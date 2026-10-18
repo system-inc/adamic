@@ -1,0 +1,81 @@
+=== RUN   TestUncheckableCastsStayRefused
+=== PAUSE TestUncheckableCastsStayRefused
+=== CONT  TestUncheckableCastsStayRefused
+=== RUN   TestUncheckableCastsStayRefused/unknown_interface
+=== PAUSE TestUncheckableCastsStayRefused/unknown_interface
+=== RUN   TestUncheckableCastsStayRefused/callback_signature
+=== PAUSE TestUncheckableCastsStayRefused/callback_signature
+=== RUN   TestUncheckableCastsStayRefused/mutable_widening
+=== PAUSE TestUncheckableCastsStayRefused/mutable_widening
+=== RUN   TestUncheckableCastsStayRefused/mutable_union_tag
+=== PAUSE TestUncheckableCastsStayRefused/mutable_union_tag
+=== RUN   TestUncheckableCastsStayRefused/mutable_union_payload
+=== PAUSE TestUncheckableCastsStayRefused/mutable_union_payload
+=== RUN   TestUncheckableCastsStayRefused/hidden_optional_field
+=== PAUSE TestUncheckableCastsStayRefused/hidden_optional_field
+=== RUN   TestUncheckableCastsStayRefused/double_assertion
+=== PAUSE TestUncheckableCastsStayRefused/double_assertion
+=== RUN   TestUncheckableCastsStayRefused/related_double_assertion
+=== PAUSE TestUncheckableCastsStayRefused/related_double_assertion
+=== RUN   TestUncheckableCastsStayRefused/primitive_union
+=== PAUSE TestUncheckableCastsStayRefused/primitive_union
+=== RUN   TestUncheckableCastsStayRefused/tuple_length
+=== PAUSE TestUncheckableCastsStayRefused/tuple_length
+=== RUN   TestUncheckableCastsStayRefused/unrelated_class
+=== PAUSE TestUncheckableCastsStayRefused/unrelated_class
+=== RUN   TestUncheckableCastsStayRefused/structural_class
+=== PAUSE TestUncheckableCastsStayRefused/structural_class
+=== RUN   TestUncheckableCastsStayRefused/payload_refinement
+=== PAUSE TestUncheckableCastsStayRefused/payload_refinement
+=== RUN   TestUncheckableCastsStayRefused/duplicate_literal_tags
+=== PAUSE TestUncheckableCastsStayRefused/duplicate_literal_tags
+=== RUN   TestUncheckableCastsStayRefused/duplicate_enum_values
+=== PAUSE TestUncheckableCastsStayRefused/duplicate_enum_values
+=== RUN   TestUncheckableCastsStayRefused/different_enums_same_value
+=== PAUSE TestUncheckableCastsStayRefused/different_enums_same_value
+=== RUN   TestUncheckableCastsStayRefused/mixed_tag_representations
+=== PAUSE TestUncheckableCastsStayRefused/mixed_tag_representations
+=== RUN   TestUncheckableCastsStayRefused/erased_generic_argument
+=== PAUSE TestUncheckableCastsStayRefused/erased_generic_argument
+=== RUN   TestUncheckableCastsStayRefused/incompatible_generic_arguments
+=== PAUSE TestUncheckableCastsStayRefused/incompatible_generic_arguments
+=== CONT  TestUncheckableCastsStayRefused/unknown_interface
+=== CONT  TestUncheckableCastsStayRefused/unrelated_class
+=== CONT  TestUncheckableCastsStayRefused/incompatible_generic_arguments
+=== CONT  TestUncheckableCastsStayRefused/different_enums_same_value
+=== CONT  TestUncheckableCastsStayRefused/tuple_length
+=== CONT  TestUncheckableCastsStayRefused/primitive_union
+=== CONT  TestUncheckableCastsStayRefused/related_double_assertion
+=== CONT  TestUncheckableCastsStayRefused/double_assertion
+=== CONT  TestUncheckableCastsStayRefused/hidden_optional_field
+=== CONT  TestUncheckableCastsStayRefused/mutable_union_payload
+=== CONT  TestUncheckableCastsStayRefused/mutable_union_tag
+=== CONT  TestUncheckableCastsStayRefused/mutable_widening
+=== CONT  TestUncheckableCastsStayRefused/callback_signature
+=== CONT  TestUncheckableCastsStayRefused/payload_refinement
+=== CONT  TestUncheckableCastsStayRefused/duplicate_enum_values
+=== CONT  TestUncheckableCastsStayRefused/duplicate_literal_tags
+=== CONT  TestUncheckableCastsStayRefused/erased_generic_argument
+=== CONT  TestUncheckableCastsStayRefused/mixed_tag_representations
+=== CONT  TestUncheckableCastsStayRefused/structural_class
+--- PASS: TestUncheckableCastsStayRefused (0.00s)
+    --- PASS: TestUncheckableCastsStayRefused/unrelated_class (0.08s)
+    --- PASS: TestUncheckableCastsStayRefused/different_enums_same_value (0.09s)
+    --- PASS: TestUncheckableCastsStayRefused/unknown_interface (0.09s)
+    --- PASS: TestUncheckableCastsStayRefused/incompatible_generic_arguments (0.11s)
+    --- PASS: TestUncheckableCastsStayRefused/primitive_union (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/related_double_assertion (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/double_assertion (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/tuple_length (0.10s)
+    --- PASS: TestUncheckableCastsStayRefused/mutable_union_payload (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/hidden_optional_field (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/mutable_union_tag (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/mutable_widening (0.08s)
+    --- PASS: TestUncheckableCastsStayRefused/callback_signature (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/payload_refinement (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/duplicate_literal_tags (0.04s)
+    --- PASS: TestUncheckableCastsStayRefused/duplicate_enum_values (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/mixed_tag_representations (0.06s)
+    --- PASS: TestUncheckableCastsStayRefused/erased_generic_argument (0.07s)
+    --- PASS: TestUncheckableCastsStayRefused/structural_class (0.05s)
+PASS

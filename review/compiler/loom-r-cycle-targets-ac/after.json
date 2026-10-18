@@ -1,0 +1,39 @@
+{
+  "predicate_exit": 0,
+  "failure": null,
+  "seconds": 1.0,
+  "results": {
+    "internal/oracle/testdata/cycle_closure_targets_refused/direct.a": {
+      "outcome": "refused",
+      "expected": "refused 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/direct.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting ca"
+    },
+    "internal/oracle/testdata/cycle_closure_targets_refused/joined.a": {
+      "outcome": "refused",
+      "expected": "refused 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/joined.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting ca"
+    },
+    "internal/oracle/testdata/cycle_closure_targets_refused/map.a": {
+      "outcome": "refused",
+      "expected": "refused Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/map.a:13:7: Adamic 0.1 refuses Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycle_clos"
+    }
+  },
+  "diagnostics": {
+    "internal/oracle/testdata/cycle_closure_targets_refused/direct.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/direct.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+    },
+    "internal/oracle/testdata/cycle_closure_targets_refused/joined.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/joined.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+    },
+    "internal/oracle/testdata/cycle_closure_targets_refused/map.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/map.a:13:7: Adamic 0.1 refuses Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/map.a:15:1 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where make is called from the top level); declare the values weak, Map<number, Weak<() => number>> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)\n"
+    }
+  }
+}

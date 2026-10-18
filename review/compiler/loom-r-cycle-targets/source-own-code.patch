@@ -1,0 +1,1279 @@
+diff --git a/docs/memory.md b/docs/memory.md
+index 56d24e5b..edb5c7d2 100644
+--- a/docs/memory.md
++++ b/docs/memory.md
+@@ -306,18 +306,95 @@ Reference counting can't free a cycle, and a garbage collector is refused (no cy
+ 
+ - **Immutable data is acyclic.** A value built from `readonly` parts can only point at values that already existed when it was made, so no `readonly` structure can ever reach itself. Immutable by default is the first answer.
+ - **A cycle needs a write.** It forms only when an existing object's mutable slot (a mutable field, an array or map element, a closure's captured variable) is set to something that can reach that object back.
+-- **That's visible in the types.** A mutable slot of type `T` inside type `S` can close a cycle only if `T` can reach `S` through the type graph. The checker holds that graph, so every *cycle-capable* slot can be found at compile time.
++- **That's visible in the types.** A mutable slot of type `T` inside type `S` can close a cycle only if `T` can reach `S` through the type graph. The checker holds that graph. Function-typed slots refine this membership using their closure targets, as described below.
+ 
+ What stage 0 does (`internal/lower/cycles.go`):
+ 
+-1. **The finder** walks the whole program's type graph after lowering and refuses every cycle-capable slot that isn't declared `Weak`, with the fix (`adamic/cycle-capable`). A slot is a field (a `readonly` one too, since its constructor writes it: below), an element of an array that isn't `readonly`, a `Map`'s value, or a variable a function value captures (`let` or `const`: the cell is written after the closure captured it). Reaching follows an object's fields and the fields of every object type in the program that can be seen as it (a `Dog` seen as an `Animal` brings its `owner` along), an array's elements, a map's keys and values, and, through a function type, the variables captured by every function value in the program that can be seen as it, since a type doesn't say what a function captured. A `Weak` is not followed. A value just made (a literal, a call's result, `new`) is examined only where it's kept, since nothing writes through it before.
+-2. **What that means in practice.** A parent pointer must be `Weak`. A mutable child array of the same type (`children: TreeNode[]`) is cycle-capable too (`node.children.push(root)`), so a tree's children are `readonly`, or `Weak`, or written only with what the relaxation below proves can't close a cycle. Either link of a doubly linked list alone can close a cycle (`a.next = a`), and the types can't tell `next` from `prev`, so both are `Weak` and something else (an array) owns the nodes. A closure kept in a variable it captures (`let countdown = ...; countdown = (n) => countdown(n - 1)`) is a cycle; the fix is a function declaration, which captures nothing. A callback field is refused only when some function value in the program captures a variable that can reach the object holding it.
++1. **The finder** walks the whole program's type graph after lowering and refuses every cycle-capable slot that isn't declared `Weak`, with the fix (`adamic/cycle-capable`). A slot is a field (a `readonly` one too, since its constructor writes it: below), an element of an array that isn't `readonly`, a `Map`'s value, or a variable a function value captures (`let` or `const`: the cell is written after the closure captured it). Reaching follows an object's fields and the fields of every object type in the program that can be seen as it (a `Dog` seen as an `Animal` brings its `owner` along), an array's elements, a map's keys and values, and, through a function-typed slot, the variables captured by the closure literals that can flow into it. The shared `ClosureTargets` producer analysis supplies those targets; an Unknown origin remains cycle-capable. A `Weak` is not followed. A value just made (a literal, a call's result, `new`) is examined only where it's kept, since nothing writes through it before.
++2. **What that means in practice.** A parent pointer must be `Weak`. A mutable child array of the same type (`children: TreeNode[]`) is cycle-capable too (`node.children.push(root)`), so a tree's children are `readonly`, or `Weak`, or written only with what the relaxation below proves can't close a cycle. Either link of a doubly linked list alone can close a cycle (`a.next = a`), and the types can't tell `next` from `prev`, so both are `Weak` and something else (an array) owns the nodes. A closure kept in a variable it captures (`let countdown = ...; countdown = (n) => countdown(n - 1)`) is a cycle; the fix is a function declaration, which captures nothing. A callback field is cycle-capable when one of its targets captures a variable that can reach the object holding it, or its target set is Unknown.
+ 3. **Spelling.** `import type { Weak } from 'adamic'`, then `parent: Weak<TreeNode>`, `Weak<TreeNode>[]`, `Map<string, Weak<TreeNode>>`, or a `let` of a `Weak` type. `Weak<Target>` is `(Target & WeakBrand) | undefined`: tsc accepts it, a plain `TreeNode` assigns into it, and a read is a `TreeNode` once narrowed, so it reads as `TreeNode | undefined`. The brand gives weak slots a type of their own, so the compiler sees them in the type graph, not just in the syntax. An array of `TreeNode` seen as an array of `Weak<TreeNode>` (which tsc allows) says NotYet: one holds targets and the other handles.
+ 4. **Natively** (`runtime/weak.c`), a `Weak` slot holds a counted handle, shared by every weak slot pointing at one target, never the target itself, so it doesn't count. Freeing a target tells its handle, which then reads `undefined`. A side table from target to handle is how freeing finds it, consulted only while any handle exists, so a program without `Weak` pays nothing.
+ 5. **In the JavaScript backend**, a `Weak` is a plain reference, which is what Node does with the source.
+ 
+ **Where native and Node differ, by design:** a `Weak` read after its target's last strong holder let go is `undefined` natively, while on Node the collector keeps the target as long as the `Weak` points at it. A read the checker had narrowed to present panics natively instead of reading freed memory. Programs that read a `Weak` only while its target is held strongly (a child's parent, while the tree is held) mean the same on both; the oracle's fixtures are such programs, and `internal/oracle/weak_test.go` pins the difference itself.
+ 
++### Function slots use closure targets
++
++The closure-target refinement preserves the type-graph rule for objects and
++collections. A function type does not describe the closure's environment.
++Membership instead follows the closure literals that can flow into the slot,
++using the same producer facts as `ClosureTargets` in `internal/ir/call_targets.go`.
++Direct call arguments, local writes, returns and joins contribute actual targets.
++Collection slots and field names are conservatively pooled across the program.
++The analysis never obtains a target by matching function types.
++
++This proof applies only to a closed world. Foreign values, host callbacks,
++unsupported producers and unbounded target sets remain Unknown and
++cycle-capable. Function values that may escape to an unmodelled caller have
++Unknown parameters. Captures are followed transitively: a target is acyclic only
++when everything it captures is acyclic by the same rule. A captured object whose
++type graph reaches the slot still prevents admission. Captured Maps and arrays
++follow their stored function targets too; an indirect back-reference is not an
++exception. Weak edges retain their existing meaning.
++
++`memoizeOne` can therefore capture its callback and a Map of functions when the
++callback and every cached function capture only acyclic values. The ten
++`getters_census_*_function.a` fixtures preserve the lazy initialization and cache
++behavior. They compare source Node, emitted JavaScript, release native and
++sanitized native, with LeakSanitizer.
++
++The following complete program stays refused with the captured-variable
++`adamic/cycle-capable` message. The returned closure reaches `memo` again:
++
++```ts
++function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
++    const cache = new Map<number, T>();
++    return (kind) => {
++        const found = cache.get(kind);
++        if (found !== undefined) return found;
++        const value = callback(kind);
++        cache.set(kind, value);
++        return value;
++    };
++}
++function make(): (kind: number) => () => number {
++let memo: (kind: number) => () => number = (kind) => () => kind;
++memo = memoizeOne((kind: number) => () => memo(kind)());
++return memo;
++}
++const held = make();
++console.log('stored');
++```
++
++The indirect case stays refused too. `links` owns a function that reaches the
++memoizer; the callback reaches `links`. The Map value slot keeps its existing
++`adamic/cycle-capable` refusal:
++
++```ts
++function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
++    const cache = new Map<number, T>();
++    return (kind) => {
++        const found = cache.get(kind);
++        if (found !== undefined) return found;
++        const value = callback(kind);
++        cache.set(kind, value);
++        return value;
++    };
++}
++function make(): (kind: number) => () => number {
++const links = new Map<number, () => number>();
++let memo: (kind: number) => () => number = (kind) => () => kind;
++links.set(0, () => memo(0)());
++memo = memoizeOne((kind: number) => () => {
++    const next = links.get(kind);
++    return next === undefined ? kind : next();
++});
++return memo;
++}
++const held = make();
++console.log('stored');
++```
++
+ ### Relaxing the finder for fresh writes
+ 
+ The type rule is sound and, for builders of trees, costly: every parser pushes freshly made children into a mutable `children: Node[]`, and a `Node[]` whose elements can reach a `Node[]` is cycle-capable, so it's refused, and stage 1's ports (285K lines of lint rules behind them) must build each child list into a local array and freeze it `readonly`. This is the design for letting such a slot stand undeclared when the program provably never closes a cycle through it. It needs A2's control-flow graph (`internal/flow`: single assignment per function, and aliasing effects, Create, Capture, Alias and Mutate, with values escaped when a parameter, a global, a captured variable, a call's result, or a value handed to a call). The design is kept as written; what was built, and how it's held, follows it.
+diff --git a/internal/ir/call_targets.go b/internal/ir/call_targets.go
+index 34669f73..c68dc1a2 100644
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -1,5 +1,10 @@
+ package ir
+ 
++import (
++	"reflect"
++	"slices"
++)
++
+ // CallTargets answers which functions a call can run. A direct call has exactly
+ // its Function as target. A virtual call (Virtual != 0) has every implementation
+ // that can run, including overrides in every instantiated subclass, recorded by
+@@ -34,8 +39,8 @@ type FunctionTargets struct {
+ }
+ 
+ // ClosureTargets answers which functions a function-value call can run. Only a
+-// closure literal or a const initialized directly with one is bounded. Parameters,
+-// mutable bindings, properties, returned values and joins are Unknown. ArrayVisit
++// value whose producers are bounded is known. The same whole-program flow facts
++// are used for cycle membership. Unsupported producers remain Unknown. ArrayVisit
+ // covers forEach, filter, find, some and every; MapForEach covers Map and Set.
+ // A sort's named comparator is a direct function, rather than a function value.
+ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+@@ -64,15 +69,7 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+ 	default:
+ 		panic("ir: ClosureTargets requires a function-value call")
+ 	}
+-	switch value := value.(type) {
+-	case MakeClosure:
+-		return FunctionTargets{Functions: []int{value.Function}}
+-	case Read:
+-		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
+-			return FunctionTargets{Functions: []int{target - 1}}
+-		}
+-	}
+-	return FunctionTargets{Unknown: true}
++	return p.ValueClosureTargets(value)
+ }
+ 
+ // ClosureMayThrow treats Unknown as anything in the program, including methods
+@@ -117,3 +114,562 @@ func (p *Program) CallExpandsArguments(call Call) bool {
+ 	}
+ 	return false
+ }
++
++// ValueClosureTargets uses the call target analysis for a stored function value.
++// An empty least fixed point is not evidence of a callable value's origin.
++func (p *Program) ValueClosureTargets(value Expression) FunctionTargets {
++	facts := p.closureFlow()
++	targets := facts.value(value)
++	if len(targets.Functions) == 0 {
++		targets.Unknown = true
++	}
++	return targets
++}
++
++// StoredMapClosureTargets conservatively merges function values in all maps.
++// Pooling maps can refuse a safe program, but cannot hide an indirect capture.
++func (p *Program) StoredMapClosureTargets() FunctionTargets {
++	return p.closureFlow().maps
++}
++
++// StoredClosureTargets answers the same producer graph for a collection or field.
++// Slot names identify pooled fields, array elements, or Map keys and values.
++func (p *Program) StoredClosureTargets(slot string) FunctionTargets {
++	facts := p.closureFlow()
++	if slot == "map" {
++		return facts.maps
++	}
++	if len(slot) >= 6 && slot[:6] == "field:" && facts.foreignFields {
++		return FunctionTargets{Unknown: true}
++	}
++	if len(slot) >= 6 && slot[:6] == "field:" {
++		if _, known := facts.contents[slot]; !known {
++			return FunctionTargets{Unknown: true}
++		}
++	}
++	return facts.contents[slot]
++}
++
++type closureFacts struct {
++	contents        SortedMap[string, FunctionTargets]
++	foreignFields   bool
++	program         *Program
++	locals, returns []FunctionTargets
++	maps            FunctionTargets
++	produced        []bool
++}
++
++func mergeClosureTargets(into *FunctionTargets, from FunctionTargets) bool {
++	changed := false
++	if from.Unknown && !into.Unknown {
++		into.Unknown = true
++		changed = true
++	}
++	for _, function := range from.Functions {
++		if !slices.Contains(into.Functions, function) {
++			into.Functions = append(into.Functions, function)
++			changed = true
++		}
++	}
++	return changed
++}
++
++func (f *closureFacts) value(expression Expression) FunctionTargets {
++	switch value := expression.(type) {
++	case nil, Undefined, NumberConstant, BooleanConstant, StringConstant:
++		return FunctionTargets{}
++	case MakeClosure:
++		return FunctionTargets{Functions: []int{value.Function}}
++	case Read:
++		if value.Local < 0 || value.Local >= len(f.locals) {
++			return FunctionTargets{Unknown: true}
++		}
++		if target := f.program.Locals[value.Local].ConstantClosure; target != 0 {
++			return FunctionTargets{Functions: []int{target - 1}}
++		}
++		return f.locals[value.Local]
++	case Defined:
++		return f.value(value.Value)
++	case Unwrap:
++		return f.value(value.Value)
++	case MaybeOf:
++		return f.value(value.Value)
++	case Box:
++		return f.value(value.Value)
++	case Conditional:
++		result := FunctionTargets{}
++		mergeClosureTargets(&result, f.value(value.WhenTrue))
++		mergeClosureTargets(&result, f.value(value.WhenNot))
++		return result
++	case Coalesce:
++		result := FunctionTargets{}
++		mergeClosureTargets(&result, f.value(value.Value))
++		mergeClosureTargets(&result, f.value(value.Fallback))
++		return result
++	case Call:
++		return f.results(f.program.CallTargets(value))
++	case CallClosure:
++		targets := f.value(value.Closure)
++		if value.Direct > 0 {
++			targets = FunctionTargets{Functions: []int{value.Direct - 1}}
++		}
++		result := f.results(targets.Functions)
++		result.Unknown = result.Unknown || targets.Unknown
++		return result
++	case Property:
++		if value.Method {
++			return FunctionTargets{Unknown: true}
++		}
++		if f.foreignFields {
++			return FunctionTargets{Unknown: true}
++		}
++		return f.contents["field:"+value.Name]
++	case ArrayIndex, ArrayPop:
++		return f.contents["array"]
++	case Narrow:
++		return f.value(value.Value)
++	case MapGet:
++		return f.maps
++	}
++	return FunctionTargets{Unknown: true}
++}
++
++func (f *closureFacts) results(targets []int) FunctionTargets {
++	result := FunctionTargets{}
++	for _, target := range targets {
++		if target < 0 || target >= len(f.returns) {
++			result.Unknown = true
++			continue
++		}
++		mergeClosureTargets(&result, f.returns[target])
++	}
++	return result
++}
++
++func walkClosureFlow(value reflect.Value, visit func(any)) {
++	switch value.Kind() {
++	case reflect.Interface:
++		if !value.IsNil() {
++			walkClosureFlow(value.Elem(), visit)
++		}
++	case reflect.Slice, reflect.Array:
++		for index := 0; index < value.Len(); index++ {
++			walkClosureFlow(value.Index(index), visit)
++		}
++	case reflect.Struct:
++		if value.CanInterface() {
++			visit(value.Interface())
++		}
++		for index := 0; index < value.NumField(); index++ {
++			walkClosureFlow(value.Field(index), visit)
++		}
++	}
++}
++
++// closureFlow solves a monotone, context-insensitive target graph. No type
++// compatibility inference supplies targets. Calls, returns and writes contribute
++// actual producers; unbound inputs and unsupported values poison their consumers.
++func (p *Program) closureFlow() *closureFacts {
++	if p.closureTargets != nil {
++		return p.closureTargets
++	}
++	f := &closureFacts{contents: SortedMap[string, FunctionTargets]{}, program: p, locals: make([]FunctionTargets, len(p.Locals)), returns: make([]FunctionTargets, len(p.Functions)), produced: make([]bool, len(p.Locals))}
++	for local, declared := range p.Locals {
++		if declared.ConstantClosure != 0 {
++			f.locals[local] = FunctionTargets{Functions: []int{declared.ConstantClosure - 1}}
++			f.produced[local] = true
++		}
++	}
++	changed := true
++	store := func(slot string, value Expression) {
++		targets := f.contents[slot]
++		if mergeClosureTargets(&targets, f.value(value)) {
++			changed = true
++		}
++		f.contents[slot] = targets
++	}
++	bind := func(targets FunctionTargets, arguments []Expression, expanded bool) {
++		for _, target := range targets.Functions {
++			if target < 0 || target >= len(p.Functions) {
++				continue
++			}
++			for position, local := range p.Functions[target].Parameters {
++				f.produced[local] = true
++				input := FunctionTargets{Unknown: true}
++				if !expanded && position < len(arguments) {
++					input = f.value(arguments[position])
++				}
++				if mergeClosureTargets(&f.locals[local], input) {
++					changed = true
++				}
++			}
++		}
++	}
++	bindInputs := func(targets FunctionTargets, inputs []FunctionTargets) {
++		for _, target := range targets.Functions {
++			if target < 0 || target >= len(p.Functions) {
++				continue
++			}
++			for position, local := range p.Functions[target].Parameters {
++				f.produced[local] = true
++				input := FunctionTargets{Unknown: true}
++				if position < len(inputs) {
++					input = inputs[position]
++				}
++				if mergeClosureTargets(&f.locals[local], input) {
++					changed = true
++				}
++			}
++		}
++	}
++	solve := func() {
++		for changed {
++			changed = false
++			inspect := func(owner int) func(any) {
++				return func(node any) {
++					switch value := node.(type) {
++					case Declare:
++						if !value.Uninitialized {
++							f.produced[value.Local] = true
++							if mergeClosureTargets(&f.locals[value.Local], f.value(value.Value)) {
++								changed = true
++							}
++						}
++					case Assign:
++						f.produced[value.Local] = true
++						if mergeClosureTargets(&f.locals[value.Local], f.value(value.Value)) {
++							changed = true
++						}
++					case Return:
++						if owner >= 0 && mergeClosureTargets(&f.returns[owner], f.value(value.Value)) {
++							changed = true
++						}
++					case Call:
++						bind(FunctionTargets{Functions: p.CallTargets(value)}, value.Arguments, p.CallExpandsArguments(value))
++					case CallClosure:
++						targets := f.value(value.Closure)
++						if value.Direct > 0 {
++							targets = FunctionTargets{Functions: []int{value.Direct - 1}}
++						}
++						bind(targets, value.Arguments, len(value.Spread) > 0)
++					case ForOf:
++						if value.Local >= 0 && value.Local < len(f.locals) && len(value.Pattern) == 0 {
++							f.produced[value.Local] = true
++							input := FunctionTargets{Unknown: true}
++							if value.Iterable != nil && value.Iterable.Type() == Array {
++								input = f.contents["array"]
++							}
++							if value.MapPart == "keys" {
++								input = f.contents["map-key"]
++							}
++							if value.MapPart == "values" {
++								input = f.maps
++							}
++							if value.Element != Closure && value.Element != Union {
++								input = FunctionTargets{}
++							}
++							if mergeClosureTargets(&f.locals[value.Local], input) {
++								changed = true
++							}
++						}
++						for _, binding := range value.Pattern {
++							f.produced[binding.Local] = true
++							input := FunctionTargets{Unknown: true}
++							if value.MapPart == "entries" {
++								if binding.Field == "0" {
++									input = f.contents["map-key"]
++								}
++								if binding.Field == "1" {
++									input = f.maps
++								}
++							}
++							if mergeClosureTargets(&f.locals[binding.Local], input) {
++								changed = true
++							}
++						}
++					case MapForEach:
++						targets := f.value(value.Callback)
++						items := f.maps
++						keys := f.contents["map-key"]
++						if value.Set {
++							items = f.contents["set"]
++							keys = items
++						}
++						for _, target := range targets.Functions {
++							if target >= 0 && target < len(p.Functions) {
++								for position, local := range p.Functions[target].Parameters {
++									f.produced[local] = true
++									input := FunctionTargets{Unknown: true}
++									if position == 0 {
++										input = items
++									}
++									if position == 1 {
++										input = keys
++									}
++									if position == 2 {
++										input = FunctionTargets{}
++									}
++									if mergeClosureTargets(&f.locals[local], input) {
++										changed = true
++									}
++								}
++							}
++						}
++					case ArrayVisit:
++						targets := f.value(value.Callback)
++						for _, target := range targets.Functions {
++							if target >= 0 && target < len(p.Functions) {
++								for position, local := range p.Functions[target].Parameters {
++									f.produced[local] = true
++									input := FunctionTargets{Unknown: true}
++									if position == 0 {
++										input = f.contents["array"]
++									}
++									if position == 1 || position == 2 {
++										input = FunctionTargets{}
++									}
++									if mergeClosureTargets(&f.locals[local], input) {
++										changed = true
++									}
++								}
++							}
++						}
++					case ObjectLiteral:
++						for _, field := range value.Fields {
++							if field.Value != nil && (field.Value.Type() == Closure || field.Value.Type() == Union) {
++								store("field:"+field.Name, field.Value)
++							}
++						}
++					case SetProperty:
++						if value.Value != nil && (value.Value.Type() == Closure || value.Value.Type() == Union) {
++							store("field:"+value.Name, value.Value)
++						}
++					case ArrayLiteral:
++						if value.Element == Closure || value.Element == Union {
++							for index, element := range value.Elements {
++								if index < len(value.Spread) && value.Spread[index] {
++									continue
++								}
++								store("array", element)
++							}
++						}
++					case ArrayPush:
++						if value.Element == Closure || value.Element == Union {
++							store("array", value.Value)
++						}
++					case SetIndex:
++						if value.Element == Closure || value.Element == Union {
++							store("array", value.Value)
++						}
++					case ArrayFill:
++						if value.Element == Closure || value.Element == Union {
++							store("array", value.Value)
++						}
++					case ArraySplice:
++						if value.Element == Closure || value.Element == Union {
++							for _, item := range value.Items {
++								store("array", item)
++							}
++						}
++					case ArrayMap:
++						bindInputs(f.value(value.Callback), []FunctionTargets{f.contents["array"], {}, {}})
++						if value.Result == Closure || value.Result == Union {
++							store("array", CallClosure{Closure: value.Callback, Returns: value.Result})
++						}
++					case ArrayFrom:
++						bindInputs(f.value(value.Callback), []FunctionTargets{{}, {}})
++						if value.Element == Closure || value.Element == Union {
++							store("array", CallClosure{Closure: value.Callback, Returns: value.Element})
++						}
++					case ArrayReduce:
++						accumulator := FunctionTargets{}
++						mergeClosureTargets(&accumulator, f.value(value.Initial))
++						mergeClosureTargets(&accumulator, f.results(f.value(value.Callback).Functions))
++						bindInputs(f.value(value.Callback), []FunctionTargets{accumulator, f.contents["array"], {}, {}})
++					case ArraySort:
++						targets := f.value(value.Callback)
++						if value.Callback == nil {
++							targets = FunctionTargets{Functions: []int{value.Comparator}}
++						}
++						bindInputs(targets, []FunctionTargets{f.contents["array"], f.contents["array"]})
++					case SetAdd:
++						if value.Element == Closure || value.Element == Union {
++							store("set", value.Value)
++						}
++					case SetNew:
++						targets := f.contents["set"]
++						if mergeClosureTargets(&targets, f.contents["array"]) {
++							changed = true
++						}
++						f.contents["set"] = targets
++					case SetValues:
++						if value.Element == Closure || value.Element == Union {
++							targets := f.contents["array"]
++							if mergeClosureTargets(&targets, f.contents["set"]) {
++								changed = true
++							}
++							f.contents["array"] = targets
++						}
++					case MapKeys:
++						if value.Key == Closure || value.Key == Union {
++							targets := f.contents["array"]
++							if mergeClosureTargets(&targets, f.contents["map-key"]) {
++								changed = true
++							}
++							f.contents["array"] = targets
++						}
++					case MapValues:
++						if value.Value == Closure || value.Value == Union {
++							targets := f.contents["array"]
++							if mergeClosureTargets(&targets, f.maps) {
++								changed = true
++							}
++							f.contents["array"] = targets
++						}
++					case MapSet:
++						if value.KeyType == Closure || value.KeyType == Union {
++							store("map-key", value.Key)
++						}
++						if (value.ValueType == Closure || value.ValueType == Union) && mergeClosureTargets(&f.maps, f.value(value.Value)) {
++							changed = true
++						}
++					case MapNew:
++						if value.Key == Closure || value.Key == Union {
++							for _, entry := range value.Entries {
++								store("map-key", entry[0])
++							}
++						}
++						if value.Value == Closure || value.Value == Union {
++							for _, entry := range value.Entries {
++								if mergeClosureTargets(&f.maps, f.value(entry[1])) {
++									changed = true
++								}
++							}
++							if value.Pairs != nil && mergeClosureTargets(&f.maps, FunctionTargets{Unknown: true}) {
++								changed = true
++							}
++						}
++					}
++				}
++			}
++			walkClosureFlow(reflect.ValueOf(p.Main), inspect(-1))
++			for owner, function := range p.Functions {
++				walkClosureFlow(reflect.ValueOf(function.Body), inspect(owner))
++			}
++		}
++	}
++	solve()
++	// A local without any producer includes foreign inputs and callback parameters
++	// invoked by operations this solver does not model. They are never empty proofs.
++	for local := range f.locals {
++		if !f.produced[local] {
++			f.locals[local].Unknown = true
++			changed = true
++			if p.Locals[local].Type == Map {
++				f.maps.Unknown = true
++			}
++		}
++	}
++	poisonMaps := func(node any) {
++		expression, ok := node.(Expression)
++		if !ok || expression.Type() != Map {
++			return
++		}
++		switch expression.(type) {
++		case MapNew, MapSet, SetNew, SetAdd, Read, Call, CallClosure, Defined, Coalesce, Conditional, Narrow, Box, WeakTarget, Property, ArrayIndex, Unwrap, Undefined:
++		default:
++			f.maps.Unknown = true
++		}
++	}
++	walkClosureFlow(reflect.ValueOf(p.Main), poisonMaps)
++	for _, function := range p.Functions {
++		walkClosureFlow(reflect.ValueOf(function.Body), poisonMaps)
++	}
++
++	poisonContainers := func(node any) {
++		expression, ok := node.(Expression)
++		if !ok {
++			return
++		}
++		if expression.Type() == Object {
++			switch expression.(type) {
++			case ObjectLiteral, Call, CallClosure, Read, Defined, Coalesce, Conditional, Property, ArrayIndex, MapGet, MaybeOf, Narrow, Box, Undefined, WeakTarget, Unwrap, CheckedCast, MakeError, RegExpNew, CollectionIterator, JSONNull:
++			default:
++				f.foreignFields = true
++				f.maps.Unknown = true
++				targets := f.contents["array"]
++				targets.Unknown = true
++				f.contents["array"] = targets
++			}
++		}
++		if expression.Type() == Array {
++			switch expression.(type) {
++			case ArrayLiteral, ArrayPush, ArrayFill, ArraySplice, ArraySlice, ArrayConcat, ArrayReverse, ArraySort, ArrayMap, ArrayFrom, ArrayVisit, MapKeys, MapValues, MapEntries, SetValues, Read, Call, CallClosure, Defined, Coalesce, Conditional, ProgramArguments, CodePoints, StringCall, ObjectKeys, Undefined, Unwrap, Narrow, Box, WeakTarget, ArrayIndex, Property:
++			default:
++				targets := f.contents["array"]
++				targets.Unknown = true
++				f.contents["array"] = targets
++			}
++		}
++	}
++	walkClosureFlow(reflect.ValueOf(p.Main), poisonContainers)
++	for _, function := range p.Functions {
++		walkClosureFlow(reflect.ValueOf(function.Body), poisonContainers)
++	}
++	for local := range f.locals {
++		if !f.produced[local] && p.Locals[local].Type == Array {
++			targets := f.contents["array"]
++			targets.Unknown = true
++			f.contents["array"] = targets
++		}
++	}
++	changed = true
++	solve()
++	// An unknown invocation or a foreign operation can call any function value
++	// that escaped, including one which also has a known caller. Poison those
++	// inputs rather than letting the known call conceal the foreign boundary.
++	unknownCaller := false
++	inspectBoundary := func(node any) {
++		if call, ok := node.(CallClosure); ok && call.Direct == 0 {
++			targets := f.value(call.Closure)
++			if targets.Unknown || len(targets.Functions) == 0 {
++				unknownCaller = true
++			}
++		}
++		if expression, ok := node.(Expression); ok {
++			name := reflect.TypeOf(expression).Name()
++			if len(name) >= 4 && name[:4] == "Node" {
++				unknownCaller = true
++			}
++		}
++	}
++	walkClosureFlow(reflect.ValueOf(p.Main), inspectBoundary)
++	for _, function := range p.Functions {
++		walkClosureFlow(reflect.ValueOf(function.Body), inspectBoundary)
++	}
++	if unknownCaller {
++		poison := func(node any) {
++			if closure, ok := node.(MakeClosure); ok && closure.Function >= 0 && closure.Function < len(p.Functions) {
++				for _, local := range p.Functions[closure.Function].Parameters {
++					f.locals[local].Unknown = true
++					if p.Locals[local].Type == Map {
++						f.maps.Unknown = true
++					}
++					if p.Locals[local].Type == Array {
++						targets := f.contents["array"]
++						targets.Unknown = true
++						f.contents["array"] = targets
++					}
++				}
++			}
++		}
++		walkClosureFlow(reflect.ValueOf(p.Main), poison)
++		for _, function := range p.Functions {
++			walkClosureFlow(reflect.ValueOf(function.Body), poison)
++		}
++		changed = true
++		solve()
++	}
++	p.closureTargets = f
++	return f
++}
+diff --git a/internal/ir/call_targets_test.go b/internal/ir/call_targets_test.go
+index 542b2189..c3a9229f 100644
+--- a/internal/ir/call_targets_test.go
++++ b/internal/ir/call_targets_test.go
+@@ -68,7 +68,7 @@ func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
+ 			t.Errorf("%T: unrelated throw spoiled bounded target", call)
+ 		}
+ 	}
+-	unknown := []ir.Expression{ir.Read{Local: 1}, ir.Property{Of: ir.Closure}, ir.Call{Returns: ir.Closure}, ir.Conditional{WhenTrue: literal, WhenNot: literal}}
++	unknown := []ir.Expression{ir.Read{Local: 1}, ir.Property{Of: ir.Closure}, ir.Call{Returns: ir.Closure}}
+ 	for _, value := range unknown {
+ 		call := ir.CallClosure{Closure: value}
+ 		if !program.ClosureTargets(call).Unknown {
+@@ -79,3 +79,48 @@ func TestClosureTargetsBoundOnlyProvenValues(t *testing.T) {
+ 		}
+ 	}
+ }
++
++func TestClosureTargetsFollowParametersReturnsAndMapValues(t *testing.T) {
++	t.Parallel()
++	program := &ir.Program{
++		Locals: []ir.Local{{Type: ir.Closure, Function: 0}, {Type: ir.Closure, Function: -1}, {Type: ir.Map, Function: -1}},
++		Functions: []ir.Function{
++			{Parameters: []int{0}, Returns: ir.Closure, Body: []ir.Statement{ir.Return{Value: ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}, Returns: ir.Closure}}}},
++			{Returns: ir.Closure, Body: []ir.Statement{ir.Return{Value: ir.Conditional{WhenTrue: ir.MakeClosure{Function: 2}, WhenNot: ir.MakeClosure{Function: 3}, Of: ir.Closure}}}},
++			{}, {MayThrow: true},
++		},
++		Main: []ir.Statement{
++			ir.Declare{Local: 1, Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.MakeClosure{Function: 1}}, Returns: ir.Closure}},
++			ir.Declare{Local: 2, Value: ir.MapNew{Key: ir.Number, Value: ir.Closure}},
++			ir.Evaluate{Value: ir.MapSet{Map: ir.Read{Local: 2, Of: ir.Map}, Value: ir.Read{Local: 1, Of: ir.Closure}, ValueType: ir.Closure}},
++		},
++	}
++	for _, value := range []ir.Expression{ir.Read{Local: 1, Of: ir.Closure}, ir.MapGet{Map: ir.Read{Local: 2, Of: ir.Map}, ValueType: ir.Closure}} {
++		targets := program.ClosureTargets(ir.CallClosure{Closure: value})
++		if targets.Unknown || !reflect.DeepEqual(targets.Functions, []int{2, 3}) {
++			t.Fatalf("%T: want both returned targets, got %+v", value, targets)
++		}
++		if !program.ClosureMayThrow(ir.CallClosure{Closure: value}) {
++			t.Fatal("throwing target lost")
++		}
++	}
++	stored := program.StoredMapClosureTargets()
++	if stored.Unknown || !reflect.DeepEqual(stored.Functions, []int{2, 3}) {
++		t.Fatalf("stored targets disagree: %+v", stored)
++	}
++}
++
++func TestClosureTargetsKnownCallerDoesNotHideUnknownCaller(t *testing.T) {
++	t.Parallel()
++	program := &ir.Program{
++		Locals:    []ir.Local{{Type: ir.Closure, Function: 0}},
++		Functions: []ir.Function{{Parameters: []int{0}}, {}, {}},
++		Main: []ir.Statement{
++			ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.MakeClosure{Function: 2}}}},
++			ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Of: ir.Closure}, Arguments: []ir.Expression{ir.MakeClosure{Function: 0}}}},
++		},
++	}
++	if targets := program.ClosureTargets(ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}}); !targets.Unknown {
++		t.Fatalf("known caller hid unbounded caller: %+v", targets)
++	}
++}
+diff --git a/internal/ir/ir.go b/internal/ir/ir.go
+index 047dcff1..faa4a0ca 100644
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@ -10,6 +10,7 @@ import "fmt"
+ 
+ // Program is one compiled Adamic program.
+ type Program struct {
++	closureTargets    *closureFacts
+ 	ViewOrigins       []Expression
+ 	ViewContracts     []ViewContract
+ 	ViewContractTypes SortedMap[int, ViewContractID]
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index 63513189..1b7708ba 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -13,7 +13,8 @@ import (
+ // collector, so a cycle must not be able to form. One forms only when a slot (a field, readonly or
+ // not, since a constructor writes a readonly one, an element of an array that isn't readonly, a map's
+ // value, a variable a function value captures) is set to something that can reach back to what
+-// holds the slot. Whether it can is visible in the types, so every such slot is found here, from the
++// holds the slot. Objects and collections are judged by type; function slots use the shared closure targets.
++// Every such slot is found here, from the
+ // whole program, and each one is refused unless it's declared Weak<Target>, which doesn't count. A
+ // map's key and a set's element are slots too, now that they may be objects; neither can be declared
+ // weak, so one that can reach back is refused with the fix of a ReadonlyMap or ReadonlySet.
+@@ -21,8 +22,8 @@ import (
+ // Reaching is followed through everything the checker knows a value can hold: an object's fields,
+ // including the fields of every object type in the program that can be seen as it (a Dog seen as an
+ // Animal brings its owner along), an array's elements, a map's keys and values, and through a
+-// function type, the variables captured by every function value in the program that can be seen as
+-// it, since a type doesn't say what a function captured. A Weak isn't followed: it holds nothing.
++// function slot, the variables captured by every closure target that can flow into it. Unknown
++// producers remain cycle-capable, since a type does not describe a closure environment. A Weak isn't followed: it holds nothing.
+ //
+ // It runs after lowering, when the variables each function value captures are known.
+ 
+@@ -37,6 +38,7 @@ type closureRecord struct {
+ type cycleNode struct {
+ 	proven *checker.Type
+ 	cell   int
++	slot   string
+ }
+ 
+ type cycleFinder struct {
+@@ -109,7 +111,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+ 		if proven == nil || node == nil || finder.weak(proven) {
+ 			continue
+ 		}
+-		if finder.reaches(proven, cycleNode{cell: local + 1}) && !l.closedFrameInput(local) {
++		if finder.reachesFrom(cycleNode{cell: local + 1}, cycleNode{cell: local + 1}, true) && !l.closedFrameInput(local) {
+ 			return &Refused{
+ 				Where: l.program.Where(node),
+ 				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+@@ -267,7 +269,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ 			return nil
+ 		}
+ 		for _, element := range l.checker.GetTypeArguments(holder) {
+-			if f.weak(element) || !f.reaches(element, cycleNode{proven: holder}) {
++			if f.weak(element) || !f.reachesFrom(cycleNode{proven: element, slot: "array"}, cycleNode{proven: holder}, false) {
+ 				continue
+ 			}
+ 			write := f.unproven(fresh.WriteElement, holder, "")
+@@ -284,7 +286,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
+ 	case l.isLibraryType(holder, "Set"):
+ 		arguments := l.checker.GetTypeArguments(holder)
+-		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
++		if len(arguments) == 1 && f.reachesFrom(cycleNode{proven: arguments[0], slot: "set"}, cycleNode{proven: holder}, false) {
+ 			if write := f.unproven(fresh.WriteSetElement, holder, ""); write != nil {
+ 				return &Refused{
+ 					Where: l.program.Where(f.where[holder]),
+@@ -295,7 +297,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ 		}
+ 	case l.isLibraryType(holder, "Map"):
+ 		arguments := l.checker.GetTypeArguments(holder)
+-		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
++		if len(arguments) == 2 && f.reachesFrom(cycleNode{proven: arguments[0], slot: "map-key"}, cycleNode{proven: holder}, false) {
+ 			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+ 				return &Refused{
+ 					Where: l.program.Where(f.where[holder]),
+@@ -304,7 +306,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ 				}
+ 			}
+ 		}
+-		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
++		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reachesFrom(cycleNode{proven: arguments[1], slot: "map"}, cycleNode{proven: holder}, false) {
+ 			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+ 				return &Refused{
+ 					Where: l.program.Where(f.where[holder]),
+@@ -321,7 +323,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ 			// and is no write at all.
+ 			readonly := l.checker.IsReadonlySymbol(field)
+ 			proven := l.checker.GetTypeOfSymbol(field)
+-			if f.weak(proven) || !f.reaches(proven, cycleNode{proven: holder}) {
++			if f.weak(proven) || !f.reachesFrom(cycleNode{proven: proven, slot: "field:" + field.Name}, cycleNode{proven: holder}, false) {
+ 				continue
+ 			}
+ 			write := f.unproven(fresh.WriteField, holder, field.Name)
+@@ -350,18 +352,35 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
+ // reaches reports whether a value of type from can reach target: a value seen as target's type
+ // (either way round, since either may be what the value really is), or target's cell.
+ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
++	return f.reachesFrom(cycleNode{proven: from}, target, false)
++}
++
++func (f *cycleFinder) reachesFrom(start, target cycleNode, root bool) bool {
+ 	visited := map[cycleNode]bool{}
+-	queue := []cycleNode{{proven: from}}
++	queue := []cycleNode{start}
+ 	for len(queue) > 0 {
+ 		node := queue[0]
+ 		queue = queue[1:]
++		if node.cell != 0 && node.cell == target.cell && !root {
++			return true
++		}
++		root = false
+ 		if visited[node] {
+ 			continue
+ 		}
+ 		visited[node] = true
+ 		if node.cell != 0 {
+-			if node == target {
+-				return true
++			if f.l.result.Locals[node.cell-1].Type == ir.Closure {
++				targets := f.l.result.ValueClosureTargets(ir.Read{Local: node.cell - 1, Of: ir.Closure})
++				if targets.Unknown {
++					return true
++				}
++				for _, function := range targets.Functions {
++					for _, local := range f.l.result.Functions[function].Environment {
++						queue = append(queue, cycleNode{cell: local + 1})
++					}
++				}
++				continue
+ 			}
+ 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
+ 				queue = append(queue, cycleNode{proven: proven})
+@@ -380,7 +399,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+ 		}
+ 		if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+ 			for _, member := range proven.Types() {
+-				queue = append(queue, cycleNode{proven: member})
++				queue = append(queue, cycleNode{proven: member, slot: node.slot})
+ 			}
+ 			continue
+ 		}
+@@ -403,19 +422,33 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+ 					}
+ 				}
+ 			}
+-			// What a function value holds is what it captured: the cells of every function value the
+-			// program makes that can be seen as this type.
+-			for _, closure := range f.l.closureRecords {
+-				if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+-					continue
+-				}
+-				for _, local := range f.l.result.Functions[closure.function].Environment {
++			// Stored values and calls use the same producer graph. A type alone
++			// does not bound a function value's origin.
++			if node.slot == "" {
++				return true
++			}
++			targets := f.l.result.StoredClosureTargets(node.slot)
++			if targets.Unknown {
++				return true
++			}
++			for _, function := range targets.Functions {
++				for _, local := range f.l.result.Functions[function].Environment {
+ 					queue = append(queue, cycleNode{cell: local + 1})
+ 				}
+ 			}
+ 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+-			for _, argument := range f.l.checker.GetTypeArguments(proven) {
+-				queue = append(queue, cycleNode{proven: argument})
++			for index, argument := range f.l.checker.GetTypeArguments(proven) {
++				slot := "array"
++				if f.l.isLibraryType(proven, "Set", "ReadonlySet") {
++					slot = "set"
++				}
++				if f.l.isLibraryType(proven, "Map", "ReadonlyMap") {
++					slot = "map"
++					if index == 0 {
++						slot = "map-key"
++					}
++				}
++				queue = append(queue, cycleNode{proven: argument, slot: slot})
+ 			}
+ 		default:
+ 			if f.l.isStaticType(proven) {
+@@ -431,7 +464,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+ 				}
+ 			}
+ 			for _, field := range f.fields(proven) {
+-				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field)})
++				queue = append(queue, cycleNode{proven: f.l.checker.GetTypeOfSymbol(field), slot: "field:" + field.Name})
+ 			}
+ 			// A value seen as this type may be any object type the program has that can be seen as
+ 			// it, with fields this type doesn't show.
+diff --git a/internal/lower/namespaces_ambient_test.go b/internal/lower/namespaces_ambient_test.go
+index a9d0e207..c0ffc5c1 100644
+--- a/internal/lower/namespaces_ambient_test.go
++++ b/internal/lower/namespaces_ambient_test.go
+@@ -9,8 +9,8 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ )
+ 
+-// Test preflight separately from unsupported host member lowering. Neither host
+-// namespace has an executable body in the checked module graph.
++// Test preflight separately from unsupported host member lowering. The host
++// namespace has no executable body in the checked module graph.
+ func TestNamespaceAmbientHostInitialization(t *testing.T) {
+ 	t.Parallel()
+ 	// An executable namespace read before initialization must still be rejected.
+@@ -20,30 +20,32 @@ func TestNamespaceAmbientHostInitialization(t *testing.T) {
+ 	if !errors.As(err, &stop) || !strings.Contains(err.Error(), "before runtime initialization") {
+ 		t.Fatalf("runtime namespace initialization guard lost: %v", err)
+ 	}
+-	for _, name := range []string{"realpath", "cwd"} {
+-		t.Run(name, func(t *testing.T) {
+-			source, err := os.ReadFile("../../stage3/namespace-init-sys/" + name + ".a")
+-			if err != nil {
+-				t.Fatal(err)
+-			}
+-			graph, _ := namespaceGraphForTest(t, string(source))
+-			if err := graph.lowering.namespaceInitialization(graph.lowering.program.Files()); err != nil {
+-				t.Fatalf("ambient host declaration acquired pending initialization: %v", err)
+-			}
+-			// Unsupported hosts must still have their own named diagnostic.
+-			_, err = lowerSource(t, string(source))
+-			var refused *Refused
+-			if name == "cwd" && errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/cycle-capable") {
+-				// The area's captured-callback ownership rule remains stricter than the host topic.
+-				t.Logf("independent ownership refusal: %v", err)
+-				return
+-			}
+-			if err == nil || strings.Contains(err.Error(), "before runtime initialization") || !strings.Contains(err.Error(), "node:") {
+-				t.Fatalf("expected independent host member NotYet, got %v", err)
+-			}
+-			t.Logf("independent lowering stop: %v", err)
+-		})
++	source := namespaceAmbientHostSource(t, "realpath")
++	_, err = lowerSource(t, source)
++	if err == nil || strings.Contains(err.Error(), "before runtime initialization") || !strings.Contains(err.Error(), "node:") {
++		t.Fatalf("expected independent host member NotYet, got %v", err)
+ 	}
++	t.Logf("independent lowering stop: %v", err)
++}
++
++func TestNamespaceAmbientCwdInitialization(t *testing.T) {
++	t.Parallel()
++	// Closure targets prove the callback has no captured back-reference. The
++	// host call is supported, so the old cycle refusal is now stale.
++	lowersAndAgreesWithNode(t, namespaceAmbientHostSource(t, "cwd"))
++}
++
++func namespaceAmbientHostSource(t *testing.T, name string) string {
++	t.Helper()
++	source, err := os.ReadFile("../../stage3/namespace-init-sys/" + name + ".a")
++	if err != nil {
++		t.Fatal(err)
++	}
++	graph, _ := namespaceGraphForTest(t, string(source))
++	if err := graph.lowering.namespaceInitialization(graph.lowering.program.Files()); err != nil {
++		t.Fatalf("ambient host declaration acquired pending initialization: %v", err)
++	}
++	return string(source)
+ }
+ 
+ func TestNamespaceAmbientContextsDoNotExecute(t *testing.T) {
+diff --git a/internal/oracle/cycle_closure_targets_test.go b/internal/oracle/cycle_closure_targets_test.go
+new file mode 100644
+index 00000000..ae370346
+--- /dev/null
++++ b/internal/oracle/cycle_closure_targets_test.go
+@@ -0,0 +1,85 @@
++package oracle
++
++import (
++	"errors"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/lower"
++)
++
++const ambientCwdFixture = "stage3/namespace-init-sys/cwd.a"
++
++func init() {
++	fixtures = append(fixtures, struct {
++		path            string
++		lowers, checked bool
++	}{ambientCwdFixture, true, false})
++	for _, name := range []string{"binary", "unary", "primary", "unary_node", "update_node", "optional_boolean", "optional_type", "update_type", "optional_comment", "update_comment"} {
++		fixtures = append(fixtures, struct {
++			path            string
++			lowers, checked bool
++		}{"internal/oracle/testdata/getters_census_" + name + "_function.a", true, false})
++	}
++}
++func observeClosureCycleRefusal(t *testing.T, name string) {
++	t.Helper()
++	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/cycle_closure_targets_refused", name+".a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	node := onNode(t, path)
++	if node.exitCode != 0 || string(node.stdout) != "stored\n" {
++		t.Fatalf("Node: %+v", node)
++	}
++	_, err = lowered(t, path)
++	var refused *lower.Refused
++	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
++		t.Fatalf("want cycle refusal, got %v", err)
++	}
++	want := "'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"
++	if name == "map" {
++		want = "Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at <fixture>:14:1 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where make is called from the top level); declare the values weak, Map<number, Weak<() => number>> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)"
++	}
++	got := strings.ReplaceAll(refused.What+"; "+refused.Fix, path, "<fixture>")
++	if got != want {
++		t.Fatalf("refusal changed:\nwant %s\ngot  %s", want, got)
++	}
++	t.Log(err)
++}
++func TestClosureCycleDirect(t *testing.T) { t.Parallel(); observeClosureCycleRefusal(t, "direct") }
++func TestClosureCycleJoined(t *testing.T) { t.Parallel(); observeClosureCycleRefusal(t, "joined") }
++func TestClosureCycleMap(t *testing.T)    { t.Parallel(); observeClosureCycleRefusal(t, "map") }
++
++// The memoizer owns a callback with no environment and a string cache. Neither
++// can reach the returned closure, even though both closures have the same type.
++func TestClosureCycleAmbientCwd(t *testing.T) {
++	t.Parallel()
++	path, err := filepath.Abs(filepath.Join(repository, ambientCwdFixture))
++	if err != nil {
++		t.Fatal(err)
++	}
++	node := onNode(t, path)
++	if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != "true\n" {
++		t.Fatalf("Node: %+v", node)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	backend := onJavaScriptBackend(t, program)
++	sanitized, leaked, comparable := nativelyCheckingLeaks(t, program, true)
++	if leaked != "" {
++		t.Fatal(leaked)
++	}
++	if !comparable {
++		t.Fatal("sanitized run was not comparable")
++	}
++	for name, result := range map[string]run{"JavaScript": backend, "release": released(t, program), "sanitized": sanitized} {
++		t.Logf("%s: exit %d stdout %q stderr %q", name, result.exitCode, result.stdout, result.stderr)
++		if difference := disagreement(node, result); difference != "" {
++			t.Errorf("%s: %s", name, difference)
++		}
++	}
++}
+diff --git a/internal/oracle/getters_census_test.go b/internal/oracle/getters_census_test.go
+index fe59d5d6..615f1865 100644
+--- a/internal/oracle/getters_census_test.go
++++ b/internal/oracle/getters_census_test.go
+@@ -87,47 +87,47 @@ func TestGettersCensusLazyObject(t *testing.T) {
+ 
+ func TestGettersCensusPrimaryFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "primary_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n")
++	observeGettersCensus(t, "primary_function", "", "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n")
+ }
+ 
+ func TestGettersCensusOptionalBooleanFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "optional_boolean_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
++	observeGettersCensus(t, "optional_boolean_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
+ }
+ 
+ func TestGettersCensusUpdateNodeFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "update_node_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
++	observeGettersCensus(t, "update_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+ }
+ 
+ func TestGettersCensusUnaryNodeFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "unary_node_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
++	observeGettersCensus(t, "unary_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+ }
+ 
+ func TestGettersCensusOptionalTypeFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "optional_type_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
++	observeGettersCensus(t, "optional_type_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+ }
+ 
+ func TestGettersCensusUpdateTypeFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "update_type_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n")
++	observeGettersCensus(t, "update_type_function", "", "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n")
+ }
+ 
+ func TestGettersCensusOptionalCommentFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "optional_comment_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
++	observeGettersCensus(t, "optional_comment_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
+ }
+ 
+ func TestGettersCensusUpdateCommentFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "update_comment_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
++	observeGettersCensus(t, "update_comment_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+ }
+ 
+ func TestGettersCensusBinaryFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "binary_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
++	observeGettersCensus(t, "binary_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+ }
+ 
+ func TestGettersCensusOverloadedFunction(t *testing.T) {
+@@ -137,7 +137,7 @@ func TestGettersCensusOverloadedFunction(t *testing.T) {
+ 
+ func TestGettersCensusUnaryFunction(t *testing.T) {
+ 	t.Parallel()
+-	observeGettersCensus(t, "unary_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
++	observeGettersCensus(t, "unary_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+ }
+ 
+ func TestGettersCensusThrowingObject(t *testing.T) {
+diff --git a/internal/oracle/testdata/cycle_closure_targets_refused/direct.a b/internal/oracle/testdata/cycle_closure_targets_refused/direct.a
+new file mode 100644
+index 00000000..4de6b2b0
+--- /dev/null
++++ b/internal/oracle/testdata/cycle_closure_targets_refused/direct.a
+@@ -0,0 +1,17 @@
++function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
++    const cache = new Map<number, T>();
++    return (kind) => {
++        const found = cache.get(kind);
++        if (found !== undefined) return found;
++        const value = callback(kind);
++        cache.set(kind, value);
++        return value;
++    };
++}
++function make(): (kind: number) => () => number {
++let memo: (kind: number) => () => number = (kind) => () => kind;
++memo = memoizeOne((kind: number) => () => memo(kind)());
++return memo;
++}
++const held = make();
++console.log('stored');
+diff --git a/internal/oracle/testdata/cycle_closure_targets_refused/joined.a b/internal/oracle/testdata/cycle_closure_targets_refused/joined.a
+new file mode 100644
+index 00000000..84333316
+--- /dev/null
++++ b/internal/oracle/testdata/cycle_closure_targets_refused/joined.a
+@@ -0,0 +1,20 @@
++function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
++    const cache = new Map<number, T>();
++    return (kind) => {
++        const found = cache.get(kind);
++        if (found !== undefined) return found;
++        const value = callback(kind);
++        cache.set(kind, value);
++        return value;
++    };
++}
++function make(): (kind: number) => () => number {
++let memo: (kind: number) => () => number = (kind) => () => kind;
++function choose(flag: boolean): (kind: number) => () => number {
++    return flag ? (kind) => () => kind : (kind) => () => memo(kind)();
++}
++memo = memoizeOne(choose(false));
++return memo;
++}
++const held = make();
++console.log('stored');
+diff --git a/internal/oracle/testdata/cycle_closure_targets_refused/map.a b/internal/oracle/testdata/cycle_closure_targets_refused/map.a
+new file mode 100644
+index 00000000..5c87afbc
+--- /dev/null
++++ b/internal/oracle/testdata/cycle_closure_targets_refused/map.a
+@@ -0,0 +1,22 @@
++function memoizeOne<T>(callback: (kind: number) => T): (kind: number) => T {
++    const cache = new Map<number, T>();
++    return (kind) => {
++        const found = cache.get(kind);
++        if (found !== undefined) return found;
++        const value = callback(kind);
++        cache.set(kind, value);
++        return value;
++    };
++}
++function make(): (kind: number) => () => number {
++const links = new Map<number, () => number>();
++let memo: (kind: number) => () => number = (kind) => () => kind;
++links.set(0, () => memo(0)());
++memo = memoizeOne((kind: number) => () => {
++    const next = links.get(kind);
++    return next === undefined ? kind : next();
++});
++return memo;
++}
++const held = make();
++console.log('stored');

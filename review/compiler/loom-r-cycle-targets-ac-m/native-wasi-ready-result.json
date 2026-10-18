@@ -1,0 +1,21 @@
+{
+  "package": "internal/native",
+  "command": [
+    "timeout",
+    "570",
+    "go",
+    "test",
+    "./internal/native",
+    "-count=1",
+    "-p=1",
+    "-parallel=4",
+    "-json",
+    "-timeout=540s"
+  ],
+  "exit": 0,
+  "seconds": 362.627,
+  "test_events": 856,
+  "max_leaf_seconds": 28.9,
+  "over_budget": [],
+  "prerequisite": "WASI SDK 27 / WASI_SYSROOT set, ADAMIC_TEST_WASI unset"
+}

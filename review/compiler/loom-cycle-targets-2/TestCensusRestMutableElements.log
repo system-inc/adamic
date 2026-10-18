@@ -1,0 +1,6 @@
+=== RUN   TestCensusRestMutableElements
+=== PAUSE TestCensusRestMutableElements
+=== CONT  TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements4100885745/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (0.04s)
+PASS

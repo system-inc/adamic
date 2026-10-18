@@ -1,0 +1,11 @@
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+=== RUN   TestTypedArraysLower/Int32Array
+=== RUN   TestTypedArraysLower/Float64Array
+--- PASS: TestTypedArraysLower (0.64s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.18s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.18s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.28s)
+PASS

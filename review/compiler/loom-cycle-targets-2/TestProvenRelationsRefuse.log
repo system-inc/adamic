@@ -1,0 +1,65 @@
+=== RUN   TestProvenRelationsRefuse
+=== PAUSE TestProvenRelationsRefuse
+=== CONT  TestProvenRelationsRefuse
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_array
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_array
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_array
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== RUN   TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== PAUSE TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== RUN   TestProvenRelationsRefuse/satisfies_function_parameter
+=== PAUSE TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_function_parameter
+=== PAUSE TestProvenRelationsRefuse/upcast_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/upcast_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/upcast_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
+=== CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_nominal_identity
+=== CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_array
+=== CONT  TestProvenRelationsRefuse/upcast_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_function_parameter
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
+=== CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+--- PASS: TestProvenRelationsRefuse (0.00s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.09s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.09s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.11s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.11s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.09s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.09s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.11s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.06s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.07s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.09s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.05s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.04s)
+PASS

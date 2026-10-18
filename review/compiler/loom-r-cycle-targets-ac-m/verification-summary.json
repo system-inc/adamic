@@ -1,0 +1,210 @@
+{
+  "source": "b1d42ea3917096b83841c570f05185cbe9a0b337",
+  "base": "67733635b0252eb9d3bb3645c72262c7b18361e1",
+  "packages": [
+    {
+      "package": "internal/ir",
+      "command": [
+        "timeout",
+        "570",
+        "go",
+        "test",
+        "./internal/ir",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=540s"
+      ],
+      "log": "final-package-00.log",
+      "exit": 0,
+      "wall_seconds": 24.452,
+      "packages": [
+        {
+          "Time": "2026-10-18T22:23:58.360618103Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/internal/ir",
+          "Elapsed": 22.656
+        }
+      ],
+      "test_events": 30,
+      "max_leaf_seconds": 15.82,
+      "over_budget": []
+    },
+    {
+      "package": "internal/lower",
+      "command": [
+        "timeout",
+        "570",
+        "go",
+        "test",
+        "./internal/lower",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=540s"
+      ],
+      "log": "final-package-01.log",
+      "exit": 0,
+      "wall_seconds": 52.387,
+      "packages": [
+        {
+          "Time": "2026-10-18T22:24:50.48951524Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/internal/lower",
+          "Elapsed": 50.264
+        }
+      ],
+      "test_events": 1472,
+      "max_leaf_seconds": 8.62,
+      "over_budget": []
+    },
+    {
+      "package": "internal/native",
+      "command": [
+        "timeout",
+        "570",
+        "go",
+        "test",
+        "./internal/native",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=540s"
+      ],
+      "exit": 0,
+      "seconds": 362.627,
+      "test_events": 856,
+      "max_leaf_seconds": 28.9,
+      "over_budget": [],
+      "prerequisite": "WASI SDK 27 / WASI_SYSROOT set, ADAMIC_TEST_WASI unset"
+    },
+    {
+      "package": "internal/javascript",
+      "command": [
+        "timeout",
+        "570",
+        "go",
+        "test",
+        "./internal/javascript",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=540s"
+      ],
+      "log": "final-package-03.log",
+      "exit": 0,
+      "wall_seconds": 1.103,
+      "packages": [
+        {
+          "Time": "2026-10-18T22:30:26.057143599Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/internal/javascript",
+          "Elapsed": 0.236
+        }
+      ],
+      "test_events": 7,
+      "max_leaf_seconds": 0.09,
+      "over_budget": []
+    },
+    {
+      "package": "internal/flow",
+      "command": [
+        "timeout",
+        "570",
+        "go",
+        "test",
+        "./internal/flow",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=540s"
+      ],
+      "log": "final-package-04.log",
+      "exit": 0,
+      "wall_seconds": 106.968,
+      "packages": [
+        {
+          "Time": "2026-10-18T22:32:12.861946956Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/internal/flow",
+          "Elapsed": 103.425
+        }
+      ],
+      "test_events": 905,
+      "max_leaf_seconds": 22.73,
+      "over_budget": []
+    },
+    {
+      "package": "internal/fresh",
+      "command": [
+        "timeout",
+        "570",
+        "go",
+        "test",
+        "./internal/fresh",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=540s"
+      ],
+      "log": "final-package-05.log",
+      "exit": 0,
+      "wall_seconds": 31.727,
+      "packages": [
+        {
+          "Time": "2026-10-18T22:32:44.60261423Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/internal/fresh",
+          "Elapsed": 29.322
+        }
+      ],
+      "test_events": 936,
+      "max_leaf_seconds": 6.83,
+      "over_budget": []
+    },
+    {
+      "package": "internal/oracle",
+      "command": [
+        "timeout",
+        "1230",
+        "go",
+        "test",
+        "./internal/oracle",
+        "-count=1",
+        "-p=1",
+        "-parallel=4",
+        "-json",
+        "-timeout=1200s"
+      ],
+      "log": "final-package-06.log",
+      "exit": 0,
+      "wall_seconds": 612.287,
+      "packages": [
+        {
+          "Time": "2026-10-18T22:42:53.470612936Z",
+          "Action": "pass",
+          "Package": "github.com/system-inc/adamic/internal/oracle",
+          "Elapsed": 605.855
+        }
+      ],
+      "test_events": 5296,
+      "max_leaf_seconds": 49.34,
+      "over_budget": []
+    }
+  ],
+  "all_pass": true,
+  "runtime_additional_lines": [],
+  "acheck": {
+    "checked": 0,
+    "NotYet": 0,
+    "refused": 3,
+    "type_error": 0
+  },
+  "mutant_types_caught": 9
+}

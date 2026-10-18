@@ -1,0 +1,14 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/callback_widening/object-generic.a",
+    "main_generated": true,
+    "recut_generated": true,
+    "diff": "object-generic-emission.patch"
+  },
+  {
+    "fixture": "internal/oracle/testdata/miscompile_2a/controls.a",
+    "main_generated": true,
+    "recut_generated": true,
+    "diff": "controls-emission.patch"
+  }
+]

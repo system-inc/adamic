@@ -1,0 +1,72 @@
+[
+  {
+    "log": "final-package-00.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsPreserveEffectsProducers",
+    "status": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "final-package-00.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsKnownCallerDoesNotHideUnknownCaller",
+    "status": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "final-package-00.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsFollowParametersReturnsAndMapValues",
+    "status": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "final-package-00.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "status": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "final-package-01.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientCwdInitialization",
+    "status": "pass",
+    "seconds": 1.12
+  },
+  {
+    "log": "final-package-06.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleMap",
+    "status": "pass",
+    "seconds": 0.19
+  },
+  {
+    "log": "final-package-06.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleJoined",
+    "status": "pass",
+    "seconds": 0.19
+  },
+  {
+    "log": "final-package-06.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleDirect",
+    "status": "pass",
+    "seconds": 0.19
+  },
+  {
+    "log": "final-package-06.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleAmbientCwd",
+    "status": "pass",
+    "seconds": 1.11
+  },
+  {
+    "log": "effects-final.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsPreserveEffectsProducers",
+    "status": "pass",
+    "seconds": 0
+  }
+]

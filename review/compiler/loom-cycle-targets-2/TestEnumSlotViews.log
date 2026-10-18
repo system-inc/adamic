@@ -1,0 +1,97 @@
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/variable
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== CONT  TestEnumSlotViews/array_alias
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.21s)
+    --- PASS: TestEnumSlotViews/object_assign (0.22s)
+    --- PASS: TestEnumSlotViews/variable (0.46s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.30s)
+    --- PASS: TestEnumSlotViews/optional_union (0.38s)
+    --- PASS: TestEnumSlotViews/class_field (0.40s)
+    --- PASS: TestEnumSlotViews/map_alias (0.71s)
+    --- PASS: TestEnumSlotViews/array_literal (0.99s)
+    --- PASS: TestEnumSlotViews/override (0.39s)
+    --- PASS: TestEnumSlotViews/array_alias (0.43s)
+    --- PASS: TestEnumSlotViews/function_view (0.46s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.08s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.18s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.15s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.18s)
+    --- PASS: TestEnumSlotViews/argument (0.25s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.99s)
+    --- PASS: TestEnumSlotViews/compound (0.85s)
+    --- PASS: TestEnumSlotViews/literal_property (1.00s)
+    --- PASS: TestEnumSlotViews/increment (0.68s)
+    --- PASS: TestEnumSlotViews/assignment (0.86s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.53s)
+    --- PASS: TestEnumSlotViews/initializer (0.39s)
+PASS

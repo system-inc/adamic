@@ -1,0 +1,3798 @@
+[
+  {
+    "test": "TestProduct_LowerAgreementNative",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestProduct_LowerAgreementNative$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 6.142107400999976
+  },
+  {
+    "test": "TestAgreementRejectsWrongLoweredOutput",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementRejectsWrongLoweredOutput$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21566223700006049
+  },
+  {
+    "test": "TestAgreementRejectsEmptyAnswer",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementRejectsEmptyAnswer$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16468695999992633
+  },
+  {
+    "test": "TestAgreementAcceptsComputedAnswer",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementAcceptsComputedAnswer$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2147173760001806
+  },
+  {
+    "test": "TestAgreementAcceptsExpectedPanic",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementAcceptsExpectedPanic$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21488333399997828
+  },
+  {
+    "test": "TestAgreementEnumConstantWitness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementEnumConstantWitness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26941559900001266
+  },
+  {
+    "test": "TestAgreementInheritedFieldWitness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementInheritedFieldWitness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2151225659999909
+  },
+  {
+    "test": "TestAgreementParameterPropertyWitness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementParameterPropertyWitness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2158618099999785
+  },
+  {
+    "test": "TestAgreementStaticInitializerWitness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementStaticInitializerWitness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.22086115100000825
+  },
+  {
+    "test": "TestAgreementParseIntRadixWitness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAgreementParseIntRadixWitness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21496227400007228
+  },
+  {
+    "test": "TestNativeAgreementRejectsWrongOutput",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNativeAgreementRejectsWrongOutput$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.46715516800009027
+  },
+  {
+    "test": "TestNativeAgreementRejectsWrongExit",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNativeAgreementRejectsWrongExit$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4717153579999831
+  },
+  {
+    "test": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNativeAgreementRowsNameRegisteredPrograms$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.03368891199988866
+  },
+  {
+    "test": "TestArgumentsLengthRefusals",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArgumentsLengthRefusals$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.36672782300001927
+  },
+  {
+    "test": "TestMixedTupleSpreadIsNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedTupleSpreadIsNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06491582200010271
+  },
+  {
+    "test": "TestArgumentsLengthReadNeighbors",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArgumentsLengthReadNeighbors$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8688948459998755
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArgumentsLengthRefusalFixtures$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.36664863900000455
+  },
+  {
+    "test": "TestArgumentsCountLocalsAreNumberedTheSameEveryTime",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArgumentsCountLocalsAreNumberedTheSameEveryTime$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1664629839999634
+  },
+  {
+    "test": "TestArgumentsLengthReadKeepsReaderFact",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArgumentsLengthReadKeepsReaderFact$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21875616099987383
+  },
+  {
+    "test": "TestArrayPredicatePreservesDeclaredElementContract",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArrayPredicatePreservesDeclaredElementContract$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9774647130000176
+  },
+  {
+    "test": "TestArrayPredicateCannotInventAnElementContract",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArrayPredicateCannotInventAnElementContract$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2682169750000867
+  },
+  {
+    "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArrayPredicateDoesNotMisclassifyNativeTuples$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1149536480002098
+  },
+  {
+    "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUnknownArrayPredicateRefusesUnrepresentedObservations$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1149118250000356
+  },
+  {
+    "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestArrayPredicateCoexistsWithUnknownReflection$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9682543339999938
+  },
+  {
+    "test": "TestUncheckableCastsStayRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUncheckableCastsStayRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4172247099998003
+  },
+  {
+    "test": "TestCheckedCastProofAndElision",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCheckedCastProofAndElision$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26876372900005663
+  },
+  {
+    "test": "TestCensusMarkerResultIsAssignable",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusMarkerResultIsAssignable$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06431545000009464
+  },
+  {
+    "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusMarkerZeroCallIsNotAssumedSafe$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.0646863200001917
+  },
+  {
+    "test": "TestOptionalFunctionValueRelation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalFunctionValueRelation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11570142799996574
+  },
+  {
+    "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOverloadedShorthandFunctionValueStaysNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06478305299992826
+  },
+  {
+    "test": "TestCensusOverloadBinderGuards",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusOverloadBinderGuards$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11477160699996602
+  },
+  {
+    "test": "TestCensusOverloadReturnProof",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusOverloadReturnProof$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21547372600002745
+  },
+  {
+    "test": "TestCensusPredicateInteractionBoundary",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusPredicateInteractionBoundary$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16851135000001705
+  },
+  {
+    "test": "TestCensusPredicateInteractionEscapes",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusPredicateInteractionEscapes$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11527959099998952
+  },
+  {
+    "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusPredicateMarkerKeepsProofBoundaries$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.20591448100003618
+  },
+  {
+    "test": "TestCensusPredicateMarkerCallStaysNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusPredicateMarkerCallStaysNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.17020459099990148
+  },
+  {
+    "test": "TestCensusOverloadRelation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusOverloadRelation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16538766500002566
+  },
+  {
+    "test": "TestCensusSmallFiniteKeyRead",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusSmallFiniteKeyRead$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21977696299995841
+  },
+  {
+    "test": "TestCensusRestMutableElements",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusRestMutableElements$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06447233700009747
+  },
+  {
+    "test": "TestCensusBooleanDeadBranch",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCensusBooleanDeadBranch$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2154576079999515
+  },
+  {
+    "test": "TestCheckPragmasAreRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCheckPragmasAreRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26721971300003133
+  },
+  {
+    "test": "TestCheckPragmaNeighborsCompile",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCheckPragmaNeighborsCompile$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21505656700014697
+  },
+  {
+    "test": "TestTsgoHonorsNoCheckInAdamicFiles",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTsgoHonorsNoCheckInAdamicFiles$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1645009060000575
+  },
+  {
+    "test": "TestClassFeaturesReadonlyChecker",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesReadonlyChecker$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3670318800000132
+  },
+  {
+    "test": "TestClassFeaturesPrivateChecker",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesPrivateChecker$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06659715500018137
+  },
+  {
+    "test": "TestClassFeaturesPrivateStorage",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesPrivateStorage$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.22604825500002335
+  },
+  {
+    "test": "TestClassFeaturesAccessorRefusals",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesAccessorRefusals$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2183031839999785
+  },
+  {
+    "test": "TestClassFeaturesStaticDeclarationsExecute",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesStaticDeclarationsExecute$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.41769445399995675
+  },
+  {
+    "test": "TestClassFeaturesStaticSoundness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesStaticSoundness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4197188059999917
+  },
+  {
+    "test": "TestClassFeaturesAccessorCaptureCycle",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesAccessorCaptureCycle$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06462174000012055
+  },
+  {
+    "test": "TestClassFeaturesNarrowedAccessor",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesNarrowedAccessor$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06423107399996297
+  },
+  {
+    "test": "TestClassFeaturesStaticParentCycle",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesStaticParentCycle$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06434413600004518
+  },
+  {
+    "test": "TestClassFeaturesStaticInterfaceCycle",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassFeaturesStaticInterfaceCycle$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06428301500000089
+  },
+  {
+    "test": "TestInheritanceRefusesUnsoundOverrides",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceRefusesUnsoundOverrides$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1644611240001268
+  },
+  {
+    "test": "TestInheritanceKeepsCheckerConstructorRules",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceKeepsCheckerConstructorRules$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11636537699996552
+  },
+  {
+    "test": "TestInheritanceAllowsSoundOverrides",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceAllowsSoundOverrides$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21605014099986874
+  },
+  {
+    "test": "TestInheritanceHasClassIdentity",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceHasClassIdentity$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21695827500002451
+  },
+  {
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceCycleFinderIncludesInheritedFields$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11840890000007676
+  },
+  {
+    "test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceRejectsUnsupportedConstructorShapes$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1649601070000699
+  },
+  {
+    "test": "TestInheritanceRefusesFalseNominalViews",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceRefusesFalseNominalViews$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21486244199991233
+  },
+  {
+    "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceRefusesThisBeforeSuperReturns$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06453419600006782
+  },
+  {
+    "test": "TestInheritanceKeepsNominalTupleDestructuring",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceKeepsNominalTupleDestructuring$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21510281600012604
+  },
+  {
+    "test": "TestInheritanceGenericMonomorphizations",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceGenericMonomorphizations$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21486932299990258
+  },
+  {
+    "test": "TestInheritanceRefusesGrowingGenericClasses",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceRefusesGrowingGenericClasses$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06462220599996726
+  },
+  {
+    "test": "TestInheritanceGenericSoundness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceGenericSoundness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11737755300009667
+  },
+  {
+    "test": "TestInheritanceConditionalThisRules",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceConditionalThisRules$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16705399099987517
+  },
+  {
+    "test": "TestInheritanceGenericViewsKeepNominalArguments",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceGenericViewsKeepNominalArguments$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06437755300021308
+  },
+  {
+    "test": "TestInheritanceGenericNominalConstraints",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceGenericNominalConstraints$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11797119899983954
+  },
+  {
+    "test": "TestInheritanceGenericFactoryLayouts",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceGenericFactoryLayouts$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21536548399990352
+  },
+  {
+    "test": "TestInheritanceNativeSignatureNeighbors",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceNativeSignatureNeighbors$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.41775445399980526
+  },
+  {
+    "test": "TestInheritanceNativeSignatureLimits",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritanceNativeSignatureLimits$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16616906200010817
+  },
+  {
+    "test": "TestClassArgumentsUseCheckerIdentity",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassArgumentsUseCheckerIdentity$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8211790829998336
+  },
+  {
+    "test": "TestClassStaticInitializerCallIsEmitted",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassStaticInitializerCallIsEmitted$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06415997099998094
+  },
+  {
+    "test": "TestClassStaticSideEffectMatchesNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassStaticSideEffectMatchesNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 8.915266590000101
+  },
+  {
+    "test": "TestClassWrongOutputIteratorReceiver",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassWrongOutputIteratorReceiver$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6739430149998498
+  },
+  {
+    "test": "TestClassWrongOutputKeysRepair",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassWrongOutputKeysRepair$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21845531500002835
+  },
+  {
+    "test": "TestClassWrongOutputPrivateRepair",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClassWrongOutputPrivateRepair$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2152096720001282
+  },
+  {
+    "test": "TestClockGenericReturnsT01Shapes",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClockGenericReturnsT01Shapes$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2156314219998876
+  },
+  {
+    "test": "TestClockGenericReturnsT01DeclinesBrandedPrimitives",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClockGenericReturnsT01DeclinesBrandedPrimitives$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11536294400002589
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsNullBeforeBody",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClockGenericReturnsT01RejectsNullBeforeBody$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11651842599985685
+  },
+  {
+    "test": "TestClockGenericReturnsT01RejectsIndexBeforeBody",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClockGenericReturnsT01RejectsIndexBeforeBody$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11449652700002844
+  },
+  {
+    "test": "TestConstructorCacheOneArgumentRemainsNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestConstructorCacheOneArgumentRemainsNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06456848900006662
+  },
+  {
+    "test": "TestDefiniteAssignmentUsesReadiness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestDefiniteAssignmentUsesReadiness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.7703643039999406
+  },
+  {
+    "test": "TestDefiniteAssignmentSoundNeighbors",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestDefiniteAssignmentSoundNeighbors$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.7712873039999977
+  },
+  {
+    "test": "TestNestedEmptyArrayElementKinds",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedEmptyArrayElementKinds$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21577848100014307
+  },
+  {
+    "test": "TestEmptyLiteralGenericReturnUsesSamePath",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEmptyLiteralGenericReturnUsesSamePath$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.0673341540000365
+  },
+  {
+    "test": "TestEntriesAllocationProof",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEntriesAllocationProof$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2167267909999282
+  },
+  {
+    "test": "TestEntriesRecordBoundaries",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEntriesRecordBoundaries$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11492721200011147
+  },
+  {
+    "test": "TestFlagEnumsOpen",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFlagEnumsOpen$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.5885361440000452
+  },
+  {
+    "test": "TestFlagEnumsDomain",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFlagEnumsDomain$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 2.693716568999889
+  },
+  {
+    "test": "TestEnumNeverDefault",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumNeverDefault$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21654439799999636
+  },
+  {
+    "test": "TestFlagEnumLiteralSpellings",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFlagEnumLiteralSpellings$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21747827800004416
+  },
+  {
+    "test": "TestFlagEnumMemberAliases",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFlagEnumMemberAliases$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2697063269999944
+  },
+  {
+    "test": "TestEnumNameEnumeration",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumNameEnumeration$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2157812620000641
+  },
+  {
+    "test": "TestFlagEnumInlineIteration",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFlagEnumInlineIteration$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2143952270000682
+  },
+  {
+    "test": "TestFlagEnumAliasBoundaries",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFlagEnumAliasBoundaries$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8163560600000892
+  },
+  {
+    "test": "TestEnumMemberValuesAndReverseNameMatchNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumMemberValuesAndReverseNameMatchNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.4714434360000723
+  },
+  {
+    "test": "TestEnumFlagProofsWithoutObservableLoweringEffect",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumFlagProofsWithoutObservableLoweringEffect$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11425183100004688
+  },
+  {
+    "test": "TestEnumReverseMappingUsesSingleSlot",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumReverseMappingUsesSingleSlot$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21511186900011126
+  },
+  {
+    "test": "TestEnumInitializationReach",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumInitializationReach$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.46721568499992827
+  },
+  {
+    "test": "TestEnumInitializationGraphMemo",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumInitializationGraphMemo$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11863125099989702
+  },
+  {
+    "test": "TestEnumNamespaceSharedCycle",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumNamespaceSharedCycle$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06416371199998139
+  },
+  {
+    "test": "TestNumericEnumsAreOpen",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNumericEnumsAreOpen$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 2.0855872659999477
+  },
+  {
+    "test": "TestStringEnumsStayClosed",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestStringEnumsStayClosed$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16583505199992032
+  },
+  {
+    "test": "TestNumericEnumNeverProof",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNumericEnumNeverProof$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4171382019999328
+  },
+  {
+    "test": "TestNumericEnumLiteralPromises",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNumericEnumLiteralPromises$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.41509965200020815
+  },
+  {
+    "test": "TestEnumSlotViews",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumSlotViews$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 3.0063801149999563
+  },
+  {
+    "test": "TestEnumSwitchExhaustiveness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumSwitchExhaustiveness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9217828589999044
+  },
+  {
+    "test": "TestEnumLimitsStayLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumLimitsStayLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5699848970000403
+  },
+  {
+    "test": "TestConstEnumErasesRuntimeObject",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestConstEnumErasesRuntimeObject$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2145094610000342
+  },
+  {
+    "test": "TestEnumIdentityAcrossModules",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEnumIdentityAcrossModules$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06715029400015737
+  },
+  {
+    "test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestReadonlyFieldsAreJudgedByTheirConstructorsWrites$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1649580230000538
+  },
+  {
+    "test": "TestParseIntMapUsesIndexRadix",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestParseIntMapUsesIndexRadix$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21724358300002677
+  },
+  {
+    "test": "TestFSOpenStringFlagsLower",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFSOpenStringFlagsLower$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5187063129999387
+  },
+  {
+    "test": "TestFSRemoveDefaultRetryDelayLowers",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFSRemoveDefaultRetryDelayLowers$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8301176350000787
+  },
+  {
+    "test": "TestFSExistsOperation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFSExistsOperation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9309899410000071
+  },
+  {
+    "test": "TestFSStatThrowsByDefault",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFSStatThrowsByDefault$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9488359080000919
+  },
+  {
+    "test": "TestFunctionValueUnionViewsStayNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestFunctionValueUnionViewsStayNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4009544560001359
+  },
+  {
+    "test": "TestGenericFunctionPolymorphicRecursionIsRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestGenericFunctionPolymorphicRecursionIsRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11556311100002858
+  },
+  {
+    "test": "TestGenericUnionFixtureHasSeparateInstances",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestGenericUnionFixtureHasSeparateInstances$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11772477499994238
+  },
+  {
+    "test": "TestGenericJSONUnionArrayIsNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestGenericJSONUnionArrayIsNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11960321400010798
+  },
+  {
+    "test": "TestOriginalCycleLedger",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOriginalCycleLedger$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.016157069999962914
+  },
+  {
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUndecidedCycleReadsUseReadyChecks$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 7.964213879999988
+  },
+  {
+    "test": "TestInputSpreadArgumentsAreNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInputSpreadArgumentsAreNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.32018081500018525
+  },
+  {
+    "test": "TestInputSpreadCoverage",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInputSpreadCoverage$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.5971225670000422
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceAdmission",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestDefaultTaggedInterfaceAdmission$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.132275633000063
+  },
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestDefaultTaggedInterfaceNeedsNoFlag$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2661392689999502
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorGapsAreExplicit$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.32254546200010736
+  },
+  {
+    "test": "TestIteratorViewsCannotHideReturn",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorViewsCannotHideReturn$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06569055800014212
+  },
+  {
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorViewsCannotEraseReceivers$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11801587000013569
+  },
+  {
+    "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorDestructuringDoesNotLieAboutExhaustion$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16776500900004976
+  },
+  {
+    "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestGeneratorsAreRefusedEvenWithoutYield$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5953793239998504
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLiteralMethodCapturesCannotMakeCycles$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2180273430001307
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLiteralMethodViewsDoNotLoseThis$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6876555490000555
+  },
+  {
+    "test": "TestLiteralMethodSignatureViewsDoNotLoseThis",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLiteralMethodSignatureViewsDoNotLoseThis$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9430253569998968
+  },
+  {
+    "test": "TestIteratorDescriptorReasons",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorDescriptorReasons$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.44500351299984686
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRepresentedMethodReplacementIsNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11802782099994147
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestDestructuredMethodsCannotLoadOwnSlots$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2674059649998526
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestGenericIteratorViewsPreserveNativeArguments$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.12416686400001709
+  },
+  {
+    "test": "TestIteratorMapperIndexHasNumberRepresentation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorMapperIndexHasNumberRepresentation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.068395996000163
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIteratorSymbolKeysAreNotStringKeys$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11599022899986267
+  },
+  {
+    "test": "TestLibraryLanguageBoundaries",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryLanguageBoundaries$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.41793361600002754
+  },
+  {
+    "test": "TestLibraryMapSetGapsStayRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryMapSetGapsStayRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.27458649699997295
+  },
+  {
+    "test": "TestLibraryMapSetIteratorCopyTypesRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryMapSetIteratorCopyTypesRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21599062599989338
+  },
+  {
+    "test": "TestLibraryMethodValues",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryMethodValues$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.5011118519998945
+  },
+  {
+    "test": "TestLibraryMethodValueBoundaries",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryMethodValueBoundaries$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5377577610001936
+  },
+  {
+    "test": "TestLibraryMethodValueSafety",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryMethodValueSafety$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5369693149998511
+  },
+  {
+    "test": "TestNodeBufferRefusals",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeBufferRefusals$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 3.9266806820000966
+  },
+  {
+    "test": "TestNodeFSFileOptionsBorrow",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileOptionsBorrow$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.2883962169998995
+  },
+  {
+    "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileDoesNotAuthorizeMutableWidening$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5294553310000083
+  },
+  {
+    "test": "TestNodeFSFileRefusesOptionEffects",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileRefusesOptionEffects$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5217790879999029
+  },
+  {
+    "test": "TestNodeFSFileRefusesVoidValues",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileRefusesVoidValues$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.7252572209999926
+  },
+  {
+    "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileRefusesPinnedUnsupportedOverloads$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 2.606136620000143
+  },
+  {
+    "test": "TestNodeFSFileNamespaceImport",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileNamespaceImport$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.5912798700001076
+  },
+  {
+    "test": "TestNodeFSFileQualifiedErrorType",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileQualifiedErrorType$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.7609775210000862
+  },
+  {
+    "test": "TestNodeFSFileKeepsDetachedMethodRefusal",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileKeepsDetachedMethodRefusal$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 2.2459597069998836
+  },
+  {
+    "test": "TestNodeFSFileBufferBorrow",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileBufferBorrow$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.6801276670000789
+  },
+  {
+    "test": "TestNodeFSFileScratchOptionsBorrow",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileScratchOptionsBorrow$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.8160512500001005
+  },
+  {
+    "test": "TestNodeFSFileScratchOverloadsAreNamed",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeFSFileScratchOverloadsAreNamed$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.7048639990000538
+  },
+  {
+    "test": "TestNodeLibraryNamesUnimplementedMembers",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeLibraryNamesUnimplementedMembers$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 3.536659312999973
+  },
+  {
+    "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.899893696999925
+  },
+  {
+    "test": "TestNodeLibraryDistinguishesReceiverOwners",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeLibraryDistinguishesReceiverOwners$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.3863068379998822
+  },
+  {
+    "test": "TestNodeLibraryQualifiedTypeAssertion",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNodeLibraryQualifiedTypeAssertion$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9444899039999655
+  },
+  {
+    "test": "TestObjectRefusalsExplainSoundness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestObjectRefusalsExplainSoundness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8957538250001562
+  },
+  {
+    "test": "TestObjectUnprovenShapesStayNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestObjectUnprovenShapesStayNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5959331029998793
+  },
+  {
+    "test": "TestLibraryRegexOffsetRequiresNoCaptures",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryRegexOffsetRequiresNoCaptures$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.44179944699999396
+  },
+  {
+    "test": "TestLibraryStringRefusals",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestLibraryStringRefusals$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.7195357020000301
+  },
+  {
+    "test": "TestConsoleLowersToWriteLine",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestConsoleLowersToWriteLine$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.12270103700006985
+  },
+  {
+    "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.4674438740000824
+  },
+  {
+    "test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestWhatZeroOneRefusesIsRefusedWithAFix$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.1420100220000222
+  },
+  {
+    "test": "TestAMutableLocationSeenWiderIsRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAMutableLocationSeenWiderIsRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.9367758260000301
+  },
+  {
+    "test": "TestAViewThatCantWriteIsNotRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAViewThatCantWriteIsNotRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 2.254064137000114
+  },
+  {
+    "test": "TestATupleSeenAsAnArrayIsNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestATupleSeenAsAnArrayIsNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8014802000000145
+  },
+  {
+    "test": "TestAMethodReadAsAValueIsRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAMethodReadAsAValueIsRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.1870328290001453
+  },
+  {
+    "test": "TestModuleNamespaceLimitsStayLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestModuleNamespaceLimitsStayLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.49865886099996715
+  },
+  {
+    "test": "TestModuleNamespaceInitializedReadProof",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestModuleNamespaceInitializedReadProof$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.14411955799982934
+  },
+  {
+    "test": "TestCallableNamespaceLimitsStayLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCallableNamespaceLimitsStayLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5244130309999946
+  },
+  {
+    "test": "TestCallableNamespaceReceiverStaysLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestCallableNamespaceReceiverStaysLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.0686505930000294
+  },
+  {
+    "test": "TestNamespaceClassEarlyConstructionStaysLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceClassEarlyConstructionStaysLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06459221699992668
+  },
+  {
+    "test": "TestNamespaceReceiverArrowInheritsScope",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceReceiverArrowInheritsScope$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06426826000006258
+  },
+  {
+    "test": "TestNamespaceAmbientHostInitialization",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceAmbientHostInitialization$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8820926119999513
+  },
+  {
+    "test": "TestNamespaceAmbientCwdInitialization",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceAmbientCwdInitialization$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.8720189259997824
+  },
+  {
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceAmbientContextsDoNotExecute$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2724342629999228
+  },
+  {
+    "test": "TestNamespaceCallGraphLinearWork",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceCallGraphLinearWork$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11496851200013225
+  },
+  {
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceCallGraphCycleUnion$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06476528999996845
+  },
+  {
+    "test": "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceEnumInitializationIndependentOfModuleAnalysis$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11485573400000249
+  },
+  {
+    "test": "TestParserFactoryBindingHoisting",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestParserFactoryBindingHoisting$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11455019999993965
+  },
+  {
+    "test": "TestMissingBindingSymbolHasStructuredLocation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMissingBindingSymbolHasStructuredLocation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11475839499985341
+  },
+  {
+    "test": "TestTscNamespaceDeclarationShapes",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTscNamespaceDeclarationShapes$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4676481330000115
+  },
+  {
+    "test": "TestNamespaceLimitsStayLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceLimitsStayLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.2943534990001808
+  },
+  {
+    "test": "TestNamespaceReceiverRefusal",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceReceiverRefusal$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11657629999990604
+  },
+  {
+    "test": "TestNamespaceTypesErase",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceTypesErase$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26531005299989374
+  },
+  {
+    "test": "TestTracingNamespaceEscapeStaysNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTracingNamespaceEscapeStaysNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11617091400012214
+  },
+  {
+    "test": "TestDebugNamespaceMergedCapabilities",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestDebugNamespaceMergedCapabilities$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3154260890000842
+  },
+  {
+    "test": "TestNamespaceReturnedAssignmentLimits",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceReturnedAssignmentLimits$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11716355299995485
+  },
+  {
+    "test": "TestNamespaceInitializationReachability",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceInitializationReachability$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21771491000004062
+  },
+  {
+    "test": "TestNamespaceClosedCallGraphEdges",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceClosedCallGraphEdges$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2736351060000288
+  },
+  {
+    "test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEmptyNeverMapCannotGainWritableInhabitants$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11476754699992853
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedFunctionGapsAreLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16494822699996803
+  },
+  {
+    "test": "TestNestedFunctionCycleIsRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedFunctionCycleIsRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11460769500013157
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedEnvironmentHasOneAllocationSite$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.524522423999997
+  },
+  {
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedEnvironmentCycleIncludesDisjointSlots$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06707636200007983
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedCapturedParametersAreOwned$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3667531730000064
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestClosedFrameInputRejectsMutation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3164433110000573
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedRebindingNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11550139099995249
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedCallbackCycleIsRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06889444300009018
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedBodylessDeclarationsAreLoud$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.12057648400013932
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNestedRestIsSupported$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2671178079999663
+  },
+  {
+    "test": "TestAdamicNullishAssertionsAreRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAdamicNullishAssertionsAreRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.3511987599999884
+  },
+  {
+    "test": "TestNonNullAssertionLowersToNullishPanic",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNonNullAssertionLowersToNullishPanic$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11775244399996154
+  },
+  {
+    "test": "TestNonNullAssertionOnPresentTypeIsErased",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNonNullAssertionOnPresentTypeIsErased$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11624208200009889
+  },
+  {
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalIndexingMapShapeRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11800815500009776
+  },
+  {
+    "test": "TestOptionalIndexingKeepsIndexSignaturesRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalIndexingKeepsIndexSignaturesRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06622939099997893
+  },
+  {
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalIndexingKeepsUnsupportedStorageNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2152131149998695
+  },
+  {
+    "test": "TestOptionalWideningCensus",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalWideningCensus$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.01620381299994733
+  },
+  {
+    "test": "TestOptionalWideningRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalWideningRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5170802220000041
+  },
+  {
+    "test": "TestOptionalWideningAllowed",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalWideningAllowed$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.17285141399997883
+  },
+  {
+    "test": "TestOptionalWideningSpreadOverwrite",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOptionalWideningSpreadOverwrite$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.13068400099996325
+  },
+  {
+    "test": "TestOverloadInferenceWitnesses",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOverloadInferenceWitnesses$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11475361799989514
+  },
+  {
+    "test": "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestAbfe962OverrideDefaultAddedRefusesNativeSignature$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11493550199998026
+  },
+  {
+    "test": "TestOverrideOptionalNumberRefusesNativeSignature",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOverrideOptionalNumberRefusesNativeSignature$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06431077100000948
+  },
+  {
+    "test": "TestOverrideOptionalRefusesNativeSignature",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestOverrideOptionalRefusesNativeSignature$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06432021899991014
+  },
+  {
+    "test": "TestParameterPropertiesSoundness",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestParameterPropertiesSoundness$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2648505149998073
+  },
+  {
+    "test": "TestParameterPropertyCheckerContracts",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestParameterPropertyCheckerContracts$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.31486793799990664
+  },
+  {
+    "test": "TestParameterPropertyCallbackReceiver",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestParameterPropertyCallbackReceiver$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06408624799996687
+  },
+  {
+    "test": "TestParameterPropertyValueMatchesNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestParameterPropertyValueMatchesNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.9777840259998811
+  },
+  {
+    "test": "TestPredicateSummaryParameterIndex",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateSummaryParameterIndex$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3289519030001884
+  },
+  {
+    "test": "TestPredicateOverloadRuntime",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateOverloadRuntime$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 11.470676059000198
+  },
+  {
+    "test": "TestIndirectPredicateOverloadIsPending",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIndirectPredicateOverloadIsPending$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.17004898599998342
+  },
+  {
+    "test": "TestPredicateBodyProof",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateBodyProof$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4162789750000684
+  },
+  {
+    "test": "TestConditionAssertionAdmission",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestConditionAssertionAdmission$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21603814499985674
+  },
+  {
+    "test": "TestPredicateCallbackContracts",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateCallbackContracts$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.46604265399992073
+  },
+  {
+    "test": "TestEveryNeedsCallbackEffects",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestEveryNeedsCallbackEffects$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06429772399997091
+  },
+  {
+    "test": "TestPredicateOverloadCallback",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateOverloadCallback$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2689496670000153
+  },
+  {
+    "test": "TestPredicateUseRegions",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateUseRegions$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3657216439999047
+  },
+  {
+    "test": "TestPredicateUsesBelongToEachCall",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateUsesBelongToEachCall$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06630658900007802
+  },
+  {
+    "test": "TestUnprovenPredicateReturnsAreRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUnprovenPredicateReturnsAreRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6714438120000068
+  },
+  {
+    "test": "TestPredicateBodiesAreProven",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPredicateBodiesAreProven$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4185868609999943
+  },
+  {
+    "test": "TestPrimitiveAdmittingSlotsUseBoxes",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPrimitiveAdmittingSlotsUseBoxes$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06427736599994205
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsObject",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsObject$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5659960519999458
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsArray",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsArray$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5697103649999917
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsTuple",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsTuple$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6748923910001849
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsNumber",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsNumber$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5163635730000351
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsString",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsString$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5719027200000255
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6191617700001188
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsClass",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsClass$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5188424160000977
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsMap",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsMap$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5160293160001856
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsSet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsSet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5680227739999282
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsFunction",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsFunction$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6682045229999858
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsError$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6166969280000103
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsUnion",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadsNeverLoadOwnFieldsUnion$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5677474849999271
+  },
+  {
+    "test": "TestInheritedLibraryReadReceiversEachHaveOneTest",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestInheritedLibraryReadReceiversEachHaveOneTest$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.016174069000044256
+  },
+  {
+    "test": "TestPrototypeMethodsAreRefusedWithReasons",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPrototypeMethodsAreRefusedWithReasons$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.41658019599981344
+  },
+  {
+    "test": "TestNullishPrototypeReadsAreRejectedByChecker",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNullishPrototypeReadsAreRejectedByChecker$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 1.0774816669998017
+  },
+  {
+    "test": "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPrototypeHazardsBehindObjectViewsAreNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.46765048800011755
+  },
+  {
+    "test": "TestUnrepresentedPrototypeCallsAreNotYet",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUnrepresentedPrototypeCallsAreNotYet$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.31521049800016954
+  },
+  {
+    "test": "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestIsPrototypeOfReadsExplainThePrototypeRefusal$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.1151507639999636
+  },
+  {
+    "test": "TestProvenRelationsRefuse",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestProvenRelationsRefuse$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.3708416419999594
+  },
+  {
+    "test": "TestProvenRelationsErase",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestProvenRelationsErase$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6676096420001159
+  },
+  {
+    "test": "TestReadinessElisionRequiresDominatingAssignment",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestReadinessElisionRequiresDominatingAssignment$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6189147939999202
+  },
+  {
+    "test": "TestRegExpNativeRefusals",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRegExpNativeRefusals$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21483589199988273
+  },
+  {
+    "test": "TestRegExpSourceNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRegExpSourceNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06417278100002477
+  },
+  {
+    "test": "TestRegExpUnicodeClassSourceAgreesWithNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRegExpUnicodeClassSourceAgreesWithNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5703991340001267
+  },
+  {
+    "test": "TestRegExpSlashClassSourceAgreesWithNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRegExpSlashClassSourceAgreesWithNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.46828935100006674
+  },
+  {
+    "test": "TestRegExpEscapedSlashSourceAgreesWithNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRegExpEscapedSlashSourceAgreesWithNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4746321980001085
+  },
+  {
+    "test": "TestRepresentationClockSourceCheckedTypes",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestRepresentationClockSourceCheckedTypes$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06444923399999425
+  },
+  {
+    "test": "TestPrivateAndPublicStaticsAgreeWithNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestPrivateAndPublicStaticsAgreeWithNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.2177535060000082
+  },
+  {
+    "test": "TestNamespaceFactoryBindingsAgreeWithNode",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestNamespaceFactoryBindingsAgreeWithNode$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21461120699996172
+  },
+  {
+    "test": "TestReadinessErrorIncludesReceiverExpression",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestReadinessErrorIncludesReceiverExpression$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11448625399998491
+  },
+  {
+    "test": "TestSuppressionDirectivesAreRefused",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestSuppressionDirectivesAreRefused$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6185258870000325
+  },
+  {
+    "test": "TestSuppressionDirectiveSoundNeighbors",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestSuppressionDirectiveSoundNeighbors$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26600253900005555
+  },
+  {
+    "test": "TestSwitchConditionalBreakFallsThrough",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestSwitchConditionalBreakFallsThrough$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21462475199996334
+  },
+  {
+    "test": "TestSwitchEmptyElseFallsThrough",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestSwitchEmptyElseFallsThrough$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21661361300016324
+  },
+  {
+    "test": "TestSwitchEmptyCaseFallsThrough",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestSwitchEmptyCaseFallsThrough$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.21459169599984307
+  },
+  {
+    "test": "TestSwitchEmptyBlockFallsThrough",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestSwitchEmptyBlockFallsThrough$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26457936999986487
+  },
+  {
+    "test": "TestTasteRepresentationLimitsStayExplicit",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTasteRepresentationLimitsStayExplicit$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.26560225100001844
+  },
+  {
+    "test": "TestTypedArraysLower",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTypedArraysLower$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6692433079999773
+  },
+  {
+    "test": "TestTypedArrayGaps",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTypedArrayGaps$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4214933949999704
+  },
+  {
+    "test": "TestTypedArrayViewsCannotChangeRepresentation",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTypedArrayViewsCannotChangeRepresentation$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16437884099991606
+  },
+  {
+    "test": "TestTypedArrayFromArray",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTypedArrayFromArray$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.5197822769998766
+  },
+  {
+    "test": "TestTypedArrayFromEmptyArray",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestTypedArrayFromEmptyArray$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.4678862760001721
+  },
+  {
+    "test": "TestUnknownReflectionRefusals",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUnknownReflectionRefusals$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.6229044169999725
+  },
+  {
+    "test": "TestViewObjectContractsAreAvailableToEraser",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestViewObjectContractsAreAvailableToEraser$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11460579100003088
+  },
+  {
+    "test": "TestViewObjectWritesNeedSourceCertificate",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestViewObjectWritesNeedSourceCertificate$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.11655792299984569
+  },
+  {
+    "test": "TestMixedUnionContractGraph",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedUnionContractGraph$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.16509193399997457
+  },
+  {
+    "test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedUnionContractFailureDoesNotCertifyRetry$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06421083500003988
+  },
+  {
+    "test": "TestMixedUnionContractUnknownMemberFails",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedUnionContractUnknownMemberFails$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06405040899994674
+  },
+  {
+    "test": "TestMixedUnionContractRecursiveMember",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedUnionContractRecursiveMember$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06416070000000218
+  },
+  {
+    "test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedUnionContractPhantomBrandUsesPrimitiveBase$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06424598099988543
+  },
+  {
+    "test": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestMixedUnionContractPhantomVoidIsUndefined$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.06446030500001143
+  },
+  {
+    "test": "TestUntaggedViewMemberTags",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUntaggedViewMemberTags$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.01585165100004815
+  },
+  {
+    "test": "TestUntaggedViewStructuralFallback",
+    "args": [
+      "/tmp/adamic-gate/loom-cycle-lower.test",
+      "-test.run=^TestUntaggedViewStructuralFallback$",
+      "-test.count=1",
+      "-test.timeout=60s",
+      "-test.parallel=4",
+      "-test.v"
+    ],
+    "exit": 0,
+    "seconds": 0.0157496029999038
+  }
+]

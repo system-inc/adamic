@@ -1,0 +1,93 @@
+=== RUN   TestFlagEnumsOpen
+=== PAUSE TestFlagEnumsOpen
+=== CONT  TestFlagEnumsOpen
+=== RUN   TestFlagEnumsOpen/complement
+=== PAUSE TestFlagEnumsOpen/complement
+=== RUN   TestFlagEnumsOpen/arithmetic
+=== PAUSE TestFlagEnumsOpen/arithmetic
+=== RUN   TestFlagEnumsOpen/increment
+=== PAUSE TestFlagEnumsOpen/increment
+=== RUN   TestFlagEnumsOpen/shift_update
+=== PAUSE TestFlagEnumsOpen/shift_update
+=== RUN   TestFlagEnumsOpen/shift_result
+=== PAUSE TestFlagEnumsOpen/shift_result
+=== RUN   TestFlagEnumsOpen/sign_bit
+=== PAUSE TestFlagEnumsOpen/sign_bit
+=== RUN   TestFlagEnumsOpen/implicit
+=== PAUSE TestFlagEnumsOpen/implicit
+=== RUN   TestFlagEnumsOpen/numeric_shape
+=== PAUSE TestFlagEnumsOpen/numeric_shape
+=== RUN   TestFlagEnumsOpen/arithmetic_shape
+=== PAUSE TestFlagEnumsOpen/arithmetic_shape
+=== RUN   TestFlagEnumsOpen/switch_default
+=== PAUSE TestFlagEnumsOpen/switch_default
+=== RUN   TestFlagEnumsOpen/cross_enum_left
+=== PAUSE TestFlagEnumsOpen/cross_enum_left
+=== RUN   TestFlagEnumsOpen/cross_enum_right
+=== PAUSE TestFlagEnumsOpen/cross_enum_right
+=== RUN   TestFlagEnumsOpen/or_number
+=== PAUSE TestFlagEnumsOpen/or_number
+=== RUN   TestFlagEnumsOpen/xor_number
+=== PAUSE TestFlagEnumsOpen/xor_number
+=== RUN   TestFlagEnumsOpen/and_numbers
+=== PAUSE TestFlagEnumsOpen/and_numbers
+=== RUN   TestFlagEnumsOpen/narrowed_member
+=== PAUSE TestFlagEnumsOpen/narrowed_member
+=== RUN   TestFlagEnumsOpen/compound_or_number
+=== PAUSE TestFlagEnumsOpen/compound_or_number
+=== RUN   TestFlagEnumsOpen/compound_xor_number
+=== PAUSE TestFlagEnumsOpen/compound_xor_number
+=== RUN   TestFlagEnumsOpen/mutable_alias
+=== PAUSE TestFlagEnumsOpen/mutable_alias
+=== RUN   TestFlagEnumsOpen/bare_number
+=== PAUSE TestFlagEnumsOpen/bare_number
+=== RUN   TestFlagEnumsOpen/member_slot
+=== PAUSE TestFlagEnumsOpen/member_slot
+=== RUN   TestFlagEnumsOpen/array_view
+=== PAUSE TestFlagEnumsOpen/array_view
+=== CONT  TestFlagEnumsOpen/complement
+=== CONT  TestFlagEnumsOpen/cross_enum_right
+=== CONT  TestFlagEnumsOpen/cross_enum_left
+=== CONT  TestFlagEnumsOpen/implicit
+=== CONT  TestFlagEnumsOpen/sign_bit
+=== CONT  TestFlagEnumsOpen/shift_result
+=== CONT  TestFlagEnumsOpen/shift_update
+=== CONT  TestFlagEnumsOpen/increment
+=== CONT  TestFlagEnumsOpen/arithmetic
+=== CONT  TestFlagEnumsOpen/array_view
+=== CONT  TestFlagEnumsOpen/member_slot
+=== CONT  TestFlagEnumsOpen/bare_number
+=== CONT  TestFlagEnumsOpen/mutable_alias
+=== CONT  TestFlagEnumsOpen/compound_xor_number
+=== CONT  TestFlagEnumsOpen/compound_or_number
+=== CONT  TestFlagEnumsOpen/narrowed_member
+=== CONT  TestFlagEnumsOpen/and_numbers
+=== CONT  TestFlagEnumsOpen/xor_number
+=== CONT  TestFlagEnumsOpen/or_number
+=== CONT  TestFlagEnumsOpen/switch_default
+=== CONT  TestFlagEnumsOpen/arithmetic_shape
+=== CONT  TestFlagEnumsOpen/numeric_shape
+--- PASS: TestFlagEnumsOpen (0.00s)
+    --- PASS: TestFlagEnumsOpen/cross_enum_left (0.28s)
+    --- PASS: TestFlagEnumsOpen/cross_enum_right (0.29s)
+    --- PASS: TestFlagEnumsOpen/complement (0.30s)
+    --- PASS: TestFlagEnumsOpen/implicit (0.31s)
+    --- PASS: TestFlagEnumsOpen/shift_update (0.34s)
+    --- PASS: TestFlagEnumsOpen/increment (0.33s)
+    --- PASS: TestFlagEnumsOpen/sign_bit (0.39s)
+    --- PASS: TestFlagEnumsOpen/shift_result (0.38s)
+    --- PASS: TestFlagEnumsOpen/member_slot (0.10s)
+    --- PASS: TestFlagEnumsOpen/arithmetic (0.28s)
+    --- PASS: TestFlagEnumsOpen/array_view (0.31s)
+    --- PASS: TestFlagEnumsOpen/bare_number (0.30s)
+    --- PASS: TestFlagEnumsOpen/mutable_alias (0.23s)
+    --- PASS: TestFlagEnumsOpen/narrowed_member (0.07s)
+    --- PASS: TestFlagEnumsOpen/compound_xor_number (0.27s)
+    --- PASS: TestFlagEnumsOpen/and_numbers (0.21s)
+    --- PASS: TestFlagEnumsOpen/compound_or_number (0.30s)
+    --- PASS: TestFlagEnumsOpen/xor_number (0.25s)
+    --- PASS: TestFlagEnumsOpen/or_number (0.24s)
+    --- PASS: TestFlagEnumsOpen/switch_default (0.24s)
+    --- PASS: TestFlagEnumsOpen/arithmetic_shape (0.26s)
+    --- PASS: TestFlagEnumsOpen/numeric_shape (0.25s)
+PASS

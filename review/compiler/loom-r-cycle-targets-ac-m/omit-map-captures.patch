@@ -1,0 +1,11 @@
+--- internal/lower/cycles.go
++++ internal/lower/cycles.go
+@@ -495,7 +495,7 @@
+ 			if node.slot == "" {
+ 				return true
+ 			}
+-			targets := f.l.result.StoredClosureTargets(node.slot)
++			if node.slot == "map" { continue }; targets := f.l.result.StoredClosureTargets(node.slot)
+ 			if targets.Unknown {
+ 				return true
+ 			}

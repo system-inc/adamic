@@ -1,0 +1,33 @@
+=== RUN   TestClockGenericReturnsT01Shapes
+=== PAUSE TestClockGenericReturnsT01Shapes
+=== CONT  TestClockGenericReturnsT01Shapes
+=== RUN   TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== RUN   TestClockGenericReturnsT01Shapes/callable
+=== PAUSE TestClockGenericReturnsT01Shapes/callable
+=== RUN   TestClockGenericReturnsT01Shapes/constructable
+=== PAUSE TestClockGenericReturnsT01Shapes/constructable
+=== RUN   TestClockGenericReturnsT01Shapes/indexed
+=== PAUSE TestClockGenericReturnsT01Shapes/indexed
+=== RUN   TestClockGenericReturnsT01Shapes/container_intersection
+=== PAUSE TestClockGenericReturnsT01Shapes/container_intersection
+=== RUN   TestClockGenericReturnsT01Shapes/nested_callable
+=== PAUSE TestClockGenericReturnsT01Shapes/nested_callable
+=== RUN   TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== PAUSE TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestClockGenericReturnsT01Shapes/nested_readonly_fields
+=== CONT  TestClockGenericReturnsT01Shapes/container_intersection
+=== CONT  TestClockGenericReturnsT01Shapes/indexed
+=== CONT  TestClockGenericReturnsT01Shapes/constructable
+=== CONT  TestClockGenericReturnsT01Shapes/callable
+=== CONT  TestClockGenericReturnsT01Shapes/null_remains_distinct
+=== CONT  TestClockGenericReturnsT01Shapes/nested_callable
+--- PASS: TestClockGenericReturnsT01Shapes (0.00s)
+    --- PASS: TestClockGenericReturnsT01Shapes/constructable (0.09s)
+    --- PASS: TestClockGenericReturnsT01Shapes/indexed (0.09s)
+    --- PASS: TestClockGenericReturnsT01Shapes/container_intersection (0.11s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_readonly_fields (0.13s)
+    --- PASS: TestClockGenericReturnsT01Shapes/null_remains_distinct (0.07s)
+    --- PASS: TestClockGenericReturnsT01Shapes/nested_callable (0.06s)
+    --- PASS: TestClockGenericReturnsT01Shapes/callable (0.08s)
+PASS

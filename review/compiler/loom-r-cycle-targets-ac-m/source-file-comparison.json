@@ -1,0 +1,12 @@
+{
+  "source": "b1d42ea3917096b83841c570f05185cbe9a0b337",
+  "base": "67733635b0252eb9d3bb3645c72262c7b18361e1",
+  "source_paths_except_counts": 530,
+  "paths_whose_contents_differ_from_source": [
+    "internal/ir/call_targets.go",
+    "internal/ir/call_targets_test.go",
+    "internal/ir/ir.go",
+    "internal/lower/cycles.go"
+  ],
+  "explanation": "Main infrastructure preserved in ir.go and cycles.go; shared Effects conflict resolution in call_targets.go; added regression in call_targets_test.go. Original source review evidence and all Adamic fixture bodies remain unchanged."
+}

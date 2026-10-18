@@ -1,0 +1,310 @@
+[
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsKnownCallerDoesNotHideUnknownCaller",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsFollowParametersReturnsAndMapValues",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "result": "pass",
+    "seconds": 0.04
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientContextsDoNotExecute",
+    "result": "pass",
+    "seconds": 0.09
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientHostInitialization",
+    "result": "pass",
+    "seconds": 0.93
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceAmbientCwdInitialization",
+    "result": "pass",
+    "seconds": 1.1
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecordedTable",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+    "test": "TestEveryTestIsParallelOrSaysWhy",
+    "result": "pass",
+    "seconds": 0.26
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusSnapshotNext",
+    "result": "pass",
+    "seconds": 3.17
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClosureUnionNext",
+    "result": "pass",
+    "seconds": 3.18
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClosureNumberNext",
+    "result": "pass",
+    "seconds": 0.19
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusHigherCallbackPairMethods",
+    "result": "pass",
+    "seconds": 0.2
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestRuntimeSetsAreEachUsed",
+    "result": "pass",
+    "seconds": 1.18
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusCallbackPairMethods",
+    "result": "pass",
+    "seconds": 0.13
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusThrowingObject",
+    "result": "pass",
+    "seconds": 5.63
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUpdateCommentFunction",
+    "result": "pass",
+    "seconds": 5.65
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusPrimaryFunction",
+    "result": "pass",
+    "seconds": 0.99
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusBinaryInline",
+    "result": "pass",
+    "seconds": 3.1
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOptionalTypeFunction",
+    "result": "pass",
+    "seconds": 1.01
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOptionalCommentFunction",
+    "result": "pass",
+    "seconds": 1.1
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUpdateTypeFunction",
+    "result": "pass",
+    "seconds": 1.12
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUnaryNodeFunction",
+    "result": "pass",
+    "seconds": 0.86
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUpdateNodeFunction",
+    "result": "pass",
+    "seconds": 0.72
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOptionalBooleanFunction",
+    "result": "pass",
+    "seconds": 0.75
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClassMap",
+    "result": "pass",
+    "seconds": 0.78
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusLazyObject",
+    "result": "pass",
+    "seconds": 0.26
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusClosureNumberMethods",
+    "result": "pass",
+    "seconds": 0.25
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleJoined",
+    "result": "pass",
+    "seconds": 0.23
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleMap",
+    "result": "pass",
+    "seconds": 0.28
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusOverloadedFunction",
+    "result": "pass",
+    "seconds": 0.22
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleDirect",
+    "result": "pass",
+    "seconds": 0.19
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusUnaryFunction",
+    "result": "pass",
+    "seconds": 0.78
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestGettersCensusBinaryFunction",
+    "result": "pass",
+    "seconds": 0.67
+  },
+  {
+    "log": "focused.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureCycleAmbientCwd",
+    "result": "pass",
+    "seconds": 3.02
+  },
+  {
+    "log": "readers.log",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReaders",
+    "result": "pass",
+    "seconds": 3.21
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestRegexOperandsStillJudgeCycleWrites",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestBorrowChainTargets",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestDebuggerHasNoFlowInstruction",
+    "result": "pass",
+    "seconds": 0
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestFlowCorpusUnitsCoverEveryProgram",
+    "result": "pass",
+    "seconds": 0.01
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionSelectsNumber",
+    "result": "pass",
+    "seconds": 0.07
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCallTargetsElementBorrowPlan",
+    "result": "pass",
+    "seconds": 0.06
+  },
+  {
+    "log": "consumers.log",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLoopCallCoverage",
+    "result": "pass",
+    "seconds": 0.09
+  }
+]

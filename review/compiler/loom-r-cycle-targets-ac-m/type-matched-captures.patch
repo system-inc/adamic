@@ -1,0 +1,44 @@
+--- internal/lower/cycles.go
++++ internal/lower/cycles.go
+@@ -438,18 +438,6 @@
+ 		}
+ 		visited[node] = true
+ 		if node.cell != 0 {
+-			if f.l.result.Locals[node.cell-1].Type == ir.Closure {
+-				targets := f.l.result.ValueClosureTargets(ir.Read{Local: node.cell - 1, Of: ir.Closure})
+-				if targets.Unknown {
+-					return true
+-				}
+-				for _, function := range targets.Functions {
+-					for _, local := range f.l.result.Functions[function].Environment {
+-						queue = append(queue, cycleNode{cell: local + 1})
+-					}
+-				}
+-				continue
+-			}
+ 			if proven := f.l.localTypes[node.cell-1]; proven != nil {
+ 				queue = append(queue, cycleNode{proven: proven})
+ 			}
+@@ -490,17 +478,11 @@
+ 					}
+ 				}
+ 			}
+-			// Stored values and calls use the same producer graph. A type alone
+-			// does not bound a function value's origin.
+-			if node.slot == "" {
+-				return true
+-			}
+-			targets := f.l.result.StoredClosureTargets(node.slot)
+-			if targets.Unknown {
+-				return true
+-			}
+-			for _, function := range targets.Functions {
+-				for _, local := range f.l.result.Functions[function].Environment {
++			for _, closure := range f.l.closureRecords {
++				if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
++					continue
++				}
++				for _, local := range f.l.result.Functions[closure.function].Environment {
+ 					queue = append(queue, cycleNode{cell: local + 1})
+ 				}
+ 			}

@@ -1,0 +1,17 @@
+=== RUN   TestEntriesRecordBoundaries
+=== PAUSE TestEntriesRecordBoundaries
+=== CONT  TestEntriesRecordBoundaries
+=== RUN   TestEntriesRecordBoundaries/spread_into_record_storage
+=== PAUSE TestEntriesRecordBoundaries/spread_into_record_storage
+=== RUN   TestEntriesRecordBoundaries/closed_const_literal_origin
+=== PAUSE TestEntriesRecordBoundaries/closed_const_literal_origin
+=== RUN   TestEntriesRecordBoundaries/indexed_record_field_read
+=== PAUSE TestEntriesRecordBoundaries/indexed_record_field_read
+=== CONT  TestEntriesRecordBoundaries/spread_into_record_storage
+=== CONT  TestEntriesRecordBoundaries/indexed_record_field_read
+=== CONT  TestEntriesRecordBoundaries/closed_const_literal_origin
+--- PASS: TestEntriesRecordBoundaries (0.00s)
+    --- PASS: TestEntriesRecordBoundaries/closed_const_literal_origin (0.08s)
+    --- PASS: TestEntriesRecordBoundaries/spread_into_record_storage (0.09s)
+    --- PASS: TestEntriesRecordBoundaries/indexed_record_field_read (0.09s)
+PASS

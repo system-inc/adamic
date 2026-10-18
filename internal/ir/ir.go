@@ -10,6 +10,7 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	closureTargets    *closureFacts
 	ViewOrigins       []Expression
 	ViewContracts     []ViewContract
 	ViewContractTypes SortedMap[int, ViewContractID]

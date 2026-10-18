@@ -1,0 +1,33 @@
+=== RUN   TestInputSpreadArgumentsAreNotYet
+=== PAUSE TestInputSpreadArgumentsAreNotYet
+=== CONT  TestInputSpreadArgumentsAreNotYet
+=== RUN   TestInputSpreadArgumentsAreNotYet/writeTextFile
+=== PAUSE TestInputSpreadArgumentsAreNotYet/writeTextFile
+=== RUN   TestInputSpreadArgumentsAreNotYet/utf8Length
+=== PAUSE TestInputSpreadArgumentsAreNotYet/utf8Length
+=== RUN   TestInputSpreadArgumentsAreNotYet/utf8At
+=== PAUSE TestInputSpreadArgumentsAreNotYet/utf8At
+=== RUN   TestInputSpreadArgumentsAreNotYet/readDirectory
+=== PAUSE TestInputSpreadArgumentsAreNotYet/readDirectory
+=== RUN   TestInputSpreadArgumentsAreNotYet/fileStatus
+=== PAUSE TestInputSpreadArgumentsAreNotYet/fileStatus
+=== RUN   TestInputSpreadArgumentsAreNotYet/programArguments
+=== PAUSE TestInputSpreadArgumentsAreNotYet/programArguments
+=== RUN   TestInputSpreadArgumentsAreNotYet/readTextFile
+=== PAUSE TestInputSpreadArgumentsAreNotYet/readTextFile
+=== CONT  TestInputSpreadArgumentsAreNotYet/writeTextFile
+=== CONT  TestInputSpreadArgumentsAreNotYet/readTextFile
+=== CONT  TestInputSpreadArgumentsAreNotYet/utf8At
+=== CONT  TestInputSpreadArgumentsAreNotYet/fileStatus
+=== CONT  TestInputSpreadArgumentsAreNotYet/utf8Length
+=== CONT  TestInputSpreadArgumentsAreNotYet/readDirectory
+=== CONT  TestInputSpreadArgumentsAreNotYet/programArguments
+--- PASS: TestInputSpreadArgumentsAreNotYet (0.00s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/utf8At (0.14s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/fileStatus (0.18s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/writeTextFile (0.18s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/readTextFile (0.18s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/utf8Length (0.10s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/programArguments (0.11s)
+    --- PASS: TestInputSpreadArgumentsAreNotYet/readDirectory (0.13s)
+PASS

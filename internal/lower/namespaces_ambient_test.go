@@ -9,8 +9,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 )
 
-// Test preflight separately from unsupported host member lowering. Neither host
-// namespace has an executable body in the checked module graph.
+// Test preflight separately from unsupported host member lowering. The host
+// namespace has no executable body in the checked module graph.
 func TestNamespaceAmbientHostInitialization(t *testing.T) {
 	t.Parallel()
 	// An executable namespace read before initialization must still be rejected.
@@ -20,30 +20,32 @@ func TestNamespaceAmbientHostInitialization(t *testing.T) {
 	if !errors.As(err, &stop) || !strings.Contains(err.Error(), "before runtime initialization") {
 		t.Fatalf("runtime namespace initialization guard lost: %v", err)
 	}
-	for _, name := range []string{"realpath", "cwd"} {
-		t.Run(name, func(t *testing.T) {
-			source, err := os.ReadFile("../../stage3/namespace-init-sys/" + name + ".a")
-			if err != nil {
-				t.Fatal(err)
-			}
-			graph, _ := namespaceGraphForTest(t, string(source))
-			if err := graph.lowering.namespaceInitialization(graph.lowering.program.Files()); err != nil {
-				t.Fatalf("ambient host declaration acquired pending initialization: %v", err)
-			}
-			// Unsupported hosts must still have their own named diagnostic.
-			_, err = lowerSource(t, string(source))
-			var refused *Refused
-			if name == "cwd" && errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/cycle-capable") {
-				// The area's captured-callback ownership rule remains stricter than the host topic.
-				t.Logf("independent ownership refusal: %v", err)
-				return
-			}
-			if err == nil || strings.Contains(err.Error(), "before runtime initialization") || !strings.Contains(err.Error(), "node:") {
-				t.Fatalf("expected independent host member NotYet, got %v", err)
-			}
-			t.Logf("independent lowering stop: %v", err)
-		})
+	source := namespaceAmbientHostSource(t, "realpath")
+	_, err = lowerSource(t, source)
+	if err == nil || strings.Contains(err.Error(), "before runtime initialization") || !strings.Contains(err.Error(), "node:") {
+		t.Fatalf("expected independent host member NotYet, got %v", err)
 	}
+	t.Logf("independent lowering stop: %v", err)
+}
+
+func TestNamespaceAmbientCwdInitialization(t *testing.T) {
+	t.Parallel()
+	// Closure targets prove the callback has no captured back-reference. The
+	// host call is supported, so the old cycle refusal is now stale.
+	lowersAndAgreesWithNode(t, namespaceAmbientHostSource(t, "cwd"))
+}
+
+func namespaceAmbientHostSource(t *testing.T, name string) string {
+	t.Helper()
+	source, err := os.ReadFile("../../stage3/namespace-init-sys/" + name + ".a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	graph, _ := namespaceGraphForTest(t, string(source))
+	if err := graph.lowering.namespaceInitialization(graph.lowering.program.Files()); err != nil {
+		t.Fatalf("ambient host declaration acquired pending initialization: %v", err)
+	}
+	return string(source)
 }
 
 func TestNamespaceAmbientContextsDoNotExecute(t *testing.T) {

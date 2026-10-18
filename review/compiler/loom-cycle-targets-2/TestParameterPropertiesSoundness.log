@@ -1,0 +1,17 @@
+=== RUN   TestParameterPropertiesSoundness
+=== PAUSE TestParameterPropertiesSoundness
+=== CONT  TestParameterPropertiesSoundness
+=== RUN   TestParameterPropertiesSoundness/readonly_view
+=== RUN   TestParameterPropertiesSoundness/mutable_override
+=== RUN   TestParameterPropertiesSoundness/readonly_override
+=== RUN   TestParameterPropertiesSoundness/inherited_initializer
+=== RUN   TestParameterPropertiesSoundness/early_default
+=== RUN   TestParameterPropertiesSoundness/field_initializer
+--- PASS: TestParameterPropertiesSoundness (0.23s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_view (0.05s)
+    --- PASS: TestParameterPropertiesSoundness/mutable_override (0.04s)
+    --- PASS: TestParameterPropertiesSoundness/readonly_override (0.03s)
+    --- PASS: TestParameterPropertiesSoundness/inherited_initializer (0.03s)
+    --- PASS: TestParameterPropertiesSoundness/early_default (0.03s)
+    --- PASS: TestParameterPropertiesSoundness/field_initializer (0.03s)
+PASS

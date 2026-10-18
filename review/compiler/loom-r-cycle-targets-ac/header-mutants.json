@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "removed-header",
+    "path": "internal/oracle/testdata/cycle_closure_targets_refused/direct.a",
+    "caught": true,
+    "predicate_exit": 1,
+    "compiler_diagnostics": "captured from the real after-header compiler run, as in the README"
+  },
+  {
+    "mutant": "wrong-reason",
+    "path": "internal/oracle/testdata/cycle_closure_targets_refused/direct.a",
+    "caught": true,
+    "predicate_exit": 1,
+    "compiler_diagnostics": "captured from the real after-header compiler run, as in the README"
+  }
+]

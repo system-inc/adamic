@@ -1,0 +1,117 @@
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+--- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined (0.36s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function (0.37s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes (0.44s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes (0.44s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object (0.17s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined (0.12s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.28s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union (0.22s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined (0.17s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (0.17s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only (0.21s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (0.24s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only (0.19s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only (0.19s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback (0.19s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback (0.21s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array (0.20s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never (0.19s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples (0.19s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value (0.13s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?. (0.10s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array (0.10s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go (0.10s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only (0.07s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error (0.07s)
+PASS

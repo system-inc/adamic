@@ -1,0 +1,19 @@
+--- main/internal/oracle/testdata/miscompile_2a/controls.a
++++ recut/internal/oracle/testdata/miscompile_2a/controls.a
+@@ -359,7 +359,7 @@
+ 	adamic_object * adamic_temporary_59 = adamic_function_10_PlainIterator___adamic_symbol_iterator(adamic_local_21_iterable);
+ 	adamic_object * adamic_local_22_iterator = adamic_temporary_59;
+ 	bool adamic_local_23_iterator_close_needed = false;
+-	adamic_closure * adamic_temporary_60 = adamic_retain(((adamic_closure *)(&adamic_local_22_iterator->slots[0])->reference));
++	adamic_closure * adamic_temporary_60 = ((adamic_closure *)(&adamic_local_22_iterator->slots[0])->reference);
+ 	adamic_closure * adamic_local_24_iterator_next = adamic_temporary_60;
+ 	adamic_array * adamic_temporary_61 = adamic_array_new(0, false);
+ 	adamic_array * adamic_local_25_collected = adamic_temporary_61;
+@@ -389,7 +389,6 @@
+ 	}
+ 	adamic_array * adamic_temporary_71 = adamic_retain(adamic_local_25_collected);
+ 	adamic_release(adamic_local_25_collected);
+-	adamic_release(adamic_local_24_iterator_next);
+ 	adamic_release(adamic_local_22_iterator);
+ 	return adamic_temporary_71;
+ 	adamic_unreachable();

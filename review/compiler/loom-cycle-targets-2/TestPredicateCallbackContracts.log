@@ -1,0 +1,37 @@
+=== RUN   TestPredicateCallbackContracts
+=== PAUSE TestPredicateCallbackContracts
+=== CONT  TestPredicateCallbackContracts
+=== RUN   TestPredicateCallbackContracts/inferred_arrow
+=== PAUSE TestPredicateCallbackContracts/inferred_arrow
+=== RUN   TestPredicateCallbackContracts/inferred_opaque
+=== PAUSE TestPredicateCallbackContracts/inferred_opaque
+=== RUN   TestPredicateCallbackContracts/inferred_named
+=== PAUSE TestPredicateCallbackContracts/inferred_named
+=== RUN   TestPredicateCallbackContracts/arrow
+=== PAUSE TestPredicateCallbackContracts/arrow
+=== RUN   TestPredicateCallbackContracts/named
+=== PAUSE TestPredicateCallbackContracts/named
+=== RUN   TestPredicateCallbackContracts/unproven
+=== PAUSE TestPredicateCallbackContracts/unproven
+=== RUN   TestPredicateCallbackContracts/lying
+=== PAUSE TestPredicateCallbackContracts/lying
+=== RUN   TestPredicateCallbackContracts/reassigned
+=== PAUSE TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/inferred_arrow
+=== CONT  TestPredicateCallbackContracts/named
+=== CONT  TestPredicateCallbackContracts/inferred_named
+=== CONT  TestPredicateCallbackContracts/lying
+=== CONT  TestPredicateCallbackContracts/reassigned
+=== CONT  TestPredicateCallbackContracts/arrow
+=== CONT  TestPredicateCallbackContracts/unproven
+=== CONT  TestPredicateCallbackContracts/inferred_opaque
+--- PASS: TestPredicateCallbackContracts (0.00s)
+    --- PASS: TestPredicateCallbackContracts/lying (0.12s)
+    --- PASS: TestPredicateCallbackContracts/reassigned (0.06s)
+    --- PASS: TestPredicateCallbackContracts/inferred_arrow (0.29s)
+    --- PASS: TestPredicateCallbackContracts/named (0.29s)
+    --- PASS: TestPredicateCallbackContracts/inferred_named (0.32s)
+    --- PASS: TestPredicateCallbackContracts/unproven (0.06s)
+    --- PASS: TestPredicateCallbackContracts/inferred_opaque (0.07s)
+    --- PASS: TestPredicateCallbackContracts/arrow (0.24s)
+PASS

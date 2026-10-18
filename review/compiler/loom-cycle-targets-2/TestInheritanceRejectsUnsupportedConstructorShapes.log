@@ -1,0 +1,21 @@
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== RUN   TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== PAUSE TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/computed_base
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/declare_field
+=== CONT  TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch
+--- PASS: TestInheritanceRejectsUnsupportedConstructorShapes (0.00s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/replacement_object (0.08s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/union_dispatch (0.09s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/computed_base (0.09s)
+    --- PASS: TestInheritanceRejectsUnsupportedConstructorShapes/declare_field (0.10s)
+PASS

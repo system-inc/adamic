@@ -1,0 +1,37 @@
+=== RUN   TestNodeLibraryNamesUnimplementedMembers
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers
+=== CONT  TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+--- PASS: TestNodeLibraryNamesUnimplementedMembers (0.00s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID (1.13s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync (1.60s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo (1.62s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath (1.64s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (1.92s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:path.sep (1.67s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (1.76s)
+    --- PASS: TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength (1.80s)
+PASS

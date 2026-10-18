@@ -1,0 +1,53 @@
+=== RUN   TestReadinessElisionRequiresDominatingAssignment
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment
+=== CONT  TestReadinessElisionRequiresDominatingAssignment
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+--- PASS: TestReadinessElisionRequiresDominatingAssignment (0.00s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/throw-before-write (0.23s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/branch-join (0.23s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-write (0.27s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-missing-join (0.31s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/catch-write (0.17s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/finally-write (0.18s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/do-loop (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-join (0.20s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/loop-body (0.09s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-write (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-read (0.13s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/zero-iteration (0.09s)
+PASS

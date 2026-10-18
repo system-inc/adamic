@@ -1,0 +1,11 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -165,7 +165,7 @@
+ 		into.Unknown = true
+ 		changed = true
+ 	}
+-	for _, function := range from.Functions {
++	for _, function := range from.Functions[:min(len(from.Functions), 1)] {
+ 		if !slices.Contains(into.Functions, function) {
+ 			into.Functions = append(into.Functions, function)
+ 			changed = true
