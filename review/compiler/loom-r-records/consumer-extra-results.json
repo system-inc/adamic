@@ -1,0 +1,235 @@
+[
+  {
+    "package": "./internal/boundedrun",
+    "tests": [
+      "TestDeadlineKillsGrandchild"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/boundedrun",
+      "-run",
+      "^(TestDeadlineKillsGrandchild)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.299
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "tests": [
+      "TestClassification",
+      "TestDiffCoverage",
+      "TestShardPartitionKeepsDiff"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-admission-delta",
+      "-run",
+      "^(TestClassification|TestDiffCoverage|TestShardPartitionKeepsDiff)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 2.438
+  },
+  {
+    "package": "./internal/compilercensus",
+    "tests": [
+      "TestEveryCCompilerRunsThroughNative",
+      "TestDependenciesFollowTheMarkers",
+      "TestDependenciesCoverTheDeclaredMap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/compilercensus",
+      "-run",
+      "^(TestEveryCCompilerRunsThroughNative|TestDependenciesFollowTheMarkers|TestDependenciesCoverTheDeclaredMap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 9.165
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "tests": [
+      "TestNoToken"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gocacheprog",
+      "-run",
+      "^(TestNoToken)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 3.252
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/productidentity",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.826
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "tests": [
+      "TestSettleParsesOnlyAskedCalls"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/traced",
+      "-run",
+      "^(TestSettleParsesOnlyAskedCalls)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 2.054
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/goplan",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.699
+  },
+  {
+    "package": "./internal/tracked",
+    "tests": [
+      "TestChangedNamesEveryDifference"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/tracked",
+      "-run",
+      "^(TestChangedNamesEveryDifference)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.249
+  },
+  {
+    "package": "./internal/toolchain",
+    "tests": [
+      "TestAToolsCompilersAreClangUnlessTheCallerNamesOne"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/toolchain",
+      "-run",
+      "^(TestAToolsCompilersAreClangUnlessTheCallerNamesOne)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.257
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "tests": [
+      "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/executable",
+      "-run",
+      "^(TestWriteLeavesNoWritableDescriptorForSiblingForksToExec)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.007
+  },
+  {
+    "package": "./stage3/lane",
+    "tests": [
+      "TestShardsMatchManifest",
+      "TestApplyPython",
+      "TestLanePython"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^(TestShardsMatchManifest|TestApplyPython|TestLanePython)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 6.586
+  }
+]

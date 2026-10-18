@@ -1,0 +1,4 @@
+// a-check: refused a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven; snapshot the value before the call, or read and recheck its type after the call
+const r: Record<string, number> = {value: 1};
+function drop(): void {delete r['value'];}
+if(r['value'] !== undefined) {drop(); console.log(String(r['value'] + 1));}

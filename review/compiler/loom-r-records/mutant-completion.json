@@ -1,0 +1,113 @@
+{
+  "lowering_guards": 16,
+  "source_runner_caught": 11,
+  "source_runner_aggregate_exit": 124,
+  "unfinished_type_only_completed": true,
+  "named_guard_caught": 3,
+  "extra_mutants": [
+    {
+      "name": "nullable-slot",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler/loom-r-records/nullable-slot.json",
+        "./internal/lower",
+        "-run",
+        "^TestNamedRecordRefusals$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "-parallel",
+        "4"
+      ],
+      "exit": 1,
+      "seconds": 36.043,
+      "caught": true
+    },
+    {
+      "name": "refusal-removal",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler/loom-r-records/refusal-removal.json",
+        "./internal/oracle",
+        "-run",
+        "^(TestRecordRefusal.*|TestRecordPrototypeMutant|TestRecordNarrowingMutant|TestNamedRecordTypeGuardMutant)$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "-parallel",
+        "4"
+      ],
+      "exit": 0,
+      "seconds": 95.319,
+      "caught": true
+    },
+    {
+      "name": "flow-refused-directory",
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/adamic/review/compiler/loom-r-records/flow-refused-directory.json",
+        "./internal/flow",
+        "-run",
+        "^TestFlowCorpusRemainder$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "-parallel",
+        "4"
+      ],
+      "exit": 1,
+      "seconds": 59.952,
+      "caught": true
+    },
+    {
+      "name": "counts-mutant",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "^TestCountsAreRecorded_[0-9]+$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "-parallel",
+        "4"
+      ],
+      "exit": 1,
+      "seconds": 18.348,
+      "caught": true
+    },
+    {
+      "name": "stage3-classification",
+      "command": [
+        "go",
+        "test",
+        "./stage3/fixtures",
+        "-run",
+        "^TestFixturesRecords$",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "-v",
+        "-parallel",
+        "4",
+        "-args",
+        "-fixtures",
+        "/workspace/scratch/loom-r-records-stage3-mutant"
+      ],
+      "exit": 1,
+      "seconds": 18.827,
+      "caught": true
+    }
+  ]
+}

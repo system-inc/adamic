@@ -1,0 +1,718 @@
+[
+  {
+    "id": "src/compiler/commandLineParser.ts:2789:13@111330",
+    "location": "src/compiler/commandLineParser.ts:2789:13",
+    "class": "user_input",
+    "expression": "hasProperty(options, name)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:2795:27@111782",
+    "location": "src/compiler/commandLineParser.ts:2795:27",
+    "class": "user_input",
+    "expression": "options[name]",
+    "verdict": "a",
+    "evidence": "hasProperty(options, name) dominates the read at 2789.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:2901:42@116901",
+    "location": "src/compiler/commandLineParser.ts:2901:42",
+    "class": "user_input",
+    "expression": "options[allSetOptions[0]]",
+    "verdict": "a",
+    "evidence": "allSetOptions comes from Object.keys(options) at 2839; splice removes names but does not create missing names.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:2930:24@117944",
+    "location": "src/compiler/commandLineParser.ts:2930:24",
+    "class": "user_input",
+    "expression": "hasProperty(options, setting)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:2933:24@117999",
+    "location": "src/compiler/commandLineParser.ts:2933:24",
+    "class": "user_input",
+    "expression": "options[setting]",
+    "verdict": "safe-domain",
+    "evidence": "User-supplied settings come from allSetOptions and are own. Absent preset settings are fixed literal option names, none prototype members. hasProperty at 2930 is NOT a dominating guard on this read.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:2976:13@119763",
+    "location": "src/compiler/commandLineParser.ts:2976:13",
+    "class": "user_input",
+    "expression": "hasProperty(options, name)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:2979:17@119921",
+    "location": "src/compiler/commandLineParser.ts:2979:17",
+    "class": "user_input",
+    "expression": "options[name]",
+    "verdict": "a",
+    "evidence": "hasProperty(options, name) dominates at 2976.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:3322:22@136676",
+    "location": "src/compiler/commandLineParser.ts:3322:22",
+    "class": "user_input",
+    "expression": "mapLike[key]",
+    "verdict": "a",
+    "evidence": "getOwnKeys(mapLike) at 3320 supplies own keys; the isArray test is AFTER the read but is not the ownership proof.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:3323:77@136776",
+    "location": "src/compiler/commandLineParser.ts:3323:77",
+    "class": "user_input",
+    "expression": "mapLike[key]",
+    "verdict": "a",
+    "evidence": "Same getOwnKeys(mapLike) enumeration; not merely the preceding isArray test.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:3785:90@158733",
+    "location": "src/compiler/commandLineParser.ts:3785:90",
+    "class": "user_input",
+    "expression": "jsonOptions[id]",
+    "verdict": "safe-domain",
+    "evidence": "optionsNameMap.get(id) must succeed at 3783-3784. Its internal declarations exclude prototype names. This Map checks the option-name domain, NOT jsonOptions ownership.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:4142:68@175990",
+    "location": "src/compiler/commandLineParser.ts:4142:68",
+    "class": "user_input",
+    "expression": "wildcardDirectories[existingPath]",
+    "verdict": "a",
+    "evidence": "wildCardKeyToPath.get(key) yields existingPath only after writing wildcardDirectories[path], at 4144-4145. No deletion occurs until the later pruning loop. A Map lookup alone would not otherwise prove ownership.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:4155:17@176643",
+    "location": "src/compiler/commandLineParser.ts:4155:17",
+    "class": "user_input",
+    "expression": "hasProperty(wildcardDirectories, path)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/commandLineParser.ts:4266:13@181943",
+    "location": "src/compiler/commandLineParser.ts:4266:13",
+    "class": "user_input",
+    "expression": "hasProperty(opts, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1267:12@44722",
+    "location": "src/compiler/core.ts:1267:12",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(map, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1279:12@44994",
+    "location": "src/compiler/core.ts:1279:12",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(map, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1279:44@45005",
+    "location": "src/compiler/core.ts:1279:44",
+    "class": "unknown",
+    "expression": "map[key]",
+    "verdict": "a",
+    "evidence": "hasOwnProperty.call(map, key) is the conditional before map[key].",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1290:13@45276",
+    "location": "src/compiler/core.ts:1290:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(map, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1315:13@45894",
+    "location": "src/compiler/core.ts:1315:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(collection, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1316:25@45954",
+    "location": "src/compiler/core.ts:1316:25",
+    "class": "unknown",
+    "expression": "(collection as MapLike<T>)[key]",
+    "verdict": "a",
+    "evidence": "hasOwnProperty.call(collection, key) dominates at 1315.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1354:17@46938",
+    "location": "src/compiler/core.ts:1354:17",
+    "class": "unknown",
+    "expression": "hasProperty(arg, p)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1355:24@46972",
+    "location": "src/compiler/core.ts:1355:24",
+    "class": "unknown",
+    "expression": "arg[p]",
+    "verdict": "a",
+    "evidence": "hasProperty(arg, p) dominates at 1354.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1374:13@47582",
+    "location": "src/compiler/core.ts:1374:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(left, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1375:18@47635",
+    "location": "src/compiler/core.ts:1375:18",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(right, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1376:35@47695",
+    "location": "src/compiler/core.ts:1376:35",
+    "class": "unknown",
+    "expression": "left[key]",
+    "verdict": "a",
+    "evidence": "left ownership at 1374 and right ownership at 1375 both dominate the two reads.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1376:46@47707",
+    "location": "src/compiler/core.ts:1376:46",
+    "class": "unknown",
+    "expression": "right[key]",
+    "verdict": "a",
+    "evidence": "left ownership at 1374 and right ownership at 1375 both dominate the two reads.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1381:13@47820",
+    "location": "src/compiler/core.ts:1381:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(right, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1382:18@47872",
+    "location": "src/compiler/core.ts:1382:18",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(left, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1470:27@52401",
+    "location": "src/compiler/core.ts:1470:27",
+    "class": "unknown",
+    "expression": "result[key]",
+    "verdict": "safe-domain",
+    "evidence": "Only compiler caller is legacyDecorators.ts:538 with isSyntheticMetadataDecorator: keys true/false. Generic helper with constructor crashes; existing 14_group_by.a records this, but no stock CLI path to that callback key was found.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1481:13@52683",
+    "location": "src/compiler/core.ts:1481:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(object, id)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1482:26@52732",
+    "location": "src/compiler/core.ts:1482:26",
+    "class": "unknown",
+    "expression": "(object as any)[id]",
+    "verdict": "a",
+    "evidence": "hasOwnProperty.call(object, id) dominates at 1481.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1498:13@53211",
+    "location": "src/compiler/core.ts:1498:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(second, id)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1499:35@53269",
+    "location": "src/compiler/core.ts:1499:35",
+    "class": "unknown",
+    "expression": "(second as any)[id]",
+    "verdict": "a",
+    "evidence": "hasOwnProperty.call(second, id) dominates at 1498.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1504:13@53365",
+    "location": "src/compiler/core.ts:1504:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(first, id)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1505:35@53422",
+    "location": "src/compiler/core.ts:1505:35",
+    "class": "unknown",
+    "expression": "(first as any)[id]",
+    "verdict": "a",
+    "evidence": "hasOwnProperty.call(first, id) dominates at 1504.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1515:13@53645",
+    "location": "src/compiler/core.ts:1515:13",
+    "class": "unknown",
+    "expression": "hasOwnProperty.call(second, id)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:1516:34@53693",
+    "location": "src/compiler/core.ts:1516:34",
+    "class": "unknown",
+    "expression": "second[id]",
+    "verdict": "a",
+    "evidence": "hasOwnProperty.call(second, id) dominates at 1515.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:2143:18@76215",
+    "location": "src/compiler/core.ts:2143:18",
+    "class": "unknown",
+    "expression": "a[key]",
+    "verdict": "unresolved",
+    "evidence": "Generic comparer sees both unguarded values; no compiler caller of this exported helper was found. checker.ts has a different local function of the same name. No real CLI/config counterexample established.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/core.ts:2143:26@76223",
+    "location": "src/compiler/core.ts:2143:26",
+    "class": "unknown",
+    "expression": "b[key]",
+    "verdict": "unresolved",
+    "evidence": "Generic comparer sees both unguarded values; no compiler caller of this exported helper was found. checker.ts has a different local function of the same name. No real CLI/config counterexample established.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/debug.ts:433:27@18649",
+    "location": "src/compiler/debug.ts:433:27",
+    "class": "unknown",
+    "expression": "enumObject[name]",
+    "verdict": "a-plain",
+    "evidence": "for-in over compiler enum objects: default prototype members are non-enumerable, so a missing such key is not produced. No explicit hasOwn check. With arbitrary inherited enumerable enum properties this conclusion would not hold.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:6138:17@267142",
+    "location": "src/compiler/factory/nodeFactory.ts:6138:17",
+    "class": "unknown",
+    "expression": "hasProperty(node, p)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:6138:42@267169",
+    "location": "src/compiler/factory/nodeFactory.ts:6138:42",
+    "class": "unknown",
+    "expression": "hasProperty(source, p)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:6145:32@267388",
+    "location": "src/compiler/factory/nodeFactory.ts:6145:32",
+    "class": "unknown",
+    "expression": "(source as any)[p]",
+    "verdict": "a",
+    "evidence": "The continue at 6138 excludes !hasProperty(source, p) before reading source.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:6400:17@277736",
+    "location": "src/compiler/factory/nodeFactory.ts:6400:17",
+    "class": "unknown",
+    "expression": "hasProperty(clone, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:6400:45@277763",
+    "location": "src/compiler/factory/nodeFactory.ts:6400:45",
+    "class": "unknown",
+    "expression": "hasProperty(node, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:6404:26@277846",
+    "location": "src/compiler/factory/nodeFactory.ts:6404:26",
+    "class": "unknown",
+    "expression": "node[key]",
+    "verdict": "a",
+    "evidence": "The continue at 6400 excludes !hasProperty(node, key).",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/factory/nodeFactory.ts:7539:27@334893",
+    "location": "src/compiler/factory/nodeFactory.ts:7539:27",
+    "class": "unknown",
+    "expression": "sourceRanges[key]",
+    "verdict": "a-plain",
+    "evidence": "for-in over internally constructed arrays; ordinary Object.prototype members are non-enumerable and do not produce a missing prototype-name key. Arbitrary prototype mutation is outside this proof.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:433:17@16616",
+    "location": "src/compiler/moduleNameResolver.ts:433:17",
+    "class": "user_input",
+    "expression": "hasProperty(typesVersions, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:465:14@17848",
+    "location": "src/compiler/moduleNameResolver.ts:465:14",
+    "class": "user_input",
+    "expression": "hasProperty(typesVersions, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:474:43@18186",
+    "location": "src/compiler/moduleNameResolver.ts:474:43",
+    "class": "user_input",
+    "expression": "typesVersions[key]",
+    "verdict": "a",
+    "evidence": "!hasProperty(typesVersions, key) continues at 465 before semver parsing and this read.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:953:13@43025",
+    "location": "src/compiler/moduleNameResolver.ts:953:13",
+    "class": "user_input",
+    "expression": "hasProperty(value, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:954:59@43107",
+    "location": "src/compiler/moduleNameResolver.ts:954:59",
+    "class": "user_input",
+    "expression": "(value as any)[key]",
+    "verdict": "a",
+    "evidence": "hasProperty(value, key) dominates at 953.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2295:46@113265",
+    "location": "src/compiler/moduleNameResolver.ts:2295:46",
+    "class": "user_input",
+    "expression": "(exports as MapLike<unknown>)[key]",
+    "verdict": "a-plain",
+    "evidence": "Package content is JSON.parse data with the ordinary prototype. Its inherited prototype members are non-enumerable; for-in gives own keys here. allKeysStartWithDot itself checks getOwnKeys; it is NOT an ownership guard on the subsequent for-in loop.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2351:54@115906",
+    "location": "src/compiler/moduleNameResolver.ts:2351:54",
+    "class": "user_input",
+    "expression": "(target as MapLike<unknown>)[key]",
+    "verdict": "a",
+    "evidence": "getOwnKeys(target) at 2349 supplies the key.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2429:13@119380",
+    "location": "src/compiler/moduleNameResolver.ts:2429:13",
+    "class": "user_input",
+    "expression": "hasProperty(peerDependencies, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2711:83@136624",
+    "location": "src/compiler/moduleNameResolver.ts:2711:83",
+    "class": "user_input",
+    "expression": "hasProperty(lookupTable, moduleName)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2712:24@136697",
+    "location": "src/compiler/moduleNameResolver.ts:2712:24",
+    "class": "user_input",
+    "expression": "(lookupTable as MapLike<unknown>)[moduleName]",
+    "verdict": "a",
+    "evidence": "hasProperty(lookupTable, moduleName) dominates at 2711, before any read.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2718:28@137234",
+    "location": "src/compiler/moduleNameResolver.ts:2718:28",
+    "class": "user_input",
+    "expression": "(lookupTable as MapLike<unknown>)[potentialTarget]",
+    "verdict": "a",
+    "evidence": "expandingKeys is filtered/sorted getOwnKeys(lookupTable) at 2715.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2724:28@137785",
+    "location": "src/compiler/moduleNameResolver.ts:2724:28",
+    "class": "user_input",
+    "expression": "(lookupTable as MapLike<unknown>)[potentialTarget]",
+    "verdict": "a",
+    "evidence": "Same getOwnKeys(lookupTable) list at 2715; suffix/prefix tests do not create keys.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2729:28@138124",
+    "location": "src/compiler/moduleNameResolver.ts:2729:28",
+    "class": "user_input",
+    "expression": "(lookupTable as MapLike<unknown>)[potentialTarget]",
+    "verdict": "a",
+    "evidence": "Same getOwnKeys(lookupTable) list at 2715.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:2820:43@144848",
+    "location": "src/compiler/moduleNameResolver.ts:2820:43",
+    "class": "user_input",
+    "expression": "(target as MapLike<unknown>)[condition]",
+    "verdict": "a",
+    "evidence": "getOwnKeys(target) at 2817 precedes the condition test and read. A supplied own toString/custom condition reads normally.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleNameResolver.ts:3177:34@169127",
+    "location": "src/compiler/moduleNameResolver.ts:3177:34",
+    "class": "user_input",
+    "expression": "paths[matchedPatternText]",
+    "verdict": "a",
+    "evidence": "matchedPattern comes from tryParsePatterns(paths), which uses getOwnKeys at utilities.ts:10239 and a Set of exact own strings. Missing constructor does not match an empty paths record.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleSpecifiers.ts:928:35@44293",
+    "location": "src/compiler/moduleSpecifiers.ts:928:35",
+    "class": "user_input",
+    "expression": "paths[key]",
+    "verdict": "a-plain",
+    "evidence": "for-in over parsed paths/JSON package typesVersions; default prototype members are non-enumerable. No explicit own check. Injected enumerable inherited keys would need a guard; no missing default-member read on ordinary records.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleSpecifiers.ts:1111:35@58586",
+    "location": "src/compiler/moduleSpecifiers.ts:1111:35",
+    "class": "user_input",
+    "expression": "(exports as MapLike<unknown>)[key]",
+    "verdict": "a",
+    "evidence": "getOwnKeys(exports) at 1109 supplies the key.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleSpecifiers.ts:1134:122@60155",
+    "location": "src/compiler/moduleSpecifiers.ts:1134:122",
+    "class": "user_input",
+    "expression": "(exports as MapLike<unknown>)[k]",
+    "verdict": "a",
+    "evidence": "getOwnKeys(exports) at 1129 supplies k.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/moduleSpecifiers.ts:1165:121@62049",
+    "location": "src/compiler/moduleSpecifiers.ts:1165:121",
+    "class": "user_input",
+    "expression": "(imports as MapLike<unknown>)[k]",
+    "verdict": "a",
+    "evidence": "getOwnKeys(imports) at 1160 supplies k before the hash-prefix filter.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/program.ts:4142:22@210905",
+    "location": "src/compiler/program.ts:4142:22",
+    "class": "user_input",
+    "expression": "hasProperty(options.paths, key)",
+    "verdict": "a-check",
+    "evidence": "This operation IS an own-property test, not a value read. Missing prototype names return false without fetching their inherited value.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/program.ts:4148:29@211227",
+    "location": "src/compiler/program.ts:4148:29",
+    "class": "user_input",
+    "expression": "options.paths[key]",
+    "verdict": "a",
+    "evidence": "!hasProperty(options.paths, key) continues at 4142.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/program.ts:4149:33@211283",
+    "location": "src/compiler/program.ts:4149:33",
+    "class": "user_input",
+    "expression": "options.paths[key]",
+    "verdict": "a",
+    "evidence": "Same dominating ownership check at 4142, then isArray at 4148.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/program.ts:4154:39@211616",
+    "location": "src/compiler/program.ts:4154:39",
+    "class": "user_input",
+    "expression": "options.paths[key]",
+    "verdict": "a",
+    "evidence": "Same dominating ownership check; outer numeric array read is a separate census site.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/program.ts:5099:53@265851",
+    "location": "src/compiler/program.ts:5099:53",
+    "class": "unknown",
+    "expression": "option[d.skippedOn]",
+    "verdict": "safe-domain",
+    "evidence": "Checker errorSkippedOn assigns only skipLibCheck or skipDefaultLibCheck in compiler calls. Diagnostic API callers can forge metadata; no CLI input changes this key domain.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/sys.ts:1566:24@69222",
+    "location": "src/compiler/sys.ts:1566:24",
+    "class": "unknown",
+    "expression": "process.env[name]",
+    "verdict": "unresolved",
+    "evidence": "process.env[name] has no own check; stock ts.sys.getEnvironmentVariable(\"toString\") actually returns a function on Node. Compiler callers use internal environment-variable names. No requested CLI/config source can set name to a prototype member; process.env is also an exotic host object, not a plain record.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/utilities.ts:8153:20@320577",
+    "location": "src/compiler/utilities.ts:8153:20",
+    "class": "unknown",
+    "expression": "dst[e]",
+    "verdict": "a-plain",
+    "evidence": "e comes from for-in on dst: missing default prototype members are non-enumerable. No explicit own guard. Arbitrary inherited enumerable dst properties are not covered.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/utilities.ts:8154:37@320637",
+    "location": "src/compiler/utilities.ts:8154:37",
+    "class": "unknown",
+    "expression": "dst[e]",
+    "verdict": "a-plain",
+    "evidence": "e is enumerated from ordinary dst; default inherited prototype members are non-enumerable. No explicit own check.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/utilities.ts:8154:45@320645",
+    "location": "src/compiler/utilities.ts:8154:45",
+    "class": "unknown",
+    "expression": "src[e]",
+    "verdict": "b/c",
+    "evidence": "dst[e] is a-plain. src[e] has no own guard: b for nonempty object/array values (recursive comparison rejects the inherited value), c at helper/API level for empty objects/arrays (it can incorrectly return true). Full CLI/watch wrong behavior not established.",
+    "fixtures": [
+      "17_compare_missing_object.a",
+      "19_compare_empty_objects.a"
+    ]
+  },
+  {
+    "id": "src/compiler/utilities.ts:8158:25@320738",
+    "location": "src/compiler/utilities.ts:8158:25",
+    "class": "unknown",
+    "expression": "dst[e]",
+    "verdict": "a-plain",
+    "evidence": "Same for-in ownership proof for ordinary dst. typeof is AFTER the read and is not an own-property guard.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/utilities.ts:8159:17@320780",
+    "location": "src/compiler/utilities.ts:8159:17",
+    "class": "unknown",
+    "expression": "dst[e]",
+    "verdict": "a-plain",
+    "evidence": "e is enumerated from ordinary dst; default inherited prototype members are non-enumerable. No explicit own check.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/utilities.ts:8159:28@320791",
+    "location": "src/compiler/utilities.ts:8159:28",
+    "class": "unknown",
+    "expression": "src[e]",
+    "verdict": "b",
+    "evidence": "dst[e] is a-plain. src[e] is b: a missing constructor/toString/hasOwnProperty produces a function, __proto__ an object, and scalar inequality returns false. Must lower this read to has_own plus get_own before comparing.",
+    "fixtures": [
+      "18_compare_missing_scalar.a"
+    ]
+  },
+  {
+    "id": "src/compiler/utilities.ts:8605:43@337752",
+    "location": "src/compiler/utilities.ts:8605:43",
+    "class": "unknown",
+    "expression": "localizedDiagnosticMessages[message.key]",
+    "verdict": "safe-domain",
+    "evidence": "message.key comes from generated diagnostic metadata, not user-provided JSON keys; generated message keys include their numeric diagnostic code and are not prototype names. Public callers can forge DiagnosticMessage values.",
+    "fixtures": []
+  },
+  {
+    "id": "src/compiler/utilities.ts:9402:9@370490",
+    "location": "src/compiler/utilities.ts:9402:9",
+    "class": "unknown",
+    "expression": "options[option.name]",
+    "verdict": "safe-domain",
+    "evidence": "Compiler callers enumerate optionDeclarations/affectingOptionDeclarations. Internal option names exclude prototype members; no explicit own guard, and missing ordinary option names are intentional.",
+    "fixtures": []
+  }
+]

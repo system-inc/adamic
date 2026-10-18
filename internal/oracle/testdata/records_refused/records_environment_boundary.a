@@ -1,0 +1,9 @@
+// a-check: refused record read of toString: the record's prototype chain isn't modeled; check Object.hasOwn(record, key) immediately before reading its own value, or use a Map
+// Plain-record boundary probe for sys.ts:1566. process.env itself is an exotic host object.
+function environmentVariable(environment: Record<string, string>, name: string): string {
+    return environment[name] ?? '';
+}
+const environment: Record<string, string> = {};
+const name: string = 'toString';
+console.log('before environment read');
+console.log(environmentVariable(environment, name));

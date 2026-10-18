@@ -5,7 +5,7 @@ enum adamic_json_kind {
 	adamic_json_undefined, adamic_json_null, adamic_json_number, adamic_json_boolean,
 	adamic_json_string, adamic_json_map, adamic_json_function, adamic_json_union,
 	adamic_json_maybe_number, adamic_json_maybe_boolean, adamic_json_array,
-	adamic_json_tuple, adamic_json_object
+	adamic_json_tuple, adamic_json_object, adamic_json_record
 };
 typedef struct adamic_json_schema adamic_json_schema;
 typedef struct adamic_json_field {
