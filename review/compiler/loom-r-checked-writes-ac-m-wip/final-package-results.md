@@ -1,0 +1,14 @@
+| Package (recursive) | Package seconds | Test events | Slowest leaf seconds | Log |
+|---|---:|---:|---:|---|
+| internal/ir | 21.535 | 16 | 21.52 | package-02.log |
+| internal/fresh | 11.631 | 901 | 2.06 | package-03.log |
+| internal/javascript | 0.175 | 7 | 0.1 | package-04.log |
+| internal/flow | 61.883 | 862 | 15.17 | package-05.log |
+| internal/regexp | 11.722 | 128 | 4.26 | package-06.log |
+| internal/lower | 107.096, 0.045 | 1477 | 23.9 | lower-final.log |
+| internal/native | 270.588 | 857 | 25.88 | native-green.log |
+| internal/native/runtimeproducts | 113.629 | 5 | 113.61 | runtimeproducts-local-cache.log |
+| cmd/adamic | 29.066 | 100 | 4.15 | remaining-final-00.log |
+| stage1/cohere/values | 27.472, 1.6320000000000001 | 29 | 6.15 | remaining-green-00.log |
+| stage3/fixtures | 115.311 | 719 | 26.17 | remaining-green-01.log |
+| internal/oracle | 20.072, 18.184, 26.131, 28.749, 32.817, 17.594 | 5304 | 37 | oracle-final.log + oracle-remainder-*.log |

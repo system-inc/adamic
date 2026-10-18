@@ -1,0 +1,13 @@
+git fetch origin compiler/area-next-fixtures
+git merge --no-edit f0c6e6fc
+git fetch origin 3e339bbf06e0695f1b1223065ee8d4eef4813ba8
+source /workspace/adamic-tools/env.sh
+python3 stage3/checked-writes/a-check.py --out /tmp/checked-fixture-a-check > /tmp/checked-fixture-a-check.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic ./internal/native -run 'TestCheckedWider|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestExplainCheckedWritesOutput|TestUniformFieldsMatchNode|TestCEndsInNewline' -count=1 -v -timeout 10m > /tmp/checked-fixture-oracle.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/checked-fixture-counts.log 2>&1
+
+The a-check runner loads the exact reported gate tools revision and calls only
+its aCheck method. It does not run the full gate or change gate expectations.
+Runtime witnesses are authored as .ts under the user's explicit extension ruling.
+The three .a refusal sidecars pin the path and readonly or copy fix. The one
+proven .a witness matches Node in both backends and inserts zero write checks.

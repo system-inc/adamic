@@ -1,0 +1,4 @@
+// a-check: refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+const shared: never[] = [];
+function store(values: number[]): void { values.push(1); }
+store(shared);

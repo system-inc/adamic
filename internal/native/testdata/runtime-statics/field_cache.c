@@ -2,7 +2,7 @@
 static const char *const first_names[] = {"key", "value"};
 static const char *const second_names[] = {"value", "key"};
 static const bool references[] = {false, false};
-static const adamic_shape shapes[] = {{2, first_names, references, NULL}, {2, second_names, references, NULL}};
+static const adamic_shape shapes[] = {{2, first_names, references, NULL, NULL}, {2, second_names, references, NULL, NULL}};
 static adamic_slot_cache cache;
 static void prepare(void) {}
 static void cleanup(void) {}

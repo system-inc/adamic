@@ -1,0 +1,150 @@
+{
+  "results": {
+    "a_check": {
+      "internal/native/testdata/checked_library_push.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/native/testdata/checked_library_push.a:7:14: stage 0 can't lower a SpreadElement yet"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/directory.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], w"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/fs.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/fs.a:7:35: Adamic 0.1 refuses a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would re"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/map.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/map.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower tha"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/regex.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/regex.a:5:101: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/set.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/set.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower tha"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/status.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/status.a:7:72: Adamic 0.1 refuses a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can'"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (reado"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type rea"
+      },
+      "review/compiler/checked-writes-follow/push-loop.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/array-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/array-refused.a:4:7: Adamic 0.1 refuses a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items],"
+      },
+      "stage3/checked-writes/emit-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/emit-refused.a:12:7: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of"
+      },
+      "stage3/checked-writes/flags-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/flags-refused.a:6:6: Adamic 0.1 refuses a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in th"
+      },
+      "stage3/checked-writes/flow-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/flow-refused.a:12:7: Adamic 0.1 refuses a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't wr"
+      },
+      "stage3/checked-writes/map-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/map-refused.a:4:7: Adamic 0.1 refuses a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the "
+      },
+      "stage3/checked-writes/proven-containers.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/proven-emit.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/proven-generic.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/proven-number.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/refused-branch-bottom.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-bottom.a:4:41: Adamic 0.1 refuses a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([.."
+      },
+      "stage3/checked-writes/refused-branch-diagnostic.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-diagnostic.a:8:41: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't "
+      },
+      "stage3/checked-writes/refused-optional-boolean.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-optional-boolean.a:4:7: Adamic 0.1 refuses a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than"
+      },
+      "stage3/checked-writes/refused-overload-result.a": {
+        "outcome": "refused",
+        "expected": "refused overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-overload-result.a:9:1: Adamic 0.1 refuses overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result"
+      },
+      "stage3/checked-writes/shared-never.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/shared-never.a:4:7: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { "
+      },
+      "stage3/checked-writes/string-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/string-refused.a:4:7: Adamic 0.1 refuses a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of st"
+      }
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failures": []
+}

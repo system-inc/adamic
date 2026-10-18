@@ -1,0 +1,280 @@
+=== RUN   TestAgreementAcceptsExpectedPanic
+=== PAUSE TestAgreementAcceptsExpectedPanic
+=== RUN   TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== PAUSE TestUnknownArrayPredicateRefusesUnrepresentedObservations
+=== RUN   TestCensusRestMutableElements
+=== PAUSE TestCensusRestMutableElements
+=== RUN   TestClassFeaturesStaticInterfaceCycle
+=== PAUSE TestClassFeaturesStaticInterfaceCycle
+=== RUN   TestInheritanceGenericFactoryLayouts
+=== PAUSE TestInheritanceGenericFactoryLayouts
+=== RUN   TestNestedEmptyArrayElementKinds
+=== PAUSE TestNestedEmptyArrayElementKinds
+=== RUN   TestEnumInitializationGraphMemo
+=== PAUSE TestEnumInitializationGraphMemo
+=== RUN   TestFSStatThrowsByDefault
+=== PAUSE TestFSStatThrowsByDefault
+=== RUN   TestLiteralMethodCapturesCannotMakeCycles
+=== PAUSE TestLiteralMethodCapturesCannotMakeCycles
+=== RUN   TestNodeFSFileOptionsBorrow
+=== PAUSE TestNodeFSFileOptionsBorrow
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestEmptyNeverMapCannotGainWritableInhabitants
+=== PAUSE TestEmptyNeverMapCannotGainWritableInhabitants
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== PAUSE TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestPredicateBodyProof
+=== PAUSE TestPredicateBodyProof
+=== RUN   TestProvenRelationsRefuse
+=== PAUSE TestProvenRelationsRefuse
+=== RUN   TestSwitchEmptyCaseFallsThrough
+=== PAUSE TestSwitchEmptyCaseFallsThrough
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestAgreementAcceptsExpectedPanic
+=== CONT  TestNodeFSFileOptionsBorrow
+=== CONT  TestLiteralMethodCapturesCannotMakeCycles
+=== CONT  TestNestedEmptyArrayElementKinds
+=== CONT  TestPredicateBodyProof
+=== RUN   TestNestedEmptyArrayElementKinds/first
+=== RUN   TestPredicateBodyProof/condition_assertion
+=== PAUSE TestPredicateBodyProof/condition_assertion
+=== RUN   TestPredicateBodyProof/returning_fail
+=== PAUSE TestPredicateBodyProof/returning_fail
+=== RUN   TestPredicateBodyProof/empty_condition_assertion
+=== PAUSE TestNestedEmptyArrayElementKinds/first
+=== RUN   TestNestedEmptyArrayElementKinds/last
+=== PAUSE TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNestedEmptyArrayElementKinds/typed
+=== PAUSE TestNestedEmptyArrayElementKinds/typed
+=== RUN   TestNestedEmptyArrayElementKinds/strings
+=== PAUSE TestNestedEmptyArrayElementKinds/strings
+=== RUN   TestNestedEmptyArrayElementKinds/objects
+=== PAUSE TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestPredicateBodyProof/empty_condition_assertion
+=== RUN   TestPredicateBodyProof/condition_mutation
+=== PAUSE TestPredicateBodyProof/condition_mutation
+=== RUN   TestPredicateBodyProof/diagnostic_work_on_failure
+=== PAUSE TestPredicateBodyProof/diagnostic_work_on_failure
+=== RUN   TestPredicateBodyProof/typeof
+=== PAUSE TestPredicateBodyProof/typeof
+=== RUN   TestPredicateBodyProof/kind
+=== PAUSE TestPredicateBodyProof/kind
+=== RUN   TestPredicateBodyProof/kind_helpers_fixed_point
+=== PAUSE TestPredicateBodyProof/kind_helpers_fixed_point
+=== RUN   TestPredicateBodyProof/helper
+=== PAUSE TestPredicateBodyProof/helper
+=== RUN   TestPredicateBodyProof/false_branch_lies
+=== PAUSE TestPredicateBodyProof/false_branch_lies
+=== RUN   TestPredicateBodyProof/true_branch_lies
+=== PAUSE TestPredicateBodyProof/true_branch_lies
+=== RUN   TestPredicateBodyProof/mutation
+=== PAUSE TestPredicateBodyProof/mutation
+=== RUN   TestPredicateBodyProof/alias_mutation
+=== PAUSE TestPredicateBodyProof/alias_mutation
+=== RUN   TestPredicateBodyProof/recursive
+=== PAUSE TestPredicateBodyProof/recursive
+=== RUN   TestPredicateBodyProof/default_changes_input
+=== PAUSE TestPredicateBodyProof/default_changes_input
+=== RUN   TestPredicateBodyProof/empty_assertion
+=== PAUSE TestPredicateBodyProof/empty_assertion
+=== RUN   TestPredicateBodyProof/assertion
+=== PAUSE TestPredicateBodyProof/assertion
+=== RUN   TestPredicateBodyProof/disabled_assertion
+=== PAUSE TestPredicateBodyProof/disabled_assertion
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestSwitchEmptyCaseFallsThrough
+--- PASS: TestLiteralMethodCapturesCannotMakeCycles (0.09s)
+=== CONT  TestProvenRelationsRefuse
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_array
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_array
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_array
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_array
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_field
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== RUN   TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== PAUSE TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== RUN   TestProvenRelationsRefuse/satisfies_function_parameter
+=== PAUSE TestProvenRelationsRefuse/satisfies_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_function_parameter
+=== PAUSE TestProvenRelationsRefuse/upcast_function_parameter
+=== RUN   TestProvenRelationsRefuse/upcast_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/upcast_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_nominal_identity
+=== PAUSE TestProvenRelationsRefuse/satisfies_nominal_identity
+=== RUN   TestProvenRelationsRefuse/satisfies_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_hidden_optional
+=== PAUSE TestProvenRelationsRefuse/upcast_hidden_optional
+=== RUN   TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== PAUSE TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== RUN   TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== PAUSE TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== RUN   TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== PAUSE TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== RUN   TestProvenRelationsRefuse/satisfies_nested_optional
+=== PAUSE TestProvenRelationsRefuse/satisfies_nested_optional
+=== CONT  TestEmptyNeverMapCannotGainWritableInhabitants
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.11s)
+=== CONT  TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key
+--- PASS: TestEmptyNeverMapCannotGainWritableInhabitants (0.10s)
+=== CONT  TestFSStatThrowsByDefault
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal
+--- PASS: TestAgreementAcceptsExpectedPanic (0.24s)
+=== CONT  TestNamespaceAmbientHostInitialization
+--- PASS: TestSwitchEmptyCaseFallsThrough (0.24s)
+=== CONT  TestEnumInitializationGraphMemo
+=== RUN   TestEnumInitializationGraphMemo/12
+=== PAUSE TestEnumInitializationGraphMemo/12
+=== RUN   TestEnumInitializationGraphMemo/24
+=== PAUSE TestEnumInitializationGraphMemo/24
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestClassFeaturesStaticInterfaceCycle
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+--- PASS: TestClassFeaturesStaticInterfaceCycle (0.17s)
+=== CONT  TestInheritanceGenericFactoryLayouts
+--- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.36s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.07s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.04s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal (0.07s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation (0.14s)
+=== CONT  TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements925578848/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (0.07s)
+=== CONT  TestUnknownArrayPredicateRefusesUnrepresentedObservations
+--- PASS: TestInheritanceGenericFactoryLayouts (0.23s)
+=== CONT  TestNestedEmptyArrayElementKinds/first
+=== CONT  TestPredicateBodyProof/condition_assertion
+=== CONT  TestPredicateBodyProof/alias_mutation
+--- PASS: TestUnknownArrayPredicateRefusesUnrepresentedObservations (0.16s)
+=== CONT  TestPredicateBodyProof/kind
+=== CONT  TestPredicateBodyProof/mutation
+=== CONT  TestPredicateBodyProof/true_branch_lies
+=== CONT  TestPredicateBodyProof/false_branch_lies
+=== CONT  TestPredicateBodyProof/helper
+=== CONT  TestPredicateBodyProof/kind_helpers_fixed_point
+=== CONT  TestPredicateBodyProof/condition_mutation
+=== CONT  TestPredicateBodyProof/typeof
+=== CONT  TestPredicateBodyProof/diagnostic_work_on_failure
+=== CONT  TestNestedEmptyArrayElementKinds/strings
+=== CONT  TestNestedEmptyArrayElementKinds/union
+--- PASS: TestFSStatThrowsByDefault (0.81s)
+=== CONT  TestNestedEmptyArrayElementKinds/objects
+=== CONT  TestNestedEmptyArrayElementKinds/typed
+=== CONT  TestNestedEmptyArrayElementKinds/last
+=== CONT  TestPredicateBodyProof/empty_assertion
+=== CONT  TestPredicateBodyProof/disabled_assertion
+=== CONT  TestPredicateBodyProof/assertion
+--- PASS: TestNestedEmptyArrayElementKinds (0.00s)
+    --- PASS: TestNestedEmptyArrayElementKinds/first (0.04s)
+    --- PASS: TestNestedEmptyArrayElementKinds/strings (0.06s)
+    --- PASS: TestNestedEmptyArrayElementKinds/objects (0.08s)
+    --- PASS: TestNestedEmptyArrayElementKinds/union (0.10s)
+    --- PASS: TestNestedEmptyArrayElementKinds/typed (0.08s)
+    --- PASS: TestNestedEmptyArrayElementKinds/last (0.05s)
+=== CONT  TestPredicateBodyProof/returning_fail
+=== CONT  TestPredicateBodyProof/empty_condition_assertion
+=== CONT  TestPredicateBodyProof/default_changes_input
+=== CONT  TestPredicateBodyProof/recursive
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_array
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_optional
+--- PASS: TestPredicateBodyProof (0.00s)
+    --- PASS: TestPredicateBodyProof/condition_assertion (0.03s)
+    --- PASS: TestPredicateBodyProof/alias_mutation (0.03s)
+    --- PASS: TestPredicateBodyProof/kind (0.07s)
+    --- PASS: TestPredicateBodyProof/mutation (0.08s)
+    --- PASS: TestPredicateBodyProof/true_branch_lies (0.06s)
+    --- PASS: TestPredicateBodyProof/false_branch_lies (0.03s)
+    --- PASS: TestPredicateBodyProof/helper (0.08s)
+    --- PASS: TestPredicateBodyProof/kind_helpers_fixed_point (0.07s)
+    --- PASS: TestPredicateBodyProof/condition_mutation (0.02s)
+    --- PASS: TestPredicateBodyProof/diagnostic_work_on_failure (0.04s)
+    --- PASS: TestPredicateBodyProof/typeof (0.07s)
+    --- PASS: TestPredicateBodyProof/empty_assertion (0.04s)
+    --- PASS: TestPredicateBodyProof/disabled_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/assertion (0.05s)
+    --- PASS: TestPredicateBodyProof/returning_fail (0.06s)
+    --- PASS: TestPredicateBodyProof/empty_condition_assertion (0.06s)
+    --- PASS: TestPredicateBodyProof/default_changes_input (0.06s)
+    --- PASS: TestPredicateBodyProof/recursive (0.05s)
+=== CONT  TestProvenRelationsRefuse/upcast_invariant_optional_class_argument
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_optional_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_optional_elements
+=== CONT  TestProvenRelationsRefuse/upcast_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_hidden_optional
+=== CONT  TestProvenRelationsRefuse/satisfies_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_nominal_identity
+=== CONT  TestProvenRelationsRefuse/upcast_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_function_parameter
+=== CONT  TestProvenRelationsRefuse/satisfies_readonly_to_writable
+=== CONT  TestProvenRelationsRefuse/satisfies_nested_mutable_literal
+=== CONT  TestProvenRelationsRefuse/satisfies_mutable_field
+=== CONT  TestProvenRelationsRefuse/upcast_mutable_array
+=== CONT  TestEnumInitializationGraphMemo/12
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== NAME  TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath7529724/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+=== NAME  TestEnumInitializationGraphMemo/12
+    enum_initialization_reach_test.go:53: depth 12: 13 function body expansions
+=== CONT  TestEnumInitializationGraphMemo/24
+--- PASS: TestNodeFSFileOptionsBorrow (1.55s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+--- PASS: TestProvenRelationsRefuse (0.00s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_array (0.04s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_optional (0.05s)
+    --- PASS: TestProvenRelationsRefuse/upcast_invariant_optional_class_argument (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_optional_field (0.03s)
+    --- PASS: TestProvenRelationsRefuse/upcast_hidden_optional (0.03s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_optional_elements (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_hidden_optional (0.10s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nominal_identity (0.11s)
+    --- PASS: TestProvenRelationsRefuse/upcast_nominal_identity (0.12s)
+    --- PASS: TestProvenRelationsRefuse/upcast_function_parameter (0.08s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_function_parameter (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_readonly_to_writable (0.05s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_nested_mutable_literal (0.03s)
+    --- PASS: TestProvenRelationsRefuse/satisfies_mutable_field (0.03s)
+    --- PASS: TestProvenRelationsRefuse/upcast_mutable_array (0.04s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== NAME  TestEnumInitializationGraphMemo/24
+    enum_initialization_reach_test.go:53: depth 24: 25 function body expansions
+--- PASS: TestEnumInitializationGraphMemo (0.00s)
+    --- PASS: TestEnumInitializationGraphMemo/12 (0.02s)
+    --- PASS: TestEnumInitializationGraphMemo/24 (0.05s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.00s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.06s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_} (0.08s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_} (0.07s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.07s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.11s)
+=== NAME  TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:38: independent ownership refusal: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationcwd804095333/002/main.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- PASS: TestNamespaceAmbientHostInitialization (1.83s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (1.15s)
+    --- PASS: TestNamespaceAmbientHostInitialization/cwd (0.53s)
+PASS

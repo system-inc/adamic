@@ -1,0 +1,24 @@
+Auto-merging internal/fresh/fresh.go
+Auto-merging internal/ir/ir.go
+CONFLICT (content): Merge conflict in internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+Auto-merging internal/lower/expression.go
+Auto-merging internal/lower/object.go
+Auto-merging internal/native/emit_expressions.go
+Auto-merging internal/native/emit_objects.go
+Auto-merging internal/native/emit_statements.go
+CONFLICT (content): Merge conflict in internal/native/emit_statements.go
+Auto-merging internal/native/reuse.go
+Auto-merging internal/native/runtime/adamic.h
+Auto-merging internal/native/runtime/exceptions.c
+Auto-merging internal/native/runtime/input.c
+Auto-merging internal/native/runtime/library_object.c
+Auto-merging internal/native/runtime/object.c
+Auto-merging internal/native/runtime/regexp.c
+Auto-merging internal/native/runtime/tsgo.c
+Auto-merging internal/oracle/counts.md
+CONFLICT (content): Merge conflict in internal/oracle/counts.md
+error: could not apply 196a08b4... Re-cut checked writes on current main
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: Disable this message with "git config set advice.mergeConflict false"

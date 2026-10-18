@@ -1,0 +1,18 @@
+{"Time":"2026-10-18T00:15:38.736987613Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:15:38.741090461Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot"}
+{"Time":"2026-10-18T00:15:38.741174969Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot","Output":"=== RUN   TestParallelMutant_oversized_slot\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:38.741199365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot","Output":"=== PAUSE TestParallelMutant_oversized_slot\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:38.741201639Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot"}
+{"Time":"2026-10-18T00:15:38.741203882Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot"}
+{"Time":"2026-10-18T00:15:38.741205525Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot","Output":"=== CONT  TestParallelMutant_oversized_slot\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:38.741207828Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot/oversized_slot"}
+{"Time":"2026-10-18T00:15:38.741210081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot/oversized_slot","Output":"=== RUN   TestParallelMutant_oversized_slot/oversized_slot\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:42.945220096Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot/oversized_slot","Output":"    parallel_test.go:253: mutant attempt=1 elapsed=2.439687ms\n"}
+{"Time":"2026-10-18T00:15:42.945265033Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot/oversized_slot","Output":"    parallel_test.go:273: oversized_slot caught: harness failure (signal: aborted)\n"}
+{"Time":"2026-10-18T00:15:42.94566787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot/oversized_slot","Output":"--- PASS: TestParallelMutant_oversized_slot/oversized_slot (4.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:42.9456809Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot/oversized_slot","Elapsed":4.2}
+{"Time":"2026-10-18T00:15:42.945723614Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot","Output":"--- PASS: TestParallelMutant_oversized_slot (4.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:42.945732247Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMutant_oversized_slot","Elapsed":4.2}
+{"Time":"2026-10-18T00:15:42.945736384Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:42.947336265Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t4.210s\n"}
+{"Time":"2026-10-18T00:15:42.947357176Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":4.21}

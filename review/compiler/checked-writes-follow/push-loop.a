@@ -1,0 +1,5 @@
+const values: number[] = [];
+for (let index = 0; index < 10000000; index++) {
+    values.push(index);
+}
+console.log(`${values.length} ${values[9999999]}`);

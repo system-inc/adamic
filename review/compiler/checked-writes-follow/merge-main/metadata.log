@@ -1,0 +1,10 @@
+=== RUN   TestObjectMetadataCacheIsPerEmission
+=== PAUSE TestObjectMetadataCacheIsPerEmission
+=== RUN   TestObjectMetadataCheckedWritesIsPerEmission
+=== PAUSE TestObjectMetadataCheckedWritesIsPerEmission
+=== CONT  TestObjectMetadataCacheIsPerEmission
+=== CONT  TestObjectMetadataCheckedWritesIsPerEmission
+--- PASS: TestObjectMetadataCacheIsPerEmission (0.00s)
+--- PASS: TestObjectMetadataCheckedWritesIsPerEmission (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.007s

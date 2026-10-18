@@ -1,0 +1,5 @@
+const values: (1 | 2)[] = [1];
+values[0] = 2;
+const map: Map<string, 1 | 2> = new Map<string, 1 | 2>();
+map.set('key', 1);
+console.log((values[0] ?? 0).toString() + ' ' + (map.get('key') ?? 0).toString());

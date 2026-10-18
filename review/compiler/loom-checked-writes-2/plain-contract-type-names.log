@@ -1,0 +1,14 @@
+=== RUN   TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+=== PAUSE TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+=== RUN   TestEveryMapAProgramHoldsIsSorted
+=== PAUSE TestEveryMapAProgramHoldsIsSorted
+=== CONT  TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+=== CONT  TestEveryMapAProgramHoldsIsSorted
+    gob_map_test.go:96: Program.ContractTypeNames is a plain map[int]string: gob writes it in random order; make it a SortedMap
+--- FAIL: TestEveryMapAProgramHoldsIsSorted (0.00s)
+=== NAME  TestAProgramIsTheSameBytesEveryTimeGobWritesIt
+    gob_map_test.go:44: one program, 13 encodings in 32
+--- FAIL: TestAProgramIsTheSameBytesEveryTimeGobWritesIt (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.047s
+FAIL

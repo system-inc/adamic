@@ -1,0 +1,20 @@
+{"Time":"2026-10-18T00:12:39.255516758Z","Action":"start","Package":"github.com/system-inc/adamic/internal/leakcheck"}
+{"Time":"2026-10-18T00:12:39.261754027Z","Action":"run","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected"}
+{"Time":"2026-10-18T00:12:39.261821779Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"=== RUN   TestReportedLeakIsRejected\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.261844784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"=== PAUSE TestReportedLeakIsRejected\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.261847208Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected"}
+{"Time":"2026-10-18T00:12:39.261853026Z","Action":"run","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance"}
+{"Time":"2026-10-18T00:12:39.2618556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"=== RUN   TestCountedBalance\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.261859937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"=== PAUSE TestCountedBalance\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.26186231Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance"}
+{"Time":"2026-10-18T00:12:39.261864393Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected"}
+{"Time":"2026-10-18T00:12:39.261866697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"=== CONT  TestReportedLeakIsRejected\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.261872646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Output":"--- PASS: TestReportedLeakIsRejected (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.26187515Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestReportedLeakIsRejected","Elapsed":0}
+{"Time":"2026-10-18T00:12:39.261886176Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance"}
+{"Time":"2026-10-18T00:12:39.261887949Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"=== CONT  TestCountedBalance\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.261890853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Output":"--- PASS: TestCountedBalance (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.261892386Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Test":"TestCountedBalance","Elapsed":0}
+{"Time":"2026-10-18T00:12:39.261894138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:39.262081175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/leakcheck","Output":"ok  \tgithub.com/system-inc/adamic/internal/leakcheck\t0.005s\n"}
+{"Time":"2026-10-18T00:12:39.262116138Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/leakcheck","Elapsed":0.007}

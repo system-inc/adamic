@@ -1,0 +1,20 @@
+{"Time":"2026-10-18T08:45:43.566454283Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T08:45:43.571351765Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation"}
+{"Time":"2026-10-18T08:45:43.571440488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation","Output":"=== RUN   TestCheckedSignatureInstantiation\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.571464585Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation","Output":"=== PAUSE TestCheckedSignatureInstantiation\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.571467129Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation"}
+{"Time":"2026-10-18T08:45:43.571470724Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload"}
+{"Time":"2026-10-18T08:45:43.571472997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload","Output":"=== RUN   TestCheckedSignatureEveryReceivingOverload\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.571477684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload","Output":"=== PAUSE TestCheckedSignatureEveryReceivingOverload\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.571479437Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload"}
+{"Time":"2026-10-18T08:45:43.571482692Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation"}
+{"Time":"2026-10-18T08:45:43.571485226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation","Output":"=== CONT  TestCheckedSignatureInstantiation\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.571489723Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload"}
+{"Time":"2026-10-18T08:45:43.571491425Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload","Output":"=== CONT  TestCheckedSignatureEveryReceivingOverload\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.620465782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation","Output":"--- PASS: TestCheckedSignatureInstantiation (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.622981161Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureInstantiation","Elapsed":0.05}
+{"Time":"2026-10-18T08:45:43.623024266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload","Output":"--- PASS: TestCheckedSignatureEveryReceivingOverload (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.623071116Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCheckedSignatureEveryReceivingOverload","Elapsed":0.05}
+{"Time":"2026-10-18T08:45:43.623077776Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:45:43.62566968Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.059s\n"}
+{"Time":"2026-10-18T08:45:43.625688399Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.059}

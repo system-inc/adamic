@@ -1,0 +1,1283 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^(TestExplainChecksDriver|TestExplainCheckedWritesOutput_emit_node_misfit|TestExplainCheckedWritesOutput_number_misfit|TestExplainCheckedWritesOutput_flow_node_misfit|TestExplainCheckedWritesOutput_container_number_misfit|TestExplainCheckedWritesOutput_container_map_misfit|TestExplainCheckedWritesOutput_container_fill_misfit|TestExplainCheckedWritesOutput_optional_boolean_misfit|TestExplainCheckedWritesOutput_overload_result_misfit|TestExplainCheckedWritesOutput_overload_callback_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 31.038,
+    "tests": [
+      {
+        "test": "TestExplainChecksDriver",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_container_number_misfit",
+        "action": "pass",
+        "seconds": 3.96
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 4
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_emit_node_misfit",
+        "action": "pass",
+        "seconds": 4.04
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 4.14
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_overload_result_misfit",
+        "action": "pass",
+        "seconds": 5.52
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_flow_node_misfit",
+        "action": "pass",
+        "seconds": 6.02
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_number_misfit",
+        "action": "pass",
+        "seconds": 6.05
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_container_fill_misfit",
+        "action": "pass",
+        "seconds": 6.12
+      },
+      {
+        "test": "TestExplainCheckedWritesOutput_container_map_misfit",
+        "action": "pass",
+        "seconds": 2.51
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestCheckedSignatureInstantiation|TestCheckedSignatureEveryReceivingOverload)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 6.407,
+    "tests": [
+      {
+        "test": "TestCheckedSignatureEveryReceivingOverload",
+        "action": "pass",
+        "seconds": 0.2
+      },
+      {
+        "test": "TestCheckedSignatureInstantiation",
+        "action": "pass",
+        "seconds": 0.22
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestRuntimeCheckedLibraryPush|TestRuntimeCheckedLibraryPushRejectsLiteral|TestRuntimeCheckedReferenceArrayKeepsContract|TestRuntimeCheckedReferenceArrayRejectsWrongElement|TestRuntimeCheckedReferenceArrayRejectsLiteral|TestRuntimeCheckedReferenceArrayRejectsWeakerContract|TestRuntimeFieldLayoutsAreIncluded|TestObjectMetadataCacheIsPerEmission|TestObjectMetadataCheckedWritesIsPerEmission|TestRegExpIteratorResultShape)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 29.235,
+    "tests": [
+      {
+        "test": "TestRuntimeCheckedReferenceArrayRejectsWeakerContract",
+        "action": "pass",
+        "seconds": 17.97
+      },
+      {
+        "test": "TestObjectMetadataCheckedWritesIsPerEmission",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRuntimeCheckedReferenceArrayRejectsLiteral",
+        "action": "pass",
+        "seconds": 18.02
+      },
+      {
+        "test": "TestRuntimeCheckedReferenceArrayRejectsWrongElement",
+        "action": "pass",
+        "seconds": 18.08
+      },
+      {
+        "test": "TestObjectMetadataCacheIsPerEmission",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRuntimeFieldLayoutsAreIncluded",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRegExpIteratorResultShape",
+        "action": "pass",
+        "seconds": 0.35
+      },
+      {
+        "test": "TestRuntimeCheckedLibraryPushRejectsLiteral",
+        "action": "pass",
+        "seconds": 0.39
+      },
+      {
+        "test": "TestRuntimeCheckedReferenceArrayKeepsContract",
+        "action": "pass",
+        "seconds": 0.46
+      },
+      {
+        "test": "TestRuntimeCheckedLibraryPush",
+        "action": "pass",
+        "seconds": 24.38
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedRuntimeRegexFields|TestCheckedRuntimeMapFields|TestCheckedRuntimeSetFields|TestCheckedRuntimeFSFields|TestCheckedRuntimeDirectoryFields|TestCheckedRuntimeStatusFields|TestCheckedRuntimeReferenceArrayLaterWriter|TestCheckedViewsNextAdamicRefusals|TestCheckedViewsNextProvenAdamic|TestCheckedWriteMessage02|TestCheckedWriteMessage03|TestCheckedWriteMessage13|TestCheckedWriteMessage15|TestCheckedWriteMessage16|TestCheckedWriteMessageMutant03|TestCheckedWriteMessageMutant13|TestCheckedWriteMessageMutant15|TestCheckedWriteMessageMutant16|TestCheckedWiderWritesAdamicRefuses|TestCheckedWiderWritesProvenAdamic)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 40.001,
+    "tests": [
+      {
+        "test": "TestCheckedWriteMessage15",
+        "action": "pass",
+        "seconds": 19.23
+      },
+      {
+        "test": "TestCheckedWriteMessage13",
+        "action": "pass",
+        "seconds": 19.22
+      },
+      {
+        "test": "TestCheckedRuntimeReferenceArrayLaterWriter",
+        "action": "pass",
+        "seconds": 19.55
+      },
+      {
+        "test": "TestCheckedRuntimeRegexFields",
+        "action": "pass",
+        "seconds": 20
+      },
+      {
+        "test": "TestCheckedRuntimeDirectoryFields",
+        "action": "pass",
+        "seconds": 1.62
+      },
+      {
+        "test": "TestCheckedRuntimeStatusFields",
+        "action": "pass",
+        "seconds": 1.7
+      },
+      {
+        "test": "TestCheckedRuntimeFSFields",
+        "action": "pass",
+        "seconds": 1.68
+      },
+      {
+        "test": "TestCheckedRuntimeSetFields",
+        "action": "pass",
+        "seconds": 1.77
+      },
+      {
+        "test": "TestCheckedWriteMessageMutant16",
+        "action": "pass",
+        "seconds": 1
+      },
+      {
+        "test": "TestCheckedWiderWritesAdamicRefuses",
+        "action": "pass",
+        "seconds": 0.75
+      },
+      {
+        "test": "TestCheckedRuntimeMapFields",
+        "action": "pass",
+        "seconds": 1.68
+      },
+      {
+        "test": "TestCheckedWiderWritesProvenAdamic",
+        "action": "pass",
+        "seconds": 1.37
+      },
+      {
+        "test": "TestCheckedWriteMessageMutant03",
+        "action": "pass",
+        "seconds": 1.21
+      },
+      {
+        "test": "TestCheckedWriteMessageMutant13",
+        "action": "pass",
+        "seconds": 0.87
+      },
+      {
+        "test": "TestCheckedWriteMessageMutant15",
+        "action": "pass",
+        "seconds": 0.98
+      },
+      {
+        "test": "TestCheckedWriteMessage02",
+        "action": "pass",
+        "seconds": 1.03
+      },
+      {
+        "test": "TestCheckedWriteMessage03",
+        "action": "pass",
+        "seconds": 0.8
+      },
+      {
+        "test": "TestCheckedViewsNextAdamicRefusals",
+        "action": "pass",
+        "seconds": 0.35
+      },
+      {
+        "test": "TestCheckedWriteMessage16",
+        "action": "pass",
+        "seconds": 0.75
+      },
+      {
+        "test": "TestCheckedViewsNextProvenAdamic",
+        "action": "pass",
+        "seconds": 1.09
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedNeverContractMutant|TestCheckedWiderWritesKeepSpreadOverrideRefusal|TestCheckedWiderWritesProvenContainers|TestCheckedEmitProvenAdamic|TestCheckedWiderWrites_overload_callback_fit|TestCheckedWiderWrites_overload_callback_misfit|TestCheckedWiderWrites_optional_boolean_fit|TestCheckedWiderWrites_optional_boolean_misfit|TestCheckedWiderWrites_required_boolean_fit|TestCheckedWiderWrites_required_boolean_misfit|TestCheckedWiderWrites_optional_false_fit|TestCheckedWiderWrites_optional_false_misfit|TestCheckedWiderWrites_branch_file_fit|TestCheckedWiderWrites_branch_file_misfit|TestCheckedWiderWrites_branch_start_fit|TestCheckedWiderWrites_branch_start_misfit|TestCheckedWiderWrites_branch_length_fit|TestCheckedWiderWrites_branch_length_misfit|TestCheckedWiderWrites_branch_bottom_number_fit|TestCheckedWiderWrites_branch_bottom_number_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 16.417,
+    "tests": [
+      {
+        "test": "TestCheckedWiderWrites_required_boolean_misfit",
+        "action": "pass",
+        "seconds": 5.76
+      },
+      {
+        "test": "TestCheckedWiderWrites_required_boolean_fit",
+        "action": "pass",
+        "seconds": 6.34
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_start_fit",
+        "action": "pass",
+        "seconds": 6.57
+      },
+      {
+        "test": "TestCheckedWiderWrites_overload_callback_fit",
+        "action": "pass",
+        "seconds": 6.6
+      },
+      {
+        "test": "TestCheckedWiderWrites_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 1.02
+      },
+      {
+        "test": "TestCheckedWiderWrites_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 0.97
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_file_misfit",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestCheckedWiderWrites_optional_boolean_fit",
+        "action": "pass",
+        "seconds": 1.57
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_file_fit",
+        "action": "pass",
+        "seconds": 1.69
+      },
+      {
+        "test": "TestCheckedWiderWrites_optional_false_misfit",
+        "action": "pass",
+        "seconds": 1.14
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_number_misfit",
+        "action": "pass",
+        "seconds": 1.49
+      },
+      {
+        "test": "TestCheckedWiderWrites_optional_false_fit",
+        "action": "pass",
+        "seconds": 1.73
+      },
+      {
+        "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestCheckedWiderWritesProvenContainers",
+        "action": "pass",
+        "seconds": 1.6
+      },
+      {
+        "test": "TestCheckedEmitProvenAdamic",
+        "action": "pass",
+        "seconds": 2.14
+      },
+      {
+        "test": "TestCheckedNeverContractMutant",
+        "action": "pass",
+        "seconds": 1.38
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_length_misfit",
+        "action": "pass",
+        "seconds": 1.44
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_number_fit",
+        "action": "pass",
+        "seconds": 1.52
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_start_misfit",
+        "action": "pass",
+        "seconds": 1.03
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_length_fit",
+        "action": "pass",
+        "seconds": 1.37
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedWiderWrites_branch_bottom_string_fit|TestCheckedWiderWrites_branch_bottom_string_misfit|TestCheckedWiderWrites_generic_site_fit|TestCheckedWiderWrites_generic_site_misfit|TestCheckedWiderWrites_overload_result_fit|TestCheckedWiderWrites_overload_result_misfit|TestCheckedWiderWrites_emit_comment_fit|TestCheckedWiderWrites_emit_comment_misfit|TestCheckedWiderWrites_emit_resolution_fit|TestCheckedWiderWrites_emit_resolution_misfit|TestCheckedWiderWrites_emit_callback_fit|TestCheckedWiderWrites_emit_callback_misfit|TestCheckedWiderWrites_emit_node_fit|TestCheckedWiderWrites_emit_node_misfit|TestCheckedWiderWrites_emit_auto_fit|TestCheckedWiderWrites_emit_auto_misfit|TestCheckedWiderWrites_container_slice_fit|TestCheckedWiderWrites_container_slice_misfit|TestCheckedWiderWrites_container_map_values_fit|TestCheckedWiderWrites_container_map_values_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 25.763,
+    "tests": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_values_misfit",
+        "action": "pass",
+        "seconds": 10.19
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_auto_misfit",
+        "action": "pass",
+        "seconds": 10.32
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_callback_fit",
+        "action": "pass",
+        "seconds": 10.91
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_string_fit",
+        "action": "pass",
+        "seconds": 11.08
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_slice_misfit",
+        "action": "pass",
+        "seconds": 1.47
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_map_values_fit",
+        "action": "pass",
+        "seconds": 2.31
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_node_fit",
+        "action": "pass",
+        "seconds": 1.86
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_slice_fit",
+        "action": "pass",
+        "seconds": 2.27
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_node_misfit",
+        "action": "pass",
+        "seconds": 1.6
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_auto_fit",
+        "action": "pass",
+        "seconds": 2.48
+      },
+      {
+        "test": "TestCheckedWiderWrites_overload_result_misfit",
+        "action": "pass",
+        "seconds": 1.6
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_callback_misfit",
+        "action": "pass",
+        "seconds": 2.06
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_resolution_misfit",
+        "action": "pass",
+        "seconds": 1.64
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_comment_misfit",
+        "action": "pass",
+        "seconds": 1.52
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_resolution_fit",
+        "action": "pass",
+        "seconds": 2.62
+      },
+      {
+        "test": "TestCheckedWiderWrites_generic_site_misfit",
+        "action": "pass",
+        "seconds": 1.45
+      },
+      {
+        "test": "TestCheckedWiderWrites_emit_comment_fit",
+        "action": "pass",
+        "seconds": 2.44
+      },
+      {
+        "test": "TestCheckedWiderWrites_overload_result_fit",
+        "action": "pass",
+        "seconds": 2.17
+      },
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_string_misfit",
+        "action": "pass",
+        "seconds": 1.49
+      },
+      {
+        "test": "TestCheckedWiderWrites_generic_site_fit",
+        "action": "pass",
+        "seconds": 2.14
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedWiderWrites_container_boolean_fit|TestCheckedWiderWrites_container_boolean_misfit|TestCheckedWiderWrites_container_fill_fit|TestCheckedWiderWrites_container_fill_misfit|TestCheckedWiderWrites_container_map_object_fit|TestCheckedWiderWrites_container_map_object_misfit|TestCheckedWiderWrites_container_alias_fit|TestCheckedWiderWrites_container_alias_misfit|TestCheckedWiderWrites_container_number_fit|TestCheckedWiderWrites_container_number_misfit|TestCheckedWiderWrites_container_string_fit|TestCheckedWiderWrites_container_string_misfit|TestCheckedWiderWrites_container_map_fit|TestCheckedWiderWrites_container_map_misfit|TestCheckedWiderWrites_container_splice_fit|TestCheckedWiderWrites_container_splice_misfit|TestCheckedWiderWrites_container_object_fit|TestCheckedWiderWrites_container_object_misfit|TestCheckedWiderWrites_container_nested_fit|TestCheckedWiderWrites_container_nested_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 28.416,
+    "tests": [
+      {
+        "test": "TestCheckedWiderWrites_container_splice_misfit",
+        "action": "pass",
+        "seconds": 9.92
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_number_misfit",
+        "action": "pass",
+        "seconds": 10.11
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_boolean_fit",
+        "action": "pass",
+        "seconds": 10.72
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_string_fit",
+        "action": "pass",
+        "seconds": 10.91
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_alias_misfit",
+        "action": "pass",
+        "seconds": 1.77
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_number_fit",
+        "action": "pass",
+        "seconds": 2.38
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_map_object_misfit",
+        "action": "pass",
+        "seconds": 1.79
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_alias_fit",
+        "action": "pass",
+        "seconds": 2.69
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_fill_misfit",
+        "action": "pass",
+        "seconds": 1.43
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_map_object_fit",
+        "action": "pass",
+        "seconds": 2.15
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_fill_fit",
+        "action": "pass",
+        "seconds": 1.93
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_boolean_misfit",
+        "action": "pass",
+        "seconds": 1.51
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_nested_misfit",
+        "action": "pass",
+        "seconds": 1.38
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_nested_fit",
+        "action": "pass",
+        "seconds": 1.99
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_map_fit",
+        "action": "pass",
+        "seconds": 2.03
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_map_misfit",
+        "action": "pass",
+        "seconds": 1.29
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_splice_fit",
+        "action": "pass",
+        "seconds": 2.21
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_object_misfit",
+        "action": "pass",
+        "seconds": 1.39
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_string_misfit",
+        "action": "pass",
+        "seconds": 1.48
+      },
+      {
+        "test": "TestCheckedWiderWrites_container_object_fit",
+        "action": "pass",
+        "seconds": 1.73
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedWiderWrites_flow_node_fit|TestCheckedWiderWrites_flow_node_misfit|TestCheckedWiderWrites_flow_undefined_fit|TestCheckedWiderWrites_flow_undefined_misfit|TestCheckedWiderWrites_flow_array_fit|TestCheckedWiderWrites_flow_array_misfit|TestCheckedWiderWrites_never_nullable_fit|TestCheckedWiderWrites_never_nullable_misfit|TestCheckedWiderWrites_never_index_misfit|TestCheckedWiderWrites_never_splice_misfit|TestCheckedWiderWrites_never_wide_fit|TestCheckedWiderWrites_never_number_fit|TestCheckedWiderWrites_never_number_misfit|TestCheckedWiderWrites_never_string_fit|TestCheckedWiderWrites_never_string_misfit|TestCheckedWiderWrites_never_object_fit|TestCheckedWiderWrites_never_object_misfit|TestCheckedWiderWrites_diagnostic_alias_fit|TestCheckedWiderWrites_diagnostic_alias_misfit|TestCheckedWiderWrites_diagnostic_proof_fit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 20.641,
+    "tests": [
+      {
+        "test": "TestCheckedWiderWrites_never_number_misfit",
+        "action": "pass",
+        "seconds": 8.48
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_object_fit",
+        "action": "pass",
+        "seconds": 9.23
+      },
+      {
+        "test": "TestCheckedWiderWrites_flow_node_fit",
+        "action": "pass",
+        "seconds": 9.35
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_proof_fit",
+        "action": "pass",
+        "seconds": 9.46
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_alias_misfit",
+        "action": "pass",
+        "seconds": 1.19
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_object_misfit",
+        "action": "pass",
+        "seconds": 1.05
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_alias_fit",
+        "action": "pass",
+        "seconds": 1.7
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_nullable_fit",
+        "action": "pass",
+        "seconds": 1.5
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_number_fit",
+        "action": "pass",
+        "seconds": 1.51
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_wide_fit",
+        "action": "pass",
+        "seconds": 1.56
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_splice_misfit",
+        "action": "pass",
+        "seconds": 1.07
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_index_misfit",
+        "action": "pass",
+        "seconds": 1.09
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_nullable_misfit",
+        "action": "pass",
+        "seconds": 0.97
+      },
+      {
+        "test": "TestCheckedWiderWrites_flow_undefined_misfit",
+        "action": "pass",
+        "seconds": 1.09
+      },
+      {
+        "test": "TestCheckedWiderWrites_flow_array_misfit",
+        "action": "pass",
+        "seconds": 1.03
+      },
+      {
+        "test": "TestCheckedWiderWrites_flow_array_fit",
+        "action": "pass",
+        "seconds": 1.62
+      },
+      {
+        "test": "TestCheckedWiderWrites_flow_undefined_fit",
+        "action": "pass",
+        "seconds": 1.85
+      },
+      {
+        "test": "TestCheckedWiderWrites_flow_node_misfit",
+        "action": "pass",
+        "seconds": 1.23
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_string_fit",
+        "action": "pass",
+        "seconds": 1.47
+      },
+      {
+        "test": "TestCheckedWiderWrites_never_string_misfit",
+        "action": "pass",
+        "seconds": 0.88
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedWiderWrites_diagnostic_proof_misfit|TestCheckedWiderWrites_diagnostic_rich_fit|TestCheckedWiderWrites_diagnostic_rich_misfit|TestCheckedWiderWrites_diagnostic_related_fit|TestCheckedWiderWrites_diagnostic_related_misfit|TestCheckedWiderWrites_diagnostic_nested_fit|TestCheckedWiderWrites_diagnostic_nested_misfit|TestCheckedWiderWrites_diagnostic_inner_fit|TestCheckedWiderWrites_diagnostic_inner_misfit|TestCheckedWiderWrites_reference_structure|TestCheckedWiderWrites_flags_fit|TestCheckedWiderWrites_flags_misfit|TestCheckedWiderWrites_string_fit|TestCheckedWiderWrites_string_misfit|TestCheckedWiderWrites_boolean_fit|TestCheckedWiderWrites_boolean_misfit|TestCheckedWiderWrites_diagnostic_fit|TestCheckedWiderWrites_diagnostic_misfit|TestCheckedWiderWrites_number_fit|TestCheckedWiderWrites_number_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 21.831,
+    "tests": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_inner_misfit",
+        "action": "pass",
+        "seconds": 9.08
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_proof_misfit",
+        "action": "pass",
+        "seconds": 9.12
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_nested_fit",
+        "action": "pass",
+        "seconds": 10.06
+      },
+      {
+        "test": "TestCheckedWiderWrites_flags_fit",
+        "action": "pass",
+        "seconds": 10.21
+      },
+      {
+        "test": "TestCheckedWiderWrites_reference_structure",
+        "action": "pass",
+        "seconds": 1.1
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_related_misfit",
+        "action": "pass",
+        "seconds": 1.7
+      },
+      {
+        "test": "TestCheckedWiderWrites_boolean_misfit",
+        "action": "pass",
+        "seconds": 1.49
+      },
+      {
+        "test": "TestCheckedWiderWrites_number_misfit",
+        "action": "pass",
+        "seconds": 1.75
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_misfit",
+        "action": "pass",
+        "seconds": 1.23
+      },
+      {
+        "test": "TestCheckedWiderWrites_number_fit",
+        "action": "pass",
+        "seconds": 1.9
+      },
+      {
+        "test": "TestCheckedWiderWrites_string_misfit",
+        "action": "pass",
+        "seconds": 1.27
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_rich_misfit",
+        "action": "pass",
+        "seconds": 1.51
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_fit",
+        "action": "pass",
+        "seconds": 2.09
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_related_fit",
+        "action": "pass",
+        "seconds": 1.76
+      },
+      {
+        "test": "TestCheckedWiderWrites_boolean_fit",
+        "action": "pass",
+        "seconds": 1.58
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_inner_fit",
+        "action": "pass",
+        "seconds": 1.53
+      },
+      {
+        "test": "TestCheckedWiderWrites_string_fit",
+        "action": "pass",
+        "seconds": 1.83
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_rich_fit",
+        "action": "pass",
+        "seconds": 1.91
+      },
+      {
+        "test": "TestCheckedWiderWrites_flags_misfit",
+        "action": "pass",
+        "seconds": 1.18
+      },
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_nested_misfit",
+        "action": "pass",
+        "seconds": 1.31
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedWiderWrites_compound_fit|TestCheckedWiderWrites_compound_misfit|TestCheckedWiderWrites_nullable_number_fit|TestCheckedWiderWrites_nullable_number_misfit|TestCheckedWiderWrites_range_fit|TestCheckedWiderWrites_range_misfit|TestCheckedWiderWrites_receiver_fit|TestCheckedWiderWrites_parent_fit|TestCheckedWiderWrites_parent_misfit|TestCheckedWiderWriteMutants_drop_check|TestCheckedWiderWriteMutants_drop_literal_set|TestCheckedDiagnosticReferenceMutants_drop_alias_check|TestCheckedDiagnosticReferenceMutants_drop_allocation_proof|TestCheckedDiagnosticReferenceMutants_drop_nested_contract|TestCheckedFlowContainerContractMutants_flow_node_misfit|TestCheckedFlowContainerContractMutants_flow_undefined_misfit|TestCheckedFlowContainerContractMutants_flow_array_misfit|TestCheckedFlowContainerContractMutants_container_number_misfit|TestCheckedFlowContainerContractMutants_container_string_misfit|TestCheckedFlowContainerContractMutants_container_map_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 33.001,
+    "tests": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+        "action": "pass",
+        "seconds": 13.52
+      },
+      {
+        "test": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+        "action": "pass",
+        "seconds": 13.7
+      },
+      {
+        "test": "TestCheckedWiderWrites_compound_fit",
+        "action": "pass",
+        "seconds": 13.84
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+        "action": "pass",
+        "seconds": 13.84
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+        "action": "pass",
+        "seconds": 2.15
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+        "action": "pass",
+        "seconds": 2.06
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+        "action": "pass",
+        "seconds": 2.29
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+        "action": "pass",
+        "seconds": 2.56
+      },
+      {
+        "test": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+        "action": "pass",
+        "seconds": 2.31
+      },
+      {
+        "test": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+        "action": "pass",
+        "seconds": 2.14
+      },
+      {
+        "test": "TestCheckedWiderWriteMutants_drop_literal_set",
+        "action": "pass",
+        "seconds": 2.32
+      },
+      {
+        "test": "TestCheckedWiderWrites_receiver_fit",
+        "action": "pass",
+        "seconds": 3.04
+      },
+      {
+        "test": "TestCheckedWiderWrites_parent_misfit",
+        "action": "pass",
+        "seconds": 1.87
+      },
+      {
+        "test": "TestCheckedWiderWriteMutants_drop_check",
+        "action": "pass",
+        "seconds": 2.22
+      },
+      {
+        "test": "TestCheckedWiderWrites_nullable_number_misfit",
+        "action": "pass",
+        "seconds": 2
+      },
+      {
+        "test": "TestCheckedWiderWrites_parent_fit",
+        "action": "pass",
+        "seconds": 2.37
+      },
+      {
+        "test": "TestCheckedWiderWrites_range_misfit",
+        "action": "pass",
+        "seconds": 1.78
+      },
+      {
+        "test": "TestCheckedWiderWrites_range_fit",
+        "action": "pass",
+        "seconds": 2.14
+      },
+      {
+        "test": "TestCheckedWiderWrites_compound_misfit",
+        "action": "pass",
+        "seconds": 1.5
+      },
+      {
+        "test": "TestCheckedWiderWrites_nullable_number_fit",
+        "action": "pass",
+        "seconds": 2.04
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedFlowContainerContractMutants_container_splice_misfit|TestCheckedFlowContainerContractMutants_container_object_misfit|TestCheckedFlowContainerContractMutants_container_nested_misfit|TestCheckedFlowContainerContractMutants_container_boolean_misfit|TestCheckedFlowContainerContractMutants_container_fill_misfit|TestCheckedFlowContainerContractMutants_container_map_object_misfit|TestCheckedFlowContainerContractMutants_container_alias_misfit|TestCheckedEmitContractsMutants_emit_drop_check|TestCheckedEmitContractsMutants_emit_node_misfit|TestCheckedEmitContractsMutants_emit_auto_misfit|TestCheckedEmitContractsMutants_emit_callback_misfit|TestCheckedEmitContractsMutants_emit_comment_misfit|TestCheckedEmitContractsMutants_emit_resolution_misfit|TestCheckedViewsNextMutants_optional_boolean_misfit|TestCheckedViewsNextMutants_optional_false_misfit|TestCheckedViewsNextMutants_required_boolean_misfit|TestCheckedViewsNextMutants_branch_file_misfit|TestCheckedViewsNextMutants_branch_start_misfit|TestCheckedViewsNextMutants_branch_length_misfit|TestCheckedViewsNextMutants_branch_bottom_number_misfit)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 37.833,
+    "tests": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+        "action": "pass",
+        "seconds": 17.17
+      },
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+        "action": "pass",
+        "seconds": 17.63
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+        "action": "pass",
+        "seconds": 17.9
+      },
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+        "action": "pass",
+        "seconds": 17.91
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+        "action": "pass",
+        "seconds": 2.35
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+        "action": "pass",
+        "seconds": 2.6
+      },
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_node_misfit",
+        "action": "pass",
+        "seconds": 3.48
+      },
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_drop_check",
+        "action": "pass",
+        "seconds": 3.37
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+        "action": "pass",
+        "seconds": 2.68
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+        "action": "pass",
+        "seconds": 2.93
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+        "action": "pass",
+        "seconds": 3.22
+      },
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+        "action": "pass",
+        "seconds": 3.13
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_branch_length_misfit",
+        "action": "pass",
+        "seconds": 3.37
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_branch_start_misfit",
+        "action": "pass",
+        "seconds": 3.08
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_branch_file_misfit",
+        "action": "pass",
+        "seconds": 3.18
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_required_boolean_misfit",
+        "action": "pass",
+        "seconds": 3.1
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_optional_false_misfit",
+        "action": "pass",
+        "seconds": 2.41
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 2.37
+      },
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+        "action": "pass",
+        "seconds": 1.87
+      },
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+        "action": "pass",
+        "seconds": 2.26
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestCheckedViewsNextMutants_branch_bottom_string_misfit|TestCheckedViewsNextMutants_generic_site_misfit|TestCheckedViewsNextMutants_overload_result_misfit|TestCheckedViewsNextMutants_overload_callback_misfit|TestFamiliesOwnEveryCaseOnce|TestFamilyWrappersAreCurrent|TestCheckedViewV2RepresentationMutants)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 25.021,
+    "tests": [
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/null",
+        "action": "pass",
+        "seconds": 6.27
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_overload_result_misfit",
+        "action": "pass",
+        "seconds": 12.32
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+        "action": "pass",
+        "seconds": 12.49
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_generic_site_misfit",
+        "action": "pass",
+        "seconds": 6.23
+      },
+      {
+        "test": "TestFamilyWrappersAreCurrent",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestCheckedViewsNextMutants_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 12.53
+      },
+      {
+        "test": "TestFamiliesOwnEveryCaseOnce",
+        "action": "pass",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/int32",
+        "action": "pass",
+        "seconds": 0.89
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/uint8",
+        "action": "pass",
+        "seconds": 0.78
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/float64",
+        "action": "pass",
+        "seconds": 0.89
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/undefined",
+        "action": "pass",
+        "seconds": 1
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 16.785,
+    "tests": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+        "action": "pass",
+        "seconds": 1.91
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+        "action": "pass",
+        "seconds": 1.97
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+        "action": "pass",
+        "seconds": 1.97
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+        "action": "pass",
+        "seconds": 2
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^(TestEveryMapAProgramHoldsIsSorted|TestAProgramIsTheSameBytesEveryTimeGobWritesIt|TestASortedMapIsNilWhereAPlainMapIs)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 4.509,
+    "tests": [
+      {
+        "test": "TestEveryMapAProgramHoldsIsSorted",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestASortedMapIsNilWhereAPlainMapIs",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+        "action": "pass",
+        "seconds": 0.02
+      }
+    ]
+  }
+]

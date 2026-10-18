@@ -1,0 +1,67 @@
+=== RUN   TestCheckedRuntimeRegexFields
+=== PAUSE TestCheckedRuntimeRegexFields
+=== RUN   TestCheckedRuntimeMapFields
+=== PAUSE TestCheckedRuntimeMapFields
+=== RUN   TestCheckedRuntimeSetFields
+=== PAUSE TestCheckedRuntimeSetFields
+=== RUN   TestCheckedRuntimeFSFields
+=== PAUSE TestCheckedRuntimeFSFields
+=== RUN   TestCheckedRuntimeDirectoryFields
+=== PAUSE TestCheckedRuntimeDirectoryFields
+=== CONT  TestCheckedRuntimeRegexFields
+=== CONT  TestCheckedRuntimeFSFields
+=== CONT  TestCheckedRuntimeMapFields
+=== CONT  TestCheckedRuntimeSetFields
+=== CONT  TestCheckedRuntimeDirectoryFields
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:69: gate cache node miss
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:70: gate cache node miss
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:71: gate cache node miss
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:68: gate cache node miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:74: gate cache node miss
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:68: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-339414015/main.c:138:20: error: use of undeclared identifier 'adamic_local_3_optional_join_receiver'
+          138 |                                 adamic_release(adamic_local_3_optional_join_receiver);
+              |                                                ^
+        1 error generated.
+        
+--- FAIL: TestCheckedRuntimeRegexFields (12.22s)
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:74: gate cache node miss
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:69: gate cache node miss
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:71: gate cache node miss
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:70: gate cache node miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeFSFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeMapFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeSetFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:74: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/directory.a: source Node exit 0 stdout ""; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeDirectoryFields (12.64s)
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:70: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/set.a: source Node exit 0 stdout "alpha\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeSetFields (12.67s)
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:71: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/fs.a: source Node exit 0 stdout ""; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeFSFields (12.67s)
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:69: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/map.a: source Node exit 0 stdout "alpha\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeMapFields (12.68s)
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.698s
+FAIL

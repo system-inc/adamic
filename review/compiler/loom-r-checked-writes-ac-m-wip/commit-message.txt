@@ -1,0 +1,13 @@
+Add exact a-check headers to checked-write witnesses
+
+Carry 5aa205ec00329ce78789ddb62277f0ccdcc1f337 on pinned main dbdf977f5b8b0979d414ebe6f20e7aadd312e309 as one commit. Conservatively use each full observed refusal reason and remove the legacy compile header from the clean generic witness. Preserve every program body byte.
+
+Compile all 28 changed Adamic files, including review evidence. The unchanged fast-gate predicate accepts all and catches both header mutants. Rerun focused fixtures, guards, vet and twelve count measurements. Compiler, runtime, expectations and counts remain identical to 5aa205ec.
+
+Re-cut onto main 5a94465370ea0172e25aae8c13478e59e40c2bb4 (was 48855a9bcd7fc36aebd41e33c6a05aec956e211e on dbdf977f)
+
+Validation WIP: three unchanged cold Go export leaves exceeded 60 seconds and one 90-second probe was not rerun.
+
+Assumption: keep the fetched base fixed and leave the unrelated main infrastructure test split to its owner.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
