@@ -894,3 +894,13 @@ func TestCompilerAndStage1Agree_6564_25(t *testing.T) {
 	t.Parallel()
 	compilerAgreementSubShard(t, 6564, 25)
 }
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_cond_assign(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-cond-assign")
+}
+
+func TestCompilerAndStage1Agree_6564_26(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 26)
+}

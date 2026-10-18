@@ -52,6 +52,7 @@ func registeredRules() []registeredRule {
 		{oracleNoAwaitInLoop(), oracleNoAwaitInLoopOptions},
 		{oracleNoBitwise(), oracleNoBitwiseOptions},
 		{oracleNoCaller(), oracleNoCallerOptions},
+		{oracleNoCondAssign(), oracleNoCondAssignOptions},
 		{oracleNoContinue(), oracleNoContinueOptions},
 		{oracleNoDivRegex(), oracleNoDivRegexOptions},
 		{oracleNoEmptyCharacterClass(), oracleNoEmptyCharacterClassOptions},
