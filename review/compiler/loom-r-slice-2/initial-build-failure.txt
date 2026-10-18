@@ -1,0 +1,2 @@
+First runtime-set guard attempt did not run a test: source self_compare_test.go:68:15: undefined: unbalanced.
+Main moved that operation to internal/leakcheck.Unbalanced. Updated only the source test to leakcheck.Unbalanced(leakRun(counted)); subsequent guard compilation and runtime witness check passed.

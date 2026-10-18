@@ -1,0 +1,217 @@
+[
+  {
+    "test": "TestFlowCallbackWideningNumberNamedSort",
+    "seconds": 0.24,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberFindLast",
+    "seconds": 0.24,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningLibraryMap",
+    "seconds": 0.27,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectGeneric",
+    "seconds": 0.28,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2WeakHeldUnion",
+    "seconds": 0.22,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2WeakUnion",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2WeakMatchingMethods",
+    "seconds": 0.25,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2WeakBooleanFilter",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2WeakSingle",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2OptionalError",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2UndefinedError",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestSlice2MiscompileControls",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningOptionalObjectMap",
+    "seconds": 0.22,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNullableObjectMap",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningOptionalNumberMap",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningStringMap",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningBooleanMap",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberArguments",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberGenericMap",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectGenericMap",
+    "seconds": 0.22,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectSort",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectSome",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectReduce",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectMap",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberToSorted",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectForEach",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectFind",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectFilter",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningObjectEvery",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberThrow",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberSome",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberSort",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberFilter",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberReduce",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberFindIndex",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberFind",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberGeneric",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberIndex",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberMap",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberEvery",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberCapture",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberForEach",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "test": "TestFlowCallbackWideningNumberReduceAccumulator",
+    "seconds": 0.2,
+    "action": "pass"
+  }
+]

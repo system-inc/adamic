@@ -1,0 +1,22 @@
+{
+  "mutant": "weak-callback-isolated",
+  "exit": 1,
+  "caught": true,
+  "markers": [
+    "both backends unexpectedly admit the pinned callback NotYet",
+    "AddressSanitizer: heap-buffer-overflow",
+    "sanitized: exit codes differ"
+  ],
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/weak-isolated/overlay.json",
+    "-run",
+    "^TestWeakDifferential(Each|Find|Map|Reduce|Some|Sort)$",
+    "-count=1",
+    "-v",
+    "-timeout=90s"
+  ],
+  "seconds": 65.43
+}

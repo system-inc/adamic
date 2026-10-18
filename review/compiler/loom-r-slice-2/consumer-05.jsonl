@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:17:39.5715677Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-18T00:17:39.577112892Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback"}
+{"Time":"2026-10-18T00:17:39.577189255Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback","Output":"=== RUN   TestAdaptSingletonArrayCallback\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:39.577234202Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback","Output":"=== PAUSE TestAdaptSingletonArrayCallback\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:39.577237557Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback"}
+{"Time":"2026-10-18T00:17:39.577240992Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback"}
+{"Time":"2026-10-18T00:17:39.577243596Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback","Output":"=== CONT  TestAdaptSingletonArrayCallback\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:39.577251728Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback","Output":"--- PASS: TestAdaptSingletonArrayCallback (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:39.577255243Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptSingletonArrayCallback","Elapsed":0}
+{"Time":"2026-10-18T00:17:39.577268563Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:39.577390108Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.005s\n"}
+{"Time":"2026-10-18T00:17:39.577409647Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.006}

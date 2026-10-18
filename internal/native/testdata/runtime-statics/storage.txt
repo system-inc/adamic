@@ -54,6 +54,10 @@
 `directory.c:ok_kind:1`
 `directory.c:other_type:1`
 `exceptions.c:adamic_thrown:1`
+# empty_message is an immortal ADAMIC_STRING literal (references=0). Retain/release and share
+# leave it unchanged; string_index.c excludes immortal literals from units/index cache writes.
+# It has no mutable shared state and requires neither a lock nor thread-local storage.
+`exceptions.c:empty_message:1`
 `exceptions.c:error_name:1`
 `exceptions.c:message_cache:1`
 `exceptions.c:name_cache:1`

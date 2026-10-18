@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:21:36.014843718Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments"}
+{"Time":"2026-10-18T00:21:36.019772769Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion"}
+{"Time":"2026-10-18T00:21:36.019852868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion","Output":"=== RUN   TestCommentMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:36.019874971Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion","Output":"=== PAUSE TestCommentMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:36.019877295Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion"}
+{"Time":"2026-10-18T00:21:36.019879308Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion"}
+{"Time":"2026-10-18T00:21:36.01988099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion","Output":"=== CONT  TestCommentMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:36.020167476Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion","Output":"    comment_mutants_test.go:182: union: 5 mutants x 47 witnesses = 235 unique cases\n"}
+{"Time":"2026-10-18T00:21:36.020188107Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion","Output":"--- PASS: TestCommentMutantsUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:36.020191852Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Test":"TestCommentMutantsUnion","Elapsed":0}
+{"Time":"2026-10-18T00:21:36.020223119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:36.020359592Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers/comments\t0.005s\n"}
+{"Time":"2026-10-18T00:21:36.020379451Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments","Elapsed":0.006}

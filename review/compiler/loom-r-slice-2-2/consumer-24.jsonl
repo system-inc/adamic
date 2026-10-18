@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T08:50:05.839504014Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex"}
+{"Time":"2026-10-18T08:50:05.850894507Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap"}
+{"Time":"2026-10-18T08:50:05.851555131Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"=== RUN   TestDynamicPatternGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:05.851599567Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"=== PAUSE TestDynamicPatternGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:05.851602301Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap"}
+{"Time":"2026-10-18T08:50:05.851605215Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap"}
+{"Time":"2026-10-18T08:50:05.851607428Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"=== CONT  TestDynamicPatternGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:06.074009056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"    regex_test.go:204: /workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet\n"}
+{"Time":"2026-10-18T08:50:06.075361219Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Output":"--- PASS: TestDynamicPatternGap (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:06.075376822Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Test":"TestDynamicPatternGap","Elapsed":0.22}
+{"Time":"2026-10-18T08:50:06.075394458Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:06.085448682Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/regex\t0.246s\n"}
+{"Time":"2026-10-18T08:50:06.085486468Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/regex","Elapsed":0.246}

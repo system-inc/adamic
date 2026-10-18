@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T08:49:19.324949467Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-18T08:49:19.345054402Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion"}
+{"Time":"2026-10-18T08:49:19.345283993Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"=== RUN   TestAcceptanceMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:19.345310202Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"=== PAUSE TestAcceptanceMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:19.345312736Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion"}
+{"Time":"2026-10-18T08:49:19.345316131Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion"}
+{"Time":"2026-10-18T08:49:19.345317673Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"=== CONT  TestAcceptanceMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:19.345320257Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"    acceptance_grain_test.go:226: union: 2 mutations x 11 corpus cases = 22 pairs, each exactly once\n"}
+{"Time":"2026-10-18T08:49:19.345327348Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Output":"--- PASS: TestAcceptanceMutantsUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:19.345329301Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceMutantsUnion","Elapsed":0}
+{"Time":"2026-10-18T08:49:19.345340347Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:19.346951607Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.013s\n"}
+{"Time":"2026-10-18T08:49:19.346979548Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.022}

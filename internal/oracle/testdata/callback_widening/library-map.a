@@ -1,0 +1,1 @@
+console.log([1,2,3].map(String).join(','));console.log(['11','11','11'].map(parseInt).join(','));

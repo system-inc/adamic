@@ -1,0 +1,4418 @@
+[
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/non_null.ts",
+    "seconds": 3.44
+  },
+  {
+    "test": "TestCountsAreRecorded_015/stage3/interface-downcasts/v2/fixed-tuple-wrong.a",
+    "seconds": 2.65
+  },
+  {
+    "test": "TestCountsAreRecorded_015/stage3/interface-downcasts/lane4b/fixtures/node-indicator-flags-wrong.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/typed_arrays_stats.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_015/stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/typed_arrays_float64array.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/93122fa_s1.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/non_null_uninitialized_const.ts",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/switch_case_declarations/shared.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/overload_resolve_type_names.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/parameter_properties_levels.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/omitted_reader_override.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/optional_widening_declared.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/new_expression_class_cache_or.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/narrowed_union_valid.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/node_buffer_digest_twice.a",
+    "seconds": 0.62
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/047cb0d_n_element_plain.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/enums_flags_never_default.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/clock_generic_returns_t_01.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/callback_widening/optional-object-map.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/notyet_library_regex_callback.a",
+    "seconds": 2.07
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/plain_data_spread.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/host_undefined_value.a",
+    "seconds": 1.97
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/node_fs_rm_options.a",
+    "seconds": 2.81
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/normalize_long_marks.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/reuse_arrays.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/optional_class_method.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/borrow_defined_lent.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/nbody_runtime_fields.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/pad_too_long.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/normalize_coverage_long.a",
+    "seconds": 1.35
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/sorts.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/json_stringify_escapes.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/arguments_length_value.a",
+    "seconds": 2.47
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/library_array_metadata.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_015/internal/oracle/testdata/library_array_iterators.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/library_object_has_own.a",
+    "seconds": 3.45
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_023/stage3/interface-downcasts/untagged/fixtures/structural-source-nested.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_023/stage3/interface-downcasts/readiness-number-uninitialized.ts",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/weak_miscompiles/matching_methods.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_023/stage3/interface-downcasts/untagged/fixtures/binding-name-source-nested.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/non_null_uninitialized_catch.ts",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/structural_statics_mixed.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_023/stage3/namespaces/shapes/Parser.JSDocParser.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/unknown_narrowing_host.a",
+    "seconds": 0.79
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/module_namespace_reads/initialized.a",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/namespaces_pair/main.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_codes.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/method_coverage_string_tostring.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/host_void_method.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/import_cycles/runtime/even.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/function_values_diagnostic.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/getters_census_throwing_object.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/function_values_chain.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/enums_names.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/element_access_presence.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/entries_record_alias.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/nested_reduced_parameter_unreachable.a",
+    "seconds": 1.69
+  },
+  {
+    "test": "TestCountsAreRecorded_023/stage3/fixtures/nested-functions/03_scanner_hoisting.a",
+    "seconds": 2.04
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/devirtualize_interfaces.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/census_optional_values_system.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/callback_widening/object-every.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/search_from.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_next.a",
+    "seconds": 0.42
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/class_inheritance_generic.a",
+    "seconds": 0.68
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/declared_later.a",
+    "seconds": 0.45
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/library_map_set_group_by.a",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/throw_keeps_old_value.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/self_assignments.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/size_class_churn.a",
+    "seconds": 0.44
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/read_order.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/functions.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_023/internal/oracle/testdata/library_fnexpr_loops.a",
+    "seconds": 0.49
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/map_foreach_arrays.a",
+    "seconds": 3.53
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/borrow_chain_listener.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_022/stage3/fixtures/taste/10_global_import_meta.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_022/stage3/fixtures/taste/05_this_type.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/concurrency/accepted/identity.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/omitted_string.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/nested_mutual.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_022/stage3/namespace-init-sys/realpath-control.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/node_fs_file_write_file.a",
+    "seconds": 0.82
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/method_coverage_string_indexof.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/namespaces_debug_state.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/method_coverage_string_at.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/method_coverage_map_strings.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/imported_const_cases/reexport.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/enums_open_never_if.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/class_inheritance_exceptions.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/census_boolean_operators.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/census_optional_values_receivers.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/callback_widening/object-forEach.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/callback_widening/number-throw.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/return_panic.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/move_throw.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/spread_snapshot.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/normalize_form.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/find_shrinks.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/strings_more.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/maybe_number_slots.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/tuples_kept.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/lint_runtime_release_chain.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/library_array_join.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/borrow_chain_override.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/borrow_chain_coverage_method.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_022/internal/oracle/testdata/bitwise_sweep.a",
+    "seconds": 0.91
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/borrow_chain_coverage_return.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/literal_optional_shapes.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/conditions_sites.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/host_map_generic_union.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/cast_enum_const_numeric_fails.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/callback_widening/object-find.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/async_throw.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/accessor_spread_throw_last.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/spread_calls.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/from_codes.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/normalize_coverage_stream.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/tuple_values.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/sort_releases.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/narrowed_writes.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/library_map_set_construct.a",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/borrow_chain_argument.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/non_null_uninitialized_spread.ts",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_021/stage3/interface-downcasts/v2/fixed-tuple-good.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/class_as_interface.a",
+    "seconds": 0.55
+  },
+  {
+    "test": "TestCountsAreRecorded_021/stage3/interface-downcasts/lane1/flag-downcast-wrong.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_021/stage3/interface-downcasts/lane1/objects-untagged-good.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/stage3/drivers/scanner/probes/nested-sibling-callback.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/regexp_cycle_closures.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_021/stage3/namespace-parser-stops/native-namespace-object-receiver.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/nested_callback_late_capture.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/non_null_checked_present.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/047cb0d_n_arrayindex.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_021/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/non_null_map.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/interface-downcasts/untagged/fixtures/flow-stored-good.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/interface-downcasts/lane4b/fixtures/literal-negative-wrong.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/interface-downcasts/untagged/fixtures/callable-union-good-string.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/interface-downcasts/v2/mixed-read-write.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/fixtures/self-compare/sweep.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/static_constructor_spread_gap.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/interface-downcasts/lane1/objects-missing-nested.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/fixtures/nested-functions/07_binder_symbol_count.a",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/omitted_reader.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/non_null_definite_local.ts",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/non_null_checked_initializer.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/notyet_library_object_entries_const.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/library_method_values_dead_zone.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/module_namespace_reads/main.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/function_values_options.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/host_unknown_error_code.a",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCountsAreRecorded_020/stage3/fixtures/enums/13_regex_map_keys.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/node_buffer_writes.a",
+    "seconds": 0.92
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/entries_checked_literal.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/cast_class_generic_fails.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/devirtualize_modules/main.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/callback_widening/number-toSorted.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/cast_class.a",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/callback_widening/number-capture.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/callback_widening/number-generic-map.a",
+    "seconds": 0.45
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/nbody_write_read_order.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/nbody_optional_references.a",
+    "seconds": 0.52
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/long_chain.a",
+    "seconds": 0.46
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/borrow_loop_calls.a",
+    "seconds": 0.84
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/adversarial_iteration.a",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/timsort.a",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCountsAreRecorded_020/internal/oracle/testdata/library_array_flat_map.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/map_foreach_named_more.a",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/statements_small_typescript/nonnull.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_019/stage3/interface-downcasts/readiness-identifier.ts",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_019/stage3/interface-downcasts/lane1/objects-wrong-nested.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_019/stage3/interface-downcasts/default-boxed-string.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_019/stage3/interface-downcasts/untagged/fixtures/flow-helper-wrong.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_019/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/regexp_cycle_weak.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/concurrency/accepted/nested.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/empty-path.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/namespaces_parser_body.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/module_namespace_reads/hoisted.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/notyet_library_regex_offset.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/host_rest_union.a",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/callback_widening/number-findIndex.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/class_identity.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/arguments_length_value_count.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/reuse_narrowed.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/regexp_matchall_nonglobal.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/reuse_weak_after_reuse.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/shared_slice_append.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/lent_reads.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/narrowed_numbers.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/library_map_set_iterators.a",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/narrowed_methods.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/lint_runtime_search_calls.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/json_stringify_keys.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/call_targets_closure.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_019/internal/oracle/testdata/maybe_numbers.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/route_targets_sort_values.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/instantiation_last.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/typed_arrays_primes_large.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/typed_arrays_primes.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/proven_satisfies.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/nested_reference_identity.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/node_fs_file_close.a",
+    "seconds": 0.77
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/namespace_callable_properties.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/params_namespaces_callbacks.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/omitted_reader_string.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/optional_indexing_map.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_018/stage3/fixtures/namespaces/08_parser_jsdoc_nested.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_018/stage3/namespace-live-export/live.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/host_empty_object_slots.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/debugger_fail.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/fallthrough_ownership.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/closure_convention_plain.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/class_instance_key_region_alias.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/census_predicate_marker.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/array_literal_empty_typed.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/arguments_length_static.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/stack_forever.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/spreads.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/classes.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/library_object_freeze_alias.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/borrow_chain_coverage_bounded.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/borrow_chain_coverage_exclusions.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/set_foreach_keys.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_018/internal/oracle/testdata/concat_too_long.a",
+    "seconds": 1.24
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/typeof_null.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/fixtures/taste/12_symbol_links.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/interface-downcasts/default-wrong-boolean.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/interface-downcasts/untagged/fixtures/flow-helper-good.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/interface-downcasts/lane1/interfaces-good.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/class_features_twice.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/scanner_nested_overload.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/statements_small_prefix.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/params_namespaces_shared/main.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/non_null_definite_field.ts",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/omitted_methods.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/parameter_properties.a",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/nested_array.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/nested_captures.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/namespaces_safe_initialization.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/namespaces_observed_narrowing.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/method_coverage_string_slice.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/library_map_set_iterator_number_hash.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/host_optional_intrinsic.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/host_map_iterator_probe.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/conditions_optional_string.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/fixtures/enum-init-reach/unknown-after.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/class_inheritance_interface.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/cast_subunion_const_string_fails.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/regions_constructor_capture.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/cast_subunion_fails.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/class_features_retained.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/arguments_length_static_constructor.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/async_plain.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/has_own.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/arguments_length.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/library_string_existing.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/reuse_throw.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/maybe_boolean_panic.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/field_write_paths.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/nbody_base_writes.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/normalize.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/string_too_long.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/array_from_length.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/fixtures/taste/20_jsdoc_terminate.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_017/stage3/fixtures/taste/19_deprecated_flags.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/string_build_cached_reads.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/closures_throw.a",
+    "seconds": 0.51
+  },
+  {
+    "test": "TestCountsAreRecorded_017/internal/oracle/testdata/string_build_join.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/map_foreach_named_closures.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_016/stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_016/stage3/fixtures/taste/23_labels_finally.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/read_files.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/non_null_uninitialized_append.ts",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/regexp_replace/argument_guard.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/non_null_uninitialized_capture.ts",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_016/stage3/namespace-parser-stops/native-callable-namespace.a",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/proven_upcasts.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/non_null_checked_narrowed.ts",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_016/stage3/drivers/scanner/probes/cyclic-premature-value/main.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/047cb0d_n_paren.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/method_coverage_string_overloads.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/callback_widening/library-map.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/regexp_split_pair_pattern.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/reuse_lent_global.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/node_buffer_utf16.a",
+    "seconds": 0.7
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/library_string_raw.a",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/return_panic_fires.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/reuse_forward.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/nbody_field_values.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/maybe_collections.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/field_access_paths.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/narrowed_fields.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/param_assigned_in_try.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/library_math_number_convert.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/runtime_last_index_of.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/strings.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/call_targets_sort.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_016/internal/oracle/testdata/library_array_find_last.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/non_null_boolean.ts",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/instantiation_first.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/typeof_dispatch.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_030/stage3/interface-downcasts/lane4b/fixtures/literal-good.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/typed_arrays_stop.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/switch_empty_neighbors.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/concurrency/accepted/global_capture.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/overload_inference_contracts.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/non_null_refuse_null.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/non_null_checked_let_initializer.ts",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/method_coverage_string_trimend.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/import_cycles/order/main.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/enums_open_never.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/devirtualize_generic.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/class_inheritance_order.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/callback_widening/number-reduce.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/library_method_values.a",
+    "seconds": 0.88
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/regexp_split.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/async_coverage_discard.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/try_assignments.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/method_closures.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/navigation.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/string_index.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_030/cmd/adamic/testdata/wasi/request.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/borrow_loop.a",
+    "seconds": 0.61
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/library_object_is.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/call_targets_reuse.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_030/internal/oracle/testdata/borrow_chain_unknown.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/route_targets_callbacks.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_029/stage3/interface-downcasts/lane4b/fixtures/required-missing.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_029/stage3/fixtures/taste/09_literal_cache.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_029/stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/structural_statics_generic.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/non_null_literal_statement.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/namespace_method_receiver.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_029/stage3/interface-downcasts/v2/fs-option-boxing.a",
+    "seconds": 0.85
+  },
+  {
+    "test": "TestCountsAreRecorded_029/stage3/fixtures/nested-functions/02_scanner_digits.a",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/concurrency/accepted/readonly_function.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/concurrency/accepted/map_capture.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/optional_widening_class.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/namespaces_unready.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/omitted_scanner.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/method_coverage_string_endswith.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/fallthrough_exceptions.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_029/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/element_access_reads.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/cast_enum_string_fails.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/generic_instance_key_typeof.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/class_instance_key_region.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/from_code_point_fails.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/interleaved.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/large_output.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/sets.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/borrow_element_throw.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/borrow_reassigned.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/panic_in_try.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/ascii_scan.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/undefined_keys.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/json_stringify_numbers.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/library_math_number_prototype.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_029/internal/oracle/testdata/library_object_freeze.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/string_views_holders.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_024/stage3/interface-downcasts/untagged/fixtures/recursive-absent.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/statements_small_typescript/absent.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/namespaces.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/utf8_sweep.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_024/stage3/fixtures/taste/15_barrel.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/non_null_lazy_default.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/syntax_module_declarations.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/non_null_initialized.ts",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/concurrency/accepted/strings.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/omitted_object.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/omitted_scanner_explicit.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/nested_generic_capture.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/new_expression_class_value.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/047cb0d_n_element.a",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/namespaces_call_graph.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/node_buffer_bom.a",
+    "seconds": 1.0
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/method_coverage_string_touppercase.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/callback_widening/number-named-sort.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/node_buffer_encodings.a",
+    "seconds": 1.09
+  },
+  {
+    "test": "TestCountsAreRecorded_024/stage3/fixtures/enums/09_symbol_exclusion_mask.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/conditions_string.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/devirt_borrow_doc_claim.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/class_super_closure.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/census_boolean_negation.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/class_private_generic.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/census_never_rest_marker.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/async_typeof.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/generic_method_return.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/regexp_search.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/library_string_prototype.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/borrow_element_virtual_move.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/borrow_element_super_move.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_024/internal/oracle/testdata/map_iteration.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/string_views_surrogates.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/stage3/interface-downcasts/untagged/fixtures/option-element-source-nested.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/stage3/interface-downcasts/untagged/fixtures/flow-stored-wrong.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/typeof_null_switch.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/taste_star/const.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/params_namespaces_dotted.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/concurrency/accepted/throw_middle.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/nested_reduced_parameter_escaped.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/nested_three_levels.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/047cb0d_n_template.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/namespaces_nested.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/node_options_const_capture.a",
+    "seconds": 0.68
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/method_coverage_object_tags.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/method_coverage_bound_strings.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/imported_const_cases/string.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/fallthrough_nested.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/enums_flags.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/enums_modules/main.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_028/bench/parallel_files.a",
+    "seconds": 1.29
+  },
+  {
+    "test": "TestCountsAreRecorded_028/stage3/fixtures/enum-init-reach/safe-helper.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/census_boolean_dead_branch.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/conditions_null.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/callback_widening/number-forEach.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/callback_widening/nullable-object-map.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/reuse_spread_method.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/power_of_two_string.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/throw_global_move.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/string_limits.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/fill_length.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/map_zero_keys.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/effects.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/radixes.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/string_build_calls.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/load/testdata/0.1/compile/09_tree.ts",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/load/testdata/0.1/compile/03_shapes.ts",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/borrow_chain_coverage_spread.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/library_array_spliced.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/set_foreach_named_keys.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_028/internal/oracle/testdata/map_foreach_named_objects.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/non_null_catch.ts",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_027/stage3/interface-downcasts/lane4b/fixtures/node-indicator-false.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/taste_star/function.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_027/stage3/interface-downcasts/lane4b/fixtures/literal-boolean.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/taste_optional_join.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_027/stage3/drivers/scanner/probes/nested-ancestor-call.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/non_null_uninitialized.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/non_null_lazy_read.ts",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/overload_leading_comment_range.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/overload_array_to_map.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/optional_indexing_string.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/047cb0d_n_numparam.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_027/stage3/namespace-init-sys/cwd-control.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/method_coverage_string_valueof.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/method_coverage_format_failure.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/method_coverage_receiver_order.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/node_buffer_utf8.a",
+    "seconds": 0.8
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/method_coverage_object_descriptors.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/imported_const_cases/fallthrough.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/enums_open_members.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/host_map_union.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/class_instance_key_consume.a",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/cast_enum_numeric.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/async_coverage_typeof.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/async_coverage_reject_empty.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/utf8_view.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/reuse_weak_during_spread.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/user_iterators.a",
+    "seconds": 2.3
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/closure_convention_nested.a",
+    "seconds": 2.08
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/class_oct6_release.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/borrow_chain_coverage_scope.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/route_targets_unknown.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_027/internal/oracle/testdata/census_optional_values_forms.a",
+    "seconds": 2.37
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/string_views_calls.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_026/stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/switch_case_declarations/fallthrough.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/switch_case_declarations/scanner.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/omitted_reader_direct.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/omitted_number.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/nested_pattern_parameter.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/047cb0d_n_optional.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/047cb0d_n_element_method.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/method_coverage_string_startswith.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/method_coverage_string_includes.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/method_coverage_empty_alias_tdz.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/imported_const_cases/numeric.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_026/stage3/fixtures/enum-init-reach/safe-constructor.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_026/stage3/fixtures/enum-init-reach/call-graph-24.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/conditions_object.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/cast_class_fails.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/callback_widening/number-index.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/async_coverage_unions.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/class_layouts.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/adversarial_exits.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/borrow_element.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/radix_range.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/exceptions.a",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/fresh_parser.a",
+    "seconds": 0.46
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/casts.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/regexp_replace/callback.a",
+    "seconds": 1.88
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/sorting.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/input_spread_local.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/call_targets_element.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/map_foreach_named_numbers.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_026/internal/oracle/testdata/map_foreach_objects.a",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/borrow_chain_coverage_callbacks.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/typed_arrays_workers_stats.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/taste_star/type.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/taste_star/class.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/taste_labels.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_031/stage3/fixtures/taste/22_assignment_once.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/switch_case_declarations/neighbors.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/taste_truthiness.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/overload_array_to_numeric_map.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/namespaces_unknown_before.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/nested_callback_escaped.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/new_expression_class_cache_local.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/method_coverage_string_trimstart.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_031/stage3/fixtures/enums/03_jsdoc_range.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/function_values_array.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/conditions_optional_reference.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/implicit_returns.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/callback_widening/boolean-map.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/accessor_spread_throw_first.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/async_coverage_reject_nested.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/library_map_set_zeros.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/reuse_global_sibling.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/nbody_slot_kinds.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/nbody_collection_fields.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/dead_zone.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/borrow_chain_write.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_031/internal/oracle/testdata/library_for_in.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/string_views_policy.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_025/stage3/interface-downcasts/untagged/fixtures/structural-source-good.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/entries_record_misfit.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_025/stage3/interface-downcasts/lane1/objects-good.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_025/stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_025/stage3/fixtures/taste/18_named_export.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_025/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/non_null_lazy_static.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/non_null_lazy_initialized.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a",
+    "seconds": 0.51
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/parameter_properties_kinds.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/optional_widening_fresh.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/overload_original_node.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/overload_trailing_comment_range.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/non_null_checked_null.ts",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/optional_indexing_array.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/namespaces_parser_enums.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/module_namespace_reads/direct_initialized.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/method_coverage_string_padend.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/census_optional_values_padding.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/cast_subunion_const_numeric_fails.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/callback_widening/number-reduce-accumulator.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/weak_narrowed.a",
+    "seconds": 0.38
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/generic_functions.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/nbody_narrowed_receiver.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/invariance_readonly.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/case_mapping.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/reuse_foreach_global.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/borrow_chain_store.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/statements_small_typescript/missing.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/optional_numbers.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/fresh_writes.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/library_object_freeze_write.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/borrow_chain_coverage_guards.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/non_null_array.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/borrow_chain_coverage_values.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_025/internal/oracle/testdata/string_views_methods.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/route_targets_bound_method.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_013/stage3/interface-downcasts/default-destructure.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_013/stage3/interface-downcasts/default-boxed-write.ts",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_013/stage3/fixtures/enums/10_string_enum.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/regexp_replace/arguments.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/walk.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/non_null_uninitialized_exception.ts",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/taste_logical_assignment.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/nested_owned_parameter.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/proven_guards.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/override_same_representation.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/e4eec87_f1_class_narrowed.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/e4eec87_f1_field_narrowed.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/namespaces_debug_probe.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/user_iterators_rest_tdz.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/method_coverage_array_values.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_013/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/cast_enum_const_string_fails.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/enums_open_never_index.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/enums_open_never_field.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/entries_proven_import.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/entries_checked_misfit.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/conditions_function.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/census_overload_lie.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/optional_strings.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/class_features_distinct.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/census_boolean_sieve.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/callback_widening/number-every.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/writes_past_end.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/bitwise.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/set_undefined.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/json_stringify_replacer.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_013/internal/oracle/testdata/regexp.a",
+    "seconds": 0.83
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/fixtures/enum-init-reach/native-call-before-enum.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/interface-downcasts/v2/representation-read-write.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/set_foreach_objects.a",
+    "seconds": 0.48
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/node_fs_file_date.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/fixtures/taste/13_void_callback.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/fixtures/taste/07_compact.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/non_null_weak.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/regexp_replace/group_guard.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/concurrency/accepted/records.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/non_null_checked_undefined.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/method_coverage_string_padstart.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/method_coverage_number_statics.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/getters_census_class_map.a",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/method_coverage_conversions.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/enums_open_never_update.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_012/stage3/fixtures/enums/05_local_export_flags.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/borrow_defined_lent_field.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/element_access_boolean.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/census_overload_contracts.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/array_literal_empty_first.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/callback_widening/object-reduce.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/library_string_conversion.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/search_from_sweep.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/writes.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/throw_keeps_old_value_variants.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/narrowed_compared.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/searches.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/lone_surrogates.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/unions.a",
+    "seconds": 0.58
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/map_foreach_numbers.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/set_foreach_arrays.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_012/internal/oracle/testdata/indexing.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/string_views_throw.a",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/method_coverage_string_charcodeat.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/v2/tuple-identity-wrong.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/untagged/fixtures/structural-source-wrong.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/untagged/fixtures/binding-name-source-wrong.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/lane4b/fixtures/diagnostic-boolean.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/typeof_null_roll.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/typed_arrays_uint8array.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/fixtures/taste/03_diagnostic_file.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/non_null_lazy_field.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/syntax_substr.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/params_namespaces_overrides.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/parameter_properties_ownership.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/047cb0d_n_typeof.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/omitted_boolean.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/namespaces_map_before.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/namespaces_repeated_var.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/miscompile_2a/controls.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/method_coverage_number_formats.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/regions.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/host_array_unknown_predicate.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/entries_scanner.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/method_coverage_math.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/conditions_evaluation.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/cast_enum_const.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/arguments_length_spread.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/library_string_indices.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/output_then_panic.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/closures_throw_uncaught.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/shared_slices.a",
+    "seconds": 0.53
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/class_oct6_subclass_holder.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/maps_and_text.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/json_stringify_undefined.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/weak_parent.a",
+    "seconds": 0.44
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/library_object_assign_fields.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/input_spread_ordinary.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_011/stage3/interface-downcasts/visitor.a",
+    "seconds": 2.97
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/borrow_chain_captured_root.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/non_null_union.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_011/internal/oracle/testdata/string_views_characters.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_014/stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/non_null_field.ts",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/stage3/interface-downcasts/lane4b/fixtures/diagnostic-good.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_014/stage3/interface-downcasts/lane4b/fixtures/diagnostic-code-wrong.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/taste_void.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/unknown_narrowing.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_014/stage3/fixtures/taste/01_diagnostic_code.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/representation_clock_source.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/node_buffer_input.a",
+    "seconds": 0.63
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/node_fs_file_write_positions.a",
+    "seconds": 0.7
+  },
+  {
+    "test": "TestCountsAreRecorded_014/stage3/fixtures/nested-functions/11_scanner_method_wrapper.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/non_null_uninitialized_loop.ts",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/nested_weak.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_014/stage3/namespaces/shapes/BuilderState.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/params_namespaces_values.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/e4eec87_u02_optional_absent.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/enums_open_never_implicit.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/conditions_optional_boolean.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/callback_widening/object-map.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/async_nested.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/callback_widening/number-filter.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/arguments_length_callbacks.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/borrow_global_call.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/library_map_set_setops.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/exceptions_uncaught.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/reuse.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/splice_empty.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/number_formats.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/lint_runtime_release_shared.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/closures.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/normalize_coverage_limit.a",
+    "seconds": 0.76
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/library_for_in_keys.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/library_array_with.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/class_oct6_deep.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/borrow_chain_capture.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_014/internal/oracle/testdata/set_foreach_named_closures.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/string_views_loops.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/library_map_set_iterator_exhausted.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/fallthrough_labels.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/devirtualize.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/conditions_number.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/census_small_overload.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/exceptions_empty.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/set_maybe_numbers.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/regions_throw.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/narrowed_reads.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/fresh_calls.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/lint_runtime_equal_headers.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/library_for_in_live.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/borrow_chain_coverage_finally.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/library_object_same.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/library_function_expressions.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/map_foreach_keys.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_008/stage3/interface-downcasts/v2/null-read-write.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/predicate_refusals/representation_controls.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_008/stage3/interface-downcasts/untagged/fixtures/recursive-wrong.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_008/stage3/interface-downcasts/untagged/fixtures/recursive-good.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_008/stage3/fixtures/taste/16_scan_exclamation.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/fresh/testdata/regexp_tree.ts",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/non_null_uninitialized_optional.ts",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/concurrency/accepted/numbers.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/pow_fractional.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/optional_indexing_string_gap.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/module_namespace_reads/direct_early.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/namespaces_debug_modules/main.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/method_coverage_map_parsers.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_008/internal/oracle/testdata/node_buffer_finalized.a",
+    "seconds": 0.74
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/set_foreach_keep.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/read_arguments.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_007/stage3/fixtures/self-compare/array-fill.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/typed_arrays_int32array.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_007/stage3/fixtures/nested-functions/06_parser_token_state.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/non_null_uninitialized_iteration.ts",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/nested_destructured_tdz.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/nested_mixed.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/nested_hoisting.a",
+    "seconds": 0.11
+  },
+  {
+    "test": "TestCountsAreRecorded_007/stage3/namespaces/shapes/ReactNames.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_trim.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_concat.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_string_codepointat.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/entries_checked_boolean.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/method_coverage_array_mutations.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/devirtualize_accessors.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/census_append_overload.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static_private.a",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/conditions_ledger78.a",
+    "seconds": 0.64
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-generic.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/callback_widening/number-find.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/class_features_static.a",
+    "seconds": 0.61
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/regexp_match.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/undefined_references.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/adversarial_order.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/modules/main.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/library_object_assign.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/borrow_chain_walk.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_007/internal/oracle/testdata/collections.a",
+    "seconds": 0.92
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/set_foreach_numbers.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_010/stage3/interface-downcasts/default-literal.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_010/stage3/interface-downcasts/untagged/fixtures/option-element-source-wrong.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/arguments.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/weak_miscompiles/held_union.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/taste_stage3_representations.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/typed_arrays_views.a",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_010/stage3/fixtures/taste/04_jsx_runtime.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/structural_statics_optional.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_010/stage3/drivers/scanner/probes/nested-generic-sibling-call.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/non_null_literal_return.ts",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/structural_statics_inherited.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/regexp_cycle_fields.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/non_null_static_uninitialized.ts",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/proven_assertions.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/concurrency/accepted/readonly_forms.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/nested_callback_recursive.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/overload_mutate_map.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/module_namespace_reads/early.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/nested_destructured.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/logical_and_reference_maybe.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/method_coverage_string_charat.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/host_scanner_never.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_010/stage3/fixtures/enums/04_parse_tree_mask.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/function_values_boundary.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_010/stage3/fixtures/enums/07_regex_array_map.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/element_access_tuple.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/conditions_union.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/census_overload_binders.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/element_access_optional.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/callback_widening/object-some.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/normalize_coverage_quick.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/replace_all_large.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/stack_tail_call.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/normalize_coverage_repeat.a",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/nbody_spread_fields.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/write_after_shrink.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/array_from.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/library_map_set_keys.a",
+    "seconds": 0.47
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/search_halves.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/defaults.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/string_build_caches.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/library_object_keys.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/library_globals.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_010/internal/oracle/testdata/borrow_chain_coverage_parents.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/set_foreach_named_objects.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/template_nullish.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/weak_miscompiles/boolean_filter.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_006/stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/93122fa_s2.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/regexp_cycle_collections.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/node_fs_file_write_buffer.a",
+    "seconds": 0.62
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/optional_indexing_typed_array.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/namespaces_call_cycle.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/object_prototype.a",
+    "seconds": 0.44
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/namespaces_parser_state.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/method_coverage_object_statics.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/host_array_predicate.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/class_features_private.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/callback_widening/object-sort.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/callback_widening/object-generic-map.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/callback_widening/number-arguments.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/regexp_replace.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/string_positions.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/lint_runtime_search_boundaries.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/writes_in_try.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/load/testdata/0.1/compile/01_hello.ts",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/library_array_search.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/string_build_repeat.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_006/internal/oracle/testdata/objects.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/map_foreach_keep.a",
+    "seconds": 0.51
+  },
+  {
+    "test": "TestCountsAreRecorded_009/stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/stage3/interface-downcasts/v2/undefined-read-write.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/stage3/interface-downcasts/lane4b/fixtures/node-indicator-wrong.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/instantiation_array.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_009/stage3/interface-downcasts/readiness-number.ts",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_009/stage3/interface-downcasts/default-staged.ts",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/write_files.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/taste_exports/main.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/switch_case_declarations/dead_zone.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/structural_statics_instance.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/static_constructor_spread_owned.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/statements_small_parameters.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/stage3/fixtures/self-compare/closure.a",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/node_fs_file_mkdir.a",
+    "seconds": 0.64
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/regexp_replace/throw.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/optional_indexing_chain.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/047cb0d_n_param.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/method_coverage_string_tolowercase.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/fallthrough_probe.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/entries_proven.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/devirtualize_factory.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/node_options_widening.a",
+    "seconds": 0.6
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/conditions_optional_number.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/class_instance_key_throw.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/closure_convention_regexp_count.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/callback_widening/object-generic.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/class_inheritance.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/arguments_length_method.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/arguments_length_extended.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/arguments_length_no_reader.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/throw_in_writes.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/inherited_static_field_read.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/regexp_exec.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/array_from_undefined.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/doubly_linked.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/cast_fails.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/find_index_shrinks.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/panic.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/library_fnexpr_recurse.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/json_stringify_indent.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/library_array_flat.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/json_stringify_values.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/library_object_freeze_assign.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/library_array_copy_within.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_009/internal/oracle/testdata/borrow_chain_coverage_depths.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/route_targets_virtual_fresh.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_005/stage3/interface-downcasts/readiness-identifier-uninitialized.ts",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/instantiation_callback.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_005/stage3/interface-downcasts/default-wrong-type.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/typeof_null_compare.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/statements_small_throw.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/non_null_static_initialized.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/non_null_uninitialized_default.ts",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/concurrency/accepted/recursive_tree.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/non_null_refuse_undefined.ts",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/omitted_scanner_required.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/notyet_library_string_bounds.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/namespaces_parser_factory.a",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/node_buffer_crypto.a",
+    "seconds": 0.95
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/devirtualize_abstract.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/cast_enum_numeric_fails.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/cast_operand_once.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/async_three.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/array_literal_empty_union.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/regexp_unicode.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/utf8_view_fails.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/prompt_then_read.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/map_shrinks.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/unused_parameters.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/library_math_number_math.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/long_literals.a",
+    "seconds": 0.84
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/loops.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/load/testdata/0.1/compile/06_stack.ts",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/json_stringify_options.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/route_targets_try_loop.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_005/internal/oracle/testdata/set_foreach_named_more.a",
+    "seconds": 0.42
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/non_null_capture.ts",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/callback_widening/number-some.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_004/stage3/interface-downcasts/default-read-before-set.ts",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/typed_arrays_order.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/structural_statics_static.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_004/stage3/fixtures/nested-functions/04_scanner_escaped_text.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_004/stage3/interface-downcasts/lane1/optional-read-control.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/non_null_definite.ts",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/proven_class_guards.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/overload_array_to_multimap.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/047cb0d_n_conditional.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_004/stage3/namespaces/shapes/BinaryExpressionState.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/namespaces_modules/main.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/method_coverage_string_substring.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/method_coverage_string_normalize.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/function_values_signature.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/entries_checked_fit.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/devirtualize_function_field.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/conditions_array.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/census_small_boolean.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/callback_widening/object-filter.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/callback_widening/number-sort.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_004/stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/callback_widening/number-map.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/async_coverage_values.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/array_literal_empty_last.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/trig_reduction.a",
+    "seconds": 0.11
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/arguments_length_reduce_left.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/generic_values.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/integer_format.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/borrow_element_virtual_store.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/undefined_elements.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/number_edges.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/precision_range.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/class_oct6_parameters.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/updates.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/call_targets_region.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_004/internal/oracle/testdata/visits.a",
+    "seconds": 0.49
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/non_null_null.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_003/stage3/fixtures/enums/02_node_range.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_003/stage3/interface-downcasts/wrong-kind.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_003/stage3/interface-downcasts/v2/callable-producer-wrong.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/typeof_null_slots.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_003/stage3/fixtures/nested-functions/05_scanner_reassigned_text.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/non_null_uninitialized_interface.ts",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/non_null_literal_assignment.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/params_namespaces_types.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/nested_callback_levels.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/nested_reduced_parameter_unused.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/nested_minimal.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_003/stage3/fixtures/enums/01_token_range.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/normalize_coverage_cache.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/enums_open_never_return.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/entries_checked_boxed.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/enums_open.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/node_buffer_random.a",
+    "seconds": 0.71
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/class_inheritance_memory.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/census_predicate_marker_live.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/cast_enum_string.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/census_unary_numeric.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/callback_widening/number-findLast.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/arguments_length_unrelated_type.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/native-arguments-length-value.a",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/reuse_spread_method_alias.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/library_map_set_visit.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/write_stderr_order.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/undefined_strings.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/string_build_boundaries.a",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/local_console.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/splices.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/named_function_values.a",
+    "seconds": 0.56
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/load/testdata/0.1/compile/07_modules/main.ts",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/library_array_copy.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/borrow_chain_reassigned.a",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/library_map_set.a",
+    "seconds": 0.81
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/load/testdata/0.1/compile/05_wordcount.ts",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_003/dedication/dedication.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_003/internal/oracle/testdata/map_foreach_fnexpr.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/string_views_lifetime.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/library_object_own.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_000/stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/stage3/interface-downcasts/lane4b/fixtures/literal-text-wrong.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_000/stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/stage3/fixtures/taste/14_relative_complement.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_000/stage3/fixtures/taste/24_proportional_conditions.a",
+    "seconds": 0.39
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/namespace_class_registration.a",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/overload_ancestor_directory.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/miscompile_2a/error_undefined_message.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/nested_assignment_return.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/e4eec87_f1_field_present.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/method_coverage_string_repeat.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/enums_const.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/enums_flags_modules/main.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/stage3/fixtures/enum-init-reach/native-enum-map.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/host_map_iterator_union.a",
+    "seconds": 0.51
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/enums.a",
+    "seconds": 0.58
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/census_small_rest.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/callback_widening/string-map.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/write_stdout_order.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/string_append.a",
+    "seconds": 0.4
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/sweeps/regexp_methods.a",
+    "seconds": 0.5
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/spread_undefined.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/maybe_booleans.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/numbers.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/finally_leaves.a",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/fills.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/string_build_padding.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/library_globals_typeof.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/library_object_order.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/set_foreach_closures.a",
+    "seconds": 0.43
+  },
+  {
+    "test": "TestCountsAreRecorded_000/internal/oracle/testdata/closure_convention_host24.a",
+    "seconds": 2.3
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/route_targets_recursive.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_001/stage3/fixtures/enum-init-reach/callable-selection.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/concurrency/accepted/large.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/instantiation_find.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/typeof_string_literal.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/taste_comma.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/nested_returned.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/047cb0d_n_coalesce.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/omitted_defaults.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/devirtualize_receivers.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/gaps.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/class_features_accessors.a",
+    "seconds": 0.35
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/census_unary_truthiness.a",
+    "seconds": 0.36
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/cast_subunion_string_fails.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/callback_widening/optional-number-map.a",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/long_unicode_literals.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/library_map_set_groupby_keys.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/sort_top_level.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/load/testdata/0.1/compile/08_results.ts",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/booleans.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/load/testdata/0.1/compile/10_unicode.ts",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/load/testdata/0.1/compile/04_closures.ts",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/set_foreach_fnexpr.a",
+    "seconds": 0.37
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/library_fnexpr_store.a",
+    "seconds": 0.49
+  },
+  {
+    "test": "TestCountsAreRecorded_001/stage3/namespaces/shapes/JsxNames.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_002/stage3/interface-downcasts/untagged/fixtures/flow-generic-wrong.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/route_targets_accessor.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_002/stage3/interface-downcasts/lane4b/fixtures/diagnostic-wrong.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_002/stage3/interface-downcasts/untagged/fixtures/recursive-nested.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/taste_star/enum.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_002/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/non_null_uninitialized_field.ts",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_002/stage3/namespace-parser-stops/native-namespace-class.a",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/overload_sort_deduplicate.a",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/params_namespaces_order.a",
+    "seconds": 0.23
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/concurrency/accepted/fresh.a",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/nested_tdz_write.a",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/method_coverage_alias_order.a",
+    "seconds": 0.11
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/nested_tdz.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/method_coverage_string_lastindexof.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/host_never_branches.a",
+    "seconds": 0.33
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/closure_convention_receiver_rest.a",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/function_values_return.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/cast_class_union_fails.a",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/class_private_members.a",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/class_inheritance_conditional.a",
+    "seconds": 0.41
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/async_coverage_reject_eager.a",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/async_coverage_parameters.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/regexp_null_narrowed.a",
+    "seconds": 0.27
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/borrow_map_overwrite.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/nbody_static_collision.a",
+    "seconds": 0.32
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/shadowing.a",
+    "seconds": 0.24
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/number_parsing.a",
+    "seconds": 0.26
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/json_stringify_scalars.a",
+    "seconds": 0.28
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/map_foreach_named_keys.a",
+    "seconds": 0.34
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/map_foreach_closures.a",
+    "seconds": 0.65
+  },
+  {
+    "test": "TestCountsAreRecorded_002/internal/oracle/testdata/getters_census_binary_inline.a",
+    "seconds": 1.96
+  }
+]

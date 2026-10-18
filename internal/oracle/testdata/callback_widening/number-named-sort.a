@@ -1,0 +1,2 @@
+function compare(a:number|string,b:number|string):number{return (typeof a==='number'?a:0)-(typeof b==='number'?b:0);}
+console.log([3,1,2].sort(compare).join(','));

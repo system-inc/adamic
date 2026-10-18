@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:18:47.584803335Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts"}
+{"Time":"2026-10-18T00:18:47.587812679Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes"}
+{"Time":"2026-10-18T00:18:47.587873198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes","Output":"=== RUN   TestTheJobserverNeverReachesAnArchivesBytes\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:47.587895381Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes","Output":"=== PAUSE TestTheJobserverNeverReachesAnArchivesBytes\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:47.587898787Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes"}
+{"Time":"2026-10-18T00:18:47.587902672Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes"}
+{"Time":"2026-10-18T00:18:47.587905637Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes","Output":"=== CONT  TestTheJobserverNeverReachesAnArchivesBytes\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:58.618233026Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes","Output":"--- PASS: TestTheJobserverNeverReachesAnArchivesBytes (11.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:58.618271333Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestTheJobserverNeverReachesAnArchivesBytes","Elapsed":11.03}
+{"Time":"2026-10-18T00:18:58.618290542Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:58.618949992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"ok  \tgithub.com/system-inc/adamic/internal/native/runtimeproducts\t11.034s\n"}
+{"Time":"2026-10-18T00:18:58.618980938Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Elapsed":11.034}

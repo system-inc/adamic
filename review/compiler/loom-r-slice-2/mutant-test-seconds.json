@@ -1,0 +1,212 @@
+[
+  {
+    "mutant": "constructor-capture",
+    "test": "TestMiscompile2AConstructorArrow",
+    "seconds": 3.26
+  },
+  {
+    "mutant": "constructor-capture",
+    "test": "TestMiscompile2AConstructorNumberArrow",
+    "seconds": 3.26
+  },
+  {
+    "mutant": "nullable-token-omitted",
+    "test": "TestCallbackWideningNullableObjectMapRelease",
+    "seconds": 3.42
+  },
+  {
+    "mutant": "nullable-token-omitted",
+    "test": "TestCallbackWideningNullableObjectMapSanitized",
+    "seconds": 3.53
+  },
+  {
+    "mutant": "union-liveness",
+    "test": "TestWeakDifferentialUnionNarrowed",
+    "seconds": 4.33
+  },
+  {
+    "mutant": "weak-callback",
+    "test": "TestWeakDifferentialSort",
+    "seconds": 3.21
+  },
+  {
+    "mutant": "weak-callback",
+    "test": "TestWeakDifferentialEach",
+    "seconds": 3.25
+  },
+  {
+    "mutant": "weak-callback",
+    "test": "TestWeakDifferentialReduce",
+    "seconds": 3.25
+  },
+  {
+    "mutant": "weak-callback",
+    "test": "TestWeakDifferentialSome",
+    "seconds": 3.3
+  },
+  {
+    "mutant": "weak-callback",
+    "test": "TestWeakDifferentialMap",
+    "seconds": 0.17
+  },
+  {
+    "mutant": "weak-callback",
+    "test": "TestWeakDifferentialFind",
+    "seconds": 0.19
+  },
+  {
+    "mutant": "long-name",
+    "test": "TestMiscompile2ALongName",
+    "seconds": 2.77
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseSort",
+    "seconds": 3.96
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseSome",
+    "seconds": 3.97
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseReduce",
+    "seconds": 4.0
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseMap",
+    "seconds": 4.03
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseEvery",
+    "seconds": 0.22
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseForEach",
+    "seconds": 0.23
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseFind",
+    "seconds": 0.22
+  },
+  {
+    "mutant": "refusal-revert",
+    "test": "TestCallbackWideningRefuseFilter",
+    "seconds": 0.19
+  },
+  {
+    "mutant": "computed-name",
+    "test": "TestMiscompile2AOverrideSource",
+    "seconds": 3.87
+  },
+  {
+    "mutant": "unrepresented-parameter-admitted",
+    "test": "TestCallbackWideningUnrepresentedParameter",
+    "seconds": 3.54
+  },
+  {
+    "mutant": "split-numeric-fold",
+    "test": "TestSplitSelfCompareAgreesWithNode",
+    "seconds": 1.41
+  },
+  {
+    "mutant": "maybe-setter",
+    "test": "TestMiscompile2AMaybeSetter",
+    "seconds": 2.81
+  },
+  {
+    "mutant": "adapter-target-omitted",
+    "test": "TestCallbackAdapterTargets",
+    "seconds": 0.0
+  },
+  {
+    "mutant": "weak-counter-registration-omitted",
+    "test": "TestCountsAreRecordedTable",
+    "seconds": 0.0
+  },
+  {
+    "mutant": "adaptation-omitted",
+    "test": "TestCallbackWideningNumberEveryRelease",
+    "seconds": 3.78
+  },
+  {
+    "mutant": "adaptation-omitted",
+    "test": "TestCallbackWideningNumberEverySanitized",
+    "seconds": 3.86
+  },
+  {
+    "mutant": "error-own-message",
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "seconds": 9.05
+  },
+  {
+    "mutant": "error-spread",
+    "test": "TestMiscompile2AErrorSpread",
+    "seconds": 2.91
+  },
+  {
+    "mutant": "error-spread",
+    "test": "TestMiscompile2AErrorSubclassSpread",
+    "seconds": 2.91
+  },
+  {
+    "mutant": "method-views",
+    "test": "TestWeakDifferentialViewMethod",
+    "seconds": 3.75
+  },
+  {
+    "mutant": "method-views",
+    "test": "TestWeakDifferentialViewMethodParameter",
+    "seconds": 3.77
+  },
+  {
+    "mutant": "weak-callback-isolated",
+    "test": "TestWeakDifferentialSort",
+    "seconds": 3.34
+  },
+  {
+    "mutant": "weak-callback-isolated",
+    "test": "TestWeakDifferentialReduce",
+    "seconds": 3.39
+  },
+  {
+    "mutant": "weak-callback-isolated",
+    "test": "TestWeakDifferentialEach",
+    "seconds": 3.46
+  },
+  {
+    "mutant": "weak-callback-isolated",
+    "test": "TestWeakDifferentialSome",
+    "seconds": 3.48
+  },
+  {
+    "mutant": "weak-callback-isolated",
+    "test": "TestWeakDifferentialMap",
+    "seconds": 0.52
+  },
+  {
+    "mutant": "weak-callback-isolated",
+    "test": "TestWeakDifferentialFind",
+    "seconds": 0.53
+  },
+  {
+    "mutant": "optional-error",
+    "test": "TestMiscompile2AOptionalError",
+    "seconds": 19.61
+  },
+  {
+    "mutant": "optional-error",
+    "test": "TestMiscompile2AMarkerUndefined",
+    "seconds": 36.64
+  },
+  {
+    "mutant": "static-inline-definition",
+    "test": "TestSplitSelfCompareAgreesWithNode",
+    "seconds": 1.24
+  }
+]

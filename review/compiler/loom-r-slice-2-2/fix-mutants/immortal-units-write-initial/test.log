@@ -1,0 +1,18 @@
+=== RUN   TestErrorUndefinedMessageHasNoOwnProperty
+=== PAUSE TestErrorUndefinedMessageHasNoOwnProperty
+=== CONT  TestErrorUndefinedMessageHasNoOwnProperty
+    error_message_test.go:50: /tmp/adamic-gate/TestErrorUndefinedMessageHasNoOwnProperty3654216731/001/error-message: exit status 1
+        
+        =================================================================
+        ==27928==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 76 byte(s) in 1 object(s) allocated from:
+            #0 0x5576da0a4354 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5576da0fea4f in adamic_allocate /adamic-runtime/heap.c:250:10
+            #2 0x7f5f438dbca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: 76 byte(s) leaked in 1 allocation(s).
+--- FAIL: TestErrorUndefinedMessageHasNoOwnProperty (7.51s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	7.519s
+FAIL

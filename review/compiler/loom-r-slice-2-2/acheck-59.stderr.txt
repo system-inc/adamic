@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method_parameter.a:19:27: stage 0 can't lower a StrongTaker seen as a WeakTaker (one keeps something weakly that the other keeps strongly) yet

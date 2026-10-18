@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T00:17:01.853474836Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-18T00:17:01.857726028Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece"}
+{"Time":"2026-10-18T00:17:01.857858575Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"=== RUN   TestBridgeUnitsCoverEveryPiece\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:01.861750357Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"    coverage_test.go:112: coverage: 16 active pieces, 162 query positions, 5 query analyses; each piece has one owner for 1..40 shards\n"}
+{"Time":"2026-10-18T00:17:01.862452561Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"--- PASS: TestBridgeUnitsCoverEveryPiece (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:01.862466892Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Elapsed":0}
+{"Time":"2026-10-18T00:17:01.862480883Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:01.862626058Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.009s\n"}
+{"Time":"2026-10-18T00:17:01.862636594Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.009}

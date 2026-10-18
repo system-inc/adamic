@@ -1,0 +1,52 @@
+=== RUN   TestWeakDifferentialEach
+=== PAUSE TestWeakDifferentialEach
+=== RUN   TestWeakDifferentialFind
+=== PAUSE TestWeakDifferentialFind
+=== RUN   TestWeakDifferentialMap
+=== PAUSE TestWeakDifferentialMap
+=== RUN   TestWeakDifferentialReduce
+=== PAUSE TestWeakDifferentialReduce
+=== RUN   TestWeakDifferentialSome
+=== PAUSE TestWeakDifferentialSome
+=== RUN   TestWeakDifferentialSort
+=== PAUSE TestWeakDifferentialSort
+=== CONT  TestWeakDifferentialEach
+=== CONT  TestWeakDifferentialSort
+=== CONT  TestWeakDifferentialReduce
+=== CONT  TestWeakDifferentialSome
+    weak_differential_test.go:53: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestWeakDifferentialReduce
+    weak_differential_test.go:48: Node: exit=0 stdout="4\n" stderr=""
+=== NAME  TestWeakDifferentialSort
+    weak_differential_test.go:58: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestWeakDifferentialSome
+    weak_differential_test.go:53: both backends must stop at "/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_some.a:10:15: stage 0 can't lower some callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet" NotYet, got program=false error=/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_some.a:10:28: Adamic 0.1 refuses an intrinsic callback parameter x of type Box & WeakBrand receiving array element type Box & WeakBrand without a representation adapter; annotate parameter x as the element type Box & WeakBrand
+--- FAIL: TestWeakDifferentialSome (5.54s)
+=== CONT  TestWeakDifferentialMap
+=== NAME  TestWeakDifferentialReduce
+    weak_differential_test.go:48: both backends must stop at "/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_reduce.a:10:16: stage 0 can't lower reduce callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet" NotYet, got program=false error=/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_reduce.a:10:31: Adamic 0.1 refuses an intrinsic callback parameter x of type Box & WeakBrand receiving array element type Box & WeakBrand without a representation adapter; annotate parameter x as the element type Box & WeakBrand
+--- FAIL: TestWeakDifferentialReduce (5.57s)
+=== CONT  TestWeakDifferentialFind
+=== NAME  TestWeakDifferentialSort
+    weak_differential_test.go:58: both backends must stop at "/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_sort.a:10:2: stage 0 can't lower sort callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet" NotYet, got program=false error=/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_sort.a:10:15: Adamic 0.1 refuses an intrinsic callback parameter x of type Box & WeakBrand receiving array element type value without a representation adapter; annotate parameter x as the element type value
+--- FAIL: TestWeakDifferentialSort (5.60s)
+=== NAME  TestWeakDifferentialEach
+    weak_differential_test.go:33: Node: exit=0 stdout="a1\nb1\n" stderr=""
+    weak_differential_test.go:33: both backends must stop at "/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_each.a:10:2: stage 0 can't lower forEach callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet" NotYet, got program=false error=/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_each.a:10:18: Adamic 0.1 refuses an intrinsic callback parameter x of type Box & WeakBrand receiving array element type Box & WeakBrand without a representation adapter; annotate parameter x as the element type Box & WeakBrand
+--- FAIL: TestWeakDifferentialEach (5.72s)
+=== NAME  TestWeakDifferentialFind
+    weak_differential_test.go:38: Node: exit=0 stdout="b1\nb1\nb1\n" stderr=""
+=== NAME  TestWeakDifferentialMap
+    weak_differential_test.go:43: Node: exit=0 stdout="a1,b1\n" stderr=""
+=== NAME  TestWeakDifferentialFind
+    weak_differential_test.go:38: both backends must stop at "/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_find.a:10:16: stage 0 can't lower find callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet" NotYet, got program=false error=/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_find.a:10:29: Adamic 0.1 refuses an intrinsic callback parameter x of type Box & WeakBrand receiving array element type Box & WeakBrand without a representation adapter; annotate parameter x as the element type Box & WeakBrand
+--- FAIL: TestWeakDifferentialFind (0.31s)
+=== NAME  TestWeakDifferentialMap
+    weak_differential_test.go:43: both backends must stop at "/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_map.a:10:14: stage 0 can't lower map callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet" NotYet, got program=false error=/workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_map.a:10:26: Adamic 0.1 refuses an intrinsic callback parameter x of type Box & WeakBrand receiving array element type Box & WeakBrand without a representation adapter; annotate parameter x as the element type Box & WeakBrand
+--- FAIL: TestWeakDifferentialMap (0.39s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.954s
+FAIL

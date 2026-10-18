@@ -1,0 +1,54 @@
+=== RUN   TestCallbackWideningRefuseMap
+=== PAUSE TestCallbackWideningRefuseMap
+=== RUN   TestCallbackWideningRefuseFilter
+=== PAUSE TestCallbackWideningRefuseFilter
+=== RUN   TestCallbackWideningRefuseForEach
+=== PAUSE TestCallbackWideningRefuseForEach
+=== RUN   TestCallbackWideningRefuseFind
+=== PAUSE TestCallbackWideningRefuseFind
+=== RUN   TestCallbackWideningRefuseSome
+=== PAUSE TestCallbackWideningRefuseSome
+=== RUN   TestCallbackWideningRefuseEvery
+=== PAUSE TestCallbackWideningRefuseEvery
+=== RUN   TestCallbackWideningRefuseReduce
+=== PAUSE TestCallbackWideningRefuseReduce
+=== RUN   TestCallbackWideningRefuseSort
+=== PAUSE TestCallbackWideningRefuseSort
+=== CONT  TestCallbackWideningRefuseMap
+=== CONT  TestCallbackWideningRefuseSome
+=== CONT  TestCallbackWideningRefuseReduce
+=== CONT  TestCallbackWideningRefuseEvery
+=== NAME  TestCallbackWideningRefuseMap
+    callback_widening_test.go:34: expected narrow callback refusal, got <nil>
+=== CONT  TestCallbackWideningRefuseSort
+--- FAIL: TestCallbackWideningRefuseMap (3.48s)
+=== NAME  TestCallbackWideningRefuseEvery
+    callback_widening_test.go:54: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseEvery (3.50s)
+=== CONT  TestCallbackWideningRefuseForEach
+=== NAME  TestCallbackWideningRefuseReduce
+    callback_widening_test.go:58: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseReduce (3.59s)
+=== CONT  TestCallbackWideningRefuseFind
+=== NAME  TestCallbackWideningRefuseSome
+    callback_widening_test.go:50: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseSome (3.59s)
+=== CONT  TestCallbackWideningRefuseFilter
+=== NAME  TestCallbackWideningRefuseSort
+    callback_widening_test.go:62: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseSort (0.29s)
+=== NAME  TestCallbackWideningRefuseForEach
+    callback_widening_test.go:42: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseForEach (0.27s)
+=== NAME  TestCallbackWideningRefuseFind
+    callback_widening_test.go:46: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseFind (0.22s)
+=== NAME  TestCallbackWideningRefuseFilter
+    callback_widening_test.go:38: expected narrow callback refusal, got <nil>
+--- FAIL: TestCallbackWideningRefuseFilter (0.24s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.839s
+FAIL

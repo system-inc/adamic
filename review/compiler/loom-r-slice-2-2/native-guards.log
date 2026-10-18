@@ -1,0 +1,21 @@
+{"Time":"2026-10-18T08:47:07.589393169Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T08:47:07.59369269Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-18T08:47:07.593773681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== RUN   TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:07.593799329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== PAUSE TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:07.593801802Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-18T08:47:07.593805248Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs"}
+{"Time":"2026-10-18T08:47:07.593807591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs","Output":"=== RUN   TestSplitBuildsNameNoPlaceOfTheirInputs\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:07.593811417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs","Output":"=== PAUSE TestSplitBuildsNameNoPlaceOfTheirInputs\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:07.593813039Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs"}
+{"Time":"2026-10-18T08:47:07.593815092Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-18T08:47:07.593816685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== CONT  TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:07.594488704Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs"}
+{"Time":"2026-10-18T08:47:07.594501023Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs","Output":"=== CONT  TestSplitBuildsNameNoPlaceOfTheirInputs\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:07.596947602Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"    fields_test.go:178: 33 runtime layouts included\n"}
+{"Time":"2026-10-18T08:47:07.596969204Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:08.594356783Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Elapsed":0}
+{"Time":"2026-10-18T08:47:08.594426687Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs","Output":"--- PASS: TestSplitBuildsNameNoPlaceOfTheirInputs (1.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:08.594434248Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitBuildsNameNoPlaceOfTheirInputs","Elapsed":1}
+{"Time":"2026-10-18T08:47:08.594440437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:47:08.595931676Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t1.006s\n"}
+{"Time":"2026-10-18T08:47:08.595963944Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":1.007}
