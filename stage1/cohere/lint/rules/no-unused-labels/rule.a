@@ -1,0 +1,73 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { forFile, FileCommentCache } from '../../helpers/comments/for_file.ts';
+import { messageUnusedLabel } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    labels: number[] = [];
+    used: number[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        this.walk(index);
+        const context = this.context;
+        const comments = forFile(context.parser, index, new FileCommentCache(context.parser, index));
+        for(const labeled of this.labels) {
+            if(this.used.includes(context.node(labeled).pos)) { continue; }
+            const label = context.child(labeled, 0);
+            const body = context.child(labeled, 1);
+            const start = context.start(label);
+            const end = context.start(body);
+            const byteStart = utf8Length(context.source.slice(0, start));
+            const byteEnd = utf8Length(context.source.slice(0, end));
+            let safe = true;
+            for(const comment of comments) {
+                if(comment.start < byteEnd && comment.end > byteStart) { safe = false; }
+            }
+            if(this.directive(labeled, body) || this.rejoin(start, end)) { safe = false; }
+            const finding = context.report(label, 'no-unused-labels', 'unusedLabel', messageUnusedLabel, safe ? 'fix' : '', '', '');
+            if(safe) { finding.editStart = start; finding.editEnd = end; }
+        }
+    }
+    walk(index: number): void {
+        const context = this.context;
+        const node = context.node(index);
+        if(node.kind === 'LabeledStatement') { this.labels.push(index); }
+        else if((node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') && node.children.length > 0) {
+            const name = context.node(context.child(index, 0)).text;
+            let ancestor = context.parent(index);
+            while(ancestor >= 0) {
+                if(context.functionLike(ancestor) || ['ClassDeclaration', 'ClassExpression'].includes(context.kind(ancestor))) { break; }
+                if(context.kind(ancestor) === 'LabeledStatement' && context.node(context.child(ancestor, 0)).text === name) {
+                    this.used.push(context.node(ancestor).pos);
+                    break;
+                }
+                ancestor = context.parent(ancestor);
+            }
+        }
+        for(const child of node.children) { this.walk(child); }
+    }
+    directive(labeled: number, body: number): boolean {
+        const context = this.context;
+        if(context.kind(body) !== 'ExpressionStatement') { return false; }
+        if(!['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(context.kind(context.child(body, 0)))) { return false; }
+        let outer = labeled;
+        while(context.kind(context.parent(outer)) === 'LabeledStatement') { outer = context.parent(outer); }
+        const parent = context.parent(outer);
+        if(context.kind(parent) === 'SourceFile') { return true; }
+        const grandparent = context.parent(parent);
+        return context.kind(parent) === 'Block' && grandparent >= 0 && context.functionLike(grandparent);
+    }
+    rejoin(start: number, end: number): boolean {
+        const source = this.context.source;
+        if(end >= source.length) { return false; }
+        let previous = '';
+        for(let index = start - 1; index >= 0; index--) {
+            const character = source.slice(index, index + 1);
+            if(![' ', '\t', '\n', '\r'].includes(character)) { previous = character; break; }
+        }
+        if(['', ':', ';', '{'].includes(previous)) { return false; }
+        return ['(', '[', '-', '+', '/', '`'].includes(source.slice(end, end + 1));
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -743,3 +743,13 @@ func TestProduct_LintMutant_vars_on_top(t *testing.T) {
 	t.Parallel()
 	requireMutantRuleProduct(t, "vars-on-top")
 }
+
+func TestMutants_no_unused_labels(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "no-unused-labels")
+}
+
+func TestProduct_LintMutant_no_unused_labels(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "no-unused-labels")
+}

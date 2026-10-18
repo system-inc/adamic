@@ -66,14 +66,15 @@ import { create as create62, type Rule as Rule62 } from '../rules/no-unneeded-te
 import { create as create63, type Rule as Rule63 } from '../rules/no-unsafe-finally/rule.a';
 import { create as create64, type Rule as Rule64 } from '../rules/no-unsafe-negation/rule.a';
 import { create as create65, type Rule as Rule65 } from '../rules/no-unsafe-optional-chaining/rule.a';
-import { create as create66, type Rule as Rule66 } from '../rules/no-useless-catch/rule.a';
-import { create as create67, type Rule as Rule67 } from '../rules/no-useless-concat/rule.a';
-import { create as create68, type Rule as Rule68 } from '../rules/no-warning-comments/rule.ts';
-import { create as create69, type Rule as Rule69 } from '../rules/no-with/rule.ts';
-import { create as create70, type Rule as Rule70 } from '../rules/prefer-destructuring/rule.a';
-import { create as create71, type Rule as Rule71 } from '../rules/require-yield/rule.ts';
-import { create as create72, type Rule as Rule72 } from '../rules/unicode-bom/rule.ts';
-import { create as create73, type Rule as Rule73 } from '../rules/vars-on-top/rule.ts';
+import { create as create66, type Rule as Rule66 } from '../rules/no-unused-labels/rule.a';
+import { create as create67, type Rule as Rule67 } from '../rules/no-useless-catch/rule.a';
+import { create as create68, type Rule as Rule68 } from '../rules/no-useless-concat/rule.a';
+import { create as create69, type Rule as Rule69 } from '../rules/no-warning-comments/rule.ts';
+import { create as create70, type Rule as Rule70 } from '../rules/no-with/rule.ts';
+import { create as create71, type Rule as Rule71 } from '../rules/prefer-destructuring/rule.a';
+import { create as create72, type Rule as Rule72 } from '../rules/require-yield/rule.ts';
+import { create as create73, type Rule as Rule73 } from '../rules/unicode-bom/rule.ts';
+import { create as create74, type Rule as Rule74 } from '../rules/vars-on-top/rule.ts';
 export class RuleSet {
     readonly context: RuleContext;
     readonly rule0: Rule0;
@@ -150,6 +151,7 @@ export class RuleSet {
     readonly rule71: Rule71;
     readonly rule72: Rule72;
     readonly rule73: Rule73;
+    readonly rule74: Rule74;
     readonly selected0: boolean;
     readonly selected1: boolean;
     readonly selected2: boolean;
@@ -224,7 +226,8 @@ export class RuleSet {
     readonly selected71: boolean;
     readonly selected72: boolean;
     readonly selected73: boolean;
-    constructor(context: RuleContext, rule0: Rule0, rule1: Rule1, rule2: Rule2, rule3: Rule3, rule4: Rule4, rule5: Rule5, rule6: Rule6, rule7: Rule7, rule8: Rule8, rule9: Rule9, rule10: Rule10, rule11: Rule11, rule12: Rule12, rule13: Rule13, rule14: Rule14, rule15: Rule15, rule16: Rule16, rule17: Rule17, rule18: Rule18, rule19: Rule19, rule20: Rule20, rule21: Rule21, rule22: Rule22, rule23: Rule23, rule24: Rule24, rule25: Rule25, rule26: Rule26, rule27: Rule27, rule28: Rule28, rule29: Rule29, rule30: Rule30, rule31: Rule31, rule32: Rule32, rule33: Rule33, rule34: Rule34, rule35: Rule35, rule36: Rule36, rule37: Rule37, rule38: Rule38, rule39: Rule39, rule40: Rule40, rule41: Rule41, rule42: Rule42, rule43: Rule43, rule44: Rule44, rule45: Rule45, rule46: Rule46, rule47: Rule47, rule48: Rule48, rule49: Rule49, rule50: Rule50, rule51: Rule51, rule52: Rule52, rule53: Rule53, rule54: Rule54, rule55: Rule55, rule56: Rule56, rule57: Rule57, rule58: Rule58, rule59: Rule59, rule60: Rule60, rule61: Rule61, rule62: Rule62, rule63: Rule63, rule64: Rule64, rule65: Rule65, rule66: Rule66, rule67: Rule67, rule68: Rule68, rule69: Rule69, rule70: Rule70, rule71: Rule71, rule72: Rule72, rule73: Rule73) {
+    readonly selected74: boolean;
+    constructor(context: RuleContext, rule0: Rule0, rule1: Rule1, rule2: Rule2, rule3: Rule3, rule4: Rule4, rule5: Rule5, rule6: Rule6, rule7: Rule7, rule8: Rule8, rule9: Rule9, rule10: Rule10, rule11: Rule11, rule12: Rule12, rule13: Rule13, rule14: Rule14, rule15: Rule15, rule16: Rule16, rule17: Rule17, rule18: Rule18, rule19: Rule19, rule20: Rule20, rule21: Rule21, rule22: Rule22, rule23: Rule23, rule24: Rule24, rule25: Rule25, rule26: Rule26, rule27: Rule27, rule28: Rule28, rule29: Rule29, rule30: Rule30, rule31: Rule31, rule32: Rule32, rule33: Rule33, rule34: Rule34, rule35: Rule35, rule36: Rule36, rule37: Rule37, rule38: Rule38, rule39: Rule39, rule40: Rule40, rule41: Rule41, rule42: Rule42, rule43: Rule43, rule44: Rule44, rule45: Rule45, rule46: Rule46, rule47: Rule47, rule48: Rule48, rule49: Rule49, rule50: Rule50, rule51: Rule51, rule52: Rule52, rule53: Rule53, rule54: Rule54, rule55: Rule55, rule56: Rule56, rule57: Rule57, rule58: Rule58, rule59: Rule59, rule60: Rule60, rule61: Rule61, rule62: Rule62, rule63: Rule63, rule64: Rule64, rule65: Rule65, rule66: Rule66, rule67: Rule67, rule68: Rule68, rule69: Rule69, rule70: Rule70, rule71: Rule71, rule72: Rule72, rule73: Rule73, rule74: Rule74) {
         this.context = context;
         this.rule0 = rule0;
         this.rule1 = rule1;
@@ -300,6 +303,7 @@ export class RuleSet {
         this.rule71 = rule71;
         this.rule72 = rule72;
         this.rule73 = rule73;
+        this.rule74 = rule74;
         this.selected0 = context.enabled('no-debugger');
         this.selected1 = context.enabled('no-empty');
         this.selected2 = context.enabled('eqeqeq');
@@ -366,14 +370,15 @@ export class RuleSet {
         this.selected63 = context.enabled('no-unsafe-finally');
         this.selected64 = context.enabled('no-unsafe-negation');
         this.selected65 = context.enabled('no-unsafe-optional-chaining');
-        this.selected66 = context.enabled('no-useless-catch');
-        this.selected67 = context.enabled('no-useless-concat');
-        this.selected68 = context.enabled('no-warning-comments');
-        this.selected69 = context.enabled('no-with');
-        this.selected70 = context.enabled('prefer-destructuring');
-        this.selected71 = context.enabled('require-yield');
-        this.selected72 = context.enabled('unicode-bom');
-        this.selected73 = context.enabled('vars-on-top');
+        this.selected66 = context.enabled('no-unused-labels');
+        this.selected67 = context.enabled('no-useless-catch');
+        this.selected68 = context.enabled('no-useless-concat');
+        this.selected69 = context.enabled('no-warning-comments');
+        this.selected70 = context.enabled('no-with');
+        this.selected71 = context.enabled('prefer-destructuring');
+        this.selected72 = context.enabled('require-yield');
+        this.selected73 = context.enabled('unicode-bom');
+        this.selected74 = context.enabled('vars-on-top');
     }
     prepare(root: number): void {
     if(this.selected19) { this.rule19.prepare(root); }
@@ -412,8 +417,8 @@ export class RuleSet {
             if(this.selected58) { this.rule58.visit(node, index, parent); }
             if(this.selected64) { this.rule64.visit(node, index); }
             if(this.selected65) { this.rule65.visit(node, index); }
-            if(this.selected67) { this.rule67.visit(node, index); }
-            if(this.selected70) { this.rule70.visit(node, index); }
+            if(this.selected68) { this.rule68.visit(node, index); }
+            if(this.selected71) { this.rule71.visit(node, index); }
             break;
         case 'BindingElement':
             if(this.selected65) { this.rule65.visit(node, index); }
@@ -435,7 +440,7 @@ export class RuleSet {
             break;
         case 'CatchClause':
             if(this.selected47) { this.rule47.visit(node, index); }
-            if(this.selected66) { this.rule66.visit(node, index); }
+            if(this.selected67) { this.rule67.visit(node, index); }
             break;
         case 'ClassDeclaration':
             if(this.selected7) { this.rule7.visit(index); }
@@ -510,12 +515,12 @@ export class RuleSet {
             break;
         case 'FunctionDeclaration':
             if(this.selected61) { this.rule61.visit(node, index); }
-            if(this.selected71) { this.rule71.visit(node, index); }
+            if(this.selected72) { this.rule72.visit(node, index); }
             break;
         case 'FunctionExpression':
             if(this.selected28) { this.rule28.visit(node, index); }
             if(this.selected61) { this.rule61.visit(node, index); }
-            if(this.selected71) { this.rule71.visit(node, index); }
+            if(this.selected72) { this.rule72.visit(node, index); }
             break;
         case 'Identifier':
             if(this.selected22) { this.rule22.visit(node, index); }
@@ -536,7 +541,7 @@ export class RuleSet {
         case 'MethodDeclaration':
             if(this.selected8) { this.rule8.visit(index); }
             if(this.selected61) { this.rule61.visit(node, index); }
-            if(this.selected71) { this.rule71.visit(node, index); }
+            if(this.selected72) { this.rule72.visit(node, index); }
             break;
         case 'MethodSignature':
             if(this.selected17) { this.rule17.visit(node, index); }
@@ -601,8 +606,9 @@ export class RuleSet {
             if(this.selected35) { this.rule35.visit(node, index); }
             if(this.selected36) { this.rule36.visit(node, index); }
             if(this.selected49) { this.rule49.visit(node, index); }
-            if(this.selected68) { this.rule68.visit(node, index); }
-            if(this.selected72) { this.rule72.visit(node, index); }
+            if(this.selected66) { this.rule66.visit(index); }
+            if(this.selected69) { this.rule69.visit(node, index); }
+            if(this.selected73) { this.rule73.visit(node, index); }
             break;
         case 'SpreadElement':
             if(this.selected65) { this.rule65.visit(node, index); }
@@ -651,12 +657,12 @@ export class RuleSet {
             if(this.selected38) { this.rule38.visit(node, index); }
             if(this.selected61) { this.rule61.visit(node, index); }
             if(this.selected65) { this.rule65.visit(node, index); }
-            if(this.selected70) { this.rule70.visit(node, index); }
+            if(this.selected71) { this.rule71.visit(node, index); }
             break;
         case 'VariableDeclarationList':
             if(this.selected16) { this.rule16.visit(node, index); }
             if(this.selected39) { this.rule39.visit(node, index, parent); }
-            if(this.selected73) { this.rule73.visit(node, index, parent); }
+            if(this.selected74) { this.rule74.visit(node, index, parent); }
             break;
         case 'VariableStatement':
             if(this.selected3) { this.rule3.visit(index, parent); }
@@ -667,7 +673,7 @@ export class RuleSet {
         case 'WithStatement':
             if(this.selected27) { this.rule27.visit(node, index); }
             if(this.selected65) { this.rule65.visit(node, index); }
-            if(this.selected69) { this.rule69.visit(node, index); }
+            if(this.selected70) { this.rule70.visit(node, index); }
             break;
         default:
             break;
@@ -749,5 +755,6 @@ export function createRuleSet(context: RuleContext): RuleSet {
     const rule71 = create71(context);
     const rule72 = create72(context);
     const rule73 = create73(context);
-    return new RuleSet(context, rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13, rule14, rule15, rule16, rule17, rule18, rule19, rule20, rule21, rule22, rule23, rule24, rule25, rule26, rule27, rule28, rule29, rule30, rule31, rule32, rule33, rule34, rule35, rule36, rule37, rule38, rule39, rule40, rule41, rule42, rule43, rule44, rule45, rule46, rule47, rule48, rule49, rule50, rule51, rule52, rule53, rule54, rule55, rule56, rule57, rule58, rule59, rule60, rule61, rule62, rule63, rule64, rule65, rule66, rule67, rule68, rule69, rule70, rule71, rule72, rule73);
+    const rule74 = create74(context);
+    return new RuleSet(context, rule0, rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13, rule14, rule15, rule16, rule17, rule18, rule19, rule20, rule21, rule22, rule23, rule24, rule25, rule26, rule27, rule28, rule29, rule30, rule31, rule32, rule33, rule34, rule35, rule36, rule37, rule38, rule39, rule40, rule41, rule42, rule43, rule44, rule45, rule46, rule47, rule48, rule49, rule50, rule51, rule52, rule53, rule54, rule55, rule56, rule57, rule58, rule59, rule60, rule61, rule62, rule63, rule64, rule65, rule66, rule67, rule68, rule69, rule70, rule71, rule72, rule73, rule74);
 }

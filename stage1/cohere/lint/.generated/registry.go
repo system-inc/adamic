@@ -76,6 +76,7 @@ func registeredRules() []registeredRule {
 		{oracleNoUnsafeFinally(), oracleNoUnsafeFinallyOptions},
 		{oracleNoUnsafeNegation(), oracleNoUnsafeNegationOptions},
 		{oracleNoUnsafeOptionalChaining(), oracleNoUnsafeOptionalChainingOptions},
+		{oracleNoUnusedLabels(), oracleNoUnusedLabelsOptions},
 		{oracleNoUselessCatch(), oracleNoUselessCatchOptions},
 		{oracleNoUselessConcat(), oracleNoUselessConcatOptions},
 		{oracleNoWarningComments(), oracleNoWarningCommentsOptions},
