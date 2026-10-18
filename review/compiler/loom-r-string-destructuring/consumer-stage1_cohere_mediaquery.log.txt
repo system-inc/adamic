@@ -1,0 +1,30 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts (2.23s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts (2.28s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts (2.32s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts (2.33s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts (0.54s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts (0.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/mediaquery	2.924s

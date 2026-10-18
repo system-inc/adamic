@@ -1,0 +1,221 @@
+=== RUN   TestFixturesObjects
+=== PAUSE TestFixturesObjects
+=== CONT  TestFixturesObjects
+    fixtures_test.go:232: build stage3-fixture-oracle-hook 8001a14f1c2f miss 10.04
+=== RUN   TestFixturesObjects/objects
+=== PAUSE TestFixturesObjects/objects
+=== CONT  TestFixturesObjects/objects
+=== RUN   TestFixturesObjects/objects/01_reference_spreads.a
+=== PAUSE TestFixturesObjects/objects/01_reference_spreads.a
+=== RUN   TestFixturesObjects/objects/02_polling_levels.a
+=== PAUSE TestFixturesObjects/objects/02_polling_levels.a
+=== RUN   TestFixturesObjects/objects/03_resolution_cache_spreads.a
+=== PAUSE TestFixturesObjects/objects/03_resolution_cache_spreads.a
+=== RUN   TestFixturesObjects/objects/04_trace_metadata.a
+=== PAUSE TestFixturesObjects/objects/04_trace_metadata.a
+=== RUN   TestFixturesObjects/objects/05_polling_array_metadata.a
+=== PAUSE TestFixturesObjects/objects/05_polling_array_metadata.a
+=== RUN   TestFixturesObjects/objects/06_watch_close.a
+=== PAUSE TestFixturesObjects/objects/06_watch_close.a
+=== RUN   TestFixturesObjects/objects/07_synthetic_reference.a
+=== PAUSE TestFixturesObjects/objects/07_synthetic_reference.a
+=== RUN   TestFixturesObjects/objects/08_loop_state.a
+=== PAUSE TestFixturesObjects/objects/08_loop_state.a
+=== RUN   TestFixturesObjects/objects/10_build_options.a
+=== PAUSE TestFixturesObjects/objects/10_build_options.a
+=== RUN   TestFixturesObjects/objects/12_decorator_descriptor.a
+=== PAUSE TestFixturesObjects/objects/12_decorator_descriptor.a
+=== RUN   TestFixturesObjects/objects/14_comment_pending.a
+=== PAUSE TestFixturesObjects/objects/14_comment_pending.a
+=== RUN   TestFixturesObjects/objects/15_accessor_absence.a
+=== PAUSE TestFixturesObjects/objects/15_accessor_absence.a
+=== RUN   TestFixturesObjects/objects/16_version_defaults.a
+=== PAUSE TestFixturesObjects/objects/16_version_defaults.a
+=== RUN   TestFixturesObjects/objects/17_container_rest.a
+=== PAUSE TestFixturesObjects/objects/17_container_rest.a
+=== RUN   TestFixturesObjects/objects/19_identifier_multimap.a
+=== PAUSE TestFixturesObjects/objects/19_identifier_multimap.a
+=== RUN   TestFixturesObjects/objects/20_queue_optional_call.a
+=== PAUSE TestFixturesObjects/objects/20_queue_optional_call.a
+=== RUN   TestFixturesObjects/objects/22_nested_optional_calls.a
+=== PAUSE TestFixturesObjects/objects/22_nested_optional_calls.a
+=== RUN   TestFixturesObjects/objects/23_factory_getters.a
+=== PAUSE TestFixturesObjects/objects/23_factory_getters.a
+=== RUN   TestFixturesObjects/objects/24_transformation_accessors.a
+=== PAUSE TestFixturesObjects/objects/24_transformation_accessors.a
+=== RUN   TestFixturesObjects/objects/25_map_generator.a
+=== PAUSE TestFixturesObjects/objects/25_map_generator.a
+=== RUN   TestFixturesObjects/objects/26_diagnostic_in.a
+=== PAUSE TestFixturesObjects/objects/26_diagnostic_in.a
+=== RUN   TestFixturesObjects/objects/27_delete_substitution.a
+=== PAUSE TestFixturesObjects/objects/27_delete_substitution.a
+=== RUN   TestFixturesObjects/objects/28_debugger.a
+=== PAUSE TestFixturesObjects/objects/28_debugger.a
+=== RUN   TestFixturesObjects/objects/29_parameter_default.a
+=== PAUSE TestFixturesObjects/objects/29_parameter_default.a
+=== RUN   TestFixturesObjects/objects/30_host_optional_method.a
+=== PAUSE TestFixturesObjects/objects/30_host_optional_method.a
+=== CONT  TestFixturesObjects/objects/01_reference_spreads.a
+=== CONT  TestFixturesObjects/objects/17_container_rest.a
+=== CONT  TestFixturesObjects/objects/08_loop_state.a
+=== CONT  TestFixturesObjects/objects/25_map_generator.a
+=== RUN   TestFixturesObjects/objects/17_container_rest.a/node
+=== RUN   TestFixturesObjects/objects/08_loop_state.a/node
+=== RUN   TestFixturesObjects/objects/01_reference_spreads.a/node
+=== RUN   TestFixturesObjects/objects/25_map_generator.a/node
+=== RUN   TestFixturesObjects/objects/17_container_rest.a/stage0
+=== CONT  TestFixturesObjects/objects/07_synthetic_reference.a
+=== RUN   TestFixturesObjects/objects/01_reference_spreads.a/stage0
+=== CONT  TestFixturesObjects/objects/06_watch_close.a
+=== RUN   TestFixturesObjects/objects/08_loop_state.a/stage0
+=== CONT  TestFixturesObjects/objects/05_polling_array_metadata.a
+=== RUN   TestFixturesObjects/objects/25_map_generator.a/stage0
+=== CONT  TestFixturesObjects/objects/04_trace_metadata.a
+=== RUN   TestFixturesObjects/objects/07_synthetic_reference.a/node
+=== RUN   TestFixturesObjects/objects/07_synthetic_reference.a/native
+=== RUN   TestFixturesObjects/objects/04_trace_metadata.a/node
+=== RUN   TestFixturesObjects/objects/06_watch_close.a/node
+=== RUN   TestFixturesObjects/objects/05_polling_array_metadata.a/node
+=== RUN   TestFixturesObjects/objects/04_trace_metadata.a/stage0
+=== CONT  TestFixturesObjects/objects/03_resolution_cache_spreads.a
+=== RUN   TestFixturesObjects/objects/06_watch_close.a/stage0
+=== CONT  TestFixturesObjects/objects/02_polling_levels.a
+=== RUN   TestFixturesObjects/objects/05_polling_array_metadata.a/stage0
+=== CONT  TestFixturesObjects/objects/12_decorator_descriptor.a
+=== RUN   TestFixturesObjects/objects/02_polling_levels.a/node
+=== RUN   TestFixturesObjects/objects/12_decorator_descriptor.a/node
+=== RUN   TestFixturesObjects/objects/03_resolution_cache_spreads.a/node
+=== RUN   TestFixturesObjects/objects/12_decorator_descriptor.a/stage0
+=== CONT  TestFixturesObjects/objects/16_version_defaults.a
+=== RUN   TestFixturesObjects/objects/02_polling_levels.a/stage0
+=== CONT  TestFixturesObjects/objects/15_accessor_absence.a
+=== RUN   TestFixturesObjects/objects/03_resolution_cache_spreads.a/stage0
+=== CONT  TestFixturesObjects/objects/14_comment_pending.a
+=== RUN   TestFixturesObjects/objects/15_accessor_absence.a/node
+=== RUN   TestFixturesObjects/objects/16_version_defaults.a/node
+=== RUN   TestFixturesObjects/objects/15_accessor_absence.a/stage0
+=== CONT  TestFixturesObjects/objects/20_queue_optional_call.a
+=== RUN   TestFixturesObjects/objects/16_version_defaults.a/stage0
+=== CONT  TestFixturesObjects/objects/24_transformation_accessors.a
+=== RUN   TestFixturesObjects/objects/14_comment_pending.a/node
+=== RUN   TestFixturesObjects/objects/14_comment_pending.a/native
+=== RUN   TestFixturesObjects/objects/24_transformation_accessors.a/node
+=== RUN   TestFixturesObjects/objects/20_queue_optional_call.a/node
+=== RUN   TestFixturesObjects/objects/24_transformation_accessors.a/native
+=== RUN   TestFixturesObjects/objects/20_queue_optional_call.a/stage0
+=== CONT  TestFixturesObjects/objects/23_factory_getters.a
+=== RUN   TestFixturesObjects/objects/23_factory_getters.a/node
+=== RUN   TestFixturesObjects/objects/23_factory_getters.a/native
+=== RUN   TestFixturesObjects/objects/07_synthetic_reference.a/stage0
+=== CONT  TestFixturesObjects/objects/22_nested_optional_calls.a
+=== RUN   TestFixturesObjects/objects/22_nested_optional_calls.a/node
+=== RUN   TestFixturesObjects/objects/22_nested_optional_calls.a/stage0
+=== CONT  TestFixturesObjects/objects/27_delete_substitution.a
+=== RUN   TestFixturesObjects/objects/27_delete_substitution.a/node
+=== RUN   TestFixturesObjects/objects/27_delete_substitution.a/stage0
+=== CONT  TestFixturesObjects/objects/30_host_optional_method.a
+=== RUN   TestFixturesObjects/objects/30_host_optional_method.a/node
+=== RUN   TestFixturesObjects/objects/30_host_optional_method.a/stage0
+=== CONT  TestFixturesObjects/objects/29_parameter_default.a
+=== RUN   TestFixturesObjects/objects/29_parameter_default.a/node
+=== RUN   TestFixturesObjects/objects/24_transformation_accessors.a/stage0
+=== CONT  TestFixturesObjects/objects/28_debugger.a
+=== RUN   TestFixturesObjects/objects/29_parameter_default.a/stage0
+=== CONT  TestFixturesObjects/objects/26_diagnostic_in.a
+=== RUN   TestFixturesObjects/objects/14_comment_pending.a/stage0
+=== CONT  TestFixturesObjects/objects/10_build_options.a
+=== RUN   TestFixturesObjects/objects/23_factory_getters.a/stage0
+=== CONT  TestFixturesObjects/objects/19_identifier_multimap.a
+=== RUN   TestFixturesObjects/objects/28_debugger.a/node
+=== RUN   TestFixturesObjects/objects/28_debugger.a/native
+=== RUN   TestFixturesObjects/objects/26_diagnostic_in.a/node
+=== RUN   TestFixturesObjects/objects/10_build_options.a/node
+=== RUN   TestFixturesObjects/objects/26_diagnostic_in.a/stage0
+=== RUN   TestFixturesObjects/objects/19_identifier_multimap.a/node
+=== RUN   TestFixturesObjects/objects/10_build_options.a/stage0
+=== RUN   TestFixturesObjects/objects/19_identifier_multimap.a/stage0
+=== RUN   TestFixturesObjects/objects/28_debugger.a/stage0
+--- PASS: TestFixturesObjects (14.09s)
+    --- PASS: TestFixturesObjects/objects (0.00s)
+        --- PASS: TestFixturesObjects/objects/17_container_rest.a (0.16s)
+            --- PASS: TestFixturesObjects/objects/17_container_rest.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/17_container_rest.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/01_reference_spreads.a (0.21s)
+            --- PASS: TestFixturesObjects/objects/01_reference_spreads.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/01_reference_spreads.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/08_loop_state.a (0.22s)
+            --- PASS: TestFixturesObjects/objects/08_loop_state.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/08_loop_state.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/25_map_generator.a (0.24s)
+            --- PASS: TestFixturesObjects/objects/25_map_generator.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/25_map_generator.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/04_trace_metadata.a (0.20s)
+            --- PASS: TestFixturesObjects/objects/04_trace_metadata.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/04_trace_metadata.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/06_watch_close.a (0.23s)
+            --- PASS: TestFixturesObjects/objects/06_watch_close.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/06_watch_close.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/05_polling_array_metadata.a (0.23s)
+            --- PASS: TestFixturesObjects/objects/05_polling_array_metadata.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/05_polling_array_metadata.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/12_decorator_descriptor.a (0.18s)
+            --- PASS: TestFixturesObjects/objects/12_decorator_descriptor.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/12_decorator_descriptor.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/02_polling_levels.a (0.18s)
+            --- PASS: TestFixturesObjects/objects/02_polling_levels.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/02_polling_levels.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/03_resolution_cache_spreads.a (0.24s)
+            --- PASS: TestFixturesObjects/objects/03_resolution_cache_spreads.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/03_resolution_cache_spreads.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/15_accessor_absence.a (0.21s)
+            --- PASS: TestFixturesObjects/objects/15_accessor_absence.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/15_accessor_absence.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/16_version_defaults.a (0.22s)
+            --- PASS: TestFixturesObjects/objects/16_version_defaults.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/16_version_defaults.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/20_queue_optional_call.a (0.19s)
+            --- PASS: TestFixturesObjects/objects/20_queue_optional_call.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/20_queue_optional_call.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/07_synthetic_reference.a (2.60s)
+            --- PASS: TestFixturesObjects/objects/07_synthetic_reference.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/07_synthetic_reference.a/native (2.41s)
+            --- PASS: TestFixturesObjects/objects/07_synthetic_reference.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/22_nested_optional_calls.a (0.20s)
+            --- PASS: TestFixturesObjects/objects/22_nested_optional_calls.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/22_nested_optional_calls.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/27_delete_substitution.a (0.33s)
+            --- PASS: TestFixturesObjects/objects/27_delete_substitution.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/27_delete_substitution.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/30_host_optional_method.a (0.21s)
+            --- PASS: TestFixturesObjects/objects/30_host_optional_method.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/30_host_optional_method.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/24_transformation_accessors.a (2.84s)
+            --- PASS: TestFixturesObjects/objects/24_transformation_accessors.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/24_transformation_accessors.a/native (2.66s)
+            --- PASS: TestFixturesObjects/objects/24_transformation_accessors.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/29_parameter_default.a (0.17s)
+            --- PASS: TestFixturesObjects/objects/29_parameter_default.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/29_parameter_default.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/14_comment_pending.a (3.06s)
+            --- PASS: TestFixturesObjects/objects/14_comment_pending.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/14_comment_pending.a/native (2.79s)
+            --- PASS: TestFixturesObjects/objects/14_comment_pending.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/23_factory_getters.a (2.76s)
+            --- PASS: TestFixturesObjects/objects/23_factory_getters.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/23_factory_getters.a/native (2.56s)
+            --- PASS: TestFixturesObjects/objects/23_factory_getters.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/26_diagnostic_in.a (0.23s)
+            --- PASS: TestFixturesObjects/objects/26_diagnostic_in.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/26_diagnostic_in.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/10_build_options.a (0.23s)
+            --- PASS: TestFixturesObjects/objects/10_build_options.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/10_build_options.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/19_identifier_multimap.a (0.23s)
+            --- PASS: TestFixturesObjects/objects/19_identifier_multimap.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/19_identifier_multimap.a/stage0 (0.00s)
+        --- PASS: TestFixturesObjects/objects/28_debugger.a (1.90s)
+            --- PASS: TestFixturesObjects/objects/28_debugger.a/node (0.00s)
+            --- PASS: TestFixturesObjects/objects/28_debugger.a/native (1.73s)
+            --- PASS: TestFixturesObjects/objects/28_debugger.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	19.698s

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "wrong-member",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/string-destructuring/wrong-member-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_097$/internal/oracle/testdata/string_destructuring.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 74.903,
+    "catcher": "stdout differs",
+    "caught": true
+  },
+  {
+    "name": "skip-empty-source",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/string-destructuring/skip-empty-source-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_097$/internal/oracle/testdata/string_destructuring.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 69.597,
+    "catcher": "stdout differs",
+    "caught": true
+  },
+  {
+    "name": "missing-fix",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/string-destructuring/missing-fix-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringDestructuringMemberDiagnostic$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 50.748,
+    "catcher": "want string member refusal with path and fix",
+    "caught": true
+  }
+]

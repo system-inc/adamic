@@ -1,0 +1,11 @@
+--- a/internal/lower/collections.go
++++ b/internal/lower/collections.go
+@@ -273,7 +273,7 @@
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return append([]ir.Statement{ir.Declare{Local: held, Value: value}}, declared...), nil
++	if value.Type() == ir.String && len(pattern.AsBindingPattern().Elements.Nodes) == 0 { return declared, nil }; return append([]ir.Statement{ir.Declare{Local: held, Value: value}}, declared...), nil
+ }
+ 
+ // destructureFrom declares a pattern's names from the local held, which holds a value of type

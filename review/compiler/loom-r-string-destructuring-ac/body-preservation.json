@@ -1,0 +1,18 @@
+{
+  "changedPrograms": {
+    "internal/oracle/testdata/string_destructuring.a": {
+      "sourceBlob": "94951eca1d2776e9b87991268f55c69447baa09d",
+      "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e",
+      "unchanged": true
+    },
+    "review/compiler/string-destructuring/unsupported-member.a": {
+      "sourceBlob": "e3e0e07938e8cdca12f0b8c3d5993388ad9a0bc8",
+      "sha256": "993a1a2abcbf7a3e1f797b15d9f4816a17a86503d5681631fe2239b2f9e4844b",
+      "unchanged": true
+    }
+  },
+  "control": "internal/oracle/testdata/non_null_refused/initialized.a",
+  "controlRestored": true,
+  "controlBodySha256": "b0301d276a460b271cfce9c71e4ae88d6447849e1bce28371a1f7a54ac52cdf9",
+  "headersAdded": []
+}

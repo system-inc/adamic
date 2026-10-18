@@ -1,0 +1,8 @@
+=== RUN   TestRawInputGap
+    oracles.go:172: build estree-go-oracle-v1_oracle-owner-v1 000c1908e2dd hit 3.47
+    gaps_test.go:80: build estree-misc-sanitized-emitted fe60fe06353b miss 1.83
+    gaps_test.go:80: build lowered/sanitized/emitted products: 1.866475s
+    gaps_test.go:89: Equal size, readTextFile text and utf8Length on Node/native/emitted JS: "8:8://�\nx;\n"; Go distinguishes: line 17: Go "0 .value string \\ufffd\\ufffd\\ufffd", port "0 .value string \\ufffd"
+--- PASS: TestRawInputGap (5.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	5.912s

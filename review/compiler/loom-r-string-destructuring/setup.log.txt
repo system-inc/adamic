@@ -1,0 +1,19 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.431s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.449s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.014s
+setup: markdown dependencies ready (0.657s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.084s)
+Submodule path 'cohere': checked out '0183ccf8c57a775f874ca73be1adfc06e9ad1562'
+setup: submodules ready (1.411s)
+setup: shared cache ready (2.927s)
+setup: go build ready (113.038s)
+setup: test binaries deferred (use --warm-tests) (113.160s)
+setup: build cache warm (113.163s)
+setup: build-flags commit=dbdf977f5b8b0979d414ebe6f20e7aadd312e309 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=on load-before=0.10 0.03 0.01 1/138 674 load-after=8.06 2.61 0.92 1/147 2176
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (113.285s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.r4C84R

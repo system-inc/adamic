@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestOriginalCycleLedger",
+    "log": "consumer-internal_lower_cycleledger.log"
+  },
+  {
+    "test": "TestRecoveryLibraryGaps",
+    "log": "consumer-stage1_cohere_estree.log"
+  },
+  {
+    "test": "TestCookedSurrogateLibraryGap",
+    "log": "consumer-stage1_cohere_estree.log"
+  },
+  {
+    "test": "TestTypeMemberLibraryGap",
+    "log": "consumer-stage1_cohere_estree.log"
+  },
+  {
+    "test": "TestPinnedNumericGaps",
+    "log": "consumer-stage1_cohere_estree.log"
+  }
+]

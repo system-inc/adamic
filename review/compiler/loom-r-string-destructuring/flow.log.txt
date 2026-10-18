@@ -1,0 +1,115 @@
+=== RUN   TestFlowCorpusUnitsCoverEveryProgram
+=== PAUSE TestFlowCorpusUnitsCoverEveryProgram
+=== RUN   TestFlowCorpusSetupIsShared
+=== PAUSE TestFlowCorpusSetupIsShared
+=== RUN   TestFlowCorpusRemainder
+=== PAUSE TestFlowCorpusRemainder
+=== CONT  TestFlowCorpusUnitsCoverEveryProgram
+=== CONT  TestFlowCorpusRemainder
+=== CONT  TestFlowCorpusSetupIsShared
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a
+=== NAME  TestFlowCorpusUnitsCoverEveryProgram
+    corpus_coverage_test.go:101: 851 programs, 3404 analysis pieces, 838 selectable units
+--- PASS: TestFlowCorpusUnitsCoverEveryProgram (0.02s)
+--- PASS: TestFlowCorpusSetupIsShared (0.08s)
+=== NAME  TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a
+    corpus_coverage_test.go:131: 8 functions: 0 phis, 3 values, 15 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 32 points walked, 51 events
+    corpus_coverage_test.go:131: 11 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a
+    corpus_coverage_test.go:131: 8 functions: 0 phis, 3 values, 15 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 38 points walked, 61 events
+    corpus_coverage_test.go:131: 11 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a
+    corpus_coverage_test.go:131: 8 functions: 0 phis, 3 values, 15 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 35 points walked, 56 events
+    corpus_coverage_test.go:131: 11 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/determinism_dispatch.a
+    corpus_coverage_test.go:131: 121 functions: 0 phis, 12 values, 144 uses checked
+    corpus_coverage_test.go:131: 11 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 170 points walked, 398 events
+    corpus_coverage_test.go:131: 60 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/instantiation_array.a
+    corpus_coverage_test.go:131: 5 functions: 0 phis, 0 values, 6 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 10 points walked, 23 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/instantiation_callback.a
+    corpus_coverage_test.go:131: 6 functions: 0 phis, 4 values, 15 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 21 points walked, 36 events
+    corpus_coverage_test.go:131: 22 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/instantiation_find.a
+    corpus_coverage_test.go:131: 4 functions: 4 phis, 10 values, 14 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 29 points walked, 42 events
+    corpus_coverage_test.go:131: 105 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/instantiation_first.a
+    corpus_coverage_test.go:131: 5 functions: 0 phis, 0 values, 8 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 16 points walked, 37 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/instantiation_last.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 5 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 10 points walked, 23 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/long_unicode_literals.a
+    corpus_coverage_test.go:131: 1 functions: 2 phis, 7 values, 18 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 44202 points walked, 44203 events
+    corpus_coverage_test.go:131: 132583 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/node_fs_rm_options.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 2 values, 2 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 31 points walked, 32 events
+    corpus_coverage_test.go:131: 48 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/plain_data_spread.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 0 values, 1 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 2 points walked, 5 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a
+    corpus_coverage_test.go:131: 5 functions: 0 phis, 1 values, 5 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 10 points walked, 17 events
+    corpus_coverage_test.go:131: 5 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a
+    corpus_coverage_test.go:131: 6 functions: 0 phis, 2 values, 8 uses checked
+    corpus_coverage_test.go:131: 1 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 12 points walked, 22 events
+    corpus_coverage_test.go:131: 6 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a
+    corpus_coverage_test.go:131: 4 functions: 0 phis, 10 values, 12 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 46 points walked, 57 events
+    corpus_coverage_test.go:131: 105 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/template_nullish.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 6 points walked, 11 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== NAME  TestFlowCorpusRemainder
+    corpus_coverage_test.go:134: remainder ran 16 programs
+--- PASS: TestFlowCorpusRemainder (7.02s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a (0.35s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a (0.70s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a (0.36s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/determinism_dispatch.a (0.47s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/instantiation_array.a (0.44s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/instantiation_callback.a (0.34s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/instantiation_find.a (0.27s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/instantiation_first.a (0.27s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/instantiation_last.a (0.38s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/long_unicode_literals.a (1.07s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/node_fs_rm_options.a (1.19s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/plain_data_spread.a (0.29s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a (0.26s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a (0.20s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a (0.22s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/template_nullish.a (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	7.044s

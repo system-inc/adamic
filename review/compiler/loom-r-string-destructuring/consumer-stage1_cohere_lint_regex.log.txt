@@ -1,0 +1,15 @@
+=== RUN   TestDynamicPatternGap
+=== PAUSE TestDynamicPatternGap
+=== RUN   TestOptionDialectGap
+=== PAUSE TestOptionDialectGap
+=== CONT  TestDynamicPatternGap
+=== CONT  TestOptionDialectGap
+=== NAME  TestDynamicPatternGap
+    regex_test.go:204: /workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestDynamicPatternGap (0.21s)
+=== NAME  TestOptionDialectGap
+    regex_test.go:211: build go build cohere /workspace/adamic/stage1/cohere/lint/regex/testdata/option_dialects.go regex-option-dialects-owner-v1: settle the oracle owner first
+--- FAIL: TestOptionDialectGap (1.45s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/regex	1.464s
+FAIL

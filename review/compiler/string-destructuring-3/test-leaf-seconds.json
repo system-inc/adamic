@@ -1,0 +1,527 @@
+[
+  {
+    "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "seconds": 0.08,
+    "log": "lower.log"
+  },
+  {
+    "test": "TestStringDestructuringMemberDiagnostic",
+    "seconds": 0.08,
+    "log": "lower.log"
+  },
+  {
+    "test": "TestInheritanceKeepsNominalTupleDestructuring",
+    "seconds": 0.19,
+    "log": "lower.log"
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "seconds": 0.2,
+    "log": "lower.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode_097",
+    "seconds": 0.0,
+    "log": "fixture.log"
+  },
+  {
+    "test": "TestNativeAgreesWithNode_097/internal/oracle/testdata/string_destructuring.a",
+    "seconds": 14.93,
+    "log": "fixture.log"
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "seconds": 18.4,
+    "log": "readers.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder",
+    "seconds": 1.7,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a",
+    "seconds": 0.16,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a",
+    "seconds": 0.2,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a",
+    "seconds": 0.18,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/determinism_dispatch.a",
+    "seconds": 0.17,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/long_unicode_literals.a",
+    "seconds": 0.29,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/plain_data_spread.a",
+    "seconds": 0.13,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a",
+    "seconds": 0.14,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a",
+    "seconds": 0.12,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a",
+    "seconds": 0.15,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/template_nullish.a",
+    "seconds": 0.15,
+    "log": "flow.log"
+  },
+  {
+    "test": "TestFixturesObjects",
+    "seconds": 4.53,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/25_map_generator.a",
+    "seconds": 0.16,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/25_map_generator.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/01_reference_spreads.a",
+    "seconds": 0.17,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/01_reference_spreads.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/01_reference_spreads.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/17_container_rest.a",
+    "seconds": 0.19,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/17_container_rest.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/17_container_rest.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/27_delete_substitution.a",
+    "seconds": 0.15,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/27_delete_substitution.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/27_delete_substitution.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/22_nested_optional_calls.a",
+    "seconds": 0.13,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/22_nested_optional_calls.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/22_nested_optional_calls.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/26_diagnostic_in.a",
+    "seconds": 0.17,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/26_diagnostic_in.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/26_diagnostic_in.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/20_queue_optional_call.a",
+    "seconds": 0.14,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/20_queue_optional_call.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/20_queue_optional_call.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/08_loop_state.a",
+    "seconds": 0.15,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/08_loop_state.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/08_loop_state.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/16_version_defaults.a",
+    "seconds": 0.15,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/16_version_defaults.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/16_version_defaults.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/15_accessor_absence.a",
+    "seconds": 0.15,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/15_accessor_absence.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/15_accessor_absence.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/28_debugger.a",
+    "seconds": 1.84,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/28_debugger.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/28_debugger.a/native",
+    "seconds": 1.69,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/28_debugger.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/12_decorator_descriptor.a",
+    "seconds": 0.17,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/12_decorator_descriptor.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/12_decorator_descriptor.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/10_build_options.a",
+    "seconds": 0.12,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/10_build_options.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/10_build_options.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/05_polling_array_metadata.a",
+    "seconds": 0.13,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/05_polling_array_metadata.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/05_polling_array_metadata.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/14_comment_pending.a",
+    "seconds": 1.83,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/14_comment_pending.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/14_comment_pending.a/native",
+    "seconds": 1.69,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/14_comment_pending.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/06_watch_close.a",
+    "seconds": 0.1,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/06_watch_close.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/06_watch_close.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a",
+    "seconds": 0.11,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/04_trace_metadata.a",
+    "seconds": 0.12,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/04_trace_metadata.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/04_trace_metadata.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/19_identifier_multimap.a",
+    "seconds": 0.14,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/19_identifier_multimap.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/19_identifier_multimap.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/02_polling_levels.a",
+    "seconds": 0.1,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/02_polling_levels.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/02_polling_levels.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/30_host_optional_method.a",
+    "seconds": 0.14,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/30_host_optional_method.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/30_host_optional_method.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/29_parameter_default.a",
+    "seconds": 0.16,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/29_parameter_default.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/29_parameter_default.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a",
+    "seconds": 1.57,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a/native",
+    "seconds": 1.42,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/23_factory_getters.a",
+    "seconds": 8.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/23_factory_getters.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/23_factory_getters.a/native",
+    "seconds": 7.83,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/23_factory_getters.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a",
+    "seconds": 8.05,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a/node",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a/native",
+    "seconds": 7.91,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a/stage0",
+    "seconds": 0.0,
+    "log": "stage3.log"
+  },
+  {
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "seconds": 0.0,
+    "log": "guards.log"
+  },
+  {
+    "test": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "seconds": 0.03,
+    "log": "guards.log"
+  },
+  {
+    "test": "TestEveryTestIsParallelOrSaysWhy",
+    "seconds": 0.43,
+    "log": "guards.log"
+  },
+  {
+    "test": "TestEveryDuplicatedProductDeclarationAgrees",
+    "seconds": 0.44,
+    "log": "guards.log"
+  },
+  {
+    "test": "TestRuntimeSetsAreEachUsed",
+    "seconds": 1.1,
+    "log": "guards.log"
+  }
+]
