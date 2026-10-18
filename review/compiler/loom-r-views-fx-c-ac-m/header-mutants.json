@@ -1,0 +1,16 @@
+[
+  {
+    "mutant": "removed-header",
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a",
+    "exit": 1,
+    "catcher": "a-check failed for 1 file:\nreview/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a: refused, expected checked (adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:8:18: Adamic 0.1 refuses a checked callable producer as)",
+    "body_sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4"
+  },
+  {
+    "mutant": "wrong-reason",
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a",
+    "exit": 1,
+    "catcher": "a-check failed for 1 file:\nreview/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a: refused, expected refused deliberately wrong reason (adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:8:18: Adamic 0.1 refuses a checked callable producer as)",
+    "body_sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4"
+  }
+]

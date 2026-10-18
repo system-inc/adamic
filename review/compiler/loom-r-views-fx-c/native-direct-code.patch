@@ -1,0 +1,5 @@
+--- internal/native/view_unions_untagged.go
++++ internal/native/view_unions_untagged.go
+@@ -165 +165 @@
+-			if !e.program.Functions[function].Closure || e.program.Functions[function].Receiver {
++			if false {

@@ -1,0 +1,13 @@
+compiler-build 0 12.625
+counts-regenerate 0 88.222
+lower-all 0 60.093
+native-all 0 287.188
+oracle-all 0 439.051
+ir-all 1 67.101
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-views-fx-c-ac-m/validate.py", line 21, in <module>
+    run(name+'-all',['go','test','./internal/'+name+'/...',*standard])
+  File "/workspace/adamic/review/compiler/loom-r-views-fx-c-ac-m/validate.py", line 16, in run
+    assert r.returncode==0,(label,r.returncode)
+           ^^^^^^^^^^^^^^^
+AssertionError: ('ir-all', 1)

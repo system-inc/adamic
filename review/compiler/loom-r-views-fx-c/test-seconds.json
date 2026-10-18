@@ -1,0 +1,118 @@
+[
+  {
+    "test": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCallableProducerDiscardedObjectResultRefused",
+    "seconds": 0.79
+  },
+  {
+    "test": "TestCallableProducerExtraOptionalAdapted",
+    "seconds": 0.84
+  },
+  {
+    "test": "TestCallableProducerFewerParametersAdapted",
+    "seconds": 0.95
+  },
+  {
+    "test": "TestCallableProducerTaggedUnreadMethod",
+    "seconds": 1.06
+  },
+  {
+    "test": "TestCallableProducerMethodShorthandAdapted",
+    "seconds": 0.69
+  },
+  {
+    "test": "TestCallableProducerP21",
+    "seconds": 0.69
+  },
+  {
+    "test": "TestCallableProducerCertificatesUseClosureThunks",
+    "seconds": 0.74
+  },
+  {
+    "test": "TestCallableProducerP61",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestCallableProducerP60",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestCallableProducerUniqueObjectResultRefused",
+    "seconds": 0.6
+  },
+  {
+    "test": "TestCallableProducerMethodShorthandRefused",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestCallableProducerAmbiguousRefused",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestCallableProducerAmbiguousCertificate",
+    "seconds": 0.92
+  },
+  {
+    "test": "TestCallableProducerExtraOptionalRefused",
+    "seconds": 0.59
+  },
+  {
+    "test": "TestCallableProducerFewerParametersRefused",
+    "seconds": 0.73
+  },
+  {
+    "test": "TestCallableProducerLiteralReturn",
+    "seconds": 0.71
+  },
+  {
+    "test": "TestViewSnapshotPayloadOwnership",
+    "seconds": 33.27
+  },
+  {
+    "test": "TestCallableProducerRegistryFiltersDirectFunctions",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestViewSnapshotMaybeBoolean",
+    "seconds": 7.19
+  },
+  {
+    "test": "TestViewSnapshotTypedArrayReference",
+    "seconds": 7.42
+  },
+  {
+    "test": "TestCheckedViewV2CallableProducerMutant",
+    "seconds": 7.67
+  },
+  {
+    "test": "TestCallableUnionResultZero",
+    "seconds": 1.68
+  },
+  {
+    "test": "TestCallableUnionResultString",
+    "seconds": 1.85
+  },
+  {
+    "test": "TestCallableUnionResultNumber",
+    "seconds": 1.82
+  },
+  {
+    "test": "TestViewSnapshotMaybeNumber",
+    "seconds": 1.79
+  },
+  {
+    "test": "TestLoomViewsCOriginal",
+    "seconds": 2.06
+  },
+  {
+    "test": "TestRuntimeSetsAreEachUsed",
+    "seconds": 4.32
+  },
+  {
+    "test": "TestCallableUnionResultBoth",
+    "seconds": 20.06
+  }
+]

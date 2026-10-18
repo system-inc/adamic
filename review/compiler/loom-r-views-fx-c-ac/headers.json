@@ -1,0 +1,22 @@
+[
+  {
+    "path": "internal/lower/testdata/callable_producers/p135_object_result.a",
+    "header": "// a-check: refused a checked callable producer assignable to more than one union member",
+    "body_sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb"
+  },
+  {
+    "path": "internal/lower/testdata/callable_producers/p22.a",
+    "header": "// a-check: refused a checked callable producer assignable to more than one union member",
+    "body_sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a",
+    "header": "// a-check: refused a checked callable producer assignable to more than one union member",
+    "body_sha256": "0587b8e6f52884c351308f2e9368e060dc54e777cde1727bffff03e5860095e4"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a",
+    "header": "// a-check: refused a checked callable producer assignable to more than one union member",
+    "body_sha256": "4123e0eab5d348c81b3ac5c4f4657c1c539a3e506f1a80fcfaf33457914d1ccb"
+  }
+]

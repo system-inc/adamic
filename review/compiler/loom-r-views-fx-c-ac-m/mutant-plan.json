@@ -1,0 +1,168 @@
+[
+  {
+    "name": "packed-snapshot-stale",
+    "changes": [
+      [
+        "internal/native/runtime/object.c",
+        "value.payload = (adamic_value){0};\n        if (boolean.present) { value.payload.boolean = boolean.boolean; }",
+        "value.payload.boolean = boolean.boolean;"
+      ]
+    ],
+    "package": "./internal/native",
+    "test": "^TestViewSnapshotPayloadOwnership$",
+    "green": false
+  },
+  {
+    "name": "native-direct-code",
+    "changes": [
+      [
+        "internal/native/view_unions_untagged.go",
+        "if !e.program.Functions[function].Closure || e.program.Functions[function].Receiver {",
+        "if false {"
+      ]
+    ],
+    "package": "./internal/oracle",
+    "test": "^TestCallableProducerRegistryFiltersDirectFunctions$",
+    "green": false
+  },
+  {
+    "name": "exact-producer-type",
+    "changes": [
+      [
+        "internal/lower/view_unions_untagged.go",
+        "l.checker.IsTypeAssignableTo(producer.proven, target)",
+        "producer.proven == target"
+      ]
+    ],
+    "package": "./internal/oracle",
+    "test": "^TestCheckedViewV2CallableProducerMutant$",
+    "green": false
+  },
+  {
+    "name": "ambiguous-producer",
+    "changes": [
+      [
+        "internal/lower/view_callable_producers.go",
+        "if len(assignableMembers) > 1 {",
+        "if false {"
+      ]
+    ],
+    "package": "./internal/lower",
+    "test": "^TestCallableProducerAmbiguousRefused$",
+    "green": false
+  },
+  {
+    "name": "missing-abi-refusal",
+    "changes": [
+      [
+        "internal/lower/view_callable_producers.go",
+        "if len(assignableMembers) != 0 && !compatible {",
+        "if len(assignableMembers) != 0 && !compatible && false {"
+      ]
+    ],
+    "package": "./internal/lower",
+    "test": "^TestCallableProducerMethodShorthandRefused$|^TestCallableProducerExtraOptionalRefused$",
+    "green": false
+  },
+  {
+    "name": "raw-union-result",
+    "changes": [
+      [
+        "internal/native/emit_functions.go",
+        "if expression.Returns == ir.Union {\n\t\treturn e.callableUnionResult(result, closure, method)\n\t}",
+        ""
+      ]
+    ],
+    "package": "./internal/oracle",
+    "test": "^TestCallableUnionResultNumber$",
+    "green": false
+  },
+  {
+    "name": "lower-direct-code-fixed-mutant",
+    "changes": [
+      [
+        "internal/lower/view_unions_untagged.go",
+        "if !function.Closure || function.Receiver {",
+        "if (!function.Closure || function.Receiver) && false {"
+      ],
+      [
+        "internal/lower/view_callable_producers.go",
+        "!function.Closure || function.Receiver || ",
+        ""
+      ]
+    ],
+    "package": "./internal/lower",
+    "test": "^TestCallableProducerCertificatesUseClosureThunks$",
+    "green": false
+  },
+  {
+    "name": "snapshot-retain-unmasked",
+    "changes": [
+      [
+        "internal/native/runtime/object.c",
+        "value.payload = (adamic_value){0};\n        if (boolean.present) { value.payload.boolean = boolean.boolean; }",
+        "value.payload.boolean = boolean.boolean;"
+      ],
+      [
+        "internal/native/view_unions_read.go",
+        "e.line(\"else if (%s.kind >= adamic_view_union_string && %s.kind <= adamic_view_union_function) %s = adamic_retain(%s.payload.reference);\", snapshot, snapshot, boxed, snapshot)\n\te.line(\"else %s = NULL;\", boxed)",
+        "e.line(\"else %s = adamic_retain(%s.payload.reference);\", boxed, snapshot)"
+      ]
+    ],
+    "package": "./internal/oracle",
+    "test": "^TestLoomViewsCOriginal$",
+    "green": false
+  },
+  {
+    "name": "tagged-lazy-check",
+    "changes": [
+      [
+        "internal/lower/view_callable_producers.go",
+        "if contract.Kind == ir.ViewObject {",
+        "if contract.Kind == ir.ViewObject && false {"
+      ]
+    ],
+    "package": "./internal/lower",
+    "test": "^TestCallableProducerTaggedUnreadMethod$",
+    "green": false
+  },
+  {
+    "name": "unrecorded-unique-result",
+    "changes": [
+      [
+        "internal/lower/view_callable_producers.go",
+        "if len(assignableMembers) != 0 && !compatible {",
+        "if len(assignableMembers) != 0 && !compatible && false {"
+      ]
+    ],
+    "package": "./internal/lower",
+    "test": "^TestCallableProducerUniqueObjectResultRefused$",
+    "green": false
+  },
+  {
+    "name": "unique-certificate-fixed-witness",
+    "changes": [
+      [
+        "internal/lower/view_unions_untagged.go",
+        " && l.uniquelyAssignableCallable(producer.proven, id)",
+        ""
+      ]
+    ],
+    "package": "./internal/lower",
+    "test": "^TestCallableProducerAmbiguousCertificate$",
+    "green": false
+  },
+  {
+    "name": "snapshot-retain-control",
+    "changes": [
+      [
+        "internal/native/runtime/object.c",
+        "value.payload = (adamic_value){0};\n        if (boolean.present) { value.payload.boolean = boolean.boolean; }",
+        "value.payload.boolean = boolean.boolean;"
+      ]
+    ],
+    "package": "./internal/oracle",
+    "test": "^TestLoomViewsCOriginal$",
+    "green": true
+  }
+]

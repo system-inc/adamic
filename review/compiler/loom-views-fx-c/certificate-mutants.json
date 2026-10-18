@@ -1,0 +1,36 @@
+[
+  {
+    "name": "unique-certificate",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousCertificate$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 11.363
+  },
+  {
+    "name": "snapshot-retain-control",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsCOriginal$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 11.048
+  }
+]

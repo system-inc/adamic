@@ -1,0 +1,6 @@
+--- internal/native/runtime/object.c
++++ internal/native/runtime/object.c
+@@ -217,2 +217 @@
+-        value.payload = (adamic_value){0};
+-        if (boolean.present) { value.payload.boolean = boolean.boolean; }
++        value.payload.boolean = boolean.boolean;

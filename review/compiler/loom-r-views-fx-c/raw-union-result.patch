@@ -1,0 +1,7 @@
+--- internal/native/emit_functions.go
++++ internal/native/emit_functions.go
+@@ -363,3 +363 @@
+-	if expression.Returns == ir.Union {
+-		return e.callableUnionResult(result, closure, method)
+-	}
++
