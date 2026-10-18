@@ -287,7 +287,7 @@ void *adamic_retain_slow(void *value) {
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	// A canonical closure's interior cell is counted on its environment.
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
-		heap = &((adamic_cell *)heap)->owner->heap;
+		heap = ((adamic_cell *)heap)->owner;
 	}
 #endif
 	if (heap != NULL) {
@@ -328,7 +328,7 @@ static adamic_heap *drop_reference(void *value) {
 	adamic_heap *heap = value;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
-		heap = &((adamic_cell *)heap)->owner->heap;
+		heap = ((adamic_cell *)heap)->owner;
 	}
 #endif
 	if (heap == NULL) { return NULL; }
@@ -405,10 +405,7 @@ static void free_one(void *value) {
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	case adamic_kind_environment: {
 		adamic_environment *environment = value;
-		for (size_t index = 0; index < environment->count; index++) {
-			adamic_cell *cell = &environment->cells[index];
-			if (cell->references) { let_go(cell->value.reference); }
-		}
+		adamic_environment_drop_cells(environment->cells, environment->count, let_go);
 		break;
 	}
 #endif
