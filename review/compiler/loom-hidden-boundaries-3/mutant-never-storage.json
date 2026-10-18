@@ -1,0 +1,669 @@
+{
+  "label": "mutant-never-storage",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/never-storage-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/hidden_boundary_never_array.a$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 17.946,
+  "tests": [
+    {
+      "name": "TestNativeAgreesWithNode_000",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_071",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_126",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_125",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_127",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_124",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_036",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_121",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_120",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_118",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_119",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_117",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_115",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_122",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_123",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_113",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_116",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_112",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_110",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_109",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_114",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_107",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_111",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_105",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_106",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_102",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_108",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_104",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_101",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_103",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_098",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_097",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_096",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_099",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_095",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_094",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_092",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_093",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_091",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_090",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_088",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_100",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_085",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_086",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_089",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_083",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_087",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_082",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_084",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_080",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_078",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_076",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_079",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_077",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_074",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_073",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_075",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_081",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_070",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_072",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_068",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_069",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_066",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_067",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_054",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_065",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_064",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_063",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_058",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_059",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_056",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_061",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_055",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_057",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_034",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_033",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_018",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_031",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_035",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_030",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_028",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_060",
+      "action": "pass",
+      "seconds": 0.01
+    },
+    {
+      "name": "TestNativeAgreesWithNode_029",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_027",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_026",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_023",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_022",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_032",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_021",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_020",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_019",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_025",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_024",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_045",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_053",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_050",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_051",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_048",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_049",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_046",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_047",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_044",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_052",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_041",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_009",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_042",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_015",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_016",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_017",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_014",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_043",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_012",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_039",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_040",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_013",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_008",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_005",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_007",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_006",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_003",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_010",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_038",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_002",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_001",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_011",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_037",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_004",
+      "action": "pass",
+      "seconds": 0
+    },
+    {
+      "name": "TestNativeAgreesWithNode_062/internal/oracle/testdata/hidden_boundary_never_array.a",
+      "action": "fail",
+      "seconds": 0.04
+    },
+    {
+      "name": "TestNativeAgreesWithNode_062",
+      "action": "fail",
+      "seconds": 0
+    }
+  ]
+}

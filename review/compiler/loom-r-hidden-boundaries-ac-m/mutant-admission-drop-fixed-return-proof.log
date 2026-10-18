@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:51:24.421036599Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T19:51:24.428949064Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults"}
+{"Time":"2026-10-18T19:51:24.429073868Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults","Output":"=== RUN   TestOverloadStructuralResults\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:24.4291187Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults","Output":"=== PAUSE TestOverloadStructuralResults\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:24.429122486Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults"}
+{"Time":"2026-10-18T19:51:24.429126113Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults"}
+{"Time":"2026-10-18T19:51:24.429129037Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults","Output":"=== CONT  TestOverloadStructuralResults\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:24.585987272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults","Output":"    overload_structural_test.go:19: /tmp/adamic-gate/TestOverloadStructuralResults3288050347/004/main.a:7:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result Body at result.kind; readonly covariance requires string to fit \"Block\"; prove every return for this overload's admitted arguments, preserving result variance\n","OutputType":"error"}
+{"Time":"2026-10-18T19:51:24.586100675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults","Output":"--- FAIL: TestOverloadStructuralResults (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:24.586117467Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralResults","Elapsed":0.16}
+{"Time":"2026-10-18T19:51:24.586160205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:24.587840439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.166s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:51:24.587857562Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.167}

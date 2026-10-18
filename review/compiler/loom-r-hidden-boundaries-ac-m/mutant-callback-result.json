@@ -1,0 +1,29 @@
+{
+  "label": "mutant-callback-result",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries-ac-m/callback-result-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadCallbackUnservedResult$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 12.149,
+  "tests": [
+    {
+      "name": "TestOverloadCallbackUnservedResult",
+      "action": "fail",
+      "seconds": 0.04
+    }
+  ]
+}

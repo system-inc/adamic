@@ -1,0 +1,20 @@
+{"Time":"2026-10-16T08:49:18.54586494Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-16T08:49:18.554689575Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar"}
+{"Time":"2026-10-16T08:49:18.554760365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"=== RUN   TestOverloadFieldHatchValueLiar\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:49:18.555148247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"=== PAUSE TestOverloadFieldHatchValueLiar\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:49:18.555157459Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar"}
+{"Time":"2026-10-16T08:49:18.555161139Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar"}
+{"Time":"2026-10-16T08:49:18.555163452Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"=== CONT  TestOverloadFieldHatchValueLiar\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:49:21.756012013Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"    overload_field_hatch_test.go:35: gate cache node miss\n"}
+{"Time":"2026-10-16T08:49:21.890576682Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"    oracle_test.go:607: gate cache native miss\n"}
+{"Time":"2026-10-16T08:49:23.143319619Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"    overload_field_hatch_test.go:53: gate cache node miss\n"}
+{"Time":"2026-10-16T08:49:23.198690198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"    oracle_test.go:600: gate cache native miss\n"}
+{"Time":"2026-10-16T08:49:24.173725897Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"    overload_field_hatch_test.go:60: javascript unchecked wrong result: {stdout:[49 10 49 10 49 10 51 10] stderr:[] exitCode:0}\n","OutputType":"error"}
+{"Time":"2026-10-16T08:49:24.174352654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Output":"--- FAIL: TestOverloadFieldHatchValueLiar (5.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:49:24.174361479Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchValueLiar","Elapsed":5.62}
+{"Time":"2026-10-16T08:49:24.174390806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:49:24.174398892Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-16T08:49:24.174401202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-16T08:49:24.174403366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-16T08:49:24.177248957Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t5.631s\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:49:24.177329112Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":5.631}

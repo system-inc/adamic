@@ -1,0 +1,11 @@
+--- internal/lower/overload_callback.go
++++ internal/lower/overload_callback.go
+@@ -68,7 +68,7 @@
+ 	}
+ 	actual, actualKnown := l.representation(produced)
+ 	output, outputKnown := l.representation(result)
+-	return actualKnown && outputKnown && actual == output && !censusCallableSlotless(actual)
++	return actualKnown && outputKnown && (actual == output || actual != output) && !censusCallableSlotless(actual)
+ }
+ 
+ // Equal outer object slots do not prove equal field or element layouts. Only

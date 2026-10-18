@@ -1,0 +1,29 @@
+{
+  "label": "mutant-structural-trust-shape",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-3/structural-trust-shape-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestOverloadStructuralRefusesMissingBlockField$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 20.377,
+  "tests": [
+    {
+      "name": "TestOverloadStructuralRefusesMissingBlockField",
+      "action": "fail",
+      "seconds": 0.34
+    }
+  ]
+}

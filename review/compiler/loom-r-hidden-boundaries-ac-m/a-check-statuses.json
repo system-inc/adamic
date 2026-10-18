@@ -1,0 +1,362 @@
+[
+  {
+    "path": "internal/lower/testdata/method_destructuring_receiver.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/method_destructuring_receiver.a:6:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this\n",
+    "sha256": "5fd61169193713a2c8a57bc2106b63c5f26c1f57896d49bc6a1164075fd49061"
+  },
+  {
+    "path": "internal/lower/testdata/overload-results/evaluate-liar.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "996c72c3a85885f527758fc7e1d5f38ba0e1c384f2dfddcf524611cf8bbb830b"
+  },
+  {
+    "path": "internal/lower/testdata/overload-results/liar.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "1f2668bf85baa91369a2b848e32462e89077ae910bb334e5c7565593e258e166"
+  },
+  {
+    "path": "internal/lower/testdata/overload-results/parameter-liar.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "1d46103eb92266aa850a3dc736ab972f9f9ae5d7729746828dd67fc2bd4a4549"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/block-factory-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/block-factory-liar.a:6:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result Body at result.kind; readonly covariance requires string to fit \"Block\"; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "8fd697a80e73a98cd33e26e7b8d3e186126464663b11f08acc6208b9bb9d7e9c"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/block-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/block-liar.a:2:177: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result ConciseBody at result.statements; required field is absent from Expression; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "305474fe0c418dfd1e0813e23ba3a870a49da8a5309b126a0033d0c1c273efc2"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/evaluator-reverse-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/evaluator-reverse-liar.a:2:48: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "73a7de6f3bc1cb73b5255fb6c74416e2859696b110f3c9daa71cbd09ab95cf04"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/evaluator-shared-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/evaluator-shared-liar.a:2:112: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "c8f7ae17adfe54d8a81be7249365d6167984cf9eef5b9408715f7bf071878a35"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/evaluator-writable.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/evaluator-writable.a:2:57: Adamic 0.1 refuses overload 1 of evaluate parameter input cannot be served by implementation parameter input; make the implementation accept every value admitted by this overload, without mutable widening or bivariance\n",
+    "sha256": "65ca87d0c5230023a287ab81fd2866c020d287df640e51cc54479992434ee32c"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/factory-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-liar.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "65ae573d64766d5584b7b139ef7c3e0b8ca8aabe5d6d9fcb45debaac56c3a958"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/factory-literal-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-literal-liar.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<\"safe\"> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit \"safe\"; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "f3b6eb745306f09ae4af70124407bb9e3793de146fa2a0859106cb6492ccd188"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/factory-storage.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-storage.a:6:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | number> cannot be served by implementation result Other | Result<string | number> at result.value; required field is absent from Other; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "abcd4b13c230bea0cfcf409c52be2b34459d54f2bf29ae4394cc69684619d2af"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/factory-writable.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-writable.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string> at result.value; writable invariance (reverse direction) requires string | undefined to fit string; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "e66037fe946408a4b26432206dbd739d86466ea4a01e4b38ffe50cbde671e082"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/fields-mixed.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/fields-mixed.a:10:16: Adamic 0.1 refuses an overload result field at result.value without a single storage representation; narrow the result to a member before reading the field; matching storage does not replace the overload return proof\n",
+    "sha256": "271fbceb5968e33bb5fe866ff81585d5f1106bc9692e46205a061a7839ee88b0"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/visitor-domain-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain-liar.a:6:2: Adamic 0.1 refuses overload 1 of visitNodes visitor argument path is unproven at /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain-liar.a:6:2: original-array input must fit TIn and exclude undefined; callback contravariance at callback.parameter1 requires Node to fit TIn; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "5f9f1d83ca2ccdef28e2e7049e1188f69185875c04f3025bb63c53d2141b0689"
+  },
+  {
+    "path": "internal/lower/testdata/overload-structural/visitor-domain.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain.a:6:30: Adamic 0.1 refuses overload 1 of visitNodes visitor argument path is unproven at /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain.a:6:30: original-array input must fit TIn and exclude undefined; callback contravariance at callback.parameter1 requires Node to fit TIn; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "c9de8c7c1baa2164c076d48add823a5aecb1e2dda9235070137cd34446f11c8f"
+  },
+  {
+    "path": "internal/oracle/testdata/census_overload_binder_result_checked.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "c2ff30280156b62c5c935350890caac68292e7ded7f832ed586f0b36ccd74936"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_generic_optional_array.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "7ce3c23b577504801985e738ef328d0c5947080332793d569dc7ff4c48f9b042"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "136a40dd1e0bdaba47c640092fbb083c73a09ea6a0e386d92cb10715824cc133"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "46d8dd2c6901e390f9f7786b11b6ed9286cf55f90fd169073ab31c8e205006b6"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_never_array.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "e098e8e10592ffffe33924a320f3b462c620b34b8a5f4474f17761987e95da1a"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_never_array_observations.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "d8884c244aed45d96693d055cec610e6af88f79d7be360209cf07ac6bfca3bb7"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_optional_array_order.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "ccf9c80b5cd13f13b677968f24eaea4d4e660e9d1303c88029015477180047d6"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_refused/hidden_boundary_alias_cast_refused.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/hidden_boundary_refused/hidden_boundary_alias_cast_refused.a:6:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "sha256": "191a248dbd6b1fb1b85985e9c3e71e9a8d7b667f66618ca8d0a611ded53d20d5"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_boundary_refused/hidden_boundary_optional_array_mutation_refused.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/hidden_boundary_refused/hidden_boundary_optional_array_mutation_refused.a:3:43: Adamic 0.1 refuses instantiating a generic function makes a value of type 7 written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)\n",
+    "sha256": "5d21dc2b7519e39c7194226cc81e017ddc4c462433052819568b2ee302cc8408"
+  },
+  {
+    "path": "internal/oracle/testdata/hidden_wave2_method_destructuring.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "359071cfc4fe9801775bb32fc4f1b4df22f8497a0602cc71368daad21f18487b"
+  },
+  {
+    "path": "internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a:3:79: stage 0 can't lower assigning a field of a union of differently held members yet\n",
+    "sha256": "32b20f258b5237c10f914c18b8a36ffc8499d3424b6c5ae1541ef4de6b3520af"
+  },
+  {
+    "path": "internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a:3:36: stage 0 can't lower a generic function as a value yet\n",
+    "sha256": "9f3263cd3b9fef60c40a02565eeb53dd891c46f84cc6bf15fa465c0bd91c4c2c"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_callback_served.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "e8d0a18ebd83f9920ae1ed9ea723766cc3ddd5f1b472e43b480f97113d9c9382"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_field_hatch/kind-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/kind-liar.a:8:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires SyntaxKind to fit SyntaxKind.Block; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "62b68a8c441e44edf84c383e4896cccc0742b2020d9de0edd768ea23e24e3343"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_field_hatch/kind-valid.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/kind-valid.a:8:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires SyntaxKind to fit SyntaxKind.Block; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "59a0a01de778ad5cb14304fb85ae02feb9d74cb2e34b0e668b60337743044a7b"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_field_hatch/value-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/value-liar.a:6:2: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "3ede9bca292817d0259638358b905c304d2b696cbc5ca718d0dcdf6b1769f209"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_field_hatch/value-undefined.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/value-undefined.a:6:2: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "2367764aaa4b49d4d3f905c53b5466a80ef593f206e8124743cfd54524b90cd4"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_field_hatch/value-valid.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/value-valid.a:6:2: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "5e15baabffc7ce1097a4f64712100587cc9b8333adb9379a36af24b0ade2e38c"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_results_binding.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "a141c93ae92ad52f90720f0ae79cd799a3ad07a12fe8ba3fc38a2a680e049df5"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_results_evaluate.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "c4c9ab13f0eedf0df31737f8575dd85fa5fc67f2447a44a5558c13f14a97bf0b"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_results_parameter.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "ed5ca5e11a960e32784b70c59fea13eff6d67e19b02f903fa36eda14f1c36141"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_results_scalar.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "dc38a641a9e19ebeb5d7706e00396b3bb82d88cace54811ac6a3df6e556dd6f7"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_results_transform.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "4d34be1122bdc5c8cc58cb633c0b67388d1a57880e6e7928dcd089861308f957"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_structural_block.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "bf2da7ff5c0b051c4f7b8300d5bfa13e0d5fc9717be6ba54f32f65ccc1ff83a3"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_structural_evaluator.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "93dd05367c5f23d7007f89c73c20e6a33ca47858aebfb9192be270512f643bb4"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_structural_factory.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "572a9d2a5d116023e44c3c6c8f9508d84c55f8a6a227458ebe40186dba4c42de"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_structural_fields.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "ebaa12fd33bed09be5c8fb6db2c6d54c793bb006154d07db89695c22acaf3403"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/module-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/module-liar.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "d83caa678fbe086624052f293e45894cde939c06cf74058edb7d70d0227578af"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/module-valid.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/module-valid.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance\n",
+    "sha256": "50c7d8854092d5119231e73c32813ff333937edef743d9d7eb00830a67ffc0bc"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/narrow-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/narrow-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for each exposed overload\n",
+    "sha256": "0a59ce55514940dbeb46fef2b615d94d8e71242bf8139d56f681ba625088c2cb"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/narrow-valid.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/narrow-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for each exposed overload\n",
+    "sha256": "08dabfd953b448715994416b46cf36dd79d55cdd4ecf71410f16045ca49b727e"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/order-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/order-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for each exposed overload\n",
+    "sha256": "c31fa7d41e8da65ae8cf92d6e514882469ad374581c665dad143e0a97fd70f1f"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/order-valid.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/order-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for each exposed overload\n",
+    "sha256": "20b7d8e6f5870535a3d22e38af9bb44b6cceac062b267d21cf14247faca895ec"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/proven.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "adc09e1815ec9dd6a220b9c93eaaf3cd0d42bca7aa54a7663fc9c3a616c0005a"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/returned-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/returned-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for each exposed overload\n",
+    "sha256": "380ec050cd009cb25b9b7ca0b71fd81903cd4b71b6c25c07e8422f532d4f1214"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_values/returned-valid.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/returned-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; prove every return for each exposed overload\n",
+    "sha256": "fac82ba857becd727a73c18870f47709f3a189002e767ae666090775225dc7d4"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/default-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/default-liar.a:9:54: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/default-liar.a:9:54: original-array input must fit T and exclude undefined; callback contravariance at callback.parameter1 requires Base to fit T; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "833297a39524554aa56ec77d5a7528e9dc535e68e5cbe0e10a9a38a0cb82cbd4"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/helper-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/helper-liar.a:8:2: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/helper-liar.a:8:2: original-array input must fit T and exclude undefined; callback contravariance at callback.parameter1 requires Base to fit T; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "d8be2f04cb4ba253ee97a5df4dc7a1bc7c8042d292569468436032cd1fe0721e"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/helper.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "56fc5c90a5148e46f6b1243fbe769ebd244198bc36ba661be5dc59ae26f7ee5c"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/instantiations.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/instantiations.a:7:71: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/instantiations.a:7:71: original-array input must fit T and exclude undefined; callback contravariance at callback.parameter1 requires Base to fit T; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "e24eb536ad5b5ca04d4349597eda279514400a8c5f4534fed560a76a44dc6591"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/original-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/original-liar.a:9:2: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/original-liar.a:9:2: original-array input must fit T and exclude undefined; callback contravariance at callback.parameter1 requires Base to fit T; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "d9a4b67b33dd496c237838c911368abf587136495eed76c47224e70736d242a2"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/original.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "ca3c76af3fb3b08a5a849fe36600fe7afd8d2df5778ef1f87c0995025a8ffb37"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/overloaded-helper-liar.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/overloaded-helper-liar.a:9:2: Adamic 0.1 refuses overload 1 of worker visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/overloaded-helper-liar.a:9:2: original-array input must fit T and exclude undefined; callback contravariance at callback.parameter1 requires Base to fit T; pass a present original input element at every visitor invocation, including helpers\n",
+    "sha256": "1260e2812768c2c28df81184bc86ec39d7424d158386de1bdab791595147e51a"
+  },
+  {
+    "path": "internal/oracle/testdata/overload_visitors/overloaded-helper.a",
+    "status": "checked",
+    "diagnostic": "",
+    "sha256": "eb38ae181d4be1ae1a7b7f606d28b1f02753855cabf4765509cb57ec8d57fb9a"
+  }
+]

@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T10:25:29.997221934Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T10:25:30.005716474Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar"}
+{"Time":"2026-10-09T10:25:30.005809472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"=== RUN   TestOverloadFieldHatchKindLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:30.005846997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"=== PAUSE TestOverloadFieldHatchKindLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:30.005849621Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar"}
+{"Time":"2026-10-09T10:25:30.005852736Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar"}
+{"Time":"2026-10-09T10:25:30.005854488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"=== CONT  TestOverloadFieldHatchKindLiar\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:30.577308813Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"    overload_field_hatch_test.go:60: javascript unchecked wrong result: {stdout:[50 10 50 10 50 10 51 10] stderr:[] exitCode:0}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:25:30.577853097Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Output":"--- FAIL: TestOverloadFieldHatchKindLiar (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:30.577864213Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOverloadFieldHatchKindLiar","Elapsed":0.57}
+{"Time":"2026-10-09T10:25:30.579670381Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:30.579683731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-09T10:25:30.579689509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T10:25:30.579692413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T10:25:30.579771925Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.582s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:25:30.579825214Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.583}

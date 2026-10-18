@@ -1,0 +1,11 @@
+--- internal/lower/invariance.go
++++ internal/lower/invariance.go
+@@ -226,7 +226,7 @@
+ 	}
+ 	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+ 		source, target := fromArguments[index], toArguments[index]
+-		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
++		if mutable && false && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
+ 			return &widening{source: source, target: target}
+ 		}
+ 		if found := l.widened(source, target, visited); found != nil {

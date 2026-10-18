@@ -1,0 +1,29 @@
+{
+  "label": "mutant-visitors-erase-TIn-to-Node",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-hidden-boundaries-2/visitors-erase-TIn-to-Node-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestOverloadVisitorsHelperLiar$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 17.243,
+  "tests": [
+    {
+      "name": "TestOverloadVisitorsHelperLiar",
+      "action": "fail",
+      "seconds": 2.79
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "label": "mutant-fields-drop-constraint-storage",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries-ac-m/fields-drop-constraint-storage-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestHiddenTNodeConstraint",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 15.419,
+  "tests": [
+    {
+      "name": "TestHiddenTNodeConstraintArrayLayout",
+      "action": "pass",
+      "seconds": 0.11
+    },
+    {
+      "name": "TestHiddenTNodeConstraintUnconstrained",
+      "action": "pass",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestHiddenTNodeConstraintNumber",
+      "action": "fail",
+      "seconds": 0.12
+    },
+    {
+      "name": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+      "action": "fail",
+      "seconds": 0.14
+    },
+    {
+      "name": "TestHiddenTNodeConstraintObjectUnion",
+      "action": "fail",
+      "seconds": 0.06
+    },
+    {
+      "name": "TestHiddenTNodeConstraintStructuralLength",
+      "action": "pass",
+      "seconds": 0.08
+    },
+    {
+      "name": "TestHiddenTNodeConstraintObject",
+      "action": "fail",
+      "seconds": 0.09
+    },
+    {
+      "name": "TestHiddenTNodeConstraintAny",
+      "action": "pass",
+      "seconds": 0.1
+    },
+    {
+      "name": "TestHiddenTNodeConstraintString",
+      "action": "fail",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestHiddenTNodeConstraintBoolean",
+      "action": "fail",
+      "seconds": 0.05
+    },
+    {
+      "name": "TestHiddenTNodeConstraintUnknown",
+      "action": "pass",
+      "seconds": 0.06
+    }
+  ]
+}

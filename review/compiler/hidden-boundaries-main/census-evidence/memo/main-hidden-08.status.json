@@ -1,0 +1,22 @@
+{
+  "side": "main",
+  "query": {
+    "label": "hidden-08",
+    "file": "utilities.ts",
+    "start": 356194,
+    "end": 365984
+  },
+  "command": [
+    "/tmp/hidden-census-main-memo",
+    "-project",
+    "/tmp/any-returns-adapted/src/compiler",
+    "-region-file",
+    "/tmp/any-returns-adapted/src/compiler/utilities.ts",
+    "-region-start",
+    "356194",
+    "-region-end",
+    "365984"
+  ],
+  "exit": 0,
+  "seconds": 12.628
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "removed-header",
+    "exit": 1,
+    "failure": "a-check failed for 1 file:\ninternal/lower/testdata/method_destructuring_receiver.a: refused, expected checked (adamic: /workspace/adamic/internal/lower/testdata/method_destructuring_receiver.a:5:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destr)"
+  },
+  {
+    "name": "wrong-reason",
+    "exit": 1,
+    "failure": "a-check failed for 1 file:\ninternal/lower/testdata/method_destructuring_receiver.a: refused, expected refused deliberately unrelated reason (adamic: /workspace/adamic/internal/lower/testdata/method_destructuring_receiver.a:6:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destr)"
+  }
+]

@@ -76,7 +76,7 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 			shape := l.checker.GetTypeAtLocation(candidate)
 			field := l.checker.GetPropertyOfType(shape, name)
 			if field != nil && l.iterationShapeFits(shape, view) {
-				if literalMethod(field) {
+				if literalMethod(field) && !l.destructurableMethod(field) {
 					if isCallee(where) { // Calls carry the runtime closure's receiver convention.
 						return candidate.ForEachChild(visit)
 					}

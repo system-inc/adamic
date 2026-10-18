@@ -26,6 +26,7 @@ var commandRuntimes = []commandRuntimeSpec{
 	{"shipped", native.Options{Release: true}, nil, "internal/oracle TestProduct_NativeRuntimesShipped0"},
 	{"counted", native.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
 	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
+	{"sanitized-canonical-closures", native.Options{Sanitize: true}, []string{"ADAMIC_CANONICAL_CLOSURES"}, "internal/oracle TestProduct_NativeRuntimesSanitized2"},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, nil, "internal/oracle TestProduct_NativeRuntimesWASI0"},
 	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, nil, ""},
 }
@@ -94,6 +95,10 @@ func TestProduct_CommandRuntimeCounted(t *testing.T) {
 func TestProduct_CommandRuntimeSanitized(t *testing.T) {
 	t.Parallel()
 	commandRuntimeProduct(t, "sanitized")
+}
+func TestProduct_CommandRuntimeCanonicalClosures(t *testing.T) {
+	t.Parallel()
+	commandRuntimeProduct(t, "sanitized-canonical-closures")
 }
 func TestProduct_CommandRuntimeWASI(t *testing.T) { t.Parallel(); commandRuntimeProduct(t, "wasm") }
 func TestProduct_CommandRuntimeWASICounted(t *testing.T) {

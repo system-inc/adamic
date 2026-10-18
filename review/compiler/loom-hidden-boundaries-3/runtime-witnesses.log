@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeSetsAreEachUsed
+=== PAUSE TestRuntimeSetsAreEachUsed
+=== CONT  TestRuntimeSetsAreEachUsed
+    runtimes_test.go:90: the witness of [ADAMIC_CLOSURE_RECEIVERS+ADAMIC_NODE_HOST], stage3/fixtures/host/13_createDirectory.a, turns on [ADAMIC_NODE_HOST]: name a program that needs exactly the set, or drop the set
+--- FAIL: TestRuntimeSetsAreEachUsed (1.59s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	1.613s
+FAIL

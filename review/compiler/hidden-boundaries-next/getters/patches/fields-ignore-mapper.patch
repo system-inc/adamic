@@ -1,0 +1,5 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -44 +44 @@
+-	proven = l.concrete(proven)
++	// mutant: ignore concrete checker mapper

@@ -1,0 +1,43 @@
+{
+  "status": "budget breach; do not rerun",
+  "test": "TestSplitTSGoAgreesUnit00",
+  "seconds": 207.04,
+  "cause": "The full build-mode package run reaches this nonparallel consumer before its parallel TestProduct builders, so it builds the checker archive and baseline cold. Main code was not modified to hide this.",
+  "events": [
+    {
+      "Time": "2026-10-18T19:23:06.376509641Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestSplitTSGoAgreesUnit00",
+      "Output": "    units_tsgo_test.go:165: build go_build_./bridge/tsgo/archive_tsgo.a f19f444a0b57 miss 156.37\n"
+    },
+    {
+      "Time": "2026-10-18T19:23:36.055106699Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestSplitTSGoAgreesUnit00",
+      "Output": "    units_tsgo_test.go:165: product fetch phase 186.274s\n"
+    },
+    {
+      "Time": "2026-10-18T19:23:36.142153384Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestSplitTSGoAgreesUnit00",
+      "Output": "    units_tsgo_test.go:165: whole checker run phase 0.089s\n"
+    },
+    {
+      "Time": "2026-10-18T19:23:56.819410893Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestSplitTSGoAgreesUnit00/cache_0",
+      "Elapsed": 20.68
+    },
+    {
+      "Time": "2026-10-18T19:23:56.823989848Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestSplitTSGoAgreesUnit00",
+      "Elapsed": 207.04
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "566a5d637570b9449a120e1d8d001179aab7aca1",
+  "inherited_ts_unchanged": {
+    "internal/oracle/testdata/overload_field_hatch/kind-liar.ts": true,
+    "internal/oracle/testdata/overload_field_hatch/kind-valid.ts": true,
+    "internal/oracle/testdata/overload_field_hatch/value-liar.ts": true,
+    "internal/oracle/testdata/overload_field_hatch/value-undefined.ts": true,
+    "internal/oracle/testdata/overload_field_hatch/value-valid.ts": true,
+    "internal/oracle/testdata/overload_values/module-liar.ts": true,
+    "internal/oracle/testdata/overload_values/module-valid.ts": true,
+    "internal/oracle/testdata/overload_values/narrow-liar.ts": true,
+    "internal/oracle/testdata/overload_values/narrow-valid.ts": true,
+    "internal/oracle/testdata/overload_values/order-liar.ts": true,
+    "internal/oracle/testdata/overload_values/order-valid.ts": true,
+    "internal/oracle/testdata/overload_values/returned-liar.ts": true,
+    "internal/oracle/testdata/overload_values/returned-valid.ts": true,
+    "internal/oracle/testdata/overload_visitors/default-liar.ts": true,
+    "internal/oracle/testdata/overload_visitors/helper-liar.ts": true,
+    "internal/oracle/testdata/overload_visitors/helper.ts": true,
+    "internal/oracle/testdata/overload_visitors/instantiations.ts": true,
+    "internal/oracle/testdata/overload_visitors/original-liar.ts": true,
+    "internal/oracle/testdata/overload_visitors/original.ts": true,
+    "internal/oracle/testdata/overload_visitors/overloaded-helper-liar.ts": true,
+    "internal/oracle/testdata/overload_visitors/overloaded-helper.ts": true
+  },
+  "runtime_c_source_delta_bytes": 0,
+  "runtime_c_result_delta_bytes": 0,
+  "host_void_method_unchanged": true
+}

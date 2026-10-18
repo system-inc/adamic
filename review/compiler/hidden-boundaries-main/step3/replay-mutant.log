@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/hidden-boundaries-main/step3/historical-optional-array/replay_check.py", line 37, in <module>
+    record, _ = run('caller-selected', caller, 0)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/compiler/hidden-boundaries-main/step3/historical-optional-array/replay_check.py", line 30, in run
+    assert result.returncode == expected, (name, result.returncode, lines[1:])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('caller-selected', 1, ['replay load/register/lower: 76.570648ms', 'replay attempt mismatch: requested /tmp/hidden-step3-selector-mutant/source/caller.a:2:1, selected /tmp/hidden-step3-selector-mutant/source/caller.a:3:1'])

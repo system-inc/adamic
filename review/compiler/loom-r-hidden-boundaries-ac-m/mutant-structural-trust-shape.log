@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:49:16.230238919Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T19:49:16.237317499Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField"}
+{"Time":"2026-10-18T19:49:16.237417548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField","Output":"=== RUN   TestOverloadStructuralRefusesMissingBlockField\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:49:16.237444438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField","Output":"=== PAUSE TestOverloadStructuralRefusesMissingBlockField\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:49:16.237448044Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField"}
+{"Time":"2026-10-18T19:49:16.23745496Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField"}
+{"Time":"2026-10-18T19:49:16.237476338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField","Output":"=== CONT  TestOverloadStructuralRefusesMissingBlockField\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:49:16.44332458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField","Output":"    overload_structural_test.go:58: wanted refusal naming result.statements, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T19:49:16.443407253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField","Output":"--- FAIL: TestOverloadStructuralRefusesMissingBlockField (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:49:16.443418396Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverloadStructuralRefusesMissingBlockField","Elapsed":0.21}
+{"Time":"2026-10-18T19:49:16.443445974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:49:16.444786146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.214s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:49:16.444811064Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.215}

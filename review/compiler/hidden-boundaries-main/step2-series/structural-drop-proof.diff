@@ -1,0 +1,11 @@
+--- internal/lower/overload_structural.go
++++ internal/lower/overload_structural.go
+@@ -13,7 +13,7 @@
+ 	if promised.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) == 0 {
+ 		return false
+ 	}
+-	return l.censusProveOverloadResult(implementation, overload)
++	return false
+ }
+ 
+ // Report the first unsupported result component. A wider record is not a

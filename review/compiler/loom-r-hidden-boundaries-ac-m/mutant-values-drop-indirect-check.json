@@ -1,0 +1,29 @@
+{
+  "label": "mutant-values-drop-indirect-check",
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-hidden-boundaries-ac-m/values-drop-indirect-check-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestOverloadValuesReturnedLiar$",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "-json",
+    "-parallel",
+    "4"
+  ],
+  "exit": 1,
+  "seconds": 24.365,
+  "tests": [
+    {
+      "name": "TestOverloadValuesReturnedLiar",
+      "action": "fail",
+      "seconds": 5.82
+    }
+  ]
+}

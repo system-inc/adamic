@@ -1,0 +1,12 @@
+--- cloud/fast-gate/product-order.json
++++ cloud/fast-gate/product-order.json
+@@ -1831,9 +1831,6 @@
+     ],
+     "cmd/adamic TestProduct_CommandRuntimeCounted": [
+       "internal/oracle TestProduct_NativeRuntimesCounted0"
+-    ],
+-    "cmd/adamic TestProduct_CommandRuntimeCanonicalClosures": [
+-      "internal/oracle TestProduct_NativeRuntimesSanitized2"
+     ]
+   }
+ }

@@ -1,0 +1,5 @@
+--- internal/lower/census_small.go
++++ internal/lower/census_small.go
+@@ -134 +134 @@
+-	return l.classAssignable(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
++	return l.classAssignable(from, to)

@@ -1,0 +1,5 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -82 +82 @@
+-	if !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {
++	if false && !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {

@@ -1,0 +1,18 @@
+{
+  "base": "5a94465370ea0172e25aae8c13478e59e40c2bb4",
+  "source": "8c931b22c50f29466da3a1cbe3036784c9b447cf",
+  "conflicts": {
+    "cloud/fast-gate/product-order.json": {
+      "resolution": "Retain every main key and value and append only the single source-owned canonical-closures wait",
+      "added": {
+        "cmd/adamic TestProduct_CommandRuntimeCanonicalClosures": [
+          "internal/oracle TestProduct_NativeRuntimesSanitized2"
+        ]
+      }
+    },
+    "internal/oracle/counts.md": {
+      "resolution": "Restore exact main table then regenerate using house Linux clang 20.1.8; no manual row merge"
+    }
+  },
+  "runtime_resolution_changes": []
+}

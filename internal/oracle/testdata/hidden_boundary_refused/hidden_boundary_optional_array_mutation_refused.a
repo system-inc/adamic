@@ -1,0 +1,7 @@
+// a-check: refused instantiating a generic function makes a value of type 7 written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)
+function overwrite<T extends (number | string)[]>(items: T | undefined): void {
+    if (items !== undefined) { items.push(7); }
+}
+const strings = ["text"];
+overwrite(strings);
+console.log(strings.join("|"));
