@@ -1,0 +1,7 @@
+predicate-scan {'a-check': 0} PASS
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-slice-7-ac/predicate.py", line 37, in <module>
+    diagnostic=r.stderr.decode(); assert r.returncode==1 and 'Adamic 0.1 refuses ' in diagnostic,diagnostic
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: /tmp/adamic-gate/eep-header-control-s71radsw/control.a:1:43: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+
