@@ -131,6 +131,8 @@
 `parallel.c:visits:1`
 `parallel.c:worker_index:1`
 `parallel.c:workers:1`
+# Atomic test/embedding mode; matcher calls hold their own regular state.
+`regexp.c:regex_regular_mode:1`
 `regexp.c:regex_step_limit:1`
 `runtime-file:adamic.c`
 `runtime-file:adamic.h`
@@ -190,6 +192,8 @@
 `runtime-file:regexp.h`
 `runtime-file:regexp_fold.h`
 `runtime-file:regexp_replace.c`
+# Regular matcher has automatic per-call state and no mutable static storage.
+`runtime-file:regexp_regular.c`
 `runtime-file:region.c`
 `runtime-file:set.c`
 `runtime-file:share.c`
