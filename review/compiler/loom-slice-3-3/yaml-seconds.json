@@ -1,0 +1,17 @@
+[
+  {
+    "test": "TestProduct_YAMLClosedGapsLowered",
+    "seconds": 0.71,
+    "action": "pass"
+  },
+  {
+    "test": "TestProduct_YAMLClosedGapsNative",
+    "seconds": 3.16,
+    "action": "pass"
+  },
+  {
+    "test": "TestLexerGaps",
+    "seconds": 3.26,
+    "action": "pass"
+  }
+]

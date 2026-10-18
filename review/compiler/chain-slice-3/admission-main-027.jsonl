@@ -1,0 +1,64 @@
+{"Path":"stage3/fixtures/cycles/03_extensions/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/03_extensions/path.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/04_directory_callback/_namespaces/ts.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/04_directory_callback/core.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/04_directory_callback/main.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet"}
+{"Path":"stage3/fixtures/cycles/04_directory_callback/path.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/05_safe_load_read/_namespaces/ts.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/05_safe_load_read/core.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/05_safe_load_read/main.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/05_safe_load_read/utilities.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/06_import_order_mutant/_namespaces/ts.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/06_import_order_mutant/core.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/06_import_order_mutant/main.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/06_import_order_mutant/utilities.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"}
+{"Path":"stage3/fixtures/cycles/07_namespace_barrel/_namespaces/ts.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/07_namespace_barrel/_namespaces/ts.path.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/07_namespace_barrel/core.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/07_namespace_barrel/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/07_namespace_barrel/path.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/08_named_reexports/_namespaces/ts.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/08_named_reexports/core.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/08_named_reexports/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/08_named_reexports/path.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/09_function_value_load/_namespaces/ts.performance.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/09_function_value_load/core.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/09_function_value_load/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/09_function_value_load/performance.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/10_hoisted_before_body/_namespaces/ts.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/10_hoisted_before_body/_namespaces/ts.performance.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/10_hoisted_before_body/core.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/10_hoisted_before_body/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/cycles/10_hoisted_before_body/performance.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/call-graph-24.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/callable-selection.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/native-call-before-enum.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/native-enum-map.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/reaching-constructor.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-constructor.a:2:34: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"Path":"stage3/fixtures/enum-init-reach/reaching-cycle.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-cycle.a:2:53: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"Path":"stage3/fixtures/enum-init-reach/reaching-derived.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-derived.a:2:39: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"Path":"stage3/fixtures/enum-init-reach/reaching-direct.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-direct.a:2:31: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"Path":"stage3/fixtures/enum-init-reach/reaching-helper.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/enum-init-reach/reaching-helper.a:2:31: stage 0 can't lower reading an enum before its runtime initialization; move the call after the enum declaration yet"}
+{"Path":"stage3/fixtures/enum-init-reach/safe-constructor.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/safe-helper.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/unknown-after.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/unknown-before.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/unknown-callback.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enum-init-reach/unknown-property.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/01_token_range.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/02_node_range.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/03_jsdoc_range.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/04_parse_tree_mask.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/05_local_export_flags.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/06_set_node_flags.a","Status":"*lower.Refused","Error":"/workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable\u003cT\u003e, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"}
+{"Path":"stage3/fixtures/enums/07_regex_array_map.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/08_debug_format_enum.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/enums/08_debug_format_enum.a:16:42: error TS2532: Object is possibly 'undefined'.\n/workspace/adamic/stage3/fixtures/enums/08_debug_format_enum.a:16:64: error TS2532: Object is possibly 'undefined'."}
+{"Path":"stage3/fixtures/enums/09_symbol_exclusion_mask.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/10_string_enum.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/11_format_syntax_kind.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/enums/11_format_syntax_kind.a:14:42: error TS2532: Object is possibly 'undefined'.\n/workspace/adamic/stage3/fixtures/enums/11_format_syntax_kind.a:14:64: error TS2532: Object is possibly 'undefined'."}
+{"Path":"stage3/fixtures/enums/12_diagnostic_reverse_lookup.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/13_regex_map_keys.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/enums/syntax-kind-support.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/host/01_readFile_utf8.a","Status":"*lower.Refused","Error":"/workspace/adamic/stage3/fixtures/host/01_readFile_utf8.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"stage3/fixtures/host/02_readFile_utf16le.a","Status":"*lower.Refused","Error":"/workspace/adamic/stage3/fixtures/host/02_readFile_utf16le.a:21:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}

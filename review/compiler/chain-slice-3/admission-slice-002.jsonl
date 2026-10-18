@@ -1,0 +1,64 @@
+{"Path":"internal/oracle/testdata/census_small_stopped/census_optional_scanner_profile.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_optional_scanner_profile.a:8:63: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_overload_correlated_result.a:11:27: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"Path":"internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_default_stopped.a:28:5: stage 0 can't lower a parameter that isn't a plain name yet"}
+{"Path":"internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:11:22: stage 0 can't lower a function expression with a this parameter (dynamic receivers are not implemented) yet"}
+{"Path":"internal/oracle/testdata/census_unary_numeric.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/census_unary_truthiness.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_as_interface.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_accessors.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_distinct.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_private.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_retained.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_static.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_static_private.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_features_twice.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_identity.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance_conditional.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance_exceptions.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance_generic.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance_interface.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance_memory.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_inheritance_order.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_instance_key_consume.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_instance_key_region.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_instance_key_region_alias.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_instance_key_throw.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_layouts.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_oct6_deep.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_oct6_parameters.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_oct6_release.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_oct6_subclass_holder.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_private_generic.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_private_members.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_super_closure.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super.a:2:104: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -\u003e Derived.name -\u003e Derived.label; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_getter.a:2:157: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.summary -\u003e Derived.score -\u003e Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_number.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_init_super_number.a:2:99: Adamic 0.1 refuses a field initializer reading an uninitialized field through Base.describe -\u003e Derived.score -\u003e Derived.count; declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_instance.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_instance.a:1:124: Adamic 0.1 refuses instance private storage reached from a static member: Box.#secret (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_method.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/classfeat_static_private_method.a:2:185: Adamic 0.1 refuses instance private storage reached from a static member: Box.#hidden (adamic/private-instance-from-static); move the private access into an instance method; call that instance method from the static member"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"}
+{"Path":"internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a:2:66: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys"}
+{"Path":"internal/oracle/testdata/classes.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/clock_generic_returns_t_01.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closure_convention_host24.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closure_convention_nested.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closure_convention_plain.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closure_convention_receiver_rest.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closure_convention_regexp_count.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closures.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closures_throw.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/closures_throw_uncaught.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/collections.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/concat_too_long.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_array.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_evaluation.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_function.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_ledger78.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_null.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_number.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_object.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_optional_boolean.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_optional_number.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/conditions_optional_reference.a","Status":"accepted","Error":""}

@@ -1,0 +1,27 @@
+// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
+// From TypeScript 6.0.3 src/compiler/scanner.ts:1815-1828.
+// Exact return/assignment expression and table-lookup guard; reduced enum/table/driver.
+const enum SyntaxKind { Unknown = 0, Identifier = 80, AbstractKeyword = 128, BreakKeyword = 83 }
+type KeywordSyntaxKind = SyntaxKind.AbstractKeyword | SyntaxKind.BreakKeyword;
+const CharacterCodes = { a: 97, z: 122 };
+const textToKeyword = new Map<string, KeywordSyntaxKind>([["abstract", SyntaxKind.AbstractKeyword], ["break", SyntaxKind.BreakKeyword]]);
+let token: SyntaxKind = SyntaxKind.Unknown;
+let tokenValue = "";
+function getIdentifierToken(): SyntaxKind.Identifier | KeywordSyntaxKind {
+    // Reserved words are between 2 and 12 characters long and start with a lowercase letter
+    const len = tokenValue.length;
+    if (len >= 2 && len <= 12) {
+        const ch = tokenValue.charCodeAt(0);
+        if (ch >= CharacterCodes.a && ch <= CharacterCodes.z) {
+            const keyword = textToKeyword.get(tokenValue);
+            if (keyword !== undefined) {
+                return token = keyword;
+            }
+        }
+    }
+    return token = SyntaxKind.Identifier;
+}
+for (const value of ["abstract", "break", "name", "Abstract", "x"]) {
+    tokenValue = value;
+    console.log(`${getIdentifierToken()} ${token}`);
+}

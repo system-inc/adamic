@@ -1,0 +1,16 @@
+// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
+// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
+let x = 10;
+let calls = 0;
+function right(): number {
+    calls += 1;
+    return 2;
+}
+function add(): number {
+    const y = right();
+    return x += y;
+}
+const first = add();
+console.log(`${first} ${x} ${calls}`);
+const second = add();
+console.log(`${second} ${x} ${calls}`);

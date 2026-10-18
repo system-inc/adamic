@@ -1,0 +1,52 @@
+[
+  {
+    "test": "TestClosedLexerGaps/assignmentValue.ts",
+    "seconds": 0.49,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedValuePresenceGap",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedStringPresenceGap",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps/dynamicCase.ts",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps/negativeCase.ts",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps/stringFallback.ts",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps/valueConjunction.ts",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps/prefixIncrement.ts",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps/emptyAlternative.ts",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestClosedLexerGaps",
+    "seconds": 1.09,
+    "action": "pass"
+  }
+]

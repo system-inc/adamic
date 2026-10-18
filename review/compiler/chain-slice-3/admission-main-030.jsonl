@@ -1,0 +1,64 @@
+{"Path":"stage3/fixtures/records/input-fixtures/04_paths-missing___proto__/target.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/05_paths-own_constructor/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/05_paths-own_constructor/main.a:1:23: error TS2307: Cannot find module 'constructor' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/05_paths-own_constructor/target.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/06_paths-own_toString/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/06_paths-own_toString/main.a:1:23: error TS2307: Cannot find module 'toString' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/06_paths-own_toString/target.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/main.a:1:23: error TS2307: Cannot find module 'hasOwnProperty' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/07_paths-own_hasOwnProperty/target.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/08_paths-own___proto__/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/08_paths-own___proto__/main.a:1:23: error TS2307: Cannot find module '__proto__' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/08_paths-own___proto__/target.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/09_exports-missing_constructor/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/10_exports-missing_toString/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/10_exports-missing_toString/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/10_exports-missing_toString/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/11_exports-missing_hasOwnProperty/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/12_exports-missing___proto__/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/12_exports-missing___proto__/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/12_exports-missing___proto__/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/13_exports-own_constructor/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/13_exports-own_constructor/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/13_exports-own_constructor/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/14_exports-own_toString/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/14_exports-own_toString/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/14_exports-own_toString/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/15_exports-own_hasOwnProperty/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/16_exports-own___proto__/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/16_exports-own___proto__/main.a:1:23: error TS2307: Cannot find module 'pkg' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/16_exports-own___proto__/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor/main.a:1:23: error TS2307: Cannot find module 'pkg/constructor' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/17_typesVersions-own_constructor/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString/main.a:1:23: error TS2307: Cannot find module 'pkg/toString' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/18_typesVersions-own_toString/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a:1:23: error TS2307: Cannot find module 'pkg/hasOwnProperty' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/19_typesVersions-own_hasOwnProperty/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/main.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/main.a:1:23: error TS2307: Cannot find module 'pkg/__proto__' or its corresponding type declarations."}
+{"Path":"stage3/fixtures/records/input-fixtures/20_typesVersions-own___proto__/node_modules/pkg/target.d.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/21_config-unknown_constructor/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/22_config-unknown_toString/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/23_config-unknown_hasOwnProperty/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/24_config-unknown___proto__/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/25_cli-unknown_constructor/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/26_cli-unknown_toString/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/27_cli-unknown_hasOwnProperty/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/28_cli-unknown___proto__/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/29_compare-old/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/records/input-fixtures/30_compare-new/main.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/runner/01_queue_empty.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/runner/02_is_string.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/runner/03_return_true.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/01_diagnostic_code.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/02_diagnostic_message.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/taste/02_diagnostic_message.a:9:68: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"}
+{"Path":"stage3/fixtures/taste/03_diagnostic_file.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/04_jsx_runtime.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/05_this_type.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/06_localized_message.a","Status":"*lower.Refused","Error":"/workspace/adamic/stage3/fixtures/taste/06_localized_message.a:4:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"}
+{"Path":"stage3/fixtures/taste/07_compact.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/08_for_each.a","Status":"*load.CheckError","Error":"/workspace/adamic/stage3/fixtures/taste/08_for_each.a:7:37: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."}
+{"Path":"stage3/fixtures/taste/09_literal_cache.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/10_global_import_meta.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/11_build_info_pending.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/taste/11_build_info_pending.a:7:12: stage 0 can't lower writing a possibly absent optional own field yet"}
+{"Path":"stage3/fixtures/taste/12_symbol_links.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/13_void_callback.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/14_relative_complement.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/15_barrel.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/16_scan_exclamation.a","Status":"accepted","Error":""}
+{"Path":"stage3/fixtures/taste/17_binder_flow.a","Status":"*lower.NotYet","Error":"/workspace/adamic/stage3/fixtures/taste/17_binder_flow.a:23:13: stage 0 can't lower writing a possibly absent optional own field yet"}
+{"Path":"stage3/fixtures/taste/18_named_export.a","Status":"accepted","Error":""}

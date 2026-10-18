@@ -1,0 +1,20 @@
+{"Time":"2026-10-18T00:13:56.599096563Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:13:56.60312817Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation"}
+{"Time":"2026-10-18T00:13:56.603195892Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation","Output":"=== RUN   TestParallelReadonlyCheckerRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.603217044Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation","Output":"=== PAUSE TestParallelReadonlyCheckerRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.603218747Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation"}
+{"Time":"2026-10-18T00:13:56.603220509Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots"}
+{"Time":"2026-10-18T00:13:56.603222633Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots","Output":"=== RUN   TestParallelGlobalMarkingRoots\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.603224766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots","Output":"=== PAUSE TestParallelGlobalMarkingRoots\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.603225988Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots"}
+{"Time":"2026-10-18T00:13:56.6032275Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation"}
+{"Time":"2026-10-18T00:13:56.603228742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation","Output":"=== CONT  TestParallelReadonlyCheckerRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.604096017Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots"}
+{"Time":"2026-10-18T00:13:56.604109457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots","Output":"=== CONT  TestParallelGlobalMarkingRoots\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.914858124Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation","Output":"--- PASS: TestParallelReadonlyCheckerRepresentation (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.918311387Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelReadonlyCheckerRepresentation","Elapsed":0.31}
+{"Time":"2026-10-18T00:13:56.918364727Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots","Output":"--- PASS: TestParallelGlobalMarkingRoots (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.9183732Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParallelGlobalMarkingRoots","Elapsed":0.31}
+{"Time":"2026-10-18T00:13:56.918375764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:56.919881475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.320s\n"}
+{"Time":"2026-10-18T00:13:56.919907735Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.321}

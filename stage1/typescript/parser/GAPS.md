@@ -34,8 +34,8 @@ indexes. The representation accommodates speculative parse rollback as well.
 
 ## 2. Spread into Array.push
 
-`gaps/2_push_spread.ts` prints `1,2,3` on Node; stage 0 refuses
-`a SpreadElement` at the spread argument of push. The parser initially
+`gaps/2_push_spread.ts` prints `1,2,3` on Node. Spread-shorthand closes
+the former `a SpreadElement` stop; both backends and sanitized native agree. The parser initially
 appended an argument list with `children.push(...arguments)`, which met this
 same refusal. Workaround: an explicit loop appends each numeric child index.
 This does not limit parsing spread syntax in the source being parsed.

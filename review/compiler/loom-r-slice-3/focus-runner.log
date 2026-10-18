@@ -1,0 +1,11 @@
+{"name": "parallel", "command": ["go", "test", "./cmd/adamic-gate", "-run", "^TestEveryTestIsParallelOrSaysWhy$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 2.38}
+{"name": "maps", "command": ["go", "test", "./internal/ir", "-run", "^TestEveryMapAProgramHoldsIsSorted$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 12.103}
+{"name": "agreement-registry", "command": ["go", "test", "./internal/lower", "-run", "^TestNativeAgreementRowsNameRegisteredPrograms$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 7.494}
+{"name": "native", "command": ["go", "test", "./internal/native", "-run", "^Test(TSGoCache(Release|Sanitized)|TSGoBuildSeesTheProgramsFeatures|CheckerBuildsNameNoPlaceOfTheArchive|NativeCachesWriteNothingUnderHome)$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 16.67}
+{"name": "optional", "command": ["go", "test", "./internal/oracle", "-run", "^TestOptionalAfterCall", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 18.848}
+{"name": "spread", "command": ["go", "test", "./internal/oracle", "-run", "^Test(CallSpread|JSONStringifyShorthand)", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 12.236}
+{"name": "function", "command": ["go", "test", "./internal/oracle", "-run", "^TestFunction(Adamic|TypeScript|CallSignature)", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 5.311}
+{"name": "merged", "command": ["go", "test", "./internal/oracle", "-run", "^TestMergedField", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 3.794}
+{"name": "assignment", "command": ["go", "test", "./internal/oracle", "-run", "^TestAssignmentProof", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 6.762}
+{"name": "lower", "command": ["go", "test", "./internal/lower", "-run", "^TestOptionalAfterCallPreservesEarlierThrow$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 1.123}
+{"name": "parallel-preflight", "command": ["go", "test", "./internal/lower", "-run", "^TestParallel(ReadonlyCheckerRepresentation|GlobalMarkingRoots)$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 1.477}

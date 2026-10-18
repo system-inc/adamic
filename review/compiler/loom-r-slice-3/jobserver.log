@@ -1,0 +1,20 @@
+{"Time":"2026-10-18T00:15:49.906525533Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:15:49.917668019Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCompilesHoldAJobserverTokenEach"}
+{"Time":"2026-10-18T00:15:49.917792757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCompilesHoldAJobserverTokenEach","Output":"=== RUN   TestCompilesHoldAJobserverTokenEach\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999390216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCompilesHoldAJobserverTokenEach","Output":"--- PASS: TestCompilesHoldAJobserverTokenEach (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999510987Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCompilesHoldAJobserverTokenEach","Elapsed":0.08}
+{"Time":"2026-10-18T00:15:49.999554553Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAFailedCompileGivesItsTokenBack"}
+{"Time":"2026-10-18T00:15:49.999557508Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAFailedCompileGivesItsTokenBack","Output":"=== RUN   TestAFailedCompileGivesItsTokenBack\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.99956591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAFailedCompileGivesItsTokenBack","Output":"--- PASS: TestAFailedCompileGivesItsTokenBack (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999568103Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAFailedCompileGivesItsTokenBack","Elapsed":0}
+{"Time":"2026-10-18T00:15:49.999569896Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAJobserverThatCantBeOpenedFailsTheCompile"}
+{"Time":"2026-10-18T00:15:49.999571398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAJobserverThatCantBeOpenedFailsTheCompile","Output":"=== RUN   TestAJobserverThatCantBeOpenedFailsTheCompile\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999596757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAJobserverThatCantBeOpenedFailsTheCompile","Output":"--- PASS: TestAJobserverThatCantBeOpenedFailsTheCompile (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999598529Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAJobserverThatCantBeOpenedFailsTheCompile","Elapsed":0}
+{"Time":"2026-10-18T00:15:49.999626341Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTheJobserverMovesNoKey"}
+{"Time":"2026-10-18T00:15:49.999627923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTheJobserverMovesNoKey","Output":"=== RUN   TestTheJobserverMovesNoKey\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999655815Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTheJobserverMovesNoKey","Output":"--- PASS: TestTheJobserverMovesNoKey (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:49.999663817Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTheJobserverMovesNoKey","Elapsed":0}
+{"Time":"2026-10-18T00:15:49.99966545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:50.000613997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.092s\n"}
+{"Time":"2026-10-18T00:15:50.000777804Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.094}
