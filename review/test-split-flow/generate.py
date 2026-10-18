@@ -14,11 +14,15 @@ patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts'
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
-# Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
+# Use the same named refusal/async controls as flow's authoritative walk.
+flow_source = (root / 'internal/flow/flow_test.go').read_text()
+control_helpers = re.findall(r'^func (?:refusedConstructorFixture|refusedGettersCensusFixture|uninstrumentedAsyncFixture)\([^\n]*\{.*?^\}', flow_source, re.M | re.S)
+assert len(control_helpers) == 3
+flow_controls = set(re.findall(r'"([^"\n]+\.a)"', '\n'.join(control_helpers)))
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
         return True
-    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+    return name in flow_controls
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
