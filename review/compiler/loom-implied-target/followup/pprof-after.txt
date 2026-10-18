@@ -1,0 +1,174 @@
+File: implied-profile-after
+Build ID: 7d5f1eaf17c842ffc29d54c48eb1665dc40e2763
+Type: cpu
+Time: 2026-10-17 13:12:30 UTC
+Duration: 153.75ms, Total samples = 180ms (117.07%)
+Showing nodes accounting for 180ms, 100% of 180ms total
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      160ms 88.89%  github.com/system-inc/adamic/internal/lower.Lower
+         0     0%     0%      160ms 88.89%  main.main
+         0     0%     0%      160ms 88.89%  runtime.main
+         0     0%     0%      130ms 72.22%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeAtLocation
+         0     0%     0%      130ms 72.22%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfNode
+         0     0%     0%      120ms 66.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionEx
+         0     0%     0%      120ms 66.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getRegularTypeOfExpression
+         0     0%     0%      120ms 66.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfExpression
+         0     0%     0%      110ms 61.11%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionWorker
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).declareModule
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).expression
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).functionBody
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).statement
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+         0     0%     0%       80ms 44.44%  github.com/system-inc/adamic/internal/lower.(*lowering).variables
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%     0%       70ms 38.89%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkArrayLiteral
+         0     0%     0%       60ms 33.33%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0%     0%       60ms 33.33%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkObjectLiteral
+         0     0%     0%       60ms 33.33%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+         0     0%     0%       50ms 27.78%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayLiteral
+         0     0%     0%       50ms 27.78%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0%     0%       50ms 27.78%  github.com/system-inc/adamic/internal/lower.(*lowering).refuse
+         0     0%     0%       50ms 27.78%  github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2
+         0     0%     0%       40ms 22.22%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ArrayLiteralExpression).ForEachChild (inline)
+         0     0%     0%       40ms 22.22%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionForMutableLocation
+         0     0%     0%       40ms 22.22%  github.com/system-inc/adamic/internal/lower.(*lowering).enumObjectView
+         0     0%     0%       40ms 22.22%  github.com/system-inc/adamic/internal/lower.(*lowering).enumRefusal
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ObjectLiteralExpression).ForEachChild (inline)
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/ast.(*PropertyAssignment).ForEachChild
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpression (inline)
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedTo (inline)
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedToEx
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getQuickTypeOfExpression
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeEx
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnionTypeWorker
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeRelatedTo
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).removeSubtypes
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).isRelatedToEx
+         0     0%     0%       30ms 16.67%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).recursiveTypeRelatedTo
+         0     0%     0%       30ms 16.67%  github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral
+         0     0%     0%       30ms 16.67%  runtime.systemstack
+         0     0%     0%       20ms 11.11%  github.com/microsoft/TypeScript/tsc/internal/ast.IndexOfNode (inline)
+         0     0%     0%       20ms 11.11%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getContextualType
+         0     0%     0%       20ms 11.11%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).structuredTypeRelatedTo
+         0     0%     0%       20ms 11.11%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).structuredTypeRelatedToWorker
+         0     0%     0%       20ms 11.11%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedAssertionSource
+         0     0%     0%       20ms 11.11%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverIdentity
+         0     0%     0%       20ms 11.11%  github.com/system-inc/adamic/internal/lower.(*lowering).uninitializedInitializer
+         0     0%     0%       20ms 11.11%  runtime.gcBgMarkWorker
+         0     0%     0%       20ms 11.11%  runtime.gcBgMarkWorker.func2
+         0     0%     0%       20ms 11.11%  runtime.gcDrain
+         0     0%     0%       20ms 11.11%  runtime.gcDrainMarkWorkerDedicated (inline)
+         0     0%     0%       20ms 11.11%  runtime.mallocgc
+      20ms 11.11% 11.11%       20ms 11.11%  runtime.memclrNoHeapPointers
+      10ms  5.56% 16.67%       20ms 11.11%  runtime.tryDeferToSpanScan
+      10ms  5.56% 22.22%       20ms 11.11%  slices.BinarySearchFunc[go.shape.[]*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.*uint8,go.shape.*uint8]
+         0     0% 22.22%       10ms  5.56%  gcWriteBarrier
+         0     0% 22.22%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild (inline)
+      10ms  5.56% 27.78%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/ast.CompareNodePositions
+      10ms  5.56% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/ast.GetSymbolId (inline)
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkObjectLiteral.func1
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkPropertyAssignment
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getIndexInfosOfType
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNumberLiteralType
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfType (inline)
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfTypeEx
+         0     0% 33.33%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReducedApparentType
+      10ms  5.56% 38.89%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReducedType
+         0     0% 38.89%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol
+      10ms  5.56% 44.44%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrProperty
+         0     0% 44.44%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnmatchedPropertiesWorker
+         0     0% 44.44%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getUnmatchedProperty (inline)
+      10ms  5.56% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateContextualType
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isConstContext
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).newSymbol
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).newSymbolEx (inline)
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).pushCachedContextualType (inline)
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).indexSignaturesRelatedTo
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).propertiesRelatedTo
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/checker.(*symbolArenaLinkStore[go.shape.589b9887a0480d3642b2bb062e8af53427544c79db9d1f6a8349e93a8ce74449]).Get
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/collections.(*Set[go.shape.struct { Hi uint64; Lo uint64 }]).Add (inline)
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.4e6dafef7772428746bf8e01d6666815288fdd48209d02f2d39ad8ae1de02b1a]).New
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/jsnum.FromString
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/tspath.FileNameStem.AppendSuffix
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/tspath.RootedFilePathFromNormalized
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/tspath.RootedPathFromNormalized (inline)
+         0     0% 50.00%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/tspath.TryRootedPathFromNormalized
+      10ms  5.56% 55.56%       10ms  5.56%  github.com/microsoft/TypeScript/tsc/internal/tspath.hasRelativePathSegment
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/load.(*Program).FileName
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/load.(*sourceFS).adamicFile
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/load.(*sourceFS).displayName
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayPredicateType
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).elementType
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).enumObject
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).findCycles
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).findCycles.func1
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).genericFunction
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).namespaceInitialization
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).namespaceInitialization.func1
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).namespaceInitialization.func2
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).namespaceInitialization.func2.1
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).namespaceRuntimeEnum
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).optionalAtSite
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseOptionalWidening
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*lowering).regexUnsupportedUse
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*namespaceCallGraph).discover
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*namespaceCallGraph).discover.func2
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*namespaceCallGraph).discover.func2.1
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.(*namespaceCallGraph).reach (inline)
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.counters
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.findAssigned (inline)
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.walk
+         0     0% 55.56%       10ms  5.56%  github.com/system-inc/adamic/internal/lower.walkValue
+         0     0% 55.56%       10ms  5.56%  internal/runtime/gc/scan.ScanSpanPacked (inline)
+         0     0% 55.56%       10ms  5.56%  internal/runtime/gc/scan.ScanSpanPackedAVX512
+      10ms  5.56% 61.11%       10ms  5.56%  internal/runtime/gc/scan.scanSpanPackedAVX512
+      10ms  5.56% 66.67%       10ms  5.56%  internal/runtime/maps.(*Map).getWithoutKeySmallFastStr
+         0     0% 66.67%       10ms  5.56%  internal/runtime/maps.(*Map).growToSmall
+         0     0% 66.67%       10ms  5.56%  internal/runtime/maps.MemHash
+      10ms  5.56% 72.22%       10ms  5.56%  internal/runtime/maps.memHashAES
+         0     0% 72.22%       10ms  5.56%  internal/runtime/maps.newGroups (inline)
+         0     0% 72.22%       10ms  5.56%  internal/runtime/maps.newarray
+      10ms  5.56% 77.78%       10ms  5.56%  internal/stringslite.HasSuffix (inline)
+         0     0% 77.78%       10ms  5.56%  reflect.Value.Index
+      10ms  5.56% 83.33%       10ms  5.56%  reflect.flag.ro (inline)
+         0     0% 83.33%       10ms  5.56%  runtime.(*mcache).nextFree
+         0     0% 83.33%       10ms  5.56%  runtime.(*mcache).refill
+         0     0% 83.33%       10ms  5.56%  runtime.(*mcentral).cacheSpan
+         0     0% 83.33%       10ms  5.56%  runtime.(*mcentral).grow
+         0     0% 83.33%       10ms  5.56%  runtime.(*mspan).initHeapBits
+         0     0% 83.33%       10ms  5.56%  runtime.growslice
+      10ms  5.56% 88.89%       10ms  5.56%  runtime.heapArenaOf (inline)
+         0     0% 88.89%       10ms  5.56%  runtime.mallocgcSmallScanHeader
+         0     0% 88.89%       10ms  5.56%  runtime.mallocgcSmallScanNoHeader
+         0     0% 88.89%       10ms  5.56%  runtime.mapaccess1
+         0     0% 88.89%       10ms  5.56%  runtime.mapaccess1_faststr
+      10ms  5.56% 94.44%       10ms  5.56%  runtime.mapaccess2
+         0     0% 94.44%       10ms  5.56%  runtime.mapaccess2_faststr
+         0     0% 94.44%       10ms  5.56%  runtime.mapassign
+         0     0% 94.44%       10ms  5.56%  runtime.mapassign_faststr
+         0     0% 94.44%       10ms  5.56%  runtime.markroot
+         0     0% 94.44%       10ms  5.56%  runtime.markrootBlock
+         0     0% 94.44%       10ms  5.56%  runtime.memhash (inline)
+         0     0% 94.44%       10ms  5.56%  runtime.memhash128
+         0     0% 94.44%       10ms  5.56%  runtime.newarray
+         0     0% 94.44%       10ms  5.56%  runtime.scanSpan
+         0     0% 94.44%       10ms  5.56%  runtime.scanblock
+         0     0% 94.44%       10ms  5.56%  runtime.wbBufFlush
+         0     0% 94.44%       10ms  5.56%  runtime.wbBufFlush.func1
+         0     0% 94.44%       10ms  5.56%  runtime.wbBufFlush1
+         0     0% 94.44%       10ms  5.56%  slices.Grow[go.shape.[]go.shape.4e6dafef7772428746bf8e01d6666815288fdd48209d02f2d39ad8ae1de02b1a,go.shape.4e6dafef7772428746bf8e01d6666815288fdd48209d02f2d39ad8ae1de02b1a] (inline)
+         0     0% 94.44%       10ms  5.56%  strings.HasSuffix (inline)
+         0     0% 94.44%       10ms  5.56%  strings.TrimFunc
+         0     0% 94.44%       10ms  5.56%  strings.TrimRightFunc
+         0     0% 94.44%       10ms  5.56%  strings.lastIndexFunc
+      10ms  5.56%   100%       10ms  5.56%  unicode/utf8.DecodeLastRuneInString

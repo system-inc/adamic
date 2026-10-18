@@ -1,0 +1,36 @@
+{"Time":"2026-10-18T00:08:32.160772019Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:08:32.17355689Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles"}
+{"Time":"2026-10-18T00:08:32.173636898Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"=== RUN   TestLiteralMethodCapturesCannotMakeCycles\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173658971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"=== PAUSE TestLiteralMethodCapturesCannotMakeCycles\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173661405Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles"}
+{"Time":"2026-10-18T00:08:32.173666703Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion"}
+{"Time":"2026-10-18T00:08:32.173668916Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"=== RUN   TestNamespaceCallGraphCycleUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173673392Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"=== PAUSE TestNamespaceCallGraphCycleUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173675205Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion"}
+{"Time":"2026-10-18T00:08:32.173677098Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots"}
+{"Time":"2026-10-18T00:08:32.17367869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173683307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173684819Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots"}
+{"Time":"2026-10-18T00:08:32.173686612Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused"}
+{"Time":"2026-10-18T00:08:32.173688305Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"=== RUN   TestNestedCallbackCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173690598Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"=== PAUSE TestNestedCallbackCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.173692331Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused"}
+{"Time":"2026-10-18T00:08:32.173694384Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles"}
+{"Time":"2026-10-18T00:08:32.173697068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"=== CONT  TestLiteralMethodCapturesCannotMakeCycles\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.175882248Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots"}
+{"Time":"2026-10-18T00:08:32.175901546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.175915387Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused"}
+{"Time":"2026-10-18T00:08:32.175918421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"=== CONT  TestNestedCallbackCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.181034266Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion"}
+{"Time":"2026-10-18T00:08:32.18105705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"=== CONT  TestNamespaceCallGraphCycleUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.369038447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Output":"--- PASS: TestNestedCallbackCycleIsRefused (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.378231457Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedCallbackCycleIsRefused","Elapsed":0.19}
+{"Time":"2026-10-18T00:08:32.378283614Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"--- PASS: TestLiteralMethodCapturesCannotMakeCycles (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.380585627Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Elapsed":0.2}
+{"Time":"2026-10-18T00:08:32.38060733Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Output":"--- PASS: TestNestedEnvironmentCycleIncludesDisjointSlots (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.399105426Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedEnvironmentCycleIncludesDisjointSlots","Elapsed":0.21}
+{"Time":"2026-10-18T00:08:32.39914185Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"--- PASS: TestNamespaceCallGraphCycleUnion (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.399148761Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Elapsed":0.22}
+{"Time":"2026-10-18T00:08:32.399151394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:32.401794243Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.241s\n"}
+{"Time":"2026-10-18T00:08:32.401836967Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.241}
