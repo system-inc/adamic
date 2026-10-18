@@ -26,6 +26,9 @@ const compilerAgreementCheckerGroupCount = 27
 // native.Options{Sanitize:true, Jobs:1}, Split=false, CPU 0, one core. The cut
 // consumes these prices in production dispatch order; they are not group IDs.
 var compilerAgreementCheckerPrices = map[string]int{
+	// no-extra-bind: measured on this port over pinned checker.ts, CPU 0, Clang 20.1.8;
+	// -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all, Split=false, Jobs=1.
+	"no-extra-bind": 2588,
 	// no-cond-assign: measured on this port over pinned checker.ts, CPU 0, Clang 20.1.8;
 	// -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all, Split=false, Jobs=1.
 	"no-cond-assign":                                    2710,

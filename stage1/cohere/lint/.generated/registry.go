@@ -59,6 +59,7 @@ func registeredRules() []registeredRule {
 		{oracleNoEmptyPattern(), oracleNoEmptyPatternOptions},
 		{oracleNoEmptyStaticBlock(), oracleNoEmptyStaticBlockOptions},
 		{oracleNoExAssign(), oracleNoExAssignOptions},
+		{oracleNoExtraBind(), oracleNoExtraBindOptions},
 		{oracleNoIterator(), oracleNoIteratorOptions},
 		{oracleNoLabels(), oracleNoLabelsOptions},
 		{oracleNoMultiAssign(), oracleNoMultiAssignOptions},
