@@ -1,0 +1,370 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/graphql",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 1.6693595660003666
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.402350364000085
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/json",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.9998637799999415
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 7.113156085000355
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.987652535000052
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.090768870000375
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.032285540999965
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.944635355000173
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.888742417999765
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.934654323000359
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.746977840999989
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 6.700684844999614
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.8539413839998815
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.092113495999911
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/selector",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.492123122000066
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.204183140000168
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/suppression",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.209003430999928
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.396165165999719
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.446973460999743
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/values",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/values",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.883805197000129
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.042103241999939
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/parser",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.038356970999757
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 4.943596021999838
+  }
+]

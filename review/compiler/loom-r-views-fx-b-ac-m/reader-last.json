@@ -1,0 +1,66 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.42570563199979
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/census/tool",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.9915650750003806
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.431980128000305
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/fixtures",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 1.7729971819999264
+  }
+]

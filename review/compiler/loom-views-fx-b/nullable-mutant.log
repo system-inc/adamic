@@ -1,0 +1,45 @@
+=== RUN   TestCheckedViewOptionalReadBoundary
+=== PAUSE TestCheckedViewOptionalReadBoundary
+=== RUN   TestCheckedViewObjectPrimitiveSource
+=== PAUSE TestCheckedViewObjectPrimitiveSource
+=== CONT  TestCheckedViewOptionalReadBoundary
+=== CONT  TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== NAME  TestCheckedViewOptionalReadBoundary
+    checked_views_optional_read_test.go:23: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_v2_object_primitive_test.go:46: gate cache node miss
+=== RUN   TestCheckedViewOptionalReadBoundary/ordinary_control
+=== PAUSE TestCheckedViewOptionalReadBoundary/ordinary_control
+=== RUN   TestCheckedViewOptionalReadBoundary/native
+=== PAUSE TestCheckedViewOptionalReadBoundary/native
+=== RUN   TestCheckedViewOptionalReadBoundary/JavaScript
+=== PAUSE TestCheckedViewOptionalReadBoundary/JavaScript
+=== CONT  TestCheckedViewOptionalReadBoundary/ordinary_control
+=== CONT  TestCheckedViewOptionalReadBoundary/JavaScript
+=== CONT  TestCheckedViewOptionalReadBoundary/native
+=== NAME  TestCheckedViewOptionalReadBoundary/ordinary_control
+    checked_views_optional_read_test.go:29: gate cache node miss
+=== NAME  TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_v2_object_primitive_test.go:56: base optional boundary changed: <nil>
+--- FAIL: TestCheckedViewObjectPrimitiveSource (0.00s)
+    --- FAIL: TestCheckedViewObjectPrimitiveSource/optional-receiver (3.23s)
+=== NAME  TestCheckedViewOptionalReadBoundary/native
+    checked_views_optional_read_test.go:57: optional checked read escaped the V1 NotYet boundary
+=== NAME  TestCheckedViewOptionalReadBoundary/JavaScript
+    checked_views_optional_read_test.go:57: optional checked read escaped the V1 NotYet boundary
+=== NAME  TestCheckedViewOptionalReadBoundary/ordinary_control
+    checked_views_optional_read_test.go:33: gate cache node miss
+    oracle_test.go:614: gate cache native miss
+--- FAIL: TestCheckedViewOptionalReadBoundary (3.17s)
+    --- FAIL: TestCheckedViewOptionalReadBoundary/native (0.06s)
+    --- FAIL: TestCheckedViewOptionalReadBoundary/JavaScript (0.06s)
+    --- PASS: TestCheckedViewOptionalReadBoundary/ordinary_control (0.57s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.764s
+FAIL

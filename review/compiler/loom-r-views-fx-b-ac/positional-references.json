@@ -1,0 +1,22 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "-F",
+    "-e",
+    "native_p21.a",
+    "-e",
+    "native_p37.a",
+    "-e",
+    "views_p05.a",
+    "--glob",
+    "*_test.go",
+    "--glob",
+    "**/testdata/**",
+    "."
+  ],
+  "exit": 1,
+  "matches": "",
+  "stderr": "",
+  "conclusion": "No headers added; no lines moved. Review witnesses have no matches in *_test.go or testdata."
+}

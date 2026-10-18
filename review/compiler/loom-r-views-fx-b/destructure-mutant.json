@@ -1,0 +1,25 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b/destructure-overlay.json",
+    "./internal/lower",
+    "-run",
+    "^TestFX6P53$",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "seconds": 39.91,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P53",
+      "Action": "fail",
+      "Elapsed": 0.79
+    }
+  ]
+}

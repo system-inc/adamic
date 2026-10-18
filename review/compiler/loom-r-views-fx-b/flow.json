@@ -1,0 +1,427 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b/flow-overlay.json",
+    "./internal/flow",
+    "-run",
+    "^TestRebasedViews_|^TestFlowCorpus|^TestFlowProgram.*(view|predicate|interface|union)",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "180s"
+  ],
+  "exit": 0,
+  "seconds": 108.529,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusUnitsCoverEveryProgram",
+      "Action": "pass",
+      "Elapsed": 0.05
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_scalar_union_views_p54_s",
+      "Action": "pass",
+      "Elapsed": 0.6
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_lifetime_a_9681bee1607a",
+      "Action": "pass",
+      "Elapsed": 0.91
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_scalar_union_views_p54_n",
+      "Action": "pass",
+      "Elapsed": 0.86
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p36",
+      "Action": "pass",
+      "Elapsed": 1.03
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_scalar_union_views_p54_b",
+      "Action": "pass",
+      "Elapsed": 0.59
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_scalar_union_views_misfit_boolean",
+      "Action": "pass",
+      "Elapsed": 0.8
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_scalar_union_views_misfit_number",
+      "Action": "pass",
+      "Elapsed": 0.91
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p51_wrong",
+      "Action": "pass",
+      "Elapsed": 0.79
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p53",
+      "Action": "pass",
+      "Elapsed": 0.97
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p49",
+      "Action": "pass",
+      "Elapsed": 0.8
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p38",
+      "Action": "pass",
+      "Elapsed": 0.64
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p51",
+      "Action": "pass",
+      "Elapsed": 0.95
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p38_number",
+      "Action": "pass",
+      "Elapsed": 0.81
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p37",
+      "Action": "pass",
+      "Elapsed": 0.93
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestRebasedViews_fx6_p35",
+      "Action": "pass",
+      "Elapsed": 1.09
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_non_null_union_ts_dcd2a53f0696",
+      "Action": "pass",
+      "Elapsed": 1.24
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_non_null_uninitialized_interface_ts_0cd05da0ea1d",
+      "Action": "pass",
+      "Elapsed": 0.87
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_utf8_view_fails_a_f022be275d0a",
+      "Action": "pass",
+      "Elapsed": 0.97
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_utf8_view_a_91b9e1d3108f",
+      "Action": "pass",
+      "Elapsed": 0.78
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_unions_a_6b2449b70737",
+      "Action": "pass",
+      "Elapsed": 2.18
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_surrogates_a_612f419818ee",
+      "Action": "pass",
+      "Elapsed": 1.08
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_typed_arrays_views_a_6b5268740c48",
+      "Action": "pass",
+      "Elapsed": 1.13
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_throw_a_44087e068f41",
+      "Action": "pass",
+      "Elapsed": 1.2
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_conditions_union_a_5c8fbed52c97",
+      "Action": "pass",
+      "Elapsed": 1.28
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_holders_a_ea447c367ed5",
+      "Action": "pass",
+      "Elapsed": 1.1
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_narrowed_union_valid_a_c203ac498591",
+      "Action": "pass",
+      "Elapsed": 0.91
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_calls_a_701b47255107",
+      "Action": "pass",
+      "Elapsed": 1.2
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_host_rest_union_a_bceb1120e248",
+      "Action": "pass",
+      "Elapsed": 0.99
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_characters_a_09248968f63b",
+      "Action": "pass",
+      "Elapsed": 1.95
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_host_map_union_a_fd63aa81fa9f",
+      "Action": "pass",
+      "Elapsed": 1.48
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_host_map_generic_union_a_04abcf0b9ae3",
+      "Action": "pass",
+      "Elapsed": 1.05
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_host_map_iterator_union_a_e7c7b36f2b4a",
+      "Action": "pass",
+      "Elapsed": 1.46
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_host_array_unknown_predicate_a_f60c222c6d51",
+      "Action": "pass",
+      "Elapsed": 1.05
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_host_array_predicate_a_6710bf5f1b4c",
+      "Action": "pass",
+      "Elapsed": 1
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_e4eec87_f2_union_narrow_call_a_3342f5a4339a",
+      "Action": "pass",
+      "Elapsed": 0.96
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_devirtualize_interfaces_a_876ee24b05dd",
+      "Action": "pass",
+      "Elapsed": 1.08
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_e4eec87_f2b_union_narrow_number_a_d4b3506dc3af",
+      "Action": "pass",
+      "Elapsed": 1.3
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_methods_a_aef97f4e430b",
+      "Action": "pass",
+      "Elapsed": 0.85
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_policy_a_6fccd9703ae4",
+      "Action": "pass",
+      "Elapsed": 0.98
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_cast_subunion_const_string_fails_a_c6febb11045d",
+      "Action": "pass",
+      "Elapsed": 0.71
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_class_inheritance_interface_a_d33a68e22386",
+      "Action": "pass",
+      "Elapsed": 1.05
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_census_predicate_marker_a_b87e51448cbd",
+      "Action": "pass",
+      "Elapsed": 0.82
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_census_predicate_marker_live_a_8eae4982f574",
+      "Action": "pass",
+      "Elapsed": 0.88
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_class_as_interface_a_2957402bcf44",
+      "Action": "pass",
+      "Elapsed": 1.39
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_cast_subunion_string_fails_a_950fbce9996d",
+      "Action": "pass",
+      "Elapsed": 0.93
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_string_views_loops_a_7f7c2e980f94",
+      "Action": "pass",
+      "Elapsed": 0.92
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_cast_subunion_fails_a_5efcb386f7d3",
+      "Action": "pass",
+      "Elapsed": 1
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusSetupIsShared",
+      "Action": "pass",
+      "Elapsed": 0.27
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_cast_subunion_const_numeric_fails_a_80df6194d19a",
+      "Action": "pass",
+      "Elapsed": 0.8
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_array_literal_empty_union_a_843a43edeb29",
+      "Action": "pass",
+      "Elapsed": 1.16
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowProgram____oracle_testdata_cast_class_union_fails_a_b678b17c379d",
+      "Action": "pass",
+      "Elapsed": 0.86
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a",
+      "Action": "pass",
+      "Elapsed": 0.74
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a",
+      "Action": "pass",
+      "Elapsed": 0.86
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a",
+      "Action": "pass",
+      "Elapsed": 1.08
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/determinism_dispatch.a",
+      "Action": "pass",
+      "Elapsed": 1.19
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/instantiation_array.a",
+      "Action": "pass",
+      "Elapsed": 1
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/instantiation_callback.a",
+      "Action": "pass",
+      "Elapsed": 1.37
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/instantiation_find.a",
+      "Action": "pass",
+      "Elapsed": 1.13
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/instantiation_first.a",
+      "Action": "pass",
+      "Elapsed": 1.31
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/instantiation_last.a",
+      "Action": "pass",
+      "Elapsed": 0.87
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/long_unicode_literals.a",
+      "Action": "pass",
+      "Elapsed": 1.11
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/node_fs_rm_options.a",
+      "Action": "pass",
+      "Elapsed": 2.34
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/plain_data_spread.a",
+      "Action": "pass",
+      "Elapsed": 0.87
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a",
+      "Action": "pass",
+      "Elapsed": 0.61
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a",
+      "Action": "pass",
+      "Elapsed": 0.61
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder/../oracle/testdata/template_nullish.a",
+      "Action": "pass",
+      "Elapsed": 0.96
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowCorpusRemainder",
+      "Action": "pass",
+      "Elapsed": 16.08
+    }
+  ]
+}

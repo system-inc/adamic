@@ -1,0 +1,41 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage3/fixtures",
+    "-run",
+    "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 81.197,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a",
+      "Action": "pass",
+      "Elapsed": 0.53
+    },
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions/assertions",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions",
+      "Action": "pass",
+      "Elapsed": 42.82
+    }
+  ]
+}

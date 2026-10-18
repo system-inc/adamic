@@ -1,0 +1,31 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b/generic-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "seconds": 68.466,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+      "Action": "fail",
+      "Elapsed": 13.24
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewUntaggedSourceFlows",
+      "Action": "fail",
+      "Elapsed": 0
+    }
+  ]
+}
