@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:06:11.037205849Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T22:06:11.057155968Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan"}
+{"Time":"2026-10-18T22:06:11.057236988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan","Output":"=== RUN   TestProduct_MovesNative_asan\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:06:11.057262646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan","Output":"=== PAUSE TestProduct_MovesNative_asan\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:06:11.05726502Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan"}
+{"Time":"2026-10-18T22:06:11.057270197Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan"}
+{"Time":"2026-10-18T22:06:11.05727225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan","Output":"=== CONT  TestProduct_MovesNative_asan\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:06:12.494672168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan","Output":"    moves_test.go:259: build moves-native-asan d12d77068cdf hit 1.37\n"}
+{"Time":"2026-10-18T22:06:12.494732417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan","Output":"--- PASS: TestProduct_MovesNative_asan (1.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:06:12.494735692Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_MovesNative_asan","Elapsed":1.41}
+{"Time":"2026-10-18T22:06:12.494785787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:06:12.504774431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.466s\n"}
+{"Time":"2026-10-18T22:06:12.504818877Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.468}

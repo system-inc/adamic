@@ -1,0 +1,7 @@
+const list = [1, 2, 3];
+const found = list.find((item: number | undefined, index: number): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item}`);
+	list.pop();
+	return item === undefined;
+});
+console.log(`${found ?? 'none'}`);
