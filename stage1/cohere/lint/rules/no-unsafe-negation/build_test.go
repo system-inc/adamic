@@ -20,7 +20,7 @@ import (
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestNoUnsafeNegationProfileBuildsSanitized(t *testing.T) {
 	lowered := compileProfilesLowered(t)
-	if err := native.Build(native.C(lowered), filepath.Join(t.TempDir(), "native"), native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(lowered)+"\n#error mutant: the sanitized build is broken\n", filepath.Join(t.TempDir(), "native"), native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	t.Log("standalone profile: sanitized native compiled")
