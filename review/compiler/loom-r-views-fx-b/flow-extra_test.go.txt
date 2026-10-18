@@ -1,0 +1,16 @@
+package flow
+import "testing"
+func TestRebasedViews_fx6_p35(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p35.a") }
+func TestRebasedViews_fx6_p36(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p36.a") }
+func TestRebasedViews_fx6_p37(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p37.a") }
+func TestRebasedViews_fx6_p38(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p38.a") }
+func TestRebasedViews_fx6_p38_number(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p38_number.a") }
+func TestRebasedViews_fx6_p49(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p49.a") }
+func TestRebasedViews_fx6_p51(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p51.a") }
+func TestRebasedViews_fx6_p51_wrong(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p51_wrong.a") }
+func TestRebasedViews_fx6_p53(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/fx6/p53.a") }
+func TestRebasedViews_scalar_union_views_misfit_boolean(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/scalar_union_views/misfit_boolean.a") }
+func TestRebasedViews_scalar_union_views_misfit_number(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/scalar_union_views/misfit_number.a") }
+func TestRebasedViews_scalar_union_views_p54_b(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/scalar_union_views/p54_b.a") }
+func TestRebasedViews_scalar_union_views_p54_n(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/scalar_union_views/p54_n.a") }
+func TestRebasedViews_scalar_union_views_p54_s(t *testing.T) { t.Parallel(); checkAllFlowProgram(t, "../lower/testdata/scalar_union_views/p54_s.a") }
