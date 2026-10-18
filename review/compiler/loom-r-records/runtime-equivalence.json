@@ -1,0 +1,193 @@
+{
+  "source": "9f9ccacf28d326e072b7adfbd9c10245e6901c38",
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source_changed_lines": [
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "-\t} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array) && value.reference == NULL) {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array || kind == adamic_json_record) && value.reference == NULL) {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\tcase adamic_json_record: {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tconst adamic_record *record = value.reference;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tadamic_array *ordered = adamic_record_keys(record);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tascii(w, \"{\");"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tsize_t written = 0;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tsize_t count = w->key_list ? w->key_count : ordered->length;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tfor (size_t index = 0; index < count; index++) {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tadamic_string *key = w->key_list ? w->keys[index] : ordered->elements[index].reference;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tconst adamic_value *slot = adamic_record_get_own(record, key);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tif (slot == NULL) { continue; }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tjson_scalar item = scalar(*slot, schema->element->kind);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tif (item.kind == adamic_json_undefined || item.kind == adamic_json_function) { continue; }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tif (written++ != 0) { ascii(w, \",\"); }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tindent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? \": \" : \":\");"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\t(void)write_value(w, *slot, schema->element, depth + 1);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t}"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tif (written != 0) { indent(w, depth); }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tascii(w, \"}\"); adamic_release(ordered); return true;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t}"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.h",
+      "line": "-\tadamic_json_tuple, adamic_json_object"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.h",
+      "line": "+\tadamic_json_tuple, adamic_json_object, adamic_json_record"
+    }
+  ],
+  "rebased_changed_lines": [
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "-\t} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array) && value.reference == NULL) {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t} else if ((kind == adamic_json_string || kind == adamic_json_map || kind == adamic_json_function || kind == adamic_json_array || kind == adamic_json_record) && value.reference == NULL) {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\tcase adamic_json_record: {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tconst adamic_record *record = value.reference;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tadamic_array *ordered = adamic_record_keys(record);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tascii(w, \"{\");"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tsize_t written = 0;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tsize_t count = w->key_list ? w->key_count : ordered->length;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tfor (size_t index = 0; index < count; index++) {"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tadamic_string *key = w->key_list ? w->keys[index] : ordered->elements[index].reference;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tconst adamic_value *slot = adamic_record_get_own(record, key);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tif (slot == NULL) { continue; }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tjson_scalar item = scalar(*slot, schema->element->kind);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tif (item.kind == adamic_json_undefined || item.kind == adamic_json_function) { continue; }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tif (written++ != 0) { ascii(w, \",\"); }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\tindent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? \": \" : \":\");"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t\t(void)write_value(w, *slot, schema->element, depth + 1);"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\t}"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tif (written != 0) { indent(w, depth); }"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t\tascii(w, \"}\"); adamic_release(ordered); return true;"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.c",
+      "line": "+\t}"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.h",
+      "line": "-\tadamic_json_tuple, adamic_json_object"
+    },
+    {
+      "file": "internal/native/runtime/json_stringify.h",
+      "line": "+\tadamic_json_tuple, adamic_json_object, adamic_json_record"
+    }
+  ],
+  "identical": true
+}

@@ -1,0 +1,20 @@
+=== RUN   TestDetachedOwnRepresentation
+=== PAUSE TestDetachedOwnRepresentation
+=== CONT  TestDetachedOwnRepresentation
+=== RUN   TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_console.log(String(own([],_'length')));
+=== RUN   TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_const_r:Record<string,number>={};_console.log(String(own(r,'x')));
+    detached_own_test.go:46: an erased or unsupported storage representation must not compile
+=== RUN   TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_console.log(String(own(()=>1,'name')));
+=== RUN   TestDetachedOwnRepresentation/const_own=Object.prototype.hasOwnProperty;_own.call(null,'x');
+=== RUN   TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{const_view={map};_return_Object.prototype.hasOwnProperty.call(map,key);}
+=== RUN   TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{const_other=map;_return_Object.prototype.hasOwnProperty.call(map,key);}
+--- FAIL: TestDetachedOwnRepresentation (0.16s)
+    --- PASS: TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_console.log(String(own([],_'length'))); (0.03s)
+    --- FAIL: TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_const_r:Record<string,number>={};_console.log(String(own(r,'x'))); (0.03s)
+    --- PASS: TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_console.log(String(own(()=>1,'name'))); (0.02s)
+    --- PASS: TestDetachedOwnRepresentation/const_own=Object.prototype.hasOwnProperty;_own.call(null,'x'); (0.03s)
+    --- PASS: TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{const_view={map};_return_Object.prototype.hasOwnProperty.call(map,key);} (0.02s)
+    --- PASS: TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{const_other=map;_return_Object.prototype.hasOwnProperty.call(map,key);} (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.163s
+FAIL

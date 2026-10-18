@@ -1,0 +1,4 @@
+// a-check: refused record assignment to __proto__: its inherited setter isn't modeled; define an explicit computed own __proto__ data entry before assigning, or use a Map
+const r: Record<string, number> = {};
+function set(key: string): void {r[key]=1;}
+set('__proto__');

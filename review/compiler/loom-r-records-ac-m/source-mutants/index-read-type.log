@@ -1,0 +1,8 @@
+=== RUN   TestNamedRecordReadTypes
+=== PAUSE TestNamedRecordReadTypes
+=== CONT  TestNamedRecordReadTypes
+    records_named_test.go:21: named read used index type 10
+--- FAIL: TestNamedRecordReadTypes (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.038s
+FAIL

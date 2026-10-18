@@ -1,0 +1,21 @@
+let throwing = false;
+const value = { x: 7 };
+function entry(): { toJSON: (key: string) => unknown } {
+	return {
+		toJSON: (key: string): unknown => {
+			console.log(`key:${key}`);
+			if (key === 'omit') return undefined;
+			if (throwing) throw new Error('stop');
+			return value;
+		},
+	};
+}
+const record = { omit: entry(), nested: entry(), again: entry() };
+console.log(String(JSON.stringify(record)));
+throwing = true;
+try {
+	console.log(String(JSON.stringify(record)));
+} catch {
+	console.log('caught');
+}
+console.log(String(JSON.stringify(undefined)));

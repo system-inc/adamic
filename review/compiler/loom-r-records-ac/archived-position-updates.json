@@ -1,0 +1,82 @@
+[
+  {
+    "file": "04_own_values.a",
+    "before": "stage3/fixtures/records/04_own_values.a:12:25",
+    "after": "stage3/fixtures/records/04_own_values.a:13:25"
+  },
+  {
+    "file": "08_option_boolean.a",
+    "before": "stage3/fixtures/records/08_option_boolean.a:66:79",
+    "after": "stage3/fixtures/records/08_option_boolean.a:67:79"
+  },
+  {
+    "file": "09_option_undefined.a",
+    "before": "stage3/fixtures/records/09_option_undefined.a:66:79",
+    "after": "stage3/fixtures/records/09_option_undefined.a:67:79"
+  },
+  {
+    "file": "10_option_wrong_type.a",
+    "before": "stage3/fixtures/records/10_option_wrong_type.a:66:79",
+    "after": "stage3/fixtures/records/10_option_wrong_type.a:67:79"
+  },
+  {
+    "file": "11_option_string.a",
+    "before": "stage3/fixtures/records/11_option_string.a:66:79",
+    "after": "stage3/fixtures/records/11_option_string.a:67:79"
+  },
+  {
+    "file": "12_nested_entries.a",
+    "before": "stage3/fixtures/records/12_nested_entries.a:7:5",
+    "after": "stage3/fixtures/records/12_nested_entries.a:8:5"
+  },
+  {
+    "file": "14_group_by.a",
+    "before": "stage3/fixtures/records/14_group_by.a:10:24",
+    "after": "stage3/fixtures/records/14_group_by.a:11:24"
+  },
+  {
+    "file": "14_group_by.a",
+    "before": "stage3/fixtures/records/14_group_by.a:8:40",
+    "after": "stage3/fixtures/records/14_group_by.a:9:40"
+  },
+  {
+    "file": "15_inherited_read.a",
+    "before": "stage3/fixtures/records/15_inherited_read.a:10:24",
+    "after": "stage3/fixtures/records/15_inherited_read.a:11:24"
+  },
+  {
+    "file": "15_inherited_read.a",
+    "before": "stage3/fixtures/records/15_inherited_read.a:8:40",
+    "after": "stage3/fixtures/records/15_inherited_read.a:9:40"
+  },
+  {
+    "file": "17_compare_missing_object.a",
+    "before": "stage3/fixtures/records/17_compare_missing_object.a:27:17",
+    "after": "stage3/fixtures/records/17_compare_missing_object.a:28:17"
+  },
+  {
+    "file": "17_compare_missing_object.a",
+    "before": "stage3/fixtures/records/17_compare_missing_object.a:28:17",
+    "after": "stage3/fixtures/records/17_compare_missing_object.a:29:17"
+  },
+  {
+    "file": "18_compare_missing_scalar.a",
+    "before": "stage3/fixtures/records/18_compare_missing_scalar.a:27:17",
+    "after": "stage3/fixtures/records/18_compare_missing_scalar.a:28:17"
+  },
+  {
+    "file": "18_compare_missing_scalar.a",
+    "before": "stage3/fixtures/records/18_compare_missing_scalar.a:28:17",
+    "after": "stage3/fixtures/records/18_compare_missing_scalar.a:29:17"
+  },
+  {
+    "file": "19_compare_empty_objects.a",
+    "before": "stage3/fixtures/records/19_compare_empty_objects.a:27:17",
+    "after": "stage3/fixtures/records/19_compare_empty_objects.a:28:17"
+  },
+  {
+    "file": "19_compare_empty_objects.a",
+    "before": "stage3/fixtures/records/19_compare_empty_objects.a:28:17",
+    "after": "stage3/fixtures/records/19_compare_empty_objects.a:29:17"
+  }
+]
