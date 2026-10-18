@@ -1,0 +1,42 @@
+{
+  "item": 135,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.351
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-c",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a"
+    ],
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a:6:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member\n",
+    "seconds": 0.306
+  },
+  "js": null,
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-c",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/p135_object_result-4123e0eab5d3/native"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a:6:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member\n",
+    "seconds": 0.278
+  },
+  "native": null,
+  "agrees": false
+}

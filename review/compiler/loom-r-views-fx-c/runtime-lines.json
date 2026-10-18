@@ -1,0 +1,10 @@
+[
+  {
+    "path": "internal/native/runtime/object.c",
+    "source_added_lines": [
+      "        value.payload = (adamic_value){0};",
+      "        if (boolean.present) { value.payload.boolean = boolean.boolean; }"
+    ],
+    "changed_source_lines": []
+  }
+]

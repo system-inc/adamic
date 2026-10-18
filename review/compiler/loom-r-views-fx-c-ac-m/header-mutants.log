@@ -1,0 +1,4 @@
+removed-header CAUGHT a-check failed for 1 file:
+review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a: refused, expected checked (adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:8:18: Adamic 0.1 refuses a checked callable producer as)
+wrong-reason CAUGHT a-check failed for 1 file:
+review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a: refused, expected refused deliberately wrong reason (adamic: /workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a:8:18: Adamic 0.1 refuses a checked callable producer as)

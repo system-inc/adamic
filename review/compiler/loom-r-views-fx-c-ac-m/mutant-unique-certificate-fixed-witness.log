@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:37:28.615872042Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T22:37:28.620811837Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate"}
+{"Time":"2026-10-18T22:37:28.620874229Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate","Output":"=== RUN   TestCallableProducerAmbiguousCertificate\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:37:28.620897223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate","Output":"=== PAUSE TestCallableProducerAmbiguousCertificate\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:37:28.620899637Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate"}
+{"Time":"2026-10-18T22:37:28.620903492Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate"}
+{"Time":"2026-10-18T22:37:28.620905445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate","Output":"=== CONT  TestCallableProducerAmbiguousCertificate\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:37:28.751701194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate","Output":"    callable_producers_assignable_test.go:105: ambiguous producer was certified\n","OutputType":"error"}
+{"Time":"2026-10-18T22:37:28.751784877Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate","Output":"--- FAIL: TestCallableProducerAmbiguousCertificate (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:37:28.751789344Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCallableProducerAmbiguousCertificate","Elapsed":0.13}
+{"Time":"2026-10-18T22:37:28.751812929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:37:28.753498374Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.137s\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:37:28.753538013Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.138}

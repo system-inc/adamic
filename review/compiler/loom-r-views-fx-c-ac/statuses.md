@@ -1,0 +1,65 @@
+| File | Status | Reason/code |
+|---|---|---|
+| internal/lower/testdata/callable_producers/p135_object_result.a | refused | a checked callable producer assignable to more than one union member |
+| internal/lower/testdata/callable_producers/p135_tagged_unread.a | checked |  |
+| internal/lower/testdata/callable_producers/p135_unique_object_result.a | NotYet | a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet |
+| internal/lower/testdata/callable_producers/p21.a | checked |  |
+| internal/lower/testdata/callable_producers/p22.a | refused | a checked callable producer assignable to more than one union member |
+| internal/lower/testdata/callable_producers/p22_adapted.a | checked |  |
+| internal/lower/testdata/callable_producers/p23.a | checked |  |
+| internal/lower/testdata/callable_producers/p59.a | NotYet | a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet |
+| internal/lower/testdata/callable_producers/p59_adapted.a | checked |  |
+| internal/lower/testdata/callable_producers/p60.a | checked |  |
+| internal/lower/testdata/callable_producers/p61.a | checked |  |
+| internal/lower/testdata/callable_producers/p62.a | NotYet | a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet |
+| internal/lower/testdata/callable_producers/p62_adapted.a | checked |  |
+| internal/oracle/testdata/callable_union_result_both.a | checked |  |
+| internal/oracle/testdata/callable_union_result_number.a | checked |  |
+| internal/oracle/testdata/callable_union_result_string.a | checked |  |
+| internal/oracle/testdata/callable_union_result_zero.a | checked |  |
+| internal/oracle/testdata/loom_views_c/snapshot-original.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/0587b8e6f528/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a | refused | a checked callable producer assignable to more than one union member |
+| review/compiler/loom-views-fx-c/baseline-sources/158a78dd8b4f/fxspptb_oct9_native_p72_tuple_count_mismatch.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/166413c08ae4/p69.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/19560c042dd4/depth-2000.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a | NotYet | a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet |
+| review/compiler/loom-views-fx-c/baseline-sources/1b417795343f/fxspptb_oct9_native_p35_class_in_union.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/2212de141cf1/fxspptb_oct9_views_p68_object_view_over_tuple.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/236862030f83/fxspptb_oct9_native_p14_callable_union_no_view.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/23b93dc07994/p135_tagged_unread.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/27fe1106b197/wide.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/2ca18403dfcd/snapshot-maybe-number.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/2db1d7d06600/depth-200.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a | refused | a checked callable producer assignable to more than one union member |
+| review/compiler/loom-views-fx-c/baseline-sources/4311ed865723/callable_union_result_both.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/447b0fa4b1bb/fxspptb_oct9_native_p60_named_function_producer.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/4959ae25761c/callable_union_result_number.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/5907cb79c2f5/callable_union_result_zero.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/6f7c7da4c8e2/callable_union_result_string.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/702776fe1a62/scalar-tuple.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/78a920f10d1e/depth-65.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/8d3e50ec301c/fxspptb_oct9_views_p32_boxed_slot_string_good.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/939d79256bbb/fxspptb_oct9_views_p33_boxed_slot_union_member.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/948f2e39c0b4/fxspptb_oct9_native_p20_callable_member_call_good.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/9889d0b80ce2/p62_adapted.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/98e2b7018f11/fxspptb_oct9_views_p23_callable_union_literal_result.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/ab0bf403ae83/p22_adapted.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/aec33ed32c94/fxspptb_oct9_native_p61_method_value_producer.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/b1a2a62ba1f4/bad_callable.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/ce11e85355d8/fxspptb_oct9_native_p33_map_in_union.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/d44ab71300a7/snapshot-maybe-boolean.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/d7286c5c4c87/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/d9df1651d811/fxspptb_oct9_native_p17_callable_call_first_half.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/dc4b7e9bcfea/fxspptb_oct9_native_p70_recursive_depth_70.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/de5047d3bc07/fxspptb_oct9_views_p62_union_member_arrow_inferred.a | NotYet | a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet |
+| review/compiler/loom-views-fx-c/baseline-sources/dfe95dc594a1/fxspptb_oct9_native_p18_cast_kind_no_field_types.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/e3f464103722/fxspptb_oct9_native_p34_typed_array_in_union.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/f5c224407418/fxspptb_oct9_native_p01_maybe_boolean_spread.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/f6246f3c1c42/fxspptb_oct9_views_p21_callable_union_function_declaration.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/f8c1252799ca/fxspptb_oct9_native_p26_callable_or_undefined.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/f93df345ed22/fxspptb_oct9_views_p09_tuple_destructure_wrong.a | checked |  |
+| review/compiler/loom-views-fx-c/baseline-sources/fb59d3aecf4e/p59_adapted.a | checked |  |
+| stage3/interface-downcasts/v2/snapshot-maybe-boolean.a | checked |  |
+| stage3/interface-downcasts/v2/snapshot-maybe-number.a | checked |  |

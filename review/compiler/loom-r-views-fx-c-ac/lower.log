@@ -1,0 +1,75 @@
+=== RUN   TestCallableProducerLiteralReturn
+=== PAUSE TestCallableProducerLiteralReturn
+=== RUN   TestCallableProducerFewerParametersRefused
+=== PAUSE TestCallableProducerFewerParametersRefused
+=== RUN   TestCallableProducerMethodShorthandRefused
+=== PAUSE TestCallableProducerMethodShorthandRefused
+=== RUN   TestCallableProducerExtraOptionalRefused
+=== PAUSE TestCallableProducerExtraOptionalRefused
+=== RUN   TestCallableProducerFewerParametersAdapted
+=== PAUSE TestCallableProducerFewerParametersAdapted
+=== RUN   TestCallableProducerMethodShorthandAdapted
+=== PAUSE TestCallableProducerMethodShorthandAdapted
+=== RUN   TestCallableProducerExtraOptionalAdapted
+=== PAUSE TestCallableProducerExtraOptionalAdapted
+=== RUN   TestCallableProducerDiscardedObjectResultRefused
+=== PAUSE TestCallableProducerDiscardedObjectResultRefused
+=== RUN   TestCallableProducerTaggedUnreadMethod
+=== PAUSE TestCallableProducerTaggedUnreadMethod
+=== RUN   TestCallableProducerAmbiguousRefused
+=== PAUSE TestCallableProducerAmbiguousRefused
+=== RUN   TestCallableProducerUniqueObjectResultRefused
+=== PAUSE TestCallableProducerUniqueObjectResultRefused
+=== RUN   TestCallableProducerAmbiguousCertificate
+=== PAUSE TestCallableProducerAmbiguousCertificate
+=== RUN   TestCallableProducerP21
+=== PAUSE TestCallableProducerP21
+=== RUN   TestCallableProducerP60
+=== PAUSE TestCallableProducerP60
+=== RUN   TestCallableProducerP61
+=== PAUSE TestCallableProducerP61
+=== RUN   TestCallableProducerCertificatesUseClosureThunks
+=== PAUSE TestCallableProducerCertificatesUseClosureThunks
+=== CONT  TestCallableProducerLiteralReturn
+=== CONT  TestCallableProducerTaggedUnreadMethod
+=== CONT  TestCallableProducerFewerParametersAdapted
+=== CONT  TestCallableProducerMethodShorthandRefused
+    callable_producers_assignable_test.go:37: /tmp/adamic-gate/TestCallableProducerMethodShorthandRefused2466544694/001/main.a:8:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet
+--- PASS: TestCallableProducerMethodShorthandRefused (0.16s)
+=== CONT  TestCallableProducerFewerParametersRefused
+--- PASS: TestCallableProducerTaggedUnreadMethod (0.20s)
+=== CONT  TestCallableProducerExtraOptionalAdapted
+--- PASS: TestCallableProducerLiteralReturn (0.22s)
+=== CONT  TestCallableProducerDiscardedObjectResultRefused
+--- PASS: TestCallableProducerFewerParametersAdapted (0.22s)
+=== CONT  TestCallableProducerP21
+=== NAME  TestCallableProducerFewerParametersRefused
+    callable_producers_assignable_test.go:33: /tmp/adamic-gate/TestCallableProducerFewerParametersRefused1428740668/001/main.a:8:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member
+=== CONT  TestCallableProducerCertificatesUseClosureThunks
+--- PASS: TestCallableProducerFewerParametersRefused (0.12s)
+=== NAME  TestCallableProducerDiscardedObjectResultRefused
+    callable_producers_assignable_test.go:60: /tmp/adamic-gate/TestCallableProducerDiscardedObjectResultRefused1063787188/001/main.a:7:18: Adamic 0.1 refuses a checked callable producer assignable to more than one union member; wrap the producer in an arrow with parameters and result that select exactly one view member
+--- PASS: TestCallableProducerDiscardedObjectResultRefused (0.14s)
+=== CONT  TestCallableProducerP61
+--- PASS: TestCallableProducerExtraOptionalAdapted (0.18s)
+=== CONT  TestCallableProducerP60
+--- PASS: TestCallableProducerP21 (0.20s)
+=== CONT  TestCallableProducerUniqueObjectResultRefused
+--- PASS: TestCallableProducerCertificatesUseClosureThunks (0.17s)
+=== CONT  TestCallableProducerAmbiguousCertificate
+--- PASS: TestCallableProducerP61 (0.20s)
+=== CONT  TestCallableProducerExtraOptionalRefused
+=== NAME  TestCallableProducerUniqueObjectResultRefused
+    callable_producers_assignable_test.go:87: /tmp/adamic-gate/TestCallableProducerUniqueObjectResultRefused2659931722/001/main.a:6:18: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet
+--- PASS: TestCallableProducerUniqueObjectResultRefused (0.16s)
+=== CONT  TestCallableProducerMethodShorthandAdapted
+--- PASS: TestCallableProducerP60 (0.21s)
+=== CONT  TestCallableProducerAmbiguousRefused
+--- PASS: TestCallableProducerAmbiguousCertificate (0.19s)
+--- PASS: TestCallableProducerAmbiguousRefused (0.07s)
+=== NAME  TestCallableProducerExtraOptionalRefused
+    callable_producers_assignable_test.go:41: /tmp/adamic-gate/TestCallableProducerExtraOptionalRefused3468360393/001/main.a:9:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet
+--- PASS: TestCallableProducerExtraOptionalRefused (0.15s)
+--- PASS: TestCallableProducerMethodShorthandAdapted (0.17s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.750s

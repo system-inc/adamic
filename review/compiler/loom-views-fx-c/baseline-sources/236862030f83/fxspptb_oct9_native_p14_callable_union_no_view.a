@@ -1,0 +1,8 @@
+type Target = ((value: number) => number) | ((value: number) => boolean);
+function make(seed: string): Target {
+	const suffix = seed.repeat(3);
+	return (value: number): number => value + suffix.length;
+}
+const callable = make('ab');
+const again = make('xyz');
+console.log(`${callable(10)}:${again(100)}`);

@@ -1,0 +1,61 @@
+{
+  "item": 151,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/19560c042dd4/depth-2000.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/19560c042dd4/depth-2000.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.073
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/19560c042dd4/depth-2000.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.06
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/depth-2000-19560c042dd4/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: view.value matches no member of Link | Other; expected Link | Other, found object\n",
+    "seconds": 0.048
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/19560c042dd4/depth-2000.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/depth-2000-19560c042dd4/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.023
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/depth-2000-19560c042dd4/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: view.value matches no member of Link | Other; expected Link | Other, found object\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}

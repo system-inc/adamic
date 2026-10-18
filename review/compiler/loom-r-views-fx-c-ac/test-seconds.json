@@ -1,0 +1,66 @@
+[
+  {
+    "test": "TestCallableProducerMethodShorthandRefused",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCallableProducerTaggedUnreadMethod",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCallableProducerLiteralReturn",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCallableProducerFewerParametersAdapted",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestCallableProducerFewerParametersRefused",
+    "seconds": 0.12
+  },
+  {
+    "test": "TestCallableProducerDiscardedObjectResultRefused",
+    "seconds": 0.14
+  },
+  {
+    "test": "TestCallableProducerExtraOptionalAdapted",
+    "seconds": 0.18
+  },
+  {
+    "test": "TestCallableProducerP21",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCallableProducerCertificatesUseClosureThunks",
+    "seconds": 0.17
+  },
+  {
+    "test": "TestCallableProducerP61",
+    "seconds": 0.2
+  },
+  {
+    "test": "TestCallableProducerUniqueObjectResultRefused",
+    "seconds": 0.16
+  },
+  {
+    "test": "TestCallableProducerP60",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestCallableProducerAmbiguousCertificate",
+    "seconds": 0.19
+  },
+  {
+    "test": "TestCallableProducerAmbiguousRefused",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestCallableProducerExtraOptionalRefused",
+    "seconds": 0.15
+  },
+  {
+    "test": "TestCallableProducerMethodShorthandAdapted",
+    "seconds": 0.17
+  }
+]

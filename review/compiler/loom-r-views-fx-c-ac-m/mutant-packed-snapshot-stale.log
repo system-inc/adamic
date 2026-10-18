@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:35:04.412412719Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T22:35:04.417961977Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership"}
+{"Time":"2026-10-18T22:35:04.418020033Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership","Output":"=== RUN   TestViewSnapshotPayloadOwnership\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:04.418045831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership","Output":"=== PAUSE TestViewSnapshotPayloadOwnership\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:04.418048145Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership"}
+{"Time":"2026-10-18T22:35:04.418050388Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership"}
+{"Time":"2026-10-18T22:35:04.418052191Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership","Output":"=== CONT  TestViewSnapshotPayloadOwnership\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:11.261777755Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership","Output":"    view_snapshot_test.go:54: exit status 3: rep=9 present=0 got=0x1.a5a5a5a5a5ap+422 expected=0x0p+0\n","OutputType":"error"}
+{"Time":"2026-10-18T22:35:11.262184866Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership","Output":"--- FAIL: TestViewSnapshotPayloadOwnership (6.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:11.262192167Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestViewSnapshotPayloadOwnership","Elapsed":6.84}
+{"Time":"2026-10-18T22:35:11.262211466Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:11.263099219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t6.850s\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:11.263115423Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.851}

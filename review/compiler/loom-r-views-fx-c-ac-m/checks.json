@@ -1,0 +1,251 @@
+[
+  {
+    "label": "compiler-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/views-fx-c-adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 12.625
+  },
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 88.222
+  },
+  {
+    "label": "lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 60.093
+  },
+  {
+    "label": "native-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 287.188
+  },
+  {
+    "label": "oracle-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 439.051
+  },
+  {
+    "label": "ir-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 67.101
+  },
+  {
+    "label": "ir-all-ready",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 10.13
+  },
+  {
+    "label": "javascript-all-ready",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 3.125
+  },
+  {
+    "label": "flow-all-ready",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 68.382
+  },
+  {
+    "label": "fresh-all-ready",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 16.921
+  },
+  {
+    "label": "stage3-fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 62.925
+  },
+  {
+    "label": "readers-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders.*|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.74
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.272
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/ir/...",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./internal/javascript/...",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": 5.661
+  }
+]
