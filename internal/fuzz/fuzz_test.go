@@ -2,6 +2,7 @@ package fuzz
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,8 +25,8 @@ func TestOneSeedOneProgram(t *testing.T) {
 	}
 }
 
-// Every generated program must typecheck and lower, except an intentional parallel refusal,
-// which must fail lowering with a message naming the expected path.
+// Every generated program must typecheck and lower, except an intentional task refusal,
+// which must name the expected path. Move refusals must match the complete diagnostic and fix.
 func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 	t.Parallel()
 	// The literal ranges are also the gate's independently selectable work units.
@@ -62,13 +63,23 @@ func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 					continue
 				}
 				if generated.Refusal != "" {
-					if !strings.Contains(source, parallelRefusePrefix+" "+generated.Refusal) {
+					prefix := parallelRefusePrefix + " "
+					if generated.RefusalFix != "" {
+						prefix = movesRefusePrefix + " "
+					}
+					if !strings.Contains(source, prefix+generated.Refusal) {
 						t.Errorf("seed %d: refusal %q is not in the source", seed, generated.Refusal)
 					}
 					_, err := lower.Lower(context.Background(), program)
 					if err == nil {
 						t.Errorf("seed %d: compiler accepted a program it must refuse (%s)", seed, generated.Refusal)
-					} else if !strings.Contains(err.Error(), generated.Refusal) {
+						continue
+					}
+					var move *lower.Refused
+					if generated.RefusalFix != "" && (!errors.As(err, &move) || move.What != generated.Refusal || move.Fix != generated.RefusalFix) {
+						t.Errorf("seed %d: wrong move refusal: %v", seed, err)
+					}
+					if !strings.Contains(err.Error(), generated.Refusal) {
 						t.Errorf("seed %d: refusal did not name the path %q: %v", seed, generated.Refusal, err)
 					}
 					continue
