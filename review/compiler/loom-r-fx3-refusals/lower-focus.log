@@ -1,0 +1,126 @@
+=== RUN   TestProduct_LowerAgreementNative
+=== PAUSE TestProduct_LowerAgreementNative
+=== RUN   TestAgreementRejectsWrongLoweredOutput
+=== PAUSE TestAgreementRejectsWrongLoweredOutput
+=== RUN   TestAgreementRejectsEmptyAnswer
+=== PAUSE TestAgreementRejectsEmptyAnswer
+=== RUN   TestAgreementAcceptsComputedAnswer
+=== PAUSE TestAgreementAcceptsComputedAnswer
+=== RUN   TestAgreementAcceptsExpectedPanic
+=== PAUSE TestAgreementAcceptsExpectedPanic
+=== RUN   TestAgreementEnumConstantWitness
+=== PAUSE TestAgreementEnumConstantWitness
+=== RUN   TestAgreementInheritedFieldWitness
+=== PAUSE TestAgreementInheritedFieldWitness
+=== RUN   TestAgreementParameterPropertyWitness
+=== PAUSE TestAgreementParameterPropertyWitness
+=== RUN   TestAgreementStaticInitializerWitness
+=== PAUSE TestAgreementStaticInitializerWitness
+=== RUN   TestAgreementParseIntRadixWitness
+=== PAUSE TestAgreementParseIntRadixWitness
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== RUN   TestNativeAgreementRowsNameRegisteredPrograms
+=== PAUSE TestNativeAgreementRowsNameRegisteredPrograms
+=== RUN   TestArrayNarrowingEveryRefused
+=== PAUSE TestArrayNarrowingEveryRefused
+=== RUN   TestArrayNarrowingInferredRefused
+=== PAUSE TestArrayNarrowingInferredRefused
+=== RUN   TestArrayNarrowingReadonlyRefused
+=== PAUSE TestArrayNarrowingReadonlyRefused
+=== RUN   TestArrayNarrowingEarlyReturnRefused
+=== PAUSE TestArrayNarrowingEarlyReturnRefused
+=== RUN   TestArrayNarrowingPropertyRefused
+=== PAUSE TestArrayNarrowingPropertyRefused
+=== RUN   TestArrayNarrowingForwardRefused
+=== PAUSE TestArrayNarrowingForwardRefused
+=== RUN   TestArrayNarrowingCatRefused
+=== PAUSE TestArrayNarrowingCatRefused
+=== RUN   TestArrayNarrowingFindRefused
+=== PAUSE TestArrayNarrowingFindRefused
+=== RUN   TestArrayNarrowingFindLastRefused
+=== PAUSE TestArrayNarrowingFindLastRefused
+=== RUN   TestArrayNarrowingOptionalNumberAgrees
+=== PAUSE TestArrayNarrowingOptionalNumberAgrees
+=== RUN   TestArrayNarrowingOptionalStringAgrees
+=== PAUSE TestArrayNarrowingOptionalStringAgrees
+=== RUN   TestArrayNarrowingSomeNegatedAgrees
+=== PAUSE TestArrayNarrowingSomeNegatedAgrees
+=== RUN   TestArrayNarrowingFindLastIndexAgrees
+=== PAUSE TestArrayNarrowingFindLastIndexAgrees
+=== RUN   TestArrayNarrowingPreservedUnionAgrees
+=== PAUSE TestArrayNarrowingPreservedUnionAgrees
+=== RUN   TestArrayNarrowingBooleanCallbackAgrees
+=== PAUSE TestArrayNarrowingBooleanCallbackAgrees
+=== RUN   TestFX5NumberLiteralRefused
+=== PAUSE TestFX5NumberLiteralRefused
+=== RUN   TestFX5NumberValueRefused
+=== PAUSE TestFX5NumberValueRefused
+=== RUN   TestFX5MixedLiteralAgrees
+=== PAUSE TestFX5MixedLiteralAgrees
+=== CONT  TestProduct_LowerAgreementNative
+=== CONT  TestArrayNarrowingEarlyReturnRefused
+=== CONT  TestAgreementStaticInitializerWitness
+=== CONT  TestArrayNarrowingReadonlyRefused
+--- PASS: TestArrayNarrowingReadonlyRefused (0.09s)
+=== CONT  TestAgreementParameterPropertyWitness
+--- PASS: TestArrayNarrowingEarlyReturnRefused (0.10s)
+=== CONT  TestAgreementInheritedFieldWitness
+--- PASS: TestAgreementStaticInitializerWitness (0.28s)
+=== CONT  TestAgreementEnumConstantWitness
+--- PASS: TestAgreementParameterPropertyWitness (0.22s)
+=== CONT  TestAgreementAcceptsExpectedPanic
+--- PASS: TestAgreementInheritedFieldWitness (0.27s)
+=== CONT  TestAgreementAcceptsComputedAnswer
+--- PASS: TestAgreementEnumConstantWitness (0.20s)
+=== CONT  TestAgreementRejectsEmptyAnswer
+--- PASS: TestAgreementAcceptsExpectedPanic (0.23s)
+=== CONT  TestAgreementRejectsWrongLoweredOutput
+--- PASS: TestAgreementAcceptsComputedAnswer (0.25s)
+=== CONT  TestArrayNarrowingInferredRefused
+--- PASS: TestAgreementRejectsEmptyAnswer (0.17s)
+=== CONT  TestArrayNarrowingEveryRefused
+=== CONT  TestNativeAgreementRowsNameRegisteredPrograms
+--- PASS: TestArrayNarrowingInferredRefused (0.05s)
+--- PASS: TestNativeAgreementRowsNameRegisteredPrograms (0.02s)
+=== CONT  TestNativeAgreementRejectsWrongExit
+--- PASS: TestArrayNarrowingEveryRefused (0.05s)
+=== CONT  TestNativeAgreementRejectsWrongOutput
+--- PASS: TestAgreementRejectsWrongLoweredOutput (0.23s)
+=== CONT  TestAgreementParseIntRadixWitness
+--- PASS: TestAgreementParseIntRadixWitness (0.14s)
+=== CONT  TestArrayNarrowingSomeNegatedAgrees
+--- PASS: TestNativeAgreementRejectsWrongExit (5.08s)
+=== CONT  TestFX5MixedLiteralAgrees
+--- PASS: TestNativeAgreementRejectsWrongOutput (5.05s)
+=== CONT  TestFX5NumberValueRefused
+--- PASS: TestArrayNarrowingSomeNegatedAgrees (4.86s)
+=== CONT  TestFX5NumberLiteralRefused
+--- PASS: TestFX5NumberValueRefused (0.05s)
+=== CONT  TestArrayNarrowingBooleanCallbackAgrees
+--- PASS: TestFX5NumberLiteralRefused (0.07s)
+=== CONT  TestArrayNarrowingPreservedUnionAgrees
+--- PASS: TestFX5MixedLiteralAgrees (0.44s)
+=== CONT  TestArrayNarrowingFindLastIndexAgrees
+--- PASS: TestArrayNarrowingPreservedUnionAgrees (0.43s)
+=== CONT  TestArrayNarrowingFindRefused
+--- PASS: TestArrayNarrowingBooleanCallbackAgrees (0.48s)
+=== CONT  TestArrayNarrowingOptionalStringAgrees
+--- PASS: TestArrayNarrowingFindRefused (0.06s)
+=== CONT  TestArrayNarrowingOptionalNumberAgrees
+--- PASS: TestArrayNarrowingFindLastIndexAgrees (0.32s)
+=== CONT  TestArrayNarrowingFindLastRefused
+--- PASS: TestArrayNarrowingFindLastRefused (0.04s)
+=== CONT  TestArrayNarrowingForwardRefused
+--- PASS: TestArrayNarrowingForwardRefused (0.05s)
+=== CONT  TestArrayNarrowingCatRefused
+--- PASS: TestArrayNarrowingOptionalStringAgrees (0.35s)
+=== CONT  TestArrayNarrowingPropertyRefused
+--- PASS: TestArrayNarrowingOptionalNumberAgrees (0.31s)
+--- PASS: TestArrayNarrowingCatRefused (0.05s)
+--- PASS: TestArrayNarrowingPropertyRefused (0.03s)
+--- PASS: TestProduct_LowerAgreementNative (7.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	7.097s
