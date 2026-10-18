@@ -1,0 +1,28 @@
+{"Time":"2026-10-13T09:17:17.277207567Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-13T09:17:17.295561013Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.295664008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"=== RUN   TestArrowFieldCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.295700193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"=== PAUSE TestArrowFieldCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.295702797Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.295705281Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.295707144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames","Output":"=== RUN   TestArrowSuperCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.295710338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames","Output":"=== PAUSE TestArrowSuperCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.295712151Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.295714405Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.295716348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames","Output":"=== RUN   TestArrowStoredCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.295721095Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames","Output":"=== PAUSE TestArrowStoredCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.295722847Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.29572484Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.295726423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"=== CONT  TestArrowFieldCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.29972785Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.29975451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames","Output":"=== CONT  TestArrowSuperCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.299828372Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames"}
+{"Time":"2026-10-13T09:17:17.299832338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames","Output":"=== CONT  TestArrowStoredCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.371669389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"--- PASS: TestArrowFieldCaptureFrames (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.377762307Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Elapsed":0.07}
+{"Time":"2026-10-13T09:17:17.377804981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames","Output":"--- PASS: TestArrowStoredCaptureFrames (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.381190858Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowStoredCaptureFrames","Elapsed":0.08}
+{"Time":"2026-10-13T09:17:17.381210568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames","Output":"--- PASS: TestArrowSuperCaptureFrames (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.381243588Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowSuperCaptureFrames","Elapsed":0.08}
+{"Time":"2026-10-13T09:17:17.381246242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:17:17.383177675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.105s\n"}
+{"Time":"2026-10-13T09:17:17.383199729Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.106}

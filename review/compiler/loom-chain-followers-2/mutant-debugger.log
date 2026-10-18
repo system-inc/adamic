@@ -1,0 +1,30 @@
+{"Time":"2026-10-14T12:11:15.331764494Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-14T12:11:15.343003028Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing"}
+{"Time":"2026-10-14T12:11:15.343073521Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing","Output":"=== RUN   TestDebuggerNativeEmitsNothing\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343148268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing","Output":"=== PAUSE TestDebuggerNativeEmitsNothing\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343152132Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing"}
+{"Time":"2026-10-14T12:11:15.343160094Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing"}
+{"Time":"2026-10-14T12:11:15.343162413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing","Output":"=== CONT  TestDebuggerNativeEmitsNothing\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343165206Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a"}
+{"Time":"2026-10-14T12:11:15.343167672Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a","Output":"=== RUN   TestDebuggerNativeEmitsNothing/.a\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343172292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a","Output":"=== PAUSE TestDebuggerNativeEmitsNothing/.a\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343174479Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a"}
+{"Time":"2026-10-14T12:11:15.343177048Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts"}
+{"Time":"2026-10-14T12:11:15.343179081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts","Output":"=== RUN   TestDebuggerNativeEmitsNothing/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343182962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts","Output":"=== PAUSE TestDebuggerNativeEmitsNothing/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.34318514Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts"}
+{"Time":"2026-10-14T12:11:15.343190672Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a"}
+{"Time":"2026-10-14T12:11:15.34319307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a","Output":"=== CONT  TestDebuggerNativeEmitsNothing/.a\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.343711878Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts"}
+{"Time":"2026-10-14T12:11:15.34372232Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts","Output":"=== CONT  TestDebuggerNativeEmitsNothing/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.397196909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts","Output":"    debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.ts3056245253/001/main.ts:4:5: Adamic 0.1 refuses debugger; remove it\n","OutputType":"error"}
+{"Time":"2026-10-14T12:11:15.397237976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts","Output":"--- FAIL: TestDebuggerNativeEmitsNothing/.ts (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.397650278Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.ts","Elapsed":0.05}
+{"Time":"2026-10-14T12:11:15.397686256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a","Output":"    debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.a1917278457/001/main.a:4:5: Adamic 0.1 refuses debugger; remove it\n","OutputType":"error"}
+{"Time":"2026-10-14T12:11:15.397700538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a","Output":"--- FAIL: TestDebuggerNativeEmitsNothing/.a (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.397704282Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing/.a","Elapsed":0.05}
+{"Time":"2026-10-14T12:11:15.397707918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing","Output":"--- FAIL: TestDebuggerNativeEmitsNothing (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.397711837Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestDebuggerNativeEmitsNothing","Elapsed":0}
+{"Time":"2026-10-14T12:11:15.397736345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.398896864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.067s\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:11:15.39891641Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.067}

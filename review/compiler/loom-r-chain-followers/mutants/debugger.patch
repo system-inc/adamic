@@ -1,0 +1,11 @@
+--- internal/lower/statements.go
++++ internal/lower/statements.go
+@@ -32,7 +32,7 @@
+ 		return l.namespaceBody(node)
+ 	case ast.KindDebuggerStatement:
+ 		// Preserve it for JavaScript; native builds have no attached debugger.
+-		return []ir.Statement{ir.Debugger{}}, nil
++		return nil, &Refused{Where:l.program.Where(node),What:"debugger",Fix:"remove it"}
+ 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
+ 		// Types erase to nothing, and so does an empty statement.
+ 		return nil, nil

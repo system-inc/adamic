@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:12:36.905268566Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-18T00:12:36.912170995Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects"}
+{"Time":"2026-10-18T00:12:36.912318915Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects","Output":"=== RUN   TestObjectSpreadAccessorEffects\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:36.912343797Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects","Output":"=== PAUSE TestObjectSpreadAccessorEffects\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:36.912346254Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects"}
+{"Time":"2026-10-18T00:12:36.912352143Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects"}
+{"Time":"2026-10-18T00:12:36.912354014Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects","Output":"=== CONT  TestObjectSpreadAccessorEffects\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:36.912359901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects","Output":"--- PASS: TestObjectSpreadAccessorEffects (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:36.91236202Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestObjectSpreadAccessorEffects","Elapsed":0}
+{"Time":"2026-10-18T00:12:36.91237282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:36.912413294Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t0.007s\n"}
+{"Time":"2026-10-18T00:12:36.912426206Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.007}

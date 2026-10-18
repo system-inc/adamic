@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:16:49.030657374Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:16:49.037337487Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames"}
+{"Time":"2026-10-18T00:16:49.037581178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"=== RUN   TestArrowFieldCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:49.037634325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"=== PAUSE TestArrowFieldCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:49.037637232Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames"}
+{"Time":"2026-10-18T00:16:49.037643237Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames"}
+{"Time":"2026-10-18T00:16:49.037645077Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"=== CONT  TestArrowFieldCaptureFrames\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:49.168195143Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"    arrow_capture_frames_test.go:10: receiver frames: got 0 empty and 2 receiver arrows, want 1 and 1\n","OutputType":"error"}
+{"Time":"2026-10-18T00:16:49.169666674Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Output":"--- FAIL: TestArrowFieldCaptureFrames (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:49.169685802Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrowFieldCaptureFrames","Elapsed":0.13}
+{"Time":"2026-10-18T00:16:49.169721059Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:49.169849066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.139s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:49.169859094Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.139}

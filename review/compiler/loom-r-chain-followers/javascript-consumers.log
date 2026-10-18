@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:13:26.121344758Z","Action":"start","Package":"github.com/system-inc/adamic/internal/javascript"}
+{"Time":"2026-10-18T00:13:26.123059984Z","Action":"run","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber"}
+{"Time":"2026-10-18T00:13:26.123149887Z","Action":"output","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber","Output":"=== RUN   TestViewMixedUnionSelectsNumber\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:26.123174086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber","Output":"=== PAUSE TestViewMixedUnionSelectsNumber\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:26.123176951Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber"}
+{"Time":"2026-10-18T00:13:26.123181509Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber"}
+{"Time":"2026-10-18T00:13:26.123184055Z","Action":"output","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber","Output":"=== CONT  TestViewMixedUnionSelectsNumber\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:26.185462174Z","Action":"output","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber","Output":"--- PASS: TestViewMixedUnionSelectsNumber (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:26.185481423Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/javascript","Test":"TestViewMixedUnionSelectsNumber","Elapsed":0.06}
+{"Time":"2026-10-18T00:13:26.185498577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/javascript","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:26.185768469Z","Action":"output","Package":"github.com/system-inc/adamic/internal/javascript","Output":"ok  \tgithub.com/system-inc/adamic/internal/javascript\t0.064s\n"}
+{"Time":"2026-10-18T00:13:26.185793922Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/javascript","Elapsed":0.064}

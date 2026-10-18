@@ -1,0 +1,12 @@
+--- internal/fresh/library_language.go
++++ internal/fresh/library_language.go
+@@ -12,8 +12,7 @@
+ 	switch expression := expression.(type) {
+ 	case ir.NodeBufferCall:
+ 		return a.nodeBufferCall(expression), true
+-	// Phantom reads also keep this conservative model, including every receiver effect.
+-	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal, ir.PhantomMember:
++	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
+ 		return a.call(a.operands(expression), expression.Type()), true
+ 	}
+ 	return value{}, false

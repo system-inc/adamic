@@ -1,0 +1,14 @@
+[
+  {
+    "label": "a-check-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/workspace/adamic-binaries/adamic-acheck",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 2.986
+  }
+]

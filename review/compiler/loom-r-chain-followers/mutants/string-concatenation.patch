@@ -1,0 +1,29 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -942,21 +942,11 @@
+ // concatenated writes the primitive operands of string addition as JavaScript does.
+ // Objects retain their representation, so unsupported ToPrimitive remains NotYet.
+ func (l *lowering) concatenated(value ir.Expression) ir.Expression {
+-	switch value.(type) {
+-	case ir.Null:
+-		return ir.StringConstant{Index: l.constant("null")}
+-	case ir.Undefined:
+-		return ir.StringConstant{Index: l.constant("undefined")}
+-	}
+-	switch value.Type() {
+-	case ir.Number:
+-		return ir.NumberToString{Value: value}
+-	case ir.Boolean:
+-		return ir.BooleanToString{Value: value}
+-	case ir.MaybeNumber, ir.MaybeBoolean:
+-		return ir.MaybeToString{Value: value}
+-	}
+-	return value
++ switch value.Type() {
++ case ir.Number: return ir.NumberToString{Value:value}
++ case ir.Boolean: return ir.BooleanToString{Value:value}
++ }
++ return value
+ }
+ 
+ // spelled is a string as + and a template write it: one that may be missing (a null reference) is

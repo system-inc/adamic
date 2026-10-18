@@ -1,0 +1,8 @@
+=== RUN   TestGenericFunctionValuesHaveSeparateInstances
+=== PAUSE TestGenericFunctionValuesHaveSeparateInstances
+=== CONT  TestGenericFunctionValuesHaveSeparateInstances
+    generic_function_value_test.go:19: /tmp/adamic-gate/TestGenericFunctionValuesHaveSeparateInstances1441791626/001/main.a:4:47: stage 0 can't lower a generic function as a value yet
+--- FAIL: TestGenericFunctionValuesHaveSeparateInstances (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.042s
+FAIL

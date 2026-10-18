@@ -1,0 +1,54 @@
+[
+  {
+    "test": "TestCensusComputedRelation",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestCensusQualifiedCast",
+    "seconds": 0.09
+  },
+  {
+    "test": "TestCensusGenericRefusalInsideClosure",
+    "seconds": 0.1
+  },
+  {
+    "test": "TestPhantomRealPathRefusal",
+    "seconds": 0.13
+  },
+  {
+    "test": "TestPhantomRefusals/prototype",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestPhantomRefusals/any_Path",
+    "seconds": 0.08
+  },
+  {
+    "test": "TestPhantomRefusals/string_index",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestPhantomRefusals/review_exact_message",
+    "seconds": 0.11
+  },
+  {
+    "test": "TestPhantomRefusals/nonvoid",
+    "seconds": 0.07
+  },
+  {
+    "test": "TestPhantomRefusals/required_undefined",
+    "seconds": 0.06
+  },
+  {
+    "test": "TestPhantomRefusals/length",
+    "seconds": 0.03
+  },
+  {
+    "test": "TestPhantomRefusals",
+    "seconds": 0
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "seconds": 2.51
+  }
+]

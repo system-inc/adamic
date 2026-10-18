@@ -173,7 +173,7 @@ func relationFieldExpression(origin *ast.Node, name string) *ast.Node {
 		return nil
 	}
 	for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
-		if property.Kind == ast.KindPropertyAssignment && property.Name().Text() == name {
+		if property.Kind == ast.KindPropertyAssignment && property.Name().Kind != ast.KindComputedPropertyName && property.Name().Text() == name {
 			return property.AsPropertyAssignment().Initializer
 		}
 	}

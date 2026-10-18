@@ -1,0 +1,12 @@
+--- internal/lower/non_null.go
++++ internal/lower/non_null.go
+@@ -31,7 +31,8 @@
+ 		case ir.Defined:
+ 			value = narrowed.Value
+ 		default:
+-			// Narrow and narrowing calls retain their representation and checks.
++			// Mutant restores the old look-through of representation-changing narrowing.
++			if call, ok := value.(ir.Call); ok && call.Returns == ir.Number && len(call.Arguments) == 1 && call.Arguments[0].Type() == ir.Union { value = call.Arguments[0] }
+ 			goto stored
+ 		}
+ 	}
