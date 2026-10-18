@@ -46,7 +46,7 @@ func TestMiscompile2AMaybeSetter(t *testing.T) {
 }
 func TestMiscompile2ALongName(t *testing.T) {
 	t.Parallel()
-	checkMiscompile2AStop(t, "4ddd17f_long_name", "2\n", "property name longer than 4095 bytes", false)
+	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a", "2\n")
 }
 func TestMiscompile2ADerivedSymbol(t *testing.T) {
 	t.Parallel()
@@ -95,6 +95,9 @@ func checkMiscompile2AAdmitted(t *testing.T, relative, output string) {
 	if difference := disagreement(node, got); difference != "" {
 		t.Fatalf("%s; native stderr: %s", difference, got.stderr)
 	}
+	if got := released(t, program); disagreement(node, got) != "" {
+		t.Fatalf("release native: %s", disagreement(node, got))
+	}
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
 	}
@@ -135,7 +138,7 @@ func TestMiscompile2AUndefinedError(t *testing.T) {
 }
 
 func init() {
-	for _, name := range []string{"9984394_error_spread", "classfeat_maybe_setter", "4ddd17f_long_name", "iterators_derived_symbol", "iterators_override_source", "error_subclass_spread"} {
+	for _, name := range []string{"9984394_error_spread", "classfeat_maybe_setter", "iterators_derived_symbol", "iterators_override_source", "error_subclass_spread"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -144,6 +147,10 @@ func init() {
 }
 
 func init() {
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
