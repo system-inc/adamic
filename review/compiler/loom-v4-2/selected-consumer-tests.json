@@ -1,0 +1,436 @@
+{
+  "cmd/adamic": {
+    "products": [],
+    "tests": [
+      "TestBuildTargetParsing",
+      "TestBuildWASISanitizeTargetAfterSource",
+      "TestBuildWASISanitizeTargetBeforeSource"
+    ]
+  },
+  "cloud/reports/decode-ascii": {
+    "products": [],
+    "tests": [
+      "TestRuntimeFeaturesMatchNode"
+    ]
+  },
+  "bridge/tsgo": {
+    "products": [
+      "TestProduct_Oracle",
+      "TestProduct_ApiDriver",
+      "TestProduct_BridgeInputProofs"
+    ],
+    "tests": [
+      "TestBridgeProductCacheIsVerified",
+      "TestBridgeProductInput_ApiDriver",
+      "TestBridgeProductInput_HealthyRegion"
+    ]
+  },
+  "internal/compilerinputs": {
+    "products": [],
+    "tests": [
+      "TestLoweringIsWhatTheCompilerLinks",
+      "TestCheckKeyTellsTheCompilerFromTscWhole",
+      "TestLoweringIsACopy"
+    ]
+  },
+  "cmd/adamic-meter": {
+    "products": [],
+    "tests": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind"
+    ]
+  },
+  "cmd/adamic-test262": {
+    "products": [
+      "TestProduct_Adamic"
+    ],
+    "tests": [
+      "TestAdaptCallbackParam",
+      "TestAdaptClassKeepsVars",
+      "TestAdaptPositiveExponentVarToLet"
+    ]
+  },
+  "internal/flow": {
+    "products": [],
+    "tests": [
+      "TestArrayHolesAliasingIsFresh",
+      "TestArrayHolesOperandMutations",
+      "TestArrayHolesThrowAndIdentityRead"
+    ]
+  },
+  "internal/fresh": {
+    "products": [],
+    "tests": [
+      "TestArrayHolesBackEdgeRemainsUnproven",
+      "TestArrayHolesOperandsStillJudgeCycles",
+      "TestArrayHolesResultsAreFresh"
+    ]
+  },
+  "internal/ir": {
+    "products": [
+      "TestProduct_CallTargetExports"
+    ],
+    "tests": [
+      "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+      "TestASortedMapIsNilWhereAPlainMapIs",
+      "TestArgumentLayouts"
+    ]
+  },
+  "internal/lower": {
+    "products": [
+      "TestProduct_LowerAgreementNative"
+    ],
+    "tests": [
+      "TestClassFeaturesThrowingAccessorSpread",
+      "TestRegExpEscapedSlashSourceAgreesWithNode",
+      "TestRegExpSlashClassSourceAgreesWithNode"
+    ]
+  },
+  "internal/fuzz": {
+    "products": [
+      "TestProduct_Adamic"
+    ],
+    "tests": [
+      "TestBytesSharedRejects63Bytes",
+      "TestExactSignatureRejectsSuffix",
+      "TestExecuteCPUHelper"
+    ]
+  },
+  "internal/native": {
+    "products": [
+      "TestProduct_SplitTSGoSource",
+      "TestProduct_DecodeASCIINative",
+      "TestProduct_NormalizationProbe"
+    ],
+    "tests": [
+      "TestConstantPortabilityClang",
+      "TestLongUnicodePortabilityClang",
+      "TestLongUnicodeLiteralByteCoverage"
+    ]
+  },
+  "internal/oracle": {
+    "products": [
+      "TestProduct_Adamic",
+      "TestProduct_NativeRuntimesCounted0",
+      "TestProduct_NativeRuntimesCounted1"
+    ],
+    "tests": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestInputAgreesWithNode"
+    ]
+  },
+  "stage1/cohere/css": {
+    "products": [
+      "TestProduct_CSSCompositionGoOracle",
+      "TestProduct_CSSCompositionLowered",
+      "TestProduct_CSSParserGoOracle"
+    ],
+    "tests": [
+      "TestCSSPrinterAgreesWithGo_000",
+      "TestCSSPrinterAgreesWithGo_001",
+      "TestCSSPrinterAgreesWithGo_002"
+    ]
+  },
+  "stage1/cohere/cssnumbers": {
+    "products": [
+      "TestProduct_CSSNumbersGoOracle",
+      "TestProduct_CSSNumbersPortLowered",
+      "TestProduct_CSSNumbersFastNative"
+    ],
+    "tests": [
+      "TestCSSNumbersAnswerProductsRekey",
+      "TestCSSNumbersGoOracleKeysTheCompilersEnvGivesGo",
+      "TestCSSNumbersGoOracleRekeyCompiler"
+    ]
+  },
+  "stage1/cohere/cssstrings": {
+    "products": [
+      "TestProduct_CSSStringsGoOracle",
+      "TestProduct_CSSStringsPortLowered",
+      "TestProduct_CSSStringsFastNative"
+    ],
+    "tests": [
+      "TestCSSStringsAnswerProductsRekey",
+      "TestMultiPushGap"
+    ]
+  },
+  "stage1/cohere/estree": {
+    "products": [
+      "TestProduct_AcceptanceCatchLowered",
+      "TestProduct_AcceptanceClassLowered",
+      "TestProduct_AcceptanceOracle"
+    ],
+    "tests": [
+      "TestAcceptanceDiagnosticControl",
+      "TestAcceptanceDiagnostics",
+      "TestAcceptanceGrammar"
+    ]
+  },
+  "stage1/cohere/formatfiles": {
+    "products": [
+      "TestProduct_FormatfilesGoOracle",
+      "TestProduct_FormatfilesNative",
+      "TestProduct_FormatfilesNativeAdamicFilesDeclined"
+    ],
+    "tests": [
+      "TestExtAgreesWithGo"
+    ]
+  },
+  "stage1/cohere/gitignore": {
+    "products": [
+      "TestProduct_GitignoreCorrect",
+      "TestProduct_GitignoreOracle"
+    ],
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestPathAnswersAsGosPathPackage",
+      "TestPortAnswerPreparedUnitPlan"
+    ]
+  },
+  "stage1/cohere/json": {
+    "products": [
+      "TestProduct_JSONGoOracle",
+      "TestProduct_JSONLoweredPort",
+      "TestProduct_JSONUpstreamOracle"
+    ],
+    "tests": [
+      "TestPortMatchesGoCohereClassOrder_000",
+      "TestPortMatchesGoCohereClassOrder_001",
+      "TestPortMatchesGoCohereClassOrder_002"
+    ]
+  },
+  "stage1/cohere/graphql": {
+    "products": [
+      "TestProduct_GraphQLGoOracle"
+    ],
+    "tests": [
+      "TestThePortParsesAsGoCohereDoes",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  "stage1/cohere/graphql/printer": {
+    "products": [
+      "TestProduct_GraphQLPrinterGoOracle",
+      "TestProduct_GraphQLPrinterInTreeLowered",
+      "TestProduct_GraphQLPrinterLowered"
+    ],
+    "tests": [
+      "TestPrinterAsGoCohereWrappers",
+      "TestPrinterAsGoCohere_000",
+      "TestPrinterAsGoCohere_001"
+    ]
+  },
+  "stage1/cohere/lint/helpers": {
+    "products": [
+      "TestProduct_HelperNative",
+      "TestProduct_HelperOracle"
+    ],
+    "tests": [
+      "TestHelperMutants_000",
+      "TestHelperMutants_001",
+      "TestHelperMutants_002"
+    ]
+  },
+  "stage1/cohere/lint": {
+    "products": [
+      "TestProduct_CompilerAgreementLowered",
+      "TestProduct_CompleteSuggestionGoOracle",
+      "TestProduct_CompleteSuggestionLowered"
+    ],
+    "tests": [
+      "TestChildCPUHangGuard",
+      "TestChildCPUWaitGuard",
+      "TestChildWallBackstop"
+    ]
+  },
+  "stage1/cohere/lint/helpers/comments": {
+    "products": [
+      "TestProduct_CommentsNative",
+      "TestProduct_CommentsOracle"
+    ],
+    "tests": [
+      "TestCommentMutants_000",
+      "TestCommentMutants_001",
+      "TestCommentMutants_002"
+    ]
+  },
+  "stage1/cohere/lint/rules/no-underscore-dangle": {
+    "products": [],
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  "stage1/cohere/lint/regex": {
+    "products": [
+      "TestProduct_RegexOracle",
+      "TestProduct_RegexInventory",
+      "TestProduct_RegexOptionDialects"
+    ],
+    "tests": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource"
+    ]
+  },
+  "stage1/cohere/lint/rules/no-unsafe-negation": {
+    "products": [],
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  "stage1/cohere/lint/rules/no-unsafe-optional-chaining": {
+    "products": [],
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  "stage1/cohere/lint/rules/typescript-no-this-alias": {
+    "products": [],
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  "stage1/cohere/markdownblocks": {
+    "products": [
+      "TestProduct_GrainMarkdown_decode_lowered",
+      "TestProduct_GrainMarkdown_mdast_lowered",
+      "TestProduct_GrainMarkdown_path_lowered"
+    ],
+    "tests": [
+      "TestArrayGrowthWitness",
+      "TestFrontMatterStage",
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  "stage1/cohere/mediaquery": {
+    "products": [
+      "TestProduct_MediaQueryGoOracle"
+    ],
+    "tests": [
+      "TestThePortParsesAsGoCohereDoes",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  "stage1/cohere/markdowninline": {
+    "products": [
+      "TestProduct_MarkdownInlineFenceLowered",
+      "TestProduct_MarkdownInlineOriginalLowered",
+      "TestProduct_MarkdownInlineParityLowered"
+    ],
+    "tests": [
+      "TestDelimiterExpressionMatchesNode",
+      "TestMarkdownInline_0000",
+      "TestMarkdownInline_0001"
+    ]
+  },
+  "stage1/cohere/selector": {
+    "products": [
+      "TestProduct_SelectorGoAnswers",
+      "TestProduct_SelectorGoOracle"
+    ],
+    "tests": [
+      "TestPostcssSelectorParserParsesAsGoCohereDoes",
+      "TestThePortParsesAsGoCohereDoes",
+      "TestCorpusKeepsEveryParseableFile"
+    ]
+  },
+  "stage1/cohere/static_single_assignment": {
+    "products": [
+      "TestProduct_StaticSingleAssignmentGoOracle"
+    ],
+    "tests": [
+      "TestThePortMakesWhatGoCohereMakes",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  "stage1/cohere/suppression": {
+    "products": [
+      "TestProduct_SuppressionGoOracle"
+    ],
+    "tests": [
+      "TestThePortParsesAsGoCohereDoes",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  "stage1/cohere/tsprinter": {
+    "products": [
+      "TestProduct_TSPrinterDocumentOracle",
+      "TestProduct_TSPrinterExpressionsLowered",
+      "TestProduct_TSPrinterGoOracle"
+    ],
+    "tests": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestClosedPrefixUpdateValueGap"
+    ]
+  },
+  "stage1/cohere/typeaware": {
+    "products": [
+      "TestProduct_checker_mutant_declaration_source",
+      "TestProduct_corpus_lowered",
+      "TestProduct_corpus_oracle"
+    ],
+    "tests": [
+      "TestFactsDecoderGuards",
+      "TestPinnedTypeFlags",
+      "TestShadowIndexMissingBinding_000"
+    ]
+  },
+  "stage1/cohere/values": {
+    "products": [
+      "TestProduct_ValuesGoOracle"
+    ],
+    "tests": [
+      "TestThePortParsesAsGoCohereDoes",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  "stage1/cohere/yaml": {
+    "products": [
+      "TestProduct_YAMLCSTLowered",
+      "TestProduct_YAMLClosedGapsLowered",
+      "TestProduct_YAMLComposeLowered"
+    ],
+    "tests": [
+      "TestCSTMatchesGo",
+      "TestFormatterMatchesGo_000",
+      "TestFormatterMatchesGo_001"
+    ]
+  },
+  "stage1/typescript/scanner": {
+    "products": [
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProduct_ScannerDecimalSeparator"
+    ],
+    "tests": [
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002"
+    ]
+  },
+  "stage1/typescript/parser": {
+    "products": [
+      "TestProduct_ExpressionsOracle",
+      "TestProduct_ExpressionsSource001",
+      "TestProduct_ExpressionsSource002"
+    ],
+    "tests": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap"
+    ]
+  },
+  "stage3/fixtures": {
+    "products": [
+      "TestProduct_FixtureOracleHook"
+    ],
+    "tests": [
+      "TestExecuteGivesChildrenTheToolchainsCompiler",
+      "TestFixtureDirectoriesHaveTopLevelTests",
+      "TestFixtureOracleProductIgnoresGoCacheLocation"
+    ]
+  }
+}

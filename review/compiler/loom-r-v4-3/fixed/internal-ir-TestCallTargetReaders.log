@@ -1,0 +1,6 @@
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+    call_targets_guard_test.go:51: build go_list_-export__./internal/native_./internal/lower_./internal/fresh_./internal/flow_./internal/leakcheck_listing.json 8f87e5ce1276 hit 0.38
+--- PASS: TestCallTargetReaders (2.64s)
+PASS

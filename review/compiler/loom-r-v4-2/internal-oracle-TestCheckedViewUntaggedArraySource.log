@@ -1,0 +1,43 @@
+=== RUN   TestCheckedViewUntaggedArraySource
+=== PAUSE TestCheckedViewUntaggedArraySource
+=== CONT  TestCheckedViewUntaggedArraySource
+=== RUN   TestCheckedViewUntaggedArraySource/good
+=== PAUSE TestCheckedViewUntaggedArraySource/good
+=== RUN   TestCheckedViewUntaggedArraySource/wrong
+=== PAUSE TestCheckedViewUntaggedArraySource/wrong
+=== RUN   TestCheckedViewUntaggedArraySource/nested
+=== PAUSE TestCheckedViewUntaggedArraySource/nested
+=== RUN   TestCheckedViewUntaggedArraySource/empty
+=== PAUSE TestCheckedViewUntaggedArraySource/empty
+=== RUN   TestCheckedViewUntaggedArraySource/mixed
+=== PAUSE TestCheckedViewUntaggedArraySource/mixed
+=== CONT  TestCheckedViewUntaggedArraySource/good
+    checked_views_v2_source_test.go:217: gate cache node miss
+    checked_views_v2_source_test.go:218: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:234: gate cache node miss
+=== CONT  TestCheckedViewUntaggedArraySource/empty
+    checked_views_v2_source_test.go:217: gate cache node miss
+    checked_views_v2_source_test.go:218: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:234: gate cache node miss
+=== CONT  TestCheckedViewUntaggedArraySource/mixed
+    checked_views_v2_source_test.go:217: gate cache node miss
+    checked_views_v2_source_test.go:218: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:234: gate cache node miss
+=== CONT  TestCheckedViewUntaggedArraySource/nested
+    checked_views_v2_source_test.go:217: gate cache node miss
+    checked_views_v2_source_test.go:218: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:234: gate cache node miss
+=== CONT  TestCheckedViewUntaggedArraySource/wrong
+    checked_views_v2_source_test.go:217: gate cache node miss
+    checked_views_v2_source_test.go:218: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:234: gate cache node miss
+--- PASS: TestCheckedViewUntaggedArraySource (0.00s)
+    --- PASS: TestCheckedViewUntaggedArraySource/good (6.45s)
+    --- PASS: TestCheckedViewUntaggedArraySource/empty (0.48s)
+    --- PASS: TestCheckedViewUntaggedArraySource/mixed (0.42s)
+    --- PASS: TestCheckedViewUntaggedArraySource/nested (0.48s)
+    --- PASS: TestCheckedViewUntaggedArraySource/wrong (0.43s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0

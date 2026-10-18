@@ -1,0 +1,10 @@
+=== RUN   TestProduct_NativeRuntimesRelease0
+=== PAUSE TestProduct_NativeRuntimesRelease0
+=== CONT  TestProduct_NativeRuntimesRelease0
+    runtimes_test.go:45: build native-runtime 280a6c8e47b9 hit 0.14
+    runtimes_test.go:45: build native-runtime 1af25f50192c hit 0.01
+    runtimes_test.go:45: build native-runtime 07935b65b961 hit 0.01
+    runtimes_test.go:45: build native-runtime 2fc013ca3758 hit 0.01
+    runtimes_test.go:45: build native-runtime 323a1f992d05 hit 0.01
+--- PASS: TestProduct_NativeRuntimesRelease0 (4.68s)
+PASS

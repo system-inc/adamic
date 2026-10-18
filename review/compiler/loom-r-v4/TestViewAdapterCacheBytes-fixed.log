@@ -1,0 +1,7 @@
+=== RUN   TestViewAdapterCacheBytes
+=== PAUSE TestViewAdapterCacheBytes
+=== CONT  TestViewAdapterCacheBytes
+    view_adapter_runtime_test.go:266: bytes sanitize=false clean: adamic: counts: allocations 1000 frees 1000 retains 0 releases 1000 peak 1000 regions 0
+    view_adapter_runtime_test.go:266: bytes sanitize=true clean: adamic: counts: allocations 1000 frees 1000 retains 0 releases 1000 peak 1000 regions 0
+--- PASS: TestViewAdapterCacheBytes (0.93s)
+PASS

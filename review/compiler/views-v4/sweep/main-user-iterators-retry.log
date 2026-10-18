@@ -1,0 +1,34 @@
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a
+    counts_test.go:149: native: compiling runtime array_holes.c: exit status 1
+        /home/agent/.cache/adamic/runtime/.build-2044822658/array_holes.c:29:12: error: no member named 'sparse' in 'struct adamic_array'
+           29 |     array->sparse = adamic_map_new(false, references);
+              |     ~~~~~  ^
+        /home/agent/.cache/adamic/runtime/.build-2044822658/array_holes.c:34:16: error: no member named 'sparse' in 'struct adamic_array'
+           34 |     if (array->sparse == NULL) return adamic_array_at(array, index);
+              |         ~~~~~  ^
+        /home/agent/.cache/adamic/runtime/.build-2044822658/array_holes.c:36:34: error: no member named 'sparse' in 'struct adamic_array'
+           36 |     return adamic_map_get(array->sparse, (adamic_value){.number = index});
+              |                           ~~~~~  ^
+        /home/agent/.cache/adamic/runtime/.build-2044822658/array_holes.c:40:16: error: no member named 'sparse' in 'struct adamic_array'
+           40 |     if (array->sparse == NULL) { adamic_array_set(array, index, value); return; }
+              |         ~~~~~  ^
+        /home/agent/.cache/adamic/runtime/.build-2044822658/array_holes.c:45:27: error: no member named 'sparse' in 'struct adamic_array'
+           45 |     adamic_map_set(array->sparse, (adamic_value){.number = index}, value);
+              |                    ~~~~~  ^
+        5 errors generated.
+        
+--- FAIL: TestCountsAreRecorded (0.70s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.02s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/user_iterators.a (0.68s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.712s
+FAIL

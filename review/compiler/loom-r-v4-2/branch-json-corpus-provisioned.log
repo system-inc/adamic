@@ -1,0 +1,6 @@
+=== RUN   TestProduct_JSONPinnedCorpus
+=== PAUSE TestProduct_JSONPinnedCorpus
+=== CONT  TestProduct_JSONPinnedCorpus
+    pinned_repository_corpus_test.go:98: build json pinned corpus: product json pinned corpus holds a path of the machine that built it: repository names /workspace/adamic (the repository). A runner fetches this product and reads it elsewhere, so a product names the tree as <repository> and a product as <build cache>/<name key> (buildcache.Relative, read back with buildcache.Absolute), or keeps the path out of its bytes (#tqrqx60)
+--- FAIL: TestProduct_JSONPinnedCorpus (7.38s)
+FAIL

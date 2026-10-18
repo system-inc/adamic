@@ -1,0 +1,10 @@
+=== RUN   TestV4EscapeAdapterBoundHelperBindRefusal
+=== PAUSE TestV4EscapeAdapterBoundHelperBindRefusal
+=== CONT  TestV4EscapeAdapterBoundHelperBindRefusal
+    checked_views_v4_bind_refusals_test.go:61: gate cache node miss
+    checked_views_v4_bind_refusals_test.go:61: Node succeeds; compiler refuses: /tmp/adamic-gate/TestV4EscapeAdapterBoundHelperBindRefusal3758171860/001/bound-surface.ts:4:193: Adamic 0.1 refuses binding a bound function again; bind once
+--- PASS: TestV4EscapeAdapterBoundHelperBindRefusal (4.01s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

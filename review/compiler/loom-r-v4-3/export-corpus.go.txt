@@ -1,0 +1,18 @@
+package json
+
+import (
+ "os"
+ "path/filepath"
+ "testing"
+)
+
+func TestDiagnosticExportJSONCorpus(t *testing.T) {
+ t.Parallel()
+ cases,_:=jsonTopCorpus(t)
+ input,_:=protocol(cases,make([]answer,len(cases)))
+ directory:=os.Getenv("V4_JSON_MEASURE")
+ if err:=os.MkdirAll(directory,0755);err!=nil {t.Fatal(err)}
+ if err:=os.WriteFile(filepath.Join(directory,"cases.txt"),[]byte(input),0644);err!=nil {t.Fatal(err)}
+ writeJSON(t,filepath.Join(directory,"cases.json"),cases)
+ t.Logf("exported %d cases; protocol bytes %d",len(cases),len(input))
+}

@@ -1,0 +1,6 @@
+{"side": "base", "step": "corpus", "root": "/tmp/adamic-v4-2-base", "command": ["go", "test", "./stage1/cohere/json", "-run", "^TestProduct_JSONPinnedCorpus$", "-count=1", "-json", "-parallel=4", "-timeout=90s"], "exit": 0, "seconds": 6.941}
+{"side": "base", "step": "owners", "root": "/tmp/adamic-v4-2-base", "command": ["go", "test", "./stage1/cohere/json/oracles", "-run", "^TestProduct_", "-count=1", "-json", "-parallel=4", "-timeout=10m"], "exit": 0, "seconds": 24.075}
+{"side": "base", "step": "package", "root": "/tmp/adamic-v4-2-base", "command": ["go", "test", "./stage1/cohere/json", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 307.135}
+{"side": "v4", "step": "corpus", "root": "/tmp/adamic-json-82", "command": ["go", "test", "./stage1/cohere/json", "-run", "^TestProduct_JSONPinnedCorpus$", "-count=1", "-json", "-parallel=4", "-timeout=90s"], "exit": 0, "seconds": 13.865}
+{"side": "v4", "step": "owners", "root": "/tmp/adamic-json-82", "command": ["go", "test", "./stage1/cohere/json/oracles", "-run", "^TestProduct_", "-count=1", "-json", "-parallel=4", "-timeout=10m"], "exit": 0, "seconds": 5.551}
+{"side": "v4", "step": "package", "root": "/tmp/adamic-json-82", "command": ["go", "test", "./stage1/cohere/json", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 341.967}

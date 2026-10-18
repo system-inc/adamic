@@ -1,0 +1,18 @@
+=== RUN   TestV4Lane5FactoryStringLiteral
+=== PAUSE TestV4Lane5FactoryStringLiteral
+=== CONT  TestV4Lane5FactoryStringLiteral
+    checked_views_v4_lane5_test.go:57: gate cache node miss
+    checked_views_v4_lane5_test.go:57: gate cache node miss
+    checked_views_v4_lane5_test.go:57: guard mutant admitted in javascript: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:57: guard mutant admitted in native: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:57: guard mutant admitted in sanitized: exit 0 output "7\n"
+    checked_views_v4_lane5_test.go:59: gate cache node miss
+    checked_views_v4_lane5_test.go:59: gate cache node miss
+    checked_views_v4_lane5_test.go:59: native exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral1511106596/006/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+    checked_views_v4_lane5_test.go:59: sanitized exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral1511106596/006/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+    checked_views_v4_lane5_test.go:59: javascript exit70 at first call: adamic: panic: callable call failed: factory.createStringLiteral at /tmp/adamic-gate/TestV4Lane5FactoryStringLiteral1511106596/006/identity.ts:6:79 argument 3 expected producer string | undefined, view boolean | undefined
+--- PASS: TestV4Lane5FactoryStringLiteral (3.97s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0

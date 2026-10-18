@@ -1,0 +1,24 @@
+=== RUN   TestPrinterAsGoCohere_000
+=== PAUSE TestPrinterAsGoCohere_000
+=== CONT  TestPrinterAsGoCohere_000
+    grain_asgo_test.go:52: build GraphQL_printer_source bacc03ded925 hit 0.09
+    grain_asgo_test.go:61: build lowered_GraphQL_printer 1604f61a467d hit 0.72
+    grain_asgo_test.go:77: build GraphQL_printer_split_native_sanitize=true 082b0e063845 miss 6.39
+    printer_test.go:58: corpus-files: upstream /workspace/adamic/cohere root internal/format/graphql pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 3
+    printer_test.go:63: GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls
+    oracle_product_test.go:44: build go_test_-c_cohere_./internal/format/graphql_oracle 1ec210b747d3 hit 0.00
+    printer_test.go:38: build GraphQL_printer_oracle_outputs 59c36332e70f miss 1.11
+    printer_test.go:38: build GraphQL_printer_oracle_outputs a4419ee4ad5f miss 1.95
+    printer_test.go:38: build GraphQL_printer_oracle_outputs b90c81c5edf9 miss 2.10
+    printer_test.go:38: build GraphQL_printer_oracle_outputs cc8ecef7d74f miss 3.21
+    grain_asgo_test.go:297: union: 14256 unique mode/case ids across 12 shards
+    grain_asgo_test.go:311: setup wall 18.163s
+    grain_asgo_test.go:319: mode defaults, bucket 0 of 3: 1177 cases, defaults/case-000000 to defaults/case-003563
+    grain_asgo_test.go:352: 4 processes, at most 5 at once
+    grain_asgo_test.go:355: JS backend wall 1.928s
+    grain_asgo_test.go:355: Node wall 2.128s
+    grain_asgo_test.go:355: native wall 4.062s
+    grain_asgo_test.go:355: leaks wall 4.223s
+    grain_asgo_test.go:314: own work wall 4.224s
+--- PASS: TestPrinterAsGoCohere_000 (22.39s)
+PASS

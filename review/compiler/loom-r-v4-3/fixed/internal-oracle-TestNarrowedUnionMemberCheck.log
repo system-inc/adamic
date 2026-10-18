@@ -1,0 +1,28 @@
+=== RUN   TestNarrowedUnionMemberCheck
+=== PAUSE TestNarrowedUnionMemberCheck
+=== CONT  TestNarrowedUnionMemberCheck
+=== RUN   TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== PAUSE TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== RUN   TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== CONT  TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+    narrowed_union_test.go:38: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+    narrowed_union_test.go:47: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    narrowed_union_test.go:70: unchecked member mutant caught: exit 1, stdout "", stderr "=================================================================\n==260801==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b41003e0060 at pc 0x564f63090e2d bp 0x7ffe7dbefc50 sp 0x7ffe7dbefc48\nREAD of size 8 at 0x7b41003e0060 thread T0\n    #0 0x564f63090e2c in adamic_string_known_units /adamic-build/runtime/adamic.h:865:14\n    #1 0x564f63090e2c in adamic_string_length /adamic-build/runtime/adamic.h:873:17\n    #2 0x564f63090e2c in adamic_function_2_check /adamic-build/main.c:67:68\n    #3 0x564f63090e2c in main /adamic-build/main.c:93:2\n    #4 0x7f11012d8ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x7f11012d8d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #6 0x564f62faa540 in _start (/tmp/adamic-gate/TestNarrowedUnionMemberChecke4eec87_f2_union_narrow_call.a1425985673/004/program+0x61540)\n\n0x7b41003e0060 is located 8 bytes after 24-byte region [0x7b41003e0040,0x7b41003e0058)\nallocated by thread T0 here:\n    #0 0x564f6304d354 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x564f630a8e7f in adamic_allocate /adamic-runtime/heap.c:250:10\n    #2 0x7f11012d8ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /adamic-build/runtime/adamic.h:865:14 in adamic_string_known_units\nShadow bytes around the buggy address:\n  0x7b41003dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b41003dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b41003dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b41003dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b41003dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7b41003e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa[fa]fa fa fa\n  0x7b41003e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b41003e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b41003e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b41003e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b41003e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==260801==ABORTING\n"
+=== CONT  TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+    narrowed_union_test.go:38: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+    narrowed_union_test.go:47: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    narrowed_union_test.go:70: unchecked member mutant caught: exit 0, stdout "after toText: 1\n", stderr ""
+--- PASS: TestNarrowedUnionMemberCheck (0.00s)
+    --- PASS: TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a (3.53s)
+    --- PASS: TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a (0.55s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0

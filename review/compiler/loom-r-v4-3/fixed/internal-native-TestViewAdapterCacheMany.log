@@ -1,0 +1,7 @@
+=== RUN   TestViewAdapterCacheMany
+=== PAUSE TestViewAdapterCacheMany
+=== CONT  TestViewAdapterCacheMany
+    view_adapter_runtime_test.go:271: many sanitize=false clean: adamic: counts: allocations 10240 frees 10240 retains 8192 releases 12288 peak 8192 regions 0
+    view_adapter_runtime_test.go:271: many sanitize=true clean: adamic: counts: allocations 10240 frees 10240 retains 8192 releases 12288 peak 8192 regions 0
+--- PASS: TestViewAdapterCacheMany (0.89s)
+PASS

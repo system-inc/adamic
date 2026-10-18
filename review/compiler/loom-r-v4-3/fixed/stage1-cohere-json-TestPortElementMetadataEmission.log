@@ -1,0 +1,6 @@
+=== RUN   TestPortElementMetadataEmission
+=== PAUSE TestPortElementMetadataEmission
+=== CONT  TestPortElementMetadataEmission
+    metadata_emission_test.go:21: element metadata: 0 direct stores, 2885 runtime calls; C bytes 2033942
+--- PASS: TestPortElementMetadataEmission (1.24s)
+PASS

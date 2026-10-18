@@ -1,0 +1,9 @@
+=== RUN   TestV4EscapeAdapterUncheckableRefusal
+=== PAUSE TestV4EscapeAdapterUncheckableRefusal
+=== CONT  TestV4EscapeAdapterUncheckableRefusal
+    checked_views_v4_escape_test.go:351: gate cache node miss
+--- PASS: TestV4EscapeAdapterUncheckableRefusal (4.16s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

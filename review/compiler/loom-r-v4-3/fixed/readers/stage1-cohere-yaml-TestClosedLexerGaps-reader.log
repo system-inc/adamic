@@ -1,0 +1,21 @@
+=== RUN   TestClosedLexerGaps
+=== PAUSE TestClosedLexerGaps
+=== CONT  TestClosedLexerGaps
+=== RUN   TestClosedLexerGaps/assignmentValue.ts
+    port_products_test.go:83: build yaml-closed-gaps-lowered 8138ad7b9ec4 miss 0.57
+    port_products_test.go:107: build yaml-closed-gaps-native 8ffe989357da miss 2.45
+=== RUN   TestClosedLexerGaps/dynamicCase.ts
+=== RUN   TestClosedLexerGaps/negativeCase.ts
+=== RUN   TestClosedLexerGaps/stringFallback.ts
+=== RUN   TestClosedLexerGaps/valueConjunction.ts
+=== RUN   TestClosedLexerGaps/prefixIncrement.ts
+=== RUN   TestClosedLexerGaps/emptyAlternative.ts
+--- PASS: TestClosedLexerGaps (3.87s)
+    --- PASS: TestClosedLexerGaps/assignmentValue.ts (3.15s)
+    --- PASS: TestClosedLexerGaps/dynamicCase.ts (0.11s)
+    --- PASS: TestClosedLexerGaps/negativeCase.ts (0.13s)
+    --- PASS: TestClosedLexerGaps/stringFallback.ts (0.11s)
+    --- PASS: TestClosedLexerGaps/valueConjunction.ts (0.12s)
+    --- PASS: TestClosedLexerGaps/prefixIncrement.ts (0.11s)
+    --- PASS: TestClosedLexerGaps/emptyAlternative.ts (0.14s)
+PASS

@@ -5,7 +5,6 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -40,10 +39,6 @@ func TestMixedUnionContractGraph(t *testing.T) {
 	} {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()
-			if strings.Contains(source, "readonly Node[]") {
-				// Array membership needs V3 element-kind metadata and hole-aware reads.
-				t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
-			}
 			l, target, release := mixedUnionLowering(t, source)
 			defer release()
 			node := l.program.Files()[0].Statements.Nodes[0]

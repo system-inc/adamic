@@ -1,0 +1,15 @@
+=== RUN   TestViewCallableProducerCertificateNode
+=== PAUSE TestViewCallableProducerCertificateNode
+=== CONT  TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallableProducerCertificateNode/valid
+=== RUN   TestViewCallableProducerCertificateNode/wrong-arity
+=== RUN   TestViewCallableProducerCertificateNode/wrong-result
+=== RUN   TestViewCallableProducerCertificateNode/optional-absent
+=== RUN   TestViewCallableProducerCertificateNode/unrecorded
+--- PASS: TestViewCallableProducerCertificateNode (0.17s)
+    --- PASS: TestViewCallableProducerCertificateNode/valid (0.04s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-arity (0.03s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-result (0.03s)
+    --- PASS: TestViewCallableProducerCertificateNode/optional-absent (0.04s)
+    --- PASS: TestViewCallableProducerCertificateNode/unrecorded (0.03s)
+PASS

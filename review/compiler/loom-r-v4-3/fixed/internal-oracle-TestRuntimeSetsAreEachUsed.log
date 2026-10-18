@@ -1,0 +1,9 @@
+=== RUN   TestRuntimeSetsAreEachUsed
+=== PAUSE TestRuntimeSetsAreEachUsed
+=== CONT  TestRuntimeSetsAreEachUsed
+    checked_views_v4_runtime_products_test.go:12: gate cache node miss
+--- PASS: TestRuntimeSetsAreEachUsed (4.33s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

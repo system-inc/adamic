@@ -1,0 +1,10 @@
+--- a/internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a
++++ b/internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a
+@@ -3,6 +3,6 @@
+ type EmitHint=number;
+ interface Node {readonly value:number;}
+ interface Base {readonly onEmitNode:unknown;}
+-interface Target {onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;}
++interface Target {readonly onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;}
+ function probe(value:Base):void {const context=value as Target;context.onEmitNode(1,{value:7},(hint:EmitHint,node:Node):void=>{});console.log("done");}
+ probe({onEmitNode:():void=>{}});

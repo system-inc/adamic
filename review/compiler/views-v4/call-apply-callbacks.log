@@ -1,0 +1,34 @@
+=== RUN   TestV4EscapeAdapterCallApplyReceiver
+=== PAUSE TestV4EscapeAdapterCallApplyReceiver
+=== RUN   TestV4EscapeAdapterSurfaceSortCallback
+=== PAUSE TestV4EscapeAdapterSurfaceSortCallback
+=== RUN   TestV4EscapeAdapterSurfaceRegExpCallback
+=== PAUSE TestV4EscapeAdapterSurfaceRegExpCallback
+=== CONT  TestV4EscapeAdapterCallApplyReceiver
+=== CONT  TestV4EscapeAdapterSurfaceRegExpCallback
+=== CONT  TestV4EscapeAdapterSurfaceSortCallback
+=== NAME  TestV4EscapeAdapterCallApplyReceiver
+    checked_views_v4_call_apply_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceRegExpCallback
+    checked_views_v4_call_apply_test.go:112: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: gate cache node miss
+=== NAME  TestV4EscapeAdapterCallApplyReceiver
+    checked_views_v4_call_apply_test.go:77: native sanitized surface counts: [7 7 11 14 5 0]
+=== NAME  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: native sanitized surface counts: [5 5 5 8 5 0]
+=== NAME  TestV4EscapeAdapterCallApplyReceiver
+    checked_views_v4_call_apply_test.go:77: gate cache node miss
+=== NAME  TestV4EscapeAdapterSurfaceSortCallback
+    checked_views_v4_call_apply_test.go:102: gate cache node miss
+--- PASS: TestV4EscapeAdapterCallApplyReceiver (0.58s)
+--- PASS: TestV4EscapeAdapterSurfaceSortCallback (0.61s)
+=== NAME  TestV4EscapeAdapterSurfaceRegExpCallback
+    checked_views_v4_call_apply_test.go:112: native sanitized surface counts: [14 14 17 16 13 0]
+    checked_views_v4_call_apply_test.go:112: gate cache node miss
+--- PASS: TestV4EscapeAdapterSurfaceRegExpCallback (10.45s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	10.461s

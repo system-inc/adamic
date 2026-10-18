@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewArraysNullableArrayMissing
+=== PAUSE TestCheckedViewArraysNullableArrayMissing
+=== CONT  TestCheckedViewArraysNullableArrayMissing
+    checked_views_arrays_test.go:112: gate cache node hit
+    checked_views_arrays_test.go:112: Node: exit=70 stdout="" stderr="adamic: panic: TypeError: Cannot read properties of undefined (reading '0')\n"
+    checked_views_arrays_test.go:112: gate cache node miss
+--- PASS: TestCheckedViewArraysNullableArrayMissing (7.35s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0

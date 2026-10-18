@@ -1,0 +1,11 @@
+=== RUN   TestArrayViewHolesAbsenceMutant
+=== PAUSE TestArrayViewHolesAbsenceMutant
+=== CONT  TestArrayViewHolesAbsenceMutant
+    array_runtime_mutants_test.go:193: gate cache node miss
+    array_runtime_mutants_test.go:200: gate cache node miss
+    array_runtime_mutants_test.go:208: hole absence removed; Node's -1 then 7 rejects both checked-view mutants
+--- PASS: TestArrayViewHolesAbsenceMutant (4.67s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

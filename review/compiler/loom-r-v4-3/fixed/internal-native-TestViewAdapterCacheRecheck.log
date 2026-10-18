@@ -1,0 +1,9 @@
+=== RUN   TestViewAdapterCacheRecheck
+=== PAUSE TestViewAdapterCacheRecheck
+=== CONT  TestViewAdapterCacheRecheck
+    view_adapter_runtime_test.go:169: recheck sanitize=false clean: adamic: counts: allocations 3 frees 3 retains 3 releases 4 peak 3 regions 0
+    view_adapter_runtime_test.go:169: recheck sanitize=true clean: adamic: counts: allocations 3 frees 3 retains 3 releases 4 peak 3 regions 0
+    view_adapter_runtime_test.go:174: skip-recheck caught: factory winner was not rechecked
+        adamic: counts: allocations 3 frees 3 retains 2 releases 3 peak 3 regions 0
+--- PASS: TestViewAdapterCacheRecheck (2.54s)
+PASS

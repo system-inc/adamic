@@ -1,0 +1,6 @@
+=== RUN   TestProduct_Adamic
+=== PAUSE TestProduct_Adamic
+=== CONT  TestProduct_Adamic
+    build_products_test.go:11: build go_build_./cmd/adamic_adamic d73679de5756 hit 0.67
+--- PASS: TestProduct_Adamic (3.30s)
+PASS

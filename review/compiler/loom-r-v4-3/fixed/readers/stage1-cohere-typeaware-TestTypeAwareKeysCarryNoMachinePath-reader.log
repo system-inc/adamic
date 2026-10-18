@@ -1,0 +1,7 @@
+=== RUN   TestTypeAwareKeysCarryNoMachinePath
+=== PAUSE TestTypeAwareKeysCarryNoMachinePath
+=== CONT  TestTypeAwareKeysCarryNoMachinePath
+    typeaware_test.go:366: native: one name key and one declared key (cffa908ccaf4) from two machines
+    typeaware_test.go:366: emitted C: one name key and one declared key (5b0db34db086) from two machines
+--- PASS: TestTypeAwareKeysCarryNoMachinePath (3.41s)
+PASS

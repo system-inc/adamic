@@ -1,0 +1,11 @@
+=== RUN   TestCompilerGaps
+=== PAUSE TestCompilerGaps
+=== CONT  TestCompilerGaps
+=== RUN   TestCompilerGaps/defaultSort
+=== PAUSE TestCompilerGaps/defaultSort
+=== CONT  TestCompilerGaps/defaultSort
+    gaps_test.go:36: Node "im\n"; stage 0 /workspace/adamic/stage1/cohere/tsprinter/gaps/defaultSort.ts:2:1: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]
+--- PASS: TestCompilerGaps (0.00s)
+    --- PASS: TestCompilerGaps/defaultSort (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	0.141s

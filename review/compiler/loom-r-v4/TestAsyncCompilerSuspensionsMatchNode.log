@@ -1,0 +1,6 @@
+=== RUN   TestAsyncCompilerSuspensionsMatchNode
+=== PAUSE TestAsyncCompilerSuspensionsMatchNode
+=== CONT  TestAsyncCompilerSuspensionsMatchNode
+    async_test.go:23: source Node, JavaScript, ASan/UBSan native and leak check agree
+--- PASS: TestAsyncCompilerSuspensionsMatchNode (18.61s)
+PASS

@@ -1,0 +1,80 @@
+=== RUN   TestNativeAgreesWithNode_009
+=== PAUSE TestNativeAgreesWithNode_009
+=== CONT  TestNativeAgreesWithNode_009
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/map_foreach_keep.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/map_foreach_keep.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/library_array_flat.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/json_stringify_indent.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/json_stringify_indent.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/class_inheritance.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/class_inheritance.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/devirtualize_factory.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/devirtualize_factory.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/regexp_replace/throw.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/regexp_replace/throw.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/static_constructor_spread_owned.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/static_constructor_spread_owned.a
+=== RUN   TestNativeAgreesWithNode_009/internal/oracle/testdata/structural_statics_instance.a
+=== PAUSE TestNativeAgreesWithNode_009/internal/oracle/testdata/structural_statics_instance.a
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/map_foreach_keep.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/devirtualize_factory.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/structural_statics_instance.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/static_constructor_spread_owned.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/regexp_replace/throw.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/json_stringify_indent.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_009/internal/oracle/testdata/library_array_flat.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_009 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/map_foreach_keep.a (4.29s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/devirtualize_factory.a (0.96s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/structural_statics_instance.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/static_constructor_spread_owned.a (1.21s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/regexp_replace/throw.a (3.60s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/json_stringify_indent.a (0.55s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/class_inheritance.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode_009/internal/oracle/testdata/library_array_flat.a (0.72s)
+PASS
+gate cache: native hits=8 misses=16
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0

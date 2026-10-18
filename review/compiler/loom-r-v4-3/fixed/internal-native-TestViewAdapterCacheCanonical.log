@@ -1,0 +1,8 @@
+=== RUN   TestViewAdapterCacheCanonical
+=== PAUSE TestViewAdapterCacheCanonical
+=== CONT  TestViewAdapterCacheCanonical
+    view_adapter_runtime_test.go:199: canonical sanitize=false clean: adamic: counts: allocations 3 frees 3 retains 2 releases 3 peak 3 regions 0
+    view_adapter_runtime_test.go:199: canonical sanitize=true clean: adamic: counts: allocations 3 frees 3 retains 2 releases 3 peak 3 regions 0
+    view_adapter_runtime_test.go:208: canonical-factory omission caught by exit 0 instead of required exit 70
+--- PASS: TestViewAdapterCacheCanonical (1.69s)
+PASS

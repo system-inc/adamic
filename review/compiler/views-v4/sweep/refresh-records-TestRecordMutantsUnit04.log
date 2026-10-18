@@ -1,0 +1,9 @@
+=== RUN   TestRecordMutantsUnit04
+=== PAUSE TestRecordMutantsUnit04
+=== CONT  TestRecordMutantsUnit04
+=== RUN   TestRecordMutantsUnit04/stored-key-freed
+    record_test.go:244: caught by AddressSanitizer: heap-use-after-free
+--- PASS: TestRecordMutantsUnit04 (0.97s)
+    --- PASS: TestRecordMutantsUnit04/stored-key-freed (0.97s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.017s

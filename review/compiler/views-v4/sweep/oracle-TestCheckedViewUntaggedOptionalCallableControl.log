@@ -1,0 +1,8 @@
+=== RUN   TestCheckedViewUntaggedOptionalCallableControl
+=== PAUSE TestCheckedViewUntaggedOptionalCallableControl
+=== CONT  TestCheckedViewUntaggedOptionalCallableControl
+    checked_views_v2_source_test.go:114: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a:7:13: Adamic 0.1 refuses an unproven escaping callable read of view.value; prove the producer parameter and result relation before this read, or call the member directly through the view
+--- FAIL: TestCheckedViewUntaggedOptionalCallableControl (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.068s
+FAIL

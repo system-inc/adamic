@@ -1,0 +1,7 @@
+=== RUN   TestJsxAdapterGuardMutant
+=== PAUSE TestJsxAdapterGuardMutant
+=== CONT  TestJsxAdapterGuardMutant
+    comments_test.go:89: build comments-native-mutant-main.ts 274cb1820d0a miss 14.37
+    comments_test.go:265: compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it
+--- PASS: TestJsxAdapterGuardMutant (14.40s)
+PASS

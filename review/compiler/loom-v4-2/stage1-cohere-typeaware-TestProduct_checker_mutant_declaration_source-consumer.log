@@ -1,0 +1,104 @@
+=== RUN   TestProduct_checker_mutant_declaration_source
+=== PAUSE TestProduct_checker_mutant_declaration_source
+=== CONT  TestProduct_checker_mutant_declaration_source
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_checker_mutant_declaration_source (1m30s)
+
+goroutine 71 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x3a1943977208, 0x3a1943953b58)
+	testing/testing.go:2199 +0x123
+testing.runTests({0xf08b0a, 0x1c}, {0xf367f2, 0x34}, 0x3a19436159f8, {0x229b350, 0x29e, 0x29e}, {0xc2abd5fe07a1d41c, 0x14f52c89f7, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x3a1943a39c20)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestMain(0x3a1943a39c20)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/shared_test.go:36 +0xbd
+main.main()
+	_testmain.go:1386 +0xa5
+
+goroutine 8 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x3a194364ebb0, 0x4, 0x3a19437e2360, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x3a194364ebde?, 0x3a194364ed08?, 0x575ceb?, 0x18?, 0x213fd88?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x3a1943867580)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x14?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x3a1943a5a4e0)
+	os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x3a1943a5a4e0)
+	os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x3a1943a5a4e0)
+	os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/buildcache.goProduct.func1({0x3a1943a92320, 0x47})
+	github.com/system-inc/adamic/internal/buildcache/gobuild.go:202 +0x4f2
+github.com/system-inc/adamic/internal/buildcache.relocating.func1({0x3a1943a92320, 0x47})
+	github.com/system-inc/adamic/internal/buildcache/relative.go:194 +0x78
+github.com/system-inc/adamic/internal/buildcache.filled({0x3a1943a448c0, 0x66}, {0x3a19439ea000, 0x71da}, 0x3a194364f828)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:266 +0x249
+github.com/system-inc/adamic/internal/buildcache.get({{0x3a194383e080, 0x3b}, {0x3a1943892f08, 0x1c9, 0x24f}, {0x3a19437e8360, 0x11, 0x12}, {0x3a19439fc7e0, 0x2, ...}}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:209 +0x1405
+github.com/system-inc/adamic/internal/buildcache.Product({0x21c4e20, 0x3a1943977448}, {{0x3a194383e080, 0x3b}, {0x3a1943892f08, 0x1c9, 0x24f}, {0x3a19437e8360, 0x11, 0x12}, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:58 +0x8d
+github.com/system-inc/adamic/internal/buildcache.goProduct({0x21c4e20, 0x3a1943977448}, {{0xee3613, 0x5}, {0x0, 0x0}, {0x3a19439cdb80, 0x1c}, {0xefabcf, 0x15}, ...})
+	github.com/system-inc/adamic/internal/buildcache/gobuild.go:189 +0x796
+github.com/system-inc/adamic/internal/buildcache.GoBuildInMutated({0x21c4e20, 0x3a1943977448}, {0x0, 0x0}, {0x3a19439cdb80, 0x1c}, {0xefabcf, 0x15}, {0x3a1943a7d850, 0x1, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/gobuild.go:70 +0x22d
+github.com/system-inc/adamic/stage1/cohere/typeaware.checkerMutantArchive(0x3a1943977448, {0xef6815, 0x12})
+	github.com/system-inc/adamic/stage1/cohere/typeaware/checker_mutants_test.go:66 +0x295
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestProduct_checker_mutant_declaration_source(0x3a1943977448)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/checker_mutants_test.go:82 +0x2e
+testing.tRunner(0x3a1943977448, 0x21c5578)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 70 [IO wait]:
+internal/poll.runtime_pollWait(0x7fb9b8f0e800, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x3a19436a4480?, 0x3a1943724a00?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x3a19436a4480, {0x3a1943724a00, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x3a1943b820b8, {0x3a1943724a00?, 0x4cf410?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x3a1943858270, {0x21b45a0, 0x3a1943b820b8})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x21b46c0, 0x3a1943858270}, {0x21b45a0, 0x3a1943b820b8}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x3a1943b820b8?, {0x21b46c0?, 0x3a1943858270?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x3a1943b820b8, {0x21b46c0, 0x3a1943858270})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x21b46c0, 0x3a1943858270}, {0x21b4620, 0x3a1943b820b8}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 8
+	os/exec/exec.go:767 +0x92b

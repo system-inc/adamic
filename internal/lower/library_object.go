@@ -47,11 +47,12 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
 	switch name {
 	case "is":
-		for _, argument := range written {
+		for index, argument := range written {
 			value, err := l.expression(argument)
 			if err != nil {
 				return nil, true, err
 			}
+			call.PrimitiveOperands[index] = l.primitiveIdentityType(l.checker.GetTypeAtLocation(argument))
 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
 		}
 	case "isFrozen":

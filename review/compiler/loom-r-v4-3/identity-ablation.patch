@@ -1,0 +1,11 @@
+--- original-program.mjs
++++ identity-ablation.mjs
+@@ -88,7 +88,7 @@
+ const adamicViewAdapterRoots = new WeakMap();
+ const adamicViewAdapterKeys = new Map();
+ const adamicViewAdapterCache = new WeakMap();
+-const adamicViewAdapterUnderlying = value => adamicViewAdapterRoots.get(value) ?? value;
++const adamicViewAdapterUnderlying = value => value !== null && (typeof value === "object" || typeof value === "function") ? (adamicViewAdapterRoots.get(value) ?? value) : value;
+ const adamicViewAdapterKey = id => {
+     if (!adamicViewAdapterKeys.has(id)) adamicViewAdapterKeys.set(id, {});
+     return adamicViewAdapterKeys.get(id);

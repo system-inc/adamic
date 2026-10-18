@@ -1,0 +1,1116 @@
+--- base
+
++++ v4
+
+@@ -36,6 +36,115 @@
+
+ const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
+ const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}); };
+ const adamicWriteField = (object, name, value) => { object[name] = value; adamicFieldReadiness.get(object)?.delete(name); };
++const adamicViewCallableRead = (object, name, expression, method = false) => {
++    let holder = object;
++    if (method && holder !== null && holder !== undefined) {
++        while (!Object.hasOwn(holder, name) && Object.getPrototypeOf(holder) !== null) holder = Object.getPrototypeOf(holder);
++    }
++    const value = adamicReadField(holder, name, expression, false, false, "function");
++    if (adamicTypeOf(value) !== "function") panic("field read failed: " + expression + " is not a function; expected function, found " + (value === null ? "null" : adamicTypeOf(value)));
++    return value;
++};
++const adamicViewCallableCall = (value, receiver, arguments_, method) => method ? value(receiver, ...arguments_) : adamicCall(value, arguments_);
++const adamicViewCallablePreparedRead = (object, name, expression, method, optional, absent, expected) => {
++    let holder = object;
++    if (method && holder !== null && holder !== undefined) {
++        while (!Object.hasOwn(holder, name) && Object.getPrototypeOf(holder) !== null) holder = Object.getPrototypeOf(holder);
++    }
++    return adamicReadField(holder, name, expression, optional, absent, expected);
++};
++const adamicCallableRepresentationCompatible = (from, to, fromMembers = 0, toMembers = 0) => {
++    if (from === 0 || to === 0) return false;
++    if (from !== 10 && to !== 10 && from !== to) return false;
++    if (from !== 10 && to !== 10 && (fromMembers === 0 || toMembers === 0)) return from === to;
++    const given = fromMembers !== 0 || from === 10 ? fromMembers : (1 << from);
++    const wanted = toMembers !== 0 || to === 10 ? toMembers : (1 << to);
++    return given !== 0 && wanted !== 0 && (given & wanted) === given;
++};
++const adamicViewCallableSignaturesMatch = (recorded, expected) => recorded!==undefined && recorded!==null && expected!==undefined && expected!==null && recorded.result!==0 && expected.result!==0 && (expected.result===255 || adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>adamicCallableRepresentationCompatible(expected.parameters[index], value, expected.parameterMasks?.[index], recorded.parameterMasks?.[index]));
++const adamicViewCallableShape = (value, recorded, expected, expression, optional = false) => {
++    if (optional && value === undefined) return undefined;
++    let found = value === null ? "null" : adamicTypeOf(value);
++    if (found === "function") {
++        found = "function with unknown signature";
++        if (recorded !== undefined && recorded !== null && expected !== undefined && expected !== null) {
++            if (recorded.parameters.length !== expected.parameters.length) found = "function with arity " + recorded.parameters.length;
++            else if (recorded.result === 0 || expected.result === 0) found = "function with unknown signature";
++            else if (expected.result !== 255 && !adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) found = "function with incompatible result representation";
++            else if (adamicViewCallableSignaturesMatch(recorded, expected)) return value;
++            else found = "function with incompatible parameter representations";
++        }
++    }
++    const wanted = expected === undefined || expected === null ? "function with known signature" : expected.name;
++    panic("field read failed: " + expression + " expected " + wanted + ", found " + found);
++};
++
++let adamicViewCallSite;
++const adamicViewCallAt = (site, invoke) => {
++    const previous = adamicViewCallSite;
++    adamicViewCallSite = site;
++    try { return invoke(); } finally { adamicViewCallSite = previous; }
++};
++const adamicViewAdapterRoots = new WeakMap();
++const adamicViewAdapterKeys = new Map();
++const adamicViewAdapterCache = new WeakMap();
++const adamicViewAdapterUnderlying = value => adamicViewAdapterRoots.get(value) ?? value;
++const adamicViewAdapterKey = id => {
++    if (!adamicViewAdapterKeys.has(id)) adamicViewAdapterKeys.set(id, {});
++    return adamicViewAdapterKeys.get(id);
++};
++const adamicViewAdapterIntern = (value, key, make) => {
++    const underlying = adamicViewAdapterUnderlying(value);
++    if (underlying === undefined || underlying === null) return underlying;
++    let views = adamicViewAdapterCache.get(underlying);
++    if (views === undefined) { views = new WeakMap(); adamicViewAdapterCache.set(underlying, views); }
++    const held = views.get(key)?.deref();
++    if (held !== undefined) return held;
++    const adapter = make(underlying);
++    adamicViewAdapterRoots.set(adapter, underlying);
++    views.set(key, new WeakRef(adapter));
++    return adapter;
++};
++
++class AdamicViewMap extends Map {
++    constructor(entries = []) { super(); if (entries != null) for (const [key, value] of entries) this.set(key, value); }
++    set(key, value) {
++        const root = adamicViewAdapterUnderlying(key);
++        if (super.has(root)) super.get(root).value = value;
++        else super.set(root, {key: root === 0 ? 0 : key, value});
++        return this;
++    }
++    get(key) { return super.get(adamicViewAdapterUnderlying(key))?.value; }
++    has(key) { return super.has(adamicViewAdapterUnderlying(key)); }
++    delete(key) { return super.delete(adamicViewAdapterUnderlying(key)); }
++    *keys() { for (const entry of super.values()) yield entry.key; }
++    *values() { for (const entry of super.values()) yield entry.value; }
++    *entries() { for (const entry of super.values()) yield [entry.key, entry.value]; }
++    [Symbol.iterator]() { return this.entries(); }
++    forEach(callback, receiver) { super.forEach(entry => callback.call(receiver, entry.value, entry.key, this)); }
++}
++class AdamicViewSet extends Set {
++    #originals;
++    constructor(values = []) { super(); this.#originals = new Map(); if (values != null) for (const value of values) this.add(value); }
++    add(value) {
++        const root = adamicViewAdapterUnderlying(value);
++        if (!super.has(root)) { super.add(root); this.#originals.set(root, root === 0 ? 0 : value); }
++        return this;
++    }
++    has(value) { return super.has(adamicViewAdapterUnderlying(value)); }
++    delete(value) { const root = adamicViewAdapterUnderlying(value); this.#originals.delete(root); return super.delete(root); }
++    clear() { this.#originals.clear(); super.clear(); }
++    *values() { for (const root of super.values()) yield this.#originals.get(root); }
++    keys() { return this.values(); }
++    *entries() { for (const value of this.values()) yield [value, value]; }
++    [Symbol.iterator]() { return this.values(); }
++    forEach(callback, receiver) { super.forEach(root => { const value = this.#originals.get(root); callback.call(receiver, value, value, this); }); }
++}
++
++const adamicCallReceiver = (value, receiver, arguments_) => {
++    if (adamicViewAdapterRoots.has(value)) return value.code(value, arguments_, receiver);
++    return adamicCall(value, value.receiver ? [receiver, ...arguments_] : arguments_);
++};
+ import { createHash as adamicNodeCreateHash } from 'node:crypto';
+ const adamicCollectionIterator = (collection, part) => { const iterator = collection[part](); return { next: new AdamicClosure(() => iterator.next(), []) }; };
+ const adamicJSONValue = (value) => {
+@@ -132,23 +241,23 @@
+
+ 				{
+ 					let local_46_char = local_12_text.slice(local_45_index, (local_45_index + (1)));
+ 					let local_47_code = local_12_text.charCodeAt(local_45_index);
+-					if (((local_46_char === "\"") || (local_46_char === "\\"))) {
++					if (((adamicViewAdapterUnderlying(local_46_char) === adamicViewAdapterUnderlying("\"")) || (adamicViewAdapterUnderlying(local_46_char) === adamicViewAdapterUnderlying("\\")))) {
+ 						{
+ 							local_44_parts.push("\\");
+ 							local_44_parts.push(local_46_char);
+ 						}
+ 					} else {
+-						if ((local_46_char === "\u000a")) {
++						if ((adamicViewAdapterUnderlying(local_46_char) === adamicViewAdapterUnderlying("\u000a"))) {
+ 							{
+ 								local_44_parts.push("\\n");
+ 							}
+ 						} else {
+-							if ((local_46_char === "\u000d")) {
++							if ((adamicViewAdapterUnderlying(local_46_char) === adamicViewAdapterUnderlying("\u000d"))) {
+ 								{
+ 									local_44_parts.push("\\r");
+ 								}
+ 							} else {
+-								if ((local_46_char === "\u0009")) {
++								if ((adamicViewAdapterUnderlying(local_46_char) === adamicViewAdapterUnderlying("\u0009"))) {
+ 									{
+ 										local_44_parts.push("\\t");
+ 									}
+@@ -177,7 +286,7 @@
+
+ }
+ 
+ function function_1_whitespace(local_13_code) {
+-	return ((((((((((((local_13_code >= (9)) && (local_13_code <= (13))) || (local_13_code === (32))) || (local_13_code === (160))) || (local_13_code === (5760))) || ((local_13_code >= (8192)) && (local_13_code <= (8202)))) || (local_13_code === (8232))) || (local_13_code === (8233))) || (local_13_code === (8239))) || (local_13_code === (8287))) || (local_13_code === (12288))) || (local_13_code === (65279)));
++	return ((((((((((((local_13_code >= (9)) && (local_13_code <= (13))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((32)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((160)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((5760)))) || ((local_13_code >= (8192)) && (local_13_code <= (8202)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((8232)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((8233)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((8239)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((8287)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((12288)))) || (adamicViewAdapterUnderlying(local_13_code) === adamicViewAdapterUnderlying((65279))));
+ }
+ 
+ function function_2_digit(local_14_code) {
+@@ -196,7 +305,7 @@
+
+ 					let local_49_start = (local_48_range[(0)] ?? panic("missing character range start"));
+ 					let local_50_end = (local_48_range[(1)] ?? panic("missing character range end"));
+ 					let local_51_stride = (local_48_range[(2)] ?? panic("missing character range stride"));
+-					if ((((local_15_code >= local_49_start) && (local_15_code <= local_50_end)) && (((local_15_code - local_49_start) % local_51_stride) === (0)))) {
++					if ((((local_15_code >= local_49_start) && (local_15_code <= local_50_end)) && (adamicViewAdapterUnderlying(((local_15_code - local_49_start) % local_51_stride)) === adamicViewAdapterUnderlying((0))))) {
+ 						{
+ 							return true;
+ 						}
+@@ -209,29 +318,29 @@
+
+ }
+ 
+ function function_4_nameStart(local_17_code) {
+-	return (((((local_17_code === (36)) || (local_17_code === (95))) || ((local_17_code >= (65)) && (local_17_code <= (90)))) || ((local_17_code >= (97)) && (local_17_code <= (122)))) || ((local_17_code >= (128)) && function_3_inRanges(local_17_code, (ready_0 ? local_0_letters : adamicUnready("letters")))));
++	return (((((adamicViewAdapterUnderlying(local_17_code) === adamicViewAdapterUnderlying((36))) || (adamicViewAdapterUnderlying(local_17_code) === adamicViewAdapterUnderlying((95)))) || ((local_17_code >= (65)) && (local_17_code <= (90)))) || ((local_17_code >= (97)) && (local_17_code <= (122)))) || ((local_17_code >= (128)) && function_3_inRanges(local_17_code, (ready_0 ? local_0_letters : adamicUnready("letters")))));
+ }
+ 
+ function function_5_numericValue(local_18_raw) {
+ 	let local_52_text = (local_18_raw.includes("_") ? local_18_raw.split("_").join("") : local_18_raw);
+ 	let local_53_prefix = local_52_text.slice((0), (2)).toLowerCase();
+-	if ((((local_53_prefix === "0x") || (local_53_prefix === "0o")) || (local_53_prefix === "0b"))) {
+-		{
+-			return Number.parseInt(local_52_text.slice((2)), ((local_53_prefix === "0x") ? (16) : ((local_53_prefix === "0o") ? (8) : (2))));
++	if ((((adamicViewAdapterUnderlying(local_53_prefix) === adamicViewAdapterUnderlying("0x")) || (adamicViewAdapterUnderlying(local_53_prefix) === adamicViewAdapterUnderlying("0o"))) || (adamicViewAdapterUnderlying(local_53_prefix) === adamicViewAdapterUnderlying("0b")))) {
++		{
++			return Number.parseInt(local_52_text.slice((2)), ((adamicViewAdapterUnderlying(local_53_prefix) === adamicViewAdapterUnderlying("0x")) ? (16) : ((adamicViewAdapterUnderlying(local_53_prefix) === adamicViewAdapterUnderlying("0o")) ? (8) : (2))));
+ 		}
+ 	}
+ 	return Number.parseFloat(local_52_text);
+ }
+ 
+ function function_6_separatorsBetweenDigits(local_19_text, local_20_start, local_21_end, local_22_radix) {
+-	let local_54_forbidden = ((local_22_radix === (16)) ? ".X_x" : ".BEO_beo");
++	let local_54_forbidden = ((adamicViewAdapterUnderlying(local_22_radix) === adamicViewAdapterUnderlying((16))) ? ".X_x" : ".BEO_beo");
+ 	{
+ 		let local_55_index = local_20_start;
+ 		temporary_8: for (;;) {
+ 			if (!((local_55_index < local_21_end))) break;
+ 			continue_7: {
+ 				{
+-					if ((local_19_text.charCodeAt(local_55_index) !== (95))) {
++					if ((adamicViewAdapterUnderlying(local_19_text.charCodeAt(local_55_index)) !== adamicViewAdapterUnderlying((95)))) {
+ 						{
+ 							break continue_7;
+ 						}
+@@ -263,25 +372,25 @@
+
+ 	let local_57_op = (local_56_row[(0)] ?? panic("missing width operation"));
+ 	let local_58_out = (local_56_row[(1)] ?? panic("missing width successor"));
+ 	let local_59_arg = (local_56_row[(2)] ?? panic("missing width argument"));
+-	if (((local_57_op === (0)) || (local_57_op === (1)))) {
++	if (((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((0))) || (adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((1))))) {
+ 		{
+ 			let local_60_first = function_8_match(local_24_program, local_58_out, local_26_text, local_27_position);
+ 			return ((local_60_first >= (0)) ? local_60_first : function_8_match(local_24_program, local_59_arg, local_26_text, local_27_position));
+ 		}
+ 	}
+-	if (((local_57_op === (2)) || (local_57_op === (6)))) {
++	if (((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((2))) || (adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((6))))) {
+ 		{
+ 			return function_8_match(local_24_program, local_58_out, local_26_text, local_27_position);
+ 		}
+ 	}
+-	if ((local_57_op === (3))) {
+-		{
+-			if ((((local_59_arg & (4)) !== (0)) && (local_27_position !== (0)))) {
++	if ((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((3)))) {
++		{
++			if (((adamicViewAdapterUnderlying((local_59_arg & (4))) !== adamicViewAdapterUnderlying((0))) && (adamicViewAdapterUnderlying(local_27_position) !== adamicViewAdapterUnderlying((0))))) {
+ 				{
+ 					return (-(1));
+ 				}
+ 			}
+-			if ((((local_59_arg & (8)) !== (0)) && (local_27_position !== local_26_text.length))) {
++			if (((adamicViewAdapterUnderlying((local_59_arg & (8))) !== adamicViewAdapterUnderlying((0))) && (adamicViewAdapterUnderlying(local_27_position) !== adamicViewAdapterUnderlying(local_26_text.length)))) {
+ 				{
+ 					return (-(1));
+ 				}
+@@ -289,21 +398,21 @@
+
+ 			return function_8_match(local_24_program, local_58_out, local_26_text, local_27_position);
+ 		}
+ 	}
+-	if ((local_57_op === (4))) {
++	if ((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((4)))) {
+ 		{
+ 			return local_27_position;
+ 		}
+ 	}
+-	if (((local_57_op === (5)) || (local_27_position >= local_26_text.length))) {
++	if (((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((5))) || (local_27_position >= local_26_text.length))) {
+ 		{
+ 			return (-(1));
+ 		}
+ 	}
+ 	let local_61_code = function_7_mapped(local_26_text.charCodeAt(local_27_position));
+-	let local_62_accepted = ((local_57_op === (9)) || ((local_57_op === (10)) && (local_61_code !== (10))));
+-	if ((local_56_row.length === (4))) {
+-		{
+-			local_62_accepted = (local_61_code === local_56_row[(3)]);
++	let local_62_accepted = ((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((9))) || ((adamicViewAdapterUnderlying(local_57_op) === adamicViewAdapterUnderlying((10))) && (adamicViewAdapterUnderlying(local_61_code) !== adamicViewAdapterUnderlying((10)))));
++	if ((adamicViewAdapterUnderlying(local_56_row.length) === adamicViewAdapterUnderlying((4)))) {
++		{
++			local_62_accepted = (adamicViewAdapterUnderlying(local_61_code) === adamicViewAdapterUnderlying(local_56_row[(3)]));
+ 		}
+ 	} else {
+ 		{
+@@ -390,7 +499,7 @@
+
+ 					if ((local_74_end > local_73_index)) {
+ 						{
+ 							let local_75_found = local_29_text.slice(local_73_index, local_74_end);
+-							local_72_width = (local_72_width + ((function_8_match((ready_7 ? local_7_narrow : adamicUnready("narrow")), (ready_6 ? local_6_narrowStart : adamicUnready("narrowStart")), local_75_found, (0)) === local_75_found.length) ? (1) : (2)));
++							local_72_width = (local_72_width + ((adamicViewAdapterUnderlying(function_8_match((ready_7 ? local_7_narrow : adamicUnready("narrow")), (ready_6 ? local_6_narrowStart : adamicUnready("narrowStart")), local_75_found, (0))) === adamicViewAdapterUnderlying(local_75_found.length)) ? (1) : (2)));
+ 							local_73_index = local_74_end;
+ 							break continue_15;
+ 						}
+@@ -413,11 +522,11 @@
+
+ function function_11_stringifyName(local_30_name) {
+ 	let local_77_pieces = local_30_name.split("/");
+ 	let local_78_base = (local_77_pieces[(local_77_pieces.length - (1))] ?? "");
+-	return (((local_78_base === "package.json") || (local_78_base === "package-lock.json")) || (local_78_base === "composer.json"));
++	return (((adamicViewAdapterUnderlying(local_78_base) === adamicViewAdapterUnderlying("package.json")) || (adamicViewAdapterUnderlying(local_78_base) === adamicViewAdapterUnderlying("package-lock.json"))) || (adamicViewAdapterUnderlying(local_78_base) === adamicViewAdapterUnderlying("composer.json")));
+ }
+ 
+ function function_12_numberText(local_31_raw) {
+-	if ((local_31_raw.length === (1))) {
++	if ((adamicViewAdapterUnderlying(local_31_raw.length) === adamicViewAdapterUnderlying((1)))) {
+ 		{
+ 			return local_31_raw;
+ 		}
+@@ -432,7 +541,7 @@
+
+ 			continue_17: {
+ 				{
+ 					let local_83_char = local_79_value.slice(local_82_index, (local_82_index + (1)));
+-					if (((((local_83_char < "0") || (local_83_char > "9")) && (local_83_char !== ".")) && (!((local_82_index === (0)) && ((local_83_char === "+") || (local_83_char === "-")))))) {
++					if (((((local_83_char < "0") || (local_83_char > "9")) && (adamicViewAdapterUnderlying(local_83_char) !== adamicViewAdapterUnderlying("."))) && (!((adamicViewAdapterUnderlying(local_82_index) === adamicViewAdapterUnderlying((0))) && ((adamicViewAdapterUnderlying(local_83_char) === adamicViewAdapterUnderlying("+")) || (adamicViewAdapterUnderlying(local_83_char) === adamicViewAdapterUnderlying("-"))))))) {
+ 						{
+ 							local_81_decimalPrefix = false;
+ 						}
+@@ -461,7 +570,7 @@
+
+ 							}
+ 						}
+ 					}
+-					local_79_value = (local_79_value.slice((0), local_80_exponent) + ((local_84_tail === "0") ? "" : ("e" + (local_85_negative ? "-" : "") + local_84_tail)));
++					local_79_value = (local_79_value.slice((0), local_80_exponent) + ((adamicViewAdapterUnderlying(local_84_tail) === adamicViewAdapterUnderlying("0")) ? "" : ("e" + (local_85_negative ? "-" : "") + local_84_tail)));
+ 				}
+ 			}
+ 		}
+@@ -509,16 +618,16 @@
+
+ 			continue_23: {
+ 				{
+ 					let local_92_char = local_32_raw.slice(local_91_index, (local_91_index + (1)));
+-					if (((local_92_char === "\\") && ((local_91_index + (1)) < (local_32_raw.length - (1))))) {
++					if (((adamicViewAdapterUnderlying(local_92_char) === adamicViewAdapterUnderlying("\\")) && ((local_91_index + (1)) < (local_32_raw.length - (1))))) {
+ 						{
+ 							let local_93_next = local_32_raw.slice((local_91_index + (1)), (local_91_index + (2)));
+-							if ((local_93_next === "'")) {
++							if ((adamicViewAdapterUnderlying(local_93_next) === adamicViewAdapterUnderlying("'"))) {
+ 								{
+ 									local_90_parts.push(local_93_next);
+ 									local_91_index = (local_91_index + (1));
+ 								}
+ 							} else {
+-								if (((local_93_next === "\"") || (local_93_next === "\\"))) {
++								if (((adamicViewAdapterUnderlying(local_93_next) === adamicViewAdapterUnderlying("\"")) || (adamicViewAdapterUnderlying(local_93_next) === adamicViewAdapterUnderlying("\\")))) {
+ 									{
+ 										local_90_parts.push(local_92_char);
+ 										local_90_parts.push(local_93_next);
+@@ -532,7 +641,7 @@
+
+ 							}
+ 						}
+ 					} else {
+-						if ((local_92_char === "\"")) {
++						if ((adamicViewAdapterUnderlying(local_92_char) === adamicViewAdapterUnderlying("\""))) {
+ 							{
+ 								local_90_parts.push("\\\"");
+ 							}
+@@ -552,11 +661,11 @@
+
+ }
+ 
+ function function_14_unicodeEnd(local_33_text, local_34_start) {
+-	return ((local_33_text.slice(local_34_start, (local_34_start + (1))) === "{") ? (local_33_text.indexOf("}", local_34_start) + (1)) : (local_34_start + (4)));
++	return ((adamicViewAdapterUnderlying(local_33_text.slice(local_34_start, (local_34_start + (1)))) === adamicViewAdapterUnderlying("{")) ? (local_33_text.indexOf("}", local_34_start) + (1)) : (local_34_start + (4)));
+ }
+ 
+ function function_15_unicodeCode(local_35_text, local_36_start, local_37_end) {
+-	return Number.parseInt(((local_35_text.slice(local_36_start, (local_36_start + (1))) === "{") ? local_35_text.slice((local_36_start + (1)), (local_37_end - (1))) : local_35_text.slice(local_36_start, local_37_end)), (16));
++	return Number.parseInt(((adamicViewAdapterUnderlying(local_35_text.slice(local_36_start, (local_36_start + (1)))) === adamicViewAdapterUnderlying("{")) ? local_35_text.slice((local_36_start + (1)), (local_37_end - (1))) : local_35_text.slice(local_36_start, local_37_end)), (16));
+ }
+ 
+ function function_16_cookedTemplate(local_38_raw) {
+@@ -569,7 +678,7 @@
+
+ 			continue_25: {
+ 				{
+ 					let local_97_char = local_94_text.slice(local_96_index, (local_96_index + (1)));
+-					if ((local_97_char !== "\\")) {
++					if ((adamicViewAdapterUnderlying(local_97_char) !== adamicViewAdapterUnderlying("\\"))) {
+ 						{
+ 							local_95_parts.push(local_97_char);
+ 							break continue_25;
+@@ -577,58 +686,58 @@
+
+ 					}
+ 					local_96_index = (local_96_index + (1));
+ 					let local_98_escaped = local_94_text.slice(local_96_index, (local_96_index + (1)));
+-					if ((local_98_escaped === "n")) {
++					if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("n"))) {
+ 						{
+ 							local_95_parts.push("\u000a");
+ 						}
+ 					} else {
+-						if ((local_98_escaped === "r")) {
++						if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("r"))) {
+ 							{
+ 								local_95_parts.push("\u000d");
+ 							}
+ 						} else {
+-							if ((local_98_escaped === "t")) {
++							if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("t"))) {
+ 								{
+ 									local_95_parts.push("\u0009");
+ 								}
+ 							} else {
+-								if ((local_98_escaped === "b")) {
++								if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("b"))) {
+ 									{
+ 										local_95_parts.push("\u0008");
+ 									}
+ 								} else {
+-									if ((local_98_escaped === "f")) {
++									if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("f"))) {
+ 										{
+ 											local_95_parts.push("\u000c");
+ 										}
+ 									} else {
+-										if ((local_98_escaped === "v")) {
++										if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("v"))) {
+ 											{
+ 												local_95_parts.push("\u000b");
+ 											}
+ 										} else {
+-											if ((local_98_escaped === "0")) {
++											if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("0"))) {
+ 												{
+ 													local_95_parts.push("\u0000");
+ 												}
+ 											} else {
+-												if ((((local_98_escaped === "\u000a") || (local_98_escaped === "\u2028")) || (local_98_escaped === "\u2029"))) {
++												if ((((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("\u000a")) || (adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("\u2028"))) || (adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("\u2029")))) {
+ 													{
+ 														break continue_25;
+ 													}
+ 												} else {
+-													if ((local_98_escaped === "x")) {
++													if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("x"))) {
+ 														{
+ 															local_95_parts.push(String.fromCharCode(Number.parseInt(local_94_text.slice((local_96_index + (1)), (local_96_index + (3))), (16))));
+ 															local_96_index = (local_96_index + (2));
+ 														}
+ 													} else {
+-														if ((local_98_escaped === "u")) {
++														if ((adamicViewAdapterUnderlying(local_98_escaped) === adamicViewAdapterUnderlying("u"))) {
+ 															{
+ 																let local_99_end = function_14_unicodeEnd(local_94_text, (local_96_index + (1)));
+ 																let local_100_code = function_15_unicodeCode(local_94_text, (local_96_index + (1)), local_99_end);
+ 																local_96_index = (local_99_end - (1));
+-																if ((((local_100_code >= (55296)) && (local_100_code <= (56319))) && (local_94_text.slice(local_99_end, (local_99_end + (2))) === "\\u"))) {
++																if ((((local_100_code >= (55296)) && (local_100_code <= (56319))) && (adamicViewAdapterUnderlying(local_94_text.slice(local_99_end, (local_99_end + (2)))) === adamicViewAdapterUnderlying("\\u")))) {
+ 																	{
+ 																		let local_101_lowEnd = function_14_unicodeEnd(local_94_text, (local_99_end + (2)));
+ 																		let local_102_low = function_15_unicodeCode(local_94_text, (local_99_end + (2)), local_101_lowEnd);
+@@ -687,33 +796,33 @@
+
+ 				{
+ 					let local_105_char = local_39_text.slice(local_104_index, (local_104_index + (1)));
+ 					let local_106_code = local_39_text.charCodeAt(local_104_index);
+-					if (((local_105_char === "\"") || (local_105_char === "\\"))) {
++					if (((adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\"")) || (adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\\")))) {
+ 						{
+ 							local_103_parts.push("\\");
+ 							local_103_parts.push(local_105_char);
+ 						}
+ 					} else {
+-						if ((local_105_char === "\u000a")) {
++						if ((adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\u000a"))) {
+ 							{
+ 								local_103_parts.push("\\n");
+ 							}
+ 						} else {
+-							if ((local_105_char === "\u000d")) {
++							if ((adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\u000d"))) {
+ 								{
+ 									local_103_parts.push("\\r");
+ 								}
+ 							} else {
+-								if ((local_105_char === "\u0009")) {
++								if ((adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\u0009"))) {
+ 									{
+ 										local_103_parts.push("\\t");
+ 									}
+ 								} else {
+-									if ((local_105_char === "\u0008")) {
++									if ((adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\u0008"))) {
+ 										{
+ 											local_103_parts.push("\\b");
+ 										}
+ 									} else {
+-										if ((local_105_char === "\u000c")) {
++										if ((adamicViewAdapterUnderlying(local_105_char) === adamicViewAdapterUnderlying("\u000c"))) {
+ 											{
+ 												local_103_parts.push("\\f");
+ 											}
+@@ -793,7 +902,7 @@
+
+ 			continue_29: {
+ 				{
+ 					let local_293_piece = (local_290_pieces[local_292_index] ?? "");
+-					if ((local_293_piece === "")) {
++					if ((adamicViewAdapterUnderlying(local_293_piece) === adamicViewAdapterUnderlying(""))) {
+ 						{
+ 							local_291_parts.push("\\");
+ 							local_292_index = (local_292_index + (1));
+@@ -802,7 +911,7 @@
+
+ 						}
+ 					}
+ 					let local_294_char = local_293_piece.slice((0), (1));
+-					local_291_parts.push(((local_294_char === "n") ? "\u000a" : ((local_294_char === "r") ? "\u000d" : ((local_294_char === "t") ? "\u0009" : local_294_char))));
++					local_291_parts.push(((adamicViewAdapterUnderlying(local_294_char) === adamicViewAdapterUnderlying("n")) ? "\u000a" : ((adamicViewAdapterUnderlying(local_294_char) === adamicViewAdapterUnderlying("r")) ? "\u000d" : ((adamicViewAdapterUnderlying(local_294_char) === adamicViewAdapterUnderlying("t")) ? "\u0009" : local_294_char))));
+ 					local_291_parts.push(local_293_piece.slice((1)));
+ 				}
+ 			}
+@@ -843,7 +952,7 @@
+
+ 			{
+ 				let local_133_start = local_118_this["position"];
+ 				let local_134_code = local_118_this["text"].charCodeAt(local_133_start);
+-				if (((local_134_code === (47)) && (local_118_this["text"].charCodeAt((local_133_start + (1))) === (47)))) {
++				if (((adamicViewAdapterUnderlying(local_134_code) === adamicViewAdapterUnderlying((47))) && (adamicViewAdapterUnderlying(local_118_this["text"].charCodeAt((local_133_start + (1)))) === adamicViewAdapterUnderlying((47))))) {
+ 					{
+ 						adamicWriteField(local_118_this, "position", (local_118_this["position"] + (2)));
+ 						temporary_34: for (;;) {
+@@ -857,7 +966,7 @@
+
+ 						local_118_this["comments"].push(({"start": local_133_start, "end": local_118_this["position"], "text": local_118_this["text"].slice(local_133_start, local_118_this["position"]), "line": true}));
+ 					}
+ 				} else {
+-					if (((local_134_code === (47)) && (local_118_this["text"].charCodeAt((local_133_start + (1))) === (42)))) {
++					if (((adamicViewAdapterUnderlying(local_134_code) === adamicViewAdapterUnderlying((47))) && (adamicViewAdapterUnderlying(local_118_this["text"].charCodeAt((local_133_start + (1)))) === adamicViewAdapterUnderlying((42))))) {
+ 						{
+ 							let local_135_end = local_118_this["text"].indexOf("*/", (local_133_start + (2)));
+ 							if ((local_135_end < (0))) {
+@@ -892,7 +1001,7 @@
+
+ }
+ 
+ function function_27_Reader_expect(local_120_this, local_121_char) {
+-	if ((adamicVirtual(local_120_this, 4) !== local_121_char.charCodeAt((0)))) {
++	if ((adamicViewAdapterUnderlying(adamicVirtual(local_120_this, 4)) !== adamicViewAdapterUnderlying(local_121_char.charCodeAt((0))))) {
+ 		{
+ 			throw new Error(adamicVirtual(local_120_this, 2, ("expected '" + local_121_char + "'")));
+ 		}
+@@ -909,7 +1018,7 @@
+
+ 			{
+ 				let local_137_code = (local_122_this["text"].codePointAt(local_122_this["position"]) ?? panic("missing identifier point"));
+ 				let local_138_isStart = function_4_nameStart(local_137_code);
+-				let local_139_continuation = (((!local_138_isStart) && (local_122_this["position"] > local_136_start)) && ((((function_2_digit(local_137_code) < (10)) || (local_137_code === (8204))) || (local_137_code === (8205))) || ((local_137_code >= (128)) && function_3_inRanges(local_137_code, (ready_1 ? local_1_continuations : adamicUnready("continuations"))))));
++				let local_139_continuation = (((!local_138_isStart) && (local_122_this["position"] > local_136_start)) && ((((function_2_digit(local_137_code) < (10)) || (adamicViewAdapterUnderlying(local_137_code) === adamicViewAdapterUnderlying((8204)))) || (adamicViewAdapterUnderlying(local_137_code) === adamicViewAdapterUnderlying((8205)))) || ((local_137_code >= (128)) && function_3_inRanges(local_137_code, (ready_1 ? local_1_continuations : adamicUnready("continuations"))))));
+ 				if (((!local_138_isStart) && (!local_139_continuation))) {
+ 					{
+ 						break temporary_36;
+@@ -931,12 +1040,12 @@
+
+ 	let local_141_position = local_140_start;
+ 	let local_142_base = (10);
+ 	let local_143_prefix = local_124_this["text"].slice(local_141_position, (local_141_position + (2))).toLowerCase();
+-	if ((((local_143_prefix === "0x") || (local_143_prefix === "0o")) || (local_143_prefix === "0b"))) {
+-		{
+-			local_142_base = ((local_143_prefix === "0x") ? (16) : ((local_143_prefix === "0o") ? (8) : (2)));
++	if ((((adamicViewAdapterUnderlying(local_143_prefix) === adamicViewAdapterUnderlying("0x")) || (adamicViewAdapterUnderlying(local_143_prefix) === adamicViewAdapterUnderlying("0o"))) || (adamicViewAdapterUnderlying(local_143_prefix) === adamicViewAdapterUnderlying("0b")))) {
++		{
++			local_142_base = ((adamicViewAdapterUnderlying(local_143_prefix) === adamicViewAdapterUnderlying("0x")) ? (16) : ((adamicViewAdapterUnderlying(local_143_prefix) === adamicViewAdapterUnderlying("0o")) ? (8) : (2)));
+ 			local_141_position = (local_141_position + (2));
+ 			temporary_38: for (;;) {
+-				if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < local_142_base) || (local_124_this["text"].charCodeAt(local_141_position) === (95))))) break;
++				if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < local_142_base) || (adamicViewAdapterUnderlying(local_124_this["text"].charCodeAt(local_141_position)) === adamicViewAdapterUnderlying((95)))))) break;
+ 				continue_37: {
+ 					{
+ 						local_141_position = (local_141_position + (1));
+@@ -947,18 +1056,18 @@
+
+ 	} else {
+ 		{
+ 			temporary_40: for (;;) {
+-				if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < (10)) || (local_124_this["text"].charCodeAt(local_141_position) === (95))))) break;
++				if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < (10)) || (adamicViewAdapterUnderlying(local_124_this["text"].charCodeAt(local_141_position)) === adamicViewAdapterUnderlying((95)))))) break;
+ 				continue_39: {
+ 					{
+ 						local_141_position = (local_141_position + (1));
+ 					}
+ 				}
+ 			}
+-			if ((local_124_this["text"].slice(local_141_position, (local_141_position + (1))) === ".")) {
++			if ((adamicViewAdapterUnderlying(local_124_this["text"].slice(local_141_position, (local_141_position + (1)))) === adamicViewAdapterUnderlying("."))) {
+ 				{
+ 					local_141_position = (local_141_position + (1));
+ 					temporary_42: for (;;) {
+-						if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < (10)) || (local_124_this["text"].charCodeAt(local_141_position) === (95))))) break;
++						if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < (10)) || (adamicViewAdapterUnderlying(local_124_this["text"].charCodeAt(local_141_position)) === adamicViewAdapterUnderlying((95)))))) break;
+ 						continue_41: {
+ 							{
+ 								local_141_position = (local_141_position + (1));
+@@ -976,7 +1085,7 @@
+
+ 						}
+ 					}
+ 					temporary_44: for (;;) {
+-						if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < (10)) || (local_124_this["text"].charCodeAt(local_141_position) === (95))))) break;
++						if (!(((function_2_digit(local_124_this["text"].charCodeAt(local_141_position)) < (10)) || (adamicViewAdapterUnderlying(local_124_this["text"].charCodeAt(local_141_position)) === adamicViewAdapterUnderlying((95)))))) break;
+ 						continue_43: {
+ 							{
+ 								local_141_position = (local_141_position + (1));
+@@ -988,19 +1097,19 @@
+
+ 		}
+ 	}
+ 	let local_144_raw = local_124_this["text"].slice(local_140_start, local_141_position);
+-	if ((!function_6_separatorsBetweenDigits(local_124_this["text"], ((local_142_base === (10)) ? local_140_start : (local_140_start + (2))), local_141_position, local_142_base))) {
++	if ((!function_6_separatorsBetweenDigits(local_124_this["text"], ((adamicViewAdapterUnderlying(local_142_base) === adamicViewAdapterUnderlying((10))) ? local_140_start : (local_140_start + (2))), local_141_position, local_142_base))) {
+ 		{
+ 			throw new Error(adamicVirtual(local_124_this, 2, (ready_2 ? local_2_unexpectedNumericSeparator : adamicUnready("unexpectedNumericSeparator"))));
+ 		}
+ 	}
+ 	let local_145_literal = (local_144_raw.includes("_") ? local_144_raw.split("_").join("") : local_144_raw);
+-	if (((((local_142_base === (10)) && (local_145_literal.length > (1))) && local_145_literal.startsWith("0")) && (function_2_digit(local_145_literal.charCodeAt((1))) < (10)))) {
++	if (((((adamicViewAdapterUnderlying(local_142_base) === adamicViewAdapterUnderlying((10))) && (local_145_literal.length > (1))) && local_145_literal.startsWith("0")) && (function_2_digit(local_145_literal.charCodeAt((1))) < (10)))) {
+ 		{
+ 			throw new Error(adamicVirtual(local_124_this, 2, ("legacy octal literal " + function_0_quoted(local_145_literal))));
+ 		}
+ 	}
+ 	let local_146_exponent = local_145_literal.toLowerCase().indexOf("e");
+-	let local_147_badExponent = (((local_142_base === (10)) && (local_146_exponent >= (0))) && (((local_145_literal.endsWith("e") || local_145_literal.endsWith("E")) || local_145_literal.endsWith("+")) || local_145_literal.endsWith("-")));
++	let local_147_badExponent = (((adamicViewAdapterUnderlying(local_142_base) === adamicViewAdapterUnderlying((10))) && (local_146_exponent >= (0))) && (((local_145_literal.endsWith("e") || local_145_literal.endsWith("E")) || local_145_literal.endsWith("+")) || local_145_literal.endsWith("-")));
+ 	if ((Number.isNaN(function_5_numericValue(local_145_literal)) || local_147_badExponent)) {
+ 		{
+ 			throw new Error(adamicVirtual(local_124_this, 2, ("invalid number " + function_0_quoted(local_145_literal))));
+@@ -1020,21 +1129,21 @@
+
+ 	let local_149_quote = local_125_this["text"].slice(local_148_start, (local_148_start + (1)));
+ 	let local_150_position = (local_148_start + (1));
+ 	temporary_46: for (;;) {
+-		if (!(((local_150_position < local_125_this["text"].length) && (local_125_this["text"].charCodeAt(local_150_position) !== local_149_quote.charCodeAt((0)))))) break;
++		if (!(((local_150_position < local_125_this["text"].length) && (adamicViewAdapterUnderlying(local_125_this["text"].charCodeAt(local_150_position)) !== adamicViewAdapterUnderlying(local_149_quote.charCodeAt((0))))))) break;
+ 		continue_45: {
+ 			{
+ 				let local_151_code = local_125_this["text"].charCodeAt(local_150_position);
+-				if ((local_151_code === (92))) {
++				if ((adamicViewAdapterUnderlying(local_151_code) === adamicViewAdapterUnderlying((92)))) {
+ 					{
+ 						local_150_position = (local_150_position + (1));
+ 					}
+ 				} else {
+-					if (((local_149_quote !== "`") && ((local_151_code === (10)) || (local_151_code === (13))))) {
++					if (((adamicViewAdapterUnderlying(local_149_quote) !== adamicViewAdapterUnderlying("`")) && ((adamicViewAdapterUnderlying(local_151_code) === adamicViewAdapterUnderlying((10))) || (adamicViewAdapterUnderlying(local_151_code) === adamicViewAdapterUnderlying((13)))))) {
+ 						{
+ 							throw new Error(adamicVirtual(local_125_this, 2, "unterminated string"));
+ 						}
+ 					} else {
+-						if (((local_149_quote === "`") && (local_125_this["text"].slice(local_150_position, (local_150_position + (2))) === "${"))) {
++						if (((adamicViewAdapterUnderlying(local_149_quote) === adamicViewAdapterUnderlying("`")) && (adamicViewAdapterUnderlying(local_125_this["text"].slice(local_150_position, (local_150_position + (2)))) === adamicViewAdapterUnderlying("${")))) {
+ 							{
+ 								throw new Error(adamicVirtual(local_125_this, 2, "'TemplateLiteral' with expression is not allowed in JSON"));
+ 							}
+@@ -1047,7 +1156,7 @@
+
+ 	}
+ 	if ((local_150_position >= local_125_this["text"].length)) {
+ 		{
+-			throw new Error(adamicVirtual(local_125_this, 2, ((local_149_quote === "`") ? "unterminated template" : "unterminated string")));
++			throw new Error(adamicVirtual(local_125_this, 2, ((adamicViewAdapterUnderlying(local_149_quote) === adamicViewAdapterUnderlying("`")) ? "unterminated template" : "unterminated string")));
+ 		}
+ 	}
+ 	adamicWriteField(local_125_this, "position", (local_150_position + (1)));
+@@ -1058,23 +1167,23 @@
+
+ 			if (!((local_153_index < (local_152_raw.length - (1))))) break;
+ 			continue_47: {
+ 				{
+-					if ((local_152_raw.charCodeAt(local_153_index) !== (92))) {
++					if ((adamicViewAdapterUnderlying(local_152_raw.charCodeAt(local_153_index)) !== adamicViewAdapterUnderlying((92)))) {
+ 						{
+ 							break continue_47;
+ 						}
+ 					}
+ 					local_153_index = (local_153_index + (1));
+ 					let local_154_char = local_152_raw.slice(local_153_index, (local_153_index + (1)));
+-					if ((((local_154_char >= "1") && (local_154_char <= "9")) || ((local_154_char === "0") && (function_2_digit(local_152_raw.charCodeAt((local_153_index + (1)))) < (10))))) {
++					if ((((local_154_char >= "1") && (local_154_char <= "9")) || ((adamicViewAdapterUnderlying(local_154_char) === adamicViewAdapterUnderlying("0")) && (function_2_digit(local_152_raw.charCodeAt((local_153_index + (1)))) < (10))))) {
+ 						{
+ 							throw new Error(adamicVirtual(local_125_this, 2, "an octal escape in a string"));
+ 						}
+ 					}
+-					if (((local_154_char === "x") || (local_154_char === "u"))) {
+-						{
+-							let local_155_length = ((local_154_char === "x") ? (2) : (4));
++					if (((adamicViewAdapterUnderlying(local_154_char) === adamicViewAdapterUnderlying("x")) || (adamicViewAdapterUnderlying(local_154_char) === adamicViewAdapterUnderlying("u")))) {
++						{
++							let local_155_length = ((adamicViewAdapterUnderlying(local_154_char) === adamicViewAdapterUnderlying("x")) ? (2) : (4));
+ 							let local_156_digitsStart = (local_153_index + (1));
+-							if (((local_154_char === "u") && (local_152_raw.slice((local_153_index + (1)), (local_153_index + (2))) === "{"))) {
++							if (((adamicViewAdapterUnderlying(local_154_char) === adamicViewAdapterUnderlying("u")) && (adamicViewAdapterUnderlying(local_152_raw.slice((local_153_index + (1)), (local_153_index + (2)))) === adamicViewAdapterUnderlying("{")))) {
+ 								{
+ 									let local_157_closing = local_152_raw.indexOf("}", (local_153_index + (2)));
+ 									if ((local_157_closing < (0))) {
+@@ -1084,7 +1193,7 @@
+
+ 									}
+ 									local_156_digitsStart = (local_156_digitsStart + (1));
+ 									local_155_length = (local_157_closing - local_156_digitsStart);
+-									if (((local_155_length === (0)) || (Number.parseInt(local_152_raw.slice(local_156_digitsStart, local_157_closing), (16)) > (1.114111e+06)))) {
++									if (((adamicViewAdapterUnderlying(local_155_length) === adamicViewAdapterUnderlying((0))) || (Number.parseInt(local_152_raw.slice(local_156_digitsStart, local_157_closing), (16)) > (1.114111e+06)))) {
+ 										{
+ 											throw new Error(adamicVirtual(local_125_this, 2, "an invalid \\u{} escape"));
+ 										}
+@@ -1113,7 +1222,7 @@
+
+ 								}
+ 							}
+ 							local_153_index = ((local_156_digitsStart + local_155_length) - (1));
+-							if ((local_152_raw.slice((local_156_digitsStart - (1)), local_156_digitsStart) === "{")) {
++							if ((adamicViewAdapterUnderlying(local_152_raw.slice((local_156_digitsStart - (1)), local_156_digitsStart)) === adamicViewAdapterUnderlying("{"))) {
+ 								{
+ 									local_153_index = (local_153_index + (1));
+ 								}
+@@ -1125,24 +1234,24 @@
+
+ 			local_153_index = (local_153_index + (1));
+ 		}
+ 	}
+-	return adamicVirtual(local_125_this, 1, ((local_149_quote === "`") ? "TemplateLiteral" : "StringLiteral"), local_148_start, local_152_raw, []);
++	return adamicVirtual(local_125_this, 1, ((adamicViewAdapterUnderlying(local_149_quote) === adamicViewAdapterUnderlying("`")) ? "TemplateLiteral" : "StringLiteral"), local_148_start, local_152_raw, []);
+ }
+ 
+ function function_32_Reader_value(local_126_this, local_127_key) {
+ 	let local_159_code = adamicVirtual(local_126_this, 4);
+ 	let local_160_start = local_126_this["position"];
+-	if (((local_159_code === (123)) || (local_159_code === (91)))) {
+-		{
+-			let local_161_object = (local_159_code === (123));
++	if (((adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((123))) || (adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((91))))) {
++		{
++			let local_161_object = (adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((123)));
+ 			adamicWriteField(local_126_this, "position", (local_126_this["position"] + (1)));
+ 			let local_162_children = [];
+ 			let local_163_closer = (local_161_object ? "}" : "]");
+ 			let local_164_closingCode = (local_161_object ? (125) : (93));
+ 			temporary_52: for (;;) {
+-				if (!((adamicVirtual(local_126_this, 4) !== local_164_closingCode))) break;
++				if (!((adamicViewAdapterUnderlying(adamicVirtual(local_126_this, 4)) !== adamicViewAdapterUnderlying(local_164_closingCode)))) break;
+ 				continue_51: {
+ 					{
+-						if (((!local_161_object) && (adamicVirtual(local_126_this, 4) === (44)))) {
++						if (((!local_161_object) && (adamicViewAdapterUnderlying(adamicVirtual(local_126_this, 4)) === adamicViewAdapterUnderlying((44))))) {
+ 							{
+ 								adamicWriteField(local_126_this, "position", (local_126_this["position"] + (1)));
+ 								local_162_children.push(adamicVirtual(local_126_this, 1, "Hole", (local_126_this["position"] - (1)), "", []));
+@@ -1152,13 +1261,13 @@
+
+ 						if (local_161_object) {
+ 							{
+ 								let local_165_propertyStart = local_126_this["position"];
+-								if ((adamicVirtual(local_126_this, 4) === (91))) {
++								if ((adamicViewAdapterUnderlying(adamicVirtual(local_126_this, 4)) === adamicViewAdapterUnderlying((91)))) {
+ 									{
+ 										throw new Error(adamicVirtual(local_126_this, 2, "Computed key is not allowed in JSON"));
+ 									}
+ 								}
+ 								let local_166_propertyKey = adamicVirtual(local_126_this, 10, true);
+-								if ((adamicVirtual(local_126_this, 4) !== (58))) {
++								if ((adamicViewAdapterUnderlying(adamicVirtual(local_126_this, 4)) !== adamicViewAdapterUnderlying((58)))) {
+ 									{
+ 										throw new Error(adamicVirtual(local_126_this, 2, "Shorthand property is not allowed in JSON"));
+ 									}
+@@ -1172,7 +1281,7 @@
+
+ 								local_162_children.push(adamicVirtual(local_126_this, 10, false));
+ 							}
+ 						}
+-						if ((adamicVirtual(local_126_this, 4) === (44))) {
++						if ((adamicViewAdapterUnderlying(adamicVirtual(local_126_this, 4)) === adamicViewAdapterUnderlying((44)))) {
+ 							{
+ 								adamicWriteField(local_126_this, "position", (local_126_this["position"] + (1)));
+ 								break continue_51;
+@@ -1187,18 +1296,18 @@
+
+ 			return adamicVirtual(local_126_this, 1, (local_161_object ? "ObjectExpression" : "ArrayExpression"), local_160_start, "", local_162_children);
+ 		}
+ 	}
+-	if ((((local_159_code === (34)) || (local_159_code === (39))) || (local_159_code === (96)))) {
++	if ((((adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((34))) || (adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((39)))) || (adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((96))))) {
+ 		{
+ 			return adamicVirtual(local_126_this, 9);
+ 		}
+ 	}
+-	if (((!local_127_key) && ((local_159_code === (43)) || (local_159_code === (45))))) {
+-		{
+-			let local_168_char = ((local_159_code === (43)) ? "+" : "-");
++	if (((!local_127_key) && ((adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((43))) || (adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((45)))))) {
++		{
++			let local_168_char = ((adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((43))) ? "+" : "-");
+ 			adamicWriteField(local_126_this, "position", (local_126_this["position"] + (1)));
+ 			let local_169_argument = adamicVirtual(local_126_this, 10, false);
+ 			let local_170_node = adamicVirtual(local_126_this, 0, local_169_argument);
+-			if (((local_170_node["kind"] !== "NumericLiteral") && (!((local_170_node["kind"] === "Identifier") && ((local_170_node["raw"] === "Infinity") || (local_170_node["raw"] === "NaN")))))) {
++			if (((adamicViewAdapterUnderlying(local_170_node["kind"]) !== adamicViewAdapterUnderlying("NumericLiteral")) && (!((adamicViewAdapterUnderlying(local_170_node["kind"]) === adamicViewAdapterUnderlying("Identifier")) && ((adamicViewAdapterUnderlying(local_170_node["raw"]) === adamicViewAdapterUnderlying("Infinity")) || (adamicViewAdapterUnderlying(local_170_node["raw"]) === adamicViewAdapterUnderlying("NaN"))))))) {
+ 				{
+ 					throw new Error(adamicVirtual(local_126_this, 2, ("Operator '" + local_168_char + "' before '" + local_170_node["kind"] + "' is not allowed in JSON")));
+ 				}
+@@ -1206,13 +1315,13 @@
+
+ 			return adamicVirtual(local_126_this, 1, "UnaryExpression", local_160_start, local_168_char, [local_169_argument]);
+ 		}
+ 	}
+-	if (((local_159_code === (46)) || ((local_159_code >= (48)) && (local_159_code <= (57))))) {
++	if (((adamicViewAdapterUnderlying(local_159_code) === adamicViewAdapterUnderlying((46))) || ((local_159_code >= (48)) && (local_159_code <= (57))))) {
+ 		{
+ 			return adamicVirtual(local_126_this, 8);
+ 		}
+ 	}
+ 	let local_171_name = adamicVirtual(local_126_this, 6);
+-	if ((local_171_name === "")) {
++	if ((adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying(""))) {
+ 		{
+ 			throw new Error(adamicVirtual(local_126_this, 7));
+ 		}
+@@ -1222,12 +1331,12 @@
+
+ 			return adamicVirtual(local_126_this, 1, "Identifier", local_160_start, local_171_name, []);
+ 		}
+ 	}
+-	if ((((local_171_name === "null") || (local_171_name === "true")) || (local_171_name === "false"))) {
+-		{
+-			return adamicVirtual(local_126_this, 1, ((local_171_name === "null") ? "NullLiteral" : "BooleanLiteral"), local_160_start, local_171_name, []);
+-		}
+-	}
+-	if ((((local_171_name === "NaN") || (local_171_name === "Infinity")) || (local_171_name === "undefined"))) {
++	if ((((adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("null")) || (adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("true"))) || (adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("false")))) {
++		{
++			return adamicVirtual(local_126_this, 1, ((adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("null")) ? "NullLiteral" : "BooleanLiteral"), local_160_start, local_171_name, []);
++		}
++	}
++	if ((((adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("NaN")) || (adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("Infinity"))) || (adamicViewAdapterUnderlying(local_171_name) === adamicViewAdapterUnderlying("undefined")))) {
+ 		{
+ 			return adamicVirtual(local_126_this, 1, "Identifier", local_160_start, local_171_name, []);
+ 		}
+@@ -1310,7 +1419,7 @@
+
+ 							continue_57: {
+ 								{
+ 									let local_249_node = adamicVirtual(local_175_this["reader"], 0, local_248_index);
+-									if ((((((local_249_node["kind"] === "ObjectExpression") || (local_249_node["kind"] === "ArrayExpression")) && (local_249_node["start"] < local_245_comment["start"])) && (local_249_node["end"] > local_245_comment["end"])) && ((local_249_node["end"] - local_249_node["start"]) < local_247_span))) {
++									if ((((((adamicViewAdapterUnderlying(local_249_node["kind"]) === adamicViewAdapterUnderlying("ObjectExpression")) || (adamicViewAdapterUnderlying(local_249_node["kind"]) === adamicViewAdapterUnderlying("ArrayExpression"))) && (local_249_node["start"] < local_245_comment["start"])) && (local_249_node["end"] > local_245_comment["end"])) && ((local_249_node["end"] - local_249_node["start"]) < local_247_span))) {
+ 										{
+ 											local_246_container = local_248_index;
+ 											local_247_span = (local_249_node["end"] - local_249_node["start"]);
+@@ -1399,12 +1508,12 @@
+
+ 			}
+ 		}
+ 	}
+-	if ((local_177_this["reader"]["text"].slice(local_256_index, (local_256_index + (2))) === "\u000d\u000a")) {
++	if ((adamicViewAdapterUnderlying(local_177_this["reader"]["text"].slice(local_256_index, (local_256_index + (2)))) === adamicViewAdapterUnderlying("\u000d\u000a"))) {
+ 		{
+ 			local_256_index = (local_256_index + (1));
+ 		}
+ 	}
+-	if ((local_177_this["reader"]["text"].slice(local_256_index, (local_256_index + (1))) !== "\u000a")) {
++	if ((adamicViewAdapterUnderlying(local_177_this["reader"]["text"].slice(local_256_index, (local_256_index + (1)))) !== adamicViewAdapterUnderlying("\u000a"))) {
+ 		{
+ 			return false;
+ 		}
+@@ -1418,28 +1527,28 @@
+
+ 			}
+ 		}
+ 	}
+-	return (local_177_this["reader"]["text"].slice(local_256_index, (local_256_index + (1))) === "\u000a");
++	return (adamicViewAdapterUnderlying(local_177_this["reader"]["text"].slice(local_256_index, (local_256_index + (1)))) === adamicViewAdapterUnderlying("\u000a"));
+ }
+ 
+ function function_38_Printer_print(local_179_this, local_180_index, local_181_key) {
+ 	let local_257_node = adamicVirtual(local_179_this["reader"], 0, local_180_index);
+ 	let local_258_documents = local_179_this["docs"];
+ 	let local_259_result = 0;
+-	if ((local_257_node["kind"] === "ObjectProperty")) {
++	if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("ObjectProperty"))) {
+ 		{
+ 			let local_260_left = adamicVirtual(local_179_this, 2, (local_257_node["children"][(0)] ?? panic("missing key")), true);
+ 			let local_261_right = adamicVirtual(local_179_this, 2, (local_257_node["children"][(1)] ?? panic("missing value")), false);
+ 			local_259_result = adamicVirtual(local_258_documents, 5, adamicVirtual(local_258_documents, 2, [local_260_left, adamicVirtual(local_258_documents, 1, ": "), local_261_right]), false);
+ 		}
+ 	} else {
+-		if ((local_257_node["kind"] === "UnaryExpression")) {
++		if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("UnaryExpression"))) {
+ 			{
+-				local_259_result = adamicVirtual(local_258_documents, 2, [adamicVirtual(local_258_documents, 1, ((local_179_this["stringify"] && (local_257_node["raw"] === "+")) ? "" : local_257_node["raw"])), adamicVirtual(local_179_this, 2, (local_257_node["children"][(0)] ?? panic("missing argument")), false)]);
++				local_259_result = adamicVirtual(local_258_documents, 2, [adamicVirtual(local_258_documents, 1, ((local_179_this["stringify"] && (adamicViewAdapterUnderlying(local_257_node["raw"]) === adamicViewAdapterUnderlying("+"))) ? "" : local_257_node["raw"])), adamicVirtual(local_179_this, 2, (local_257_node["children"][(0)] ?? panic("missing argument")), false)]);
+ 			}
+ 		} else {
+-			if (((local_257_node["kind"] === "ArrayExpression") || (local_257_node["kind"] === "ObjectExpression"))) {
++			if (((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("ArrayExpression")) || (adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("ObjectExpression")))) {
+ 				{
+-					let local_262_object = (local_257_node["kind"] === "ObjectExpression");
++					let local_262_object = (adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("ObjectExpression"));
+ 					let local_263_open = (local_262_object ? "{" : "[");
+ 					let local_264_close = (local_262_object ? "}" : "]");
+ 					let local_265_parts = [];
+@@ -1455,12 +1564,12 @@
+
+ 								let local_269_child = temporary_69;
+ 								{
+ 									let local_270_item = adamicVirtual(local_179_this["reader"], 0, local_269_child);
+-									if (((local_270_item["kind"] !== "NumericLiteral") && (!((local_270_item["kind"] === "UnaryExpression") && (adamicVirtual(local_179_this["reader"], 0, (local_270_item["children"][(0)] ?? panic("missing signed number")))["kind"] === "NumericLiteral"))))) {
++									if (((adamicViewAdapterUnderlying(local_270_item["kind"]) !== adamicViewAdapterUnderlying("NumericLiteral")) && (!((adamicViewAdapterUnderlying(local_270_item["kind"]) === adamicViewAdapterUnderlying("UnaryExpression")) && (adamicViewAdapterUnderlying(adamicVirtual(local_179_this["reader"], 0, (local_270_item["children"][(0)] ?? panic("missing signed number")))["kind"]) === adamicViewAdapterUnderlying("NumericLiteral")))))) {
+ 										{
+ 											local_266_concise = false;
+ 										}
+ 									}
+-									if (((((local_270_item["kind"] !== "ObjectExpression") && (local_270_item["kind"] !== "ArrayExpression")) || (local_270_item["children"].length <= (1))) || ((local_268_previousKind !== "") && (local_270_item["kind"] !== local_268_previousKind)))) {
++									if (((((adamicViewAdapterUnderlying(local_270_item["kind"]) !== adamicViewAdapterUnderlying("ObjectExpression")) && (adamicViewAdapterUnderlying(local_270_item["kind"]) !== adamicViewAdapterUnderlying("ArrayExpression"))) || (local_270_item["children"].length <= (1))) || ((adamicViewAdapterUnderlying(local_268_previousKind) !== adamicViewAdapterUnderlying("")) && (adamicViewAdapterUnderlying(local_270_item["kind"]) !== adamicViewAdapterUnderlying(local_268_previousKind))))) {
+ 										{
+ 											local_267_sameNested = false;
+ 										}
+@@ -1537,13 +1646,13 @@
+
+ 							}
+ 						}
+ 					}
+-					if (((local_257_node["children"].length === (0)) && ((local_265_parts.length === (0)) || ((!local_271_broken) && (local_265_parts.length > (0)))))) {
++					if (((adamicViewAdapterUnderlying(local_257_node["children"].length) === adamicViewAdapterUnderlying((0))) && ((adamicViewAdapterUnderlying(local_265_parts.length) === adamicViewAdapterUnderlying((0))) || ((!local_271_broken) && (local_265_parts.length > (0)))))) {
+ 						{
+ 							local_259_result = adamicVirtual(local_258_documents, 2, [adamicVirtual(local_258_documents, 1, local_263_open), adamicVirtual(local_258_documents, 2, local_265_parts), adamicVirtual(local_258_documents, 1, local_264_close)]);
+ 						}
+ 					} else {
+ 						{
+-							if (((((!local_262_object) && (!local_179_this["stringify"])) && (local_257_node["children"].length > (0))) && (adamicVirtual(local_179_this["reader"], 0, (local_257_node["children"][(local_257_node["children"].length - (1))] ?? panic("missing last element")))["kind"] === "Hole"))) {
++							if (((((!local_262_object) && (!local_179_this["stringify"])) && (local_257_node["children"].length > (0))) && (adamicViewAdapterUnderlying(adamicVirtual(local_179_this["reader"], 0, (local_257_node["children"][(local_257_node["children"].length - (1))] ?? panic("missing last element")))["kind"]) === adamicViewAdapterUnderlying("Hole")))) {
+ 								{
+ 									local_265_parts.push(adamicVirtual(local_258_documents, 1, ","));
+ 								}
+@@ -1555,30 +1664,30 @@
+
+ 					}
+ 				}
+ 			} else {
+-				if ((local_257_node["kind"] === "StringLiteral")) {
++				if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("StringLiteral"))) {
+ 					{
+ 						local_259_result = adamicVirtual(local_258_documents, 1, function_13_stringText(local_257_node["raw"]));
+ 					}
+ 				} else {
+-					if ((local_257_node["kind"] === "NumericLiteral")) {
++					if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("NumericLiteral"))) {
+ 						{
+ 							let local_279_raw = (local_179_this["stringify"] ? local_257_node["raw"] : function_12_numberText(local_257_node["raw"]));
+ 							let local_280_canonical = (local_181_key ? String(function_5_numericValue(local_257_node["raw"])) : "");
+-							let local_281_numericKey = (local_181_key && (local_179_this["stringify"] ? (local_280_canonical === local_257_node["raw"]) : ((((((local_280_canonical === local_279_raw) && (!local_279_raw.includes("e"))) && (!local_279_raw.startsWith("0x"))) && (!local_279_raw.startsWith("0o"))) && (!local_279_raw.startsWith("0b"))) && (!local_279_raw.includes("_")))));
++							let local_281_numericKey = (local_181_key && (local_179_this["stringify"] ? (adamicViewAdapterUnderlying(local_280_canonical) === adamicViewAdapterUnderlying(local_257_node["raw"])) : ((((((adamicViewAdapterUnderlying(local_280_canonical) === adamicViewAdapterUnderlying(local_279_raw)) && (!local_279_raw.includes("e"))) && (!local_279_raw.startsWith("0x"))) && (!local_279_raw.startsWith("0o"))) && (!local_279_raw.startsWith("0b"))) && (!local_279_raw.includes("_")))));
+ 							local_259_result = adamicVirtual(local_258_documents, 1, (local_281_numericKey ? ("\"" + String((local_179_this["stringify"] ? local_279_raw : function_5_numericValue(local_257_node["raw"]))) + "\"") : local_279_raw));
+ 						}
+ 					} else {
+-						if ((local_257_node["kind"] === "Identifier")) {
++						if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("Identifier"))) {
+ 							{
+ 								local_259_result = adamicVirtual(local_258_documents, 1, (local_181_key ? ("\"" + local_257_node["raw"] + "\"") : local_257_node["raw"]));
+ 							}
+ 						} else {
+-							if ((local_257_node["kind"] === "Hole")) {
++							if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("Hole"))) {
+ 								{
+ 									local_259_result = adamicVirtual(local_258_documents, 1, (local_179_this["stringify"] ? "null" : ""));
+ 								}
+ 							} else {
+-								if ((local_257_node["kind"] === "TemplateLiteral")) {
++								if ((adamicViewAdapterUnderlying(local_257_node["kind"]) === adamicViewAdapterUnderlying("TemplateLiteral"))) {
+ 									{
+ 										local_259_result = adamicVirtual(local_258_documents, 1, (local_179_this["stringify"] ? function_17_jsonQuote(function_16_cookedTemplate(local_257_node["raw"])) : local_257_node["raw"]));
+ 									}
+@@ -1594,7 +1703,7 @@
+
+ 			}
+ 		}
+ 	}
+-	if (((!local_179_this["hasComments"]) || (((local_179_this["leading"][local_180_index] ?? panic("missing comment list")).length === (0)) && ((local_179_this["trailing"][local_180_index] ?? panic("missing comment list")).length === (0))))) {
++	if (((!local_179_this["hasComments"]) || ((adamicViewAdapterUnderlying((local_179_this["leading"][local_180_index] ?? panic("missing comment list")).length) === adamicViewAdapterUnderlying((0))) && (adamicViewAdapterUnderlying((local_179_this["trailing"][local_180_index] ?? panic("missing comment list")).length) === adamicViewAdapterUnderlying((0)))))) {
+ 		{
+ 			return local_259_result;
+ 		}
+@@ -1666,7 +1775,7 @@
+
+ 
+ function function_41_Documents_add(local_185_this, local_186_kind, local_187_text, local_188_parts, local_189_broken) {
+ 	let local_214_mustBreak = local_189_broken;
+-	if ((local_186_kind !== "line")) {
++	if ((adamicViewAdapterUnderlying(local_186_kind) !== adamicViewAdapterUnderlying("line"))) {
+ 		{
+ 			{
+ 				const temporary_86 = local_188_parts;
+@@ -1728,9 +1837,9 @@
+
+ 		if (!((local_217_remainingWidth >= (0)))) break;
+ 		continue_89: {
+ 			{
+-				if ((local_218_stack.length === (0))) {
++				if ((adamicViewAdapterUnderlying(local_218_stack.length) === adamicViewAdapterUnderlying((0)))) {
+ 					{
+-						if ((local_219_restIndex === (0))) {
++						if ((adamicViewAdapterUnderlying(local_219_restIndex) === adamicViewAdapterUnderlying((0)))) {
+ 							{
+ 								return true;
+ 							}
+@@ -1742,17 +1851,17 @@
+
+ 				}
+ 				let local_220_command = (local_218_stack.pop() ?? panic("missing fit command"));
+ 				let local_221_node = adamicVirtual(local_206_this, 7, local_220_command["doc"]);
+-				if ((local_221_node["kind"] === "suffix")) {
++				if ((adamicViewAdapterUnderlying(local_221_node["kind"]) === adamicViewAdapterUnderlying("suffix"))) {
+ 					{
+ 						break continue_89;
+ 					}
+ 				}
+-				if ((local_221_node["kind"] === "text")) {
++				if ((adamicViewAdapterUnderlying(local_221_node["kind"]) === adamicViewAdapterUnderlying("text"))) {
+ 					{
+ 						local_217_remainingWidth = (local_217_remainingWidth - local_221_node["width"]);
+ 					}
+ 				} else {
+-					if ((local_221_node["kind"] === "line")) {
++					if ((adamicViewAdapterUnderlying(local_221_node["kind"]) === adamicViewAdapterUnderlying("line"))) {
+ 						{
+ 							if (((!local_220_command["flat"]) || local_221_node["broken"])) {
+ 								{
+@@ -1763,12 +1872,12 @@
+
+ 						}
+ 					} else {
+ 						{
+-							if ((((local_221_node["kind"] === "group") && local_210_mustFlat) && local_221_node["broken"])) {
++							if ((((adamicViewAdapterUnderlying(local_221_node["kind"]) === adamicViewAdapterUnderlying("group")) && local_210_mustFlat) && local_221_node["broken"])) {
+ 								{
+ 									return false;
+ 								}
+ 							}
+-							let local_222_flat = (((local_221_node["kind"] === "group") && local_221_node["broken"]) ? false : local_220_command["flat"]);
++							let local_222_flat = (((adamicViewAdapterUnderlying(local_221_node["kind"]) === adamicViewAdapterUnderlying("group")) && local_221_node["broken"]) ? false : local_220_command["flat"]);
+ 							{
+ 								let local_223_index = (local_221_node["parts"].length - (1));
+ 								temporary_92: for (;;) {
+@@ -1803,9 +1912,9 @@
+
+ 			{
+ 				let local_230_command = (local_224_stack.pop() ?? panic("missing print command"));
+ 				let local_231_node = adamicVirtual(local_211_this, 7, local_230_command["doc"]);
+-				if ((local_231_node["kind"] === "text")) {
++				if ((adamicViewAdapterUnderlying(local_231_node["kind"]) === adamicViewAdapterUnderlying("text"))) {
+ 					{
+-						if (((local_231_node["text"] !== "") && (local_227_pendingIndent > (0)))) {
++						if (((adamicViewAdapterUnderlying(local_231_node["text"]) !== adamicViewAdapterUnderlying("")) && (local_227_pendingIndent > (0)))) {
+ 							{
+ 								temporary_96: for (;;) {
+ 									if (!((local_228_indentation.length <= local_227_pendingIndent))) break;
+@@ -1823,12 +1932,12 @@
+
+ 						local_226_column = (local_226_column + local_231_node["width"]);
+ 					}
+ 				} else {
+-					if ((local_231_node["kind"] === "suffix")) {
++					if ((adamicViewAdapterUnderlying(local_231_node["kind"]) === adamicViewAdapterUnderlying("suffix"))) {
+ 						{
+ 							local_229_suffixes.push(({"doc": adamicVirtual(local_211_this, 2, local_231_node["parts"]), "indent": local_230_command["indent"], "flat": local_230_command["flat"], "offset": (0)}));
+ 						}
+ 					} else {
+-						if ((local_231_node["kind"] === "line")) {
++						if ((adamicViewAdapterUnderlying(local_231_node["kind"]) === adamicViewAdapterUnderlying("line"))) {
+ 							{
+ 								if (((local_229_suffixes.length > (0)) && ((!local_230_command["flat"]) || local_231_node["broken"]))) {
+ 									{
+@@ -1858,7 +1967,7 @@
+
+ 								}
+ 							}
+ 						} else {
+-							if ((local_231_node["kind"] === "group")) {
++							if ((adamicViewAdapterUnderlying(local_231_node["kind"]) === adamicViewAdapterUnderlying("group"))) {
+ 								{
+ 									let local_232_child = (local_231_node["parts"][(0)] ?? panic("missing group child"));
+ 									let local_233_candidate = ({"doc": local_232_child, "indent": local_230_command["indent"], "flat": true, "offset": (0)});
+@@ -1866,7 +1975,7 @@
+
+ 									local_224_stack.push(({"doc": local_232_child, "indent": local_230_command["indent"], "flat": local_234_flat, "offset": (0)}));
+ 								}
+ 							} else {
+-								if ((local_231_node["kind"] === "fill")) {
++								if ((adamicViewAdapterUnderlying(local_231_node["kind"]) === adamicViewAdapterUnderlying("fill"))) {
+ 									{
+ 										let local_235_index = local_230_command["offset"];
+ 										let local_236_first = (local_231_node["parts"][local_235_index] ?? panic("missing fill part"));
+@@ -1894,7 +2003,7 @@
+
+ 									}
+ 								} else {
+ 									{
+-										let local_241_indent = ((local_231_node["kind"] === "indent") ? (local_230_command["indent"] + (2)) : local_230_command["indent"]);
++										let local_241_indent = ((adamicViewAdapterUnderlying(local_231_node["kind"]) === adamicViewAdapterUnderlying("indent")) ? (local_230_command["indent"] + (2)) : local_230_command["indent"]);
+ 										{
+ 											let local_242_index = (local_231_node["parts"].length - (1));
+ 											temporary_100: for (;;) {
+@@ -1943,13 +2052,13 @@
+
+ ready_7 = true;
+ local_8_args = programArguments();
+ ready_8 = true;
+-local_9_batch = (local_8_args[(0)] === "--cases");
++local_9_batch = (adamicViewAdapterUnderlying(local_8_args[(0)]) === adamicViewAdapterUnderlying("--cases"));
+ ready_9 = true;
+ local_10_path = (local_8_args[(local_9_batch ? (1) : (0))] ?? panic("usage: main.ts <file> | --cases <cases>"));
+ ready_10 = true;
+ local_11_read = readTextFile(local_10_path);
+ ready_11 = true;
+-if ((local_11_read["kind"] === "Error")) {
++if ((adamicViewAdapterUnderlying(local_11_read["kind"]) === adamicViewAdapterUnderlying("Error"))) {
+ 	{
+ 		panic(local_11_read["message"]);
+ 	}
+@@ -1964,7 +2073,7 @@
+
+ 				continue_101: {
+ 					let local_295_line = temporary_103;
+ 					{
+-						if ((local_295_line === "")) {
++						if ((adamicViewAdapterUnderlying(local_295_line) === adamicViewAdapterUnderlying(""))) {
+ 							{
+ 								break continue_101;
+ 							}

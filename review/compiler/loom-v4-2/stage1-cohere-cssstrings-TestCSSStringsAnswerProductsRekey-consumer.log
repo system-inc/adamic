@@ -1,0 +1,10 @@
+=== RUN   TestCSSStringsAnswerProductsRekey
+=== PAUSE TestCSSStringsAnswerProductsRekey
+=== CONT  TestCSSStringsAnswerProductsRekey
+    setup_products_test.go:262: corpus-files: upstream /workspace/adamic/cohere root internal/format/css/testdata/prettier pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 247
+    setup_products_test.go:262: corpus-files: upstream /workspace/adamic/cohere root internal/lint/rules/tailwind pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 8
+    setup_products_test.go:292: Go batch oracle answers: name key 0f89e91a1641 to 97e5bae1e0b3 (input) and afe59bbe3e06 (oracle), key 8998e1311165 to 5fee28d61802 and b27103e129b7
+    setup_products_test.go:292: Prettier batch oracle answers: name key 770a47f19162 to 645efd282f4d (input) and 9b834e362b49 (oracle), key ce40d92e12c8 to d6ad85ba3491 and 1677915c1f23
+    setup_products_test.go:292: Go raw oracle answers: name key 621bffb2a090 to d9f92a90e128 (input) and 2ba8921cb05f (oracle), key 10f812097898 to 52eadbf95af9 and ee8e0f30e6dc
+--- PASS: TestCSSStringsAnswerProductsRekey (0.25s)
+PASS

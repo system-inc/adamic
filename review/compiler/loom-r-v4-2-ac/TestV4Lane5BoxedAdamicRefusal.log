@@ -1,0 +1,10 @@
+=== RUN   TestV4Lane5BoxedAdamicRefusal
+=== PAUSE TestV4Lane5BoxedAdamicRefusal
+=== CONT  TestV4Lane5BoxedAdamicRefusal
+    checked_views_v4_lane5_test.go:164: gate cache node miss
+    checked_views_v4_lane5_test.go:173: readonly unknown storage grants no .a signature proof: /tmp/adamic-gate/TestV4Lane5BoxedAdamicRefusal2077182178/001/boxed.a:5:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view
+--- PASS: TestV4Lane5BoxedAdamicRefusal (3.20s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

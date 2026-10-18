@@ -1,0 +1,23 @@
+=== RUN   TestV4PrimitiveUnionIdentityEmission
+=== PAUSE TestV4PrimitiveUnionIdentityEmission
+=== RUN   TestV4ObjectOperandAdapterIdentity
+=== PAUSE TestV4ObjectOperandAdapterIdentity
+=== CONT  TestV4PrimitiveUnionIdentityEmission
+    cache_test.go:297: /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:124: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:13: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:163: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:193: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:36: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:66: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4PrimitiveUnionIdentityEmission2353464025/001/identity.ts:3:95: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+--- FAIL: TestV4PrimitiveUnionIdentityEmission (2.63s)
+=== CONT  TestV4ObjectOperandAdapterIdentity
+    cache_test.go:297: /tmp/adamic-gate/TestV4ObjectOperandAdapterIdentity2441951640/001/identity.ts:7:133: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+        /tmp/adamic-gate/TestV4ObjectOperandAdapterIdentity2441951640/001/identity.ts:7:97: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.
+--- FAIL: TestV4ObjectOperandAdapterIdentity (0.02s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.664s
+FAIL

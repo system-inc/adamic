@@ -1,0 +1,9 @@
+=== RUN   TestV4EscapeAdapterCallReceiverRefusal
+=== PAUSE TestV4EscapeAdapterCallReceiverRefusal
+=== CONT  TestV4EscapeAdapterCallReceiverRefusal
+    checked_views_v4_call_apply_test.go:163: gate cache node miss
+--- PASS: TestV4EscapeAdapterCallReceiverRefusal (10.38s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

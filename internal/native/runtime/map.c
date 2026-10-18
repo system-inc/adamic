@@ -56,6 +56,13 @@ adamic_map *adamic_map_new_identity(bool reference_values) {
 	return map;
 }
 
+// Keep the stored key's checking adapter for later calls/iteration, but hash and
+// compare its root identity. This is shared by Map and Set.
+static void *callable_key_identity(void *value) {
+	const adamic_heap *heap = value;
+	return heap != NULL && heap->kind == adamic_kind_closure ? adamic_view_adapter_underlying(value) : value;
+}
+
 static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	if (map->maybe_number_keys) {
 		return adamic_map_maybe_key_hash(key.number);
@@ -79,7 +86,7 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	}
 	if (map->reference_keys) {
 		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
-		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
+		uint64_t bits = (uint64_t)(uintptr_t)callable_key_identity(key.reference);
 		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
 	return adamic_map_number_hash(key.number);
@@ -96,7 +103,7 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 		return left.boolean == right.boolean;
 	}
 	if (map->reference_keys) {
-		return left.reference == right.reference;
+		return callable_key_identity(left.reference) == callable_key_identity(right.reference);
 	}
 	return left.number == right.number || (isnan(left.number) && isnan(right.number));
 }

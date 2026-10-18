@@ -1,0 +1,6 @@
+=== RUN   TestProduct_ValuesGoOracle
+=== PAUSE TestProduct_ValuesGoOracle
+=== CONT  TestProduct_ValuesGoOracle
+    values_test.go:530: build go_test_-c_cohere_./internal/format/css/values_values.test 06f28b2479f2 miss 7.55
+--- PASS: TestProduct_ValuesGoOracle (11.22s)
+PASS

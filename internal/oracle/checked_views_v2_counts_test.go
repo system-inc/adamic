@@ -1,6 +1,8 @@
 package oracle
 
-import "testing"
+import (
+	"testing"
+)
 
 func init() {
 	for _, path := range []string{
@@ -55,6 +57,13 @@ func init() {
 		"stage3/interface-downcasts/v2/tuple-identity-wrong.a",
 		"stage3/interface-downcasts/v2/undefined-read-write.a",
 	} {
+		// V4 refuses these escapes before emission; their refusal tests retain the Node controls.
+		switch path {
+		case "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+			"stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+			"stage3/interface-downcasts/v2/callable-producer-wrong.a":
+			continue
+		}
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
 	}
 }

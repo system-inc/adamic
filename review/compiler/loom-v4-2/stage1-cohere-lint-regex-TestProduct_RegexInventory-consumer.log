@@ -1,0 +1,6 @@
+=== RUN   TestProduct_RegexInventory
+=== PAUSE TestProduct_RegexInventory
+=== CONT  TestProduct_RegexInventory
+    build_products_test.go:17: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/inventory.go_regex-inventory f456411ab60f miss 1.81
+--- PASS: TestProduct_RegexInventory (3.48s)
+PASS

@@ -1,0 +1,12 @@
+=== RUN   TestJavaScriptObjectOperandAdapterIdentity
+=== PAUSE TestJavaScriptObjectOperandAdapterIdentity
+=== RUN   TestJavaScriptPrimitiveIdentityRepresentations
+=== PAUSE TestJavaScriptPrimitiveIdentityRepresentations
+=== CONT  TestJavaScriptObjectOperandAdapterIdentity
+=== CONT  TestJavaScriptPrimitiveIdentityRepresentations
+--- PASS: TestJavaScriptPrimitiveIdentityRepresentations (0.00s)
+=== NAME  TestJavaScriptObjectOperandAdapterIdentity
+    primitive_identity_test.go:25: object-typed lookup omission caught: expected true true, mutant false false
+--- PASS: TestJavaScriptObjectOperandAdapterIdentity (0.07s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.071s

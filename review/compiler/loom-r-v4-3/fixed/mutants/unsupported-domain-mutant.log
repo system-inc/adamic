@@ -1,0 +1,11 @@
+=== RUN   TestV4DirectRecursiveRefusal
+=== PAUSE TestV4DirectRecursiveRefusal
+=== CONT  TestV4DirectRecursiveRefusal
+    checked_views_v4_direct_test.go:323: refusal with path and fix: <nil>
+--- FAIL: TestV4DirectRecursiveRefusal (3.33s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.339s
+FAIL

@@ -1,0 +1,6 @@
+=== RUN   TestProduct_AcceptanceClassLowered
+=== PAUSE TestProduct_AcceptanceClassLowered
+=== CONT  TestProduct_AcceptanceClassLowered
+    acceptance_grain_test.go:147: build estree-acceptance-mutant-lowered-class-keyword-name 5858ef02166a miss 6.98
+--- PASS: TestProduct_AcceptanceClassLowered (7.00s)
+PASS

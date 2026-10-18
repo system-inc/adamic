@@ -1,0 +1,17 @@
+=== RUN   TestViewArrayContract
+=== PAUSE TestViewArrayContract
+=== CONT  TestViewArrayContract
+=== RUN   TestViewArrayContract/type_Target_=_number[];
+=== RUN   TestViewArrayContract/type_Target_=_readonly_string[];
+=== RUN   TestViewArrayContract/type_Target_=_{_readonly_name:_string_}[];
+=== RUN   TestViewArrayContract/type_Target_=_(string_|_number)[];
+=== RUN   TestViewArrayContract/type_Target_=_number;
+=== RUN   TestViewArrayContract/type_Target_=_readonly_[number,_string?];
+--- PASS: TestViewArrayContract (0.19s)
+    --- PASS: TestViewArrayContract/type_Target_=_number[]; (0.03s)
+    --- PASS: TestViewArrayContract/type_Target_=_readonly_string[]; (0.04s)
+    --- PASS: TestViewArrayContract/type_Target_=_{_readonly_name:_string_}[]; (0.03s)
+    --- PASS: TestViewArrayContract/type_Target_=_(string_|_number)[]; (0.03s)
+    --- PASS: TestViewArrayContract/type_Target_=_number; (0.03s)
+    --- PASS: TestViewArrayContract/type_Target_=_readonly_[number,_string?]; (0.03s)
+PASS

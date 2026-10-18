@@ -1,0 +1,13 @@
+=== RUN   TestNarrowedUnionObjectTagPassing
+=== PAUSE TestNarrowedUnionObjectTagPassing
+=== CONT  TestNarrowedUnionObjectTagPassing
+    narrowed_union_test.go:82: gate cache node miss
+    narrowed_union_test.go:82: gate cache node miss
+    narrowed_union_test.go:82: native-sanitized: exit 0 stdout "1\n" stderr ""
+    narrowed_union_test.go:82: native-release: exit 0 stdout "1\n" stderr ""
+    narrowed_union_test.go:82: JavaScript: exit 0 stdout "1\n" stderr ""
+--- PASS: TestNarrowedUnionObjectTagPassing (3.33s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

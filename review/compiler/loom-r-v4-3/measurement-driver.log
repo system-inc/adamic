@@ -1,0 +1,22 @@
+{'side': 'source', 'mode': 'node', 'round': 0, 'seconds': 19.876852704999692, 'exit': 0, 'stdout_bytes': 300372755, 'stdout_sha256': '8571e190419a2e27c5796b3f1ff6485cfc824ddf161fcf48e9b3a55739ac614f', 'stderr_bytes': 0}
+{'side': 'base', 'mode': 'release', 'round': 0, 'seconds': 32.35207090299991, 'exit': 0, 'stdout_bytes': 300372755, 'stdout_sha256': '8571e190419a2e27c5796b3f1ff6485cfc824ddf161fcf48e9b3a55739ac614f', 'stderr_bytes': 0}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-v4-3/run-measurements.py", line 40, in <module>
+    run(side,mode,round_,[str(art/side/mode),'--cases',str(inputs)],'/tmp/adamic-v4-2-base' if side=='base' else '/tmp/adamic-json-82',mode=='sanitized')
+  File "/workspace/adamic/review/compiler/loom-r-v4-3/run-measurements.py", line 31, in run
+    r=subprocess.run(args,cwd=cwd,env={**env,**({'ASAN_OPTIONS':'detect_leaks=1'} if sanitize else {})},stdout=out,stderr=err,timeout=180)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2141, in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/workspace/adamic/review/compiler/loom-r-v4-3/artifacts/base/sanitized', '--cases', '/workspace/adamic/review/compiler/loom-r-v4-3/artifacts/cases.txt']' timed out after 179.99998567900002 seconds

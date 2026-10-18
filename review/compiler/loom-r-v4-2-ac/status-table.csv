@@ -1,0 +1,48 @@
+path,status,reason_or_code,header,body_sha256
+internal/oracle/testdata/library_array_holes_length.a,checked,,,9421d1bca045d5534a2754ee805fbcf6b75b42428beefb143f5634f11036eeca
+internal/oracle/testdata/library_array_holes_range.a,checked,,,4d1dd97a562fabefa702dcd970a01d3b82b508c49dc4b2119b7ab06f1b6b6e3d
+internal/oracle/testdata/library_array_holes_scanner_probe.a,checked,,,52cec54b8ad9acf098614dbc60a564ee6f1842fd1ddcb1712733af22a78010bc
+internal/oracle/testdata/views_v4_refused/construct-no-signature.a,type error,TS7009,// a-check: type error TS7009,3f7199eda328348de6fd9423b56f54b24be0711737b60d828dfb5bde9ad7099d
+internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a,refused,"a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void would replace",// a-check: refused readonly field onEmitNode becomes writable,b640cff51ad299e51889d8fe0b9d7de8d7c98d48ead3929434e3fd51ca4212c6
+internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a,refused,an unproven escaping callable read of viewed.run,// a-check: refused an unproven escaping callable read of viewed.run,8b475e80b0f7c39e8e7be0c1557d92b63e8925276267870e3140aa8a3e30cd16
+internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a,refused,an unproven escaping callable read of viewed.run,// a-check: refused an unproven escaping callable read of viewed.run,5def47c6e1ecfaf584fd7598158e7b18282196eadd4cedd8833b782f61788f02
+internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a,refused,an unproven escaping callable read of viewed.run,// a-check: refused an unproven escaping callable read of viewed.run,a1cadaf27b9ce958a4bd29658f459f31ae91b6fc7298146269213f38d96d6f74
+internal/oracle/testdata/views_v4_refused/view-result-wrong.a,refused,an unproven escaping callable read of viewed.run,// a-check: refused an unproven escaping callable read of viewed.run,4a009c89529af14710825cb852c4e7efbed0a062a142754c22d2da31be088bcf
+review/compiler/views-v4/construct-misfit.a,NotYet,adamic: /workspace/adamic/review/compiler/views-v4/construct-misfit.a:7:60: stage 0 can't lower new an Identifier yet; construct the producer directly with its declared parameter types; checked construction through a view is not implemented,,7a3c36c8ad0a9af6d2aa572b0d889de0c84b59ad0d793346fc6390d4e8fdc499
+review/compiler/views-v4/lane5/factory-12-wrong-producer.a,checked,,,d9a052aea4d1e367f29c59c896ad2f39559b72da1df038e2be0540151f296670
+review/compiler/views-v4/lane5/factory-174-wrong-producer.a,checked,,,b929680a8a84c3e6a46d9ec245bbf91d9a6788042792dc418902b4e5d24853d3
+review/compiler/views-v4/lane5/factory-186-wrong-overload.a,checked,,,d0d02b92fa6856d274284aa6b8c06be9460f6b350c3f15f837219a4bf49bf463
+review/compiler/views-v4/lane5/factory-189-wrong-overload.a,checked,,,0679356bb2f42b4ab7a1b0bce95a164685639e027cf7dab51dc69108c2c8309b
+review/compiler/views-v4/lane5/factory-24-wrong-overload.a,checked,,,8083a0d6bf76aaccf71c274a5ca11deec5f28062bc242beecef8a689c8a3af60
+review/compiler/views-v4/lane5/factory-3-wrong-overload.a,checked,,,3f5076f9e34f6e276c1821463e1245fe7e27a391caf9800759ea37cb8243b19c
+review/compiler/views-v4/lane5/factory-3-wrong-result.a,checked,,,d3272aec4f6a04ac10fd8e8db0f3c66b5c7938feeb82e05f8024574256adf957
+review/compiler/views-v4/lane5/factory-9-wrong-overload.a,checked,,,75f3f865fe6212a2b8110621ee880155414cbd38e5781b974d7b684ffeee45e9
+stage3/interface-downcasts/lane2/array-alias.a,checked,,,6e728d2090d765072bc31cbe8b1b6d4a49a4356880c1a6cfd4a0d0bf9306240c
+stage3/interface-downcasts/lane2/array-boolean.a,checked,,,f2e90b9f124bacb84ce062b248b1ef0eb511a347f31141ba51942511dd1036e9
+stage3/interface-downcasts/lane2/array-bounds.a,checked,,,23c88cea68c16b01bc981d92ac746a091091aaeecad6817bfdb457d0d42907a2
+stage3/interface-downcasts/lane2/array-element.a,checked,,,ee860fafa3117f8c8c0c5d2708ccc40575bf18acc835e1e45b915167cd68ca82
+stage3/interface-downcasts/lane2/array-field.a,checked,,,ea7623230769b9097d716c1b1acb30ddfd2327dae90a8b327f35694520276351
+stage3/interface-downcasts/lane2/array-holes-view.a,checked,,,f7cdaac7e0fba2ccc3cf579702b59bdc948b6cdd0b382b374aec8dba3c757a9a
+stage3/interface-downcasts/lane2/array-iteration-bad.a,checked,,,c86f91ebb0b709e10919f19f85c39a1f7ee67ae7309660545869afe9b8816b71
+stage3/interface-downcasts/lane2/array-iteration.a,checked,,,86de1f80346a02a70b55399619454ce4f82190d2a0f126b98776d6ca48c7408a
+stage3/interface-downcasts/lane2/array-lazy.a,checked,,,7c76485a04458b77f47b4c891dfd4ab15697f0570b8748003d8c66eb8438f62e
+stage3/interface-downcasts/lane2/array-length-kind.a,checked,,,6daefa0f46534dee0ed5d67d2b1131a1e796205a504074350a1dba9b9f370ee9
+stage3/interface-downcasts/lane2/array-map-bad.a,checked,,,d40db85c9f44de13ce0985f4694111b9165131f22d6b67fc1987d1d4c3112d02
+stage3/interface-downcasts/lane2/array-map.a,checked,,,613e8354b5b868b246393dab6509533a04519087f45e618ca3320479f4cdbe01
+stage3/interface-downcasts/lane2/array-missing.a,checked,,,bdbd9ddf724bd6d1c4cf328381fe64e1594c0130a353ae6f165264e6c76765f6
+stage3/interface-downcasts/lane2/array-pop.a,checked,,,7b88d88299210b5f8b3f54aaaa8e9993088cf0cd512deb330ccb14087cd17214
+stage3/interface-downcasts/lane2/array-second.a,checked,,,f789c84989186d803af7167bbc533efd5ba43ffa22320e30d9ae2602b71ee9b3
+stage3/interface-downcasts/lane2/array-string-literal.a,checked,,,6c1bbb6976f0ba40b4ee396579059684c3563d936faf9201af8fa199f13bee25
+stage3/interface-downcasts/lane2/array-undefined.a,checked,,,01145b6d2cf0a7bf61659d70ef52f0ccde035ba68b6da8b731a2bb8b87b74868
+stage3/interface-downcasts/lane2/generic-array-element.a,checked,,,3d3fe6c52dae74f2e117ecb35ce869380a5ffb4cfc7e59a1d31950739739861c
+stage3/interface-downcasts/lane2/non-array.a,checked,,,d8b355acd0b9f899327d2a60540563222771d393f44df128e24f572b0267fe8d
+stage3/interface-downcasts/lane2/nullable-array-element.a,checked,,,43f91da3c37e51b12d5d50c8e00e6d1c96819f7609dfe20a85980d5885a5b5a3
+stage3/interface-downcasts/lane2/nullable-array-missing.a,checked,,,380b49d64110f08842dfb588b9394a1f34667f8246c71137a567e1a97093eb30
+stage3/interface-downcasts/lane2/nullable-array-string.a,checked,,,a3114a1819a057859b25889578f595954cbfd36e1acc16377355494afe7a9208
+stage3/interface-downcasts/lane2/object-element.a,checked,,,43e9b3c5db88e80ff4cb1bee892bd877b70178314a234650f0e795a93918d19d
+stage3/interface-downcasts/untagged/fixtures/array-union-empty.a,checked,,,5ca3d6c468972014585e9970117051c184cb1b5a3767d1becd0063448feaff97
+stage3/interface-downcasts/untagged/fixtures/array-union-good.a,checked,,,97d8e0387ce558d2ceabf8059806ae8e255d4694513717ebea9c4e5e7e5937f0
+stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a,checked,,,523fa0a6f81162f79f7b8832f998f5d75e428ba25724d87aa70146dc570e1677
+stage3/interface-downcasts/untagged/fixtures/array-union-nested.a,checked,,,3d7a2e7c5d1fd2ced072ffb1710cb1e3376cf1d5bea40e610fe0126af74ea56e
+stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a,checked,,,db943c16076ba9b3c2ee56527a13574f19b1b60fd0ac8f4a1b20b7cc3e765cc9
+stage3/interface-downcasts/v2/array-arm.a,checked,,,111d155fc55e198dbfc8e1acaa3ba45e949589d3807ea4b167607bbbb6e7b78c

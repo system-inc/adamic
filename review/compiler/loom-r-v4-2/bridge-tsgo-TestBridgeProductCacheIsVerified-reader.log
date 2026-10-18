@@ -1,0 +1,4 @@
+=== RUN   TestBridgeProductCacheIsVerified
+    coverage_test.go:176: same hash built once; corrupt bytes and extra product refused
+--- PASS: TestBridgeProductCacheIsVerified (0.00s)
+PASS

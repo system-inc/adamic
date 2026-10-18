@@ -1,0 +1,267 @@
+diff --git a/internal/ir/ir.go b/internal/ir/ir.go
+index 2fd7d2a3..d95f4f86 100644
+--- a/internal/ir/ir.go
++++ b/internal/ir/ir.go
+@@ -387,6 +387,9 @@ type (
+ 	Binary struct {
+ 		Operator    Operator
+ 		Left, Right Expression
++		// PrimitiveOperands records checker proof, including mixed primitive unions.
++		// False retains adapter identity normalization.
++		PrimitiveOperands [2]bool
+ 	}
+ 
+ 	// NumberToString is String(value), as a template literal and string + number write it.
+diff --git a/internal/ir/library_object.go b/internal/ir/library_object.go
+index d009fb7b..d065f4ed 100644
+--- a/internal/ir/library_object.go
++++ b/internal/ir/library_object.go
+@@ -3,13 +3,15 @@ package ir
+ // ObjectCall is a static Object method whose arguments have proven representations.
+ // Element is the homogeneous value type for values and entries; Returns is tsc's result.
+ type ObjectCall struct {
+-	Method      string
+-	Arguments   []Expression
+-	Element     Type
+-	Returns     Type
+-	Checked     bool
+-	Allowed     []Expression
+-	ElementName string
++	Method    string
++	Arguments []Expression
++	// PrimitiveOperands is checker proof for Object.is, before union boxing.
++	PrimitiveOperands [2]bool
++	Element           Type
++	Returns           Type
++	Checked           bool
++	Allowed           []Expression
++	ElementName       string
+ }
+ 
+ func (c ObjectCall) Type() Type { return c.Returns }
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 57cffad8..d5fbe39c 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -791,7 +791,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
+ 		return "(" + operator + e.value(expression.Operand) + ")"
+ 	case ir.Binary:
+ 		if expression.Operator == ir.Equal || expression.Operator == ir.NotEqual {
+-			return "(adamicViewAdapterUnderlying(" + e.value(expression.Left) + ") " + operators[expression.Operator] + " adamicViewAdapterUnderlying(" + e.value(expression.Right) + "))"
++			return "(" + e.identityOperand(expression.Left, expression.PrimitiveOperands[0]) + " " + operators[expression.Operator] + " " + e.identityOperand(expression.Right, expression.PrimitiveOperands[1]) + ")"
+ 		}
+ 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
+ 	case ir.HasAccessor:
+@@ -970,7 +970,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
+ 		return e.nodeBufferCall(expression)
+ 	case ir.ObjectCall:
+ 		if expression.Method == "is" {
+-			return "Object.is(adamicViewAdapterUnderlying(" + e.value(expression.Arguments[0]) + "), adamicViewAdapterUnderlying(" + e.value(expression.Arguments[1]) + "))"
++			return "Object.is(" + e.identityOperand(expression.Arguments[0], expression.PrimitiveOperands[0]) + ", " + e.identityOperand(expression.Arguments[1], expression.PrimitiveOperands[1]) + ")"
+ 		}
+ 		if expression.Checked {
+ 			return e.checkedObjectEnumeration(expression)
+diff --git a/internal/javascript/primitive_identity.go b/internal/javascript/primitive_identity.go
+new file mode 100644
+index 00000000..134db69b
+--- /dev/null
++++ b/internal/javascript/primitive_identity.go
+@@ -0,0 +1,16 @@
++package javascript
++
++import "github.com/system-inc/adamic/internal/ir"
++
++func (e *emitter) identityOperand(value ir.Expression, primitive bool) string {
++	// These representations contain only primitives, including compiler-generated
++	// comparisons without a source checker node. Union and Object are not proofs.
++	switch value.Type() {
++	case ir.Number, ir.String, ir.Boolean, ir.MaybeNumber, ir.MaybeBoolean:
++		primitive = true
++	}
++	if primitive {
++		return e.value(value)
++	}
++	return "adamicViewAdapterUnderlying(" + e.value(value) + ")"
++}
+diff --git a/internal/javascript/primitive_identity_test.go b/internal/javascript/primitive_identity_test.go
+new file mode 100644
+index 00000000..87cad111
+--- /dev/null
++++ b/internal/javascript/primitive_identity_test.go
+@@ -0,0 +1,44 @@
++package javascript
++
++import (
++	"github.com/system-inc/adamic/internal/ir"
++	"strings"
++	"testing"
++)
++
++func TestJavaScriptObjectOperandAdapterIdentity(t *testing.T) {
++	t.Parallel()
++	program := &ir.Program{Locals: []ir.Local{{Name: "left", Type: ir.Object}, {Name: "right", Type: ir.Object}}}
++	e := &emitter{program: program}
++	left, right := ir.Read{Local: 0, Of: ir.Object}, ir.Read{Local: 1, Of: ir.Object}
++	equal := e.value(ir.Binary{Operator: ir.Equal, Left: left, Right: right})
++	same := e.value(ir.ObjectCall{Method: "is", Arguments: []ir.Expression{left, right}, Returns: ir.Boolean})
++	setup := viewCallableAdapterRuntime + "const " + e.variable(0) + " = {}; const " + e.variable(1) + " = {}; adamicViewAdapterRoots.set(" + e.variable(0) + ", " + e.variable(1) + ");\n"
++	code := "console.log(" + equal + ", " + same + ");"
++	runViewNode(t, setup+code, "true true\n", "", 0)
++	if strings.Count(equal, "adamicViewAdapterUnderlying(") != 2 || strings.Count(same, "adamicViewAdapterUnderlying(") != 2 {
++		t.Fatal("object comparisons lost normalization", equal, same)
++	}
++	// Omit lookups at object-typed operand sites only, retaining the root map.
++	mutant := strings.ReplaceAll(code, "adamicViewAdapterUnderlying(", "(")
++	runViewNode(t, setup+mutant, "false false\n", "", 0)
++	t.Log("object-typed lookup omission caught: expected true true, mutant false false")
++}
++
++func TestJavaScriptPrimitiveIdentityRepresentations(t *testing.T) {
++	t.Parallel()
++	e := &emitter{program: &ir.Program{Locals: []ir.Local{{Name: "value"}}}}
++	for _, of := range []ir.Type{ir.Number, ir.String, ir.Boolean, ir.MaybeNumber, ir.MaybeBoolean} {
++		if strings.Contains(e.identityOperand(ir.Read{Local: 0, Of: of}, false), "adamicViewAdapterUnderlying") {
++			t.Fatalf("primitive representation %v normalizes", of)
++		}
++	}
++	for _, of := range []ir.Type{ir.Object, ir.Closure, ir.Union, ir.Array} {
++		if !strings.Contains(e.identityOperand(ir.Read{Local: 0, Of: of}, false), "adamicViewAdapterUnderlying") {
++			t.Fatalf("object-capable representation %v bypasses", of)
++		}
++	}
++	if strings.Contains(e.identityOperand(ir.Read{Local: 0, Of: ir.Union}, true), "adamicViewAdapterUnderlying") {
++		t.Fatal("checker primitive-union proof ignored")
++	}
++}
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 1e277f9b..8a81cf3b 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -903,7 +903,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
+ 		if operator == ast.KindExclamationEqualsEqualsToken {
+ 			lowered = ir.NotEqual
+ 		}
+-		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
++		return ir.Binary{Operator: lowered, Left: left, Right: right, PrimitiveOperands: [2]bool{l.primitiveIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)), l.primitiveIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right))}}, nil
+ 	}
+ 	if value, known := l.censusBooleanLogical(node, operator, left, right); known {
+ 		return value, nil
+diff --git a/internal/lower/library_object.go b/internal/lower/library_object.go
+index 3a2b5a8d..16219399 100644
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -47,11 +47,12 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
+ 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
+ 	switch name {
+ 	case "is":
+-		for _, argument := range written {
++		for index, argument := range written {
+ 			value, err := l.expression(argument)
+ 			if err != nil {
+ 				return nil, true, err
+ 			}
++			call.PrimitiveOperands[index] = l.primitiveIdentityType(l.checker.GetTypeAtLocation(argument))
+ 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
+ 		}
+ 	case "isFrozen":
+diff --git a/internal/lower/primitive_identity.go b/internal/lower/primitive_identity.go
+new file mode 100644
+index 00000000..c6a9f5f5
+--- /dev/null
++++ b/internal/lower/primitive_identity.go
+@@ -0,0 +1,18 @@
++package lower
++
++import "github.com/microsoft/TypeScript/tsc/shim/checker"
++
++// primitiveIdentityType proves that an operand cannot be an adapter key. Any,
++// unknown, object, callable and unresolved parameter types retain normalization.
++func (l *lowering) primitiveIdentityType(proven *checker.Type) bool {
++	proven = l.concrete(proven)
++	if proven.Flags()&checker.TypeFlagsUnion != 0 {
++		for _, member := range proven.Types() {
++			if !l.primitiveIdentityType(member) {
++				return false
++			}
++		}
++		return len(proven.Types()) != 0
++	}
++	return proven.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
++}
+diff --git a/internal/lower/primitive_identity_test.go b/internal/lower/primitive_identity_test.go
+new file mode 100644
+index 00000000..108152e5
+--- /dev/null
++++ b/internal/lower/primitive_identity_test.go
+@@ -0,0 +1,40 @@
++package lower
++
++import (
++	"context"
++	"os"
++	"path/filepath"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/load"
++)
++
++func TestPrimitiveIdentityCheckerProof(t *testing.T) {
++	t.Parallel()
++	for _, test := range []struct {
++		declaration string
++		primitive   bool
++	}{
++		{"type Target = number;", true}, {"type Target = string;", true}, {"type Target = boolean;", true}, {"type Target = bigint;", true}, {"type Target = undefined;", true}, {"type Target = null;", true},
++		{"type Target = number|string|boolean|bigint|undefined|null;", true},
++		{"type Target = number|object;", false}, {"type Target = string|(()=>void);", false},
++		{"type Target = object;", false}, {"type Target = {};", false}, {"type Target = unknown;", false}, {"type Target = any;", false},
++	} {
++		path := filepath.Join(t.TempDir(), "primitive.a")
++		if err := os.WriteFile(path, []byte(test.declaration), 0600); err != nil {
++			t.Fatal(err)
++		}
++		program, err := load.Load([]string{path})
++		if err != nil {
++			t.Fatal(err)
++		}
++		file := program.Files()[0]
++		checked, release := program.Checker(context.Background(), file)
++		l := &lowering{program: program, checker: checked}
++		got := l.primitiveIdentityType(checked.GetTypeAtLocation(file.Statements.Nodes[0].Name()))
++		release()
++		if got != test.primitive {
++			t.Fatalf("%s primitive=%t, want %t", test.declaration, got, test.primitive)
++		}
++	}
++}
+diff --git a/internal/oracle/checked_views_v4_primitive_identity_test.go b/internal/oracle/checked_views_v4_primitive_identity_test.go
+new file mode 100644
+index 00000000..448975e5
+--- /dev/null
++++ b/internal/oracle/checked_views_v4_primitive_identity_test.go
+@@ -0,0 +1,25 @@
++package oracle
++
++import (
++	"strings"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/javascript"
++)
++
++func TestV4PrimitiveUnionIdentityEmission(t *testing.T) {
++	t.Parallel()
++	source := `function same(left:number|string|boolean|null|undefined,right:number|string|boolean|null|undefined):boolean { return left===right; }
++function objectSame(left:number|string|boolean|null|undefined,right:number|string|boolean|null|undefined):boolean { return Object.is(left,right); }
++console.log(` + "`" + `${same(7,7)}` + "`" + `);console.log(` + "`" + `${same('ok','bad')}` + "`" + `);console.log(` + "`" + `${same(true,true)}` + "`" + `);console.log(` + "`" + `${same(null,null)}` + "`" + `);console.log(` + "`" + `${same(undefined,undefined)}` + "`" + `);console.log(` + "`" + `${objectSame(0,-0)}` + "`" + `);console.log(` + "`" + `${objectSame(NaN,NaN)}` + "`" + `);`
++	program, truth := v4IdentityProgram(t, source, "true\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\n")
++	code := javascript.JavaScript(program)
++	// Only the helper declaration and adapter runtime may normalize roots; neither
++	// comparison of primitive-only union parameters should do so.
++	for _, line := range strings.Split(code, "\n") {
++		if strings.Contains(line, "return ") && strings.Contains(line, "adamicViewAdapterUnderlying(") && (strings.Contains(line, " === ") || strings.Contains(line, "Object.is(")) {
++			t.Fatalf("primitive union still normalizes identity: %s", line)
++		}
++	}
++	v4EscapeAdmitted(t, program, truth)
++}

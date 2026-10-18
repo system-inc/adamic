@@ -1,0 +1,7 @@
+=== RUN   TestViewAdapterCacheIntern
+=== PAUSE TestViewAdapterCacheIntern
+=== CONT  TestViewAdapterCacheIntern
+    view_adapter_runtime_test.go:152: intern sanitize=false clean: adamic: counts: allocations 4 frees 4 retains 5 releases 6 peak 3 regions 0
+    view_adapter_runtime_test.go:152: intern sanitize=true clean: adamic: counts: allocations 4 frees 4 retains 5 releases 6 peak 3 regions 0
+--- PASS: TestViewAdapterCacheIntern (0.96s)
+PASS

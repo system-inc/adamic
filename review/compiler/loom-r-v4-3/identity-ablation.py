@@ -1,0 +1,8 @@
+import difflib,hashlib,json,os,subprocess,time
+from pathlib import Path
+e=Path(__file__).resolve().parent;art=e/'artifacts';original=(art/'v4/program.mjs').read_text();before='const adamicViewAdapterUnderlying = value => adamicViewAdapterRoots.get(value) ?? value;';after='const adamicViewAdapterUnderlying = value => value !== null && (typeof value === "object" || typeof value === "function") ? (adamicViewAdapterRoots.get(value) ?? value) : value;';assert original.count(before)==1
+changed=original.replace(before,after,1);script=art/'v4/identity-ablation.mjs';script.write_text(changed);(e/'identity-ablation.patch').write_text(''.join(difflib.unified_diff(original.splitlines(True),changed.splitlines(True),fromfile='original-program.mjs',tofile='identity-ablation.mjs')))
+start=time.monotonic();outpath=art/'identity-ablation.stdout';errpath=art/'identity-ablation.stderr'
+with outpath.open('wb') as out,errpath.open('wb') as err:r=subprocess.run(['node','--disable-warning=ExperimentalWarning','oracle/node.mjs',str(script),'--cases',str(art/'cases.txt')],cwd='/tmp/adamic-json-82',env={**os.environ,'GOMAXPROCS':'4'},stdout=out,stderr=err,timeout=90)
+row=dict(seconds=time.monotonic()-start,exit=r.returncode,stdout_bytes=outpath.stat().st_size,stdout_sha256=hashlib.sha256(outpath.read_bytes()).hexdigest(),stderr_bytes=errpath.stat().st_size,experiment='Skip adapter-root WeakMap lookup for primitive values; original emitted program and compiler sources unchanged')
+(e/'identity-ablation.json').write_text(json.dumps(row,indent=2)+'\n');print(row);assert r.returncode==0 and row['stderr_bytes']==0 and row['stdout_sha256']==json.loads((e/'run-times.json').read_text())[0]['stdout_sha256']

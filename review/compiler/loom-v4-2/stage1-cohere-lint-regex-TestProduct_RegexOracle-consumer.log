@@ -1,0 +1,6 @@
+=== RUN   TestProduct_RegexOracle
+=== PAUSE TestProduct_RegexOracle
+=== CONT  TestProduct_RegexOracle
+    build_products_test.go:7: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/oracle.go_regex-oracle 28210cca14ef miss 2.12
+--- PASS: TestProduct_RegexOracle (3.13s)
+PASS

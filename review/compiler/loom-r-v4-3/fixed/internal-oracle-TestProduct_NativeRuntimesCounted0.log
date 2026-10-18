@@ -1,0 +1,10 @@
+=== RUN   TestProduct_NativeRuntimesCounted0
+=== PAUSE TestProduct_NativeRuntimesCounted0
+=== CONT  TestProduct_NativeRuntimesCounted0
+    runtimes_test.go:57: build native-runtime 145ee8268bcc hit 0.13
+    runtimes_test.go:57: build native-runtime 3d1a4f81fadd hit 0.01
+    runtimes_test.go:57: build native-runtime a500c16dec12 hit 0.01
+    runtimes_test.go:57: build native-runtime 8a6fe602f874 hit 0.01
+    runtimes_test.go:57: build native-runtime 0cdd3fbfba56 hit 0.01
+--- PASS: TestProduct_NativeRuntimesCounted0 (5.09s)
+PASS

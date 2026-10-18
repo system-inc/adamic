@@ -1,0 +1,62 @@
+=== RUN   TestViewAdapterCacheDying
+=== PAUSE TestViewAdapterCacheDying
+=== CONT  TestViewAdapterCacheDying
+    view_adapter_runtime_test.go:179: dying sanitize=false clean: adamic: counts: allocations 20001 frees 20001 retains 20000 releases 20001 peak 3 regions 0
+    view_adapter_runtime_test.go:179: dying sanitize=true clean: adamic: counts: allocations 20001 frees 20001 retains 20000 releases 20001 peak 3 regions 0
+    view_adapter_runtime_test.go:184: dying-retain caught by ASan in the actual count-zero destruction window:
+        =================================================================
+        ==233445==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c12623e0098 at pc 0x5559ba7301f6 bp 0x7ffe9eaff5d0 sp 0x7ffe9eaff5c8
+        READ of size 8 at 0x7c12623e0098 thread T0
+            #0 0x5559ba7301f5 in adamic_closure_call /tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/adamic.h:227:18
+            #1 0x5559ba7301f5 in main /workspace/adamic/internal/native/testdata/view-adapters/dying.c:18:31
+            #2 0x7fb2632b9ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x7fb2632b9d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x5559ba645400 in _start (/tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/fixture+0x2e400)
+        
+        0x7c12623e0098 is located 24 bytes inside of 64-byte region [0x7c12623e0080,0x7c12623e00c0)
+        freed by thread T0 here:
+            #0 0x5559ba6e7f76 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+            #1 0x5559ba72df27 in deallocate /tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/heap.c:268:3
+            #2 0x5559ba72df27 in free_one /tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/heap.c:454:2
+            #3 0x5559ba72df27 in release_last /tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/heap.c:466:30
+            #4 0x7fb2632b9ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        previously allocated by thread T0 here:
+            #0 0x5559ba6e8214 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5559ba72d351 in adamic_allocate /tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/heap.c:251:10
+        
+        SUMMARY: AddressSanitizer: heap-use-after-free /tmp/adamic-gate/TestViewAdapterCacheDying2060323413/003/adamic.h:227:18 in adamic_closure_call
+        Shadow bytes around the buggy address:
+          0x7c12623dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c12623dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c12623dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c12623dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7c12623e0000: fa fa fa fa 00 00 00 00 00 00 00 00 fa fa fa fa
+        =>0x7c12623e0080: fd fd fd[fd]fd fd fd fd fa fa fa fa fa fa fa fa
+          0x7c12623e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c12623e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c12623e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c12623e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7c12623e0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07 
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==233445==ABORTING
+--- PASS: TestViewAdapterCacheDying (1.30s)
+PASS

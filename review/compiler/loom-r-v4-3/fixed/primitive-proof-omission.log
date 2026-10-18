@@ -1,0 +1,12 @@
+=== RUN   TestV4PrimitiveUnionIdentityEmission
+=== PAUSE TestV4PrimitiveUnionIdentityEmission
+=== CONT  TestV4PrimitiveUnionIdentityEmission
+    checked_views_v4_primitive_identity_test.go:15: gate cache node miss
+    checked_views_v4_primitive_identity_test.go:21: primitive union still normalizes identity: 	return (adamicViewAdapterUnderlying(local_0_left) === adamicViewAdapterUnderlying(local_1_right));
+--- FAIL: TestV4PrimitiveUnionIdentityEmission (3.47s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.473s
+FAIL

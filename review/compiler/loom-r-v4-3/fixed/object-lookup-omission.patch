@@ -1,0 +1,11 @@
+--- a/internal/javascript/primitive_identity.go
++++ b/internal/javascript/primitive_identity.go
+@@ -9,7 +9,7 @@
+ 	case ir.Number, ir.String, ir.Boolean, ir.MaybeNumber, ir.MaybeBoolean:
+ 		primitive = true
+ 	}
+-	if primitive {
++	if primitive || value.Type() == ir.Object {
+ 		return e.value(value)
+ 	}
+ 	return "adamicViewAdapterUnderlying(" + e.value(value) + ")"

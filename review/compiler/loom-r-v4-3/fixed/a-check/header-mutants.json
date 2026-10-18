@@ -1,0 +1,16 @@
+[
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/view-result-wrong.a",
+    "mutant": "removed-header",
+    "exit": 1,
+    "caught_by": "unchanged Gate.aCheck",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/views_v4_refused/view-result-wrong.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and resu)"
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/view-result-wrong.a",
+    "mutant": "wrong-reason",
+    "exit": 1,
+    "caught_by": "unchanged Gate.aCheck",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/views_v4_refused/view-result-wrong.a: refused, expected refused deliberately unmatched V4 reason (adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and resu)"
+  }
+]

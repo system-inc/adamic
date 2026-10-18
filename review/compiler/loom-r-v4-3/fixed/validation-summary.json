@@ -1,0 +1,33 @@
+{
+  "focused_tests": 315,
+  "focused_pass": 308,
+  "focused_skip": 7,
+  "maximum_focused": {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_047",
+    "seconds": 14.055,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  "reader_packages": 53,
+  "reader_tests": 48,
+  "reader_skips": [
+    {
+      "package": "internal/lower/cycleledger",
+      "test": "TestOriginalCycleLedger",
+      "seconds": 0.01,
+      "exit": 0,
+      "grain": true,
+      "skip": true
+    },
+    {
+      "package": "stage1/cohere/estree",
+      "test": "TestCookedSurrogateLibraryGap",
+      "seconds": 0.008,
+      "exit": 0,
+      "grain": true,
+      "skip": true
+    }
+  ]
+}

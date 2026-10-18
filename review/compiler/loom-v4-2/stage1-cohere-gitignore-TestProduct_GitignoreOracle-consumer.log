@@ -1,0 +1,6 @@
+=== RUN   TestProduct_GitignoreOracle
+=== PAUSE TestProduct_GitignoreOracle
+=== CONT  TestProduct_GitignoreOracle
+    answers_products_test.go:50: build go_test_-c_cohere_./internal/gitignore_oracle ec61e1ba6136 miss 2.38
+--- PASS: TestProduct_GitignoreOracle (4.47s)
+PASS

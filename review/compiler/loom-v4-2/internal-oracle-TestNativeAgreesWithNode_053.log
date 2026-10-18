@@ -1,0 +1,96 @@
+=== RUN   TestNativeAgreesWithNode_053
+=== PAUSE TestNativeAgreesWithNode_053
+=== CONT  TestNativeAgreesWithNode_053
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/sort_releases.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/sort_releases.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/spread_calls.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/spread_calls.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/accessor_spread_throw_last.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/accessor_spread_throw_last.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/literal_optional_shapes.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/literal_optional_shapes.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/047cb0d_n_arrayindex.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/047cb0d_n_arrayindex.a
+=== RUN   TestNativeAgreesWithNode_053/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+=== PAUSE TestNativeAgreesWithNode_053/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+=== RUN   TestNativeAgreesWithNode_053/internal/oracle/testdata/regexp_cycle_closures.a
+=== PAUSE TestNativeAgreesWithNode_053/internal/oracle/testdata/regexp_cycle_closures.a
+=== RUN   TestNativeAgreesWithNode_053/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== PAUSE TestNativeAgreesWithNode_053/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/borrow_chain_coverage_return.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/stage3/drivers/scanner/probes/nested-sibling-callback.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/regexp_cycle_closures.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/stage3/namespace-parser-stops/native-namespace-object-receiver.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/047cb0d_n_arrayindex.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/accessor_spread_throw_last.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/literal_optional_shapes.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/spread_calls.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_053/internal/oracle/testdata/sort_releases.a
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:772: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_053 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/borrow_chain_coverage_return.a (3.38s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a (0.38s)
+    --- PASS: TestNativeAgreesWithNode_053/stage3/drivers/scanner/probes/nested-sibling-callback.a (2.37s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/regexp_cycle_closures.a (0.46s)
+    --- PASS: TestNativeAgreesWithNode_053/stage3/namespace-parser-stops/native-namespace-object-receiver.a (2.18s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/047cb0d_n_arrayindex.a (0.38s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/accessor_spread_throw_last.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/literal_optional_shapes.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/spread_calls.a (0.47s)
+    --- PASS: TestNativeAgreesWithNode_053/internal/oracle/testdata/sort_releases.a (0.53s)
+PASS
+gate cache: native hits=8 misses=20
+gate cache: node hits=0 misses=20
+gate cache: probe hits=0 misses=0

@@ -10,9 +10,15 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
-	ViewOrigins       []Expression
-	ViewContracts     []ViewContract
-	ViewContractTypes SortedMap[int, ViewContractID]
+	OptionalViewFields SortedMap[string, bool]
+
+	ArrayViewEnabled                bool
+	ArrayViewTemplateWhere          string
+	ArrayViewNeedsSourceCertificate bool
+	ViewOrigins                     []Expression
+	ViewAdapters                    bool // escaped adapters receive an explicit dynamic this slot
+	ViewContracts                   []ViewContract
+	ViewContractTypes               SortedMap[int, ViewContractID]
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
@@ -120,6 +126,18 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// Surface records JavaScript reflection from the source, independently of ABI.
+	Surface *FunctionSurface
+	Bound   *BoundCallable
+
+	// CallableMasks records producer signature members independently of any view.
+	CallableMasks      []uint16
+	CallableParameters []ViewContractID
+	CallableReceiver   ViewContractID // explicit source this parameter, when present
+	CallableResult     ViewContractID
+	CallableResultName string
+	CallableResultNull bool
+
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string
@@ -369,6 +387,9 @@ type (
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
+		// PrimitiveOperands records checker proof, including mixed primitive unions.
+		// False retains adapter identity normalization.
+		PrimitiveOperands [2]bool
 	}
 
 	// NumberToString is String(value), as a template literal and string + number write it.
@@ -423,6 +444,11 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// Escaping callable reads retain their value-level invocation contract.
+		// This is demand metadata, never a producer certificate.
+		ViewEscape         bool
+		ViewEscapeAdamic   bool
+		ViewEscapeContract ViewContractID
 		ViewContract       ViewContractID
 		ViewTypeID         int
 		ViewReceiverTypeID int
@@ -644,10 +670,15 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
-		Array, Index Expression
-		Element      Type
-		Relative     bool
-		Optional     bool // array?.[index], skipping the index when the receiver is missing
+		View, ViewType             string
+		ViewAllowed                []ViewLiteral
+		ViewContract               ViewContractID
+		ViewTypeID                 int
+		Required, UndefinedAllowed bool
+		Array, Index               Expression
+		Element                    Type
+		Relative                   bool
+		Optional                   bool // array?.[index], skipping the index when the receiver is missing
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
@@ -705,6 +736,7 @@ type (
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		ViewRead                 ArrayViewRead
 		CallbackType             int
 		Array, Callback, Initial Expression
 		Element, Result          Type
@@ -717,8 +749,9 @@ type (
 	// ArrayPop is array.pop(): the last element, removed, or undefined when there's none (a null
 	// reference, or a Maybe pair).
 	ArrayPop struct {
-		Array   Expression
-		Element Type
+		ViewRead ArrayViewRead
+		Array    Expression
+		Element  Type
 	}
 
 	// MakeClosure makes a closure of a function, capturing the cells of its Environment.
@@ -726,18 +759,31 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		CallWhere        string
+		CallContract     ViewContractID
+		CheckBound       bool // validate only the supplied prefix, never invoke
+		BoundView        string
+		SurfaceOperation string // source call/apply/bind, for bound-surface refusal
+		CheckedDiscard   bool
+		DiscardContract  ViewContractID
+		DiscardView      string
+
 		// Direct identifies canonical sibling code sharing Closure as its environment.
-		Direct       int
-		Closure      Expression
-		Arguments    []Expression
-		Spread       []bool
-		FunctionType int
-		Returns      Type
+		Direct         int
+		Closure        Expression
+		Receiver       Expression // call/apply thisArg, evaluated after the callee and before arguments
+		ReceiverPacked bool       // protocol lowering already supplies its receiver as argument zero
+		Arguments      []Expression
+		ArgumentCount  Expression // actual argument count when forwarding a bound prefix
+		Spread         []bool
+		FunctionType   int
+		Returns        Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
+		ViewRead     ArrayViewRead
 		CallbackType int
 		Array        Expression
 		Callback     Expression
@@ -751,6 +797,7 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
+		ViewRead     ArrayViewRead
 		CallbackType int
 		Method       string
 		Array        Expression
@@ -878,6 +925,7 @@ type (
 
 	// ArrayJoin is Array.join(Separator), writing each element as String() would.
 	ArrayJoin struct {
+		ViewRead  ArrayViewRead
 		Array     Expression
 		Separator Expression
 		Element   Type
@@ -1200,11 +1248,12 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Record        bool // write into counted own-key storage
-		Uninitialized bool
-		Object        Expression
-		Name          string
-		Value         Expression
+		ViewWriteUnrelated bool // every reaching receiver is proven outside the viewed allocation graph
+		Record             bool // write into counted own-key storage
+		Uninitialized      bool
+		Object             Expression
+		Name               string
+		Value              Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1244,6 +1293,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		ViewRead ArrayViewRead
 		Labels   []string
 		Iterable Expression
 		Element  Type

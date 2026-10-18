@@ -1,0 +1,9 @@
+--- a/internal/lower/primitive_identity.go
++++ b/internal/lower/primitive_identity.go
+@@ -14,5 +14,5 @@
+ 		}
+ 		return len(proven.Types()) != 0
+ 	}
+-	return proven.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
++	return false
+ }

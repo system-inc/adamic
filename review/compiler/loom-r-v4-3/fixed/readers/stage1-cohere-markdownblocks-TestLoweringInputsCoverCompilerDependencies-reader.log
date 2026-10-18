@@ -1,0 +1,6 @@
+=== RUN   TestLoweringInputsCoverCompilerDependencies
+=== PAUSE TestLoweringInputsCoverCompilerDependencies
+=== CONT  TestLoweringInputsCoverCompilerDependencies
+    whitespace_layout_split_test.go:678: 101 in-repository compiler directories and module files covered; each of 6 declared inputs needed
+--- PASS: TestLoweringInputsCoverCompilerDependencies (0.13s)
+PASS

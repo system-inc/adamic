@@ -1,0 +1,32 @@
+package main
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "time"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+ "github.com/system-inc/adamic/internal/native"
+)
+func main() {
+ out:=os.Args[1]
+ if err:=os.MkdirAll(out,0755);err!=nil {panic(err)}
+ phases:=map[string]any{}
+ start:=time.Now()
+ loaded,err:=load.Load([]string{"stage1/cohere/json/main.ts"});if err!=nil {panic(err)}
+ phases["load_seconds"]=time.Since(start).Seconds()
+ start=time.Now();program,err:=lower.Lower(context.Background(),loaded);if err!=nil {panic(err)}
+ phases["lower_seconds"]=time.Since(start).Seconds()
+ start=time.Now();source:=native.C(program);phases["emit_seconds"]=time.Since(start).Seconds();phases["c_bytes"]=len(source)
+ if err:=os.WriteFile(filepath.Join(out,"main.c"),[]byte(source),0644);err!=nil {panic(err)}
+ for _,sanitize:=range []bool{false,true} {
+  name:="release";if sanitize {name="sanitized"}
+  start=time.Now();err:=native.Build(source,filepath.Join(out,name),native.Options{Sanitize:sanitize});phases[name+"_compile_seconds"]=time.Since(start).Seconds();if err!=nil {panic(err)}
+ }
+ data,err:=json.MarshalIndent(phases,"","  ");if err!=nil {panic(err)}
+ if err:=os.WriteFile(filepath.Join(out,"compile.json"),append(data,'\n'),0644);err!=nil {panic(err)}
+ fmt.Println(string(data))
+}

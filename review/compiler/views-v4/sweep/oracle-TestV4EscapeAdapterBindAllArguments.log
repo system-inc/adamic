@@ -1,0 +1,12 @@
+=== RUN   TestV4EscapeAdapterBindAllArguments
+=== PAUSE TestV4EscapeAdapterBindAllArguments
+=== CONT  TestV4EscapeAdapterBindAllArguments
+    checked_views_v4_bind_test.go:143: gate cache node miss
+    checked_views_v4_bind_test.go:143: native sanitized surface counts: [10 10 23 23 10 0]
+    checked_views_v4_bind_test.go:143: gate cache node miss
+--- PASS: TestV4EscapeAdapterBindAllArguments (0.64s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.646s

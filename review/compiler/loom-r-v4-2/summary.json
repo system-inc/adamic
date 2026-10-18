@@ -1,0 +1,20 @@
+{
+  "focused": 314,
+  "focused_skips": [
+    "TestViewAdapterPoolTSanPending",
+    "TestViewAdapterProgramUnderlyingPending",
+    "TestViewAdapterRegionAdoptionPending",
+    "TestViewAdapterRuntimeStaticsPending",
+    "TestV4EscapeAdapterBlameRuntimeCallback",
+    "TestV4Lane5FactoryReadonlyTargetControl",
+    "TestV4Lane5FactoryWiderWritePending"
+  ],
+  "focused_max": 34.892,
+  "flow_leaves": 859,
+  "flow_max": 52.02,
+  "flow_seconds": 125.755,
+  "reader_packages": 53,
+  "reader_tests": 48,
+  "reader_max": 33.844,
+  "external_mutants": 20
+}

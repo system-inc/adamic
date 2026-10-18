@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewArrayReadMutantsArrayMissing
+=== PAUSE TestCheckedViewArrayReadMutantsArrayMissing
+=== CONT  TestCheckedViewArrayReadMutantsArrayMissing
+    checked_views_arrays_mutants_test.go:70: gate cache node miss
+    checked_views_arrays_mutants_test.go:70: removed 1 field checks; release C and JavaScript rejected the mutant
+--- PASS: TestCheckedViewArrayReadMutantsArrayMissing (3.53s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,151 @@
+{
+  "bench/regex": [],
+  "bridge/tsgo": [
+    "TestBridgeProductCacheIsVerified"
+  ],
+  "cloud/reports/decode-ascii": [
+    "TestRuntimeFeaturesMatchNode"
+  ],
+  "cmd/adamic": [
+    "TestBuildTargetParsing"
+  ],
+  "cmd/adamic-meter": [
+    "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk"
+  ],
+  "cmd/adamic-test262": [
+    "TestAdaptCallbackParam"
+  ],
+  "internal/compilerinputs": [
+    "TestCheckKeyTellsTheCompilerFromTscWhole"
+  ],
+  "internal/flow": [
+    "TestArrayHolesAliasingIsFresh"
+  ],
+  "internal/fresh": [
+    "TestArrayHolesBackEdgeRemainsUnproven"
+  ],
+  "internal/fuzz": [
+    "TestExactSignatureRejectsSuffix"
+  ],
+  "internal/ir": [
+    "TestAProgramIsTheSameBytesEveryTimeGobWritesIt"
+  ],
+  "internal/javascript": [
+    "TestViewArrayFieldPresence"
+  ],
+  "internal/leakcheck": [
+    "TestCountedBalance"
+  ],
+  "internal/load": [
+    "TestLoadRefusesWhatIsNotAdamic"
+  ],
+  "internal/lower": [
+    "TestAMethodReadAsAValueIsRefused"
+  ],
+  "internal/lower/cycleledger": [
+    "TestOriginalCycleLedger"
+  ],
+  "internal/native": [
+    "TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads"
+  ],
+  "internal/native/runtimeproducts": [
+    "TestAnArchivesBuildIsJournaledAsRuntimeproducts"
+  ],
+  "internal/oracle": [
+    "TestARuntimeProductKeyIsTheSameThroughEitherLink"
+  ],
+  "stage1/cohere/css": [
+    "TestCSSGoOraclesKeyTheCompilersEnvGivesGo"
+  ],
+  "stage1/cohere/cssnumbers": [
+    "TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks"
+  ],
+  "stage1/cohere/cssstrings": [
+    "TestMultiPushGap"
+  ],
+  "stage1/cohere/estree": [
+    "TestCookedSurrogateLibraryGap"
+  ],
+  "stage1/cohere/formatfiles": [
+    "TestExtAgreesWithGo"
+  ],
+  "stage1/cohere/gitignore": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/graphql": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/graphql/printer": [
+    "TestPrinterConstructorGap"
+  ],
+  "stage1/cohere/json": [
+    "TestClosedEmptyFallbackGap"
+  ],
+  "stage1/cohere/lint": [
+    "TestClosedComparatorGaps"
+  ],
+  "stage1/cohere/lint/helpers": [
+    "TestKnownGapsAreExplicit"
+  ],
+  "stage1/cohere/lint/helpers/comments": [
+    "TestJsxAdapterGuardMutant"
+  ],
+  "stage1/cohere/lint/regex": [
+    "TestDynamicPatternGap"
+  ],
+  "stage1/cohere/lint/rules/no-underscore-dangle": [
+    "TestCompileProfiles"
+  ],
+  "stage1/cohere/lint/rules/no-unsafe-negation": [
+    "TestCompileProfiles"
+  ],
+  "stage1/cohere/lint/rules/no-unsafe-optional-chaining": [
+    "TestCompileProfiles"
+  ],
+  "stage1/cohere/lint/rules/typescript-no-this-alias": [
+    "TestCompileProfiles"
+  ],
+  "stage1/cohere/markdownblocks": [
+    "TestLoweringInputsCoverCompilerDependencies"
+  ],
+  "stage1/cohere/markdowninline": [
+    "TestDelimiterExpressionMatchesNode"
+  ],
+  "stage1/cohere/mediaquery": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/selector": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/static_single_assignment": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/suppression": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/tsprinter": [
+    "TestClassInterfaceMethodGap"
+  ],
+  "stage1/cohere/typeaware": [
+    "TestTypeAwareKeysCarryNoMachinePath"
+  ],
+  "stage1/cohere/values": [
+    "TestEachGapStandsWhereGapsMdSaysItDoes"
+  ],
+  "stage1/cohere/yaml": [
+    "TestClosedLexerGaps"
+  ],
+  "stage1/typescript/parser": [
+    "TestClassMethodInterfaceGap"
+  ],
+  "stage1/typescript/scanner": [
+    "TestBigintGapStandsWhereGapsMdSays"
+  ],
+  "stage3/census/tool": [],
+  "stage3/drivers/parser/probe": [],
+  "stage3/fixtures": [
+    "TestFixtureOracleProductTracksInputs"
+  ],
+  "stage3/ledger/checker-259": [],
+  "stage3/ledger/checker-259/rerun-2026-10-08": []
+}

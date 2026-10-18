@@ -1,0 +1,11 @@
+--- a/internal/native/runtimeproducts/runtimeproducts.go
++++ b/internal/native/runtimeproducts/runtimeproducts.go
+@@ -52,7 +52,7 @@
+ 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/getters_census_binary_inline.a"},
+ 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
+ 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
+-	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "v4-receiver-regexp"},
++	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "dedication/dedication.a"},
+ }
+ 
+ // A Variant is one way the oracle builds a program: sanitized for the comparison and the leak check, release as a
