@@ -1,0 +1,36 @@
+{"Time":"2026-10-18T00:08:14.348637348Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:08:14.35565469Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce"}
+{"Time":"2026-10-18T00:08:14.355752726Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce","Output":"=== RUN   TestCycleScalarLiteralShapesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355800507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce","Output":"=== PAUSE TestCycleScalarLiteralShapesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355803171Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce"}
+{"Time":"2026-10-18T00:08:14.35580955Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields"}
+{"Time":"2026-10-18T00:08:14.355812725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"=== RUN   TestCycleScalarShapeKeysPreserveDistinctFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355817512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"=== PAUSE TestCycleScalarShapeKeysPreserveDistinctFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355819245Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields"}
+{"Time":"2026-10-18T00:08:14.355822369Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle"}
+{"Time":"2026-10-18T00:08:14.355824432Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle","Output":"=== RUN   TestEnumNamespaceSharedCycle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355827006Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle","Output":"=== PAUSE TestEnumNamespaceSharedCycle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355828478Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle"}
+{"Time":"2026-10-18T00:08:14.355830441Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants"}
+{"Time":"2026-10-18T00:08:14.355832154Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"=== RUN   TestEmptyNeverMapCannotGainWritableInhabitants\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.355834658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"=== PAUSE TestEmptyNeverMapCannotGainWritableInhabitants\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.35583631Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants"}
+{"Time":"2026-10-18T00:08:14.355838163Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce"}
+{"Time":"2026-10-18T00:08:14.355839745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce","Output":"=== CONT  TestCycleScalarLiteralShapesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.358149065Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle"}
+{"Time":"2026-10-18T00:08:14.358168313Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle","Output":"=== CONT  TestEnumNamespaceSharedCycle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.358281201Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants"}
+{"Time":"2026-10-18T00:08:14.358285237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"=== CONT  TestEmptyNeverMapCannotGainWritableInhabitants\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.36303417Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields"}
+{"Time":"2026-10-18T00:08:14.363056473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"=== CONT  TestCycleScalarShapeKeysPreserveDistinctFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.503736371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle","Output":"--- PASS: TestEnumNamespaceSharedCycle (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.534208274Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumNamespaceSharedCycle","Elapsed":0.15}
+{"Time":"2026-10-18T00:08:14.534314252Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Output":"--- PASS: TestCycleScalarShapeKeysPreserveDistinctFields (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:14.555003865Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarShapeKeysPreserveDistinctFields","Elapsed":0.15}
+{"Time":"2026-10-18T00:08:14.555059238Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Output":"--- PASS: TestEmptyNeverMapCannotGainWritableInhabitants (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:15.331325861Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEmptyNeverMapCannotGainWritableInhabitants","Elapsed":0.19}
+{"Time":"2026-10-18T00:08:15.331370568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce","Output":"--- PASS: TestCycleScalarLiteralShapesOnce (0.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:15.331378019Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCycleScalarLiteralShapesOnce","Elapsed":0.96}
+{"Time":"2026-10-18T00:08:15.331380953Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:15.341558896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.993s\n"}
+{"Time":"2026-10-18T00:08:15.341596191Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.993}

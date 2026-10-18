@@ -1,0 +1,134 @@
+{
+  "review/compiler/loom-implied-target/followup/objects-1024.a": {
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "body_sha256": "6ec9d5723c8d00b93b04e72a4d4f65cbcd03644641b0a00b71654f256a1087a3",
+    "before": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.165,
+      "command": [
+        "/tmp/loom-r-implied-target-ac-adamic",
+        "c",
+        "review/compiler/loom-implied-target/followup/objects-1024.a"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 341712,
+      "seconds": 0.128
+    }
+  },
+  "review/compiler/loom-implied-target/followup/objects-2048.a": {
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "body_sha256": "345d89db4fecb8fa9f4fa339b0865a6d3c2b75c8fe799d5fcf71582da586504a",
+    "before": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.267,
+      "command": [
+        "/tmp/loom-r-implied-target-ac-adamic",
+        "c",
+        "review/compiler/loom-implied-target/followup/objects-2048.a"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 683454,
+      "seconds": 0.235
+    }
+  },
+  "review/compiler/loom-implied-target/followup/objects-4096.a": {
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "body_sha256": "e4bdd46b0ceaa57b59815a30a0a6d305453edbacd1b850e2dc0827ab19d90ff1",
+    "before": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.471,
+      "command": [
+        "/tmp/loom-r-implied-target-ac-adamic",
+        "c",
+        "review/compiler/loom-implied-target/followup/objects-4096.a"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1367212,
+      "seconds": 0.436
+    }
+  },
+  "review/compiler/loom-implied-target/followup/objects-512.a": {
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "body_sha256": "0db222c9869c306056b334a3c013fb570d05857ed1def53515d18cea5e1817f9",
+    "before": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.116,
+      "command": [
+        "/tmp/loom-r-implied-target-ac-adamic",
+        "c",
+        "review/compiler/loom-implied-target/followup/objects-512.a"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 172830,
+      "seconds": 0.086
+    }
+  },
+  "review/compiler/loom-implied-target/objects-sequential.a": {
+    "status": "checked",
+    "reason": "",
+    "header": "",
+    "body_sha256": "192447b8beed6e1e16136cb1172dd70e74fec68da1d93f383de650e8c6a45946",
+    "before": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.268,
+      "command": [
+        "/tmp/loom-r-implied-target-ac-adamic",
+        "c",
+        "review/compiler/loom-implied-target/objects-sequential.a"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 683460,
+      "seconds": 0.231
+    }
+  },
+  "review/compiler/loom-implied-target/objects.a": {
+    "status": "refused",
+    "reason": "parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)",
+    "header": "// a-check: refused parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)",
+    "body_sha256": "848de67f6a6711fe1da741bfd93b2732248f17bbc27c396a6faa7e98206dbd6d",
+    "before": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2053:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)\n",
+      "seconds": 0.115,
+      "command": [
+        "/tmp/loom-r-implied-target-ac-adamic",
+        "c",
+        "review/compiler/loom-implied-target/objects.a"
+      ]
+    },
+    "after": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2054:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)\n",
+      "stdout_bytes": 0,
+      "seconds": 0.058
+    }
+  }
+}

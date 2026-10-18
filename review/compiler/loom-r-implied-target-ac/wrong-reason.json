@@ -1,0 +1,26 @@
+{
+  "result": {
+    "a_check": {
+      "review/compiler/loom-implied-target/objects.a": {
+        "outcome": "refused",
+        "expected": "refused deliberate-wrong-reason-header-mutant",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2054:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belo"
+      }
+    }
+  },
+  "steps": {
+    "a-check": 0.2
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\nreview/compiler/loom-implied-target/objects.a: refused, expected refused deliberate-wrong-reason-header-mutant (adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2054:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make th)",
+  "diagnostics": {
+    "review/compiler/loom-implied-target/objects.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2054:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)\n",
+      "stdout_bytes": 0,
+      "seconds": 0.071
+    }
+  }
+}
