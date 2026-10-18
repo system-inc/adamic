@@ -1,143 +1,24 @@
 package json
 
 import (
-	"crypto/sha256"
 	"encoding/json"
-	"fmt"
 	"os"
-	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
-type caseIdentity struct {
-	Path   string `json:"path"`
-	SHA256 string `json:"sha256"`
-}
-type groupPin struct {
-	Count  int    `json:"count"`
-	SHA256 string `json:"sha256"`
-}
-type corpusPin struct {
-	Count  int                 `json:"count"`
-	SHA256 string              `json:"sha256"`
-	Groups map[string]groupPin `json:"groups"`
-	Cases  []caseIdentity      `json:"cases"`
-}
+type caseIdentity = oracles.CaseIdentity
+type groupPin = oracles.GroupPin
+type corpusPin = oracles.CorpusPin
 
-func caseGroup(path string) string {
-	if strings.HasPrefix(path, "generated/") {
-		return "generated"
-	}
-	if strings.HasPrefix(path, "cohere/TypeScript/") {
-		return "TypeScript"
-	}
-	if strings.HasPrefix(path, "cohere/") {
-		return "cohere"
-	}
-	return "provisioned"
-}
+func caseGroup(path string) string { return oracles.CaseGroup(path) }
 
 // The digest is SHA256 of sorted path<TAB>SHA256(text)<LF> identities.
-func pinForCases(cases []textCase) corpusPin {
-	pin := corpusPin{Count: len(cases), Groups: map[string]groupPin{}}
-	for _, item := range cases {
-		pin.Cases = append(pin.Cases, caseIdentity{item.Name, fmt.Sprintf("%x", sha256.Sum256([]byte(item.Text)))})
-	}
-	sort.Slice(pin.Cases, func(i, j int) bool {
-		if pin.Cases[i].Path == pin.Cases[j].Path {
-			return pin.Cases[i].SHA256 < pin.Cases[j].SHA256
-		}
-		return pin.Cases[i].Path < pin.Cases[j].Path
-	})
-	var all strings.Builder
-	groups := map[string]*strings.Builder{}
-	for _, item := range pin.Cases {
-		line := item.Path + "\t" + item.SHA256 + "\n"
-		all.WriteString(line)
-		group := caseGroup(item.Path)
-		if groups[group] == nil {
-			groups[group] = &strings.Builder{}
-		}
-		groups[group].WriteString(line)
-		record := pin.Groups[group]
-		record.Count++
-		pin.Groups[group] = record
-	}
-	pin.SHA256 = fmt.Sprintf("%x", sha256.Sum256([]byte(all.String())))
-	for group, lines := range groups {
-		record := pin.Groups[group]
-		record.SHA256 = fmt.Sprintf("%x", sha256.Sum256([]byte(lines.String())))
-		pin.Groups[group] = record
-	}
-	return pin
-}
+func pinForCases(cases []textCase) corpusPin { return oracles.PinForCases(oracleCases(cases)) }
 
-func corpusPinError(want, got corpusPin) error {
-	// Recompute the committed manifest too: a corrupted count/digest cannot pass.
-	summarize := func(pin corpusPin) corpusPin {
-		var lines strings.Builder
-		for _, item := range pin.Cases {
-			lines.WriteString(item.Path + "\t" + item.SHA256 + "\n")
-		}
-		pin.SHA256 = fmt.Sprintf("%x", sha256.Sum256([]byte(lines.String())))
-		return pin
-	}
-	if summarize(want).SHA256 != want.SHA256 || want.Count != len(want.Cases) {
-		return fmt.Errorf("corpus pin manifest/count/digest is inconsistent")
-	}
-	var differences []string
-	for _, group := range []string{"provisioned", "TypeScript", "cohere", "generated"} {
-		a, b := want.Groups[group], got.Groups[group]
-		if a != b {
-			differences = append(differences, fmt.Sprintf("%s: got %d, pinned %d (identity SHA256 got %s, pinned %s)", group, b.Count, a.Count, b.SHA256, a.SHA256))
-		}
-	}
-	if want.Count == got.Count && want.SHA256 == got.SHA256 && len(differences) == 0 {
-		return nil
-	}
-	expected, observed := map[string]string{}, map[string]string{}
-	for _, item := range want.Cases {
-		expected[item.Path] = item.SHA256
-	}
-	for _, item := range got.Cases {
-		observed[item.Path] = item.SHA256
-	}
-	for _, item := range want.Cases {
-		hash, exists := observed[item.Path]
-		if !exists {
-			differences = append(differences, "missing "+item.Path)
-		} else if hash != item.SHA256 {
-			differences = append(differences, "changed text "+item.Path)
-		}
-	}
-	for _, item := range got.Cases {
-		if _, exists := expected[item.Path]; !exists {
-			differences = append(differences, "extra "+item.Path)
-		}
-	}
-	return fmt.Errorf("corpus pin: got %d, pinned %d; %s", got.Count, want.Count, strings.Join(differences, "; "))
-}
-
-func verifyCorpusPin(t *testing.T, cases []textCase) {
-	t.Helper()
-	encoded, err := os.ReadFile("testdata/corpus.pin")
-	if err != nil {
-		t.Fatalf("%s corpus pin: %v", t.Name(), err)
-	}
-	var expected corpusPin
-	if err := json.Unmarshal(encoded, &expected); err != nil {
-		t.Fatalf("%s corpus pin: %v", t.Name(), err)
-	}
-	actual, count, err := validatePinnedCorpus(t, cases, expected)
-	t.Logf("corpus repository: %d tracked JSON files; read from the corpus product at Git pin %s", count, repositoryCorpusCommit)
-	if err != nil {
-		t.Fatalf("%s: %v", t.Name(), err)
-	}
-	for _, group := range []string{"provisioned", "TypeScript", "cohere", "generated"} {
-		t.Logf("corpus pin group %s: %d, SHA256 %s", group, actual.Groups[group].Count, actual.Groups[group].SHA256)
-	}
-}
+func corpusPinError(want, got corpusPin) error { return oracles.CorpusPinError(want, got) }
 
 func TestCorpusPinDiagnostics(t *testing.T) {
 	t.Parallel()

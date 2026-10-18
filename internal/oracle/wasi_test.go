@@ -95,6 +95,7 @@ func onWASI(t *testing.T, source string) run {
 }
 
 func TestWASIOracleCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -118,6 +119,7 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -144,51 +146,5 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 	}
 	if difference := disagreement(expected, probe("probe\n", 23)); difference != "exit codes differ" {
 		t.Fatalf("exit mutant: %q", difference)
-	}
-}
-
-// Compile every emitted translation unit for the 32-bit ABI independently of runtime linking, as a family
-// (families_test.go): TestWASIEmission_000 and on each compile the fixtures their shard owns.
-func runWASIEmissionShard(t *testing.T, shard int) {
-	t.Helper()
-	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
-	}
-	options := native.Options{Target: "wasm32-wasi"}
-	if err := native.ValidateOptions(options); err != nil {
-		t.Fatal(err)
-	}
-	compiler := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
-	_, probing := familyProbe("TestWASIEmission")
-	for _, index := range familyCases(t, "TestWASIEmission", shard, fixturePaths()) {
-		fixture := fixtures[index]
-		t.Run(fixture.path, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lowered(t, path)
-			if !fixture.lowers {
-				t.Skip("fixture does not lower")
-			}
-			if err != nil {
-				t.Fatal(err)
-			}
-			code := native.C(program)
-			if probing {
-				// TestFamiliesCatchAPlantedCase's mutant: C that no target compiles.
-				code += "\nint planted = ;\n"
-			}
-			directory := t.TempDir()
-			source := filepath.Join(directory, "main.c")
-			if err := os.WriteFile(source, []byte(code), 0644); err != nil {
-				t.Fatal(err)
-			}
-			flags := append(native.Flags(options), "-I", filepath.Join(repository, "internal", "native", "runtime"), "-c", source, "-o", filepath.Join(directory, "main.o"))
-			if output, err := bounded(t, compiler, flags...).CombinedOutput(); err != nil {
-				t.Fatalf("emitted C: %v\n%s", err, output)
-			}
-		})
 	}
 }

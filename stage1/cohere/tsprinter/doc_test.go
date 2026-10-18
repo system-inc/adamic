@@ -1,83 +1,43 @@
 package tsprinter
 
 import (
-	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
-
-func documentCorpus(t *testing.T) (string, string, string) {
-	t.Helper()
-	directory := t.TempDir()
-	cohere, _ := filepath.Abs(repository + "/cohere")
-	// The unit only runs the oracle, in the package's directory.
-	command := bounded(t, documentOracle(t), "-test.run=^TestAdamicDocuments$")
-	command.Dir = cohere + "/internal/format/doc"
-	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go doc corpus %v\n%s", err, output)
-	}
-	answers, err := os.ReadFile(directory + "/answers.txt")
-	if err != nil {
-		t.Fatal(err)
-	}
-	planCorpus(t, directory+"/docs.txt")
-	return directory + "/docs.txt", string(answers), directory + "/docs.json"
-}
-
-// documentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
-func documentOracle(t *testing.T) string {
-	t.Helper()
-	return buildcache.GoTest(t, "cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t))
-}
-
-// documentOracleInputs is documentOracle's key, computed without building it.
-func documentOracleInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	inputs, err := buildcache.GoTestInputs("cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return inputs
-}
-
-// documentOracleArguments lay the harness over cohere's doc package.
-func documentOracleArguments(t *testing.T) []string {
-	t.Helper()
-	cohere, _ := filepath.Abs(repository + "/cohere")
-	side, _ := filepath.Abs("testdata/doc_side_test.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
-	path := t.TempDir() + "/overlay.json"
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	return []string{"-overlay=" + path}
-}
-
-func TestProduct_TSPrinterDocumentOracle(t *testing.T) {
-	t.Parallel()
-	documentOracle(t)
-}
 
 func TestDocumentsAgainstGoAndPrettier(t *testing.T) {
 	t.Parallel()
-	cases, want, specs := documentCorpus(t)
-	port, _ := filepath.Abs("docMain.ts")
-	compare := func(name string, result run) {
-		if result.exitCode != 0 || len(result.stderr) > 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
+	cases, want, specs := oracles.DocumentCorpus(t)
+	// The port's lowered program and natives are products, as expressions' and statements' are (#g7a9yd3): the test is
+	// only its runs.
+	products := printerGateFamilyProducts(t, "documents")
+	compare := func(name string, result oracles.Run) {
+		if result.ExitCode != 0 || len(result.Stderr) > 0 || string(result.Stdout) != want {
+			t.Fatalf("%s exit %d stderr %s diff %s", name, result.ExitCode, result.Stderr, corpusDifference(t, cases, string(result.Stdout), want))
 		}
 	}
-	compare("Node", onNode(t, port, cases))
-	program := lowered(t, port)
-	result, binary := natively(t, program, cases)
-	compare("native", result)
-	compare("backend", onJavaScriptBackend(t, program, cases))
-	if report := leaks(t, program, binary, cases); report != "" {
-		t.Fatal(report)
+	compare("Node", onNode(t, products.source, cases))
+	var environment []string
+	if runtime.GOOS == "linux" {
+		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+	}
+	compare("native", execute(t, environment, products.sanitized, cases))
+	compare("backend", onNode(t, products.backend, cases))
+	switch runtime.GOOS {
+	case "darwin":
+		if report := execute(t, nil, "leaks", "--atExit", "--", products.release, cases); report.ExitCode != 0 {
+			t.Fatal(string(report.Stdout))
+		}
+	case "linux":
+		if report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, cases); report.ExitCode != 0 {
+			t.Fatalf("exit %d\n%s", report.ExitCode, report.Stderr)
+		}
+	default:
+		t.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {

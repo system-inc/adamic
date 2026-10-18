@@ -1,0 +1,97 @@
+[
+  {
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "seconds": 0.01,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a/native",
+    "seconds": 1.39,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareClosure/self-compare/closure.a",
+    "seconds": 1.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareClosure/self-compare",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareClosure",
+    "seconds": 3.01,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/native",
+    "seconds": 1.53,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareSweep/self-compare/sweep.a",
+    "seconds": 1.67,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareSweep/self-compare",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareSweep",
+    "seconds": 2.95,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/native",
+    "seconds": 1.53,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a",
+    "seconds": 1.68,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareArrayFill/self-compare",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestFixturesSelfCompareArrayFill",
+    "seconds": 2.99,
+    "action": "pass"
+  }
+]

@@ -1,7 +1,6 @@
 package printer
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
@@ -22,6 +21,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -100,10 +100,10 @@ func TestProduct_GraphQLPrinterRelease(t *testing.T) {
 	}
 	printerAsGoNative(t, false)
 }
-func TestProduct_GraphQLPrinterDefaults(t *testing.T) { t.Parallel(); printerCases(t, "defaults") }
-func TestProduct_GraphQLPrinterNarrow(t *testing.T)   { t.Parallel(); printerCases(t, "narrow") }
-func TestProduct_GraphQLPrinterTight(t *testing.T)    { t.Parallel(); printerCases(t, "tight") }
-func TestProduct_GraphQLPrinterTabs(t *testing.T)     { t.Parallel(); printerCases(t, "tabs") }
+func TestProduct_GraphQLPrinterFindsDefaults(t *testing.T) { t.Parallel(); printerCases(t, "defaults") }
+func TestProduct_GraphQLPrinterFindsNarrow(t *testing.T)   { t.Parallel(); printerCases(t, "narrow") }
+func TestProduct_GraphQLPrinterFindsTight(t *testing.T)    { t.Parallel(); printerCases(t, "tight") }
+func TestProduct_GraphQLPrinterFindsTabs(t *testing.T)     { t.Parallel(); printerCases(t, "tabs") }
 
 func TestPrinterAsGoCohere_Union(t *testing.T) { t.Parallel(); printerAsGoUnit(t, -1) }
 func TestPrinterAsGoCohere_000(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 0) }
@@ -200,7 +200,6 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 			command.Env = toolchain.Env(job.environment...)
 		}
 	}
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(err, syscall.ESRCH) {
@@ -208,19 +207,35 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	// Its own group, its output read to the end once the group is gone: no delay decides when the reads are done, so a
+	// slow finish under load is never red (#n3gk22h, a leak pass's "WaitDelay expired before I/O complete" on Home).
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if errors.As(err, &exitError) {
 		err = nil
 	}
-	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: -1}
+	result := run{stdout: stdout, stderr: stderr, exitCode: -1}
 	if command.ProcessState != nil {
 		result.exitCode = command.ProcessState.ExitCode()
 	}
 	return printerAsGoResult{job, result, err, time.Since(start)}
+}
+
+// A job whose process leaves a descendant holding its output (a shell's background sleep, standing in for a helper a
+// sanitizer starts) still returns what the job wrote, with no error, as soon as the job exits. exec's own pipes with the
+// one-second WaitDelay that printerAsGoRun had reported "WaitDelay expired before I/O complete" here instead (#n3gk22h).
+func TestPrinterAsGoRunReadsPastADescendant(t *testing.T) {
+	t.Parallel()
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	result := printerAsGoRun(ctx, printerAsGoJob{"descendant", "/bin/sh", []string{"-c", "sleep 30 & printf ok; printf warned >&2"}, nil, false})
+	if result.err != nil || string(result.run.stdout) != "ok" || string(result.run.stderr) != "warned" || result.run.exitCode != 0 {
+		t.Fatalf("err %v, exit %d, stdout %q, stderr %q", result.err, result.run.exitCode, result.run.stdout, result.run.stderr)
+	}
+	if result.wall > 10*time.Second {
+		t.Fatalf("the job's reads waited %.3fs on the descendant's sleep", result.wall.Seconds())
+	}
+	t.Logf("read past the descendant in %.3fs", result.wall.Seconds())
 }
 
 // Each of the four fixed option modes deals its cases to three buckets by a hash of the case's input, so no shard runs

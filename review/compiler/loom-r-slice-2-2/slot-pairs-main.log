@@ -1,0 +1,22 @@
+{"Time":"2026-10-18T08:50:30.125523319Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T08:50:30.130247105Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs"}
+{"Time":"2026-10-18T08:50:30.130347163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"=== RUN   TestParallelSlotPairs\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:30.130376086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"=== PAUSE TestParallelSlotPairs\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:30.130379391Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs"}
+{"Time":"2026-10-18T08:50:30.130384269Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs"}
+{"Time":"2026-10-18T08:50:30.130387083Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"=== CONT  TestParallelSlotPairs\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:30.13039186Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan"}
+{"Time":"2026-10-18T08:50:30.130394794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Output":"=== RUN   TestParallelSlotPairs/asan\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:31.278365658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=1 elapsed=33.858568ms\n"}
+{"Time":"2026-10-18T08:50:31.278837029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Output":"--- PASS: TestParallelSlotPairs/asan (1.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:31.278847965Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/asan","Elapsed":1.15}
+{"Time":"2026-10-18T08:50:31.279161561Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release"}
+{"Time":"2026-10-18T08:50:31.279170104Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Output":"=== RUN   TestParallelSlotPairs/release\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:32.45964371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Output":"    scaling_test.go:138: harness threads=4 arguments=[] runs=1 elapsed=11.461407ms\n"}
+{"Time":"2026-10-18T08:50:32.459693835Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Output":"--- PASS: TestParallelSlotPairs/release (1.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:32.459698452Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs/release","Elapsed":1.18}
+{"Time":"2026-10-18T08:50:32.459707365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Output":"--- PASS: TestParallelSlotPairs (2.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:32.459713855Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelSlotPairs","Elapsed":2.33}
+{"Time":"2026-10-18T08:50:32.459717911Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:50:32.460947198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t2.335s\n"}
+{"Time":"2026-10-18T08:50:32.461015309Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":2.336}

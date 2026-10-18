@@ -93,6 +93,23 @@ func Witnesses(directory string) ([]string, error) {
 	return paths, nil
 }
 
+// CheckWitnesses refuses a rule with no witness under its testdata/. It walks every rule's testdata/, so it isn't part
+// of Discover, which lint's TestMain runs (Stale) and most of its tests run (Generate) in every process: a listing of
+// every rule's testdata/ there entered the read set of every lint test after it, and a witness added to one rule moved
+// every lint test's key (#s57yq6y). go run ./cmd/lint-registry checks it, and so does TestEveryRuleHasAWitness.
+func CheckWitnesses(root string, descriptors []Descriptor) error {
+	for _, d := range descriptors {
+		directory := filepath.Join(root, "rules", d.Slug)
+		witnesses, err := Witnesses(directory)
+		if err != nil || len(witnesses) == 0 {
+			return fmt.Errorf("%s: missing witness", filepath.Join(directory, "rule.json"))
+		}
+	}
+	return nil
+}
+
+// Discover reads each rule's descriptor and the files it names, all directly in the rule's directory, and nothing
+// below it: a rule's evidence/ and testdata/ are never its descriptor's inputs.
 func Discover(root string) ([]Descriptor, error) {
 	paths, err := filepath.Glob(filepath.Join(root, "rules", "*", "rule.json"))
 	if err != nil {
@@ -214,10 +231,6 @@ func Discover(root string) ([]Descriptor, error) {
 		}
 		if mutant.Name == "" || mutant.From == "" || mutant.To == mutant.From {
 			return nil, fmt.Errorf("%s: invalid owned mutant", path)
-		}
-		witnesses, err := Witnesses(filepath.Dir(path))
-		if err != nil || len(witnesses) == 0 {
-			return nil, fmt.Errorf("%s: missing witness", path)
 		}
 		result = append(result, d)
 	}

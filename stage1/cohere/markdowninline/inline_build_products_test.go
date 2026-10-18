@@ -1,20 +1,9 @@
 package markdowninline
 
 import (
-	"github.com/system-inc/adamic/internal/buildcache"
 	"path/filepath"
-	"sync"
 	"testing"
 )
-
-var inlineCompilerOnce sync.Once
-var inlineCompilerRecipe buildcache.Inputs
-
-func inlineCompilerInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	inlineCompilerOnce.Do(func() { inlineCompilerRecipe = collectInlineCompilerInputs(t) })
-	return inlineCompilerRecipe
-}
 
 var inlineMutations = []inlineMutation{
 	{"one-case disagreement", "main.ts", "console.log(encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));", "console.log(line === 'w😀😀😀😀' ? 'planted disagreement' : encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));"},
@@ -34,16 +23,11 @@ func inlineProductName(index int) string {
 }
 func inlineLoweredProduct(t *testing.T, index int) string {
 	t.Helper()
-	name := inlineProductName(index) + " lowered"
 	build := buildInlineLowered
-	if index < 0 {
-		name = "markdowninline lowered program"
-	} else {
+	if index >= 0 {
 		build = inlineMutations[index].buildLowered
 	}
-	in := inlineProgramInputs(inlineCompilerInputs(t), name)
-	in.Files = append(append([]string{}, in.Files...), "stage1/cohere/markdowninline/inline_build_products_test.go")
-	return inlineBuild(t, in, build)
+	return inlineBuild(t, inlineLoweredInputs(index), build)
 }
 func inlineNativeProduct(t *testing.T, index int, sanitize bool) string {
 	t.Helper()
@@ -70,7 +54,7 @@ func inlineMutationNodeProduct(t *testing.T, index int) string {
 	return inlineBuild(t, inlineNodeInputs(t, inlineProductName(index)+" Node", source), inlineSource(source).buildNode)
 }
 
-func TestProduct_MarkdownInlineGoOverlay(t *testing.T) {
+func TestProduct_MarkdownInlineFindsGoOverlay(t *testing.T) {
 	t.Parallel()
 	inlineOverlayBuild(t)
 }

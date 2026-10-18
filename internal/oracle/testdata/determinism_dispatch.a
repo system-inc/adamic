@@ -1,0 +1,172 @@
+// TestStage0EmitsDeterministically's witness, emitted and never run: twelve classes of eight methods, each class's
+// dispatch map its own, so a stage 0 that lists methods in map order emits this C a different way nearly every time.
+class Alder {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 0; }
+    east(): number { return this.base + 1; }
+    south(): number { return this.base + 2; }
+    west(): number { return this.base + 3; }
+    up(): number { return this.base + 4; }
+    down(): number { return this.base + 5; }
+    inward(): number { return this.base + 6; }
+    outward(): number { return this.base + 7; }
+}
+class Birch {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 8; }
+    east(): number { return this.base + 9; }
+    south(): number { return this.base + 10; }
+    west(): number { return this.base + 11; }
+    up(): number { return this.base + 12; }
+    down(): number { return this.base + 13; }
+    inward(): number { return this.base + 14; }
+    outward(): number { return this.base + 15; }
+}
+class Cedar {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 16; }
+    east(): number { return this.base + 17; }
+    south(): number { return this.base + 18; }
+    west(): number { return this.base + 19; }
+    up(): number { return this.base + 20; }
+    down(): number { return this.base + 21; }
+    inward(): number { return this.base + 22; }
+    outward(): number { return this.base + 23; }
+}
+class Dogwood {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 24; }
+    east(): number { return this.base + 25; }
+    south(): number { return this.base + 26; }
+    west(): number { return this.base + 27; }
+    up(): number { return this.base + 28; }
+    down(): number { return this.base + 29; }
+    inward(): number { return this.base + 30; }
+    outward(): number { return this.base + 31; }
+}
+class Elm {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 32; }
+    east(): number { return this.base + 33; }
+    south(): number { return this.base + 34; }
+    west(): number { return this.base + 35; }
+    up(): number { return this.base + 36; }
+    down(): number { return this.base + 37; }
+    inward(): number { return this.base + 38; }
+    outward(): number { return this.base + 39; }
+}
+class Fir {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 40; }
+    east(): number { return this.base + 41; }
+    south(): number { return this.base + 42; }
+    west(): number { return this.base + 43; }
+    up(): number { return this.base + 44; }
+    down(): number { return this.base + 45; }
+    inward(): number { return this.base + 46; }
+    outward(): number { return this.base + 47; }
+}
+class Ginkgo {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 48; }
+    east(): number { return this.base + 49; }
+    south(): number { return this.base + 50; }
+    west(): number { return this.base + 51; }
+    up(): number { return this.base + 52; }
+    down(): number { return this.base + 53; }
+    inward(): number { return this.base + 54; }
+    outward(): number { return this.base + 55; }
+}
+class Hazel {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 56; }
+    east(): number { return this.base + 57; }
+    south(): number { return this.base + 58; }
+    west(): number { return this.base + 59; }
+    up(): number { return this.base + 60; }
+    down(): number { return this.base + 61; }
+    inward(): number { return this.base + 62; }
+    outward(): number { return this.base + 63; }
+}
+class Ironwood {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 64; }
+    east(): number { return this.base + 65; }
+    south(): number { return this.base + 66; }
+    west(): number { return this.base + 67; }
+    up(): number { return this.base + 68; }
+    down(): number { return this.base + 69; }
+    inward(): number { return this.base + 70; }
+    outward(): number { return this.base + 71; }
+}
+class Juniper {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 72; }
+    east(): number { return this.base + 73; }
+    south(): number { return this.base + 74; }
+    west(): number { return this.base + 75; }
+    up(): number { return this.base + 76; }
+    down(): number { return this.base + 77; }
+    inward(): number { return this.base + 78; }
+    outward(): number { return this.base + 79; }
+}
+class Koji {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 80; }
+    east(): number { return this.base + 81; }
+    south(): number { return this.base + 82; }
+    west(): number { return this.base + 83; }
+    up(): number { return this.base + 84; }
+    down(): number { return this.base + 85; }
+    inward(): number { return this.base + 86; }
+    outward(): number { return this.base + 87; }
+}
+class Larch {
+    readonly base: number;
+    constructor(base: number) { this.base = base; }
+    north(): number { return this.base + 88; }
+    east(): number { return this.base + 89; }
+    south(): number { return this.base + 90; }
+    west(): number { return this.base + 91; }
+    up(): number { return this.base + 92; }
+    down(): number { return this.base + 93; }
+    inward(): number { return this.base + 94; }
+    outward(): number { return this.base + 95; }
+}
+let total = 0;
+const alder = new Alder(0);
+total += alder.north() + alder.east() + alder.south() + alder.west() + alder.up() + alder.down() + alder.inward() + alder.outward();
+const birch = new Birch(1);
+total += birch.north() + birch.east() + birch.south() + birch.west() + birch.up() + birch.down() + birch.inward() + birch.outward();
+const cedar = new Cedar(2);
+total += cedar.north() + cedar.east() + cedar.south() + cedar.west() + cedar.up() + cedar.down() + cedar.inward() + cedar.outward();
+const dogwood = new Dogwood(3);
+total += dogwood.north() + dogwood.east() + dogwood.south() + dogwood.west() + dogwood.up() + dogwood.down() + dogwood.inward() + dogwood.outward();
+const elm = new Elm(4);
+total += elm.north() + elm.east() + elm.south() + elm.west() + elm.up() + elm.down() + elm.inward() + elm.outward();
+const fir = new Fir(5);
+total += fir.north() + fir.east() + fir.south() + fir.west() + fir.up() + fir.down() + fir.inward() + fir.outward();
+const ginkgo = new Ginkgo(6);
+total += ginkgo.north() + ginkgo.east() + ginkgo.south() + ginkgo.west() + ginkgo.up() + ginkgo.down() + ginkgo.inward() + ginkgo.outward();
+const hazel = new Hazel(7);
+total += hazel.north() + hazel.east() + hazel.south() + hazel.west() + hazel.up() + hazel.down() + hazel.inward() + hazel.outward();
+const ironwood = new Ironwood(8);
+total += ironwood.north() + ironwood.east() + ironwood.south() + ironwood.west() + ironwood.up() + ironwood.down() + ironwood.inward() + ironwood.outward();
+const juniper = new Juniper(9);
+total += juniper.north() + juniper.east() + juniper.south() + juniper.west() + juniper.up() + juniper.down() + juniper.inward() + juniper.outward();
+const koji = new Koji(10);
+total += koji.north() + koji.east() + koji.south() + koji.west() + koji.up() + koji.down() + koji.inward() + koji.outward();
+const larch = new Larch(11);
+total += larch.north() + larch.east() + larch.south() + larch.west() + larch.up() + larch.down() + larch.inward() + larch.outward();
+console.log(`${total}`);

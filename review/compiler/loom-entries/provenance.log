@@ -1,0 +1,113 @@
+=== RUN   TestEntriesProvenance
+=== PAUSE TestEntriesProvenance
+=== RUN   TestEntriesRuntimeReadiness
+=== PAUSE TestEntriesRuntimeReadiness
+=== CONT  TestEntriesProvenance
+=== RUN   TestEntriesProvenance/entries_scanner
+=== CONT  TestEntriesRuntimeReadiness
+=== PAUSE TestEntriesProvenance/entries_scanner
+=== RUN   TestEntriesProvenance/entries_proven
+=== PAUSE TestEntriesProvenance/entries_proven
+=== RUN   TestEntriesProvenance/entries_checked_fit
+=== PAUSE TestEntriesProvenance/entries_checked_fit
+=== RUN   TestEntriesProvenance/entries_checked_misfit
+=== PAUSE TestEntriesProvenance/entries_checked_misfit
+=== RUN   TestEntriesProvenance/entries_proven_import
+=== PAUSE TestEntriesProvenance/entries_proven_import
+=== RUN   TestEntriesProvenance/entries_checked_boolean
+=== PAUSE TestEntriesProvenance/entries_checked_boolean
+=== RUN   TestEntriesProvenance/entries_checked_literal
+=== PAUSE TestEntriesProvenance/entries_checked_literal
+=== RUN   TestEntriesProvenance/entries_checked_boxed
+=== PAUSE TestEntriesProvenance/entries_checked_boxed
+=== RUN   TestEntriesProvenance/entries_record_alias
+=== PAUSE TestEntriesProvenance/entries_record_alias
+=== RUN   TestEntriesProvenance/entries_record_misfit
+=== PAUSE TestEntriesProvenance/entries_record_misfit
+=== CONT  TestEntriesProvenance/entries_scanner
+=== CONT  TestEntriesProvenance/entries_checked_boolean
+=== CONT  TestEntriesProvenance/entries_record_alias
+=== NAME  TestEntriesProvenance/entries_scanner
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_boolean
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_record_alias
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:124: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_scanner
+    entries_provenance_test.go:49: gate cache node miss
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:127: gate cache node miss
+=== CONT  TestEntriesProvenance/entries_checked_boxed
+=== NAME  TestEntriesProvenance/entries_checked_boolean
+    entries_provenance_test.go:49: gate cache node miss
+=== CONT  TestEntriesProvenance/entries_checked_misfit
+=== NAME  TestEntriesProvenance/entries_record_alias
+    entries_provenance_test.go:49: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_boxed
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:137: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_misfit
+    entries_provenance_test.go:33: gate cache node miss
+=== CONT  TestEntriesProvenance/entries_proven_import
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:145: unchecked readiness primitive mutant caught by pinned exit/message in both backends
+--- PASS: TestEntriesRuntimeReadiness (2.99s)
+=== CONT  TestEntriesProvenance/entries_checked_literal
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_proven_import
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_boxed
+    entries_provenance_test.go:49: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_misfit
+    entries_provenance_test.go:49: gate cache node miss
+=== CONT  TestEntriesProvenance/entries_checked_fit
+=== NAME  TestEntriesProvenance/entries_checked_literal
+    entries_provenance_test.go:49: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_fit
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_proven_import
+    entries_provenance_test.go:49: gate cache node miss
+=== CONT  TestEntriesProvenance/entries_proven
+=== NAME  TestEntriesProvenance/entries_checked_misfit
+    entries_provenance_test.go:72: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_proven
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_literal
+    entries_provenance_test.go:72: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_misfit
+    entries_provenance_test.go:80: unproven-as-proven mutant prints Node's completed and exits 0; pinned exit 70 catches both backends
+=== CONT  TestEntriesProvenance/entries_record_misfit
+=== NAME  TestEntriesProvenance/entries_checked_literal
+    entries_provenance_test.go:80: unproven-as-proven mutant prints Node's completed and exits 0; pinned exit 70 catches both backends
+=== NAME  TestEntriesProvenance/entries_record_misfit
+    entries_provenance_test.go:33: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_checked_literal
+    entries_provenance_test.go:94: gate cache node miss
+    entries_provenance_test.go:102: drop literal membership mutant caught by pinned literal-contract exit/message in both backends
+=== NAME  TestEntriesProvenance/entries_checked_fit
+    entries_provenance_test.go:49: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_proven
+    entries_provenance_test.go:49: gate cache node miss
+=== NAME  TestEntriesProvenance/entries_record_misfit
+    entries_provenance_test.go:49: gate cache node miss
+    entries_provenance_test.go:72: gate cache node miss
+    entries_provenance_test.go:80: unproven-as-proven mutant prints Node's completed and exits 0; pinned exit 70 catches both backends
+--- PASS: TestEntriesProvenance (0.00s)
+    --- PASS: TestEntriesProvenance/entries_scanner (2.83s)
+    --- PASS: TestEntriesProvenance/entries_checked_boolean (2.89s)
+    --- PASS: TestEntriesProvenance/entries_record_alias (2.98s)
+    --- PASS: TestEntriesProvenance/entries_checked_boxed (0.52s)
+    --- PASS: TestEntriesProvenance/entries_proven_import (0.46s)
+    --- PASS: TestEntriesProvenance/entries_checked_misfit (0.62s)
+    --- PASS: TestEntriesProvenance/entries_checked_literal (0.67s)
+    --- PASS: TestEntriesProvenance/entries_checked_fit (0.43s)
+    --- PASS: TestEntriesProvenance/entries_proven (0.40s)
+    --- PASS: TestEntriesProvenance/entries_record_misfit (0.51s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=27
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.034s

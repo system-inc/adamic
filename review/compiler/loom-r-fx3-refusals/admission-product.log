@@ -1,0 +1,5 @@
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:313: build admission-compiler f3ac74b28190 miss 0.16
+--- PASS: TestProduct_AdmissionCompiler (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.190s

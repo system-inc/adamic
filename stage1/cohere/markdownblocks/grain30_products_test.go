@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -22,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 const grainCorpusShards = 8
@@ -70,29 +70,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	// nonexistent target. Rule 7 permits this Go build as a Product, with all inputs
 	// and reproducible flags declared. Generator/formatter products use GoBuild below.
 	if target == "" || target == "go" {
-		dir := buildcache.Product(t, grainGoInputs(name, markdownGoCompilers()), func(dir string) error {
-			replace := map[string]string{}
-			for to, from := range recipe.overlay {
-				replace[filepath.Join(root, "cohere", to)] = filepath.Join(root, "stage1/cohere/markdownblocks/testdata", from)
-			}
-			data, err := json.Marshal(map[string]any{"Replace": replace})
-			if err != nil {
-				return err
-			}
-			overlay := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlay, data, 0644); err != nil {
-				return err
-			}
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlay)
-			args := append(append([]string{"build"}, grainGoBuildFlags...), "-overlay="+overlay, "-o", filepath.Join(dir, "oracle"), filepath.Join(root, "cohere/cmd", recipe.command, "main.go"))
-			cmd := textGoCommand(t, filepath.Join(root, "cohere"), args...)
-			if output, err := textCombinedOutput(cmd); err != nil {
-				return fmt.Errorf("Go oracle: %w\n%s", err, output)
-			}
-			return nil
-		})
-		p.goBinary = filepath.Join(dir, "oracle")
+		p.goBinary = oracles.GrainGoOracle(t, name)
 	}
 
 	if target == "go" {
@@ -134,19 +112,11 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 	return p
 }
 
-// grainGoBuildFlags are the reproducible flags every grain Go oracle builds with, each named in its key.
-var grainGoBuildFlags = []string{"-trimpath", "-buildvcs=false", "-ldflags=-buildid="}
-
 // grainGoInputs keys name's Go oracle. The build runs go under toolchain.Env (textGoCommand), so the key names the C
 // and C++ compilers that environment gives go, and the C compiler by its report: the caller's CC and CXX are empty on a
 // box where go runs clang. The other variables pass to go as the caller set them.
 func grainGoInputs(name string, compilers markdownCompilers) buildcache.Inputs {
-	inputs := buildcache.Inputs{Name: "markdown-grain-" + name + "-go-v2", Files: []string{"go.mod", "go.work", "cohere", "stage1/cohere/markdownblocks/testdata", "stage1/cohere/markdownblocks/grain30_products_test.go"}, Toolchain: []string{buildcache.Tool("go", "version"), compilers.report}, Flags: append([]string(nil), grainGoBuildFlags...)}
-	for _, variable := range []string{"GOFLAGS", "CGO_ENABLED", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS"} {
-		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
-	}
-	inputs.Flags = append(inputs.Flags, "CC="+compilers.c, "CXX="+compilers.cPlusPlus, buildcache.Tool("go", "env", "GOWORK"))
-	return inputs
+	return oracles.GrainGoProductInputs(name, compilers.c, compilers.cPlusPlus, compilers.report)
 }
 
 func grainOwn(t *testing.T) func() {
@@ -274,8 +244,6 @@ func grainUnion(t *testing.T, inputs []auditInput, children int, family, helper 
 	}
 }
 
-func TestProduct_GrainMarkdown_path_go(t *testing.T) { t.Parallel(); grainProduct(t, "path", "go") }
-
 func TestProduct_GrainMarkdown_path_lowered(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "path", "lowered")
@@ -290,8 +258,6 @@ func TestProduct_GrainMarkdown_path_release(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "path", "release")
 }
-
-func TestProduct_GrainMarkdown_mdast_go(t *testing.T) { t.Parallel(); grainProduct(t, "mdast", "go") }
 
 func TestProduct_GrainMarkdown_mdast_lowered(t *testing.T) {
 	t.Parallel()
@@ -308,8 +274,6 @@ func TestProduct_GrainMarkdown_mdast_release(t *testing.T) {
 	grainProduct(t, "mdast", "release")
 }
 
-func TestProduct_GrainMarkdown_decode_go(t *testing.T) { t.Parallel(); grainProduct(t, "decode", "go") }
-
 func TestProduct_GrainMarkdown_decode_lowered(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "decode", "lowered")
@@ -324,8 +288,6 @@ func TestProduct_GrainMarkdown_decode_release(t *testing.T) {
 	t.Parallel()
 	grainProduct(t, "decode", "release")
 }
-
-func TestProduct_GrainMarkdown_width_go(t *testing.T) { t.Parallel(); grainProduct(t, "width", "go") }
 
 func TestProduct_GrainMarkdown_width_lowered(t *testing.T) {
 	t.Parallel()
@@ -357,13 +319,7 @@ func grainTool(t *testing.T, name string) string {
 	return prepared.path
 }
 
-func grainBuildTool(t *testing.T, name string) string {
-	pkg := "./stage1/cohere/markdownblocks/tools/generate_" + name
-	if name == "formatter" {
-		pkg = "github.com/system-inc/cohere/command/cohere"
-	}
-	return buildcache.GoBuild(t, "grain-"+name, pkg, nil)
-}
+func grainBuildTool(t *testing.T, name string) string { return oracles.GrainTool(t, name) }
 
 func grainGenerator(t *testing.T, name string) string {
 	if name == "decode" {
@@ -378,9 +334,6 @@ func grainRegenerate(t *testing.T, name, generator, formatter string) {
 		t.Fatalf("%s regeneration: %v\n%s", name, err, output)
 	}
 }
-func TestProduct_GrainMarkdownEntitiesGenerator(t *testing.T) { t.Parallel(); grainTool(t, "entities") }
-func TestProduct_GrainMarkdownWidthGenerator(t *testing.T)    { t.Parallel(); grainTool(t, "width") }
-func TestProduct_GrainMarkdownFormatter(t *testing.T)         { t.Parallel(); grainTool(t, "formatter") }
 
 // Inspect dispatchers, rather than trusting a second hand-written list of leaves.
 func grainVerifyChildren(t *testing.T, family, helper string, children int) {

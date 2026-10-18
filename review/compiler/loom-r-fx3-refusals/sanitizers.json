@@ -1,0 +1,100 @@
+[
+  {
+    "fixture": "internal/lower/testdata/array_narrowing/optional_number.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "internal/lower/testdata/array_narrowing/optional_number.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-optional_number",
+      "--sanitize"
+    ],
+    "stdout": "total 3\n",
+    "exit": 0,
+    "seconds": 7.372
+  },
+  {
+    "fixture": "internal/lower/testdata/array_narrowing/optional_string.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "internal/lower/testdata/array_narrowing/optional_string.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-optional_string",
+      "--sanitize"
+    ],
+    "stdout": "ab\n",
+    "exit": 0,
+    "seconds": 1.112
+  },
+  {
+    "fixture": "internal/lower/testdata/array_narrowing/some_negated.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "internal/lower/testdata/array_narrowing/some_negated.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-some_negated",
+      "--sanitize"
+    ],
+    "stdout": "ab\n",
+    "exit": 0,
+    "seconds": 1.187
+  },
+  {
+    "fixture": "internal/lower/testdata/array_narrowing/find_last_index.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "internal/lower/testdata/array_narrowing/find_last_index.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-find_last_index",
+      "--sanitize"
+    ],
+    "stdout": "index 2\n",
+    "exit": 0,
+    "seconds": 1.108
+  },
+  {
+    "fixture": "internal/lower/testdata/array_narrowing/preserved_union.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "internal/lower/testdata/array_narrowing/preserved_union.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-preserved_union",
+      "--sanitize"
+    ],
+    "stdout": "number 1\nb\n",
+    "exit": 0,
+    "seconds": 1.105
+  },
+  {
+    "fixture": "internal/lower/testdata/array_narrowing/boolean_callback.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "internal/lower/testdata/array_narrowing/boolean_callback.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-boolean_callback",
+      "--sanitize"
+    ],
+    "stdout": "true\n",
+    "exit": 0,
+    "seconds": 1.141
+  },
+  {
+    "fixture": "review/compiler/loom-r-fx3-refusals/mixed-literal.a",
+    "build": [
+      "/workspace/adamic/review/compiler/loom-r-fx3-refusals/adamic",
+      "build",
+      "review/compiler/loom-r-fx3-refusals/mixed-literal.a",
+      "-o",
+      "/tmp/adamic-gate/fx3-mixed-literal",
+      "--sanitize"
+    ],
+    "stdout": "number 1\nstring a\n",
+    "exit": 0,
+    "seconds": 1.199
+  }
+]

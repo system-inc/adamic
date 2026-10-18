@@ -6,10 +6,6 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/gatesample"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -19,6 +15,12 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/gatesample"
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
 type leafCompositionAnswer struct{ Name, Off string }
@@ -446,45 +448,7 @@ type leafCompositionProducts struct{ root, main, fork, script, goList, goLayout,
 
 func leafCompositionGoProduct(t *testing.T, root, name, driverName string) string {
 	t.Helper()
-	cohere := filepath.Join(root, "cohere")
-	bridge, err := filepath.Abs("testdata/list_bridge.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	driver, err := filepath.Abs(filepath.Join("testdata", driverName))
-	if err != nil {
-		t.Fatal(err)
-	}
-	main := filepath.Join(cohere, "cmd", name, "main.go")
-	inputs := buildcache.Inputs{Name: "markdown-leaf-go-" + name, Files: []string{
-		"stage1/cohere/markdownblocks/testdata/" + driverName,
-		"stage1/cohere/markdownblocks/testdata/list_bridge.go",
-		"cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
-		"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "go.mod", "go.work",
-	}, Flags: []string{"overlay=" + driverName, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
-	product := buildcache.Product(t, inputs, func(out string) error {
-		replacements := map[string]string{main: driver}
-		if name == "adamic_markdown_lists" {
-			replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(out, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := leafCompositionCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)
-		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("Go bridge: %v\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(product, "oracle")
+	return oracles.LeafCompositionGoProduct(t, root, name, driverName)
 }
 
 func prepareLeafCompositionGo(t *testing.T, root string) leafCompositionProducts {

@@ -1,0 +1,7 @@
+=== RUN   TestProduct_EstreeGoOracle
+=== PAUSE TestProduct_EstreeGoOracle
+=== CONT  TestProduct_EstreeGoOracle
+    oracles.go:172: build estree-go-oracle-v1_oracle-owner-v1 000c1908e2dd miss 22.17
+--- PASS: TestProduct_EstreeGoOracle (22.21s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree/oracles	22.243s

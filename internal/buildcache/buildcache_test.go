@@ -3,14 +3,17 @@ package buildcache
 import (
 	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
 	"sync/atomic"
+	"syscall"
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -31,6 +34,24 @@ func write(t *testing.T, root, name, content string) {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// writeExecutable writes a program this process will run. On Linux a process forked by a parallel test holds every
+// descriptor open at its fork until it execs, so the program's own write descriptor can still be open in such a child
+// when this process execs the program, and exec fails with ETXTBSY (go.dev/issue/22315; TestRequireArtifacts,
+// #gh8v02z). Holding syscall.ForkLock for reading while the file is open keeps every fork out of that window. Running
+// the program again on ETXTBSY would only hide the race.
+func writeExecutable(t *testing.T, path, content string) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	syscall.ForkLock.RLock()
+	err := os.WriteFile(path, []byte(content), 0o755)
+	syscall.ForkLock.RUnlock()
+	if err != nil {
 		t.Fatal(err)
 	}
 }
@@ -298,9 +319,10 @@ func cached(t *testing.T) (string, string) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_BUILD_LOG", log)
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	// Products go to the test's cache itself, whatever output directory the process running the tests was given.
+	t.Setenv(location.OutputDirectoryVariable, "")
 	// The real store is never reached from a test; the store's own tests serve one.
 	t.Setenv("ADAMIC_BUILD_STORE", "off")
-	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
 	return cache, log
 }
 
@@ -329,7 +351,7 @@ func TestABuildRunsOncePerKey(t *testing.T) {
 }
 
 // Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
-func TestAFailedBuildPublishesNothing(t *testing.T) {
+func TestAFailedBuildLeavesNothing(t *testing.T) {
 	cache, _ := cached(t)
 	failure := errors.New("clang failed")
 	if _, err := Get(thisPackage, func(directory string) error {
@@ -440,6 +462,86 @@ func TestParallelCallersBuildOnce(t *testing.T) {
 	for _, product := range products {
 		if product != products[0] {
 			t.Fatalf("products differ: %v", products)
+		}
+	}
+}
+
+// Settle places a settled build under the key a lookup in another process may be fetching into (#bcae1e2). placeSettled
+// takes the key's lock as filled does, so it waits while the fill holds it, then finds the fill's product there: both end
+// holding the product, and neither errs. Mutant: placeSettled without the lock places while the fill holds it.
+func TestASettledPlacementWaitsForAFillOfItsKey(t *testing.T) {
+	t.Parallel()
+	cache := t.TempDir()
+	productKey := strings.Repeat("ab", 32)
+	product := filepath.Join(cache, productKey)
+	settled := filepath.Join(cache, "pending", "trace", "name-key")
+	write(t, settled, "product", "settled")
+	filling, release := make(chan struct{}), make(chan struct{})
+	var built bool
+	var fillError error
+	var group sync.WaitGroup
+	group.Add(1)
+	go func() {
+		defer group.Done()
+		_, built, fillError = filled(product, "inputs", func(scratch string) error {
+			close(filling)
+			<-release
+			return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
+		})
+	}()
+	<-filling
+	placed := make(chan string, 1)
+	go func() {
+		placed <- placeSettled(cache, productKey, journalEntry{NameKey: "name-key", Directory: settled})
+	}()
+	select {
+	case directory := <-placed:
+		close(release)
+		group.Wait()
+		t.Fatalf("placeSettled placed the settled build at %s while a fill held the key's lock", directory)
+	case <-time.After(200 * time.Millisecond):
+	}
+	close(release)
+	group.Wait()
+	directory := <-placed
+	if fillError != nil || !built {
+		t.Fatalf("the fill: built %t, %v", built, fillError)
+	}
+	if directory != product {
+		t.Fatalf("placeSettled returned %s, not the product at %s", directory, product)
+	}
+	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "fetched" {
+		t.Fatalf("the product reads %q, %v", content, err)
+	}
+	if _, err := os.Stat(settled); !errors.Is(err, fs.ErrNotExist) {
+		t.Fatalf("the settled build's copy stayed at %s: %v", settled, err)
+	}
+}
+
+// A fill whose rename loses to a product another placer put there whole has found the product, not failed (#bcae1e2):
+// it drops its scratch and says it didn't fill. Mutant: filled returns the rename's error, as it did, and the test that
+// asked for the product failed with "file exists" while the product sat there.
+func TestAFillThatLosesItsRenameFindsTheProduct(t *testing.T) {
+	t.Parallel()
+	cache := t.TempDir()
+	product := filepath.Join(cache, strings.Repeat("cd", 32))
+	placed, built, err := filled(product, "inputs", func(scratch string) error {
+		write(t, product, "product", "placed")
+		return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
+	})
+	if err != nil || built || placed != product {
+		t.Fatalf("the fill that lost its rename: placed at %s, built %t, %v", placed, built, err)
+	}
+	if content, err := os.ReadFile(filepath.Join(product, "product")); err != nil || string(content) != "placed" {
+		t.Fatalf("the product reads %q, %v", content, err)
+	}
+	entries, err := os.ReadDir(cache)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".building-") {
+			t.Fatalf("the losing fill left its scratch %s", entry.Name())
 		}
 	}
 }
@@ -604,13 +706,7 @@ func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
 	t.Parallel()
 	report := func(prefix, note string) string {
 		bin := filepath.Join(prefix, "bin")
-		if err := os.MkdirAll(bin, 0o755); err != nil {
-			t.Fatal(err)
-		}
-		script := "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: " + prefix + "/lib/fakecc/20\"\necho '" + note + "' >&2\n"
-		if err := os.WriteFile(filepath.Join(bin, "fakecc"), []byte(script), 0o755); err != nil {
-			t.Fatal(err)
-		}
+		writeExecutable(t, filepath.Join(bin, "fakecc"), "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+prefix+"/lib/fakecc/20\"\necho '"+note+"' >&2\n")
 		return Tool(filepath.Join(bin, "fakecc"), "--version")
 	}
 	workshop, runner := report(filepath.Join(t.TempDir(), "home/ahra/adamic-tools"), "fakecc: downloading 20.1.8"), report(filepath.Join(t.TempDir(), "opt/adamic-tools"), "")
@@ -619,7 +715,7 @@ func TestAToolsReportNamesTheToolNotItsPlace(t *testing.T) {
 	}
 	// A tool that writes only to standard error is named by it.
 	silent := filepath.Join(t.TempDir(), "quiet")
-	os.WriteFile(silent, []byte("#!/bin/sh\necho 'quiet 1.0' >&2\n"), 0o755)
+	writeExecutable(t, silent, "#!/bin/sh\necho 'quiet 1.0' >&2\n")
 	if got := Tool(silent, "-v"); got != "quiet -v: quiet 1.0" {
 		t.Fatalf("a tool reporting on standard error reported %q", got)
 	}
@@ -635,10 +731,7 @@ func TestAToolsReportIsTheSameThroughEitherLink(t *testing.T) {
 		t.Fatal(err)
 	}
 	tools := filepath.Join(home, "adamic-tools")
-	write(t, tools, "llvm/bin/fakecc", "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+tools+"/llvm/lib/fakecc/20\"\n")
-	if err := os.Chmod(filepath.Join(tools, "llvm/bin/fakecc"), 0o755); err != nil {
-		t.Fatal(err)
-	}
+	writeExecutable(t, filepath.Join(tools, "llvm/bin/fakecc"), "#!/bin/sh\necho 'fakecc version 20.1.8'\necho \"resources: "+tools+"/llvm/lib/fakecc/20\"\n")
 	if err := os.MkdirAll(filepath.Join(tools, "bin"), 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -704,5 +797,30 @@ func TestToolNamesItselfOnce(t *testing.T) {
 	}
 	if value := Tool("adamic-no-such-tool"); !strings.Contains(value, "adamic-no-such-tool: ") || !strings.Contains(value, "(") {
 		t.Fatalf("a missing tool reported %q", value)
+	}
+}
+
+// A product declaring a File outside the repository's root-relative names is refused on every path a build can take,
+// with one message, before it builds: traced, where the key never hashes declared Files and an absolute one landed green
+// twice (#j9st2ff, #y6ff7ea), as well as for this machine alone, cache off and read-only (#r7cb4bd). Mutant: the
+// check after the traced path is taken.
+// Not parallel: cached and each path's t.Setenv.
+func TestADeclaredFileOutsideTheRepositoryIsRefusedOnEveryPath(t *testing.T) {
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{filepath.Join(root, "go.mod"), "../outside", "internal/../../outside"} {
+		want := fmt.Sprintf("input %q must be inside the repository, relative to its root", name)
+		for _, path := range []struct{ name, cache, trace string }{{"this machine's key", "", ""}, {"traced", "", t.TempDir()}, {"cache off", "off", ""}, {"read-only", "read", ""}} {
+			cached(t)
+			t.Setenv("ADAMIC_BUILD_CACHE", path.cache)
+			t.Setenv("ADAMIC_BUILD_TRACE", path.trace)
+			built := false
+			_, err := Get(Inputs{Name: "declares " + name, Files: []string{"go.mod", name}}, func(string) error { built = true; return nil })
+			if err == nil || err.Error() != want || built {
+				t.Errorf("%s, declaring %s: built %t, error %v, want %q", path.name, name, built, err, want)
+			}
+		}
 	}
 }

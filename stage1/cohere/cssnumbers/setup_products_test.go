@@ -2,18 +2,19 @@ package cssnumbers
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"slices"
+	"strings"
 	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var numbersPreparedPrograms = make([]struct {
@@ -108,7 +109,7 @@ type numbersAnswerProduct struct {
 	err       error
 }
 
-var numbersGoBatchAnswers, numbersPrettierBatchAnswers, numbersGoRawAnswers numbersAnswerProduct
+var numbersPrettierBatchAnswers numbersAnswerProduct
 
 func numbersBatchAnswerFile(unit numbersUnit) string {
 	return fmt.Sprintf("batch-%06d-%06d.txt", unit.lo, unit.hi-1)
@@ -119,34 +120,29 @@ func numbersRawAnswerFile(index int, preference string) string {
 }
 
 func numbersBatchCases(corpus numbersCorpus) []numbersAnswerCase {
-	var cases []numbersAnswerCase
-	for _, unit := range numbersUnits(corpus) {
-		if unit.kind == "batch" {
-			cases = append(cases, numbersAnswerCase{numbersBatchAnswerFile(unit), numbersInput(corpus.texts[unit.lo:unit.hi])})
-		}
+	var result []numbersAnswerCase
+	for _, c := range oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}) {
+		result = append(result, numbersAnswerCase{c.File, c.Input})
 	}
-	return cases
+	return result
 }
 
 func numbersRawCases(corpus numbersCorpus) []numbersAnswerCase {
-	var cases []numbersAnswerCase
-	for index, text := range corpus.raw {
-		for _, preference := range []string{"d", "s"} {
-			cases = append(cases, numbersAnswerCase{numbersRawAnswerFile(index, preference), []byte(preference + numbersEncode.Replace(text) + "\n")})
-		}
+	var result []numbersAnswerCase
+	for _, c := range oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}) {
+		result = append(result, numbersAnswerCase{c.File, c.Input})
 	}
-	return cases
+	return result
 }
 
 // numbersAnswerProductInputs keys an answer product by its oracle, every case's file name and input, and this file,
 // which holds the recipe.
 func numbersAnswerProductInputs(name, identity, toolchain string, files []string, cases []numbersAnswerCase) numbersInputs {
-	hash := sha256.New()
-	for _, each := range cases {
-		fmt.Fprintf(hash, "%s %d\n", each.file, len(each.input))
-		hash.Write(each.input)
+	var shared []oracles.AnswerCase
+	for _, c := range cases {
+		shared = append(shared, oracles.AnswerCase{File: c.file, Input: c.input})
 	}
-	return numbersInputs{Name: name, Files: append([]string{"setup_products_test.go"}, files...), Flags: []string{identity, fmt.Sprintf("cases-sha256=%x", hash.Sum(nil))}, Toolchain: toolchain}
+	return oracles.AnswerProductInputs(name, identity, toolchain, files, shared)
 }
 
 func numbersAnswerDirectory(t *testing.T, product *numbersAnswerProduct, prepare func() (numbersInputs, []numbersAnswerCase), command func(t *testing.T, input string) *exec.Cmd) string {
@@ -206,11 +202,7 @@ func numbersAnswerRun(t *testing.T, dir string, each numbersAnswerCase, oracleCo
 }
 
 func numbersGoBatchAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus numbersCorpus) string {
-	t.Helper()
-	return numbersAnswerDirectory(t, &numbersGoBatchAnswers, func() (numbersInputs, []numbersAnswerCase) {
-		cases := numbersBatchCases(corpus)
-		return numbersAnswerProductInputs("Go batch oracle answers", oracleIdentity, runtime.Version(), nil, cases), cases
-	}, func(t *testing.T, input string) *exec.Cmd { return numbersCommand(t, oracle, input) })
+	return oracles.BatchAnswers(t, oracle, oracleIdentity, oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}))
 }
 
 func numbersPrettierBatchAnswersDirectory(t *testing.T, library, libraryIdentity string, corpus numbersCorpus) string {
@@ -226,11 +218,7 @@ func numbersPrettierBatchAnswersDirectory(t *testing.T, library, libraryIdentity
 }
 
 func numbersGoRawAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus numbersCorpus) string {
-	t.Helper()
-	return numbersAnswerDirectory(t, &numbersGoRawAnswers, func() (numbersInputs, []numbersAnswerCase) {
-		cases := numbersRawCases(corpus)
-		return numbersAnswerProductInputs("Go raw oracle answers", oracleIdentity, runtime.Version(), nil, cases), cases
-	}, func(t *testing.T, input string) *exec.Cmd { return numbersCommand(t, oracle, input) })
+	return oracles.RawAnswers(t, oracle, oracleIdentity, oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}))
 }
 
 func numbersAnswer(t *testing.T, directory, file string) run {
@@ -332,58 +320,55 @@ func TestCSSNumbersAnswerProductsRekey(t *testing.T) {
 	}
 }
 
-// The Go oracle's key moves with the C or C++ compiler go builds it with, and with the C compiler's report, so a
-// changed compiler misses rather than reading a product another one built.
-func TestCSSNumbersGoOracleRekeyCompiler(t *testing.T) {
+// An edit to a package the compiler links must move the key of every product the compiler makes (the port's and each
+// mutant's lowering, and every native binary built from one), and an edit to tsc's baselines, which nothing links,
+// must keep it.
+func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
 	t.Parallel()
-	root, err := filepath.Abs(repository)
+	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	compilers := numbersCompilers{"clang", "clang++", "clang version 18.1.8"}
-	key := buildcache.NameKey(root, numbersGoProductInputs("Go oracle", compilers))
-	for _, other := range []numbersCompilers{{"gcc", "clang++", compilers.report}, {"clang", "g++", compilers.report}, {"clang", "clang++", "clang version 19.1.7"}} {
-		if otherKey := buildcache.NameKey(root, numbersGoProductInputs("Go oracle", other)); otherKey == key {
-			t.Fatalf("compilers %+v kept the Go oracle's key %s", other, key[:12])
+	// A native product is keyed by its C's content and the toolchain's report; any C and any report stand in, since
+	// only Files are checked.
+	c := filepath.Join(t.TempDir(), "program.c")
+	write(t, c, []byte("int main(void) { return 0; }\n"))
+	products := []numbersInputs{
+		numbersProgramInputs("port", main),
+		numbersNativeInputs("sanitized", c, native.Options{Sanitize: true}, "toolchain"),
+		numbersNativeInputs("native-fast", c, native.Options{Sanitize: false}, "toolchain"),
+	}
+	for _, mutation := range numbersMutations {
+		products = append(products, numbersProgramInputs(mutation.name, prepareNumbersMutant(t, mutation)), numbersNativeInputs(mutation.name+"-sanitized", c, native.Options{Sanitize: true}, "toolchain"))
+	}
+	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
+	for _, product := range products {
+		keyed := numbersCacheInputs(t, product)
+		linked, baselines := false, false
+		for _, entry := range keyed.Files {
+			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
+			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
+		}
+		if !linked {
+			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", keyed.Name)
+		}
+		if baselines {
+			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", keyed.Name)
 		}
 	}
-	t.Logf("Go oracle key %s moves with CC, CXX and the C compiler's report", key[:12])
+	if !t.Failed() {
+		t.Logf("%d compiler products key what the compiler links and no tsc baseline", len(products))
+	}
 }
 
-// The compilers the Go oracle's key names are read from toolchain.Env, the environment go runs under, not from the
-// caller's: with CC and CXX unset that is clang and clang++, which a reader of os.Getenv would key as empty while go ran
-// clang, and a CC the caller sets moves the key. Not parallel: it sets CC and CXX.
-func TestCSSNumbersGoOracleKeysTheCompilersEnvGivesGo(t *testing.T) {
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Setenv("CC", "")
-	t.Setenv("CXX", "")
-	defaults := numbersGoCompilers()
-	inputs := numbersGoProductInputs("Go oracle", defaults)
-	if !slices.Contains(inputs.Flags, "CC=clang") || !slices.Contains(inputs.Flags, "CXX=clang++") || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
-		t.Fatalf("with CC and CXX unset, the Go oracle's key names %+v, want clang, clang++ and clang's report", defaults)
-	}
-	t.Setenv("CC", "cc")
-	moved := numbersGoCompilers()
-	if moved.c != "cc" || moved.report == defaults.report {
-		t.Fatalf("CC=cc read as %+v", moved)
-	}
-	if buildcache.NameKey(root, numbersGoProductInputs("Go oracle", moved)) == buildcache.NameKey(root, inputs) {
-		t.Fatal("CC=cc kept the Go oracle's key")
-	}
-	t.Logf("unset: %s and %s; CC=cc moves the key", defaults.c, defaults.cPlusPlus)
-}
-
-func TestProduct_CSSNumbersGoOracle(t *testing.T) { t.Parallel(); numbersPreparedOracle(t) }
-func TestProduct_CSSNumbersGoAnswers(t *testing.T) {
+func TestProduct_CSSNumbersFindsGoOracle(t *testing.T) { t.Parallel(); numbersPreparedOracle(t) }
+func TestProduct_CSSNumbersFindsGoAnswers(t *testing.T) {
 	t.Parallel()
 	corpus := enumerateNumbers(t)
 	oracle := numbersPreparedOracle(t)
 	clean(t, "Go", numbersSetupOracleAnswers(t, "Go", oracle, nil, numbersInput(corpus.texts), numbersOracleIdentity(t, oracle)))
 }
-func TestProduct_CSSNumbersGoBatchAnswers(t *testing.T) {
+func TestProduct_CSSNumbersFindsGoBatchAnswers(t *testing.T) {
 	t.Parallel()
 	prepareNumbersAnswerInputs(t)
 	numbersGoBatchAnswersDirectory(t, numbersAnswerInputs.oracle, numbersAnswerInputs.oracleIdentity, numbersAnswerInputs.corpus)
@@ -399,7 +384,7 @@ func TestProduct_CSSNumbersPrettierBatchAnswers(t *testing.T) {
 	prepareNumbersAnswerInputs(t)
 	numbersPrettierBatchAnswersDirectory(t, numbersAnswerInputs.library, numbersAnswerInputs.libraryIdentity, numbersAnswerInputs.corpus)
 }
-func TestProduct_CSSNumbersGoRawAnswers(t *testing.T) {
+func TestProduct_CSSNumbersFindsGoRawAnswers(t *testing.T) {
 	t.Parallel()
 	prepareNumbersAnswerInputs(t)
 	numbersGoRawAnswersDirectory(t, numbersAnswerInputs.oracle, numbersAnswerInputs.oracleIdentity, numbersAnswerInputs.corpus)

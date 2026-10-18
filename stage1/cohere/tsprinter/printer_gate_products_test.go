@@ -1,81 +1,50 @@
 package tsprinter
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
-	"sync"
 	"testing"
 
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
+
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-type printerGateProductState struct {
-	once      sync.Once
-	directory string
-}
-
-var printerGateProducts sync.Map
-
-// Only process-local initialization is held here. Every persistent product is
-// owned, keyed and published by internal/buildcache.
-func printerGateOnce(t *testing.T, name string, build func() string) string {
-	t.Helper()
-	value, _ := printerGateProducts.LoadOrStore(name, &printerGateProductState{})
-	state := value.(*printerGateProductState)
-	state.once.Do(func() { state.directory = build() })
-	if state.directory == "" {
-		t.Fatalf("product %s preparation failed", name)
+// printerGateEntry is a family's port: expressions' main.ts, statements' statementsMain.ts, documents' docMain.ts.
+func printerGateEntry(family string) string {
+	switch family {
+	case "statements":
+		return "statementsMain.ts"
+	case "documents":
+		return "docMain.ts"
 	}
-	return state.directory
+	return "main.ts"
 }
 
-// printerGateGoOracle is the directory holding the Go printer oracle, cohere's internal/format/javascript test binary
-// with the two side files laid over it: a buildcache.GoTest product, keyed by the files of the packages go compiles,
-// the overlay's map and the side files' content, and go's settings. Its key declared all of cohere, the TypeScript
-// submodule's 41,000 files included, which cost a populated tree's first lookup 15 to 60 s (#4ycgm2n).
-func printerGateGoOracle(t *testing.T) string {
-	t.Helper()
-	return printerGateOnce(t, "go-oracle", func() string {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		replace := map[string]string{}
-		for _, family := range []string{"expressions", "statements"} {
-			replace[root+"/cohere/internal/format/javascript/adamic_"+family+"_test.go"] = root + "/stage1/cohere/tsprinter/testdata/" + family + "_side_test.go"
-		}
-		overlay, err := json.Marshal(map[string]any{"Replace": replace})
-		if err != nil {
-			t.Fatal(err)
-		}
-		// The overlay names this checkout's paths: GoTest keys its map and the side files' content, never its own path.
-		path := filepath.Join(t.TempDir(), "overlay.json")
-		if err := os.WriteFile(path, overlay, 0o644); err != nil {
-			t.Fatal(err)
-		}
-		return filepath.Dir(buildcache.GoTest(t, "cohere", "oracle", "./internal/format/javascript", []string{"-overlay=" + path}))
-	})
+// printerGateLoweredFiles are what a family's lowering reads: the compiler, which runs in this process, so its code is
+// in the key by name (compilerinputs.Lowering), not cohere whole, whose TypeScript submodule a populated tree hashed for
+// every lookup (#4ycgm2n); then the port and the TypeScript it imports. TestPrinterGateLoweredKeyCoversWhatItReads
+// holds it to what the loader reads.
+func printerGateLoweredFiles() []string {
+	return append(compilerinputs.Lowering(), "stage1/cohere/tsprinter", "stage1/typescript")
 }
 
 func printerGateLowered(t *testing.T, family string) string {
 	t.Helper()
-	return printerGateOnce(t, "lowered-"+family, func() string {
-		entry := "main.ts"
-		if family == "statements" {
-			entry = "statementsMain.ts"
-		}
+	return oracles.PrinterGateOnce(t, "lowered-"+family, func() string {
+		entry := printerGateEntry(family)
 		path, err := filepath.Abs(entry)
 		if err != nil {
 			t.Fatal(err)
 		}
 		return buildcache.Product(t, buildcache.Inputs{
-			Name:  "tsprinter-lowered-" + family + "-v2",
-			Files: []string{"go.mod", "go.work", "cohere", "internal", "stage1/cohere/tsprinter", "stage1/typescript"},
+			Name:  "tsprinter-lowered-" + family + "-v3",
+			Files: printerGateLoweredFiles(),
 			Flags: []string{"entry=" + entry}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error {
 			program := lowered(t, path)
@@ -90,14 +59,14 @@ func printerGateLowered(t *testing.T, family string) string {
 func printerGateNative(t *testing.T, family string, sanitize bool) string {
 	t.Helper()
 	name := fmt.Sprintf("native-%s-%t", family, sanitize)
-	return printerGateOnce(t, name, func() string {
+	return oracles.PrinterGateOnce(t, name, func() string {
 		lowered := printerGateLowered(t, family)
 		source, err := os.ReadFile(lowered + "/port.c")
 		if err != nil {
 			t.Fatal(err)
 		}
 		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
-		flags := append([]string{"C sha256=" + statementBytesHash(source), "split=true", "jobs=4"}, native.Flags(options)...)
+		flags := append([]string{"C sha256=" + oracles.StatementBytesHash(source), "split=true", "jobs=4"}, native.Flags(options)...)
 		for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 			flags = append(flags, variable+"="+os.Getenv(variable))
 		}
@@ -110,18 +79,13 @@ func printerGateNative(t *testing.T, family string, sanitize bool) string {
 
 func printerGateFamilyProducts(t *testing.T, family string) tsPrinterProducts {
 	t.Helper()
-	entry := "main.ts"
-	if family == "statements" {
-		entry = "statementsMain.ts"
-	}
-	path, err := filepath.Abs(entry)
+	path, err := filepath.Abs(printerGateEntry(family))
 	if err != nil {
 		t.Fatal(err)
 	}
 	return tsPrinterProducts{source: path, backend: printerGateLowered(t, family) + "/program.mjs", sanitized: printerGateNative(t, family, true) + "/port", release: printerGateNative(t, family, false) + "/port"}
 }
 
-func TestProduct_TSPrinterGoOracle(t *testing.T) { t.Parallel(); printerGateGoOracle(t) }
 func TestProduct_TSPrinterExpressionsLowered(t *testing.T) {
 	t.Parallel()
 	printerGateLowered(t, "expressions")
@@ -145,4 +109,20 @@ func TestProduct_TSPrinterStatementsSanitized(t *testing.T) {
 func TestProduct_TSPrinterStatementsRelease(t *testing.T) {
 	t.Parallel()
 	printerGateNative(t, "statements", false)
+}
+
+// The document port's lowered program and natives are products, as expressions' and statements' are: building the
+// sanitized native inside TestDocumentsAgainstGoAndPrettier was 5.8 of its 10.6 s alone on one core, and most of its
+// 65.5 s at load 37 on Cloud, which reddened a lint-only change by the time budget (#g7a9yd3).
+func TestProduct_TSPrinterDocumentsLowered(t *testing.T) {
+	t.Parallel()
+	printerGateLowered(t, "documents")
+}
+func TestProduct_TSPrinterDocumentsSanitized(t *testing.T) {
+	t.Parallel()
+	printerGateNative(t, "documents", true)
+}
+func TestProduct_TSPrinterDocumentsRelease(t *testing.T) {
+	t.Parallel()
+	printerGateNative(t, "documents", false)
 }

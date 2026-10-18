@@ -3,8 +3,7 @@ package estree
 import (
 	"bytes"
 	"context"
-	"encoding/json"
-	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +19,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 const testScalarEdgesShards = 4
@@ -82,34 +80,7 @@ func scalarEdgeProducts(t *testing.T, main string) (string, string) {
 	return scalarEdgeNative(t, lowered), filepath.Join(lowered, "port.mjs")
 }
 
-func scalarEdgeOracle(t *testing.T) string {
-	t.Helper()
-	repo := root(t)
-	source := filepath.Join(repo, "stage1/cohere/estree/testdata/oracle.go")
-	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	product := buildcache.Product(t, buildcache.Inputs{
-		Name: "scalar-edges-go-oracle", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go"},
-		Flags: []string{"go build overlay oracle"}, Toolchain: []string{buildcache.Tool("go", "version")},
-	}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		path := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(path)
-		command := toolchain.CommandIn(filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
-		output, err := command.CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("oracle: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(product, "oracle")
-}
+func scalarEdgeOracle(t *testing.T) string { t.Helper(); return oracles.ScalarEdgesOracle(t) }
 
 type scalarEdgeReady struct{ Oracle, Binary, Script string }
 
@@ -284,18 +255,7 @@ func TestScalarEdges_003(t *testing.T) {
 }
 
 // Build-phase units use the same recipes and keys as standalone shards.
-func TestProduct_scalar_edges_go_oracle(t *testing.T) {
+func TestProduct_EstreeFindsScalarEdgesOracle(t *testing.T) {
 	t.Parallel()
 	scalarEdgeOracle(t)
-}
-
-func TestProduct_scalar_edges_lowered(t *testing.T) {
-	t.Parallel()
-	scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
-}
-
-func TestProduct_scalar_edges_sanitized_native(t *testing.T) {
-	t.Parallel()
-	lowered := scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
-	scalarEdgeNative(t, lowered)
 }

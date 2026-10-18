@@ -1,0 +1,34 @@
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestNegativeCommandAccepted
+=== PAUSE TestNegativeCommandAccepted
+=== RUN   TestNegativeTypeCorrectMutant
+=== PAUSE TestNegativeTypeCorrectMutant
+=== RUN   TestNegativeAlreadyAcceptedRepairMutant
+=== PAUSE TestNegativeAlreadyAcceptedRepairMutant
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== RUN   TestExecutableReplacement
+=== PAUSE TestExecutableReplacement
+=== CONT  TestNewAdmissionMismatch
+=== CONT  TestNegativeAlreadyAcceptedRepairMutant
+=== CONT  TestNegativeCommandAccepted
+=== CONT  TestHeadInputIsolation
+--- PASS: TestNegativeCommandAccepted (0.44s)
+=== CONT  TestNegativeTypeCorrectMutant
+=== NAME  TestNegativeAlreadyAcceptedRepairMutant
+    negative_test.go:185: type-correct input admitted by both compilers still demands Node agreement and rejects exit 70
+--- PASS: TestNegativeAlreadyAcceptedRepairMutant (0.46s)
+=== CONT  TestExecutableReplacement
+--- PASS: TestExecutableReplacement (0.00s)
+=== CONT  TestParallelLoweringOnly
+--- PASS: TestParallelLoweringOnly (0.00s)
+--- PASS: TestHeadInputIsolation (0.52s)
+--- PASS: TestNewAdmissionMismatch (0.54s)
+=== NAME  TestNegativeTypeCorrectMutant
+    negative_test.go:152: type-correct copy demands Node agreement; backend exit 70 is a divergence
+--- PASS: TestNegativeTypeCorrectMutant (0.28s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.734s

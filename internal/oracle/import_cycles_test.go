@@ -24,7 +24,7 @@ func init() {
 }
 
 func TestImportCycleRuntimeCalls(t *testing.T) {
-	// Not parallel: the cohere runner caches one program process-wide.
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/import_cycles/runtime/even.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -81,7 +81,7 @@ func quoteJS(value string) string {
 }
 
 func TestImportCycleLoadTimeReads(t *testing.T) {
-	// Not parallel: the cohere runner caches one program process-wide.
+	t.Parallel()
 	for _, probe := range []struct{ path, output, nodeError string }{
 		{"read/a.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"classes/c.a", "", "ReferenceError: Cannot access 'Base' before initialization"},

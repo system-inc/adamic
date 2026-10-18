@@ -133,9 +133,13 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		return nil
 	}
 	// Only argument positions of a directly imported node:* call can use the host exemption.
-	if parent := node.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {
+	argumentSite := node
+	for argumentSite.Parent != nil && argumentSite.Parent.Kind == ast.KindParenthesizedExpression {
+		argumentSite = argumentSite.Parent
+	}
+	if parent := argumentSite.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {
 		for index, argument := range parent.AsCallExpression().Arguments.Nodes {
-			if argument == node && l.nodeHostConsumesArgument(parent, index) {
+			if ast.SkipParentheses(argument) == node && l.nodeHostConsumesArgument(parent, index) {
 				return nil
 			}
 		}

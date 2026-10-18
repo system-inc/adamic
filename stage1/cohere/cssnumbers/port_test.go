@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -12,14 +14,11 @@ import (
 	"syscall"
 	"testing"
 	"time"
-
-	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 const repository = "../../.."
 
-const testCSSNumbersShards = 357
+const testCSSNumbersShards = 361
 
 // run is one execution's observable behavior.
 type run struct {
@@ -77,49 +76,8 @@ type numbersCorpus struct {
 }
 
 func enumerateNumbers(t *testing.T) numbersCorpus {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var texts []string
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"}, []string{"*.css", "*.scss", "*.less"})
-	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		texts = append(texts, string(data))
-	}
-	files := len(texts)
-	alphabet := []string{"a", "0", "1", ".", "e", "-", "\"", "\\"}
-	var generate func(string, int)
-	generate = func(s string, n int) {
-		texts = append(texts, s)
-		if n > 0 {
-			for _, c := range alphabet {
-				generate(s+c, n-1)
-			}
-		}
-	}
-	generate("", 5)
-	texts = append(texts, "\r\t\u2028\u2029", strings.Repeat("'😀\\\"x' ", 10000), "'never closed\\", `"\'"`, "\x00'null'")
-	for _, mantissa := range []string{"0", "01", ".0", ".00100", "1.", "1.000", "12.34000"} {
-		for _, exponent := range []string{"", "e0", "E+000", "e-000", "e+001", "e-002", "E00020", "e+", "e-"} {
-			for _, unit := range strings.Split("|n|EM|Q|HZ|kHZ|px|cQmAX|unknown|foo|é|Σ|İ", "|") {
-				for _, prefix := range []string{"", "a", "$x", "@foo", "-", "+", "😀", "'", "\""} {
-					texts = append(texts, prefix+mantissa+exponent+unit)
-				}
-			}
-		}
-	}
-	for _, unit := range strings.Split("em|rem|ex|rex|cap|rcap|ch|rch|ic|ric|lh|rlh|vw|svw|lvw|dvw|vh|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cm|mm|Q|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|x|cqw|cqh|cqi|cqb|cqmin|cqmax|fr", "|") {
-		texts = append(texts, ".1000E+002"+strings.ToUpper(unit))
-	}
-	texts = append(texts, cssAuditNumberInputs...)
-	texts = append(texts, "'1.000px'", "1.000unknown", "a1.000px", "😀1.000px", strings.Repeat(".000100E-002KHZ ", 10000))
-	raw := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
-	return numbersCorpus{texts: texts, paths: paths, raw: raw}
+	c := oracles.Enumerate(t)
+	return numbersCorpus{texts: c.Texts, paths: c.Paths, raw: c.Raw}
 }
 
 // TestCSSNumbers builds each input once before the parallel units. ADAMIC_TEST_SHARD=i/n
@@ -129,7 +87,7 @@ func enumerateNumbers(t *testing.T) numbersCorpus {
 // TestCSSNumbers_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestCSSNumbers_NNN$'. Every original side and sanitizer/leak check stays.
-// Contiguous ranges are fixed by cohere commit 7945d102a6c18dd36adf9114a758ce646e8b2359
+// Contiguous ranges are fixed by cohere commit 0183ccf8c57a775f874ca73be1adfc06e9ad1562
 // and the generated grammar in enumerateNumbers.
 
 func prepareCSSNumbersSetup(t *testing.T) {
@@ -333,34 +291,7 @@ func equal(t *testing.T, name string, a, b []byte) {
 	}
 }
 
-func numbersPreparedOracle(t *testing.T) string {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	bridge, _ := filepath.Abs("testdata/bridge.go")
-	driver, _ := filepath.Abs("testdata/go_driver.go")
-	cohere := filepath.Join(root, "cohere")
-	oracleDir := numbersGoProduct(t, "Go oracle", func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
-		}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		command := numbersGoCommand(t, cohere, "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-		if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-			return fmt.Errorf("Go bridge: %w\n%s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(oracleDir, "go-printer")
-}
+// numbersPreparedOracle is cohere's printer with testdata's bridge and driver laid over it, a product
+// (buildcache.GoBuildIn) built ahead. Its key is go's package list, the overlay's map and each replacement's content,
+// and the build environment and toolchains go resolves.
+func numbersPreparedOracle(t *testing.T) string { return oracles.Printer(t) }

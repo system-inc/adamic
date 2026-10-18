@@ -172,8 +172,12 @@ mode, redirecting stdout to Go JSONL and stderr to a log. Run
 <port-jsonl> <identical-manifest>` with output redirected to a log. The saved
 inventory supplies relative paths, sizes and hashes. Scratch snapshots and stored
 Go answer paths in the audit records are local artifacts; reconstruct them from
-that inventory to reproduce elsewhere. `TestRepositoryAgreement` batches the
-identical records into groups of 100 and checks every byte, without instrumentation.
+that inventory to reproduce elsewhere. `TestRepositoryAgreement` batched the
+identical records into groups of 100 and checked every byte, without instrumentation.
+It and `TestCorpusNativeRefusals` were deleted on Oct 14 (#testaudit, task hb0fpvd):
+no gate sets `ADAMIC_ESTREE_CORPUS`, so neither ever ran there. The corpus checks
+return only through heavy unit #m9es0rv. This report's commands that name them
+record past runs.
 
 Not covered or completed: complete checkout parity, diagnostic equivalence, JSX,
 raw invalid-UTF-8 inputs, unpaired cooked surrogate representation, the remaining

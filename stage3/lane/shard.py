@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Run one manifest unit cold against a verified shared artifact."""
+"""Run one manifest unit cold against the adapted tree: stage3/lane's product, or a verified shared artifact."""
 import argparse
 from collections import Counter
 import difflib
 import json
 import os
 from pathlib import Path
+import shutil
 import signal
 import subprocess
 import sys
@@ -38,6 +39,27 @@ def shared_artifact(plan):
     if runtime_hash() != plan['runtime']:
         raise ValueError('shard harness inputs changed; regenerate the manifest')
     return artifact.resolve(), ready
+
+
+def adapted_inputs(plan):
+    """The adapted tree a unit runs against, the stock API parser, the producer's phases, and the packages the view links
+    in as node_modules (None when the tree holds its own). With STAGE3_ADAPTED_TREE, the tree is stage3/lane's
+    TestProduct_Stage3AdaptedTree product, whose key is its identity, so none of the shared artifact's identity checks
+    apply; the parser is stage3/api's install, checked against the manifest's digest, and the packages are
+    stage3/typescript's install, the tree's devDependencies, which the product leaves out."""
+    supplied = os.environ.get('STAGE3_ADAPTED_TREE')
+    if not supplied:
+        artifact, ready = shared_artifact(plan)
+        return artifact / 'tree', artifact / 'api', ready['phases'], None
+    tree = Path(supplied).resolve()
+    if not (tree / 'built/local/run.js').is_file():
+        raise ValueError('the adapted tree product holds no built harness: ' + str(tree))
+    api = LANE.parent / 'api/node_modules/typescript'
+    if payload_digest(api) != plan['api_digest']:
+        raise ValueError('stage3/api\'s stock API parser differs from the manifest\'s')
+    if runtime_hash() != plan['runtime']:
+        raise ValueError('shard harness inputs changed; regenerate the manifest')
+    return tree, api, None, LANE.parent / 'typescript/node_modules'
 
 
 def baseline_diff(tree):
@@ -77,7 +99,16 @@ def execute(command, tree, log, env, seconds):
     return code
 
 
-def validate_observation(unit, counts, records, paths, failures, seconds, code):
+def shard_seconds():
+    """A unit's wall limit: SHARD_CONTRACT's 30 s for a unit run on its own, or, when a TestShard_ test runs it, the limit
+    that test sets in STAGE3_SHARD_SECONDS, its own deadline less a margin for teardown, so the child is always killed
+    before the test is. Inside a Go test the time bound is the test's and its unit's, where Planner and the census hold
+    it, and a shard measured at 24.7 s alone on 4 CPUs runs past 30 s with seven others at an 8-CPU share."""
+    supplied = os.environ.get('STAGE3_SHARD_SECONDS')
+    return float(supplied) if supplied else 30.0
+
+
+def validate_observation(unit, counts, records, paths, failures, seconds, code, limit=30.0):
     errors = []
     if counts != unit['expect']:
         errors.append(f"counts: expected {unit['expect']}, observed {counts}")
@@ -91,9 +122,15 @@ def validate_observation(unit, counts, records, paths, failures, seconds, code):
         errors.append(f'failure titles: expected {wanted}, observed {failures}')
     if code != (1 if unit['expect']['fail'] else 0):
         errors.append(f'upstream exit: {code}')
-    if seconds >= 30:
-        errors.append(f'invalid test unit: cold wall {seconds:.6f} seconds exceeds 30 seconds')
+    if seconds >= limit:
+        errors.append(f'invalid test unit: cold wall {seconds:.6f} seconds exceeds {limit:g} seconds')
     return errors
+
+
+def timed_out(name, code, started, limit):
+    """Upstream killed at the limit is a timeout naming the unit, before anything reads what it left half written."""
+    if code == 124:
+        raise ValueError(f'{name} timed out after {time.monotonic() - started:.1f} seconds, past its {limit:g} second limit')
 
 
 def check_unit_inputs(unit, plan, wanted_hash):
@@ -105,6 +142,7 @@ def check_unit_inputs(unit, plan, wanted_hash):
 
 def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_content=None, mutant_runner=None):
     started = time.monotonic()
+    limit = shard_seconds()
     plan = plan or load_plan()
     unit = next(row for row in plan['units'] if row['name'] == name)
     output = results / name
@@ -112,14 +150,25 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
     report = dict(name=name, inputs_hash=wanted_hash, artifact=plan['artifact'], counts={}, errors=[], status='fail')
     try:
         check_unit_inputs(unit, plan, wanted_hash)
-        artifact, ready = shared_artifact(plan)
+        source, api, phases, modules = adapted_inputs(plan)
         tree = output / 'adapted-tree'
         if mutant_case is not None:
             if mutant_case.is_absolute() or '..' in mutant_case.parts or not mutant_case.is_relative_to('tests/cases'):
                 raise ValueError('mutant case must be a relative tests/cases path')
             if mutant_content is None:
                 raise ValueError('mutant case requires content')
-        make_view(artifact / 'tree', tree, mutant_case)
+        make_view(source, tree, mutant_case)
+        if modules is not None:
+            (tree / 'node_modules').symlink_to(modules, target_is_directory=True)
+            # node's ESM loader resolves a module by its real path, so scripts/build/options.mjs reached through the
+            # view's link would look for minimist above the product, never in the view's node_modules: the watcher
+            # cases' run-prepared.mjs imports from scripts/, so it's the view's own copy.
+            (tree / 'scripts').unlink()
+            shutil.copytree(source / 'scripts', tree / 'scripts', symlinks=True)
+            # A runner holds products read-only, and copytree copies a directory's mode, so the copy's directories are
+            # made writable again, or the test's cleanup couldn't remove what's in them.
+            for directory, _, _ in os.walk(tree / 'scripts'):
+                os.chmod(directory, 0o755)
         if mutant_case is not None:
             import hashlib
             content = mutant_content.read_bytes()
@@ -142,7 +191,8 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
             command = ['node', str(LANE.parent / 'oracle/run-prepared.mjs'), str(tree),
                        '--workers=1', '--light=false', '--no-colors',
                        '--runners=unittest', '--tests=' + unit['grep']]
-            code = execute(command, tree, oracle / 'tests.log', env, 29.5 - (time.monotonic() - started))
+            code = execute(command, tree, oracle / 'tests.log', env, limit - 0.5 - (time.monotonic() - started))
+            timed_out(name, code, started, limit)
             events = [json.loads(line) for line in (oracle / 'events.jsonl').read_text().splitlines()]
             records = [dict(row, task=unit['tasks'][0]) for row in events]
             counts = {'pass': sum(row['status'] == 'pass' for row in records),
@@ -155,7 +205,8 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
             tasks = output / 'tasks.json'
             tasks.write_text(json.dumps(unit['tasks']))
             command = ['node', str(LANE.parent / 'oracle/run-tasks.cjs'), str(tree), str(tasks), str(oracle / 'worker'), '1']
-            code = execute(command, tree, oracle / 'tests.log', env, 29.5 - (time.monotonic() - started))
+            code = execute(command, tree, oracle / 'tests.log', env, limit - 0.5 - (time.monotonic() - started))
+            timed_out(name, code, started, limit)
             rows = [json.loads(line) for line in (oracle / 'worker/tasks.jsonl').read_text().splitlines()]
             if Counter((row['task']['runner'], row['task']['file']) for row in rows) != Counter(
                     (task['runner'], task['file']) for task in unit['tasks']):
@@ -177,22 +228,22 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
                 stream.write(text)
         errors = []
         if name == 'stage3-lane-byte-comparisons':
-            os.environ['TSC_ADAPT_TYPESCRIPT'] = str(artifact / 'api')
+            os.environ['TSC_ADAPT_TYPESCRIPT'] = str(api)
             errors, report['api'] = api_check(output, json.loads((LANE / 'sanctioned-api.json').read_text()))
         seconds = time.monotonic() - started
-        errors += validate_observation(unit, counts, records, paths, failures, seconds, code)
+        errors += validate_observation(unit, counts, records, paths, failures, seconds, code, limit)
         report.update(counts=counts, failed_tests=failures, baseline_diffs=paths,
                       upstream_exit=code, errors=errors, status='fail' if errors else 'pass',
-                      producer_phases=ready['phases'], command=command)
+                      producer_phases=phases, command=command)
         details = read_failures((oracle / 'tests.log').read_text(), diff, observations)
         report['failures'] = details
         (output / 'failures.md').write_text(markdown(details))
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         report['errors'].append(str(error))
     report['seconds'] = time.monotonic() - started
-    if report['seconds'] >= 30 and report['status'] == 'pass':
+    if report['seconds'] >= limit and report['status'] == 'pass':
         report['status'] = 'fail'
-        report['errors'].append('invalid test unit: total wall exceeds 30 seconds')
+        report['errors'].append(f'invalid test unit: total wall exceeds {limit:g} seconds')
     (output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     (output / 'verdict.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({key: report[key] for key in ['name', 'status', 'counts', 'seconds', 'errors']}), flush=True)

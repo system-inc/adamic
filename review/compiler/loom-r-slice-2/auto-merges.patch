@@ -1,0 +1,211 @@
+diff --git a/internal/lower/exceptions.go b/internal/lower/exceptions.go
+index 0df2214a..d8e185a2 100644
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -67,7 +67,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
+ // newError lowers new Error(message), and new Error().
+ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+ 	created := node.AsNewExpression()
+-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
++	message := ir.Expression(ir.Undefined{Of: ir.String})
+ 	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
+ 		if len(created.Arguments.Nodes) > 1 {
+ 			return nil, l.notYet(node, "new Error with options")
+@@ -76,6 +76,7 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
+ 		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
+ 			return nil, err
+ 		}
++		message = fit(message, ir.String)
+ 		if message.Type() != ir.String {
+ 			return nil, l.notYet(node, "new Error with a message that isn't a string")
+ 		}
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 3b416e80..1e45d083 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -196,6 +196,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
+ // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
+ // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
+ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
++	if err := l.weakArrayCallback(node); err != nil {
++		return nil, err
++	}
+ 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+ 		return nil, err
+ 	}
+@@ -259,6 +262,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+ 		// The checker narrowed it to present (Target & WeakBrand).
+ 		to, present = target, true
+ 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
++		// A union of branded targets stays represented as Weak after narrowing.
++		// Absence, not that representation, decides whether its read needs liveness.
++		present = !l.includesUndefined(read)
+ 		for _, member := range read.Types() {
+ 			if target := l.weakTarget(member); target != nil {
+ 				if to, isKnown = l.representation(target); !isKnown {
+@@ -328,6 +334,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
+ 	default:
+ 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+ 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
++				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
++					return false
++				}
+ 				continue
+ 			}
+ 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 59e16707..94175dba 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1237,7 +1237,14 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
+ 		if err != nil {
+ 			return nil, true, err
+ 		}
+-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
++		callbackType := int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())
++		if !known {
++			callback, callbackType, err = l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
++			if err != nil {
++				return nil, true, err
++			}
++		}
++		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType}, true, nil
+ 	}
+ 	if _, isVisit := visits[name]; isVisit {
+ 		return l.arrayVisit(node, array, element, name)
+@@ -1439,7 +1446,11 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
+ 	if name != "forEach" && returns != ir.Boolean {
+ 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
+ 	}
+-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
++	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
++	if err != nil {
++		return nil, true, err
++	}
++	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: callbackType}, true, nil
+ }
+ 
+ // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
+@@ -1471,7 +1482,11 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
+ 	if result != initial.Type() || slotless(result) {
+ 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+ 	}
+-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
++	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{result, element, ir.Number, ir.Array})
++	if err != nil {
++		return nil, true, err
++	}
++	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType}, true, nil
+ }
+ 
+ // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
+@@ -1779,9 +1794,24 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
+ 		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
+ 			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
+ 		}
+-		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(comparator)).Id())}, true, nil
++		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
++		if err != nil {
++			return nil, true, err
++		}
++		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
+ 	}
+ 	declared := l.result.Functions[function]
++	if declared.Returns == ir.Number && len(declared.Parameters) == 2 && (l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element) {
++		callback, err := l.expression(comparator)
++		if err != nil {
++			return nil, true, err
++		}
++		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
++		if err != nil {
++			return nil, true, err
++		}
++		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
++	}
+ 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {
+ 		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number")
+ 	}
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index 4fe76965..8a9cb7bb 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -87,6 +87,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 		if branch := l.literalCallableBranch(node); branch != nil {
+ 			return visit(branch)
+ 		}
++		if err := l.knownLoweringGap(node); err != nil {
++			found = err
++			return true
++		}
+ 		if node.Kind == ast.KindTypePredicate {
+ 			found = l.predicateRefusal(node)
+ 			return found != nil
+diff --git a/internal/native/emit_expressions.go b/internal/native/emit_expressions.go
+index 3348b971..d1c80e4b 100644
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -753,6 +753,9 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
+ 	case operandType == ir.Union && operator == ir.NotEqual:
+ 		return fmt.Sprintf("(!adamic_union_equal(%s, %s))", left, right)
+ 	}
++	if operator == ir.Equal || operator == ir.NotEqual {
++		return e.scalarEquality(operator, operandType, left, right)
++	}
+ 	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
+ }
+ 
+diff --git a/internal/native/units.go b/internal/native/units.go
+index 1eac1741..9a1b6c48 100644
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -173,7 +173,8 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
+ 	return declarations, nil
+ }
+ 
+-// splitC gives every generated static symbol one external definition. Token replacement never
++// splitC gives generated static symbols external definitions, except inline helpers whose
++// definitions stay in the shared header with static linkage. Token replacement never
+ // touches literal bytes. The fixed namespace cannot collide with runtime API names. Existing
+ // program-wide indexes distinguish symbols; no whole-program content hash invalidates all units.
+ func splitC(source string) (string, []compilationUnit, error) {
+@@ -214,6 +215,11 @@ func splitC(source string) (string, []compilationUnit, error) {
+ 			header.WriteString(rewrite(d.tokens) + "\n")
+ 			continue
+ 		}
++		// Every using translation unit needs the definition of a static inline helper.
++		if d.function && d.tokens[0].text == "static" && d.tokens[1].text == "inline" {
++			header.WriteString(rewrite(d.tokens) + "\n")
++			continue
++		}
+ 		tokens := d.tokens
+ 		if tokens[0].text == "static" {
+ 			tokens = tokens[1:]
+diff --git a/stage3/fixtures/fixtures_test.go b/stage3/fixtures/fixtures_test.go
+index 28231eb1..aaf8a286 100644
+--- a/stage3/fixtures/fixtures_test.go
++++ b/stage3/fixtures/fixtures_test.go
+@@ -252,7 +252,7 @@ func TestFixturesTaste(t *testing.T) {
+ 	testFixtureDirectory(t, "taste")
+ }
+ 
+-func testFixtureDirectory(t *testing.T, directory string) {
++func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...string) {
+ 	t.Helper()
+ 	repository, err := filepath.Abs("../..")
+ 	if err != nil {
+@@ -347,6 +347,15 @@ func testFixtureDirectory(t *testing.T, directory string) {
+ 					t.Fatalf("invalid or duplicate file: %q", entry.File)
+ 				}
+ 				seen[entry.File] = true
++				if len(selectedFiles) != 0 {
++					selected := false
++					for _, file := range selectedFiles {
++						selected = selected || file == entry.File
++					}
++					if !selected {
++						continue
++					}
++				}
+ 				if len(entry.TSC) == 0 || entry.Reason == "" {
+ 					t.Fatalf("missing provenance for %s", entry.File)
+ 				}

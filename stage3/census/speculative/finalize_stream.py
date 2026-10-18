@@ -41,6 +41,7 @@ for item in identity['files']:
     assert hashlib.sha256(record_path.read_bytes()).hexdigest() == (record_path.with_suffix('.sha256')).read_text().strip()
     rows = [json.loads(line) for line in record_path.read_text().splitlines()]
     assert len(rows) == 2 and rows[1]['file'] == str(path)
+    assert not rows[1].get('piece'), 'partial piece cannot claim complete file coverage'
     if header is None:
         header = rows[0]
     assert header == rows[0], 'whole-project checker header changed'

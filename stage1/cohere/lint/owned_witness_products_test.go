@@ -130,9 +130,9 @@ func ownedWitnessProducts(t *testing.T, directory string) (string, string) {
 }
 func TestProduct_LintOwnedWitnessesLowered(t *testing.T) {
 	t.Parallel()
-	ownedWitnessLowered(t, packageDirectory)
+	requireLintArtifacts(t, ownedWitnessLowered(t, packageDirectory), "program.c", "program.mjs")
 }
 func TestProduct_LintOwnedWitnessesSanitized(t *testing.T) {
 	t.Parallel()
-	ownedWitnessNative(t, packageDirectory)
+	requireLintExecutable(t, ownedWitnessNative(t, packageDirectory))
 }

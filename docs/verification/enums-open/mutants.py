@@ -6,12 +6,12 @@ mutants=[
  ('close-numeric-domain','internal/lower/enums.go','if l.numericEnum(l.enumIdentity(to)) {','if false && l.numericEnum(l.enumIdentity(to)) {','./internal/lower','^TestNumericEnumsAreOpen/arithmetic$','unproven value'),
  ('invert-object-presence','internal/lower/control.go','return ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: condition}}, nil','return ir.IsUndefined{Value: condition}, nil','./internal/oracle','TestNativeAgreesWithNode/stage3/fixtures/enums/05','exit codes differ'),
  ('permit-enum-object-write','internal/lower/enums.go','if node.Kind == ast.KindCallExpression {','if false && node.Kind == ast.KindCallExpression {','./internal/lower','^TestEnumSlotViews/object_assign$','want Refused'),
- ('repeat-switch-effects','internal/lower/object.go','value = ir.Read{Local: local, Of: value.Type()}','value = ir.Expression(value)','./internal/oracle','^TestNumericEnumNeverPathsPinned/implicit$','stdout differs'),
- ('omit-never-increment-check','internal/lower/assignments.go','if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {','if false && l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {','./internal/oracle','^TestNumericEnumNeverPathsPinned/update$','exit codes differ'),
+ ('repeat-switch-effects','internal/lower/object.go','value = ir.Read{Local: local, Of: value.Type()}','value = ir.Expression(value)','./internal/oracle','^TestNumericEnumNeverPathsPinned_implicit$','stdout differs'),
+ ('omit-never-increment-check','internal/lower/assignments.go','if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {','if false && l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {','./internal/oracle','^TestNumericEnumNeverPathsPinned_update$','exit codes differ'),
  ('permit-member-number','internal/lower/enums.go','if !l.openNumericEnumType(to) {','if false && !l.openNumericEnumType(to) {','./internal/lower','^TestNumericEnumLiteralPromises/member_tag$','want literal-promise refusal'),
  ('trust-exclusion-literal','internal/lower/invariance.go','if l.openNumericEnumType(declared) && !l.enumMemberOrigin','if false && l.openNumericEnumType(declared) && !l.enumMemberOrigin','./internal/lower','^TestNumericEnumLiteralPromises/narrowed_member$','want literal-promise refusal'),
  ('trust-open-object-tag','internal/lower/enums.go','if l.openNumericEnumType(tag) {','if false && l.openNumericEnumType(tag) {','./internal/lower','^TestNumericEnumLiteralPromises/open_tag$','want literal-promise refusal'),
- ('omit-array-enum-storage','internal/lower/enum_never.go','if node.Kind == ast.KindElementAccessExpression {','if false && node.Kind == ast.KindElementAccessExpression {','./internal/oracle','^TestNumericEnumNeverPathsPinned/index$',"can't lower a value of type never"),
+ ('omit-array-enum-storage','internal/lower/enum_never.go','if node.Kind == ast.KindElementAccessExpression {','if false && node.Kind == ast.KindElementAccessExpression {','./internal/oracle','^TestNumericEnumNeverPathsPinned_index$',"can't lower a value of type never"),
 ]
 results=[]
 for name,file,old,new,package,test,expected in mutants:

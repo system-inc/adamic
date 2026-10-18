@@ -268,7 +268,7 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 		return nil, err
 	}
 	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: value.Type(), Function: l.functionIndex})
 	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
 	if err != nil {
 		return nil, err
@@ -282,6 +282,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
 	if tuple && !checker.IsTupleType(destructured) {
 		return nil, l.notYet(pattern, "destructuring anything but a tuple into [names]")
+	}
+	if heldAs == ir.String && !tuple {
+		return l.destructureString(pattern, held)
 	}
 	if heldAs != ir.Object {
 		return nil, l.notYet(pattern, "destructuring a "+typeName(heldAs))
@@ -352,6 +355,38 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		value.View = sourceExpression(binding) + " (field " + field + ")"
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)
+		statements = append(statements, l.initializeLocal(local, value)...)
+	}
+	return statements, nil
+}
+
+// destructureString uses the same UTF-16 length read as string.length. The caller
+// saves the source once, even for an empty pattern or repeated property reads.
+func (l *lowering) destructureString(pattern *ast.Node, held int) ([]ir.Statement, error) {
+	statements := []ir.Statement{}
+	for _, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		declared := binding.AsBindingElement()
+		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "a string destructured name that isn't plain; save the string and read its properties explicitly")
+		}
+		field := binding.Name().Text()
+		if declared.PropertyName != nil {
+			if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+				return nil, l.notYet(declared.PropertyName, "a computed string destructuring member; save the string and read its properties explicitly")
+			}
+			field = declared.PropertyName.Text()
+		}
+		if field != "length" {
+			return nil, l.notYet(binding, "string member '"+field+"' in object destructuring; call methods on the saved string receiver or wrap the call in an arrow")
+		}
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		if l.result.Locals[local].Type != ir.Number {
+			return nil, l.notYet(binding, "a destructured string length held otherwise than a number; use an explicitly typed string source")
+		}
+		value := ir.StringLength{Value: ir.Read{Local: held, Of: ir.String}}
 		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil

@@ -1,0 +1,11 @@
+=== RUN   TestCountsAreRecorded_001
+=== PAUSE TestCountsAreRecorded_001
+=== CONT  TestCountsAreRecorded_001
+    counts_test.go:412: build count-measurements 6056df2cd007 hit 0.01
+=== RUN   TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a
+=== PAUSE TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a
+=== CONT  TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a
+--- PASS: TestCountsAreRecorded_001 (3.55s)
+    --- PASS: TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	3.564s

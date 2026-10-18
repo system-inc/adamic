@@ -202,6 +202,30 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_first_a_6bc987292245",
+    "program": "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "path": "../oracle/testdata/accessor_spread_throw_first.a",
+    "sha256": "fee13ae115be32feeb9944bd224c190520c435d31a8119f28acab618c76ab0c3"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_last_a_c1cd90f9b399",
+    "program": "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "path": "../oracle/testdata/accessor_spread_throw_last.a",
+    "sha256": "0947d9a78529b016a2acdfdb166a2ee9ccb1b1bc3e5db2586de24d1e392b51fa"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_middle_a_7071760acdec",
+    "program": "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "path": "../oracle/testdata/accessor_spread_throw_middle.a",
+    "sha256": "98816762ee954bcfc0d11f079dad9ea6fe17dec04c43c41cff913f09d937232b"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_adversarial_exits_a_4b0474bafd0b",
     "program": "internal/oracle/testdata/adversarial_exits.a",
     "path": "../oracle/testdata/adversarial_exits.a",
@@ -1277,7 +1301,7 @@
     "test": "TestFlowProgram____oracle_testdata_closure_convention_host24_a_c6da27a08c9b",
     "program": "internal/oracle/testdata/closure_convention_host24.a",
     "path": "../oracle/testdata/closure_convention_host24.a",
-    "sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159"
+    "sha256": "99005c2bc2870aaf22f368bd3f9abf04079af9c7ad76018bba39a9856539d17d"
   },
   {
     "package": "flow",
@@ -1494,6 +1518,14 @@
     "program": "internal/oracle/testdata/defaults.a",
     "path": "../oracle/testdata/defaults.a",
     "sha256": "2536fc81fea94ace3f3a14385a6587d957c4b0f458cb56a77afa09a380857915"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_determinism_dispatch_a_ea633a1e1b11",
+    "program": "internal/oracle/testdata/determinism_dispatch.a",
+    "path": "../oracle/testdata/determinism_dispatch.a",
+    "sha256": "b3f3afa23abf07cf6c7c5863dff8a486a90ff8fbac656f4629a6b4ffd6ed9680"
   },
   {
     "package": "flow",
@@ -2170,6 +2202,30 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_has_own_a_9d389ee6f06f",
     "program": "internal/oracle/testdata/has_own.a",
     "path": "../oracle/testdata/has_own.a",
@@ -2326,6 +2382,46 @@
     "program": "internal/oracle/testdata/input_spread_ordinary.a",
     "path": "../oracle/testdata/input_spread_ordinary.a",
     "sha256": "0a1acd0c3670fffbddb38a656ab235e1ad26901d01bcbfa472c626f1ec046729"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_array_a_961538ce4706",
+    "program": "internal/oracle/testdata/instantiation_array.a",
+    "path": "../oracle/testdata/instantiation_array.a",
+    "sha256": "1a7fc379bfbc2b9f394147f56c10b81cdf1120c0426232d7388f2b8888c90c3d"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_callback_a_9a3ded8bc96c",
+    "program": "internal/oracle/testdata/instantiation_callback.a",
+    "path": "../oracle/testdata/instantiation_callback.a",
+    "sha256": "a67bc2fb37200da1c4253af745ef7facb3e9e1f70fd5927604c9c28bbc480ada"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_find_a_572b43aab632",
+    "program": "internal/oracle/testdata/instantiation_find.a",
+    "path": "../oracle/testdata/instantiation_find.a",
+    "sha256": "d61e632496445bb1d3d9dfd01915acf69f42f2bd75a51b68496e10021bb39ffa"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_first_a_d5b037dd9fa8",
+    "program": "internal/oracle/testdata/instantiation_first.a",
+    "path": "../oracle/testdata/instantiation_first.a",
+    "sha256": "4e10c9e693f10af450a91295f6bb5983136edebd79de1de6fe359fc7afad8b03"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_last_a_58c2a5d6f7a8",
+    "program": "internal/oracle/testdata/instantiation_last.a",
+    "path": "../oracle/testdata/instantiation_last.a",
+    "sha256": "51329567274a29e25273173ec7d48d60b1c5b894803e7eea4093165fd4d9c4f1"
   },
   {
     "package": "flow",
@@ -2958,6 +3054,14 @@
     "program": "internal/oracle/testdata/long_literals.a",
     "path": "../oracle/testdata/long_literals.a",
     "sha256": "8910ab19d479c45c85cf21af530ab501c1c4cb77635844ee4b450cad778ef23a"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_long_unicode_literals_a_085a03e09e42",
+    "program": "internal/oracle/testdata/long_unicode_literals.a",
+    "path": "../oracle/testdata/long_unicode_literals.a",
+    "sha256": "ab3f81e81ba2caf54db5c291760703688db5891742173a52b9f032e44dddf5a4"
   },
   {
     "package": "flow",
@@ -4170,6 +4274,38 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_write_positions_a_d0d8b7ebe8d6",
+    "program": "internal/oracle/testdata/node_fs_file_write_positions.a",
+    "path": "../oracle/testdata/node_fs_file_write_positions.a",
+    "sha256": "33a3b6aa3862e5242fbd4e2d8192d14c21362fd0a8227a87ff632eeecef1e14d"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_rm_options_a_e1eb88bcd007",
+    "program": "internal/oracle/testdata/node_fs_rm_options.a",
+    "path": "../oracle/testdata/node_fs_rm_options.a",
+    "sha256": "52d1559158ee31f805e56cf5e76f1ee41e401ebb62e231c0d5f1d084aa1d1721"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
+    "program": "internal/oracle/testdata/node_options_const_capture.a",
+    "path": "../oracle/testdata/node_options_const_capture.a",
+    "sha256": "a50e59ab5548fbcfdd9c57efdc00f387b6be512345b937bc6d1721f07cb735f5"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_options_widening_a_8c6589169d21",
+    "program": "internal/oracle/testdata/node_options_widening.a",
+    "path": "../oracle/testdata/node_options_widening.a",
+    "sha256": "bc7853622809967b75f626d11e71bff27b2c73afd2260fb39d80a461904e6e43"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_normalize_a_b4c3474ee5d4",
     "program": "internal/oracle/testdata/normalize.a",
     "path": "../oracle/testdata/normalize.a",
@@ -4738,6 +4874,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_plain_data_spread_a_5dc21c39c0e3",
+    "program": "internal/oracle/testdata/plain_data_spread.a",
+    "path": "../oracle/testdata/plain_data_spread.a",
+    "sha256": "8c7383c815ec189315d0ddd77bd6763851fcaa3f7aa7cde718d800dd7e589cc4"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
     "program": "internal/oracle/testdata/pow_fractional.a",
     "path": "../oracle/testdata/pow_fractional.a",
@@ -4914,6 +5058,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_class_octal_a_1f745009d809",
+    "program": "internal/oracle/testdata/regexp_native_class_octal.a",
+    "path": "../oracle/testdata/regexp_native_class_octal.a",
+    "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -4966,6 +5118,22 @@
     "program": "internal/oracle/testdata/regexp_unicode.a",
     "path": "../oracle/testdata/regexp_unicode.a",
     "sha256": "4cfd43bd6a443a4141b932c9da126d754beb37ed420cd8bacbabd1b579d439e8"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_folding_a_005d57eec71f",
+    "program": "internal/oracle/testdata/regexp_v8_folding.a",
+    "path": "../oracle/testdata/regexp_v8_folding.a",
+    "sha256": "136af7c43982bd5c024401bd9848bf57b74e1f4a3ffdc174d5c1e4b9c0140217"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_surrogates_a_e96d1deb3a51",
+    "program": "internal/oracle/testdata/regexp_v8_surrogates.a",
+    "path": "../oracle/testdata/regexp_v8_surrogates.a",
+    "sha256": "2e1604209430f743fc13228f50a9f305d22b74bc6e2acf357f0ae64ae0d40ce1"
   },
   {
     "package": "flow",
@@ -5514,6 +5682,22 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_gap_a_54923b8e9934",
+    "program": "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "path": "../oracle/testdata/static_constructor_spread_gap.a",
+    "sha256": "8c0a75df2fa6f679a720dffc802af4f0e70fc69246f8d85e151d102aff9456bb"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_owned_a_63e7cf269ff3",
+    "program": "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "path": "../oracle/testdata/static_constructor_spread_owned.a",
+    "sha256": "e9c89033a5fb52a12f5b55df38f082b3c66860767b6ba92e012829fafdd873e0"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_status_of_stdout_a_25bb9ae69b20",
     "program": "internal/oracle/testdata/status_of_stdout.a",
     "path": "../oracle/testdata/status_of_stdout.a",
@@ -5830,6 +6014,14 @@
     "program": "internal/oracle/testdata/taste_void.a",
     "path": "../oracle/testdata/taste_void.a",
     "sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_template_nullish_a_cad3ce92293c",
+    "program": "internal/oracle/testdata/template_nullish.a",
+    "path": "../oracle/testdata/template_nullish.a",
+    "sha256": "baaaafe44724c38b8f7480bf55789569b4e006a18ec01c1305817fa2f4dcd03a"
   },
   {
     "package": "flow",
@@ -6834,6 +7026,30 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_first_a_6bc987292245",
+    "program": "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "path": "../oracle/testdata/accessor_spread_throw_first.a",
+    "sha256": "fee13ae115be32feeb9944bd224c190520c435d31a8119f28acab618c76ab0c3"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_last_a_c1cd90f9b399",
+    "program": "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "path": "../oracle/testdata/accessor_spread_throw_last.a",
+    "sha256": "0947d9a78529b016a2acdfdb166a2ee9ccb1b1bc3e5db2586de24d1e392b51fa"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_middle_a_7071760acdec",
+    "program": "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "path": "../oracle/testdata/accessor_spread_throw_middle.a",
+    "sha256": "98816762ee954bcfc0d11f079dad9ea6fe17dec04c43c41cff913f09d937232b"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_adversarial_exits_a_4b0474bafd0b",
     "program": "internal/oracle/testdata/adversarial_exits.a",
     "path": "../oracle/testdata/adversarial_exits.a",
@@ -7909,7 +8125,7 @@
     "test": "TestFlowProgram____oracle_testdata_closure_convention_host24_a_c6da27a08c9b",
     "program": "internal/oracle/testdata/closure_convention_host24.a",
     "path": "../oracle/testdata/closure_convention_host24.a",
-    "sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159"
+    "sha256": "99005c2bc2870aaf22f368bd3f9abf04079af9c7ad76018bba39a9856539d17d"
   },
   {
     "package": "flow",
@@ -8126,6 +8342,14 @@
     "program": "internal/oracle/testdata/defaults.a",
     "path": "../oracle/testdata/defaults.a",
     "sha256": "2536fc81fea94ace3f3a14385a6587d957c4b0f458cb56a77afa09a380857915"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_determinism_dispatch_a_ea633a1e1b11",
+    "program": "internal/oracle/testdata/determinism_dispatch.a",
+    "path": "../oracle/testdata/determinism_dispatch.a",
+    "sha256": "b3f3afa23abf07cf6c7c5863dff8a486a90ff8fbac656f4629a6b4ffd6ed9680"
   },
   {
     "package": "flow",
@@ -8802,6 +9026,30 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_has_own_a_9d389ee6f06f",
     "program": "internal/oracle/testdata/has_own.a",
     "path": "../oracle/testdata/has_own.a",
@@ -8958,6 +9206,46 @@
     "program": "internal/oracle/testdata/input_spread_ordinary.a",
     "path": "../oracle/testdata/input_spread_ordinary.a",
     "sha256": "0a1acd0c3670fffbddb38a656ab235e1ad26901d01bcbfa472c626f1ec046729"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_array_a_961538ce4706",
+    "program": "internal/oracle/testdata/instantiation_array.a",
+    "path": "../oracle/testdata/instantiation_array.a",
+    "sha256": "1a7fc379bfbc2b9f394147f56c10b81cdf1120c0426232d7388f2b8888c90c3d"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_callback_a_9a3ded8bc96c",
+    "program": "internal/oracle/testdata/instantiation_callback.a",
+    "path": "../oracle/testdata/instantiation_callback.a",
+    "sha256": "a67bc2fb37200da1c4253af745ef7facb3e9e1f70fd5927604c9c28bbc480ada"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_find_a_572b43aab632",
+    "program": "internal/oracle/testdata/instantiation_find.a",
+    "path": "../oracle/testdata/instantiation_find.a",
+    "sha256": "d61e632496445bb1d3d9dfd01915acf69f42f2bd75a51b68496e10021bb39ffa"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_first_a_d5b037dd9fa8",
+    "program": "internal/oracle/testdata/instantiation_first.a",
+    "path": "../oracle/testdata/instantiation_first.a",
+    "sha256": "4e10c9e693f10af450a91295f6bb5983136edebd79de1de6fe359fc7afad8b03"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_last_a_58c2a5d6f7a8",
+    "program": "internal/oracle/testdata/instantiation_last.a",
+    "path": "../oracle/testdata/instantiation_last.a",
+    "sha256": "51329567274a29e25273173ec7d48d60b1c5b894803e7eea4093165fd4d9c4f1"
   },
   {
     "package": "flow",
@@ -9590,6 +9878,14 @@
     "program": "internal/oracle/testdata/long_literals.a",
     "path": "../oracle/testdata/long_literals.a",
     "sha256": "8910ab19d479c45c85cf21af530ab501c1c4cb77635844ee4b450cad778ef23a"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_long_unicode_literals_a_085a03e09e42",
+    "program": "internal/oracle/testdata/long_unicode_literals.a",
+    "path": "../oracle/testdata/long_unicode_literals.a",
+    "sha256": "ab3f81e81ba2caf54db5c291760703688db5891742173a52b9f032e44dddf5a4"
   },
   {
     "package": "flow",
@@ -10802,6 +11098,38 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_write_positions_a_d0d8b7ebe8d6",
+    "program": "internal/oracle/testdata/node_fs_file_write_positions.a",
+    "path": "../oracle/testdata/node_fs_file_write_positions.a",
+    "sha256": "33a3b6aa3862e5242fbd4e2d8192d14c21362fd0a8227a87ff632eeecef1e14d"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_rm_options_a_e1eb88bcd007",
+    "program": "internal/oracle/testdata/node_fs_rm_options.a",
+    "path": "../oracle/testdata/node_fs_rm_options.a",
+    "sha256": "52d1559158ee31f805e56cf5e76f1ee41e401ebb62e231c0d5f1d084aa1d1721"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
+    "program": "internal/oracle/testdata/node_options_const_capture.a",
+    "path": "../oracle/testdata/node_options_const_capture.a",
+    "sha256": "a50e59ab5548fbcfdd9c57efdc00f387b6be512345b937bc6d1721f07cb735f5"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_options_widening_a_8c6589169d21",
+    "program": "internal/oracle/testdata/node_options_widening.a",
+    "path": "../oracle/testdata/node_options_widening.a",
+    "sha256": "bc7853622809967b75f626d11e71bff27b2c73afd2260fb39d80a461904e6e43"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_normalize_a_b4c3474ee5d4",
     "program": "internal/oracle/testdata/normalize.a",
     "path": "../oracle/testdata/normalize.a",
@@ -11370,6 +11698,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_plain_data_spread_a_5dc21c39c0e3",
+    "program": "internal/oracle/testdata/plain_data_spread.a",
+    "path": "../oracle/testdata/plain_data_spread.a",
+    "sha256": "8c7383c815ec189315d0ddd77bd6763851fcaa3f7aa7cde718d800dd7e589cc4"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
     "program": "internal/oracle/testdata/pow_fractional.a",
     "path": "../oracle/testdata/pow_fractional.a",
@@ -11546,6 +11882,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_class_octal_a_1f745009d809",
+    "program": "internal/oracle/testdata/regexp_native_class_octal.a",
+    "path": "../oracle/testdata/regexp_native_class_octal.a",
+    "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -11598,6 +11942,22 @@
     "program": "internal/oracle/testdata/regexp_unicode.a",
     "path": "../oracle/testdata/regexp_unicode.a",
     "sha256": "4cfd43bd6a443a4141b932c9da126d754beb37ed420cd8bacbabd1b579d439e8"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_folding_a_005d57eec71f",
+    "program": "internal/oracle/testdata/regexp_v8_folding.a",
+    "path": "../oracle/testdata/regexp_v8_folding.a",
+    "sha256": "136af7c43982bd5c024401bd9848bf57b74e1f4a3ffdc174d5c1e4b9c0140217"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_surrogates_a_e96d1deb3a51",
+    "program": "internal/oracle/testdata/regexp_v8_surrogates.a",
+    "path": "../oracle/testdata/regexp_v8_surrogates.a",
+    "sha256": "2e1604209430f743fc13228f50a9f305d22b74bc6e2acf357f0ae64ae0d40ce1"
   },
   {
     "package": "flow",
@@ -12146,6 +12506,22 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_gap_a_54923b8e9934",
+    "program": "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "path": "../oracle/testdata/static_constructor_spread_gap.a",
+    "sha256": "8c0a75df2fa6f679a720dffc802af4f0e70fc69246f8d85e151d102aff9456bb"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_owned_a_63e7cf269ff3",
+    "program": "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "path": "../oracle/testdata/static_constructor_spread_owned.a",
+    "sha256": "e9c89033a5fb52a12f5b55df38f082b3c66860767b6ba92e012829fafdd873e0"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_status_of_stdout_a_25bb9ae69b20",
     "program": "internal/oracle/testdata/status_of_stdout.a",
     "path": "../oracle/testdata/status_of_stdout.a",
@@ -12462,6 +12838,14 @@
     "program": "internal/oracle/testdata/taste_void.a",
     "path": "../oracle/testdata/taste_void.a",
     "sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_template_nullish_a_cad3ce92293c",
+    "program": "internal/oracle/testdata/template_nullish.a",
+    "path": "../oracle/testdata/template_nullish.a",
+    "sha256": "baaaafe44724c38b8f7480bf55789569b4e006a18ec01c1305817fa2f4dcd03a"
   },
   {
     "package": "flow",
@@ -13466,6 +13850,30 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_first_a_6bc987292245",
+    "program": "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "path": "../oracle/testdata/accessor_spread_throw_first.a",
+    "sha256": "fee13ae115be32feeb9944bd224c190520c435d31a8119f28acab618c76ab0c3"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_last_a_c1cd90f9b399",
+    "program": "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "path": "../oracle/testdata/accessor_spread_throw_last.a",
+    "sha256": "0947d9a78529b016a2acdfdb166a2ee9ccb1b1bc3e5db2586de24d1e392b51fa"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_middle_a_7071760acdec",
+    "program": "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "path": "../oracle/testdata/accessor_spread_throw_middle.a",
+    "sha256": "98816762ee954bcfc0d11f079dad9ea6fe17dec04c43c41cff913f09d937232b"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_adversarial_exits_a_4b0474bafd0b",
     "program": "internal/oracle/testdata/adversarial_exits.a",
     "path": "../oracle/testdata/adversarial_exits.a",
@@ -14541,7 +14949,7 @@
     "test": "TestFlowProgram____oracle_testdata_closure_convention_host24_a_c6da27a08c9b",
     "program": "internal/oracle/testdata/closure_convention_host24.a",
     "path": "../oracle/testdata/closure_convention_host24.a",
-    "sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159"
+    "sha256": "99005c2bc2870aaf22f368bd3f9abf04079af9c7ad76018bba39a9856539d17d"
   },
   {
     "package": "flow",
@@ -14758,6 +15166,14 @@
     "program": "internal/oracle/testdata/defaults.a",
     "path": "../oracle/testdata/defaults.a",
     "sha256": "2536fc81fea94ace3f3a14385a6587d957c4b0f458cb56a77afa09a380857915"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_determinism_dispatch_a_ea633a1e1b11",
+    "program": "internal/oracle/testdata/determinism_dispatch.a",
+    "path": "../oracle/testdata/determinism_dispatch.a",
+    "sha256": "b3f3afa23abf07cf6c7c5863dff8a486a90ff8fbac656f4629a6b4ffd6ed9680"
   },
   {
     "package": "flow",
@@ -15434,6 +15850,30 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_has_own_a_9d389ee6f06f",
     "program": "internal/oracle/testdata/has_own.a",
     "path": "../oracle/testdata/has_own.a",
@@ -15590,6 +16030,46 @@
     "program": "internal/oracle/testdata/input_spread_ordinary.a",
     "path": "../oracle/testdata/input_spread_ordinary.a",
     "sha256": "0a1acd0c3670fffbddb38a656ab235e1ad26901d01bcbfa472c626f1ec046729"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_array_a_961538ce4706",
+    "program": "internal/oracle/testdata/instantiation_array.a",
+    "path": "../oracle/testdata/instantiation_array.a",
+    "sha256": "1a7fc379bfbc2b9f394147f56c10b81cdf1120c0426232d7388f2b8888c90c3d"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_callback_a_9a3ded8bc96c",
+    "program": "internal/oracle/testdata/instantiation_callback.a",
+    "path": "../oracle/testdata/instantiation_callback.a",
+    "sha256": "a67bc2fb37200da1c4253af745ef7facb3e9e1f70fd5927604c9c28bbc480ada"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_find_a_572b43aab632",
+    "program": "internal/oracle/testdata/instantiation_find.a",
+    "path": "../oracle/testdata/instantiation_find.a",
+    "sha256": "d61e632496445bb1d3d9dfd01915acf69f42f2bd75a51b68496e10021bb39ffa"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_first_a_d5b037dd9fa8",
+    "program": "internal/oracle/testdata/instantiation_first.a",
+    "path": "../oracle/testdata/instantiation_first.a",
+    "sha256": "4e10c9e693f10af450a91295f6bb5983136edebd79de1de6fe359fc7afad8b03"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_last_a_58c2a5d6f7a8",
+    "program": "internal/oracle/testdata/instantiation_last.a",
+    "path": "../oracle/testdata/instantiation_last.a",
+    "sha256": "51329567274a29e25273173ec7d48d60b1c5b894803e7eea4093165fd4d9c4f1"
   },
   {
     "package": "flow",
@@ -16222,6 +16702,14 @@
     "program": "internal/oracle/testdata/long_literals.a",
     "path": "../oracle/testdata/long_literals.a",
     "sha256": "8910ab19d479c45c85cf21af530ab501c1c4cb77635844ee4b450cad778ef23a"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_long_unicode_literals_a_085a03e09e42",
+    "program": "internal/oracle/testdata/long_unicode_literals.a",
+    "path": "../oracle/testdata/long_unicode_literals.a",
+    "sha256": "ab3f81e81ba2caf54db5c291760703688db5891742173a52b9f032e44dddf5a4"
   },
   {
     "package": "flow",
@@ -17434,6 +17922,38 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_write_positions_a_d0d8b7ebe8d6",
+    "program": "internal/oracle/testdata/node_fs_file_write_positions.a",
+    "path": "../oracle/testdata/node_fs_file_write_positions.a",
+    "sha256": "33a3b6aa3862e5242fbd4e2d8192d14c21362fd0a8227a87ff632eeecef1e14d"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_rm_options_a_e1eb88bcd007",
+    "program": "internal/oracle/testdata/node_fs_rm_options.a",
+    "path": "../oracle/testdata/node_fs_rm_options.a",
+    "sha256": "52d1559158ee31f805e56cf5e76f1ee41e401ebb62e231c0d5f1d084aa1d1721"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
+    "program": "internal/oracle/testdata/node_options_const_capture.a",
+    "path": "../oracle/testdata/node_options_const_capture.a",
+    "sha256": "a50e59ab5548fbcfdd9c57efdc00f387b6be512345b937bc6d1721f07cb735f5"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_options_widening_a_8c6589169d21",
+    "program": "internal/oracle/testdata/node_options_widening.a",
+    "path": "../oracle/testdata/node_options_widening.a",
+    "sha256": "bc7853622809967b75f626d11e71bff27b2c73afd2260fb39d80a461904e6e43"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_normalize_a_b4c3474ee5d4",
     "program": "internal/oracle/testdata/normalize.a",
     "path": "../oracle/testdata/normalize.a",
@@ -18002,6 +18522,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_plain_data_spread_a_5dc21c39c0e3",
+    "program": "internal/oracle/testdata/plain_data_spread.a",
+    "path": "../oracle/testdata/plain_data_spread.a",
+    "sha256": "8c7383c815ec189315d0ddd77bd6763851fcaa3f7aa7cde718d800dd7e589cc4"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
     "program": "internal/oracle/testdata/pow_fractional.a",
     "path": "../oracle/testdata/pow_fractional.a",
@@ -18178,6 +18706,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_class_octal_a_1f745009d809",
+    "program": "internal/oracle/testdata/regexp_native_class_octal.a",
+    "path": "../oracle/testdata/regexp_native_class_octal.a",
+    "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -18230,6 +18766,22 @@
     "program": "internal/oracle/testdata/regexp_unicode.a",
     "path": "../oracle/testdata/regexp_unicode.a",
     "sha256": "4cfd43bd6a443a4141b932c9da126d754beb37ed420cd8bacbabd1b579d439e8"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_folding_a_005d57eec71f",
+    "program": "internal/oracle/testdata/regexp_v8_folding.a",
+    "path": "../oracle/testdata/regexp_v8_folding.a",
+    "sha256": "136af7c43982bd5c024401bd9848bf57b74e1f4a3ffdc174d5c1e4b9c0140217"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_surrogates_a_e96d1deb3a51",
+    "program": "internal/oracle/testdata/regexp_v8_surrogates.a",
+    "path": "../oracle/testdata/regexp_v8_surrogates.a",
+    "sha256": "2e1604209430f743fc13228f50a9f305d22b74bc6e2acf357f0ae64ae0d40ce1"
   },
   {
     "package": "flow",
@@ -18778,6 +19330,22 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_gap_a_54923b8e9934",
+    "program": "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "path": "../oracle/testdata/static_constructor_spread_gap.a",
+    "sha256": "8c0a75df2fa6f679a720dffc802af4f0e70fc69246f8d85e151d102aff9456bb"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_owned_a_63e7cf269ff3",
+    "program": "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "path": "../oracle/testdata/static_constructor_spread_owned.a",
+    "sha256": "e9c89033a5fb52a12f5b55df38f082b3c66860767b6ba92e012829fafdd873e0"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_status_of_stdout_a_25bb9ae69b20",
     "program": "internal/oracle/testdata/status_of_stdout.a",
     "path": "../oracle/testdata/status_of_stdout.a",
@@ -19094,6 +19662,14 @@
     "program": "internal/oracle/testdata/taste_void.a",
     "path": "../oracle/testdata/taste_void.a",
     "sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_template_nullish_a_cad3ce92293c",
+    "program": "internal/oracle/testdata/template_nullish.a",
+    "path": "../oracle/testdata/template_nullish.a",
+    "sha256": "baaaafe44724c38b8f7480bf55789569b4e006a18ec01c1305817fa2f4dcd03a"
   },
   {
     "package": "flow",
@@ -20098,6 +20674,30 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_first_a_6bc987292245",
+    "program": "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "path": "../oracle/testdata/accessor_spread_throw_first.a",
+    "sha256": "fee13ae115be32feeb9944bd224c190520c435d31a8119f28acab618c76ab0c3"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_last_a_c1cd90f9b399",
+    "program": "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "path": "../oracle/testdata/accessor_spread_throw_last.a",
+    "sha256": "0947d9a78529b016a2acdfdb166a2ee9ccb1b1bc3e5db2586de24d1e392b51fa"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_accessor_spread_throw_middle_a_7071760acdec",
+    "program": "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "path": "../oracle/testdata/accessor_spread_throw_middle.a",
+    "sha256": "98816762ee954bcfc0d11f079dad9ea6fe17dec04c43c41cff913f09d937232b"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_adversarial_exits_a_4b0474bafd0b",
     "program": "internal/oracle/testdata/adversarial_exits.a",
     "path": "../oracle/testdata/adversarial_exits.a",
@@ -21173,7 +21773,7 @@
     "test": "TestFlowProgram____oracle_testdata_closure_convention_host24_a_c6da27a08c9b",
     "program": "internal/oracle/testdata/closure_convention_host24.a",
     "path": "../oracle/testdata/closure_convention_host24.a",
-    "sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159"
+    "sha256": "99005c2bc2870aaf22f368bd3f9abf04079af9c7ad76018bba39a9856539d17d"
   },
   {
     "package": "flow",
@@ -21390,6 +21990,14 @@
     "program": "internal/oracle/testdata/defaults.a",
     "path": "../oracle/testdata/defaults.a",
     "sha256": "2536fc81fea94ace3f3a14385a6587d957c4b0f458cb56a77afa09a380857915"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_determinism_dispatch_a_ea633a1e1b11",
+    "program": "internal/oracle/testdata/determinism_dispatch.a",
+    "path": "../oracle/testdata/determinism_dispatch.a",
+    "sha256": "b3f3afa23abf07cf6c7c5863dff8a486a90ff8fbac656f4629a6b4ffd6ed9680"
   },
   {
     "package": "flow",
@@ -22066,6 +22674,30 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_has_own_a_9d389ee6f06f",
     "program": "internal/oracle/testdata/has_own.a",
     "path": "../oracle/testdata/has_own.a",
@@ -22222,6 +22854,46 @@
     "program": "internal/oracle/testdata/input_spread_ordinary.a",
     "path": "../oracle/testdata/input_spread_ordinary.a",
     "sha256": "0a1acd0c3670fffbddb38a656ab235e1ad26901d01bcbfa472c626f1ec046729"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_array_a_961538ce4706",
+    "program": "internal/oracle/testdata/instantiation_array.a",
+    "path": "../oracle/testdata/instantiation_array.a",
+    "sha256": "1a7fc379bfbc2b9f394147f56c10b81cdf1120c0426232d7388f2b8888c90c3d"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_callback_a_9a3ded8bc96c",
+    "program": "internal/oracle/testdata/instantiation_callback.a",
+    "path": "../oracle/testdata/instantiation_callback.a",
+    "sha256": "a67bc2fb37200da1c4253af745ef7facb3e9e1f70fd5927604c9c28bbc480ada"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_find_a_572b43aab632",
+    "program": "internal/oracle/testdata/instantiation_find.a",
+    "path": "../oracle/testdata/instantiation_find.a",
+    "sha256": "d61e632496445bb1d3d9dfd01915acf69f42f2bd75a51b68496e10021bb39ffa"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_first_a_d5b037dd9fa8",
+    "program": "internal/oracle/testdata/instantiation_first.a",
+    "path": "../oracle/testdata/instantiation_first.a",
+    "sha256": "4e10c9e693f10af450a91295f6bb5983136edebd79de1de6fe359fc7afad8b03"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_instantiation_last_a_58c2a5d6f7a8",
+    "program": "internal/oracle/testdata/instantiation_last.a",
+    "path": "../oracle/testdata/instantiation_last.a",
+    "sha256": "51329567274a29e25273173ec7d48d60b1c5b894803e7eea4093165fd4d9c4f1"
   },
   {
     "package": "flow",
@@ -22854,6 +23526,14 @@
     "program": "internal/oracle/testdata/long_literals.a",
     "path": "../oracle/testdata/long_literals.a",
     "sha256": "8910ab19d479c45c85cf21af530ab501c1c4cb77635844ee4b450cad778ef23a"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_long_unicode_literals_a_085a03e09e42",
+    "program": "internal/oracle/testdata/long_unicode_literals.a",
+    "path": "../oracle/testdata/long_unicode_literals.a",
+    "sha256": "ab3f81e81ba2caf54db5c291760703688db5891742173a52b9f032e44dddf5a4"
   },
   {
     "package": "flow",
@@ -24066,6 +24746,38 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_file_write_positions_a_d0d8b7ebe8d6",
+    "program": "internal/oracle/testdata/node_fs_file_write_positions.a",
+    "path": "../oracle/testdata/node_fs_file_write_positions.a",
+    "sha256": "33a3b6aa3862e5242fbd4e2d8192d14c21362fd0a8227a87ff632eeecef1e14d"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_fs_rm_options_a_e1eb88bcd007",
+    "program": "internal/oracle/testdata/node_fs_rm_options.a",
+    "path": "../oracle/testdata/node_fs_rm_options.a",
+    "sha256": "52d1559158ee31f805e56cf5e76f1ee41e401ebb62e231c0d5f1d084aa1d1721"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
+    "program": "internal/oracle/testdata/node_options_const_capture.a",
+    "path": "../oracle/testdata/node_options_const_capture.a",
+    "sha256": "a50e59ab5548fbcfdd9c57efdc00f387b6be512345b937bc6d1721f07cb735f5"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_options_widening_a_8c6589169d21",
+    "program": "internal/oracle/testdata/node_options_widening.a",
+    "path": "../oracle/testdata/node_options_widening.a",
+    "sha256": "bc7853622809967b75f626d11e71bff27b2c73afd2260fb39d80a461904e6e43"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_normalize_a_b4c3474ee5d4",
     "program": "internal/oracle/testdata/normalize.a",
     "path": "../oracle/testdata/normalize.a",
@@ -24634,6 +25346,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_plain_data_spread_a_5dc21c39c0e3",
+    "program": "internal/oracle/testdata/plain_data_spread.a",
+    "path": "../oracle/testdata/plain_data_spread.a",
+    "sha256": "8c7383c815ec189315d0ddd77bd6763851fcaa3f7aa7cde718d800dd7e589cc4"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
     "program": "internal/oracle/testdata/pow_fractional.a",
     "path": "../oracle/testdata/pow_fractional.a",
@@ -24810,6 +25530,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_class_octal_a_1f745009d809",
+    "program": "internal/oracle/testdata/regexp_native_class_octal.a",
+    "path": "../oracle/testdata/regexp_native_class_octal.a",
+    "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -24862,6 +25590,22 @@
     "program": "internal/oracle/testdata/regexp_unicode.a",
     "path": "../oracle/testdata/regexp_unicode.a",
     "sha256": "4cfd43bd6a443a4141b932c9da126d754beb37ed420cd8bacbabd1b579d439e8"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_folding_a_005d57eec71f",
+    "program": "internal/oracle/testdata/regexp_v8_folding.a",
+    "path": "../oracle/testdata/regexp_v8_folding.a",
+    "sha256": "136af7c43982bd5c024401bd9848bf57b74e1f4a3ffdc174d5c1e4b9c0140217"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_regexp_v8_surrogates_a_e96d1deb3a51",
+    "program": "internal/oracle/testdata/regexp_v8_surrogates.a",
+    "path": "../oracle/testdata/regexp_v8_surrogates.a",
+    "sha256": "2e1604209430f743fc13228f50a9f305d22b74bc6e2acf357f0ae64ae0d40ce1"
   },
   {
     "package": "flow",
@@ -25410,6 +26154,22 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_gap_a_54923b8e9934",
+    "program": "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "path": "../oracle/testdata/static_constructor_spread_gap.a",
+    "sha256": "8c0a75df2fa6f679a720dffc802af4f0e70fc69246f8d85e151d102aff9456bb"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_static_constructor_spread_owned_a_63e7cf269ff3",
+    "program": "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "path": "../oracle/testdata/static_constructor_spread_owned.a",
+    "sha256": "e9c89033a5fb52a12f5b55df38f082b3c66860767b6ba92e012829fafdd873e0"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_status_of_stdout_a_25bb9ae69b20",
     "program": "internal/oracle/testdata/status_of_stdout.a",
     "path": "../oracle/testdata/status_of_stdout.a",
@@ -25726,6 +26486,14 @@
     "program": "internal/oracle/testdata/taste_void.a",
     "path": "../oracle/testdata/taste_void.a",
     "sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_template_nullish_a_cad3ce92293c",
+    "program": "internal/oracle/testdata/template_nullish.a",
+    "path": "../oracle/testdata/template_nullish.a",
+    "sha256": "baaaafe44724c38b8f7480bf55789569b4e006a18ec01c1305817fa2f4dcd03a"
   },
   {
     "package": "flow",
@@ -26730,6 +27498,30 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_accessor_spread_throw_first_a_6bc987292245",
+    "program": "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "path": "../oracle/testdata/accessor_spread_throw_first.a",
+    "sha256": "fee13ae115be32feeb9944bd224c190520c435d31a8119f28acab618c76ab0c3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_accessor_spread_throw_last_a_c1cd90f9b399",
+    "program": "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "path": "../oracle/testdata/accessor_spread_throw_last.a",
+    "sha256": "0947d9a78529b016a2acdfdb166a2ee9ccb1b1bc3e5db2586de24d1e392b51fa"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_accessor_spread_throw_middle_a_7071760acdec",
+    "program": "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "path": "../oracle/testdata/accessor_spread_throw_middle.a",
+    "sha256": "98816762ee954bcfc0d11f079dad9ea6fe17dec04c43c41cff913f09d937232b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_adversarial_exits_a_4b0474bafd0b",
     "program": "internal/oracle/testdata/adversarial_exits.a",
     "path": "../oracle/testdata/adversarial_exits.a",
@@ -26918,6 +27710,110 @@
     "program": "internal/oracle/testdata/ascii_scan.a",
     "path": "../oracle/testdata/ascii_scan.a",
     "sha256": "0035e69b7e589004d26a6e7735ea20b1fbf740f67f4e5e9464c2243662f3e85d"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_discard_a_bd1abeed5a9d",
+    "program": "internal/oracle/testdata/async_coverage_discard.a",
+    "path": "../oracle/testdata/async_coverage_discard.a",
+    "sha256": "5f06918b1b9916e9813ec7c4d7d484de6e16ea8f1ea26594aa75f1dbe1983c47"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_parameters_a_e53914db473c",
+    "program": "internal/oracle/testdata/async_coverage_parameters.a",
+    "path": "../oracle/testdata/async_coverage_parameters.a",
+    "sha256": "2dc3fd78c5e282773bade3fffef5ca124eae8abdb106efe60ae69aff87276744"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_reject_eager_a_b2ff4e1ada5f",
+    "program": "internal/oracle/testdata/async_coverage_reject_eager.a",
+    "path": "../oracle/testdata/async_coverage_reject_eager.a",
+    "sha256": "bc4f5ce41f6731e5e3ffa96ed16047bf22c7314b3ee5119e4c989067a1a3f111"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_reject_empty_a_8e538d00d3a8",
+    "program": "internal/oracle/testdata/async_coverage_reject_empty.a",
+    "path": "../oracle/testdata/async_coverage_reject_empty.a",
+    "sha256": "7f68067134db38d0405c91ee6fcc620d5eccdce69d786efe76aeb3a64054e9ad"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_reject_nested_a_27f4a4d9f8d2",
+    "program": "internal/oracle/testdata/async_coverage_reject_nested.a",
+    "path": "../oracle/testdata/async_coverage_reject_nested.a",
+    "sha256": "10fa813d2cb2ec049cf3b55944492e3a2db9e890a866486b9b3a5e3cdaea4262"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_typeof_a_652a494344b0",
+    "program": "internal/oracle/testdata/async_coverage_typeof.a",
+    "path": "../oracle/testdata/async_coverage_typeof.a",
+    "sha256": "8baf75d0a15d5aa638b916b822c891df0cc67d2587f3e6492cd97e86d0cd2daa"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_unions_a_7499fede73d9",
+    "program": "internal/oracle/testdata/async_coverage_unions.a",
+    "path": "../oracle/testdata/async_coverage_unions.a",
+    "sha256": "0b406900597f8a7692dc419fdcc91d2bdff7f1b6c98f8d82087ab47d87b87970"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_coverage_values_a_36a257d9c8e3",
+    "program": "internal/oracle/testdata/async_coverage_values.a",
+    "path": "../oracle/testdata/async_coverage_values.a",
+    "sha256": "75f93fdd5f21a79156ad90f3d66286cbd5c98c661aa69d99ac8b8138b87cfe7f"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_nested_a_23fb3bf92237",
+    "program": "internal/oracle/testdata/async_nested.a",
+    "path": "../oracle/testdata/async_nested.a",
+    "sha256": "28d980d424541191d16d85e5586eeb4bccd775e31377cbb79f39f5439d1c3364"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_plain_a_688d1e048a1e",
+    "program": "internal/oracle/testdata/async_plain.a",
+    "path": "../oracle/testdata/async_plain.a",
+    "sha256": "e1132dee266f6a804d1184bb3d9aca652c37924352f2744b0e7bf720b2a734ae"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_three_a_79c8a05502f8",
+    "program": "internal/oracle/testdata/async_three.a",
+    "path": "../oracle/testdata/async_three.a",
+    "sha256": "a67f907f529ca7d6254516f8be6c6e067c6625edf2d3c8d73239a3d9846b36a5"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_throw_a_4e384e6f5b87",
+    "program": "internal/oracle/testdata/async_throw.a",
+    "path": "../oracle/testdata/async_throw.a",
+    "sha256": "6c3e00e7233b1131d43ca9e746748fc2b9f035daf6560a37555d03f81c8386fd"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_async_typeof_a_ae3236569f58",
+    "program": "internal/oracle/testdata/async_typeof.a",
+    "path": "../oracle/testdata/async_typeof.a",
+    "sha256": "ffc266bd328773d36b979997c12633031e94de24a7d4a6e5af399d08de261d13"
   },
   {
     "package": "fresh",
@@ -27813,7 +28709,7 @@
     "test": "TestFreshWrites____oracle_testdata_closure_convention_host24_a_c6da27a08c9b",
     "program": "internal/oracle/testdata/closure_convention_host24.a",
     "path": "../oracle/testdata/closure_convention_host24.a",
-    "sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159"
+    "sha256": "99005c2bc2870aaf22f368bd3f9abf04079af9c7ad76018bba39a9856539d17d"
   },
   {
     "package": "fresh",
@@ -28030,6 +28926,14 @@
     "program": "internal/oracle/testdata/defaults.a",
     "path": "../oracle/testdata/defaults.a",
     "sha256": "2536fc81fea94ace3f3a14385a6587d957c4b0f458cb56a77afa09a380857915"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_determinism_dispatch_a_ea633a1e1b11",
+    "program": "internal/oracle/testdata/determinism_dispatch.a",
+    "path": "../oracle/testdata/determinism_dispatch.a",
+    "sha256": "b3f3afa23abf07cf6c7c5863dff8a486a90ff8fbac656f4629a6b4ffd6ed9680"
   },
   {
     "package": "fresh",
@@ -28706,6 +29610,174 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_binary_function_a_3b46c41a76d7",
+    "program": "internal/oracle/testdata/getters_census_binary_function.a",
+    "path": "../oracle/testdata/getters_census_binary_function.a",
+    "sha256": "6d6fe64e8569967fb0a6bd590c853a552763e626d124895cb464dab829c763fb"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_binary_inline_a_09766ae4b0b8",
+    "program": "internal/oracle/testdata/getters_census_binary_inline.a",
+    "path": "../oracle/testdata/getters_census_binary_inline.a",
+    "sha256": "6f22ea11fe5b3c6e2f2a26c047e8435b2fc5b6ed3f66a38b693c74838fede700"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_callback_pair_methods_a_be50df445a04",
+    "program": "internal/oracle/testdata/getters_census_callback_pair_methods.a",
+    "path": "../oracle/testdata/getters_census_callback_pair_methods.a",
+    "sha256": "793b5c24a9e915e21a5e4baa42741a07561f3edb8bf988c9a16c1681d7b0a074"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_class_map_a_81d108988d30",
+    "program": "internal/oracle/testdata/getters_census_class_map.a",
+    "path": "../oracle/testdata/getters_census_class_map.a",
+    "sha256": "a641cd6d0ca14d4b24ee7abb0cf5ec8eb89deec08bf973046f21a96e8f3a1391"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_closure_number_methods_a_677dd2030a20",
+    "program": "internal/oracle/testdata/getters_census_closure_number_methods.a",
+    "path": "../oracle/testdata/getters_census_closure_number_methods.a",
+    "sha256": "b7362c778058b4ee04d537d686a93b71ceab5123f130ed9ddbca1889ed37504f"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_closure_number_next_a_80510145a441",
+    "program": "internal/oracle/testdata/getters_census_closure_number_next.a",
+    "path": "../oracle/testdata/getters_census_closure_number_next.a",
+    "sha256": "337ac197648a09151fa1c4ae55ce37212d81afa55da8718f60bf8693b64eb3ce"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_closure_union_next_a_b1f2494204e1",
+    "program": "internal/oracle/testdata/getters_census_closure_union_next.a",
+    "path": "../oracle/testdata/getters_census_closure_union_next.a",
+    "sha256": "521c2ac6b591b1272990f66e6ae7cd6426bb2893666436cbd81927f760158030"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_higher_callback_pair_methods_a_7972dab473dc",
+    "program": "internal/oracle/testdata/getters_census_higher_callback_pair_methods.a",
+    "path": "../oracle/testdata/getters_census_higher_callback_pair_methods.a",
+    "sha256": "c891ca8316304868cfd20427a291cbdfe98da4274590b774f512cea8fd9cb40b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_lazy_object_a_432b28f4dfe8",
+    "program": "internal/oracle/testdata/getters_census_lazy_object.a",
+    "path": "../oracle/testdata/getters_census_lazy_object.a",
+    "sha256": "6aeade35e8d6774f5f3fada84d9280705e92bd7f65c8ab32069a03cd4a369a15"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_optional_boolean_function_a_8aff4bdd0e90",
+    "program": "internal/oracle/testdata/getters_census_optional_boolean_function.a",
+    "path": "../oracle/testdata/getters_census_optional_boolean_function.a",
+    "sha256": "99886bb932bcdeb82ecafd4aa6456f8d7093c4f4dc9743e26cd7c8b50d9e5514"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_optional_comment_function_a_2029e3521983",
+    "program": "internal/oracle/testdata/getters_census_optional_comment_function.a",
+    "path": "../oracle/testdata/getters_census_optional_comment_function.a",
+    "sha256": "8efc4e9c3e0820221b25f48126a57ae337078acdd88c05b1f7153b739853b2c1"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_optional_type_function_a_cd5f07b5b690",
+    "program": "internal/oracle/testdata/getters_census_optional_type_function.a",
+    "path": "../oracle/testdata/getters_census_optional_type_function.a",
+    "sha256": "a9be9232b55f687a8bd6ece7f4cb590b3f557c38139b7fb31459b5d3cdd41974"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_overloaded_function_a_ba2c01de019e",
+    "program": "internal/oracle/testdata/getters_census_overloaded_function.a",
+    "path": "../oracle/testdata/getters_census_overloaded_function.a",
+    "sha256": "5cfbcacb9c50a48586ce6671d31056ac17eba4ea7675e4efa0976099df57eab2"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_primary_function_a_7a40b40de68a",
+    "program": "internal/oracle/testdata/getters_census_primary_function.a",
+    "path": "../oracle/testdata/getters_census_primary_function.a",
+    "sha256": "39bca8f2f1657e55528615e1340f74947cffd6458dbe8307c31125786f4b139b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_snapshot_next_a_69ca8f62041c",
+    "program": "internal/oracle/testdata/getters_census_snapshot_next.a",
+    "path": "../oracle/testdata/getters_census_snapshot_next.a",
+    "sha256": "98927c4c249aea6c20220c5e3475ae741176b99b36424c809151e76cfa7773b1"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_throwing_object_a_77826e938ba2",
+    "program": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "path": "../oracle/testdata/getters_census_throwing_object.a",
+    "sha256": "0e1538407ead9267eb9fb946d264ea3004ef606482c441d16a33bc37e7bf245e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_unary_function_a_e1dc5e26e4f4",
+    "program": "internal/oracle/testdata/getters_census_unary_function.a",
+    "path": "../oracle/testdata/getters_census_unary_function.a",
+    "sha256": "a25309ec10c210811e0e230c6b7287504c432c759f2f67a2ad280eabd5d5ba54"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_unary_node_function_a_26e29f471fc7",
+    "program": "internal/oracle/testdata/getters_census_unary_node_function.a",
+    "path": "../oracle/testdata/getters_census_unary_node_function.a",
+    "sha256": "5c4de901d256ecdb97cb95b3b1f5988784afecea99eba21b7540695e317600c3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_update_comment_function_a_24e4bd0b0eb8",
+    "program": "internal/oracle/testdata/getters_census_update_comment_function.a",
+    "path": "../oracle/testdata/getters_census_update_comment_function.a",
+    "sha256": "289f7cf4620cf0019d397df273124dd672c42df3061fa6e6bbbe0c7a05ace321"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_update_node_function_a_4e79d9aa3c1a",
+    "program": "internal/oracle/testdata/getters_census_update_node_function.a",
+    "path": "../oracle/testdata/getters_census_update_node_function.a",
+    "sha256": "04d188fc4bb30ae9b309dba9c19b9d9903f72250b6af87463272fbf1382715cf"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_getters_census_update_type_function_a_36f5dfd0d83a",
+    "program": "internal/oracle/testdata/getters_census_update_type_function.a",
+    "path": "../oracle/testdata/getters_census_update_type_function.a",
+    "sha256": "e9ab04959d8a07692e584cea3ca6a8f06d5f0ec0381a731f3817a2ab39586801"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_has_own_a_9d389ee6f06f",
     "program": "internal/oracle/testdata/has_own.a",
     "path": "../oracle/testdata/has_own.a",
@@ -28862,6 +29934,46 @@
     "program": "internal/oracle/testdata/input_spread_ordinary.a",
     "path": "../oracle/testdata/input_spread_ordinary.a",
     "sha256": "0a1acd0c3670fffbddb38a656ab235e1ad26901d01bcbfa472c626f1ec046729"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_instantiation_array_a_961538ce4706",
+    "program": "internal/oracle/testdata/instantiation_array.a",
+    "path": "../oracle/testdata/instantiation_array.a",
+    "sha256": "1a7fc379bfbc2b9f394147f56c10b81cdf1120c0426232d7388f2b8888c90c3d"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_instantiation_callback_a_9a3ded8bc96c",
+    "program": "internal/oracle/testdata/instantiation_callback.a",
+    "path": "../oracle/testdata/instantiation_callback.a",
+    "sha256": "a67bc2fb37200da1c4253af745ef7facb3e9e1f70fd5927604c9c28bbc480ada"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_instantiation_find_a_572b43aab632",
+    "program": "internal/oracle/testdata/instantiation_find.a",
+    "path": "../oracle/testdata/instantiation_find.a",
+    "sha256": "d61e632496445bb1d3d9dfd01915acf69f42f2bd75a51b68496e10021bb39ffa"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_instantiation_first_a_d5b037dd9fa8",
+    "program": "internal/oracle/testdata/instantiation_first.a",
+    "path": "../oracle/testdata/instantiation_first.a",
+    "sha256": "4e10c9e693f10af450a91295f6bb5983136edebd79de1de6fe359fc7afad8b03"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_instantiation_last_a_58c2a5d6f7a8",
+    "program": "internal/oracle/testdata/instantiation_last.a",
+    "path": "../oracle/testdata/instantiation_last.a",
+    "sha256": "51329567274a29e25273173ec7d48d60b1c5b894803e7eea4093165fd4d9c4f1"
   },
   {
     "package": "fresh",
@@ -29502,6 +30614,14 @@
     "program": "internal/oracle/testdata/long_literals.a",
     "path": "../oracle/testdata/long_literals.a",
     "sha256": "8910ab19d479c45c85cf21af530ab501c1c4cb77635844ee4b450cad778ef23a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_long_unicode_literals_a_085a03e09e42",
+    "program": "internal/oracle/testdata/long_unicode_literals.a",
+    "path": "../oracle/testdata/long_unicode_literals.a",
+    "sha256": "ab3f81e81ba2caf54db5c291760703688db5891742173a52b9f032e44dddf5a4"
   },
   {
     "package": "fresh",
@@ -30738,6 +31858,38 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_fs_file_write_positions_a_d0d8b7ebe8d6",
+    "program": "internal/oracle/testdata/node_fs_file_write_positions.a",
+    "path": "../oracle/testdata/node_fs_file_write_positions.a",
+    "sha256": "33a3b6aa3862e5242fbd4e2d8192d14c21362fd0a8227a87ff632eeecef1e14d"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_fs_rm_options_a_e1eb88bcd007",
+    "program": "internal/oracle/testdata/node_fs_rm_options.a",
+    "path": "../oracle/testdata/node_fs_rm_options.a",
+    "sha256": "52d1559158ee31f805e56cf5e76f1ee41e401ebb62e231c0d5f1d084aa1d1721"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_options_const_capture_a_b447d7f8507e",
+    "program": "internal/oracle/testdata/node_options_const_capture.a",
+    "path": "../oracle/testdata/node_options_const_capture.a",
+    "sha256": "a50e59ab5548fbcfdd9c57efdc00f387b6be512345b937bc6d1721f07cb735f5"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_options_widening_a_8c6589169d21",
+    "program": "internal/oracle/testdata/node_options_widening.a",
+    "path": "../oracle/testdata/node_options_widening.a",
+    "sha256": "bc7853622809967b75f626d11e71bff27b2c73afd2260fb39d80a461904e6e43"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_non_null_possible_read_a_03dbf385a467",
     "program": "internal/oracle/testdata/non_null_possible_read.a",
     "path": "../oracle/testdata/non_null_possible_read.a",
@@ -31426,6 +32578,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_plain_data_spread_a_5dc21c39c0e3",
+    "program": "internal/oracle/testdata/plain_data_spread.a",
+    "path": "../oracle/testdata/plain_data_spread.a",
+    "sha256": "8c7383c815ec189315d0ddd77bd6763851fcaa3f7aa7cde718d800dd7e589cc4"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_pow_fractional_a_633be2799c28",
     "program": "internal/oracle/testdata/pow_fractional.a",
     "path": "../oracle/testdata/pow_fractional.a",
@@ -31602,6 +32762,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_regexp_native_class_octal_a_1f745009d809",
+    "program": "internal/oracle/testdata/regexp_native_class_octal.a",
+    "path": "../oracle/testdata/regexp_native_class_octal.a",
+    "sha256": "c5532891a0964f5eb048c003a20b504175cc36793ed7fec12c525438c3acdd9e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -31654,6 +32822,22 @@
     "program": "internal/oracle/testdata/regexp_unicode.a",
     "path": "../oracle/testdata/regexp_unicode.a",
     "sha256": "4cfd43bd6a443a4141b932c9da126d754beb37ed420cd8bacbabd1b579d439e8"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_regexp_v8_folding_a_005d57eec71f",
+    "program": "internal/oracle/testdata/regexp_v8_folding.a",
+    "path": "../oracle/testdata/regexp_v8_folding.a",
+    "sha256": "136af7c43982bd5c024401bd9848bf57b74e1f4a3ffdc174d5c1e4b9c0140217"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_regexp_v8_surrogates_a_e96d1deb3a51",
+    "program": "internal/oracle/testdata/regexp_v8_surrogates.a",
+    "path": "../oracle/testdata/regexp_v8_surrogates.a",
+    "sha256": "2e1604209430f743fc13228f50a9f305d22b74bc6e2acf357f0ae64ae0d40ce1"
   },
   {
     "package": "fresh",
@@ -32210,6 +33394,22 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_static_constructor_spread_gap_a_54923b8e9934",
+    "program": "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "path": "../oracle/testdata/static_constructor_spread_gap.a",
+    "sha256": "8c0a75df2fa6f679a720dffc802af4f0e70fc69246f8d85e151d102aff9456bb"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_static_constructor_spread_owned_a_63e7cf269ff3",
+    "program": "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "path": "../oracle/testdata/static_constructor_spread_owned.a",
+    "sha256": "e9c89033a5fb52a12f5b55df38f082b3c66860767b6ba92e012829fafdd873e0"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_status_of_stdout_a_25bb9ae69b20",
     "program": "internal/oracle/testdata/status_of_stdout.a",
     "path": "../oracle/testdata/status_of_stdout.a",
@@ -32526,6 +33726,14 @@
     "program": "internal/oracle/testdata/taste_void.a",
     "path": "../oracle/testdata/taste_void.a",
     "sha256": "430516ad7551e6b9ca1789a8994b0eb1bb449c5bb2525104fc3550aa87b6073d"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_template_nullish_a_cad3ce92293c",
+    "program": "internal/oracle/testdata/template_nullish.a",
+    "path": "../oracle/testdata/template_nullish.a",
+    "sha256": "baaaafe44724c38b8f7480bf55789569b4e006a18ec01c1305817fa2f4dcd03a"
   },
   {
     "package": "fresh",

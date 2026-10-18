@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T08:49:44.500290313Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-18T08:49:44.509238052Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey"}
+{"Time":"2026-10-18T08:49:44.509301937Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey","Output":"=== RUN   TestJSONClassOrderAnswerKey\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:44.509804394Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey","Output":"=== PAUSE TestJSONClassOrderAnswerKey\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:44.509815991Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey"}
+{"Time":"2026-10-18T08:49:44.509819035Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey"}
+{"Time":"2026-10-18T08:49:44.509820848Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey","Output":"=== CONT  TestJSONClassOrderAnswerKey\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:44.706307151Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey","Output":"--- PASS: TestJSONClassOrderAnswerKey (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:44.706410595Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestJSONClassOrderAnswerKey","Elapsed":0.19}
+{"Time":"2026-10-18T08:49:44.706429903Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:44.709506371Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t0.209s\n"}
+{"Time":"2026-10-18T08:49:44.709550957Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":0.209}

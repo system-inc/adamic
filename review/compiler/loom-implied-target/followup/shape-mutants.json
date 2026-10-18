@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "shape-ignores-readonly",
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.434
+  },
+  {
+    "mutant": "shape-per-literal",
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.895
+  },
+  {
+    "mutant": "shape-ignores-type",
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.513
+  },
+  {
+    "mutant": "shape-ignores-name",
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.34
+  },
+  {
+    "mutant": "shape-includes-reference",
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.343
+  }
+]

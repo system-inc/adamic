@@ -1,0 +1,10 @@
+=== RUN   TestCountsAreRecordedTable
+=== PAUSE TestCountsAreRecordedTable
+=== RUN   TestRuntimeSetsAreEachUsed
+=== PAUSE TestRuntimeSetsAreEachUsed
+=== CONT  TestCountsAreRecordedTable
+=== CONT  TestRuntimeSetsAreEachUsed
+--- PASS: TestCountsAreRecordedTable (0.00s)
+--- PASS: TestRuntimeSetsAreEachUsed (1.70s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	1.715s

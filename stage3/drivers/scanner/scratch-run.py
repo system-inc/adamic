@@ -14,12 +14,12 @@ import sys
 import time
 import uuid
 
+sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from caches import stage3_cache
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-sys.dont_write_bytecode = True
 
 
 def load_module(name, file):
@@ -27,6 +27,60 @@ def load_module(name, file):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def copy_pipeline(out):
+    """Copy the scanner profile without changing the repository apply pipeline."""
+    pipeline = out / 'pipeline'
+    pipeline.mkdir()
+    for name in ['apply.sh', 'apply.py', 'caches.py', 'source.json']:
+        shutil.copyfile(REPO / 'stage3' / name, pipeline / name)
+    shutil.copytree(REPO / 'stage3/api', pipeline / 'api', ignore=shutil.ignore_patterns('node_modules'))
+    (pipeline / 'adapt').mkdir()
+    for name in ['00-setup', '10-type-imports', '42-scanner-any', '50-temporary-scanner-implicit-returns', '51-temporary-scanner-fallthrough']:
+        shutil.copytree(REPO / 'stage3/adapt' / name, pipeline / 'adapt' / name)
+    return pipeline
+
+
+def prepare_gate_inputs(out, pipeline, cache, env, require, git_text):
+    """Prepare apply's pinned source and API inputs, with named failures and phase logs."""
+    pin = json.loads((pipeline / 'source.json').read_text())
+    configured = env.get('ADAMIC_TYPESCRIPT_SOURCE')
+    source = Path(configured).resolve() if configured else out / 'typescript-source'
+    missing = f"pinned TypeScript {pin['tag']} at {pin['commit']} in {source}"
+    try:
+        if configured:
+            if not source.is_dir():
+                raise RuntimeError('ADAMIC_TYPESCRIPT_SOURCE does not name a directory')
+        else:
+            require(['git', 'clone', '--depth', '1', '--branch', pin['tag'],
+                     pin['repository'], source], 'typescript-source')
+        head = git_text(['rev-parse', '--verify', 'HEAD^{commit}'], 'typescript-source-ref', source)
+        if head != pin['commit']:
+            raise RuntimeError(f'checkout is at {head}, not the pinned commit')
+    except (OSError, RuntimeError) as error:
+        raise RuntimeError(f'gate input missing or invalid: {missing}; {error}') from error
+    env['ADAMIC_TYPESCRIPT_SOURCE'] = str(source)
+
+    # Apply consumes a pinned install beside its copied lockfile. The scanner and
+    # slicer consume the same parser at stage3_cache()/api, respecting caches.py.
+    api = cache / 'api'
+    api.mkdir(parents=True, exist_ok=True)
+    for name in ['package.json', 'package-lock.json', 'node_modules.sha256']:
+        shutil.copyfile(pipeline / 'api' / name, api / name)
+    for project, label in [(pipeline / 'api', 'pipeline-api'), (api, 'cache-api')]:
+        missing = f"pinned API packages at {project / 'node_modules'} from {project / 'package-lock.json'}"
+        try:
+            require(['npm', 'ci', '--prefix', project, '--ignore-scripts', '--no-audit', '--no-fund'], label)
+        except (OSError, RuntimeError) as error:
+            raise RuntimeError(f'gate input missing or invalid: {missing}; {error}') from error
+    # Use apply's independent lockfile/byte check rather than trusting npm's exit.
+    require(['python3', pipeline / 'apply.py', '--packages-digest'], 'pipeline-api-digest')
+    verifier = load_module('scanner_apply_inputs', pipeline / 'apply.py')
+    verifier.pinned_packages(pipeline / 'api')
+    verifier.pinned_packages(api)
+    return {'typescript_source': str(source), 'typescript_sha': head,
+            'pipeline_api': str(pipeline / 'api'), 'cache_api': str(api)}
 
 
 def main():
@@ -147,14 +201,8 @@ def main():
             return 1
         summary['compiler']['binary_sha256'] = hashlib.sha256(compiler.read_bytes()).hexdigest()
         # Use the driver's documented small apply profile; no global adaptations are edited.
-        pipeline = out / 'pipeline'
-        pipeline.mkdir()
-        for name in ['apply.sh', 'apply.py', 'source.json']:
-            shutil.copyfile(REPO / 'stage3' / name, pipeline / name)
-        shutil.copytree(REPO / 'stage3/api', pipeline / 'api', ignore=shutil.ignore_patterns('node_modules'))
-        (pipeline / 'adapt').mkdir()
-        for name in ['00-setup', '10-type-imports', '42-scanner-any', '50-temporary-scanner-implicit-returns', '51-temporary-scanner-fallthrough']:
-            shutil.copytree(REPO / 'stage3/adapt' / name, pipeline / 'adapt' / name)
+        pipeline = copy_pipeline(out)
+        summary['gate_inputs'] = prepare_gate_inputs(out, pipeline, cache, env, require, git_text)
         full = out / 'full-tree'
         require(['bash', pipeline / 'apply.sh', full], 'apply')
         # A fixed pre-50 corpus reproduces the measured 509,014-token reference.

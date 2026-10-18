@@ -67,7 +67,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 // newError lowers new Error(message), and new Error().
 func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
+	message := ir.Expression(ir.Undefined{Of: ir.String})
 	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
 		if len(created.Arguments.Nodes) > 1 {
 			return nil, l.notYet(node, "new Error with options")
@@ -76,6 +76,7 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
 			return nil, err
 		}
+		message = fit(message, ir.String)
 		if message.Type() != ir.String {
 			return nil, l.notYet(node, "new Error with a message that isn't a string")
 		}
@@ -198,7 +199,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
 			// A call through a function value, written out or made by the runtime's loop.
 			if l.result.ClosuresMayThrow {
 				found = true
@@ -231,7 +232,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 					}
 				}
 			}
-		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
+		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
 			callsClosures = true
 		case ir.ArraySort:
 			if node.Callback != nil {

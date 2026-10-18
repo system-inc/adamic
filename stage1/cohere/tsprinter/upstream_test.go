@@ -6,16 +6,18 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
 
 // Not parallel: this is a small pin check on the external formatters, not a port benchmark.
 func TestStatementUpstreamDifferences(t *testing.T) {
 	directory := t.TempDir()
-	root, _ := filepath.Abs(repository)
+	root, _ := filepath.Abs(oracles.Repository)
 	recordsPath, _ := filepath.Abs("testdata/statement-upstream-differences.json")
 	// The same two harnesses over cohere's javascript package are tsprinter-go-oracle-v2, built ahead; the unit only
 	// runs it, in the package's directory (#5qykzj5).
-	command := bounded(t, printerGateGoOracle(t)+"/oracle", "-test.v", "-test.run=^TestAdamicStatementUpstreamDifferences$")
+	command := bounded(t, oracles.PrinterGateGoOracle(t)+"/oracle", "-test.v", "-test.run=^TestAdamicStatementUpstreamDifferences$")
 	command.Dir = root + "/cohere/internal/format/javascript"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_UPSTREAM="+recordsPath)
 	if output, err := combinedOutput(command); err != nil {
@@ -45,8 +47,8 @@ func TestStatementUpstreamDifferences(t *testing.T) {
 	script, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles := root + "/cohere/internal/format/prettier/bundles"
 	result := execute(t, nil, "node", script, bundles, specsPath)
-	if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != want.String() {
-		t.Fatalf("embedded: exit %d stderr %s diff %s", result.exitCode, result.stderr, firstDifference(string(result.stdout), want.String()))
+	if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != want.String() {
+		t.Fatalf("embedded: exit %d stderr %s diff %s", result.ExitCode, result.Stderr, firstDifference(string(result.Stdout), want.String()))
 	}
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
@@ -54,8 +56,8 @@ func TestStatementUpstreamDifferences(t *testing.T) {
 	}
 	script, _ = filepath.Abs("testdata/statementDifferences.mjs")
 	result = execute(t, nil, "node", script, library, recordsPath)
-	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("npm: exit %d stderr %s", result.exitCode, result.stderr)
+	if result.ExitCode != 0 || len(result.Stderr) != 0 {
+		t.Fatalf("npm: exit %d stderr %s", result.ExitCode, result.Stderr)
 	}
-	t.Log(string(result.stdout))
+	t.Log(string(result.Stdout))
 }

@@ -11,7 +11,7 @@ func TestMutants_adamic_no_type_predicate(t *testing.T) {
 
 func TestProduct_LintMutant_adamic_no_type_predicate(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "adamic-no-type-predicate")
+	requireMutantRuleProduct(t, "adamic-no-type-predicate")
 }
 
 func TestMutants_base_boundary_no_global_container(t *testing.T) {
@@ -21,7 +21,7 @@ func TestMutants_base_boundary_no_global_container(t *testing.T) {
 
 func TestProduct_LintMutant_base_boundary_no_global_container(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "base-boundary-no-global-container")
+	requireMutantRuleProduct(t, "base-boundary-no-global-container")
 }
 
 func TestMutants_base_consistency_no_console(t *testing.T) {
@@ -31,7 +31,7 @@ func TestMutants_base_consistency_no_console(t *testing.T) {
 
 func TestProduct_LintMutant_base_consistency_no_console(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "base-consistency-no-console")
+	requireMutantRuleProduct(t, "base-consistency-no-console")
 }
 
 func TestMutants_base_consistency_no_hand_built_declared_error(t *testing.T) {
@@ -41,7 +41,7 @@ func TestMutants_base_consistency_no_hand_built_declared_error(t *testing.T) {
 
 func TestProduct_LintMutant_base_consistency_no_hand_built_declared_error(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "base-consistency-no-hand-built-declared-error")
+	requireMutantRuleProduct(t, "base-consistency-no-hand-built-declared-error")
 }
 
 func TestMutants_base_consistency_require_pagination_argument_name(t *testing.T) {
@@ -51,7 +51,7 @@ func TestMutants_base_consistency_require_pagination_argument_name(t *testing.T)
 
 func TestProduct_LintMutant_base_consistency_require_pagination_argument_name(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "base-consistency-require-pagination-argument-name")
+	requireMutantRuleProduct(t, "base-consistency-require-pagination-argument-name")
 }
 
 func TestMutants_eqeqeq(t *testing.T) {
@@ -61,7 +61,7 @@ func TestMutants_eqeqeq(t *testing.T) {
 
 func TestProduct_LintMutant_eqeqeq(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "eqeqeq")
+	requireMutantRuleProduct(t, "eqeqeq")
 }
 
 func TestMutants_max_classes_per_file(t *testing.T) {
@@ -71,7 +71,7 @@ func TestMutants_max_classes_per_file(t *testing.T) {
 
 func TestProduct_LintMutant_max_classes_per_file(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "max-classes-per-file")
+	requireMutantRuleProduct(t, "max-classes-per-file")
 }
 
 func TestMutants_max_depth(t *testing.T) {
@@ -81,7 +81,7 @@ func TestMutants_max_depth(t *testing.T) {
 
 func TestProduct_LintMutant_max_depth(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "max-depth")
+	requireMutantRuleProduct(t, "max-depth")
 }
 
 func TestMutants_max_nested_callbacks(t *testing.T) {
@@ -91,7 +91,7 @@ func TestMutants_max_nested_callbacks(t *testing.T) {
 
 func TestProduct_LintMutant_max_nested_callbacks(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "max-nested-callbacks")
+	requireMutantRuleProduct(t, "max-nested-callbacks")
 }
 
 func TestMutants_nexus_consistency_no_abbreviated_identifier(t *testing.T) {
@@ -101,7 +101,7 @@ func TestMutants_nexus_consistency_no_abbreviated_identifier(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_abbreviated_identifier(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-abbreviated-identifier")
+	requireMutantRuleProduct(t, "nexus-consistency-no-abbreviated-identifier")
 }
 
 func TestMutants_nexus_consistency_no_ambiguous_identifier(t *testing.T) {
@@ -111,7 +111,7 @@ func TestMutants_nexus_consistency_no_ambiguous_identifier(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_ambiguous_identifier(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-ambiguous-identifier")
+	requireMutantRuleProduct(t, "nexus-consistency-no-ambiguous-identifier")
 }
 
 func TestMutants_nexus_consistency_no_enum(t *testing.T) {
@@ -121,7 +121,7 @@ func TestMutants_nexus_consistency_no_enum(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_enum(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-enum")
+	requireMutantRuleProduct(t, "nexus-consistency-no-enum")
 }
 
 func TestMutants_nexus_consistency_no_for_in(t *testing.T) {
@@ -131,7 +131,7 @@ func TestMutants_nexus_consistency_no_for_in(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_for_in(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-for-in")
+	requireMutantRuleProduct(t, "nexus-consistency-no-for-in")
 }
 
 func TestMutants_nexus_consistency_no_long_line_comment(t *testing.T) {
@@ -141,7 +141,7 @@ func TestMutants_nexus_consistency_no_long_line_comment(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_long_line_comment(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-long-line-comment")
+	requireMutantRuleProduct(t, "nexus-consistency-no-long-line-comment")
 }
 
 func TestMutants_nexus_consistency_no_multiline_arrow_function(t *testing.T) {
@@ -151,7 +151,7 @@ func TestMutants_nexus_consistency_no_multiline_arrow_function(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_multiline_arrow_function(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-multiline-arrow-function")
+	requireMutantRuleProduct(t, "nexus-consistency-no-multiline-arrow-function")
 }
 
 func TestMutants_nexus_consistency_no_shouting(t *testing.T) {
@@ -161,7 +161,7 @@ func TestMutants_nexus_consistency_no_shouting(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_shouting(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-shouting")
+	requireMutantRuleProduct(t, "nexus-consistency-no-shouting")
 }
 
 func TestMutants_nexus_consistency_no_single_line_jsdoc(t *testing.T) {
@@ -171,7 +171,7 @@ func TestMutants_nexus_consistency_no_single_line_jsdoc(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_single_line_jsdoc(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-single-line-jsdoc")
+	requireMutantRuleProduct(t, "nexus-consistency-no-single-line-jsdoc")
 }
 
 func TestMutants_nexus_consistency_no_stuttering_name(t *testing.T) {
@@ -181,7 +181,7 @@ func TestMutants_nexus_consistency_no_stuttering_name(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_no_stuttering_name(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-no-stuttering-name")
+	requireMutantRuleProduct(t, "nexus-consistency-no-stuttering-name")
 }
 
 func TestMutants_nexus_consistency_require_type_suffix(t *testing.T) {
@@ -191,7 +191,7 @@ func TestMutants_nexus_consistency_require_type_suffix(t *testing.T) {
 
 func TestProduct_LintMutant_nexus_consistency_require_type_suffix(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "nexus-consistency-require-type-suffix")
+	requireMutantRuleProduct(t, "nexus-consistency-require-type-suffix")
 }
 
 func TestMutants_no_await_in_loop(t *testing.T) {
@@ -201,7 +201,7 @@ func TestMutants_no_await_in_loop(t *testing.T) {
 
 func TestProduct_LintMutant_no_await_in_loop(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-await-in-loop")
+	requireMutantRuleProduct(t, "no-await-in-loop")
 }
 
 func TestMutants_no_bitwise(t *testing.T) {
@@ -211,7 +211,7 @@ func TestMutants_no_bitwise(t *testing.T) {
 
 func TestProduct_LintMutant_no_bitwise(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-bitwise")
+	requireMutantRuleProduct(t, "no-bitwise")
 }
 
 func TestMutants_no_caller(t *testing.T) {
@@ -221,7 +221,7 @@ func TestMutants_no_caller(t *testing.T) {
 
 func TestProduct_LintMutant_no_caller(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-caller")
+	requireMutantRuleProduct(t, "no-caller")
 }
 
 func TestMutants_no_continue(t *testing.T) {
@@ -231,7 +231,7 @@ func TestMutants_no_continue(t *testing.T) {
 
 func TestProduct_LintMutant_no_continue(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-continue")
+	requireMutantRuleProduct(t, "no-continue")
 }
 
 func TestMutants_no_debugger(t *testing.T) {
@@ -241,7 +241,7 @@ func TestMutants_no_debugger(t *testing.T) {
 
 func TestProduct_LintMutant_no_debugger(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-debugger")
+	requireMutantRuleProduct(t, "no-debugger")
 }
 
 func TestMutants_no_div_regex(t *testing.T) {
@@ -251,7 +251,7 @@ func TestMutants_no_div_regex(t *testing.T) {
 
 func TestProduct_LintMutant_no_div_regex(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-div-regex")
+	requireMutantRuleProduct(t, "no-div-regex")
 }
 
 func TestMutants_no_duplicate_case(t *testing.T) {
@@ -261,7 +261,7 @@ func TestMutants_no_duplicate_case(t *testing.T) {
 
 func TestProduct_LintMutant_no_duplicate_case(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-duplicate-case")
+	requireMutantRuleProduct(t, "no-duplicate-case")
 }
 
 func TestMutants_no_empty(t *testing.T) {
@@ -271,7 +271,7 @@ func TestMutants_no_empty(t *testing.T) {
 
 func TestProduct_LintMutant_no_empty(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-empty")
+	requireMutantRuleProduct(t, "no-empty")
 }
 
 func TestMutants_no_empty_character_class(t *testing.T) {
@@ -281,7 +281,7 @@ func TestMutants_no_empty_character_class(t *testing.T) {
 
 func TestProduct_LintMutant_no_empty_character_class(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-empty-character-class")
+	requireMutantRuleProduct(t, "no-empty-character-class")
 }
 
 func TestMutants_no_empty_pattern(t *testing.T) {
@@ -291,7 +291,7 @@ func TestMutants_no_empty_pattern(t *testing.T) {
 
 func TestProduct_LintMutant_no_empty_pattern(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-empty-pattern")
+	requireMutantRuleProduct(t, "no-empty-pattern")
 }
 
 func TestMutants_no_empty_static_block(t *testing.T) {
@@ -301,7 +301,7 @@ func TestMutants_no_empty_static_block(t *testing.T) {
 
 func TestProduct_LintMutant_no_empty_static_block(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-empty-static-block")
+	requireMutantRuleProduct(t, "no-empty-static-block")
 }
 
 func TestMutants_no_ex_assign(t *testing.T) {
@@ -311,7 +311,7 @@ func TestMutants_no_ex_assign(t *testing.T) {
 
 func TestProduct_LintMutant_no_ex_assign(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-ex-assign")
+	requireMutantRuleProduct(t, "no-ex-assign")
 }
 
 func TestMutants_no_iterator(t *testing.T) {
@@ -321,7 +321,7 @@ func TestMutants_no_iterator(t *testing.T) {
 
 func TestProduct_LintMutant_no_iterator(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-iterator")
+	requireMutantRuleProduct(t, "no-iterator")
 }
 
 func TestMutants_no_labels(t *testing.T) {
@@ -331,7 +331,7 @@ func TestMutants_no_labels(t *testing.T) {
 
 func TestProduct_LintMutant_no_labels(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-labels")
+	requireMutantRuleProduct(t, "no-labels")
 }
 
 func TestMutants_no_multi_assign(t *testing.T) {
@@ -341,7 +341,7 @@ func TestMutants_no_multi_assign(t *testing.T) {
 
 func TestProduct_LintMutant_no_multi_assign(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-multi-assign")
+	requireMutantRuleProduct(t, "no-multi-assign")
 }
 
 func TestMutants_no_negated_condition(t *testing.T) {
@@ -351,7 +351,7 @@ func TestMutants_no_negated_condition(t *testing.T) {
 
 func TestProduct_LintMutant_no_negated_condition(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-negated-condition")
+	requireMutantRuleProduct(t, "no-negated-condition")
 }
 
 func TestMutants_no_new(t *testing.T) {
@@ -361,7 +361,7 @@ func TestMutants_no_new(t *testing.T) {
 
 func TestProduct_LintMutant_no_new(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-new")
+	requireMutantRuleProduct(t, "no-new")
 }
 
 func TestMutants_no_octal_escape(t *testing.T) {
@@ -371,7 +371,7 @@ func TestMutants_no_octal_escape(t *testing.T) {
 
 func TestProduct_LintMutant_no_octal_escape(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-octal-escape")
+	requireMutantRuleProduct(t, "no-octal-escape")
 }
 
 func TestMutants_no_plusplus(t *testing.T) {
@@ -381,7 +381,7 @@ func TestMutants_no_plusplus(t *testing.T) {
 
 func TestProduct_LintMutant_no_plusplus(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-plusplus")
+	requireMutantRuleProduct(t, "no-plusplus")
 }
 
 func TestMutants_no_proto(t *testing.T) {
@@ -391,7 +391,7 @@ func TestMutants_no_proto(t *testing.T) {
 
 func TestProduct_LintMutant_no_proto(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-proto")
+	requireMutantRuleProduct(t, "no-proto")
 }
 
 func TestMutants_no_return_assign(t *testing.T) {
@@ -401,7 +401,7 @@ func TestMutants_no_return_assign(t *testing.T) {
 
 func TestProduct_LintMutant_no_return_assign(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-return-assign")
+	requireMutantRuleProduct(t, "no-return-assign")
 }
 
 func TestMutants_no_script_url(t *testing.T) {
@@ -411,7 +411,7 @@ func TestMutants_no_script_url(t *testing.T) {
 
 func TestProduct_LintMutant_no_script_url(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-script-url")
+	requireMutantRuleProduct(t, "no-script-url")
 }
 
 func TestMutants_no_self_compare(t *testing.T) {
@@ -421,7 +421,7 @@ func TestMutants_no_self_compare(t *testing.T) {
 
 func TestProduct_LintMutant_no_self_compare(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-self-compare")
+	requireMutantRuleProduct(t, "no-self-compare")
 }
 
 func TestMutants_no_sequences(t *testing.T) {
@@ -431,7 +431,7 @@ func TestMutants_no_sequences(t *testing.T) {
 
 func TestProduct_LintMutant_no_sequences(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-sequences")
+	requireMutantRuleProduct(t, "no-sequences")
 }
 
 func TestMutants_no_sparse_arrays(t *testing.T) {
@@ -441,7 +441,7 @@ func TestMutants_no_sparse_arrays(t *testing.T) {
 
 func TestProduct_LintMutant_no_sparse_arrays(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-sparse-arrays")
+	requireMutantRuleProduct(t, "no-sparse-arrays")
 }
 
 func TestMutants_no_template_curly_in_string(t *testing.T) {
@@ -451,7 +451,7 @@ func TestMutants_no_template_curly_in_string(t *testing.T) {
 
 func TestProduct_LintMutant_no_template_curly_in_string(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-template-curly-in-string")
+	requireMutantRuleProduct(t, "no-template-curly-in-string")
 }
 
 func TestMutants_no_underscore_dangle(t *testing.T) {
@@ -461,7 +461,7 @@ func TestMutants_no_underscore_dangle(t *testing.T) {
 
 func TestProduct_LintMutant_no_underscore_dangle(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-underscore-dangle")
+	requireMutantRuleProduct(t, "no-underscore-dangle")
 }
 
 func TestMutants_no_unexpected_multiline(t *testing.T) {
@@ -471,7 +471,7 @@ func TestMutants_no_unexpected_multiline(t *testing.T) {
 
 func TestProduct_LintMutant_no_unexpected_multiline(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-unexpected-multiline")
+	requireMutantRuleProduct(t, "no-unexpected-multiline")
 }
 
 func TestMutants_no_unneeded_ternary(t *testing.T) {
@@ -481,7 +481,7 @@ func TestMutants_no_unneeded_ternary(t *testing.T) {
 
 func TestProduct_LintMutant_no_unneeded_ternary(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-unneeded-ternary")
+	requireMutantRuleProduct(t, "no-unneeded-ternary")
 }
 
 func TestMutants_no_unsafe_finally(t *testing.T) {
@@ -491,7 +491,7 @@ func TestMutants_no_unsafe_finally(t *testing.T) {
 
 func TestProduct_LintMutant_no_unsafe_finally(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-unsafe-finally")
+	requireMutantRuleProduct(t, "no-unsafe-finally")
 }
 
 func TestMutants_no_unsafe_negation(t *testing.T) {
@@ -501,7 +501,7 @@ func TestMutants_no_unsafe_negation(t *testing.T) {
 
 func TestProduct_LintMutant_no_unsafe_negation(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-unsafe-negation")
+	requireMutantRuleProduct(t, "no-unsafe-negation")
 }
 
 func TestMutants_no_unsafe_optional_chaining(t *testing.T) {
@@ -511,7 +511,7 @@ func TestMutants_no_unsafe_optional_chaining(t *testing.T) {
 
 func TestProduct_LintMutant_no_unsafe_optional_chaining(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-unsafe-optional-chaining")
+	requireMutantRuleProduct(t, "no-unsafe-optional-chaining")
 }
 
 func TestMutants_no_unused_private_class_members(t *testing.T) {
@@ -521,7 +521,7 @@ func TestMutants_no_unused_private_class_members(t *testing.T) {
 
 func TestProduct_LintMutant_no_unused_private_class_members(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-unused-private-class-members")
+	requireMutantRuleProduct(t, "no-unused-private-class-members")
 }
 
 func TestMutants_no_useless_catch(t *testing.T) {
@@ -531,7 +531,7 @@ func TestMutants_no_useless_catch(t *testing.T) {
 
 func TestProduct_LintMutant_no_useless_catch(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-useless-catch")
+	requireMutantRuleProduct(t, "no-useless-catch")
 }
 
 func TestMutants_no_useless_concat(t *testing.T) {
@@ -541,7 +541,7 @@ func TestMutants_no_useless_concat(t *testing.T) {
 
 func TestProduct_LintMutant_no_useless_concat(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-useless-concat")
+	requireMutantRuleProduct(t, "no-useless-concat")
 }
 
 func TestMutants_no_useless_constructor(t *testing.T) {
@@ -551,7 +551,7 @@ func TestMutants_no_useless_constructor(t *testing.T) {
 
 func TestProduct_LintMutant_no_useless_constructor(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-useless-constructor")
+	requireMutantRuleProduct(t, "no-useless-constructor")
 }
 
 func TestMutants_no_var(t *testing.T) {
@@ -561,7 +561,7 @@ func TestMutants_no_var(t *testing.T) {
 
 func TestProduct_LintMutant_no_var(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-var")
+	requireMutantRuleProduct(t, "no-var")
 }
 
 func TestMutants_no_warning_comments(t *testing.T) {
@@ -571,7 +571,7 @@ func TestMutants_no_warning_comments(t *testing.T) {
 
 func TestProduct_LintMutant_no_warning_comments(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-warning-comments")
+	requireMutantRuleProduct(t, "no-warning-comments")
 }
 
 func TestMutants_no_with(t *testing.T) {
@@ -581,7 +581,7 @@ func TestMutants_no_with(t *testing.T) {
 
 func TestProduct_LintMutant_no_with(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "no-with")
+	requireMutantRuleProduct(t, "no-with")
 }
 
 func TestMutants_prefer_destructuring(t *testing.T) {
@@ -591,7 +591,7 @@ func TestMutants_prefer_destructuring(t *testing.T) {
 
 func TestProduct_LintMutant_prefer_destructuring(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "prefer-destructuring")
+	requireMutantRuleProduct(t, "prefer-destructuring")
 }
 
 func TestMutants_prefer_template(t *testing.T) {
@@ -601,7 +601,7 @@ func TestMutants_prefer_template(t *testing.T) {
 
 func TestProduct_LintMutant_prefer_template(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "prefer-template")
+	requireMutantRuleProduct(t, "prefer-template")
 }
 
 func TestMutants_react_forward_ref_uses_ref(t *testing.T) {
@@ -611,7 +611,7 @@ func TestMutants_react_forward_ref_uses_ref(t *testing.T) {
 
 func TestProduct_LintMutant_react_forward_ref_uses_ref(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "react-forward-ref-uses-ref")
+	requireMutantRuleProduct(t, "react-forward-ref-uses-ref")
 }
 
 func TestMutants_react_jsx_no_comment_textnodes(t *testing.T) {
@@ -621,7 +621,7 @@ func TestMutants_react_jsx_no_comment_textnodes(t *testing.T) {
 
 func TestProduct_LintMutant_react_jsx_no_comment_textnodes(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "react-jsx-no-comment-textnodes")
+	requireMutantRuleProduct(t, "react-jsx-no-comment-textnodes")
 }
 
 func TestMutants_react_no_find_dom_node(t *testing.T) {
@@ -631,7 +631,7 @@ func TestMutants_react_no_find_dom_node(t *testing.T) {
 
 func TestProduct_LintMutant_react_no_find_dom_node(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "react-no-find-dom-node")
+	requireMutantRuleProduct(t, "react-no-find-dom-node")
 }
 
 func TestMutants_react_no_is_mounted(t *testing.T) {
@@ -641,7 +641,7 @@ func TestMutants_react_no_is_mounted(t *testing.T) {
 
 func TestProduct_LintMutant_react_no_is_mounted(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "react-no-is-mounted")
+	requireMutantRuleProduct(t, "react-no-is-mounted")
 }
 
 func TestMutants_react_no_redundant_should_component_update(t *testing.T) {
@@ -651,7 +651,7 @@ func TestMutants_react_no_redundant_should_component_update(t *testing.T) {
 
 func TestProduct_LintMutant_react_no_redundant_should_component_update(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "react-no-redundant-should-component-update")
+	requireMutantRuleProduct(t, "react-no-redundant-should-component-update")
 }
 
 func TestMutants_require_yield(t *testing.T) {
@@ -661,7 +661,7 @@ func TestMutants_require_yield(t *testing.T) {
 
 func TestProduct_LintMutant_require_yield(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "require-yield")
+	requireMutantRuleProduct(t, "require-yield")
 }
 
 func TestMutants_typescript_adjacent_overload_signatures(t *testing.T) {
@@ -671,7 +671,7 @@ func TestMutants_typescript_adjacent_overload_signatures(t *testing.T) {
 
 func TestProduct_LintMutant_typescript_adjacent_overload_signatures(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "typescript-adjacent-overload-signatures")
+	requireMutantRuleProduct(t, "typescript-adjacent-overload-signatures")
 }
 
 func TestMutants_typescript_init_declarations(t *testing.T) {
@@ -681,7 +681,7 @@ func TestMutants_typescript_init_declarations(t *testing.T) {
 
 func TestProduct_LintMutant_typescript_init_declarations(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "typescript-init-declarations")
+	requireMutantRuleProduct(t, "typescript-init-declarations")
 }
 
 func TestMutants_typescript_method_signature_style(t *testing.T) {
@@ -691,7 +691,7 @@ func TestMutants_typescript_method_signature_style(t *testing.T) {
 
 func TestProduct_LintMutant_typescript_method_signature_style(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "typescript-method-signature-style")
+	requireMutantRuleProduct(t, "typescript-method-signature-style")
 }
 
 func TestMutants_typescript_no_this_alias(t *testing.T) {
@@ -701,7 +701,7 @@ func TestMutants_typescript_no_this_alias(t *testing.T) {
 
 func TestProduct_LintMutant_typescript_no_this_alias(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "typescript-no-this-alias")
+	requireMutantRuleProduct(t, "typescript-no-this-alias")
 }
 
 func TestMutants_typescript_no_wrapper_object_types(t *testing.T) {
@@ -711,7 +711,7 @@ func TestMutants_typescript_no_wrapper_object_types(t *testing.T) {
 
 func TestProduct_LintMutant_typescript_no_wrapper_object_types(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "typescript-no-wrapper-object-types")
+	requireMutantRuleProduct(t, "typescript-no-wrapper-object-types")
 }
 
 func TestMutants_typescript_prefer_literal_enum_member(t *testing.T) {
@@ -721,7 +721,7 @@ func TestMutants_typescript_prefer_literal_enum_member(t *testing.T) {
 
 func TestProduct_LintMutant_typescript_prefer_literal_enum_member(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "typescript-prefer-literal-enum-member")
+	requireMutantRuleProduct(t, "typescript-prefer-literal-enum-member")
 }
 
 func TestMutants_unicode_bom(t *testing.T) {
@@ -731,7 +731,7 @@ func TestMutants_unicode_bom(t *testing.T) {
 
 func TestProduct_LintMutant_unicode_bom(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "unicode-bom")
+	requireMutantRuleProduct(t, "unicode-bom")
 }
 
 func TestMutants_vars_on_top(t *testing.T) {
@@ -741,5 +741,35 @@ func TestMutants_vars_on_top(t *testing.T) {
 
 func TestProduct_LintMutant_vars_on_top(t *testing.T) {
 	t.Parallel()
-	mutantRuleProduct(t, "vars-on-top")
+	requireMutantRuleProduct(t, "vars-on-top")
+}
+
+func TestMutants_no_cond_assign(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "no-cond-assign")
+}
+
+func TestProduct_LintMutant_no_cond_assign(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "no-cond-assign")
+}
+
+func TestMutants_no_extra_bind(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "no-extra-bind")
+}
+
+func TestProduct_LintMutant_no_extra_bind(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "no-extra-bind")
+}
+
+func TestMutants_no_unused_labels(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "no-unused-labels")
+}
+
+func TestProduct_LintMutant_no_unused_labels(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "no-unused-labels")
 }

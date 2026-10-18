@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"go/ast"
 	goparser "go/parser"
@@ -49,7 +50,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 				return err
 			}
 			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
+				if entry.Name() == ".git" || entry.Name() == "node_modules" || lintRuleSubdirectory(path) {
 					return filepath.SkipDir
 				}
 				return nil
@@ -77,36 +78,6 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 	}
 	sort.Strings(result)
 	return result
-}
-
-func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
-	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"build", "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
-	directory := jsxProduct(t, inputs, func(dir string) error {
-		virtual := filepath.Join(root, virtualName)
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-		if err != nil {
-			return err
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlayPath)
-		// toolchain's go, under its environment, in root with PWD set to it: the go and the settings the key reads.
-		command := toolchain.CommandIn(root, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)
-		var stdout, stderr bytes.Buffer
-		command.Stdout, command.Stderr = &stdout, &stderr
-		if err := command.Run(); err != nil {
-			return fmt.Errorf("build %s: %w\n%s\n%s", name, err, &stdout, &stderr)
-		}
-		if diagnostics := commandDiagnostics("go", stderr.Bytes()); len(diagnostics) != 0 {
-			return fmt.Errorf("build %s: %s", name, diagnostics)
-		}
-		return nil
-	})
-	return filepath.Join(directory, "oracle")
 }
 
 // The registry can grow without cohere's pin moving. Capture ordinals and
@@ -477,19 +448,9 @@ func jsxParserEntry(t *testing.T) string {
 	return entry
 }
 
-func jsxParserOracle(t *testing.T) string {
-	t.Helper()
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-	return jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
-}
+func jsxParserOracle(t *testing.T) string { t.Helper(); return oracles.JSXParserOracle(t) }
 
-func jsxMembershipOracle(t *testing.T) string {
-	t.Helper()
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
-	side, _ := filepath.Abs("testdata/jsx_inventory.go")
-	return jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
-}
+func jsxMembershipOracle(t *testing.T) string { t.Helper(); return oracles.JSXMembershipOracle(t) }
 
 // Every consumer prepares the immutable capture, build, and inventory product
 // once per process, before starting its own case deadline.

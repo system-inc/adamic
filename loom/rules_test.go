@@ -48,6 +48,19 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"sizing window past the queue's", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 201}}, "restack": {"on": false}}`, "window from 1 to 200"},
 		{"sizing window fraction", `{"blocks": {"on": true, "budget": 2, "sizing": {"min": 3, "max": 16, "target": 0.8, "window": 2.5}}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
 		{"first not a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "first": "chg_2tps70xcxmasvvbzer45mfhtd4"}`, "cannot unmarshal string"},
+		{"depth one", `{"blocks": {"on": true, "budget": 2, "depth": 1}, "restack": {"on": false}}`, "from 2 to 32"},
+		{"depth past the queue's", `{"blocks": {"on": true, "budget": 2, "depth": 33}, "restack": {"on": false}}`, "from 2 to 32"},
+		{"depth null", `{"blocks": {"on": true, "budget": 2, "depth": null}, "restack": {"on": false}}`, "a whole number from 2 to 32"},
+		{"depth fraction", `{"blocks": {"on": true, "budget": 2, "depth": 2.5}, "restack": {"on": false}}`, "cannot unmarshal number 2.5"},
+		{"depth string", `{"blocks": {"on": true, "budget": 2, "depth": "3"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"door bound unknown", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"budget": 2}}`, `unknown field "budget"`},
+		{"door bound zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"waiting": 0}}`, "a whole number from 1 to 9007199254740991"},
+		{"door bound null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"heavy": null}}`, "a whole number from 1 to 9007199254740991"},
+		{"door bound fraction", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"lines": 2.5}}`, "cannot unmarshal number 2.5"},
+		{"door bound string", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"lines": "100"}}`, "cannot unmarshal string"},
+		{"door bound past the queue's", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"files": 9007199254740992}}`, "a whole number from 1 to 9007199254740991"},
+		{"door null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": null}`, "an object of bounds"},
+		{"door a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": [2]}`, "cannot unmarshal array"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -60,5 +73,40 @@ func TestRulesRefuseMistakes(t *testing.T) {
 				t.Fatalf("%s was refused with %q, not naming %q", testCase.file, err, testCase.says)
 			}
 		})
+	}
+}
+
+// A depth the lander takes reads here too (Loom 0.8.71, #wpcbqpd): from 2 to 32, and absent as absent.
+func TestRulesTakeADepth(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "depth": 2}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Depth == nil || *rules.Blocks.Depth != 2 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "depth": 32}, "restack": {"on": false}}`))
+	if err != nil || *rules.Blocks.Depth != 32 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Depth != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+}
+
+// A door the lander takes reads here too (Loom 0.8.93, #qvcm8ez): each bound a whole number from 1 to 2^53-1, a bound
+// absent as absent, and an empty door as no bounds, the rollback.
+func TestRulesTakeADoor(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {"heavy": 100000, "files": 9007199254740991}}`))
+	if err != nil || rules.Door == nil || rules.Door.Heavy == nil || *rules.Door.Heavy != 100000 || *rules.Door.Files != 9007199254740991 || rules.Door.PacedAfter != nil || rules.Door.Waiting != nil || rules.Door.Lines != nil {
+		t.Fatalf("%+v, %v", rules.Door, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {}}`))
+	if err != nil || rules.Door == nil || rules.Door.Heavy != nil {
+		t.Fatalf("%+v, %v", rules.Door, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Door != nil {
+		t.Fatalf("%+v, %v", rules.Door, err)
 	}
 }

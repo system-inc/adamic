@@ -1,11 +1,14 @@
 package buildcache
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/json"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"slices"
 	"strings"
@@ -47,6 +50,11 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 	if !slices.ContainsFunc(inputs.Flags, func(flag string) bool { return strings.HasPrefix(flag, "CGO_CFLAGS=") }) ||
 		!slices.ContainsFunc(inputs.Toolchain, func(tool string) bool { return strings.HasPrefix(tool, "go version: ") }) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
+	}
+	// withc reaches testdata/include, outside its own directory, so the key names the package and that directory, and
+	// the build lays a header into withc that moves with it (outsideHeaderPlan).
+	if want := outsideHeaders + `{"package":"internal/buildcache/testdata/withc","includes":["internal/buildcache/testdata/include"]}`; !slices.Contains(inputs.Flags, want) {
+		t.Fatalf("the key doesn't name withc's header outside it, %s: %v", want, inputs.Flags)
 	}
 	binary := GoBuild(t, "withc", "./internal/buildcache/testdata/withc", nil)
 	// GoBuild built it with the reproducible flags, as its recorded inputs say.
@@ -274,6 +282,52 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 	reproducible([]string{"-ldflags=-s"})
 }
 
+// A Go oracle a product test builds by hand, go test -c over a module with a harness its overlay lays in (css's
+// css-printer-oracle), is the same bytes from any checkout path with ReproducibleGoFlags, and isn't without them, so the
+// flags are what makes it so (#j8wf2w4: every hand-rolled oracle held its checkout's path). GOENV=off keeps a machine's
+// own go env file, which may set -trimpath itself (Kirk's Mac does), out of both builds.
+func TestAHandBuiltOracleIsTheSameFromAnyCheckoutPathOnlyWithTheReproducibleFlags(t *testing.T) {
+	t.Parallel()
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	build := func(flags []string) [][]byte {
+		var products [][]byte
+		for _, name := range []string{"one", "elsewhere/two"} {
+			module := filepath.Join(t.TempDir(), name)
+			for _, file := range []string{"module/go.mod", "module/greet/greet.go", "module/greet/greet_test.go", "module-side/side_test.go.txt"} {
+				content, err := os.ReadFile(filepath.Join(root, "internal/buildcache/testdata", file))
+				if err != nil {
+					t.Fatal(err)
+				}
+				os.MkdirAll(filepath.Join(module, filepath.Dir(file)), 0o755)
+				os.WriteFile(filepath.Join(module, file), content, 0o644)
+			}
+			overlay := filepath.Join(module, "overlay.json")
+			declared, _ := json.Marshal(map[string]map[string]string{"Replace": {filepath.Join(module, "module/greet/adamic_side_test.go"): filepath.Join(module, "module-side/side_test.go.txt")}})
+			os.WriteFile(overlay, declared, 0o644)
+			command := toolchain.CommandIn(filepath.Join(module, "module"), "go", append(append(append([]string{"test"}, flags...), "-c", "-overlay="+overlay, "-o", filepath.Join(module, "oracle")), "./greet")...)
+			command.Env = append(command.Env, "GOENV=off", "GOWORK=off", "GOFLAGS=")
+			if output, err := command.CombinedOutput(); err != nil {
+				t.Fatalf("%v\n%s", err, output)
+			}
+			content, err := os.ReadFile(filepath.Join(module, "oracle"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			products = append(products, content)
+		}
+		return products
+	}
+	if products := build(ReproducibleGoFlags()); !identical(t, "a hand-built oracle at two checkout paths", products[0], products[1]) {
+		t.Fatalf("a hand-built oracle at two checkout paths built %x and %x", sha256.Sum256(products[0]), sha256.Sum256(products[1]))
+	}
+	if products := build(nil); bytes.Equal(products[0], products[1]) {
+		t.Fatal("without the reproducible flags, the oracle at two checkout paths was the same bytes: this test can't tell the flags did it")
+	}
+}
+
 // GoTest builds a module's test binary as a product, in the module's own directory, with a harness the overlay adds
 // (as a port lays its Go oracle over cohere). Its key names the package's test files, the module's go.mod and the
 // harness's content, never the harness's virtual path, which isn't on disk; the binary runs the harness; and a second
@@ -323,6 +377,42 @@ func TestGoTestKeysAModulesTestBinary(t *testing.T) {
 	}
 	if key(t, root, plain) == key(t, root, inputs) {
 		t.Fatal("the harness left the key as it was")
+	}
+}
+
+// A go product's plan holds its request's -overlay as the map it declares, never the file (#mmpt615, Mentat's M1): the
+// test writes the file before the build, in a directory of its own, and run writes its own overlay inside the window,
+// so go reads no file of the test's there that the window would count as an input. Two plans of one request are the
+// same, so the plan is a function of the request and what its key holds. Mutant: the request's -overlay kept among the
+// plan's arguments.
+func TestAGoRequestsOverlayIsItsPlansMap(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	replacement := filepath.Join(root, "internal/buildcache/testdata/module/greet/greet.go")
+	if err := os.WriteFile(overlay, []byte(`{"Replace":{"greet/extra.go":"`+replacement+`"}}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	request := goRequest{verb: "test -c", module: "internal/buildcache/testdata/module", output: "greet.test", pkg: "./greet"}
+	for _, arguments := range [][]string{{"-overlay=" + overlay}, {"-trimpath", "-overlay", overlay}} {
+		request.arguments = arguments
+		parts, err := request.planned(root, Inputs{})
+		if err != nil {
+			t.Fatalf("arguments %q: %v", arguments, err)
+		}
+		if slices.ContainsFunc(parts.command.Arguments, func(argument string) bool { return strings.HasPrefix(argument, "-overlay") || argument == overlay }) {
+			t.Errorf("arguments %q: the plan runs go with the test's overlay file: %q", arguments, parts.command.Arguments)
+		}
+		if want := map[string]string{"greet/extra.go": replacement}; !maps.Equal(parts.replace, want) {
+			t.Errorf("arguments %q: the plan's overlay is %q, want %q", arguments, parts.replace, want)
+		}
+		if again := request.plan(root, Inputs{}); !reflect.DeepEqual(request.plan(root, Inputs{}), again) {
+			t.Errorf("arguments %q: two plans of one request differ:\n%+v\n%+v", arguments, request.plan(root, Inputs{}), again)
+		}
+	}
+	request.arguments = []string{"-trimpath"}
+	if parts, err := request.planned(root, Inputs{}); err != nil || parts.replace != nil {
+		t.Errorf("a request without an overlay plans %q, %v", parts.replace, err)
 	}
 }
 

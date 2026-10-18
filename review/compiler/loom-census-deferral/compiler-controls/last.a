@@ -1,0 +1,8 @@
+// src/compiler/core.ts:1116 lastOrUndefined, with an interface constraint.
+interface Item { readonly name: string; }
+function lastOrUndefined<T extends Item>(values: readonly T[] | undefined): T | undefined { return values === undefined || values.length === 0 ? undefined : values[values.length - 1]; }
+function outer<T extends Item>(values: readonly T[] | undefined): T | undefined { return lastOrUndefined(values); }
+const values: readonly Item[] = [{ name: 'first'.repeat(2) }, { name: 'last'.repeat(2) }];
+console.log(`${outer(values)?.name ?? 'missing'}`);
+console.log(`${outer<Item>([])?.name ?? 'missing'}`);
+console.log(`${outer<Item>(undefined)?.name ?? 'missing'}`);

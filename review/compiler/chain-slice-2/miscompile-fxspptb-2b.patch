@@ -1,0 +1,687 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..3ebe7917 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -196,6 +196,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
+ // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
+ // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
+ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
++	if err := l.weakArrayCallback(node); err != nil {
++		return nil, err
++	}
+ 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+ 		return nil, err
+ 	}
+@@ -259,6 +262,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+ 		// The checker narrowed it to present (Target & WeakBrand).
+ 		to, present = target, true
+ 	} else if read.Flags()&checker.TypeFlagsUnion != 0 {
++		// A union of branded targets stays represented as Weak after narrowing.
++		// Absence, not that representation, decides whether its read needs liveness.
++		present = !l.includesUndefined(read)
+ 		for _, member := range read.Types() {
+ 			if target := l.weakTarget(member); target != nil {
+ 				if to, isKnown = l.representation(target); !isKnown {
+@@ -328,6 +334,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
+ 	default:
+ 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
+ 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
++				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
++					return false
++				}
+ 				continue
+ 			}
+ 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+diff --git a/internal/lower/statements.go b/internal/lower/statements.go
+index 7fb91a2a..c0c0aa7a 100644
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -117,6 +117,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
+ // expressionStatement lowers an expression used as a statement: a console call, an assignment, or
+ // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
+ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
++	if err := l.weakArrayCallback(expression); err != nil {
++		return nil, err
++	}
+ 	expression = ast.SkipParentheses(expression)
+ 	if statements, handled, err := l.conditionalSuper(expression); handled {
+ 		return statements, err
+diff --git a/internal/lower/testdata/run-weak-differential-mutants.py b/internal/lower/testdata/run-weak-differential-mutants.py
+new file mode 100644
+index 00000000..1be96676
+--- /dev/null
++++ b/internal/lower/testdata/run-weak-differential-mutants.py
+@@ -0,0 +1,56 @@
++#!/usr/bin/env python3
++"""Revert each Weak representation fix independently and require its Node proof to fail."""
++import json
++import os
++from pathlib import Path
++import subprocess
++
++ROOT = Path(__file__).resolve().parents[3]
++EXPRESSION = ROOT / "internal/lower/expression.go"
++CALLBACK = ROOT / "internal/lower/weak_representations.go"
++EVIDENCE = ROOT / "review/compiler/miscompile-fxspptb-2b"
++METHOD = """				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
++					return false
++				}
++"""
++FILTER = 'return l.notYet(node, callee.Name().Text()+" callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy")'
++MUTANTS = [
++    ("method-views", EXPRESSION, METHOD, "", "^TestWeakDifferential(ViewMethodParameter|ViewMethod)$",
++     ["both backends unexpectedly admit the pinned view NotYet", 'release: exit=0 stdout="t1 none', "release: stdout differs", "AddressSanitizer"]),
++    ("union-liveness", EXPRESSION, "\t\tpresent = !l.includesUndefined(read)\n", "", "^TestWeakDifferentialUnionNarrowed$",
++     ["release: exit codes differ", "sanitized: exit codes differ", "runtime error: member access within null pointer"]),
++    ("weak-callback", CALLBACK, FILTER, "return nil", "^TestWeakDifferential(Each|Find|Map|Reduce|Some|Sort)$",
++     ["both backends unexpectedly admit the pinned callback NotYet", "AddressSanitizer: heap-buffer-overflow", "sanitized: exit codes differ"]),
++]
++
++
++def main():
++    environment = dict(os.environ, ADAMIC_GATE_UNCACHED="1")
++    results = []
++    EVIDENCE.mkdir(parents=True, exist_ok=True)
++    for name, source, before, after, selected, markers in MUTANTS:
++        original = source.read_text()
++        if original.count(before) != 1:
++            raise SystemExit(f"{name}: expected one mutation site, found {original.count(before)}")
++        log = EVIDENCE / ("mutant-" + name + ".log")
++        try:
++            source.write_text(original.replace(before, after, 1))
++            with log.open("w") as output:
++                run = subprocess.run(["go", "test", "./internal/oracle", "-run", selected,
++                                      "-count=1", "-v", "-timeout", "5m"], cwd=ROOT,
++                                     env=environment, stdout=output, stderr=subprocess.STDOUT,
++                                     timeout=360)
++        finally:
++            source.write_text(original)
++        text = log.read_text()
++        caught = run.returncode != 0 and all(marker in text for marker in markers)
++        results.append({"mutant": name, "exit": run.returncode, "caught": caught,
++                        "markers": markers, "log": log.name, "tests": selected})
++        print(f"{name}: exit={run.returncode}, caught={caught}", flush=True)
++        if not caught:
++            raise SystemExit(f"{name}: survived or failed outside its intended runtime/refusal proof; see {log}")
++    (EVIDENCE / "mutants.json").write_text(json.dumps(results, indent=2) + "\n")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/internal/lower/weak_representations.go b/internal/lower/weak_representations.go
+new file mode 100644
+index 00000000..b91a9791
+--- /dev/null
++++ b/internal/lower/weak_representations.go
+@@ -0,0 +1,82 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/microsoft/TypeScript/tsc/shim/checker"
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// A method view shares the implementation's incoming and outgoing slots. A Weak
++// handle cannot stand in for its target pointer without an explicit adapter.
++func (l *lowering) sameWeakMethodSlots(from, to *checker.Type) bool {
++	source := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
++	viewed := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
++	same := func(from, to *checker.Type) bool {
++		source, _ := l.representation(l.concrete(from))
++		viewed, _ := l.representation(l.concrete(to))
++		return (source == ir.Weak) == (viewed == ir.Weak)
++	}
++	for _, sourceSignature := range source {
++		for _, viewedSignature := range viewed {
++			sourceParameters := sourceSignature.Parameters()
++			viewedParameters := viewedSignature.Parameters()
++			for index := 0; index < len(sourceParameters) && index < len(viewedParameters); index++ {
++				if !same(l.checker.GetTypeOfSymbol(sourceParameters[index]), l.checker.GetTypeOfSymbol(viewedParameters[index])) {
++					return false
++				}
++			}
++			if !same(l.checker.GetReturnTypeOfSignature(sourceSignature), l.checker.GetReturnTypeOfSignature(viewedSignature)) {
++				return false
++			}
++		}
++	}
++	return true
++}
++
++// Narrowing can leave Weak handles in an array whose callback parameter is a
++// target pointer. Indexing and for...of already load those handles correctly;
++// refuse only a callback call that needs the missing handle-to-target adapter.
++func (l *lowering) weakArrayCallback(node *ast.Node) error {
++	node = ast.SkipParentheses(node)
++	if node.Kind != ast.KindCallExpression {
++		return nil
++	}
++	call := node.AsCallExpression()
++	callee := ast.SkipParentheses(call.Expression)
++	if callee.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(callee) || len(call.Arguments.Nodes) == 0 {
++		return nil
++	}
++	parameter, count := 0, 1
++	switch callee.Name().Text() {
++	case "forEach", "find", "findIndex", "map", "some", "every", "filter":
++	case "sort":
++		count = 2
++	case "reduce", "reduceRight":
++		parameter = 1
++	default:
++		return nil
++	}
++	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
++	if !l.checker.IsArrayType(receiver) {
++		return nil
++	}
++	arguments := l.typeArguments(receiver)
++	if len(arguments) != 1 {
++		return nil
++	}
++	element, known := l.kept(arguments[0])
++	if !known || element != ir.Weak {
++		return nil
++	}
++	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), checker.SignatureKindCall)
++	for _, signature := range signatures {
++		parameters := signature.Parameters()
++		for index := parameter; index < parameter+count && index < len(parameters); index++ {
++			takes, known := l.representation(l.concrete(l.checker.GetTypeOfSymbol(parameters[index])))
++			if known && takes != ir.Weak {
++				return l.notYet(node, callee.Name().Text()+" callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy")
++			}
++		}
++	}
++	return nil
++}
+diff --git a/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a b/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a
+new file mode 100644
+index 00000000..8cf265ff
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a
+@@ -0,0 +1,18 @@
++import type { Weak } from 'adamic';
++
++// The control for weak_union_narrowed.a: a Weak of one interface, narrowed, read after its target
++// was freed, through a local as that probe reads it.
++interface Named {
++	readonly name: string;
++}
++interface Holder {
++	kept: Weak<Named>;
++}
++let strong: Named | undefined = { name: 'n'.repeat(2) };
++const holder: Holder = { kept: strong };
++if (holder.kept !== undefined) {
++	console.log('before');
++	strong = undefined;
++	const seen = holder.kept;
++	console.log(`after: ${seen.name}`);
++}
+diff --git a/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a b/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a
+new file mode 100644
+index 00000000..6b5f31bc
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a
+@@ -0,0 +1,23 @@
++import type { Weak } from 'adamic';
++
++// A Weak of a union the checker narrowed to present, read after its target was released: weak/narrowed.a
++// says natively a panic, never a read of freed memory or a null one; on Node the target is still there.
++interface Named {
++	readonly kind: 'Named';
++	readonly name: string;
++}
++interface Counted {
++	readonly kind: 'Counted';
++	readonly count: number;
++}
++interface Holder {
++	kept: Weak<Named | Counted>;
++}
++let strong: Named | undefined = { kind: 'Named', name: 'n'.repeat(2) };
++const holder: Holder = { kept: strong };
++if (holder.kept !== undefined) {
++	console.log('before');
++	strong = undefined;
++	const seen = holder.kept;
++	console.log(`after: ${seen.kind === 'Named' ? seen.name : seen.count}`);
++}
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_each.a b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_each.a
+new file mode 100644
+index 00000000..903a9498
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_each.a
+@@ -0,0 +1,14 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x) => x !== undefined);
++	present.forEach((x) => {
++		console.log(x.label);
++	});
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a
+new file mode 100644
+index 00000000..77050c15
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a
+@@ -0,0 +1,17 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x) => x !== undefined);
++	const found = present.find((x) => x.label.startsWith('b'));
++	console.log(found?.label ?? 'none');
++	const last = present.at(-1);
++	console.log(last?.label ?? 'none');
++	const popped = present.pop();
++	console.log(popped?.label ?? 'none');
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_map.a b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_map.a
+new file mode 100644
+index 00000000..e10819a2
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_map.a
+@@ -0,0 +1,12 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x) => x !== undefined);
++	console.log(present.map((x) => x.label).join(','));
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_reduce.a b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_reduce.a
+new file mode 100644
+index 00000000..852e2dd7
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_reduce.a
+@@ -0,0 +1,13 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x) => x !== undefined);
++	const total = present.reduce((sum, x) => sum + x.label.length, 0);
++	console.log(`${total}`);
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_some.a b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_some.a
+new file mode 100644
+index 00000000..e0019989
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_some.a
+@@ -0,0 +1,13 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x) => x !== undefined);
++	const kept = present.some((x) => x.label === `b${n}`);
++	console.log(`${kept}`);
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_sort.a b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_sort.a
+new file mode 100644
+index 00000000..1a8a5059
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_sort.a
+@@ -0,0 +1,13 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x) => x !== undefined);
++	present.sort((x, y) => (x.label < y.label ? 1 : -1));
++	console.log(`${present[0] === b}`);
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_view_method.a b/internal/oracle/testdata/weak_miscompiles/9984394_view_method.a
+new file mode 100644
+index 00000000..af47451e
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_view_method.a
+@@ -0,0 +1,23 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++interface WeakGetter {
++	get(): Weak<Box>;
++}
++class StrongGetter {
++	readonly box: Box;
++	constructor(box: Box) {
++		this.box = box;
++	}
++	get(): Box {
++		return this.box;
++	}
++}
++function run(n: number): void {
++	const box: Box = { label: `b${n}` };
++	const getter: WeakGetter = new StrongGetter(box);
++	const got = getter.get();
++	console.log(`${got === box} ${got?.label ?? 'gone'}`);
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a b/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a
+new file mode 100644
+index 00000000..e0754d16
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a
+@@ -0,0 +1,22 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++interface WeakTaker {
++	take(box: Weak<Box>): string;
++}
++class StrongTaker {
++	readonly tag: string;
++	constructor(tag: string) {
++		this.tag = tag;
++	}
++	take(box: Box | undefined): string {
++		return `${this.tag} ${box?.label ?? 'none'}`;
++	}
++}
++function run(n: number): void {
++	const box: Box = { label: `b${n}` };
++	const taker: WeakTaker = new StrongTaker(`t${n}`);
++	console.log(taker.take(box));
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/boolean_filter.a b/internal/oracle/testdata/weak_miscompiles/boolean_filter.a
+new file mode 100644
+index 00000000..7db77429
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/boolean_filter.a
+@@ -0,0 +1,16 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++function run(n: number): void {
++	const a: Box = { label: `a${n}` };
++	const b: Box = { label: `b${n}` };
++	const seen: Weak<Box>[] = [a, undefined, b];
++	const present = seen.filter((x): boolean => x !== undefined);
++	present.forEach((x) => {
++		if (x !== undefined) {
++			console.log(x.label);
++		}
++	});
++}
++run(1);
+diff --git a/internal/oracle/testdata/weak_miscompiles/held_union.a b/internal/oracle/testdata/weak_miscompiles/held_union.a
+new file mode 100644
+index 00000000..caf62f70
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/held_union.a
+@@ -0,0 +1,21 @@
++import type { Weak } from 'adamic';
++
++// A narrowed union Weak stays readable while its strong owner is held.
++interface Named {
++	readonly kind: 'Named';
++	readonly name: string;
++}
++interface Counted {
++	readonly kind: 'Counted';
++	readonly count: number;
++}
++interface Holder {
++	kept: Weak<Named | Counted>;
++}
++let strong: Named | undefined = { kind: 'Named', name: 'n'.repeat(2) };
++const holder: Holder = { kept: strong };
++if (holder.kept !== undefined) {
++	console.log('before');
++	const seen = holder.kept;
++	console.log(`after: ${seen.kind === 'Named' ? seen.name : seen.count}`);
++}
+diff --git a/internal/oracle/testdata/weak_miscompiles/matching_methods.a b/internal/oracle/testdata/weak_miscompiles/matching_methods.a
+new file mode 100644
+index 00000000..d046ad78
+--- /dev/null
++++ b/internal/oracle/testdata/weak_miscompiles/matching_methods.a
+@@ -0,0 +1,37 @@
++import type { Weak } from 'adamic';
++interface Box {
++	readonly label: string;
++}
++interface WeakTaker {
++	take(box: Weak<Box>): string;
++}
++class MatchingTaker {
++	readonly tag: string;
++	constructor(tag: string) {
++		this.tag = tag;
++	}
++	take(box: Weak<Box>): string {
++		return `${this.tag} ${box?.label ?? 'none'}`;
++	}
++}
++interface WeakGetter {
++	get(): Weak<Box>;
++}
++class MatchingGetter {
++	readonly box: Box;
++	constructor(box: Box) {
++		this.box = box;
++	}
++	get(): Weak<Box> {
++		return this.box;
++	}
++}
++function run(n: number): void {
++	const box: Box = { label: `b${n}` };
++	const taker: WeakTaker = new MatchingTaker(`t${n}`);
++	console.log(taker.take(box));
++	const getter: WeakGetter = new MatchingGetter(box);
++	const got = getter.get();
++	console.log(`${got === box} ${got?.label ?? 'gone'}`);
++}
++run(1);
+diff --git a/internal/oracle/weak_differential_test.go b/internal/oracle/weak_differential_test.go
+new file mode 100644
+index 00000000..054afa09
+--- /dev/null
++++ b/internal/oracle/weak_differential_test.go
+@@ -0,0 +1,163 @@
++package oracle
++
++import (
++	"errors"
++	"path/filepath"
++	"testing"
++
++	"github.com/system-inc/adamic/internal/lower"
++)
++
++func TestWeakDifferentialViewMethodParameter(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_view_method_parameter", "t1 b1\n", "view")
++}
++
++func TestWeakDifferentialViewMethod(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_view_method", "true b1\n", "view")
++}
++
++func TestWeakDifferentialUnionNarrowed(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "4ddd17f_weak_union_narrowed", "before\nafter: nn\n", "weak")
++}
++
++func TestWeakDifferentialSingleNarrowed(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "4ddd17f_weak_single_narrowed", "before\nafter: nn\n", "weak")
++}
++
++func TestWeakDifferentialEach(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_narrowed_each", "a1\nb1\n", "callback")
++}
++
++func TestWeakDifferentialFind(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_narrowed_find", "b1\nb1\nb1\n", "callback")
++}
++
++func TestWeakDifferentialMap(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_narrowed_map", "a1,b1\n", "callback")
++}
++
++func TestWeakDifferentialReduce(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_narrowed_reduce", "4\n", "callback")
++}
++
++func TestWeakDifferentialSome(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_narrowed_some", "true\n", "callback")
++}
++
++func TestWeakDifferentialSort(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "9984394_narrowed_sort", "true\n", "callback")
++}
++
++func weakDifferential(t *testing.T, name, output, shape string) {
++	t.Helper()
++	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/weak_miscompiles", name+".a"))
++	if err != nil {
++		t.Fatal(err)
++	}
++	node := onNode(t, path)
++	expected := run{stdout: []byte(output)}
++	if difference := disagreement(expected, node); difference != "" {
++		t.Fatalf("source Node: %s: exit=%d stdout=%q stderr=%q", difference, node.exitCode, node.stdout, node.stderr)
++	}
++	t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
++	program, err := lowered(t, path)
++	if shape != "weak" && shape != "control" {
++		diagnostic := "a StrongTaker seen as a WeakTaker (one keeps something weakly that the other keeps strongly)"
++		location := ":19:27:"
++		if name == "9984394_view_method" {
++			diagnostic = "a StrongGetter seen as a WeakGetter (one keeps something weakly that the other keeps strongly)"
++			location = ":19:29:"
++		}
++		if shape == "callback" {
++			method := map[string]string{"9984394_narrowed_each": "forEach", "9984394_narrowed_find": "find", "9984394_narrowed_map": "map", "9984394_narrowed_reduce": "reduce", "9984394_narrowed_some": "some", "9984394_narrowed_sort": "sort"}[name]
++			diagnostic = method + " callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy"
++			location = map[string]string{"9984394_narrowed_each": ":10:2:", "9984394_narrowed_find": ":10:16:", "9984394_narrowed_map": ":10:14:", "9984394_narrowed_reduce": ":10:16:", "9984394_narrowed_some": ":10:15:", "9984394_narrowed_sort": ":10:2:"}[name]
++		}
++		if err != nil {
++			var pending *lower.NotYet
++			want := path + location + " stage 0 can't lower " + diagnostic + " yet"
++			if !errors.As(err, &pending) || err.Error() != want || program != nil {
++				t.Fatalf("both backends must stop at %q NotYet, got program=%v error=%v", want, program != nil, err)
++			}
++			t.Logf("both backends: %v", err)
++			return
++		}
++		// Run an accidentally admitted program too. The revert mutants must
++		// recover the old runtime fault or wrong output, not a build warning.
++		t.Errorf("both backends unexpectedly admit the pinned %s NotYet", shape)
++	}
++	if err != nil {
++		t.Fatal(err)
++	}
++	js := onJavaScriptBackend(t, program)
++	release := released(t, program)
++	sanitized, binary := natively(t, program)
++	for backend, got := range map[string]run{"javascript": js, "release": release, "sanitized": sanitized} {
++		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
++		want := expected
++		if shape == "weak" && backend != "javascript" {
++			want = run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70}
++		}
++		if difference := disagreement(want, got); difference != "" {
++			t.Errorf("%s: %s", backend, difference)
++		}
++	}
++	if shape == "control" && release.exitCode == 0 {
++		if leaked := leaks(t, program, binary); leaked != "" {
++			t.Errorf("leaks: %s", leaked)
++		}
++	}
++}
++
++func TestWeakDifferentialMatchingMethods(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "matching_methods", "t1 b1\ntrue b1\n", "control")
++}
++
++func TestWeakDifferentialBooleanFilter(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "boolean_filter", "a1\nb1\n", "control")
++}
++
++func TestWeakDifferentialHeldUnion(t *testing.T) {
++	t.Parallel()
++	weakDifferential(t, "held_union", "before\nafter: nn\n", "control")
++}
++
++func init() {
++	for _, name := range []string{"matching_methods", "boolean_filter", "held_union"} {
++		fixtures = append(fixtures, struct {
++			path            string
++			lowers, checked bool
++		}{"internal/oracle/testdata/weak_miscompiles/" + name + ".a", true, false})
++	}
++	for _, name := range []string{"9984394_view_method_parameter", "9984394_view_method", "9984394_narrowed_each", "9984394_narrowed_find", "9984394_narrowed_map", "9984394_narrowed_reduce", "9984394_narrowed_some", "9984394_narrowed_sort"} {
++		fixtures = append(fixtures, struct {
++			path            string
++			lowers, checked bool
++		}{"internal/oracle/testdata/weak_miscompiles/" + name + ".a", false, false})
++	}
++	additionalFixtureCounts = append(additionalFixtureCounts, weakDifferentialCounts)
++
++}
++
++// Weak lifetime is intentionally different from Node tracing, so these run in
++// their explicit liveness tests and contribute counted native runs separately.
++func weakDifferentialCounts(t *testing.T) []string {
++	t.Helper()
++	rows := []string{}
++	for _, name := range []string{"4ddd17f_weak_union_narrowed", "4ddd17f_weak_single_narrowed"} {
++		rows = append(rows, counted(t, "internal/oracle/testdata/weak_miscompiles/"+name+".a", false, nil, false, false))
++	}
++	return rows
++}

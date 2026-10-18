@@ -4,17 +4,18 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
+
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
 	"os"
-	"os/exec"
+
 	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
 	"sync"
-	"syscall"
+
 	"testing"
 	"time"
 
@@ -23,9 +24,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/testguard"
-	"github.com/system-inc/adamic/internal/toolchain"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testRulesAgreeShards = 16
@@ -65,7 +63,7 @@ func rulesAgreeSourceInputsAt(t *testing.T, root string) []string {
 			}
 			name := entry.Name()
 			if entry.IsDir() {
-				if name == ".git" || name == "testdata" || name == "performance" || name == "evidence" {
+				if name == ".git" || name == "testdata" || name == "performance" || name == "evidence" || lintRuleSubdirectory(path) {
 					return filepath.SkipDir
 				}
 				return nil
@@ -126,6 +124,13 @@ func TestRulesAgreeLoweringCacheKey(t *testing.T) {
 	write("stage1/cohere/lint/new_shards_test.go", "package lint // a moved test")
 	if key() != original {
 		t.Fatal("test-only moves invalidated the lowered product")
+	}
+	// A rule's evidence, validation and completion notes are not its sources: their churn keeps the key (#s57yq6y).
+	write("stage1/cohere/lint/rules/probe/evidence/report-mutant.json", "{}")
+	write("stage1/cohere/lint/rules/probe/validation/run.json", "{}")
+	write("stage1/cohere/lint/rules/probe/evidence-completion/notes.json", "{}")
+	if key() != original {
+		t.Fatal("a rule's evidence, validation or completion notes invalidated the lowered product")
 	}
 	for _, name := range sources {
 		write(name, "changed")
@@ -209,45 +214,7 @@ func rulesAgreeNative(t *testing.T) string {
 	return rulesAgreeBinaryDirectory
 }
 
-var rulesAgreeCaptureOnce sync.Once
-var rulesAgreeCaptureDirectory string
-
-func rulesAgreeCapture(t *testing.T) string {
-	t.Helper()
-	rulesAgreeCaptureOnce.Do(func() {
-		directory := packageDirectory
-		captureInputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-capture",
-			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
-			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
-			Toolchain: []string{runtime.Version(), lintGoSettings()},
-		}
-		rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
-			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
-			if err != nil {
-				return err
-			}
-			for index, row := range captured {
-				fields := strings.SplitN(row, "\t", 2)
-				relative, err := filepath.Rel(output, fields[0])
-				if err != nil {
-					return err
-				}
-				captured[index] = relative + "\t" + fields[1]
-			}
-			data, err := json.Marshal(captured)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(output, "rows.json"), data, 0644)
-		})
-
-	})
-	if rulesAgreeCaptureDirectory == "" {
-		t.Fatal("capture preparation failed")
-	}
-	return rulesAgreeCaptureDirectory
-}
+func rulesAgreeCapture(t *testing.T) string { t.Helper(); return oracles.RulesAgreeCapture(t) }
 
 func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
@@ -555,208 +522,4 @@ func TestRulesAgree_014(t *testing.T) {
 func TestRulesAgree_015(t *testing.T) {
 	t.Parallel()
 	rulesAgreeRunShard(t, 15)
-}
-
-// Shared Go compilation and capture have no setup deadline.
-// Preserve the child CPU guard and kill the entire compiler process group.
-func rulesAgreeCaptureRun(directory string, environment []string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	// toolchain's go, under its environment plus the capture's own settings, with PWD set to directory.
-	path, err := toolchain.Path("go")
-	if err != nil {
-		return nil, err
-	}
-	command := exec.CommandContext(ctx, path, args...)
-	command.Dir = directory
-	command.Env = append(toolchain.Env(environment...), "PWD="+directory)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	output, err := os.CreateTemp(sharedDirectory, "rules-agree-command-")
-	if err != nil {
-		return nil, err
-	}
-	defer os.Remove(output.Name())
-	defer output.Close()
-	command.Stdout = output
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
-		return nil, fmt.Errorf("go %v: %v\n%s", args, err, &stderr)
-	}
-	return os.ReadFile(output.Name())
-}
-
-func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return nil, err
-	}
-	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
-	data, err := os.ReadFile(harness)
-	if err != nil {
-		return nil, err
-	}
-	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
-	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
-	if strings.Count(string(data), original) != 1 {
-		return nil, fmt.Errorf("capture overlay anchor changed")
-	}
-	side := filepath.Join(directory, "rule_testing.go")
-	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
-		return nil, err
-	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		return nil, err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(overlayPath)
-	capture := filepath.Join(directory, "capture")
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return nil, err
-	}
-	discovered := map[string]bool{}
-	packages := map[string][]string{}
-	for _, d := range descriptors {
-		discovered[d.Name] = true
-		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
-	}
-	var names []string
-	for name := range packages {
-		names = append(names, name)
-	}
-	sort.Strings(names)
-	// Independent upstream packages capture into separate destinations. Bound
-	// concurrent packages to the instance's four CPUs; capture is shared setup.
-	var workers sync.WaitGroup
-	slots := make(chan struct{}, 4)
-	failures := make([]error, len(names))
-	for index, name := range names {
-		workers.Add(1)
-		go func() {
-			defer workers.Done()
-			slots <- struct{}{}
-			defer func() { <-slots }()
-			destination := filepath.Join(capture, name)
-			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
-			started := time.Now()
-			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0")
-			t.Logf("capture package %s: %.3fs", name, time.Since(started).Seconds())
-		}()
-	}
-	workers.Wait()
-	for _, failure := range failures {
-		if failure != nil {
-			return nil, failure
-		}
-	}
-
-	var files []string
-	err = filepath.WalkDir(capture, func(path string, entry os.DirEntry, walkErr error) error {
-		if walkErr != nil {
-			return walkErr
-		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".jsonl") {
-			files = append(files, path)
-		}
-		return nil
-	})
-	if err != nil {
-		return nil, err
-	}
-	type record struct {
-		Rule, File, Source, Outcome, FixedSource string
-		Options                                  json.RawMessage
-	}
-	unique := map[string]record{}
-	// The raw capture is the upstream tests' own record, a file per process named by its pid, its lines in the
-	// order parallel tests wrote them: never a product's bytes, which must be the same build to build (landable-15's
-	// tree, Oct 11: lint-rules-agree-capture held capture-<pid>.jsonl). The rows and cases made from it are sorted.
-	defer os.RemoveAll(capture)
-	for _, path := range files {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return nil, err
-		}
-		for _, line := range bytes.Split(data, []byte("\n")) {
-			if len(line) == 0 {
-				continue
-			}
-			var row record
-			if err := json.Unmarshal(line, &row); err != nil {
-				return nil, err
-			}
-			if !discovered[row.Rule] {
-				continue
-			}
-			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
-			unique[key] = row
-		}
-	}
-	var keys []string
-	for key := range unique {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	var rows []string
-	for i, key := range keys {
-		row := unique[key]
-		// The case keeps its file name's directories, not only its base name: a rule that judges a
-		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
-		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
-		if name == "." || name == "" || strings.HasPrefix(name, "..") {
-			name = filepath.Base(name)
-		}
-		if name == "." || name == "" || name == ".." {
-			name = "source.ts"
-		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		path := filepath.Join(caseDirectory, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			return nil, err
-		}
-		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
-			return nil, err
-		}
-		var legacy struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
-		if len(row.Options) > 0 && row.Options[0] == '{' {
-			if err := json.Unmarshal(row.Options, &legacy); err != nil {
-				return nil, err
-			}
-		}
-		mode := ""
-		if row.Rule == "@typescript-eslint/method-signature-style" {
-			switch row.Source {
-			case "type T = { m: => void };":
-				mode = "recovery"
-			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
-			}
-		}
-		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
-			mode = "recovery"
-		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
-	}
-	if len(rows) < 150 {
-		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
-	}
-	return rows, nil
 }

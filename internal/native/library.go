@@ -219,14 +219,27 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 	return files, append(Flags(options), extraFlags...), compiler, string(version), nil
 }
 
-// cacheDirectory is where a native cache named name lives: under the build cache (location.BuildCache), never under
-// this machine's home on native's own account, so a sandboxed build that names its cache writes nothing under HOME.
+// cacheDirectory is where a native cache named name is written: under the build cache, or the output directory of a
+// process that only reads the cache (location.Output), never under this machine's home on native's own account, so a
+// sandboxed build that names its cache writes nothing under HOME. An entry is looked for there first, then at the same
+// place under the build cache (location.ReadPlaces).
 func cacheDirectory(name string) (string, error) {
-	cache, err := location.BuildCache()
+	cache, err := location.Output()
 	if err != nil {
 		return "", fmt.Errorf("native: cache directory: %w", err)
 	}
 	return filepath.Join(cache, name), nil
+}
+
+// cachedFile is the first place file, under a native cache's entry where this process writes it, is a regular file at:
+// there, then at the same place under the build cache (location.ReadPlaces).
+func cachedFile(file string) (string, bool) {
+	for _, place := range location.ReadPlaces(file) {
+		if info, err := os.Stat(place); err == nil && info.Mode().IsRegular() {
+			return place, true
+		}
+	}
+	return "", false
 }
 
 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
@@ -246,6 +259,21 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
 		files = append(files, runtimeFile{entry.Name(), contents})
 	}
 	return files, nil
+}
+
+// RuntimeSourceDigest is the sha256 of every file of the embedded runtime, named and by what it holds, every feature's
+// units included: the runtime as its sources say it, with nothing of the machine or the compiler that builds it, so it is
+// the same on every machine. internal/oracle's counts table keys each row by it (countDigest).
+func RuntimeSourceDigest() (string, error) {
+	files, err := readRuntime(runtime, "runtime")
+	if err != nil {
+		return "", fmt.Errorf("native: runtime: %w", err)
+	}
+	parts := []string{"adamic-runtime-sources-v1"}
+	for _, file := range files {
+		parts = append(parts, fmt.Sprintf("file %s %x", file.name, sha256.Sum256(file.contents)))
+	}
+	return partsKey(parts), nil
 }
 
 // runtimeKey addresses a compiled runtime by everything its compile reads (runtimeKeyParts).
@@ -375,8 +403,8 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	lock := value.(*sync.Mutex)
 	lock.Lock()
 	defer lock.Unlock()
-	if info, err := os.Stat(library); err == nil && info.Mode().IsRegular() {
-		return library, nil
+	if found, ok := cachedFile(library); ok {
+		return found, nil
 	}
 	if err := os.MkdirAll(cache, 0o755); err != nil {
 		return "", fmt.Errorf("native: runtime cache: %w", err)
@@ -395,9 +423,11 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	// Publish everything together. A competing process may already have published this key; its
 	// identical complete entry wins, while this process removes only its own temporary directory.
 	if err := os.Rename(temporary, directory); err != nil {
-		if info, statErr := os.Stat(library); statErr != nil || !info.Mode().IsRegular() {
+		found, ok := cachedFile(library)
+		if !ok {
 			return "", fmt.Errorf("native: publishing runtime: %w", err)
 		}
+		return found, nil
 	}
 	return library, nil
 }
@@ -443,7 +473,8 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			// product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
 			command := toolchain.CommandIn(directory, compiler, arguments...)
-			if output, err := command.CombinedOutput(); err != nil {
+			var output []byte
+			if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
 			}
 		})
@@ -515,7 +546,8 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 		return "", nil
 	}
 	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
-	rules, err := command.Output()
+	var rules []byte
+	err = withCompilerToken(func() (err error) { rules, err = command.Output(); return err })
 	if err != nil {
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {

@@ -118,11 +118,12 @@ uninstrumented driver, sanitized native and emitted JS; it does not turn exclusi
 or mismatches into passes.
 
 A failed interface-based converter refactor also exposed a compiler gap. Its
-minimal program is `gaps/interfaceDefault.ts`: source Node and emitted JS print 5;
-ASan reports a stack-buffer-overflow in native. The release build happened to print
-4, an observation of undefined behavior, not a portable expectation. The port
-uses concrete model classes and simple tables instead. See `GAPS.md` and the
-retained gap-test log. This gap is not one of the three qualifying port mutants.
+minimal program is `gaps/interfaceTypeMethod.ts`: source Node prints 1, while
+lowering refuses with a typed `*lower.NotYet` before native emission because the
+interface view erases the concrete method's prototype origin.
+`TestInterfaceTypeMethodGap` checks that refusal and its default-free control.
+The port uses concrete model classes and simple tables instead. See `GAPS.md`.
+This gap is not one of the three qualifying port mutants.
 
 ## Final audit and throughput
 

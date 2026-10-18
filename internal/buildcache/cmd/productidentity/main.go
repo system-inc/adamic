@@ -228,7 +228,9 @@ func (m *modeResult) runWith(root, scratch, address, tokenPath string, unit prod
 		}
 	}
 	environment := map[string]string{
-		"ADAMIC_BUILD_CACHE_DIR":   cache,
+		"ADAMIC_BUILD_CACHE_DIR": cache,
+		// Each mode writes its own cache, so an output directory this process inherited never takes its products.
+		"ADAMIC_BUILD_OUTPUT_DIR":  "",
 		"ADAMIC_BUILD_LOG":         census,
 		"ADAMIC_BUILD_AUDIT":       "0",
 		"ADAMIC_BUILD_CACHE":       "",

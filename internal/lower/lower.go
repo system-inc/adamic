@@ -48,6 +48,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 			return nil, err
 		}
 	}
+	if lowering.hasAsync(modules) {
+		return lowering.lowerAsync(modules)
+	}
 	// Link every declaration before lowering any function body, including across back edges.
 	var declarations []*ast.Node
 	for _, module := range modules {
@@ -74,6 +77,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.exceptions(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkLibrarySpreads(modules); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkAccessorSpreads(); err != nil {
 		return nil, err
 	}
@@ -87,6 +93,14 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 }
 
 type lowering struct {
+	// impliedTargets memoizes inferred parent targets only within this checker.
+	impliedTargets map[*ast.Node]*checker.Type
+	// A per-lowering query seam lets tests count actual checker calls without globals.
+	// Nil uses checker.GetTypeAtLocation.
+	impliedTargetQuery func(*ast.Node) *checker.Type
+
+	librarySpreads []librarySpread
+
 	// V2 retains exact logical producer types for union member certification.
 	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
 
@@ -97,7 +111,6 @@ type lowering struct {
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool
 	provenModuleReads map[*ast.Node]bool
-	cycleReadFindings []Finding
 
 	// strings indexes result.Strings, so a constant used twice is stored once.
 	strings map[string]int

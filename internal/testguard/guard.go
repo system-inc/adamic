@@ -42,13 +42,12 @@ func init() {
 	}
 }
 
-// Run preserves the command's streams, directory and environment. Ordinary exit
-// errors retain their type. Only guard failures are wrapped with a named reason.
-func Run(command *exec.Cmd, budget, ceiling time.Duration) error {
+// PrepareCPU installs Run's re-exec CPU limit without starting the command.
+// Callers using childguard must retain Run's wall ceiling themselves.
+func PrepareCPU(command *exec.Cmd, budget time.Duration) error {
 	if command.Err != nil {
 		return command.Err
 	}
-	label := strings.Join(command.Args, " ")
 	executable, err := os.Executable()
 	if err != nil {
 		return err
@@ -62,6 +61,17 @@ func Run(command *exec.Cmd, budget, ceiling time.Duration) error {
 	}
 	command.Env = append(command.Env, marker+"=1")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	return nil
+}
+
+// Run preserves the command's streams, directory and environment. Ordinary exit
+// errors retain their type. Only guard failures are wrapped with a named reason.
+func Run(command *exec.Cmd, budget, ceiling time.Duration) error {
+	label := strings.Join(command.Args, " ")
+	if err := PrepareCPU(command, budget); err != nil {
+		return err
+	}
+	var err error
 	if err = command.Start(); err != nil {
 		return err
 	}

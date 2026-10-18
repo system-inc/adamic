@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -15,24 +16,16 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var numbersEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 
-func numbersInput(texts []string) []byte {
-	var input strings.Builder
-	for _, text := range texts {
-		for _, preference := range []string{"d", "s"} {
-			input.WriteString(preference + numbersEncode.Replace(text) + "\n")
-		}
-	}
-	return []byte(input.String())
-}
+func numbersInput(texts []string) []byte { return oracles.Input(texts) }
 
 type numbersMutation struct{ name, from, to string }
 
@@ -55,9 +48,8 @@ func numbersCaseID(kind string, index int, preference string) string {
 
 func numbersUnits(corpus numbersCorpus) []numbersUnit {
 	var units []numbersUnit
-	const batchTexts = 512
-	for lo := 0; lo < len(corpus.texts); lo += batchTexts {
-		hi := min(lo+batchTexts, len(corpus.texts))
+	for _, bounds := range oracles.BatchRanges(len(corpus.texts)) {
+		lo, hi := bounds[0], bounds[1]
 		unit := numbersUnit{name: fmt.Sprintf("batch-%06d-%06d", lo, hi-1), kind: "batch", lo: lo, hi: hi}
 		for i := lo; i < hi; i++ {
 			for _, pref := range []string{"d", "s"} {
@@ -203,13 +195,8 @@ func selectedNumbersUnits(t *testing.T, units []numbersUnit) []numbersUnit {
 }
 
 // Every non-Go product uses the shared cache, including temporary mutants.
-// Go overlay recipes also use buildcache.Product; products are immutable.
-type numbersInputs struct {
-	Name      string
-	Files     []string
-	Flags     []string
-	Toolchain string
-}
+// The Go oracle is buildcache.GoBuildIn's product (numbersPreparedOracle); products are immutable.
+type numbersInputs = oracles.Inputs
 
 func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) error) string {
 	t.Helper()
@@ -217,96 +204,36 @@ func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) e
 	return buildcache.Product(t, keyed, build)
 }
 
-// Go overlay builds use the same content-addressed cache as the other products. The build runs go under
-// toolchain.Env (numbersGoCommand), so its key names the C and C++ compilers that environment gives go, and the C
-// compiler by its report: nothing the oracle links uses cgo today, so no compiler changes its bytes, but one the key
-// didn't name could start to unseen.
-func numbersGoProduct(t *testing.T, name string, build func(dir string) error) string {
-	t.Helper()
-	return buildcache.Product(t, numbersGoProductInputs(name, numbersGoCompilers()), build)
-}
-
-func numbersGoProductInputs(name string, compilers numbersCompilers) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:      "cssnumbers " + name,
-		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssnumbers/testdata", "stage1/cohere/cssnumbers/port_test.go"},
-		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + compilers.c, "CXX=" + compilers.cPlusPlus},
-		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH, compilers.report},
-	}
-}
-
-// numbersCompilers are the C and C++ compilers go builds with, and the C compiler's report.
-type numbersCompilers struct{ c, cPlusPlus, report string }
-
-// numbersGoCompilers reads the compilers toolchain.Env gives go: the caller's CC and CXX, or clang and clang++ when it
-// names neither.
-func numbersGoCompilers() numbersCompilers {
-	var compilers numbersCompilers
-	for _, setting := range toolchain.Env() {
-		switch name, value, _ := strings.Cut(setting, "="); name {
-		case "CC":
-			compilers.c = value
-		case "CXX":
-			compilers.cPlusPlus = value
-		}
-	}
-	compilers.report = "no C compiler"
-	if fields := strings.Fields(compilers.c); len(fields) > 0 {
-		compilers.report = buildcache.Tool(fields[0], "--version")
-	}
-	return compilers
-}
-
 // Temporary generated inputs are keyed by content and logical filename. Their
 // directory names never enter a key; repository inputs stay repository-relative.
 func numbersCacheInputs(t *testing.T, inputs numbersInputs) buildcache.Inputs {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	keyed := buildcache.Inputs{Name: "cssnumbers " + inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH}}
-	keyed.Files = append(keyed.Files, "stage1/cohere/cssnumbers/shards_test.go", "stage1/cohere/cssnumbers/port_test.go")
-	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	return oracles.CacheInputs(t, inputs)
+}
 
-	for _, name := range inputs.Files {
-		absolute, err := filepath.Abs(name)
-		if err != nil {
-			t.Fatal(err)
-		}
-		relative, err := filepath.Rel(root, absolute)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				t.Fatal(err)
-			}
-			logical := filepath.Base(name)
-			if filepath.Ext(name) == ".ts" {
-				logical = filepath.Base(filepath.Dir(name)) + "/" + logical
-			}
-			keyed.Flags = append(keyed.Flags, fmt.Sprintf("generated-input=%s:%x", logical, sha256.Sum256(content)))
-		} else {
-			keyed.Files = append(keyed.Files, filepath.ToSlash(relative))
-		}
+// numbersCompilerFiles is compilerinputs.Lowering, the compiler's exact repository paths, as numbersInputs names a
+// repository file: through repository, from this package's directory.
+func numbersCompilerFiles() []string {
+	var files []string
+	for _, path := range compilerinputs.Lowering() {
+		files = append(files, repository+"/"+path)
 	}
-	// A lowering build runs the compiler linked into this test binary. Its key names the compiler by its sources (the
-	// internal/ and cohere/TypeScript directories, go.mod, the Go release) rather than by this binary's bytes, which
-	// differ wherever the test binary was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
-
-	return keyed
+	return files
 }
 
 type numbersProgram struct{ dir, main, c, javascript string }
 
+// numbersProgramInputs keys the port lowered from main: the compiler, and main with the numbers.ts beside it and the
+// cssstrings strings.ts it imports.
+func numbersProgramInputs(name, main string) numbersInputs {
+	return numbersInputs{
+		Name: name + " lowering and backends", Files: append(numbersCompilerFiles(), main, filepath.Join(filepath.Dir(main), "numbers.ts"), filepath.Join(filepath.Dir(main), "../cssstrings/strings.ts")),
+		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
+	}
+}
+
 func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 	t.Helper()
-	dir := numbersProduct(t, numbersInputs{
-		Name: name + " lowering and backends", Files: []string{main, filepath.Join(filepath.Dir(main), "numbers.ts"), filepath.Join(filepath.Dir(main), "../cssstrings/strings.ts"), repository + "/internal", repository + "/go.mod", repository + "/cohere/TypeScript", repository + "/cohere/TypeScript-shim"},
-		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
-	}, func(dir string) error {
+	dir := numbersProduct(t, numbersProgramInputs(name, main), func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -332,11 +259,16 @@ func numbersClangToolchain(t *testing.T) string {
 	return buildcache.Tool("clang", "--version")
 }
 
+// numbersNativeInputs keys the native binary native.Build makes from c: the compiler, whose native.Build links more
+// than internal/native (internal/ir, internal/flow, internal/toolchain, bridge/tsgo), and c by content.
+func numbersNativeInputs(name, c string, options native.Options, clang string) numbersInputs {
+	return numbersInputs{Name: name, Files: append(numbersCompilerFiles(), c), Flags: native.Flags(options), Toolchain: clang}
+}
+
 func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {
 	t.Helper()
 	options := native.Options{Sanitize: sanitize}
-	flags := native.Flags(options)
-	dir := numbersProduct(t, numbersInputs{Name: name, Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: flags, Toolchain: numbersClangToolchain(t)}, func(dir string) error {
+	dir := numbersProduct(t, numbersNativeInputs(name, program.c, options, numbersClangToolchain(t)), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
@@ -537,6 +469,9 @@ func numbersSetupOracleAnswers(t *testing.T, name, command string, arguments []s
 
 func numbersOracleAnswersWithCommand(t *testing.T, name, command string, arguments []string, data []byte, identity string, makeCommand func(*testing.T, string, ...string) *exec.Cmd) run {
 	t.Helper()
+	if name == "Go" {
+		return run{stdout: oracles.FullAnswers(t, command, arguments, data, identity)}
+	}
 	dir := numbersProduct(t, numbersInputs{Name: name + " oracle answers", Files: []string{"testdata/library.mjs"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
 		if err := os.WriteFile(path, data, 0644); err != nil {
@@ -557,32 +492,4 @@ func numbersOracleAnswersWithCommand(t *testing.T, name, command string, argumen
 	return run{stdout: answer}
 }
 
-func numbersOracleIdentity(t *testing.T, path string) string {
-	t.Helper()
-	hash := sha256.New()
-	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.IsDir() {
-			if entry.Name() == ".git" {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		content, err := os.ReadFile(name)
-		if err != nil {
-			return err
-		}
-		relative, err := filepath.Rel(path, name)
-		if err != nil {
-			return err
-		}
-		fmt.Fprintf(hash, "%s\x00%x\n", filepath.ToSlash(relative), sha256.Sum256(content))
-		return nil
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
-}
+func numbersOracleIdentity(t *testing.T, path string) string { return oracles.Identity(t, path) }

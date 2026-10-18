@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static uint64_t regex_step_limit;
+// The test/embedding budget may be changed while workers match.
+static _Atomic uint64_t regex_step_limit;
 void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = limit; }
 static void *regex_memory(size_t size) {
 	void *memory = malloc(size == 0 ? 1 : size);
@@ -19,6 +20,8 @@ static bool high(uint16_t c) { return c >= 0xd800 && c <= 0xdbff; }
 static bool low(uint16_t c) { return c >= 0xdc00 && c <= 0xdfff; }
 static bool regex_read(const uint16_t *input, size_t length, ptrdiff_t at, int direction,
 					   bool unicode, uint32_t *point, ptrdiff_t *next) {
+	if (unicode && at > 0 && (size_t)at < length && high(input[at - 1]) && low(input[at]))
+		return false;
 	if (direction > 0) {
 		if ((size_t)at >= length)
 			return false;
@@ -184,7 +187,8 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
 	regex_state *stack = NULL;
 	bool matched = false;
 	for (;;) {
-		if (regex_step_limit && *steps >= regex_step_limit) {
+		uint64_t limit = regex_step_limit;
+		if (limit != 0 && *steps >= limit) {
 			static const char message[] = "regexp: instruction step limit exceeded";
 			adamic_panic(message, sizeof message - 1);
 		}
@@ -456,12 +460,12 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 	ADAMIC_CHECK_STACK();
 	bool stateful = (p->flags & 24) != 0 || force_sticky;
 	size_t start = stateful ? regex_to_length(regex->slots[1].number) : 0;
+	size_t requested = start;
+	if ((p->flags & 4) && start > 0 && start < length && high(input[start - 1]) && low(input[start]))
+		start--;
 	ptrdiff_t *captures = regex_memory(2 * (p->captures + 1) * sizeof *captures);
 	while (start <= length) {
 		ptrdiff_t at = (ptrdiff_t)start;
-		if ((p->flags & 4) && at > 0 && (size_t)at < length && high(input[at - 1]) &&
-			low(input[at]))
-			at--;
 		if (p->anchored && at != 0)
 			break;
 		for (size_t k = 0; k < 2 * (p->captures + 1); k++)
@@ -491,8 +495,8 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 				} else {
 					uint32_t point;
 					ptrdiff_t next;
-					regex_read(input, length, at, 1, p->flags & 4, &point, &next);
-					at = next;
+					bool readable = regex_read(input, length, at, 1, p->flags & 4, &point, &next);
+					at = readable ? next : at + 1;
 				}
 			}
 			captures[0] = at;
@@ -506,13 +510,13 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 			regex_workspace_destroy(&workspace);
 			return captures;
 		}
-		if (p->anchored || (p->flags & 16) || force_sticky)
+		if ((size_t)at >= length)
 			break;
-		uint32_t c;
-		ptrdiff_t next;
-		if (!regex_read(input, length, at, 1, p->flags & 4, &c, &next))
+		if (p->anchored || (((p->flags & 16) || force_sticky) && start >= requested))
 			break;
-		start = (size_t)next;
+		// Irregexp can accept \B or (?!\W) inside a pair. Try each code unit;
+		// regex_read still rejects consuming a half of a Unicode pair.
+		start = (size_t)at + 1;
 	}
 	if (stateful)
 		regex->slots[1].number = 0;

@@ -1,0 +1,5 @@
+{
+  "name": "conditional-assignment-ternary-parentheses",
+  "from": "test = this.context.unwrap(test);",
+  "to": "test = index;"
+}

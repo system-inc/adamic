@@ -9,7 +9,11 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
-	options := native.Options{}
+	return buildWithNative(path, output, arguments, native.Build)
+}
+
+func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native.Options) error) int {
+	options := native.Options{Release: true}
 	archive := ""
 	explain := false
 	for index := 0; index < len(arguments); index++ {
@@ -82,7 +86,7 @@ func build(path, output string, arguments []string) int {
 			source = native.C(program)
 		}
 		if err == nil {
-			err = native.Build(source, output, options)
+			err = buildNative(source, output, options)
 		}
 	}
 	if err != nil {

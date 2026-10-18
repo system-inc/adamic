@@ -1,0 +1,13 @@
+// react/no_unstable_nested_components.go:893; builder.String()
+import { observe } from '../observe.a';
+const pattern = "^render.*(?![\\s\\S])";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "render", 4);
+observe(regex, "xrender", 5);
+observe(regex, "render\n", 6);
+observe(regex, "renderTree", 7);

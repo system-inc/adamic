@@ -3,8 +3,9 @@ package lint
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -24,7 +25,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 // The pinned case is compared once on each of the original three runtimes.
@@ -120,16 +120,8 @@ func suggestionAlongsidePrepare(t *testing.T) {
 		}
 		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 	})
-	oracleInputs := inputs
-	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
-	oracleInputs.Files = append(append([]string{}, inputs.Files...), "cohere/internal", "cohere/mutation_aliasing", "cohere/static_single_assignment", "cohere/rule_runner")
-	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
-	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}
-	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {
-		_, err := suggestionAlongsideGoOracle(t, directory, out)
-		return err
-	})
-	oracle := filepath.Join(oracleProduct, "oracle")
+	oracle := oracles.SuggestionAlongsideOracle(t, directory)
+
 	suggestionAlongside.directory, suggestionAlongside.manifest, suggestionAlongside.oracle = directory, path, oracle
 	suggestionAlongside.binary, suggestionAlongside.module = filepath.Join(built, "scanner"), filepath.Join(lowered, "lint.mjs")
 	suggestionAlongside.ready = true
@@ -295,63 +287,4 @@ func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !productLookedUp(output, `suggestion-alongside-\S+`) {
 		t.Fatalf("standalone shard: %v\n%s", err, output)
 	}
-}
-
-// Use the same overlay and oracle, accepting only the Go download diagnostics
-// that execute already permits on a fresh instance.
-func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (string, error) {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return "", err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return "", err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return "", err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return "", failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return "", err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return "", err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	command := lintCommand(ctx, root, "go", args...)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	if err := command.Run(); err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
-		return "", fmt.Errorf("go build: %v\n%s", err, &stderr)
-	}
-	return binary, nil
 }

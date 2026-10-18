@@ -1,0 +1,232 @@
+[
+  {
+    "test": "TestMiscompile2AConstructorNumberArrow",
+    "seconds": 3.26,
+    "log": "mutants/constructor-capture/test.log"
+  },
+  {
+    "test": "TestMiscompile2AConstructorArrow",
+    "seconds": 3.26,
+    "log": "mutants/constructor-capture/test.log"
+  },
+  {
+    "test": "TestCallbackWideningNullableObjectMapRelease",
+    "seconds": 5.22,
+    "log": "mutants/nullable-token-omitted/test.log"
+  },
+  {
+    "test": "TestCallbackWideningNullableObjectMapSanitized",
+    "seconds": 5.4,
+    "log": "mutants/nullable-token-omitted/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialUnionNarrowed",
+    "seconds": 6.01,
+    "log": "mutants/union-liveness/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialSome",
+    "seconds": 5.54,
+    "log": "mutants/weak-callback/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialReduce",
+    "seconds": 5.57,
+    "log": "mutants/weak-callback/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialSort",
+    "seconds": 5.6,
+    "log": "mutants/weak-callback/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialEach",
+    "seconds": 5.72,
+    "log": "mutants/weak-callback/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialFind",
+    "seconds": 0.31,
+    "log": "mutants/weak-callback/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialMap",
+    "seconds": 0.39,
+    "log": "mutants/weak-callback/test.log"
+  },
+  {
+    "test": "TestMiscompile2ALongName",
+    "seconds": 3.12,
+    "log": "mutants/long-name/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseMap",
+    "seconds": 3.48,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseEvery",
+    "seconds": 3.5,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseReduce",
+    "seconds": 3.59,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseSome",
+    "seconds": 3.59,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseSort",
+    "seconds": 0.29,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseForEach",
+    "seconds": 0.27,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseFind",
+    "seconds": 0.22,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestCallbackWideningRefuseFilter",
+    "seconds": 0.24,
+    "log": "mutants/refusal-revert/test.log"
+  },
+  {
+    "test": "TestMiscompile2ADerivedSymbol",
+    "seconds": 3.03,
+    "log": "mutants/computed-name/test.log"
+  },
+  {
+    "test": "TestCallbackWideningUnrepresentedParameter",
+    "seconds": 5.22,
+    "log": "mutants/unrepresented-parameter-admitted/test.log"
+  },
+  {
+    "test": "TestSplitSelfCompareAgreesWithNode",
+    "seconds": 1.22,
+    "log": "mutants/split-numeric-fold/test.log"
+  },
+  {
+    "test": "TestMiscompile2AMaybeSetter",
+    "seconds": 3.0,
+    "log": "mutants/maybe-setter/test.log"
+  },
+  {
+    "test": "TestCallbackAdapterTargets",
+    "seconds": 0.0,
+    "log": "mutants/adapter-target-omitted/test.log"
+  },
+  {
+    "test": "TestCountsAreRecordedTable",
+    "seconds": 0.0,
+    "log": "mutants/weak-counter-registration-omitted/test.log"
+  },
+  {
+    "test": "TestCallbackWideningNumberEveryRelease",
+    "seconds": 5.14,
+    "log": "mutants/adaptation-omitted/test.log"
+  },
+  {
+    "test": "TestCallbackWideningNumberEverySanitized",
+    "seconds": 5.31,
+    "log": "mutants/adaptation-omitted/test.log"
+  },
+  {
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "seconds": 1.87,
+    "log": "mutants/error-own-message/test.log"
+  },
+  {
+    "test": "TestMiscompile2AErrorSubclassSpread",
+    "seconds": 3.04,
+    "log": "mutants/error-spread/test.log"
+  },
+  {
+    "test": "TestMiscompile2AErrorSpread",
+    "seconds": 3.07,
+    "log": "mutants/error-spread/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialViewMethod",
+    "seconds": 6.47,
+    "log": "mutants/method-views/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialViewMethodParameter",
+    "seconds": 6.6,
+    "log": "mutants/method-views/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialReduce",
+    "seconds": 3.83,
+    "log": "mutants/weak-callback-isolated/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialEach",
+    "seconds": 3.87,
+    "log": "mutants/weak-callback-isolated/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialSort",
+    "seconds": 3.89,
+    "log": "mutants/weak-callback-isolated/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialSome",
+    "seconds": 3.97,
+    "log": "mutants/weak-callback-isolated/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialFind",
+    "seconds": 0.57,
+    "log": "mutants/weak-callback-isolated/test.log"
+  },
+  {
+    "test": "TestWeakDifferentialMap",
+    "seconds": 0.61,
+    "log": "mutants/weak-callback-isolated/test.log"
+  },
+  {
+    "test": "TestMiscompile2AOptionalError",
+    "seconds": 3.32,
+    "log": "mutants/optional-error/test.log"
+  },
+  {
+    "test": "TestMiscompile2AMarkerUndefined",
+    "seconds": 4.23,
+    "log": "mutants/optional-error/test.log"
+  },
+  {
+    "test": "TestSplitSelfCompareAgreesWithNode",
+    "seconds": 1.01,
+    "log": "mutants/static-inline-definition/test.log"
+  },
+  {
+    "test": "TestRuntimeStaticsAreListed",
+    "seconds": 0.19,
+    "log": "fix-mutants/unlisted-empty-message/test.log"
+  },
+  {
+    "test": "TestEveryTestHasOneDescriptiveName",
+    "seconds": 0.26,
+    "log": "fix-mutants/colliding-flow-name/test.log"
+  },
+  {
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "seconds": 1.05,
+    "log": "fix-mutants/immortal-units-write/test.log"
+  },
+  {
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "seconds": 7.51,
+    "log": "fix-mutants/immortal-units-write-initial/test.log"
+  }
+]

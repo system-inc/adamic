@@ -1,7 +1,6 @@
 package json
 
 import (
-	"crypto/sha256"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -9,21 +8,33 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 // An explicit repository-relative key keeps ownership stable as the corpus grows.
-// _000 owns backend agreement and the Go oracle's live answer, _001 the leak pass, and _002 ASan/UBSan.
+// _000 owns backend agreement and the Go oracle's live answer, _001 the sanitized run: ASan/UBSan with LeakSanitizer.
 const jsonPortClassOrderKey = "cohere/internal/lint/rules/tailwind/collapse/testdata/classorder_fixtures.json"
 
-func jsonPortClassOrderPartition(all []textCase) (ordinary []textCase, shards []nativeChunk, dedicated []textCase) {
+// jsonPortInventoryKey is the corpus's largest case, 17.5 MB, about 17 s of one core's work across the five sides
+// (its sanitized run 10.8 s, Golem, Oct 14). Hashed into _0760 with a 3 KB case, it was json#20/28's long pole, and
+// under the unit's 8-way contention its own run reached 77.6 s of the 90 s (#21kptp1). One case doesn't split, so it
+// runs as class order's does: alone in the unit, before the parallel shards resume (inventory_dedicated_test.go).
+const jsonPortInventoryKey = "stage1/cohere/lint/inventory/inventory.json"
+
+// jsonPortDedicatedKeys are the cases taken out of the hash buckets, each owned by tests of its own. Taking one out
+// moves no other case: a bucket is chosen by the case's own key.
+var jsonPortDedicatedKeys = []string{jsonPortClassOrderKey, jsonPortInventoryKey}
+
+func jsonPortDedicatedPartition(all []textCase) (ordinary []textCase, shards []nativeChunk, dedicated []textCase) {
 	for _, item := range all {
-		if item.Name == jsonPortClassOrderKey {
+		if slices.Contains(jsonPortDedicatedKeys, item.Name) {
 			dedicated = append(dedicated, item)
 		} else {
 			ordinary = append(ordinary, item)
@@ -33,13 +44,30 @@ func jsonPortClassOrderPartition(all []textCase) (ordinary []textCase, shards []
 	return
 }
 
-func jsonPortClassOrderUnion(all, ordinary []textCase, shards []nativeChunk, dedicated []textCase) error {
-	if len(dedicated) > 1 {
-		return fmt.Errorf("duplicate dedicated class-order case")
+// jsonPortDedicatedCase is the dedicated case named key as a list of one, or an empty list where the corpus lacks it.
+func jsonPortDedicatedCase(dedicated []textCase, key string) []textCase {
+	var items []textCase
+	for _, item := range dedicated {
+		if item.Name == key {
+			items = append(items, item)
+		}
+	}
+	return items
+}
+
+func jsonPortDedicatedUnion(all, ordinary []textCase, shards []nativeChunk, dedicated []textCase) error {
+	named := map[string]bool{}
+	for _, item := range dedicated {
+		if named[item.Name] {
+			return fmt.Errorf("duplicate dedicated case %s", item.Name)
+		}
+		named[item.Name] = true
 	}
 	combined := append(append([]textCase(nil), ordinary...), dedicated...)
 	owners := append([]nativeChunk(nil), shards...)
-	owners = append(owners, nativeChunk{start: len(ordinary), end: len(combined)})
+	for index := range dedicated {
+		owners = append(owners, nativeChunk{start: len(ordinary) + index, end: len(ordinary) + index + 1})
+	}
 	if err := jsonPortUnion(combined, owners); err != nil {
 		return err
 	}
@@ -57,10 +85,10 @@ func jsonPortClassOrderUnion(all, ordinary []textCase, shards []nativeChunk, ded
 		if want, exists := expected[item.Name]; !exists || want != item {
 			return fmt.Errorf("dedicated union changed %s", item.Name)
 		}
-		if i < len(ordinary) && item.Name == jsonPortClassOrderKey {
-			return fmt.Errorf("dedicated case retained in ordinary shard")
+		if i < len(ordinary) && slices.Contains(jsonPortDedicatedKeys, item.Name) {
+			return fmt.Errorf("dedicated case %s retained in ordinary shard", item.Name)
 		}
-		if i >= len(ordinary) && item.Name != jsonPortClassOrderKey {
+		if i >= len(ordinary) && !slices.Contains(jsonPortDedicatedKeys, item.Name) {
 			return fmt.Errorf("unexpected dedicated case %s", item.Name)
 		}
 	}
@@ -71,70 +99,17 @@ func jsonPortClassOrderUnion(all, ordinary []textCase, shards []nativeChunk, ded
 // case's, so a different oracle or a changed fixture is a different product. The binary's digest is stricter than the
 // oracle product's key: an oracle rebuilt to the same bytes keeps the answer, which is the same answer.
 func jsonClassOrderAnswerInputs(oracle []byte, item textCase) buildcache.Inputs {
-	return buildcache.Inputs{
-		Name:  "json class-order Go answer",
-		Files: []string{"stage1/cohere/json/class_order_grain30_test.go", "stage1/cohere/json/port_test.go"},
-		Flags: []string{fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)), fmt.Sprintf("case %s sha256 %x", item.Name, sha256.Sum256([]byte(item.Text))), "--cases"},
-	}
+	return oracles.ClassOrderAnswerInputs(oracle, oracles.ComparisonCase(item))
 }
 
 // buildJSONClassOrderAnswer runs the Go oracle once over the class-order case, as _000 runs it live: the product holds
 // the case it was asked (cases.txt) and its answer (answer.txt).
-func buildJSONClassOrderAnswer(oracle string, item textCase) func(string) error {
-	return func(directory string) error {
-		input, _ := protocol([]textCase{item}, make([]answer, 1))
-		cases := filepath.Join(directory, "cases.txt")
-		if err := os.WriteFile(cases, []byte(input), 0644); err != nil {
-			return err
-		}
-		reference, err := executeResult(nil, oracle, "--cases", cases)
-		if err != nil {
-			return err
-		}
-		if reference.exitCode != 0 || len(reference.stderr) != 0 {
-			return fmt.Errorf("Go oracle: exit %d stderr %s", reference.exitCode, reference.stderr)
-		}
-		if _, err := jsonPortAnswers(string(reference.stdout), 1); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(directory, "answer.txt"), reference.stdout, 0644)
-	}
-}
-
-var jsonClassOrderAnswer struct {
-	once   sync.Once
-	answer string
-}
 
 // jsonClassOrderAnswerProduct is the Go oracle's answer to the class-order case, built once and read by the two
 // sanitizer passes, which compare against it instead of running the oracle and release again (#f42kzjr).
-func jsonClassOrderAnswerProduct(t *testing.T) string {
-	t.Helper()
-	jsonClassOrderAnswer.once.Do(func() {
-		oracle := portMatchesProduct(t, "oracle")
-		binary, err := os.ReadFile(oracle)
-		if err != nil {
-			t.Fatal(err)
-		}
-		all, _ := jsonTopCorpus(t)
-		_, _, items := jsonPortClassOrderPartition(all)
-		if len(items) != 1 {
-			t.Fatalf("dedicated fixture count %d, want 1", len(items))
-		}
-		directory := buildcache.Product(t, jsonClassOrderAnswerInputs(binary, items[0]), buildJSONClassOrderAnswer(oracle, items[0]))
-		stored, err := os.ReadFile(filepath.Join(directory, "answer.txt"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		jsonClassOrderAnswer.answer = string(stored)
-	})
-	if jsonClassOrderAnswer.answer == "" {
-		t.Fatal("the class-order Go answer failed earlier in this process")
-	}
-	return jsonClassOrderAnswer.answer
-}
+func jsonClassOrderAnswerProduct(t *testing.T) string { return oracles.ClassOrderAnswer(t) }
 
-func TestProduct_JSONClassOrderAnswer(t *testing.T) {
+func TestProduct_JsonFindsClassOrderAnswer(t *testing.T) {
 	t.Parallel()
 	jsonClassOrderAnswerProduct(t)
 }
@@ -171,19 +146,19 @@ func TestJSONClassOrderAnswerKey(t *testing.T) {
 
 func jsonPortClassOrderRun(t *testing.T, mode int) {
 	t.Helper()
-	leak := mode == 1
 	setup := time.Now()
 	portMatchesPrepare(t)
 	all, _ := jsonTopCorpus(t)
-	ordinary, shards, items := jsonPortClassOrderPartition(all)
-	if err := jsonPortClassOrderUnion(all, ordinary, shards, items); err != nil {
+	ordinary, shards, dedicated := jsonPortDedicatedPartition(all)
+	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated); err != nil {
 		t.Fatal(err)
 	}
+	items := jsonPortDedicatedCase(dedicated, jsonPortClassOrderKey)
 	if len(items) != 1 {
 		t.Fatalf("dedicated fixture count %d, want 1", len(items))
 	}
 	stored := jsonClassOrderAnswerProduct(t)
-	t.Logf("shared setup: %.3fs; exact union: %d ordinary + %d dedicated", time.Since(setup).Seconds(), len(ordinary), len(items))
+	t.Logf("shared setup: %.3fs; exact union: %d ordinary + %d dedicated", time.Since(setup).Seconds(), len(ordinary), len(dedicated))
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
 	start := time.Now()
@@ -213,22 +188,20 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 		compare(t, "JavaScript backend", onNode(t, portMatchesShared.script, "--cases", path), expected, items)
 	}
 	if mode != 0 {
-		label := "ASan/UBSan"
-		options := "ASAN_OPTIONS=detect_leaks=0"
-		if leak {
-			label = "LeakSanitizer"
-			options = "ASAN_OPTIONS=detect_leaks=1"
-		}
-		if leak && runtime.GOOS != "linux" {
+		// One sanitized run: with LeakSanitizer on (Linux), it reports every ASan/UBSan error a detect_leaks=0 run does,
+		// plus leaks, so the separate ASan/UBSan test that ran the case again is gone (#fqvxk72). Off Linux, ASan/UBSan
+		// runs without leak detection and macOS's leaks --atExit checks release.
+		label, options := "ASan/UBSan/LeakSanitizer", "ASAN_OPTIONS=detect_leaks=1"
+		if runtime.GOOS != "linux" {
+			label, options = "ASan/UBSan", "ASAN_OPTIONS=detect_leaks=0"
 			result := execute(t, nil, "leaks", "--atExit", "--", portMatchesShared.release, "--cases", path)
 			if result.exitCode != 0 {
 				t.Fatalf("leaks: %s", result.stderr)
 			}
-		} else {
-			began := time.Now()
-			compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
-			t.Logf("%s: %.3fs", label, time.Since(began).Seconds())
 		}
+		began := time.Now()
+		compare(t, label, execute(t, []string{options}, portMatchesShared.sanitized, "--cases", path), expected, items)
+		t.Logf("%s: %.3fs", label, time.Since(began).Seconds())
 	}
 	t.Logf("%s: own work %.3fs", jsonPortClassOrderKey, time.Since(start).Seconds())
 }
@@ -241,7 +214,7 @@ func jsonPortClassOrderRun(t *testing.T, mode int) {
 // Each sanitizer pass is then one run of the case and nothing else, against the stored Go answer (#f42kzjr). At an
 // 8-CPU share on Cloud (Oct 12), LeakSanitizer is 19.4 s and ASan/UBSan 22.4 s, but _001 was 27.5 s and _002 35 to
 // 37 s with the oracle and release run again around them; Home runs the same units about 2.1 times slower, where
-// _001 reached 61.5 s.
+// _001 reached 61.5 s. Since then _002 is gone: _001's one detect_leaks=1 run is its ASan/UBSan run too (#fqvxk72).
 
 // Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
 func TestPortMatchesGoCohereClassOrder_000(t *testing.T) {
@@ -253,82 +226,90 @@ func TestPortMatchesGoCohereClassOrder_001(t *testing.T) {
 	jsonPortClassOrderRun(t, 1)
 }
 
-// Not parallel: runs alone in the unit, before the parallel shards resume, so the indivisible fixture has its CPUs.
-func TestPortMatchesGoCohereClassOrder_002(t *testing.T) {
-	jsonPortClassOrderRun(t, 2)
-}
-
-func TestJSONClassOrderShardOwnership(t *testing.T) {
+// Every dedicated case leaves the hash buckets and is owned exactly once: class order by _000 and _001, inventory.json
+// by TestPortMatchesGoCohereInventory. A planted disagreement in either is caught by exactly one owner.
+func TestJSONDedicatedShardOwnership(t *testing.T) {
 	t.Parallel()
-	for _, group := range [][]textCase{nil, {{Name: "small.json", Text: "{}"}}, {{Name: jsonPortClassOrderKey, Text: "[]"}}} {
-		ordinary, shards, dedicated := jsonPortClassOrderPartition(group)
-		if err := jsonPortClassOrderUnion(group, ordinary, shards, dedicated); err != nil {
+	for _, group := range [][]textCase{nil, {{Name: "small.json", Text: "{}"}}, {{Name: jsonPortClassOrderKey, Text: "[]"}}, {{Name: jsonPortInventoryKey, Text: "{}"}}} {
+		ordinary, shards, dedicated := jsonPortDedicatedPartition(group)
+		if err := jsonPortDedicatedUnion(group, ordinary, shards, dedicated); err != nil {
 			t.Fatal(err)
 		}
 	}
-	all := []textCase{{Name: "small.json", Text: "{}"}, {Name: jsonPortClassOrderKey, Text: "[]"}}
-	ordinary, shards, dedicated := jsonPortClassOrderPartition(all)
-	if err := jsonPortClassOrderUnion(all, ordinary, shards, dedicated); err != nil {
+	all := []textCase{{Name: "small.json", Text: "{}"}, {Name: jsonPortClassOrderKey, Text: "[]"}, {Name: jsonPortInventoryKey, Text: "{}"}}
+	ordinary, shards, dedicated := jsonPortDedicatedPartition(all)
+	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated); err != nil {
 		t.Fatal(err)
 	}
-	if len(dedicated) != 1 || len(ordinary) != 1 {
+	if len(dedicated) != 2 || len(ordinary) != 1 {
 		t.Fatal("wrong dedicated ownership")
 	}
 	owner := jsonCaseShard("small.json", testPortMatchesGoCohereShards)
 	if shards[owner].end-shards[owner].start != 1 || ordinary[shards[owner].start].Name != "small.json" {
 		t.Fatal("ordinary hash owner changed")
 	}
-	if err := jsonPortClassOrderUnion(all, ordinary, shards, nil); err == nil {
-		t.Fatal("missing dedicated case survived")
+	if err := jsonPortDedicatedUnion(all, ordinary, shards, nil); err == nil {
+		t.Fatal("missing dedicated cases survived")
 	}
-	if err := jsonPortClassOrderUnion(all, ordinary, shards, append(dedicated, dedicated...)); err == nil {
+	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated[:1]); err == nil {
+		t.Fatal("a missing dedicated case survived")
+	}
+	if err := jsonPortDedicatedUnion(all, ordinary, shards, append(dedicated, dedicated[0])); err == nil {
 		t.Fatal("duplicate dedicated case survived")
 	}
-	// Agreement ownership includes the dedicated case exactly once: _000 runs the Go oracle, release, Node and the
-	// JavaScript backend, and the two sanitizer passes compare against its stored answer.
+	// Agreement ownership includes each dedicated case exactly once: class order's _000 runs the Go oracle, release,
+	// Node and the JavaScript backend, and its sanitizer pass compares against the stored answer; inventory.json's one
+	// test runs all five sides.
 	owners := [][]textCase{}
 	for _, shard := range shards {
 		owners = append(owners, ordinary[shard.start:shard.end])
 	}
-	owners = append(owners, dedicated)
-	caught := 0
-	for _, items := range owners {
-		answers := make([]answer, len(items))
-		_, want := protocol(items, answers)
-		for i, item := range items {
-			if item.Name == jsonPortClassOrderKey {
-				answers[i].Output = "planted disagreement"
+	for _, key := range jsonPortDedicatedKeys {
+		owners = append(owners, jsonPortDedicatedCase(dedicated, key))
+	}
+	for _, key := range jsonPortDedicatedKeys {
+		caught := 0
+		for _, items := range owners {
+			answers := make([]answer, len(items))
+			_, want := protocol(items, answers)
+			for i, item := range items {
+				if item.Name == key {
+					answers[i].Output = "planted disagreement"
+				}
+			}
+			_, got := protocol(items, answers)
+			if comparisonError("planted", run{stdout: []byte(got)}, want, items) != nil {
+				caught++
 			}
 		}
-		_, got := protocol(items, answers)
-		if comparisonError("planted", run{stdout: []byte(got)}, want, items) != nil {
-			caught++
+		if caught != 1 {
+			t.Fatalf("planted disagreement in %s caught by %d owners", key, caught)
 		}
 	}
-	if caught != 1 {
-		t.Fatalf("planted disagreement caught by %d owners", caught)
-	}
-	for child := 0; child < 3; child++ {
-		answers := make([]answer, len(dedicated))
-		_, want := protocol(dedicated, answers)
+	classOrder := jsonPortDedicatedCase(dedicated, jsonPortClassOrderKey)
+	for child := 0; child < 2; child++ {
+		answers := make([]answer, len(classOrder))
+		_, want := protocol(classOrder, answers)
 		answers[0].Output = "planted disagreement"
-		_, got := protocol(dedicated, answers)
-		if comparisonError(fmt.Sprintf("child-%03d", child), run{stdout: []byte(got)}, want, dedicated) == nil {
+		_, got := protocol(classOrder, answers)
+		if comparisonError(fmt.Sprintf("child-%03d", child), run{stdout: []byte(got)}, want, classOrder) == nil {
 			t.Fatalf("child %d missed planted failure", child)
 		}
 	}
-	tree, err := parser.ParseFile(token.NewFileSet(), "class_order_grain30_test.go", nil, 0)
-	if err != nil {
-		t.Fatal(err)
-	}
 	declared := map[string]bool{}
-	for _, decl := range tree.Decls {
-		if f, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereClassOrder_") {
-			declared[f.Name.Name] = true
+	for _, file := range []string{"class_order_grain30_test.go", "inventory_dedicated_test.go"} {
+		tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, decl := range tree.Decls {
+			if f, ok := decl.(*ast.FuncDecl); ok && (strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereClassOrder_") || strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereInventory")) {
+				declared[f.Name.Name] = true
+			}
 		}
 	}
-	if len(declared) != 3 || !declared["TestPortMatchesGoCohereClassOrder_002"] || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
+	if len(declared) != 3 || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] || !declared["TestPortMatchesGoCohereInventory"] {
 		t.Fatalf("dedicated shard declarations: %v", declared)
 	}
-	t.Log("dedicated union intact; planted disagreement caught by exactly one agreement shard")
+	t.Log("dedicated union intact; a planted disagreement in each dedicated case caught by exactly one owner")
 }

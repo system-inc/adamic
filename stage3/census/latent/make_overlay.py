@@ -82,7 +82,20 @@ functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.l
 # Generic dependency instantiations must also obey body skip policy.
 needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
 functions = functions.replace(needle, needle + '\n if !latentSpeculativeEnabled() && len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+# Record actual body entry within a fully mapped concrete generic call. The
+# ledger is run-owned, so per-statement state rollback cannot erase a witness.
+functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 0 && latentInstantiated != nil { latentInstantiated[l.program.Where(declaration)] = true }')
 overlay('internal/lower/functions.go', functions)
+generic = (repository / 'internal/lower/generic.go').read_text()
+needle = 'if err := l.lowerFunction(index, declaration, -1); err != nil {'
+assert generic.count(needle) == 1, 'generic body entry hook'
+generic = generic.replace(needle, '''concreteWitness := len(concreteTypes) == len(declaration.TypeParameters())
+for _, concrete := range concreteTypes { if concrete.Flags() & checker.TypeFlagsTypeParameter != 0 { concreteWitness = false } }
+outerConcreteDepth := latentConcreteCallDepth
+if concreteWitness { latentConcreteCallDepth++ } else { latentConcreteCallDepth = 0 }
+defer func() { latentConcreteCallDepth = outerConcreteDepth }()
+''' + needle)
+overlay('internal/lower/generic.go', generic)
 locals_source = (repository / 'internal/lower/locals.go').read_text()
 needle = 'local, isLocal := l.locals[symbol]'
 assert locals_source.count(needle) == 1
@@ -129,6 +142,14 @@ for name, signature, renamed in [
     else:
         source += '\nfunc (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error { return l.latentSpecSignatureReturn(index,declaration,this,returns) }\n'
     output.write_text(source)
+overlay('internal/lower/latent_piece.go', (territory / 'piece.go.txt').read_text())
+# Unassigned selected-file bodies are never lowered by generic dependency calls.
+output = pathlib.Path(replace[str(repository / 'internal/lower/functions.go')])
+source = output.read_text()
+needle = '\tpending := l.signed[index]'
+assert source.count(needle) == 1
+source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n' + needle)
+output.write_text(source)
 overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
 

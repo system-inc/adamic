@@ -1,0 +1,96 @@
+=== RUN   TestEntriesAcceptance
+=== PAUSE TestEntriesAcceptance
+=== CONT  TestEntriesAcceptance
+=== RUN   TestEntriesAcceptance/01_scanner_keywords.a/baseline
+=== PAUSE TestEntriesAcceptance/01_scanner_keywords.a/baseline
+=== RUN   TestEntriesAcceptance/01_scanner_keywords.a/mutant
+=== PAUSE TestEntriesAcceptance/01_scanner_keywords.a/mutant
+=== RUN   TestEntriesAcceptance/02_hidden_same_type.a/baseline
+=== PAUSE TestEntriesAcceptance/02_hidden_same_type.a/baseline
+=== RUN   TestEntriesAcceptance/02_hidden_same_type.a/mutant
+=== PAUSE TestEntriesAcceptance/02_hidden_same_type.a/mutant
+=== RUN   TestEntriesAcceptance/03_hidden_other_type.a/baseline
+=== PAUSE TestEntriesAcceptance/03_hidden_other_type.a/baseline
+=== RUN   TestEntriesAcceptance/03_hidden_other_type.a/mutant
+=== PAUSE TestEntriesAcceptance/03_hidden_other_type.a/mutant
+=== RUN   TestEntriesAcceptance/04_alias_add_key.a/baseline
+=== PAUSE TestEntriesAcceptance/04_alias_add_key.a/baseline
+=== RUN   TestEntriesAcceptance/04_alias_add_key.a/mutant
+=== PAUSE TestEntriesAcceptance/04_alias_add_key.a/mutant
+=== RUN   TestEntriesAcceptance/05_getter.a/baseline
+=== PAUSE TestEntriesAcceptance/05_getter.a/baseline
+=== RUN   TestEntriesAcceptance/05_getter.a/mutant
+=== PAUSE TestEntriesAcceptance/05_getter.a/mutant
+=== RUN   TestEntriesAcceptance/06_symbol_key.a/baseline
+=== PAUSE TestEntriesAcceptance/06_symbol_key.a/baseline
+=== RUN   TestEntriesAcceptance/06_symbol_key.a/mutant
+=== PAUSE TestEntriesAcceptance/06_symbol_key.a/mutant
+=== CONT  TestEntriesAcceptance/01_scanner_keywords.a/baseline
+=== CONT  TestEntriesAcceptance/04_alias_add_key.a/baseline
+=== CONT  TestEntriesAcceptance/06_symbol_key.a/mutant
+=== CONT  TestEntriesAcceptance/06_symbol_key.a/baseline
+=== NAME  TestEntriesAcceptance/04_alias_add_key.a/baseline
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/06_symbol_key.a/baseline
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/06_symbol_key.a/mutant
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/01_scanner_keywords.a/baseline
+    entries_acceptance_test.go:75: gate cache node miss
+=== CONT  TestEntriesAcceptance/02_hidden_same_type.a/mutant
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/06_symbol_key.a/mutant
+    entries_acceptance_test.go:114: gate cache node miss
+=== NAME  TestEntriesAcceptance/04_alias_add_key.a/baseline
+    entries_acceptance_test.go:114: gate cache node miss
+=== CONT  TestEntriesAcceptance/05_getter.a/mutant
+=== NAME  TestEntriesAcceptance/02_hidden_same_type.a/mutant
+    entries_acceptance_test.go:114: gate cache node miss
+=== NAME  TestEntriesAcceptance/05_getter.a/mutant
+    entries_acceptance_test.go:75: gate cache node miss
+=== CONT  TestEntriesAcceptance/05_getter.a/baseline
+    entries_acceptance_test.go:75: gate cache node miss
+=== CONT  TestEntriesAcceptance/04_alias_add_key.a/mutant
+    entries_acceptance_test.go:75: gate cache node miss
+=== CONT  TestEntriesAcceptance/03_hidden_other_type.a/mutant
+=== NAME  TestEntriesAcceptance/01_scanner_keywords.a/baseline
+    entries_acceptance_test.go:114: gate cache node miss
+=== NAME  TestEntriesAcceptance/03_hidden_other_type.a/mutant
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/05_getter.a/mutant
+    entries_acceptance_test.go:114: gate cache node miss
+=== CONT  TestEntriesAcceptance/03_hidden_other_type.a/baseline
+    entries_acceptance_test.go:75: gate cache node miss
+=== CONT  TestEntriesAcceptance/02_hidden_same_type.a/baseline
+=== NAME  TestEntriesAcceptance/04_alias_add_key.a/mutant
+    entries_acceptance_test.go:114: gate cache node miss
+=== NAME  TestEntriesAcceptance/02_hidden_same_type.a/baseline
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/03_hidden_other_type.a/mutant
+    entries_acceptance_test.go:114: gate cache node miss
+=== CONT  TestEntriesAcceptance/01_scanner_keywords.a/mutant
+    entries_acceptance_test.go:75: gate cache node miss
+=== NAME  TestEntriesAcceptance/03_hidden_other_type.a/baseline
+    entries_acceptance_test.go:114: gate cache node miss
+=== NAME  TestEntriesAcceptance/02_hidden_same_type.a/baseline
+    entries_acceptance_test.go:114: gate cache node miss
+=== NAME  TestEntriesAcceptance/01_scanner_keywords.a/mutant
+    entries_acceptance_test.go:114: gate cache node miss
+--- PASS: TestEntriesAcceptance (0.00s)
+    --- PASS: TestEntriesAcceptance/06_symbol_key.a/baseline (18.07s)
+    --- PASS: TestEntriesAcceptance/06_symbol_key.a/mutant (18.41s)
+    --- PASS: TestEntriesAcceptance/04_alias_add_key.a/baseline (18.46s)
+    --- PASS: TestEntriesAcceptance/02_hidden_same_type.a/mutant (0.48s)
+    --- PASS: TestEntriesAcceptance/05_getter.a/baseline (0.19s)
+    --- PASS: TestEntriesAcceptance/01_scanner_keywords.a/baseline (18.81s)
+    --- PASS: TestEntriesAcceptance/05_getter.a/mutant (0.50s)
+    --- PASS: TestEntriesAcceptance/04_alias_add_key.a/mutant (0.52s)
+    --- PASS: TestEntriesAcceptance/03_hidden_other_type.a/mutant (0.49s)
+    --- PASS: TestEntriesAcceptance/03_hidden_other_type.a/baseline (0.53s)
+    --- PASS: TestEntriesAcceptance/02_hidden_same_type.a/baseline (0.45s)
+    --- PASS: TestEntriesAcceptance/01_scanner_keywords.a/mutant (0.74s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=22
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.820s

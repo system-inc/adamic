@@ -1,0 +1,207 @@
+[
+  {
+    "test": "TestClassStaticInitializerCallIsEmitted",
+    "seconds": 0.07,
+    "action": "pass"
+  },
+  {
+    "test": "TestEveryNeedsCallbackEffects",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "test": "TestParameterPropertyCallbackReceiver",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestLibrarySpreadErrorView",
+    "seconds": 0.07,
+    "action": "pass"
+  },
+  {
+    "test": "TestReadinessErrorIncludesReceiverExpression",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/reassigned",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/lying",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/inferred_arrow",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/unproven",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestLibraryRegexOffsetRequiresNoCaptures",
+    "seconds": 0.29,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/named",
+    "seconds": 0.25,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/inferred_opaque",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/constructor/bracket=false",
+    "seconds": 0.07,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/toLocaleString/bracket=true",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/toLocaleString/bracket=false",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/inferred_named",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts/arrow",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestPredicateCallbackContracts",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__proto__/bracket=true",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/valueOf/bracket=true",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/valueOf/bracket=false",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__proto__/bracket=false",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/toString/bracket=true",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/propertyIsEnumerable/bracket=true",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/isPrototypeOf/bracket=true",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/propertyIsEnumerable/bracket=false",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/toString/bracket=false",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__lookupSetter__/bracket=false",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__lookupSetter__/bracket=true",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__lookupGetter__/bracket=true",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/isPrototypeOf/bracket=false",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__lookupGetter__/bracket=false",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/hasOwnProperty/bracket=true",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__defineSetter__/bracket=true",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/hasOwnProperty/bracket=false",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/constructor/bracket=true",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__defineSetter__/bracket=false",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__defineGetter__/bracket=false",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError/__defineGetter__/bracket=true",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestInheritedLibraryReadsNeverLoadOwnFieldsError",
+    "seconds": 0.03,
+    "action": "pass"
+  }
+]

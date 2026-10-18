@@ -1,0 +1,12 @@
+// core/require_description.go:236; `^(` + strings.Join(quoted, "|") + `)(?:` + jsWhitespace + `|$)`
+import { observe } from '../observe.a';
+const pattern = "^(custom)(?:[\\t\\n\\x0B\\f\\r \\u{00A0}\\u{1680}\\u{2000}-\\u{200A}\\u{2028}\\u{2029}\\u{202F}\\u{205F}\\u{3000}\\u{FEFF}]|(?![\\s\\S]))";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "custom\t", 4);
+observe(regex, "xcustom\t", 5);
+observe(regex, "custom\t\n", 6);

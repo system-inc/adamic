@@ -1,0 +1,10 @@
+// src/compiler/core.ts:1083 firstOrUndefined, reached through another generic.
+function firstOrUndefined<T>(values: readonly T[] | undefined): T | undefined { return values === undefined || values.length === 0 ? undefined : values[0]; }
+function outer<T>(values: readonly T[] | undefined): T | undefined { return firstOrUndefined(values); }
+interface Item { readonly name: string; }
+const values: readonly Item[] = [{ name: 'first'.repeat(2) }];
+console.log(`${outer(values)?.name ?? 'missing'}`);
+console.log(`${outer<Item>([])?.name ?? 'missing'}`);
+console.log(`${outer([0, 2]) ?? -1}`);
+console.log(`${outer<number>([]) ?? -1}`);
+console.log(`${outer<Item>(undefined)?.name ?? 'missing'}`);

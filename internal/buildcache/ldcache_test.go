@@ -3,11 +3,14 @@ package buildcache
 import (
 	"encoding/binary"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
 
-// ldCacheBytes is a loader's cache in glibc's format, each entry flags, soname and path.
+// ldCacheBytes is a loader's cache in glibc's format, each entry flags, soname and path: flags are x86-64's 0x303 when
+// the first field is empty, an arm64 guest's 0xa03 for "aarch64", and 0x3 (an ELF libc6 library of no 64-bit kind) otherwise.
 func ldCacheBytes(entries [][3]string) []byte {
 	const header, entrySize = 48, 24
 	strings := []byte{}
@@ -26,7 +29,11 @@ func ldCacheBytes(entries [][3]string) []byte {
 	for index, entry := range entries {
 		record := make([]byte, entrySize)
 		flags := uint32(0x303)
-		if entry[0] != "" {
+		switch entry[0] {
+		case "":
+		case "aarch64":
+			flags = 0xa03
+		default:
 			flags = 0x3
 		}
 		binary.LittleEndian.PutUint32(record[0:], flags)
@@ -49,7 +56,7 @@ func TestTheLoadersCacheIsWhatOnlyItFinds(t *testing.T) {
 		{"", "libm.so.6", "/usr/lib/x86_64-linux-gnu/glibc-hwcaps/x86-64-v3/libm.so.6"}, {"", "libfakeroot-0.so", "/usr/lib/x86_64-linux-gnu/libfakeroot/libfakeroot-0.so"}}
 	value := func(entries [][3]string) string {
 		t.Helper()
-		got, ok := ldCacheValue(ldCacheBytes(entries))
+		got, ok := ldCacheValueFor(ldCacheBytes(entries), 0x303)
 		if !ok {
 			t.Fatalf("a cache in glibc's format didn't read: %v", entries)
 		}
@@ -76,13 +83,109 @@ func TestTheLoadersCacheIsWhatOnlyItFinds(t *testing.T) {
 		}
 	}
 	for name, content := range map[string][]byte{"another format": []byte("ld.so-1.7.0\x00 an old cache"), "a short one": ldCacheBytes(machine)[:60]} {
-		if _, ok := ldCacheValue(content); ok {
+		if _, ok := ldCacheValueFor(content, 0x303); ok {
 			t.Errorf("%s read as a cache", name)
 		}
 	}
-	if content, err := os.ReadFile(ldCache); err == nil && strings.HasPrefix(string(content), "glibc-ld.so.cache1.1") {
+	if _, known := loaderFlags[runtime.GOARCH]; !known {
+		return
+	}
+	if content, err := os.ReadFile("/etc/ld.so.cache"); err == nil && strings.HasPrefix(string(content), "glibc-ld.so.cache1.1") {
 		if _, ok := ldCacheValue(content); !ok {
 			t.Fatal("this machine's own loader cache didn't read")
+		}
+	}
+}
+
+// The cache is valued by the entries the build's own loader takes, flagged exactly as glibc's _dl_cache_check_flags
+// wants (0x303 on x86_64), so an arm64 Mac guest's cache, every entry its own aarch64 one (0xa03), values as one with
+// none of them (#q4z4cmj, Mentat's M2 on #bdxnd3h: 91% of a guest's units missed on it). An x86-64 entry changed still
+// moves the value. Mutants: every entry kept whatever its flags; the check dropped for the arm64 flag only.
+func TestTheLoadersCacheIsOnlyWhatItsOwnArchitectureTakes(t *testing.T) {
+	t.Parallel()
+	house := [][3]string{{"", "libc.so.6", "/usr/lib/x86_64-linux-gnu/libc.so.6"},
+		{"", "libfakeroot-0.so", "/usr/lib/x86_64-linux-gnu/libfakeroot/libfakeroot-0.so"}}
+	guest := append(append([][3]string{}, house...), [3]string{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"},
+		[3]string{"aarch64", "libLLVM.so.18.1", "/lib/aarch64-linux-gnu/libLLVM.so.18.1"},
+		[3]string{"aarch64", "libfakeroot-0.so", "/usr/lib/aarch64-linux-gnu/libfakeroot/libfakeroot-0.so"})
+	value := func(entries [][3]string) string {
+		t.Helper()
+		got, ok := ldCacheValueFor(ldCacheBytes(entries), 0x303)
+		if !ok {
+			t.Fatalf("a cache in glibc's format didn't read: %v", entries)
+		}
+		return got
+	}
+	if value(guest) != value(house) {
+		t.Error("an arm64 guest's own aarch64 entries moved the value an x86-64 loader reads")
+	}
+	moved := [][3]string{house[0], {"", "libfakeroot-0.so", "/usr/lib/x86_64-linux-gnu/libfakeroot2/libfakeroot-0.so"}}
+	if value(moved) == value(house) {
+		t.Error("an x86-64 entry the loader takes moved and the value didn't")
+	}
+	if value([][3]string{house[0]}) == value(house) {
+		t.Error("an x86-64 entry the loader takes went away and the value didn't")
+	}
+	// The real guests' caches, measured Oct 17: every entry 0xa03. One is as good as none to an amd64 loader.
+	if value([][3]string{{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"}}) != value(nil) {
+		t.Error("a cache holding only another architecture's entries doesn't value as an empty one")
+	}
+}
+
+// A loader cache that doesn't read as the build's loader reads it is unreadable, a miss: never the empty cache's value,
+// and alike for two boxes only when their bytes are (Tests' M2 on 29627a4273). The loader may read what this can't, a
+// newer format, and a library found only through it would go unkeyed. A loader of an architecture with no rule reads
+// nothing (Tests' M1): no flag at all would keep no entry and value every cache as the empty one, the house's value
+// after #q4z4cmj's divert, a match across architectures that lies. It runs as each architecture whatever this machine
+// is. Mutants: an unreadable cache valued as no entries; one valued by a fixed string; an architecture with no rule
+// read with flags 0.
+//
+// Not parallel: it sets the package's ldCache and loaderArchitecture, which every systemValue in the package reads.
+func TestALoaderCacheThatDoesntReadIsUnreadable(t *testing.T) {
+	directory := t.TempDir()
+	originalCache, originalArchitecture := ldCache, loaderArchitecture
+	t.Cleanup(func() { ldCache, loaderArchitecture = originalCache, originalArchitecture })
+	loaderArchitecture = "amd64"
+	empty, ok := ldCacheValueFor(ldCacheBytes(nil), 0x303)
+	if !ok {
+		t.Fatal("an empty cache in glibc's format didn't read")
+	}
+	valueOf := func(name string, content []byte) string {
+		t.Helper()
+		ldCache = filepath.Join(directory, name)
+		if err := os.WriteFile(ldCache, content, 0o644); err != nil {
+			t.Fatal(err)
+		}
+		return systemValue(ldCache)
+	}
+	other := valueOf("other-format", []byte("ld.so-1.7.0\x00 an old cache"))
+	cut := valueOf("cut", ldCacheBytes([][3]string{{"", "libextra.so.1", "/usr/local/lib/libextra.so.1"}})[:60])
+	again := valueOf("other-format-again", []byte("ld.so-1.7.0\x00 an old cache"))
+	for name, got := range map[string]string{"another format": other, "a cut one": cut} {
+		if !strings.HasPrefix(got, "unreadable: ") || got == empty {
+			t.Errorf("%s values as %q, want unreadable", name, got)
+		}
+	}
+	if other == cut {
+		t.Errorf("two caches that don't read, with different bytes, value alike: %q", other)
+	}
+	if other != again {
+		t.Errorf("two caches that don't read, with the same bytes, value apart: %q and %q", other, again)
+	}
+	if got := valueOf("guest", ldCacheBytes([][3]string{{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"}})); got != empty {
+		t.Errorf("a guest's cache values as %q, want %q, the empty cache's", got, empty)
+	}
+	// A loader of an architecture with no rule reads no cache, a guest's or the house's.
+	loaderArchitecture = "arm64"
+	for name, content := range map[string][]byte{
+		"the house's after the divert": ldCacheBytes([][3]string{{"", "libc.so.6", "/usr/lib/x86_64-linux-gnu/libc.so.6"}}),
+		"a guest's":                    ldCacheBytes([][3]string{{"aarch64", "libc.so.6", "/lib/aarch64-linux-gnu/libc.so.6"}}),
+	} {
+		if _, ok := ldCacheValueAs(content, "arm64"); ok {
+			t.Errorf("%s read for a loader with no rule", name)
+		}
+		if got := valueOf("arm64", content); !strings.HasPrefix(got, "unreadable: no loader rule for arm64") || got == empty {
+			t.Errorf("%s values as %q for a loader with no rule, want unreadable", name, got)
 		}
 	}
 }

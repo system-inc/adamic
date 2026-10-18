@@ -1,0 +1,11 @@
+--- a/internal/lower/collections.go
++++ b/internal/lower/collections.go
+@@ -377,7 +377,7 @@
+ 			field = declared.PropertyName.Text()
+ 		}
+ 		if field != "length" {
+-			return nil, l.notYet(binding, "string member '"+field+"' in object destructuring; call methods on the saved string receiver or wrap the call in an arrow")
++			return nil, l.notYet(binding, "string member '"+field+"' in object destructuring")
+ 		}
+ 		local, err := l.declareLocal(binding.Name())
+ 		if err != nil {

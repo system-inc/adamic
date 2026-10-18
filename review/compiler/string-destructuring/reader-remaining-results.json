@@ -1,0 +1,340 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 65.673
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 60.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 75.078
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestArrayGrowthWitness)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 24.933
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 17.493
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 17.349
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 27.406
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 20.872
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/suppression",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 25.646
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "tests": [
+      "TestCorpusShardCoverage"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "-run",
+      "^(TestCorpusShardCoverage)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 21.562
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "tests": [
+      "TestProduct_stage0"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "-run",
+      "^(TestProduct_stage0)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 41.334
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/values",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 29.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "tests": [
+      "TestProduct_YAMLComposeGo"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "-run",
+      "^(TestProduct_YAMLComposeGo)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 32.958
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "tests": [
+      "TestParserChildGuard_000"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/parser",
+      "-run",
+      "^(TestParserChildGuard_000)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 63.706
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "tests": [
+      "TestScannerShardCoverage"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "-run",
+      "^(TestScannerShardCoverage)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 24.445
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/census/tool",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/census/tool",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 17.156
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 16.212
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "tests": [
+      "TestFixturesAssertions"
+    ],
+    "command": [
+      "go",
+      "test",
+      "github.com/system-inc/adamic/stage3/fixtures",
+      "-run",
+      "^(TestFixturesAssertions)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 32.957
+  }
+]

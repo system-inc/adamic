@@ -1,0 +1,125 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestProduct_AdmissionCompiler
+    command_test.go:280: build admission-compiler 3544adb72e4d hit 0.83
+--- PASS: TestProduct_AdmissionCompiler (0.89s)
+=== RUN   TestProduct_AdmissionCompilerReady
+=== PAUSE TestProduct_AdmissionCompilerReady
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestDiffCoverage
+=== PAUSE TestDiffCoverage
+=== RUN   TestDiffSamplingIsMandatory
+=== PAUSE TestDiffSamplingIsMandatory
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== RUN   TestNegativeContentHash
+=== PAUSE TestNegativeContentHash
+=== RUN   TestNegativeExactBackendStop
+=== PAUSE TestNegativeExactBackendStop
+=== RUN   TestNegativeRulingMetadata
+=== PAUSE TestNegativeRulingMetadata
+=== RUN   TestNegativeCommandAccepted
+=== PAUSE TestNegativeCommandAccepted
+=== RUN   TestNegativeTypeCorrectMutant
+=== PAUSE TestNegativeTypeCorrectMutant
+=== RUN   TestNegativeValidProgramCannotBeListed
+=== PAUSE TestNegativeValidProgramCannotBeListed
+=== RUN   TestNegativeEmptyListPrinted
+=== PAUSE TestNegativeEmptyListPrinted
+=== RUN   TestNegativeAlreadyAcceptedRepairMutant
+=== PAUSE TestNegativeAlreadyAcceptedRepairMutant
+=== RUN   TestNegativeEditedWitnessMandatory
+=== PAUSE TestNegativeEditedWitnessMandatory
+=== RUN   TestNodeDeclarationsArePinned
+=== PAUSE TestNodeDeclarationsArePinned
+=== RUN   TestShardPartitionKeepsDiff
+=== PAUSE TestShardPartitionKeepsDiff
+=== RUN   TestShardCommandScope
+=== PAUSE TestShardCommandScope
+=== RUN   TestCompilerCacheIncludesSHA
+=== PAUSE TestCompilerCacheIncludesSHA
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== RUN   TestCompilerCacheIgnoresBuildPolicy
+--- PASS: TestCompilerCacheIgnoresBuildPolicy (0.00s)
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestParallelLoweringOnly
+=== CONT  TestNegativeContentHash
+=== CONT  TestProduct_AdmissionCompilerReady
+--- PASS: TestNegativeContentHash (0.00s)
+=== CONT  TestCompilerCacheIncludesSHA
+=== CONT  TestNegativeEmptyListPrinted
+--- PASS: TestCompilerCacheIncludesSHA (0.00s)
+=== CONT  TestNegativeValidProgramCannotBeListed
+--- PASS: TestNegativeValidProgramCannotBeListed (0.00s)
+=== CONT  TestNegativeTypeCorrectMutant
+--- PASS: TestParallelLoweringOnly (0.02s)
+=== CONT  TestSampling
+--- PASS: TestSampling (0.00s)
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestDiffSamplingIsMandatory
+--- PASS: TestDiffSamplingIsMandatory (0.00s)
+=== CONT  TestDiffCoverage
+=== NAME  TestProduct_AdmissionCompilerReady
+    command_test.go:301: build admission-compiler 3544adb72e4d hit 0.00
+--- PASS: TestProduct_AdmissionCompilerReady (0.04s)
+=== CONT  TestBuildRevisions
+    command_test.go:307: build admission-compiler 3544adb72e4d hit 0.00
+--- PASS: TestBuildRevisions (0.14s)
+=== CONT  TestShardCommandScope
+--- PASS: TestDiffCoverage (0.20s)
+=== CONT  TestShardPartitionKeepsDiff
+--- PASS: TestShardPartitionKeepsDiff (0.00s)
+=== CONT  TestNodeDeclarationsArePinned
+--- PASS: TestNodeDeclarationsArePinned (0.00s)
+=== CONT  TestNegativeEditedWitnessMandatory
+--- PASS: TestNegativeEditedWitnessMandatory (0.00s)
+=== CONT  TestNegativeAlreadyAcceptedRepairMutant
+=== NAME  TestNegativeTypeCorrectMutant
+    negative_test.go:152: type-correct copy demands Node agreement; backend exit 70 is a divergence
+--- PASS: TestNegativeTypeCorrectMutant (0.25s)
+=== CONT  TestNegativeCommandAccepted
+--- PASS: TestNegativeEmptyListPrinted (0.37s)
+=== CONT  TestNegativeRulingMetadata
+--- PASS: TestNegativeRulingMetadata (0.00s)
+=== CONT  TestNegativeExactBackendStop
+--- PASS: TestNegativeExactBackendStop (0.00s)
+=== CONT  TestHeadInputIsolation
+--- PASS: TestShardCommandScope (0.25s)
+=== CONT  TestCompilerTimeoutIsError
+--- PASS: TestCompilerTimeoutIsError (0.11s)
+=== CONT  TestEmptyCorpus
+--- PASS: TestNegativeCommandAccepted (0.37s)
+=== CONT  TestNewlyRefusedIsInformational
+--- PASS: TestHeadInputIsolation (0.28s)
+=== CONT  TestManifestMismatch
+=== NAME  TestNegativeAlreadyAcceptedRepairMutant
+    negative_test.go:185: type-correct input admitted by both compilers still demands Node agreement and rejects exit 70
+--- PASS: TestNegativeAlreadyAcceptedRepairMutant (0.52s)
+=== CONT  TestNewAdmissionMismatch
+--- PASS: TestEmptyCorpus (0.23s)
+--- PASS: TestNewlyRefusedIsInformational (0.15s)
+--- PASS: TestManifestMismatch (0.13s)
+--- PASS: TestNewAdmissionMismatch (0.19s)
+PASS

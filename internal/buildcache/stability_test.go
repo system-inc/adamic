@@ -49,6 +49,171 @@ func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(t *testing.T) {
 	}
 }
 
+// quietHome sets HOME and XDG_CONFIG_HOME to a new temporary home whose Go telemetry is off, for a test that runs go
+// there through settleFacts. A fresh home takes the day's upload token, so go forks its telemetry sidecar detached, and
+// the sidecar writes into the home after the test returns, failing TempDir's cleanup (chg_gp66hxpv's red on Adam:
+// "unlinkat .../002: directory not empty"). With the mode off, go writes nothing there and forks nothing, which the
+// cleanup holds: a go with telemetry on writes its counters there before it exits, so anything beside the mode file
+// fails the test on any box, not only a loaded one. Mutant: no mode file.
+func quietHome(t *testing.T) string {
+	t.Helper()
+	home, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("HOME", home)
+	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, ".config"))
+	configuration, err := os.UserConfigDir()
+	if err != nil {
+		t.Fatal(err)
+	}
+	telemetry := filepath.Join(configuration, "go", "telemetry")
+	if err := os.MkdirAll(telemetry, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(telemetry, "mode"), []byte("off\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	// Registered after TempDir's, so it runs before the home is removed.
+	t.Cleanup(func() {
+		entries, err := os.ReadDir(telemetry)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		for _, entry := range entries {
+			if entry.Name() != "mode" {
+				t.Errorf("go wrote its telemetry into the test's home: %s", filepath.Join(telemetry, entry.Name()))
+			}
+		}
+	})
+	return home
+}
+
+// A directory on the build cache's own chain of parents, listed or opened to list as Go's os.Open does, is keyed as a
+// lookup beside the cache's parents is, relative to the cache, never refused under the home, and two homes holding
+// different things class it alike (#4gp2ytz: esbuild's resolver lists every parent up to /). A listing off that chain
+// under the home, a sibling of the cache's or of one of its parents, and a file on it opened, are still refused under
+// the home (Tests' bounds). Mutant: every directory listed under the home keyed relative to the cache.
+// Not parallel: it sets HOME, which settleFacts reads.
+func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
+	classes := func(extra string) []classed {
+		t.Helper()
+		home := quietHome(t)
+		directory := filepath.Join(home, "loom-builder", "trees", "6299aba1")
+		cache := filepath.Join(directory, "cache")
+		for _, made := range []string{cache, filepath.Join(directory, "logs"), filepath.Join(home, "elsewhere"), filepath.Join(home, extra)} {
+			if err := os.MkdirAll(made, 0o755); err != nil {
+				t.Fatal(err)
+			}
+		}
+		os.WriteFile(filepath.Join(home, "package.json"), []byte("{}\n"), 0o644)
+		facts, err := settleFacts(filepath.Join(home, "loom-trees", "adamic"), cache, filepath.Join(cache, "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		// A home in no temporary directory, as a builder's isn't.
+		facts.temporary = nil
+		return []classed{
+			facts.classifyPath(directory, readListing),
+			facts.classifyPath(filepath.Join(home, "loom-builder"), readContent|readListing),
+			facts.classifyPath(home, readContent|readListing),
+			facts.classifyPath(filepath.Join(directory, "logs"), readListing),
+			facts.classifyPath(filepath.Join(home, "elsewhere"), readContent|readListing),
+			facts.classifyPath(filepath.Join(home, "package.json"), readContent),
+		}
+	}
+	first, second := classes("first-box-only"), classes("second-box-only")
+	if !reflect.DeepEqual(first[:3], second[:3]) {
+		t.Fatalf("two homes holding different things classed the cache's parents apart:\n%q\n%q", first, second)
+	}
+	want := []classed{{"above cache", ".."}, {"above cache", "../../.."}, {"above cache", "../../../.."}}
+	if !reflect.DeepEqual(first[:3], want) {
+		t.Fatalf("the cache's parents classed %q, want %q", first[:3], want)
+	}
+	for index, name := range []string{"a sibling of the cache", "a directory of the home off the chain", "a file of the home"} {
+		if found := first[3+index]; found.kind != refusal+"home" {
+			t.Errorf("%s classed %q, want refused under the home", name, found)
+		}
+	}
+}
+
+// A lookup below a directory of the cache's chain under the home, deeper than its direct children, is keyed beside the
+// cache too, so two caches under one home settle to one key (#4gp2ytz: tsc's @types search missed <the cache's
+// parent>/node_modules/@types, named by its whole home path, so two checkouts keyed the adapted tree apart, Compiler's
+// Golem harness on 1412e316ed). A listing or a content read there is still the home's, refused, and a path that's there
+// keeps its own class (chg_gp66hxpv's red). Mutants: the rule dropped, so the home rule names each cache's path; the
+// rule firing on a stat too.
+// Not parallel: it sets HOME, which settleFacts reads.
+func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.T) {
+	home := quietHome(t)
+	classes := func(label string) []classed {
+		t.Helper()
+		cache := filepath.Join(home, "tests-proof", "hc", label, "cache")
+		if err := os.MkdirAll(cache, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		facts, err := settleFacts(filepath.Join(home, "tree"), cache, filepath.Join(cache, "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		facts.temporary = nil
+		parent := filepath.Dir(cache)
+		return []classed{
+			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readAbsent),
+			facts.classifyPath(filepath.Join(filepath.Dir(parent), "node_modules", "@types", "node"), readAbsent),
+			facts.classifyPath(filepath.Join(parent, "node_modules", "@types"), readListing),
+			facts.classifyPath(filepath.Join(parent, "001", "usr", "bin", "true"), readStat),
+		}
+	}
+	first, second := classes("at28-after"), classes("at29-after-other-path")
+	want := []classed{{"above cache", "../node_modules/@types"}, {"above cache", "../../node_modules/@types/node"}}
+	if !reflect.DeepEqual(first[:2], want) || !reflect.DeepEqual(second[:2], want) {
+		t.Fatalf("lookups below the cache's chain classed %q and %q, want %q at both", first[:2], second[:2], want)
+	}
+	if first[2].kind != refusal+"home" {
+		t.Errorf("a listing below the cache's chain classed %q, want refused under the home", first[2])
+	}
+	// A path that's there keeps its own class: a test's temporary directory beside its cache under the home holds
+	// machine files, and on Adam's runner the rule took a stat of one ahead of its class (chg_gp66hxpv's red). The leaf
+	// isn't a compiler's name, since this test compiles nothing (internal/compilercensus).
+	if first[3].kind == "above cache" {
+		t.Errorf("an existing path below the cache's chain classed %q, want its own class", first[3])
+	}
+}
+
+// go list -test's look for its cached test main at the package's directory joined to the Go cache's absolute path is
+// go's, never the tree's, wherever the cache sits (#pqq9z5q): two builders with their caches at two places class it
+// alike, as nothing. A missed look at a tree path that only resembles one, or that holds the cache's path as part of a
+// name, is still a tree path, and so is anything a look found. Mutant: the joined look classed as a tree path (each
+// builder's own exists entry, naming its cache).
+// Not parallel: it sets GOCACHE, which settleFacts asks go for.
+func TestGoLookingForItsCachedTestMainIsNoTreeRead(t *testing.T) {
+	root := filepath.Join(t.TempDir(), "adamic")
+	var classes [][]classed
+	for _, cache := range []string{"/home/ahra/.cache/go-build", "/home/ahra/loom-sums/s1/gocache"} {
+		t.Setenv("GOCACHE", cache)
+		facts, err := settleFacts(root, filepath.Join(t.TempDir(), "cache"), filepath.Join(t.TempDir(), "trace-1"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		testMain := "/28/28079cc4cf0088b656dc5dcec5353d6596c309cc5a5d1e4eea57b8c285139d88-d"
+		classes = append(classes, []classed{
+			facts.classifyPath(filepath.Join(root, "cmd/adamic", cache+testMain), readAbsent),
+			facts.classifyPath(filepath.Join(root, "bridge/tsgo", cache+testMain), readAbsent),
+		})
+		if found := facts.classifyPath(filepath.Join(root, "cmd/adamic", cache+"-not", testMain), readAbsent); found.kind != "exists" {
+			t.Errorf("a missed look at a tree path beside the cache's: %+v", found)
+		}
+		if found := facts.classifyPath(filepath.Join(root, "cmd/adamic", cache+testMain), readStat); found.kind == "" {
+			t.Errorf("a look that found a tree path holding the cache's: %+v", found)
+		}
+	}
+	if !reflect.DeepEqual(classes[0], classes[1]) || !reflect.DeepEqual(classes[0], []classed{{}, {}}) {
+		t.Fatalf("go's look for its cached test main, under two caches: %q and %q, want nothing", classes[0], classes[1])
+	}
+}
+
 // A path above the cache is valued by whether and as what it exists beside the cache at hand, as above values one
 // beside the tree. Mutant: valued against the tree.
 func TestAPathAboveTheCacheIsValuedBesideIt(t *testing.T) {

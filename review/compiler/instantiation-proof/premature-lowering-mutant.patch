@@ -1,0 +1,47 @@
+--- stage3/census/latent/lower.go.txt
++++ stage3/census/latent/lower.go.txt
+@@ -249,14 +249,6 @@
+ 					}
+ 				}
+ 			}
+-			// Independent units have no call witness for a generic binder. Keep the
+-			// declaration in the census, but lower it only through instantiateFunction
+-			// when a concrete caller reaches it.
+-			if node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0 {
+-				unit.Status = "deferred_generic_instantiation"
+-				record.Units = append(record.Units, unit)
+-				continue
+-			}
+ 			func() {
+ 				defer func() {
+ 					if failure := recover(); failure != nil {
+@@ -282,7 +274,7 @@
+ 						l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
+ 						l.functions[l.symbol(node.Name())] = index
+ 					}
+-					// Nongeneric declarations lower directly; generic bodies are reached at calls.
++					// Attempt generic declarations as written, without invented instantiations.
+ 					latentRecord(l.lowerFunction(index, node, -1))
+ 				} else {
+ 					_, err := l.statement(node)
+--- stage3/census/latent/units.go.txt
++++ stage3/census/latent/units.go.txt
+@@ -160,18 +160,6 @@
+ 					record.Units = append(record.Units, unit)
+ 					continue
+ 				}
+-			}
+-			// A standalone generic, or a nested unit whose lexical types depend on
+-			// one, has no concrete call witness. Registration still makes the generic
+-			// available to nongeneric callers in this census.
+-			deferred := node.Kind == ast.KindFunctionDeclaration && len(node.TypeParameters()) > 0
+-			for ancestor := range candidate.ancestors {
+-				deferred = deferred || len(ancestor.TypeParameters()) > 0
+-			}
+-			if deferred {
+-				unit.Status = "deferred_generic_instantiation"
+-				record.Units = append(record.Units, unit)
+-				continue
+ 			}
+ 			func() {
+ 				defer func() {

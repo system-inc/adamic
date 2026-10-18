@@ -1,0 +1,372 @@
+[
+  {
+    "test": "TestSelfCompareConstantMutant",
+    "seconds": 2.78,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNullableObjectMapJavaScript",
+    "seconds": 2.87,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberEveryRelease",
+    "seconds": 2.92,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AUndefinedError",
+    "seconds": 0.38,
+    "action": "pass"
+  },
+  {
+    "test": "TestSelfCompareArrayFill",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AMarkerUndefined",
+    "seconds": 1.34,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AMarker",
+    "seconds": 1.33,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AErrorSubclassSpread",
+    "seconds": 0.15,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AConstructorNumberArrow",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "test": "TestSelfCompareClosure",
+    "seconds": 2.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestSelfCompareSweep",
+    "seconds": 5.13,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AConstructorArrow",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AOverrideSource",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2ADerivedSymbol",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2ALongName",
+    "seconds": 0.25,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AMaybeSetter",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AErrorSpread",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningUnrepresentedParameter",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AOptionalError",
+    "seconds": 0.44,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialSome",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialHeldUnionJavaScript",
+    "seconds": 0.23,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialHeldUnionRelease",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningOptionalObjectMap",
+    "seconds": 0.59,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialHeldUnionSanitized",
+    "seconds": 0.35,
+    "action": "pass"
+  },
+  {
+    "test": "TestMiscompile2AControls",
+    "seconds": 1.62,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialBooleanFilterJavaScript",
+    "seconds": 0.24,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialBooleanFilterRelease",
+    "seconds": 0.31,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialSort",
+    "seconds": 0.22,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialBooleanFilterSanitized",
+    "seconds": 0.48,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNullableObjectMapRelease",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialMatchingMethods",
+    "seconds": 0.63,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNullableObjectMapSanitized",
+    "seconds": 0.29,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectSort",
+    "seconds": 0.64,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningOptionalNumberMap",
+    "seconds": 0.56,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningStringMap",
+    "seconds": 0.48,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningBooleanMap",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectGenericMap",
+    "seconds": 0.53,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberGenericMap",
+    "seconds": 0.53,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberToSorted",
+    "seconds": 0.52,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberFindIndex",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberFindLast",
+    "seconds": 0.58,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningLibraryMap",
+    "seconds": 0.55,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberArguments",
+    "seconds": 1.61,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberThrow",
+    "seconds": 0.62,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberCapture",
+    "seconds": 0.6,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberReduceAccumulator",
+    "seconds": 0.62,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialEach",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialReduce",
+    "seconds": 0.19,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberIndex",
+    "seconds": 0.58,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialMap",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialFind",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberNamedSort",
+    "seconds": 0.59,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberSort",
+    "seconds": 0.56,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectSome",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectMap",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectReduce",
+    "seconds": 0.62,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectGeneric",
+    "seconds": 0.59,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectForEach",
+    "seconds": 0.57,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectFind",
+    "seconds": 0.55,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectFilter",
+    "seconds": 0.59,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialViewMethod",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningObjectEvery",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialUnionNarrowed",
+    "seconds": 0.52,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialSingleNarrowed",
+    "seconds": 0.48,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberForEach",
+    "seconds": 0.49,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberSome",
+    "seconds": 0.53,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberReduce",
+    "seconds": 0.5,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberMap",
+    "seconds": 0.52,
+    "action": "pass"
+  },
+  {
+    "test": "TestWeakDifferentialViewMethodParameter",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberEveryJavaScript",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberGeneric",
+    "seconds": 0.57,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberFilter",
+    "seconds": 0.58,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberFind",
+    "seconds": 0.56,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallbackWideningNumberEverySanitized",
+    "seconds": 0.23,
+    "action": "pass"
+  }
+]

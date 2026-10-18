@@ -74,31 +74,9 @@ func typeSymbolFileHash(path string) (string, error) {
 // The callback writes only its product directory. Flags key fetched build inputs
 // by bytes, not by cache location; Files cover transitive TypeScript imports.
 func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanitize bool) (buildcache.Inputs, func(string) error, error) {
-	var files []string
-	for _, root := range []string{"stage1/typescript", "stage1/cohere/lint", "stage1/cohere/typeaware"} {
-		if err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			// Only what the tree carries: lint's tests write stage1/cohere/lint/.generated/registry.ts into a checkout,
-			// which a runner's source never holds, so walking it keyed this product apart (landable-10, key check).
-			if !buildcache.Tracked(repository, path, entry.IsDir()) {
-				if entry.IsDir() {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				relative, err := filepath.Rel(repository, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, relative)
-			}
-			return nil
-		}); err != nil {
-			return buildcache.Inputs{}, nil, err
-		}
+	files, err := typeAwareTrackedTypeScript(repository, "stage1/typescript", "stage1/cohere/lint", "stage1/cohere/typeaware")
+	if err != nil {
+		return buildcache.Inputs{}, nil, err
 	}
 	var flags []string
 	for _, input := range []struct{ name, path string }{{"stage0", stage0}, {"archive", archive}, {"entry", entry}} {
@@ -270,8 +248,11 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 	}
 	outputInputs := buildcache.Inputs{Name: "volume-type-symbol-oracle-output", Files: []string{"stage1/cohere/typeaware/testdata/tsconfig.json"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}
 	outputDir := buildcache.Product(t, outputInputs, func(dir string) error {
-		command, cancel := typeSymbolExec(90*time.Second, oracle, config, manifest)
+		// The oracle's run is the product's fill, as typeSymbolCommand's builds are: no clock of its own, the unit
+		// bounds it, so a builder's load never decides the product (#h4hrxpe).
+		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
+		command := typeSymbolExecContext(ctx, oracle, config, manifest)
 		command.Dir = repository
 		var stdout, stderr bytes.Buffer
 		command.Stdout = &stdout

@@ -3,6 +3,8 @@ package childguard
 
 import (
 	"bytes"
+	"context"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -20,7 +22,15 @@ const DefaultCeiling = 60 * time.Minute
 
 // FirstOutput is the silence allowed before the first byte; Stall applies thereafter.
 // Options overrides the defaults. Zero durations select the defaults.
-type Options struct{ FirstOutput, Stall, Ceiling time.Duration }
+type Options struct {
+	// Started runs synchronously after a successful start, before waiting or arming guard timers.
+	// Callers can register the exact child PID with an existing hard-deadline owner.
+	Started func(int)
+
+	FirstOutput, Stall, Ceiling time.Duration
+	// Unbounded disables the guard timers; command context cancellation still applies.
+	Unbounded bool
+}
 
 // Error reports a guard termination, separately from a child's nonzero exit.
 // Reason is "stalled" or "ceiling". Load is the one-minute load average,
@@ -71,7 +81,7 @@ func (w *watched) Write(p []byte) (int, error) {
 
 // Run starts an unstarted command in its own process group and waits for it.
 // Output is forwarded to the command's original writers (nil means discard).
-// Callers should use exec.Command, rather than an independent context deadline.
+// Context commands also cancel the whole process group.
 func Run(cmd *exec.Cmd, options Options) error {
 	if options.FirstOutput == 0 {
 		options.FirstOutput = DefaultFirstOutput
@@ -90,6 +100,18 @@ func Run(cmd *exec.Cmd, options Options) error {
 	}
 	cmd.SysProcAttr.Setpgid = true
 	cmd.SysProcAttr.Pgid = 0
+	if cmd.Cancel != nil {
+		cmd.Cancel = func() error {
+			if cmd.Process == nil {
+				return os.ErrProcessDone
+			}
+			err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+			if errors.Is(err, syscall.ESRCH) {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+	}
 	originalOut, originalErr := cmd.Stdout, cmd.Stderr
 	defer func() { cmd.Stdout, cmd.Stderr = originalOut, originalErr }()
 	start := time.Now()
@@ -110,6 +132,13 @@ func Run(cmd *exec.Cmd, options Options) error {
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	if options.Started != nil {
+		options.Started(cmd.Process.Pid)
+	}
+	if options.Unbounded {
+		return cmd.Wait()
+	}
+
 	done := make(chan error, 1)
 	go func() { done <- cmd.Wait() }()
 	timer := time.NewTimer(min(options.FirstOutput, options.Ceiling))
@@ -157,6 +186,101 @@ func Run(cmd *exec.Cmd, options Options) error {
 			}
 			timer.Reset(min(window-idle, options.Ceiling-elapsed))
 		}
+	}
+}
+
+// Capture runs an unstarted command to completion in its own process group and returns what it wrote to stdout and to
+// stderr, each read to its end. No timer decides when the output is complete: once the command exits its group is
+// killed, so a process it started that still holds an output pipe (a background job, a sanitizer's helper) can't keep
+// a read open, and the reads end when the last writer has. exec.Cmd's own pipes with a WaitDelay instead close the
+// reads a fixed time after the exit and report exec.ErrWaitDelay, so a run that was slow to finish them, or a
+// descendant that held them, is red by chance (#n3gk22h).
+//
+// ctx bounds it: when ctx is done the group is killed, and a writer outside the group (one that left it with setsid)
+// ends the reads with ctx's error. A command bound to ctx should be exec.CommandContext with the same ctx. Its exit
+// status is err's, as cmd.Run reports it.
+func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, err error) {
+	if cmd.Stdout != nil || cmd.Stderr != nil {
+		return nil, nil, fmt.Errorf("childguard: output already configured")
+	}
+	if cmd.SysProcAttr == nil {
+		cmd.SysProcAttr = &syscall.SysProcAttr{}
+	}
+	cmd.SysProcAttr.Setpgid = true
+	cmd.SysProcAttr.Pgid = 0
+	type pipe struct {
+		read, write *os.File
+		output      bytes.Buffer
+	}
+	pipes := make([]*pipe, 2)
+	closeAll := func() {
+		for _, p := range pipes {
+			if p != nil {
+				p.read.Close()
+				p.write.Close()
+			}
+		}
+	}
+	for i := range pipes {
+		read, write, err := os.Pipe()
+		if err != nil {
+			closeAll()
+			return nil, nil, err
+		}
+		pipes[i] = &pipe{read: read, write: write}
+	}
+	// *os.File writers go to the child as they are, so exec starts no copying of its own and Wait waits only for the
+	// process; this process's write ends close once the child holds its own.
+	cmd.Stdout, cmd.Stderr = pipes[0].write, pipes[1].write
+	defer func() { cmd.Stdout, cmd.Stderr = nil, nil }()
+	if err := cmd.Start(); err != nil {
+		closeAll()
+		return nil, nil, err
+	}
+	var reads sync.WaitGroup
+	for _, p := range pipes {
+		p.write.Close()
+		reads.Add(1)
+		go func() {
+			defer reads.Done()
+			_, _ = io.Copy(&p.output, p.read)
+		}()
+	}
+	finished := make(chan struct{})
+	go func() { reads.Wait(); close(finished) }()
+	stop := context.AfterFunc(ctx, func() { _ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL) })
+	err = cmd.Wait()
+	stop()
+	// The leader is reaped, but while any member of its group lives the group's id can't be reused, so this reaches
+	// exactly the processes it left behind, and none when it left none.
+	_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+	closeReads := func() {
+		for _, p := range pipes {
+			p.read.Close()
+		}
+	}
+	if held := captureEnd(ctx, finished, closeReads); err == nil && held != nil {
+		err = fmt.Errorf("childguard: %s's output is still held by a process outside its group: %w", cmd.Path, held)
+	}
+	closeReads()
+	return pipes[0].output.Bytes(), pipes[1].output.Bytes(), err
+}
+
+// captureEnd waits for Capture's reads to finish, or for ctx: then it closes the reads, waits for them to stop and
+// returns ctx's error. Reads that finished as ctx ended are whole, whichever a select would pick, so they return nil.
+func captureEnd(ctx context.Context, finished <-chan struct{}, closeReads func()) error {
+	select {
+	case <-finished:
+		return nil
+	case <-ctx.Done():
+		select {
+		case <-finished:
+			return nil
+		default:
+		}
+		closeReads()
+		<-finished
+		return ctx.Err()
 	}
 }
 

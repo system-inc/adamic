@@ -26,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 )
 
 // The upstream commit fixes the compiler population; this is a lost-corpus
@@ -155,7 +156,7 @@ func (h *harness) archive(name string, sanitize bool) string {
 	h.t.Helper()
 	path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
 		archive := filepath.Join(directory, "checker.a")
-		command := toolchain.CommandIn(h.repository, "go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+		command := toolchain.CommandIn(h.repository, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")...)
 		if sanitize {
 			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
@@ -243,7 +244,7 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	if err := os.WriteFile(path, data, 0755); err != nil {
+	if err := executable.Write(path, data); err != nil {
 		h.t.Fatal(err)
 	}
 

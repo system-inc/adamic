@@ -1,0 +1,6 @@
+=== RUN   TestCommandRuntimeArchivesHaveOneBuilder
+=== PAUSE TestCommandRuntimeArchivesHaveOneBuilder
+=== CONT  TestCommandRuntimeArchivesHaveOneBuilder
+    runtime_owners_test.go:172: exec: "git": executable file not found in $PATH
+--- FAIL: TestCommandRuntimeArchivesHaveOneBuilder (0.00s)
+FAIL

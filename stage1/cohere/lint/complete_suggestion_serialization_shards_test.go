@@ -3,12 +3,13 @@ package lint
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
+
 	"sync"
 	"syscall"
 	"testing"
@@ -19,7 +20,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
 const testCompleteSuggestionSerializationShards = 6
@@ -158,11 +158,7 @@ func completeSuggestionProductFiles(t *testing.T) []string {
 // The build phase and shard preparation call these same recipes and keys.
 func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, directory string) string {
 	t.Helper()
-	return buildcache.Product(t, buildcache.Inputs{
-		Name: "complete-suggestion-go-oracle", Files: completeSuggestionProductFiles(t),
-		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1"},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()},
-	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
+	return oracles.CompleteSuggestionOracle(ctx, t, directory)
 }
 
 func completeSuggestionLoweredProduct(ctx context.Context, t *testing.T, directory string, mutant bool) string {
@@ -341,62 +337,4 @@ func completeSuggestionNode(ctx context.Context, t *testing.T, module, path stri
 		t.Fatal(err)
 	}
 	return completeSuggestionExecute(ctx, t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path)
-}
-func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory string) error {
-	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
-	if err != nil {
-		return err
-	}
-	side, err := filepath.Abs(filepath.Join(packageDirectory, "testdata/oracle.go"))
-	if err != nil {
-		return err
-	}
-	descriptors, err := registry.Generate(sourceRoot)
-	if err != nil {
-		return err
-	}
-	replacements := map[string]string{}
-	var virtualFiles []string
-	var failure error
-	add := func(name, source string) {
-		virtual := filepath.Join(root, "adamic_lint_"+name+".go")
-		absolute, err := filepath.Abs(source)
-		if err != nil {
-			failure = err
-			return
-		}
-		replacements[virtual] = absolute
-		virtualFiles = append(virtualFiles, virtual)
-	}
-	add("oracle", side)
-	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
-	}
-	if failure != nil {
-		return failure
-	}
-	overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-	if err != nil {
-		return err
-	}
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		return err
-	}
-	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	defer os.Remove(path)
-	binary := filepath.Join(directory, "oracle")
-	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	command := lintCommand(ctx, root, "go", args...)
-	var output, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &output, &stderr
-	err = command.Run()
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	if err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
-		return fmt.Errorf("Go oracle build: %v\n%s\n%s", err, &output, &stderr)
-	}
-	return nil
 }

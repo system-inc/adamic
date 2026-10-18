@@ -1,11 +1,15 @@
 package buildcache
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"slices"
+	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -56,4 +60,118 @@ func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, argument
 		}
 	})
 	return output, err
+}
+
+// A PinnedFile is one blob of a pinned commit's tree: its path in the tree and its bytes.
+type PinnedFile struct {
+	Path string
+	Data []byte
+}
+
+// PinnedFiles reads every blob of pin's tree whose path keep accepts, sorted by path, from root's own objects through
+// PinnedGit: a corpus that moves only when its pin does, never with the working tree (json's, #jwn3n9q; tsprinter's,
+// #wy8gcke). inputs must name pin in a flag, so the product built from these bytes keys by it. The corpus never
+// fetches: a commit the checkout lacks, or a blob a blobless clone never wrote, is the checkout's to carry, and the
+// error names it. corpus names the files in errors ("JSON" says "repository JSON pin ... its 10 JSON files").
+func PinnedFiles(root string, inputs Inputs, pin, corpus string, keep func(path string) bool) ([]PinnedFile, error) {
+	if !commitPattern.MatchString(pin) {
+		return nil, fmt.Errorf("repository %s: invalid commit pin %q", corpus, pin)
+	}
+	if _, err := PinnedGit(root, inputs, pin, nil, "cat-file", "-e", pin+"^{commit}"); err != nil {
+		return nil, fmt.Errorf("repository %s pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run (%w)", corpus, pin, root, pin, err)
+	}
+	tree, err := PinnedGit(root, inputs, pin, nil, "ls-tree", "-r", "-z", pin)
+	if err != nil {
+		return nil, fmt.Errorf("repository %s pin %s: %w", corpus, pin, err)
+	}
+	var names []string
+	blobs := map[string]string{}
+	for _, entry := range strings.Split(string(tree), "\x00") {
+		// <mode> <type> <object>TAB<path>
+		header, name, found := strings.Cut(entry, "\t")
+		fields := strings.Fields(header)
+		if found && len(fields) == 3 && fields[1] == "blob" && keep(name) {
+			names = append(names, name)
+			blobs[name] = fields[2]
+		}
+	}
+	if len(names) == 0 {
+		return nil, fmt.Errorf("repository %s pin %s has no %s files", corpus, pin, corpus)
+	}
+	sort.Strings(names)
+	if err := pinnedBlobsPresent(root, inputs, pin, corpus, names, blobs); err != nil {
+		return nil, err
+	}
+	var requests strings.Builder
+	for _, name := range names {
+		if strings.ContainsAny(name, "\r\n") {
+			return nil, fmt.Errorf("repository %s pin %s: unsupported newline in path %q", corpus, pin, name)
+		}
+		fmt.Fprintf(&requests, "%s:%s\n", pin, name)
+	}
+	batch, err := PinnedGit(root, inputs, pin, []byte(requests.String()), "cat-file", "--batch")
+	if err != nil {
+		return nil, fmt.Errorf("repository %s pin %s: %w", corpus, pin, err)
+	}
+	reader := bufio.NewReader(bytes.NewReader(batch))
+	files := make([]PinnedFile, 0, len(names))
+	for _, name := range names {
+		header, err := reader.ReadString('\n')
+		if err != nil {
+			return nil, fmt.Errorf("repository %s pin %s path %s: %w", corpus, pin, name, err)
+		}
+		fields := strings.Fields(header)
+		if len(fields) != 3 || fields[1] != "blob" {
+			return nil, fmt.Errorf("repository %s pin %s path %s: invalid blob header %q", corpus, pin, name, header)
+		}
+		size, err := strconv.Atoi(fields[2])
+		if err != nil || size < 0 {
+			return nil, fmt.Errorf("repository %s pin %s path %s: invalid blob size %q", corpus, pin, name, fields[2])
+		}
+		data := make([]byte, size)
+		if _, err := io.ReadFull(reader, data); err != nil {
+			return nil, fmt.Errorf("repository %s pin %s path %s: %w", corpus, pin, name, err)
+		}
+		newline, err := reader.ReadByte()
+		if err != nil || newline != '\n' {
+			return nil, fmt.Errorf("repository %s pin %s path %s: missing blob terminator", corpus, pin, name)
+		}
+		files = append(files, PinnedFile{Path: name, Data: data})
+	}
+	if _, err := reader.ReadByte(); err != io.EOF {
+		return nil, fmt.Errorf("repository %s pin %s: trailing batch output", corpus, pin)
+	}
+	return files, nil
+}
+
+// Loom's pool units are blobless clones (--filter=blob:none): the pin's commit and trees are there, but only the
+// blobs a checkout wrote. cat-file would try to fetch each missing one on its own, which PinnedGit refuses; this
+// names every file whose blob is missing first, so the failure says which inputs the checkout lacks.
+func pinnedBlobsPresent(root string, inputs Inputs, pin, corpus string, names []string, blobs map[string]string) error {
+	// --no-walk: the pin's own tree, not every object reachable through its history. --missing=print lists an absent
+	// object rather than fetching it.
+	objects, err := PinnedGit(root, inputs, pin, nil, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
+	if err != nil {
+		return fmt.Errorf("repository %s pin %s: %w", corpus, pin, err)
+	}
+	absent := map[string]bool{}
+	for _, line := range strings.Split(string(objects), "\n") {
+		if object, found := strings.CutPrefix(line, "?"); found {
+			absent[object] = true
+		}
+	}
+	var missing []string
+	for _, name := range names {
+		if absent[blobs[name]] {
+			missing = append(missing, name)
+		}
+	}
+	if len(missing) == 0 {
+		return nil
+	}
+	named := strings.Join(missing, ", ")
+	if len(missing) > 5 {
+		named = strings.Join(missing[:5], ", ") + fmt.Sprintf(" and %d more", len(missing)-5)
+	}
+	return fmt.Errorf("repository %s pin %s: environment: %d of its %d %s files have no blob in the checkout at %s, and the corpus never fetches: %s", corpus, pin, len(missing), len(names), corpus, root, named)
 }

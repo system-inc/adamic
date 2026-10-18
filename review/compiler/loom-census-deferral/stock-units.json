@@ -1,0 +1,76 @@
+{
+  "a.a": [
+    {
+      "where": "a.a:2:1",
+      "name": "unused",
+      "depth": 0,
+      "parent_function": "",
+      "start": 0,
+      "end": 131,
+      "body_start": 68,
+      "body_end": 131
+    },
+    {
+      "where": "a.a:2:42",
+      "name": "unusedNested",
+      "depth": 1,
+      "parent_function": "a.a:2:1",
+      "start": 70,
+      "end": 115,
+      "body_start": 97,
+      "body_end": 115
+    },
+    {
+      "where": "a.a:3:1",
+      "name": "called",
+      "depth": 0,
+      "parent_function": "",
+      "start": 131,
+      "end": 188,
+      "body_start": 170,
+      "body_end": 188
+    },
+    {
+      "where": "a.a:4:1",
+      "name": "diagnosed",
+      "depth": 0,
+      "parent_function": "",
+      "start": 188,
+      "end": 277,
+      "body_start": 230,
+      "body_end": 277
+    },
+    {
+      "where": "a.a:5:1",
+      "name": "outer",
+      "depth": 0,
+      "parent_function": "",
+      "start": 277,
+      "end": 372,
+      "body_start": 315,
+      "body_end": 372
+    },
+    {
+      "where": "a.a:5:41",
+      "name": "nested",
+      "depth": 1,
+      "parent_function": "a.a:5:1",
+      "start": 317,
+      "end": 356,
+      "body_start": 338,
+      "body_end": 356
+    }
+  ],
+  "z.a": [
+    {
+      "where": "z.a:2:1",
+      "name": "caller",
+      "depth": 0,
+      "parent_function": "",
+      "start": 38,
+      "end": 104,
+      "body_start": 71,
+      "body_end": 104
+    }
+  ]
+}

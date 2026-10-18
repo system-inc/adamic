@@ -1,0 +1,14 @@
+// nexus/abbreviation_vocabulary.go:176; `(^|[^a-zA-Z])` + word + `($|[A-Z0-9])`
+import { observe } from '../observe.a';
+import { programArguments } from 'adamic';
+const argumentsList = programArguments();
+const pattern = argumentsList[0] ?? '';
+const flags = argumentsList[1] ?? '';
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "Cfg", 4);
+observe(regex, "xCfg", 5);
+observe(regex, "Cfg\n", 6);

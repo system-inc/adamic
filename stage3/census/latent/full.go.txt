@@ -93,7 +93,7 @@ func latentCopyIR[T any](value T, seen map[any]any) T {
 				copy(cloned, original)
 				for i, function := range original {
 					if function.Parameters != nil { cloned[i].Parameters = copyValue(reflect.ValueOf(function.Parameters)).Interface().([]int) }
-					if function.OptionalParameters != nil { cloned[i].OptionalParameters = copyValue(reflect.ValueOf(function.OptionalParameters)).Interface().(map[int]bool) }
+					if function.OptionalParameters != nil { cloned[i].OptionalParameters = latentCopyIR(function.OptionalParameters, seen) }
 					if function.Body != nil { cloned[i].Body = copyValue(reflect.ValueOf(function.Body)).Interface().([]ir.Statement) }
 					if function.Environment != nil { cloned[i].Environment = copyValue(reflect.ValueOf(function.Environment)).Interface().([]int) }
 					if function.FrameEnvironment != nil { cloned[i].FrameEnvironment = copyValue(reflect.ValueOf(function.FrameEnvironment)).Interface().([]int) }

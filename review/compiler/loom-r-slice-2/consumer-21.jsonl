@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:21:19.247916794Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-18T00:21:19.268207456Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion"}
+{"Time":"2026-10-18T00:21:19.268285342Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion","Output":"=== RUN   TestDecodedOptionsAndMutantUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:19.268332833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion","Output":"=== PAUSE TestDecodedOptionsAndMutantUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:19.268335687Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion"}
+{"Time":"2026-10-18T00:21:19.269412759Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion"}
+{"Time":"2026-10-18T00:21:19.269420691Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion","Output":"=== CONT  TestDecodedOptionsAndMutantUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:19.269425047Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion","Output":"    bv61ffb_decoded_options_test.go:117: union: 6 cases, each exactly once across 6 top-level shards\n"}
+{"Time":"2026-10-18T00:21:19.269435523Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion","Output":"--- PASS: TestDecodedOptionsAndMutantUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:19.269437666Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestDecodedOptionsAndMutantUnion","Elapsed":0}
+{"Time":"2026-10-18T00:21:19.269457856Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:21:19.269506468Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.021s\n"}
+{"Time":"2026-10-18T00:21:19.269519077Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.022}

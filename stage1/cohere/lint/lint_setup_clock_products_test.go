@@ -1,6 +1,10 @@
 package lint
 
 import (
+	"bytes"
+	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -8,18 +12,18 @@ import (
 func TestProduct_ShardsAgreeLowered(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	testShardsAgreeLowered(t, packageDirectory)
+	requireLintArtifacts(t, testShardsAgreeLowered(t, packageDirectory), "main.c")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ShardsAgreeNative(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	testShardsAgreeBinary(t, packageDirectory)
+	requireLintExecutable(t, testShardsAgreeBinary(t, packageDirectory))
 	t.Logf("product wall=%s", time.Since(started))
 }
 
-func TestProduct_ShardsAgreeCapture(t *testing.T) {
+func TestProduct_LintFindsShardsAgreeCapture(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	testShardsAgreeUpstream(t)
@@ -29,70 +33,83 @@ func TestProduct_ShardsAgreeCapture(t *testing.T) {
 func TestProduct_ShardsAgreePrepared(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	testShardsAgreePrepare(t)
+	requireLintArtifacts(t, testShardsAgreePrepare(t), "prepared.json")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ShardsAgreeReferences(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	testShardsAgreeReferences(t)
+	requireLintReferences(t, testShardsAgreeReferences(t))
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ProfileCompilationLowered(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationLowered(t, compilationInputs(t))
+	requireLintArtifacts(t, compilationLowered(t, compilationInputs(t)), "program.gob")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ProfileCompilationC(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationEmission(t, compilationInputs(t), "c")
+	requireLintArtifacts(t, compilationEmission(t, compilationInputs(t), "c"), "main.c")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ProfileCompilationJavaScript(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationEmission(t, compilationInputs(t), "javascript")
+	requireLintArtifacts(t, compilationEmission(t, compilationInputs(t), "javascript"), "lint.mjs")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ProfileCompilationScanner(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationProductKinds(t, []string{"scanner"})
+	requireLintExecutable(t, filepath.Join(compilationProductKinds(t, []string{"scanner"}), "scanner"))
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ProfileCompilationCounted(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationProductKinds(t, []string{"counted"})
+	requireLintExecutable(t, filepath.Join(compilationProductKinds(t, []string{"counted"}), "counted"))
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_ProfileCompilationProfiled(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	compilationProductKinds(t, []string{"profiled"})
+	directory := compilationProductKinds(t, []string{"profiled"})
+	requireLintExecutable(t, filepath.Join(directory, "profiled"))
 	t.Logf("product wall=%s", time.Since(started))
+	// The binary names no checkout: clang ran in this package's directory, and its debug info says only
+	// profiledCompilationDirectory. Mutant: drop -ffile-compilation-dir (DW_AT_comp_dir is this directory).
+	here, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary, err := os.ReadFile(filepath.Join(directory, "profiled"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.Contains(binary, []byte(here)) {
+		t.Fatalf("the profiled binary names the checkout it was built in, %s", here)
+	}
 }
 
-func TestProduct_ProfileCompilationOracleOutputs(t *testing.T) {
+func TestProduct_LintFindsProfileOracleOutputs(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
-	compilationPrepare(t)
-	t.Logf("product wall=%s", time.Since(started))
+	oracles.FindProfileOracleOutputs(t)
 }
 
 func TestProduct_SuggestionAlongsideLowered(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	suggestionAlongsideSetup(t)
+	requireLintArtifacts(t, filepath.Dir(suggestionAlongside.module), "lint.c", "lint.mjs")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
@@ -100,33 +117,32 @@ func TestProduct_SuggestionAlongsideNative(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
 	suggestionAlongsideSetup(t)
+	requireLintExecutable(t, suggestionAlongside.binary)
 	t.Logf("product wall=%s", time.Since(started))
 }
 
-func TestProduct_SuggestionAlongsideGoOracle(t *testing.T) {
+func TestProduct_LintFindsSuggestionAlongsideGoOracle(t *testing.T) {
 	t.Parallel()
-	started := time.Now()
-	suggestionAlongsideSetup(t)
-	t.Logf("product wall=%s", time.Since(started))
+	oracles.FindSuggestionAlongsideOracle(t)
 }
 
 func TestProduct_DecodedOptionsLowered(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	decodedOptionsSetupLowered(t, false)
+	requireLintArtifacts(t, decodedOptionsSetupLowered(t, false), "lint.c", "lint.mjs", "port/main.ts")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_DecodedOptionsMutantLowered(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	decodedOptionsSetupLowered(t, true)
+	requireLintArtifacts(t, decodedOptionsSetupLowered(t, true), "lint.c", "lint.mjs", "port/main.ts")
 	t.Logf("product wall=%s", time.Since(started))
 }
 
 func TestProduct_DecodedOptionsNative(t *testing.T) {
 	t.Parallel()
 	started := time.Now()
-	decodedOptionsPrepare(t)
+	requireLintExecutable(t, filepath.Join(decodedOptionsNativeProduct(t), "scanner"))
 	t.Logf("product wall=%s", time.Since(started))
 }

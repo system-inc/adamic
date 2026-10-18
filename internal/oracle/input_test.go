@@ -13,7 +13,9 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // inputFixtures are the programs that read from outside, through the doors 0.2 opens: their arguments
@@ -59,7 +61,12 @@ type inputRun struct {
 // executeInput runs a command as an input fixture runs, with environment added to the test's own.
 func executeInput(t *testing.T, how inputRun, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	// Set the child's umask explicitly so 0644 and 0666 create modes differ.
+	path, err := toolchain.Path(name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := bounded(t, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, path}, arguments...)...)
 	command.Dir = how.directory
 	command.SysProcAttr.Credential = how.credential
 	if environment != nil {
@@ -68,7 +75,7 @@ func executeInput(t *testing.T, how inputRun, environment []string, name string,
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err = command.Run()
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -96,7 +103,11 @@ func sharedDirectory(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { os.RemoveAll(directory) })
+	t.Cleanup(func() {
+		if err := os.RemoveAll(directory); err != nil {
+			t.Errorf("the shared directory stays behind: %v", err)
+		}
+	})
 	if err := os.Chmod(directory, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -323,27 +334,22 @@ func inputLeaks(t *testing.T, prepared func() inputRun, program *ir.Program, san
 }
 func inputLeaksUncached(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		// The counted build, then leaks --atExit on it, as leaksCounted checks every other fixture.
-		binary := filepath.Join(sharedDirectory(t), "counted")
-		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
-			t.Fatal(err)
-		}
-		how := prepared()
-		if report := unbalanced(t, executeInput(t, how, nil, binary, how.arguments...)); report != "" {
-			return report
-		}
-		how = prepared()
-		return leaksTool(executeInput(t, how, nil, "leaks", append([]string{"--atExit", "--", binary}, how.arguments...)...))
-	case "linux":
-		how := prepared()
-		report := executeInput(t, how, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, how.arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+	// Each run gets its own place to write, and runs where and as whom the fixture runs.
+	var how inputRun
+	report, err := leakcheck.Check(leakcheck.Program{
+		C:         native.C(program),
+		Sanitized: sanitized,
+		Counted:   filepath.Join(sharedDirectory(t), "counted"),
+		Arguments: func() []string {
+			how = prepared()
+			return how.arguments
+		},
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			return leakRun(executeInput(t, how, environment, name, arguments...))
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
+	return report
 }

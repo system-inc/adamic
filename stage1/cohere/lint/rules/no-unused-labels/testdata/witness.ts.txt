@@ -1,0 +1,6 @@
+unused: { used: while (true) { continue used; } }
+A: B: "use strict";
+foo()
+LABEL: [1].forEach(x => x);
+comment /* preserve */: foo;
+function f() { directive: "use strict"; }

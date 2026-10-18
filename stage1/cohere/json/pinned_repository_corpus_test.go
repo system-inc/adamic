@@ -1,24 +1,17 @@
 package json
 
 import (
-	"bufio"
-	"bytes"
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"regexp"
-	"sort"
-	"strconv"
 	"strings"
-	"sync"
 	"testing"
-	"unicode/utf8"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/tracked"
+
+	"github.com/system-inc/adamic/stage1/cohere/json/oracles"
 )
 
 // Freeze repository JSON so selection need not rerun this package on every
@@ -26,15 +19,15 @@ import (
 // The checkout that builds the corpus product must already hold this commit (a
 // shallow one fetches it at checkout, git fetch --depth=1 origin <pin>); the
 // corpus never fetches, and a missing pin is fatal.
-const repositoryCorpusCommit = "2b4dbde172c1c2f23c065ecae8b906f8fcb72a20"
+const repositoryCorpusCommit = oracles.RepositoryCorpusCommit
 
 // SHA256 of sorted name<TAB>SHA256(bytes)<LF>, including upstream inputs and
-// generated controls. This is the original 3,900-case working-tree identity.
-const repositoryCorpusIdentity = "09cd6c1c6a0fb423c2bf9cc1a56f5670218eca4088f0ba7a49ac26b58652cae6"
+// generated controls: 3,919 cases at cohere 0183ccf8, where 7945d102 had 3,900.
+const repositoryCorpusIdentity = "0ebc69862856a18e2af48e2a27ebfba868f642da3b4e48c218b99bd0a09236bf"
 
 // The corpus files corpus.pin names under stage3/api/node_modules: npm ci --prefix stage3/api installs them from
 // stage3/api's lockfile, so no archive of tracked files carries them.
-const provisionedCorpusPrefix = "stage3/api/node_modules/"
+const provisionedCorpusPrefix = oracles.ProvisionedCorpusPrefix
 
 // The corpus product holds every input a runner's source archive lacks: the pin's repository JSON (Git objects,
 // and Loom's source archive is the tree's tracked files with no history) and the provisioned node_modules files
@@ -46,38 +39,12 @@ const provisionedCorpusPrefix = "stage3/api/node_modules/"
 // machines they ran on (/tmp/adamic-gate/..., /private/tmp/...), and buildcache's relocation check passes such a path
 // only when a tracked file the product declares holds it (#arw7837). Those reports are tracked and unchanged since the
 // pin, so the product's key also moves when one of them does.
-func jsonPinnedCorpusInputs() (buildcache.Inputs, error) {
-	return jsonPinnedCorpusInputsAt(repositoryCorpusCommit)
-}
+func jsonPinnedCorpusInputs() (buildcache.Inputs, error) { return oracles.PinnedCorpusInputs() }
 
 // jsonPinnedCorpusInputsAt is the corpus product's key with the repository JSON at pin: the whole commit id is a flag,
 // so a different pin, which any change to a corpus file at it makes, is a different key.
 func jsonPinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
-	jsonTrackedSources.once.Do(func() {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			jsonTrackedSources.err = err
-			return
-		}
-		entries, err := tracked.Files(root)
-		if err != nil {
-			jsonTrackedSources.err = err
-			return
-		}
-		for _, entry := range entries {
-			if !entry.Submodule() && strings.HasSuffix(entry.Path, ".json") {
-				jsonTrackedSources.files = append(jsonTrackedSources.files, entry.Path)
-			}
-		}
-	})
-	if jsonTrackedSources.err != nil {
-		return buildcache.Inputs{}, jsonTrackedSources.err
-	}
-	return buildcache.Inputs{
-		Name:  "json pinned corpus",
-		Files: append([]string{"stage1/cohere/json/pinned_repository_corpus_test.go", "stage1/cohere/json/testdata/corpus.pin", "stage3/api/package-lock.json"}, jsonTrackedSources.files...),
-		Flags: []string{"repository JSON at " + pin, "provisioned " + provisionedCorpusPrefix + " inputs named by corpus.pin"},
-	}, nil
+	return oracles.PinnedCorpusInputsAt(pin)
 }
 
 // A different pin moves both the name key (what a runner finds the corpus by) and the declared key (what this machine
@@ -114,33 +81,11 @@ func TestJSONPinnedCorpusRekeysWithThePin(t *testing.T) {
 }
 
 // jsonTrackedSources is the repository's tracked JSON, listed once per process.
-var jsonTrackedSources struct {
-	once  sync.Once
-	files []string
-	err   error
-}
 
 // buildJSONPinnedCorpus is the build for the product inputs keys, and PinnedGit checks the pin against those same
 // Inputs: the build never lists them again, so it never lists the tracked JSON, which reads .git, inside its trace.
 func buildJSONPinnedCorpus(inputs buildcache.Inputs) func(directory string) error {
-	return func(directory string) error {
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			return err
-		}
-		tracked, err := repositoryCasesAtPin(root, inputs, repositoryCorpusCommit)
-		if err != nil {
-			return err
-		}
-		provisioned, err := provisionedCorpusFiles(root)
-		if err != nil {
-			return err
-		}
-		if err := writeCorpusRecords(filepath.Join(directory, "repository"), tracked); err != nil {
-			return err
-		}
-		return writeCorpusRecords(filepath.Join(directory, "provisioned"), provisioned)
-	}
+	return oracles.BuildPinnedCorpus(inputs)
 }
 
 // The product test and every corpus reader share one recipe and key.
@@ -155,277 +100,52 @@ func TestProduct_JSONPinnedCorpus(t *testing.T) {
 
 // Every test in a process reads the product once. Callers get slice copies because hash partitioning sorts its
 // input in place.
-var pinnedCorpusRead struct {
-	once                 sync.Once
-	tracked, provisioned []textCase
-	err                  error
-}
 
 func pinnedCorpusProduct(t testing.TB) (tracked, provisioned []textCase) {
-	t.Helper()
-	pinnedCorpusRead.once.Do(func() {
-		inputs, err := jsonPinnedCorpusInputs()
-		if err != nil {
-			pinnedCorpusRead.err = fmt.Errorf("json pinned corpus inputs: %w", err)
-			return
-		}
-		directory, err := buildcache.Get(inputs, buildJSONPinnedCorpus(inputs))
-		if err == nil {
-			pinnedCorpusRead.tracked, err = readCorpusRecords(filepath.Join(directory, "repository"))
-		}
-		if err == nil {
-			pinnedCorpusRead.provisioned, err = readCorpusRecords(filepath.Join(directory, "provisioned"))
-		}
-		if err != nil {
-			pinnedCorpusRead.err = fmt.Errorf("json pinned corpus product: %w", err)
-		}
-	})
-	if pinnedCorpusRead.err != nil {
-		t.Fatal(pinnedCorpusRead.err)
-	}
-	return append([]textCase(nil), pinnedCorpusRead.tracked...), append([]textCase(nil), pinnedCorpusRead.provisioned...)
+	trackedCases, provisionedCases := oracles.PinnedCorpusProduct(t)
+	return localCases(trackedCases), localCases(provisionedCases)
 }
 
 // A product file holds its cases the way Git's cat-file --batch does: "<size> <name>\n", the bytes, "\n".
 func writeCorpusRecords(path string, cases []textCase) error {
-	var records bytes.Buffer
-	for _, item := range cases {
-		if item.Name == "" || strings.ContainsAny(item.Name, "\r\n") {
-			return fmt.Errorf("corpus product %s: unsupported case name %q", path, item.Name)
-		}
-		fmt.Fprintf(&records, "%d %s\n", len(item.Text), item.Name)
-		records.WriteString(item.Text)
-		records.WriteByte('\n')
-	}
-	return os.WriteFile(path, records.Bytes(), 0o644)
+	return oracles.WriteCorpusRecords(path, oracleCases(cases))
 }
 
 func readCorpusRecords(path string) ([]textCase, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-	var cases []textCase
-	for len(data) > 0 {
-		header, rest, terminated := bytes.Cut(data, []byte("\n"))
-		sizeText, name, named := strings.Cut(string(header), " ")
-		size, err := strconv.Atoi(sizeText)
-		if !terminated || !named || name == "" || err != nil || size < 0 || len(rest) <= size || rest[size] != '\n' {
-			if len(header) > 120 {
-				header = header[:120]
-			}
-			return nil, fmt.Errorf("corpus product %s: malformed record after %d cases at %q", path, len(cases), header)
-		}
-		cases = append(cases, textCase{Name: name, Text: string(rest[:size])})
-		data = rest[size+1:]
-	}
-	return cases, nil
+	cases, err := oracles.ReadCorpusRecords(path)
+	return localCases(cases), err
 }
 
 // The corpus.pin manifest beside this file, read from the repository root.
-func corpusPinManifest(root string) (corpusPin, error) {
-	var manifest corpusPin
-	encoded, err := os.ReadFile(filepath.Join(root, "stage1/cohere/json/testdata/corpus.pin"))
-	if err != nil {
-		return manifest, err
-	}
-	return manifest, json.Unmarshal(encoded, &manifest)
-}
 
 // provisionedCorpusFiles reads the node_modules files corpus.pin names from the product builder's disk, where npm ci
 // --prefix stage3/api put them. They're untracked, so a traced build could never key them; the reads run as key-time
 // work instead (buildcache.Keying), and that is sound only because each file must match the SHA256 corpus.pin gives it,
 // byte for byte: corpus.pin is a declared input, so any bytes accepted here are exactly what the key already names.
-func provisionedCorpusFiles(root string) ([]textCase, error) {
-	manifest, err := corpusPinManifest(root)
-	if err != nil {
-		return nil, err
-	}
-	var cases []textCase
-	for _, item := range manifest.Cases {
-		if !strings.HasPrefix(item.Path, provisionedCorpusPrefix) {
-			continue
-		}
-		var data []byte
-		buildcache.Keying(func() { data, err = os.ReadFile(filepath.Join(root, filepath.FromSlash(item.Path))) })
-		if err != nil {
-			return nil, fmt.Errorf("pinned corpus input %s (npm ci --prefix stage3/api provisions it on the corpus product's builder): %w", item.Path, err)
-		}
-		if digest := fmt.Sprintf("%x", sha256.Sum256(data)); digest != item.SHA256 {
-			return nil, fmt.Errorf("pinned corpus input %s: SHA256 %s, corpus.pin names %s", item.Path, digest, item.SHA256)
-		}
-		if !utf8.Valid(data) {
-			return nil, fmt.Errorf("non-UTF-8 pinned corpus file %s", item.Path)
-		}
-		cases = append(cases, textCase{Name: item.Path, Text: string(data)})
-	}
-	return cases, nil
-}
 
 // repositoryCasesAtPin reads the pin's JSON from the checkout's own objects, on the corpus product's builder, through
-// buildcache.PinnedGit: as key-time work, since inputs names the pin, so a traced build never reads .git (#jwn3n9q).
-// PinnedGit also runs git with no transport and no lazy fetch, so the corpus never fetches. The TypeScript
-// corpusfiles selector returns live paths, not pinned bytes.
+// buildcache.PinnedFiles: as key-time work, since inputs names the pin, so a traced build never reads .git (#jwn3n9q).
+// It runs git with no transport and no lazy fetch, so the corpus never fetches. The TypeScript corpusfiles selector
+// returns live paths, not pinned bytes.
 func repositoryCasesAtPin(root string, inputs buildcache.Inputs, pin string) ([]textCase, error) {
-	if len(pin) != 40 || strings.Trim(pin, "0123456789abcdef") != "" {
-		return nil, fmt.Errorf("repository JSON: invalid commit pin %q", pin)
-	}
-	if _, err := buildcache.PinnedGit(root, inputs, pin, nil, "cat-file", "-e", pin+"^{commit}"); err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: environment: the commit is not in the checkout at %s, and the corpus never fetches; a shallow checkout carries it with git fetch --depth=1 origin %s before the run (%w)", pin, root, pin, err)
-	}
-	tree, err := buildcache.PinnedGit(root, inputs, pin, nil, "ls-tree", "-r", "-z", pin)
-	if err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
-	}
-	var names []string
-	blobs := map[string]string{}
-	for _, entry := range strings.Split(string(tree), "\x00") {
-		// <mode> <type> <object>TAB<path>
-		header, name, found := strings.Cut(entry, "\t")
-		fields := strings.Fields(header)
-		if found && len(fields) == 3 && fields[1] == "blob" && strings.HasSuffix(name, ".json") {
-			names = append(names, name)
-			blobs[name] = fields[2]
-		}
-	}
-	if len(names) == 0 {
-		return nil, fmt.Errorf("repository JSON pin %s has no JSON files", pin)
-	}
-	sort.Strings(names)
-	if err := pinnedBlobsPresent(root, inputs, pin, names, blobs); err != nil {
-		return nil, err
-	}
-	var requests strings.Builder
-	for _, name := range names {
-		if strings.ContainsAny(name, "\r\n") {
-			return nil, fmt.Errorf("repository JSON pin %s: unsupported newline in path %q", pin, name)
-		}
-		fmt.Fprintf(&requests, "%s:%s\n", pin, name)
-	}
-	batch, err := buildcache.PinnedGit(root, inputs, pin, []byte(requests.String()), "cat-file", "--batch")
-	if err != nil {
-		return nil, fmt.Errorf("repository JSON pin %s: %w", pin, err)
-	}
-	reader := bufio.NewReader(bytes.NewReader(batch))
-	cases := make([]textCase, 0, len(names))
-	for _, name := range names {
-		header, err := reader.ReadString('\n')
-		if err != nil {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: %w", pin, name, err)
-		}
-		fields := strings.Fields(header)
-		if len(fields) != 3 || fields[1] != "blob" {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: invalid blob header %q", pin, name, header)
-		}
-		size, err := strconv.Atoi(fields[2])
-		if err != nil || size < 0 {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: invalid blob size %q", pin, name, fields[2])
-		}
-		data := make([]byte, size)
-		if _, err := io.ReadFull(reader, data); err != nil {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: %w", pin, name, err)
-		}
-		newline, err := reader.ReadByte()
-		if err != nil || newline != '\n' {
-			return nil, fmt.Errorf("repository JSON pin %s path %s: missing blob terminator", pin, name)
-		}
-		if !utf8.Valid(data) {
-			return nil, fmt.Errorf("non-UTF-8 corpus file %s at pin %s", name, pin)
-		}
-		cases = append(cases, textCase{Name: name, Text: string(data)})
-	}
-	if _, err := reader.ReadByte(); err != io.EOF {
-		return nil, fmt.Errorf("repository JSON pin %s: trailing batch output", pin)
-	}
-	return cases, nil
-}
-
-// Loom's pool units are blobless clones (--filter=blob:none): the pin's commit and trees are there, but only the
-// blobs a checkout wrote. cat-file would try to fetch each missing one on its own, which PinnedGit refuses; this
-// names every JSON file whose blob is missing first, so the failure says which inputs the checkout lacks.
-func pinnedBlobsPresent(root string, inputs buildcache.Inputs, pin string, names []string, blobs map[string]string) error {
-	// --no-walk: the pin's own tree, not every object reachable through its history. --missing=print lists an absent
-	// object rather than fetching it.
-	objects, err := buildcache.PinnedGit(root, inputs, pin, nil, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
-	if err != nil {
-		return fmt.Errorf("repository JSON pin %s: %w", pin, err)
-	}
-	absent := map[string]bool{}
-	for _, line := range strings.Split(string(objects), "\n") {
-		if object, found := strings.CutPrefix(line, "?"); found {
-			absent[object] = true
-		}
-	}
-	var missing []string
-	for _, name := range names {
-		if absent[blobs[name]] {
-			missing = append(missing, name)
-		}
-	}
-	if len(missing) == 0 {
-		return nil
-	}
-	named := strings.Join(missing, ", ")
-	if len(missing) > 5 {
-		named = strings.Join(missing[:5], ", ") + fmt.Sprintf(" and %d more", len(missing)-5)
-	}
-	return fmt.Errorf("repository JSON pin %s: environment: %d of its %d JSON files have no blob in the checkout at %s, and the corpus never fetches: %s", pin, len(missing), len(names), root, named)
+	cases, err := oracles.RepositoryCasesAtPin(root, inputs, pin)
+	return localCases(cases), err
 }
 
 // pinnedCorpusFiles is every non-generated input: the pin's repository JSON and the provisioned files from the
 // corpus product, and the pinned submodule paths from the checkout's own tracked files.
-func pinnedCorpusFiles(t testing.TB, root string) ([]textCase, error) {
-	tracked, provisioned := pinnedCorpusProduct(t)
-	cases := append(tracked, provisioned...)
-	manifest, err := corpusPinManifest(root)
-	if err != nil {
-		return nil, err
-	}
-	// Only pinned submodule paths are read from disk. Arbitrary repository JSON,
-	// additions, deletions and dirty index entries cannot enter.
-	for _, item := range manifest.Cases {
-		if strings.HasPrefix(item.Path, "generated/") || strings.HasPrefix(item.Path, provisionedCorpusPrefix) {
-			continue
-		}
-		if !strings.HasPrefix(item.Path, "cohere/") {
-			return nil, fmt.Errorf("unexpected disk input in corpus pin: %s", item.Path)
-		}
-		data, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(item.Path)))
-		if err != nil {
-			return nil, fmt.Errorf("pinned corpus input %s: %w", item.Path, err)
-		}
-		if !utf8.Valid(data) {
-			return nil, fmt.Errorf("non-UTF-8 pinned corpus file %s", item.Path)
-		}
-		cases = append(cases, textCase{Name: item.Path, Text: string(data)})
-	}
-	sort.Slice(cases, func(i, j int) bool {
-		a, b := strings.Split(cases[i].Name, "/"), strings.Split(cases[j].Name, "/")
-		for k := 0; k < len(a) && k < len(b); k++ {
-			if a[k] != b[k] {
-				return a[k] < b[k]
-			}
-		}
-		return len(a) < len(b)
-	})
-	return cases, nil
-}
 
 func repositoryCorpusIdentityError(pin string, cases []textCase, count int, identity string) error {
-	got := pinForCases(cases)
-	if got.Count != count || got.SHA256 != identity {
-		return fmt.Errorf("repository JSON pin %s: corpus identity changed: %d cases SHA256 %s; want %d SHA256 %s (bump pin and identity together)", pin, got.Count, got.SHA256, count, identity)
-	}
-	return nil
+	return oracles.RepositoryCorpusIdentityError(pin, oracleCases(cases), count, identity)
 }
 
 func TestPinnedRepositoryCorpusIdentity(t *testing.T) {
 	t.Parallel()
 	cases := corpusCases(t)
-	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 3900, repositoryCorpusIdentity); err != nil {
+	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 3919, repositoryCorpusIdentity); err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("3900 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
+	t.Logf("3919 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
 }
 
 // fixtureCasesAtPin is repositoryCasesAtPin on a fixture repository, under a key that names the fixture's pin, as the
@@ -497,12 +217,7 @@ func TestPinnedRepositoryCorpusPinMutant(t *testing.T) {
 }
 
 func validatePinnedCorpus(t testing.TB, cases []textCase, expected corpusPin) (corpusPin, int, error) {
-	tracked, _ := pinnedCorpusProduct(t)
-	state := repositoryJSON{paths: map[string]bool{}}
-	for _, item := range tracked {
-		state.paths[item.Name] = true
-	}
-	return validateCorpusState(state, cases, expected)
+	return oracles.ValidatePinnedCorpus(t, oracleCases(cases), expected)
 }
 
 func TestJSONPinnedCorpusRecords(t *testing.T) {

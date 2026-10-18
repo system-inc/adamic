@@ -1,0 +1,36 @@
+{"Time":"2026-10-18T00:08:27.98393551Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:08:27.990883592Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields"}
+{"Time":"2026-10-18T00:08:27.990952274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"=== RUN   TestInheritanceCycleFinderIncludesInheritedFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.990975749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"=== PAUSE TestInheritanceCycleFinderIncludesInheritedFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.990978203Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields"}
+{"Time":"2026-10-18T00:08:27.990980917Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce"}
+{"Time":"2026-10-18T00:08:27.990984672Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"=== RUN   TestImpliedTargetOrQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.990987767Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"=== PAUSE TestImpliedTargetOrQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.990989489Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce"}
+{"Time":"2026-10-18T00:08:27.990991202Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce"}
+{"Time":"2026-10-18T00:08:27.990992744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"=== RUN   TestImpliedTargetNullishQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.990996099Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"=== PAUSE TestImpliedTargetNullishQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.990997802Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce"}
+{"Time":"2026-10-18T00:08:27.991000386Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil"}
+{"Time":"2026-10-18T00:08:27.991002118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"=== RUN   TestImpliedTargetTupleCachesNil\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.991004151Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"=== PAUSE TestImpliedTargetTupleCachesNil\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.991005724Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil"}
+{"Time":"2026-10-18T00:08:27.991009008Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields"}
+{"Time":"2026-10-18T00:08:27.991010571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"=== CONT  TestInheritanceCycleFinderIncludesInheritedFields\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.992157878Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce"}
+{"Time":"2026-10-18T00:08:27.992166962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"=== CONT  TestImpliedTargetNullishQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.992176095Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil"}
+{"Time":"2026-10-18T00:08:27.99217882Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"=== CONT  TestImpliedTargetTupleCachesNil\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:27.992181313Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce"}
+{"Time":"2026-10-18T00:08:27.992183036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"=== CONT  TestImpliedTargetOrQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:28.078092513Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Output":"--- PASS: TestImpliedTargetTupleCachesNil (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:28.081172297Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetTupleCachesNil","Elapsed":0.09}
+{"Time":"2026-10-18T00:08:28.081202803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Output":"--- PASS: TestInheritanceCycleFinderIncludesInheritedFields (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:28.566227973Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceCycleFinderIncludesInheritedFields","Elapsed":0.09}
+{"Time":"2026-10-18T00:08:28.566278569Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"--- PASS: TestImpliedTargetOrQueriesOnce (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:29.465819289Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Elapsed":0.57}
+{"Time":"2026-10-18T00:08:29.465855913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"--- PASS: TestImpliedTargetNullishQueriesOnce (1.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:29.465863424Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Elapsed":1.47}
+{"Time":"2026-10-18T00:08:29.465865948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:08:29.470060771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t1.484s\n"}
+{"Time":"2026-10-18T00:08:29.470136794Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.486}

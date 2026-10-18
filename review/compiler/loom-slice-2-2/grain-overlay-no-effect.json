@@ -1,0 +1,22 @@
+[
+  {
+    "mutant": "fixture-owner-omitted",
+    "caught": false,
+    "exit": 0,
+    "seconds": 60.34874284500074,
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/fixture-owner-omitted/overlay.json",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-json",
+      "-count=1",
+      "-timeout=90s"
+    ],
+    "marker": "has no top-level test"
+  }
+]

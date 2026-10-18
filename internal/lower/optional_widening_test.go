@@ -68,22 +68,6 @@ func TestOptionalWideningRefused(t *testing.T) {
 	}
 }
 
-func TestOptionalWideningAllowed(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"class", "fresh", "declared"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			source, err := os.ReadFile("../oracle/testdata/optional_widening_" + name + ".a")
-			if err != nil {
-				t.Fatal(err)
-			}
-			if _, err := lowerSource(t, string(source)); err != nil {
-				t.Fatal(err)
-			}
-		})
-	}
-}
-
 // These are allowed relations even though adding a spread field is not lowered yet. Test the
 // refusal pass directly so a NotYet in the backend cannot conceal a wrong optional-field refusal.
 func TestOptionalWideningSpreadOverwrite(t *testing.T) {

@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:22:39.517502195Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-18T00:22:39.523125351Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative"}
+{"Time":"2026-10-18T00:22:39.523206532Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative","Output":"=== RUN   TestProduct_CallTargetReaderArchivesNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:39.523288053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative","Output":"=== PAUSE TestProduct_CallTargetReaderArchivesNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:39.523293541Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative"}
+{"Time":"2026-10-18T00:22:39.523335173Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative"}
+{"Time":"2026-10-18T00:22:39.523338518Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative","Output":"=== CONT  TestProduct_CallTargetReaderArchivesNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:41.556508918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative","Output":"    call_targets_guard_test.go:214: build go_list_-export__./internal/native_./internal/leakcheck_listing.json 1abcf2f3c1e1 hit 0.48\n"}
+{"Time":"2026-10-18T00:22:41.556583709Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative","Output":"--- PASS: TestProduct_CallTargetReaderArchivesNative (2.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:41.556601065Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesNative","Elapsed":2.03}
+{"Time":"2026-10-18T00:22:41.556624991Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:22:41.561853088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t2.044s\n"}
+{"Time":"2026-10-18T00:22:41.561882021Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":2.044}

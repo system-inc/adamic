@@ -1,0 +1,11 @@
+--- cmd/adamic-admission-delta/speed_test.go
++++ cmd/adamic-admission-delta/speed_test.go
+@@ -37,7 +37,7 @@
+ 	script := "#!/bin/sh\n[ \"$1\" = admission-lower ] || { echo 'panic: C emission reached' >&2; exit 1; }\n: > \"$2.started\"\nwhile [ ! -f one.started ] || [ ! -f two.started ]; do :; done\n"
+ 	writeExecutable(t, compiler, script)
+ 	programs := []entry{{program: program{Path: "one"}}, {program: program{Path: "two"}}}
+-	classifyPrograms(dir, compiler, compiler, programs, 2, time.Second)
++	classifyPrograms(dir, compiler, compiler, programs, 1, time.Second)
+ 	for _, p := range programs {
+ 		if p.Class != "accepted-by-both" || p.Base.WallSeconds <= 0 {
+ 			t.Fatalf("parallel lowering failed: %+v", p)

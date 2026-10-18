@@ -1,0 +1,30 @@
+=== RUN   TestLibrarySpreadRegExpUnion
+=== PAUSE TestLibrarySpreadRegExpUnion
+=== RUN   TestLibrarySpreadErrorView
+=== PAUSE TestLibrarySpreadErrorView
+=== RUN   TestLibrarySpreadPlainProducers
+=== PAUSE TestLibrarySpreadPlainProducers
+=== RUN   TestLibrarySpreadMapView
+=== PAUSE TestLibrarySpreadMapView
+=== RUN   TestLibrarySpreadSetView
+=== PAUSE TestLibrarySpreadSetView
+=== RUN   TestLibrarySpreadDateView
+=== PAUSE TestLibrarySpreadDateView
+=== RUN   TestLibrarySpreadTypedArrayView
+=== PAUSE TestLibrarySpreadTypedArrayView
+=== CONT  TestLibrarySpreadRegExpUnion
+=== CONT  TestLibrarySpreadDateView
+=== CONT  TestLibrarySpreadTypedArrayView
+=== CONT  TestLibrarySpreadSetView
+=== CONT  TestLibrarySpreadPlainProducers
+--- PASS: TestLibrarySpreadSetView (0.18s)
+=== CONT  TestLibrarySpreadMapView
+--- PASS: TestLibrarySpreadTypedArrayView (0.19s)
+=== CONT  TestLibrarySpreadErrorView
+--- PASS: TestLibrarySpreadRegExpUnion (0.22s)
+--- PASS: TestLibrarySpreadDateView (0.22s)
+--- PASS: TestLibrarySpreadPlainProducers (0.20s)
+--- PASS: TestLibrarySpreadMapView (0.08s)
+--- PASS: TestLibrarySpreadErrorView (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.320s

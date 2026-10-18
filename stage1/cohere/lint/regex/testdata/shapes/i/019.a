@@ -1,0 +1,15 @@
+// nexus/consistency_no_ambiguous_identifier.go:17; `(?i)handle|on[A-Z]|event`
+import { observe } from '../observe.a';
+const pattern = "handle|on[A-Z]|event";
+const flags = "gui";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "HANDLE", 4);
+observe(regex, "xHANDLE", 5);
+observe(regex, "HANDLE\n", 6);
+observe(regex, "PaginationInput", 7);
+observe(regex, "onClick", 8);
+observe(regex, "handleEvent", 9);

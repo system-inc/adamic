@@ -1,0 +1,12 @@
+compiler: verify string destructuring a-check headers
+
+Apply c7302ad4's own change on exact dbdf977f5b and audit both added .a
+programs with this branch's compiler and the pinned Gate.aCheck predicate.
+No headers are needed: one program is clean and the review member witness
+is NotYet. Conservatively preserve that distinction rather than annotate
+NotYet as a refusal. Both complete program files remain byte-identical.
+
+Prove removed and wrong headers fail on an existing refused control,
+restore it byte for byte and verify its pinned diagnostic position.
+Rerun focused guards, lowering/oracle/flow/counts checks and vet. Preserve
+counts and production code exactly, with fresh evidence under review.

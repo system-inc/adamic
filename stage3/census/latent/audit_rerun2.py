@@ -1,4 +1,5 @@
 """Independently recount checker ratios, variance owners and deltas; kill artifact mutants."""
+from unit_status import attempted, body_eligible, audit_deferred
 import collections, copy, functools, gzip, hashlib, json, pathlib, re, sys
 ROOT=pathlib.Path(__file__).resolve().parent;adapted=pathlib.Path(sys.argv[1]).resolve()
 stock=json.loads(pathlib.Path(sys.argv[2]).read_text());report=json.loads((ROOT/'REPORT.json').read_text())
@@ -46,6 +47,7 @@ def check(value):
   expected_reasons=dict(sorted(collections.Counter(k[0]+': '+k[2] for k in sites).items()))
   assert run['per_reason']==expected_reasons,'finding reasons'
   assert {(f['kind'],f['where'],f['reason'],f['text']) for f in run['findings']}==sites,'finding ledger'
+  audit_deferred(run, [u for row in rows[1:] for u in row["units"]])
   for row in rows[1:]:
    file=row['file'];entry=run['per_file'][file]
    assert entry['measurement']==LABEL,'label'
@@ -56,14 +58,14 @@ def check(value):
    for unit in row['units']:
     if 'body_start' not in unit:continue
     diagnostics=[d['text'] for d in header['diagnostic_sites'] if d['file']==file and d['start']<unit['body_end'] and (d['end']>unit['body_start'] or d['start']>=unit['body_start'])]
-    assert unit['checker_diagnostics']==diagnostics and (unit['status']=='skipped_checker_body')==bool(diagnostics),'body eligibility'
+    assert unit['checker_diagnostics']==diagnostics and body_eligible(unit, diagnostics),'body eligibility'
     if diagnostics:skipped.add(unit['where'])
    assert not any(f['unit'] in skipped for f in row['findings']),'body eligibility'
    if run is not value['baseline']:
     assert [{k:v for k,v in d.items() if k!='measurement'} for d in row['declarations']]==stock[file],'stock declaration spans'
   units=[u for row in rows[1:] for u in row['units']]
   assert run['bodies_skipped']==sum(u['status']=='skipped_checker_body' for u in units),'unit count'
-  assert run['top_level_units']==len(units) and run['functions_attempted']==sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in units),'unit count'
+  assert run['top_level_units']==len(units) and run['functions_attempted']==sum(u['kind']=='KindFunctionDeclaration' and attempted(u) for u in units),'unit count'
   clean=sorted(f for f,entry in run['per_file'].items() if entry['checker']==0)
   assert run['checker_clean_files']==clean,'zero diagnostic files'
   ratio=run['checker_clean_ratio']

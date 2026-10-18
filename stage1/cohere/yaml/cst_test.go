@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
 func goCST(t *testing.T, cases string) []byte {
@@ -14,12 +16,9 @@ func goCST(t *testing.T, cases string) []byte {
 }
 
 // goCSTOracle is formatter_comparison over testdata/cst_go.go, a product built ahead (#5qykzj5).
-func goCSTOracle(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-cst", "cst_go.go")
-}
+func goCSTOracle(t *testing.T) string { return oracles.ConcreteSyntaxTree(t) }
 
-func TestProduct_YAMLCSTGo(t *testing.T) {
+func TestProduct_YamlFindsCSTGo(t *testing.T) {
 	t.Parallel()
 	goCSTOracle(t)
 }

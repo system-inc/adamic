@@ -1,4 +1,5 @@
 """Unique finding sites, unit eligibility, and feature deltas from raw measurement events."""
+from unit_status import attempted
 import collections, gzip, hashlib, json, pathlib, shutil, subprocess, sys
 scratch=pathlib.Path(sys.argv[1]).resolve(); adapted=pathlib.Path(sys.argv[2]).resolve()
 root=pathlib.Path(__file__).resolve().parent; data=root/'data'; data.mkdir(exist_ok=True)
@@ -17,8 +18,7 @@ def counts(sites):
     c=collections.Counter(k[0] for k in sites)
     return {kind:c[kind] for kind in ['NotYet','Refused','SkippedDependency','error','panic']}
 def reasons(sites): return dict(sorted(collections.Counter(k[0]+': '+k[2] for k in sites).items()))
-def units_count(units):
-    return dict(total=len(units),functions=sum(u['kind']=='KindFunctionDeclaration' for u in units),skipped_checker_body=sum(u['status']=='skipped_checker_body' for u in units),attempted_functions=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in units),attempted_statements=sum(u['kind']!='KindFunctionDeclaration' for u in units),panicked_units=sum(u['status']=='panic' for u in units))
+from unit_status import unit_counts as units_count
 site_sets={}; eligible={}; unit_sites={}
 for run in runs:
     name=run['name']; run['measurement']=LABEL
@@ -34,7 +34,7 @@ for run in runs:
     assert {row['file'] for row in raw[1:]}=={f['file'] for f in manifest}
     sites={key(f) for row in raw[1:] for f in row['findings']}; site_sets[name]=sites
     all_units=[u for row in raw[1:] for u in row['units']]
-    eligible[name]={u['where'] for u in all_units if u['status']!='skipped_checker_body'}
+    eligible[name]={u['where'] for u in all_units if attempted(u)}
     # Map events to their attempted unit, retaining caller context even if failure lives in a dependency.
     unit_sites[name]=collections.defaultdict(set)
     for row in raw[1:]:

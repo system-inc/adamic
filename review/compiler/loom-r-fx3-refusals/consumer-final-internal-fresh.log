@@ -1,0 +1,92 @@
+=== RUN   TestFreshCorpusRemainder
+=== PAUSE TestFreshCorpusRemainder
+=== CONT  TestFreshCorpusRemainder
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_discard.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_parameters.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_eager.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_empty.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_nested.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_typeof.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_unions.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_coverage_values.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_nested.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_plain.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_three.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_throw.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/async_typeof.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/determinism_dispatch.a
+    corpus_coverage_test.go:82: 24 writes, 24 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/instantiation_array.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/instantiation_callback.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/instantiation_find.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/instantiation_first.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/instantiation_last.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/node_fs_rm_options.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/plain_data_spread.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/template_nullish.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== NAME  TestFreshCorpusRemainder
+    corpus_coverage_test.go:85: remainder ran 28 programs
+--- PASS: TestFreshCorpusRemainder (1.07s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_discard.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_parameters.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_eager.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_empty.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_nested.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_typeof.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_unions.a (0.05s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_coverage_values.a (0.04s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_nested.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_plain.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_three.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_throw.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/async_typeof.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/determinism_dispatch.a (0.05s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/instantiation_array.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/instantiation_callback.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/instantiation_find.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/instantiation_first.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/instantiation_last.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/node_fs_rm_options.a (0.24s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/plain_data_spread.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/template_nullish.a (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	1.078s
