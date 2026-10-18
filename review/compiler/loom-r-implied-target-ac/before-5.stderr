@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/review/compiler/loom-implied-target/objects.a:2053:33: Adamic 0.1 refuses parallelMap items are not shareable: items is a mutable { value: number; done: boolean; }[]; make the whole reachable value readonly and bind captures with const; moving mutable values into tasks belongs to concurrency part 2 (#p286ycm)

@@ -1,0 +1,7 @@
+review/compiler/loom-implied-target/followup/objects-1024.a checked 0.165
+review/compiler/loom-implied-target/followup/objects-2048.a checked 0.267
+review/compiler/loom-implied-target/followup/objects-4096.a checked 0.471
+review/compiler/loom-implied-target/followup/objects-512.a checked 0.116
+review/compiler/loom-implied-target/objects-sequential.a checked 0.268
+review/compiler/loom-implied-target/objects.a refused 0.115
+PASS {'checked': 5, 'refused': 1} two mutants caught
