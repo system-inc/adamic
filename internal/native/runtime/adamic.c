@@ -257,6 +257,14 @@ void adamic_start(int count, char **values) {
 		}
 	}
 #endif
+#ifdef ADAMIC_TARGET_WASI
+    // Preview 1 has no initial cwd. The command host supplies one inside its
+    // preopens; without it wasi-libc's virtual cwd remains '/'.
+    const char *directory = getenv("ADAMIC_WASI_CWD");
+    if (directory != NULL && chdir(directory) != 0) {
+        adamic_panic("wasm32-wasi: cannot enter supplied working directory", sizeof "wasm32-wasi: cannot enter supplied working directory" - 1);
+    }
+#endif
 	adamic_arguments_save(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
