@@ -1,0 +1,10 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -249,6 +249,7 @@
+ 		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+ 			parent = parent.Parent
+ 		}
++		if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 { read = ir.Box{Value: ir.StringConstant{Index: l.constant("mutant")}} }
+ 		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) || unionEqualityObservation(node) || l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
+ 		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+ 			// Calls and captured writes can invalidate the checker's narrowing. Check the

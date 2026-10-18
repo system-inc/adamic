@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:20:41.070111665Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/lane"}
+{"Time":"2026-10-18T00:20:41.073023022Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython"}
+{"Time":"2026-10-18T00:20:41.073112416Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython","Output":"=== RUN   TestApplyPython\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:20:41.073139738Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython","Output":"=== PAUSE TestApplyPython\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:20:41.073142191Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython"}
+{"Time":"2026-10-18T00:20:41.073144555Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython"}
+{"Time":"2026-10-18T00:20:41.073146328Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython","Output":"=== CONT  TestApplyPython\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:20:55.124275938Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython","Output":"--- PASS: TestApplyPython (14.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:20:55.124401598Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Test":"TestApplyPython","Elapsed":14.05}
+{"Time":"2026-10-18T00:20:55.124420637Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:20:55.125090687Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/lane","Output":"ok  \tgithub.com/system-inc/adamic/stage3/lane\t14.055s\n"}
+{"Time":"2026-10-18T00:20:55.125110227Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/lane","Elapsed":14.055}

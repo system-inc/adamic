@@ -1,0 +1,429 @@
+[
+  {
+    "topic": "boxed-check",
+    "catchers": [
+      {
+        "log": "mutant-boxed-check.log",
+        "test": "TestNativeAgreesWithNode_127/internal/oracle/testdata/scout_boxed_scalar_stale_field.a",
+        "seconds": 2.76,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-boxed-check.log",
+        "test": "TestNativeAgreesWithNode_127",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:792: stdout differs\n",
+      "    oracle_test.go:796: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0\n"
+    ]
+  },
+  {
+    "topic": "boxed-observation",
+    "catchers": [
+      {
+        "log": "mutant-boxed-observation.log",
+        "test": "TestNativeAgreesWithNode_088/internal/oracle/testdata/scout_boxed_scalar_fields.a",
+        "seconds": 2.88,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-boxed-observation.log",
+        "test": "TestNativeAgreesWithNode_088",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: exit codes differ\n",
+      "    oracle_test.go:807: JavaScript backend: exit codes differ\n"
+    ]
+  },
+  {
+    "topic": "class-optional",
+    "catchers": [
+      {
+        "log": "mutant-class-optional.log",
+        "test": "TestScoutClassBooleanKeepsUnsafeViewsRefused",
+        "seconds": 0.06,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    scout_class_boolean_test.go:21: neighbor must remain stopped, got <nil>\n"
+    ]
+  },
+  {
+    "topic": "class-zero",
+    "catchers": [
+      {
+        "log": "mutant-class-zero.log",
+        "test": "TestNativeAgreesWithNode_042/internal/oracle/testdata/scout_class_boolean_fields.a",
+        "seconds": 2.77,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-class-zero.log",
+        "test": "TestNativeAgreesWithNode_042",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n",
+      "    oracle_test.go:807: JavaScript backend: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "equality-observation",
+    "catchers": [
+      {
+        "log": "mutant-equality-observation.log",
+        "test": "TestNativeAgreesWithNode_035/internal/oracle/testdata/scout_nullable_strings.a",
+        "seconds": 2.98,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-equality-observation.log",
+        "test": "TestNativeAgreesWithNode_035",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: exit codes differ\n",
+      "    oracle_test.go:807: JavaScript backend: exit codes differ\n"
+    ]
+  },
+  {
+    "topic": "local-equality",
+    "catchers": [
+      {
+        "log": "mutant-local-equality.log",
+        "test": "TestNativeAgreesWithNode_029/internal/oracle/testdata/scout_string_number_fields_locals.a",
+        "seconds": 2.76,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-local-equality.log",
+        "test": "TestNativeAgreesWithNode_029",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: exit codes differ\n",
+      "    oracle_test.go:807: JavaScript backend: exit codes differ\n"
+    ]
+  },
+  {
+    "topic": "local-nullish",
+    "catchers": [
+      {
+        "log": "mutant-local-nullish.log",
+        "test": "TestNativeAgreesWithNode_029/internal/oracle/testdata/scout_string_number_fields_locals.a",
+        "seconds": 3.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-local-nullish.log",
+        "test": "TestNativeAgreesWithNode_029",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n",
+      "    oracle_test.go:807: JavaScript backend: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "lookup",
+    "catchers": [
+      {
+        "log": "mutant-lookup.log",
+        "test": "TestNullableObjectStorageLookup",
+        "seconds": 2.49,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    scout_string_number_test.go:56: want explicit storage view stop, got <nil>\n"
+    ]
+  },
+  {
+    "topic": "lower-typeof",
+    "catchers": [
+      {
+        "log": "mutant-lower-typeof.log",
+        "test": "TestNativeAgreesWithNode_091/internal/oracle/testdata/scout_tsc_nullish_content.a",
+        "seconds": 0.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-lower-typeof.log",
+        "test": "TestNativeAgreesWithNode_091",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:766: Lower: /workspace/adamic/internal/oracle/testdata/scout_tsc_nullish_content.a:3:17: stage 0 can't lower typeof a value holding both null and undefined without a presence slot yet\n"
+    ]
+  },
+  {
+    "topic": "null-box",
+    "catchers": [
+      {
+        "log": "mutant-null-box.log",
+        "test": "TestNativeAgreesWithNode_035/internal/oracle/testdata/scout_nullable_strings.a",
+        "seconds": 2.62,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-null-box.log",
+        "test": "TestNativeAgreesWithNode_035",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "nullable-admission",
+    "catchers": [
+      {
+        "log": "mutant-nullable-admission.log",
+        "test": "TestNullableStringAdmission",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    nullable_strings_test.go:14: /tmp/adamic-gate/TestNullableStringAdmission2876416159/001/main.a:1:15: stage 0 can't lower a value of type string | null yet\n"
+    ]
+  },
+  {
+    "topic": "object-boundary",
+    "catchers": [
+      {
+        "log": "mutant-object-boundary.log",
+        "test": "TestNativeAgreesWithNode_053/internal/oracle/testdata/scout_nullable_objects.a",
+        "seconds": 2.86,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-object-boundary.log",
+        "test": "TestNativeAgreesWithNode_053",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "object-local-runtime",
+    "catchers": [
+      {
+        "log": "mutant-object-local-runtime.log",
+        "test": "TestNativeAgreesWithNode_112/internal/oracle/testdata/scout_nullable_object_stale_local.a",
+        "seconds": 2.69,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-object-local-runtime.log",
+        "test": "TestNativeAgreesWithNode_112",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:792: exit codes differ\n",
+      "    oracle_test.go:796: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0\n"
+    ]
+  },
+  {
+    "topic": "object-local",
+    "catchers": [
+      {
+        "log": "mutant-object-local.log",
+        "test": "TestNativeAgreesWithNode_053/internal/oracle/testdata/scout_nullable_objects.a",
+        "seconds": 2.66,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-object-local.log",
+        "test": "TestNativeAgreesWithNode_053",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:785: the release build: exit codes differ\n",
+      "    oracle_test.go:801: exit codes differ\n",
+      "    oracle_test.go:807: JavaScript backend: exit codes differ\n"
+    ]
+  },
+  {
+    "topic": "object-null-field",
+    "catchers": [
+      {
+        "log": "mutant-object-null-field.log",
+        "test": "TestNativeAgreesWithNode_103/internal/oracle/testdata/scout_nullable_object_null_field.a",
+        "seconds": 2.78,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-object-null-field.log",
+        "test": "TestNativeAgreesWithNode_103",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "object-optional",
+    "catchers": [
+      {
+        "log": "mutant-object-optional.log",
+        "test": "TestNativeAgreesWithNode_053/internal/oracle/testdata/scout_nullable_objects.a",
+        "seconds": 2.84,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-object-optional.log",
+        "test": "TestNativeAgreesWithNode_053",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n",
+      "    oracle_test.go:807: JavaScript backend: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "object-tag",
+    "catchers": [
+      {
+        "log": "mutant-object-tag.log",
+        "test": "TestNativeAgreesWithNode_119/internal/oracle/testdata/scout_nullable_object_stale_field.a",
+        "seconds": 2.87,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-object-tag.log",
+        "test": "TestNativeAgreesWithNode_119",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:796: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0\n"
+    ]
+  },
+  {
+    "topic": "regex-adapter",
+    "catchers": [
+      {
+        "log": "mutant-regex-adapter.log",
+        "test": "TestNativeAgreesWithNode_122/internal/oracle/testdata/regexp_replace/callback.a",
+        "seconds": 0.06,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-regex-adapter.log",
+        "test": "TestNativeAgreesWithNode_122",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:766: Lower: /workspace/adamic/internal/oracle/testdata/regexp_replace/callback.a:34:31: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n"
+    ]
+  },
+  {
+    "topic": "runtime-typeof",
+    "catchers": [
+      {
+        "log": "mutant-runtime-typeof.log",
+        "test": "TestNativeAgreesWithNode_091/internal/oracle/testdata/scout_tsc_nullish_content.a",
+        "seconds": 2.55,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-runtime-typeof.log",
+        "test": "TestNativeAgreesWithNode_091",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: stdout differs\n"
+    ]
+  },
+  {
+    "topic": "shared-view",
+    "catchers": [
+      {
+        "log": "mutant-shared-view.log",
+        "test": "TestNullableObjectStorageArray",
+        "seconds": 2.52,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    scout_string_number_test.go:36: want explicit storage view stop, got <nil>\n"
+    ]
+  },
+  {
+    "topic": "string-check",
+    "catchers": [
+      {
+        "log": "mutant-string-check.log",
+        "test": "TestNativeAgreesWithNode_073/internal/oracle/testdata/scout_string_number_stale_field.a",
+        "seconds": 2.87,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-string-check.log",
+        "test": "TestNativeAgreesWithNode_073",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:796: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0\n"
+    ]
+  },
+  {
+    "topic": "string-tag",
+    "catchers": [
+      {
+        "log": "mutant-string-tag.log",
+        "test": "TestNativeAgreesWithNode_029/internal/oracle/testdata/scout_string_number_fields_locals.a",
+        "seconds": 2.56,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-string-tag.log",
+        "test": "TestNativeAgreesWithNode_029",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ],
+    "errors": [
+      "    oracle_test.go:801: exit codes differ\n",
+      "    oracle_test.go:807: JavaScript backend: exit codes differ\n"
+    ]
+  }
+]

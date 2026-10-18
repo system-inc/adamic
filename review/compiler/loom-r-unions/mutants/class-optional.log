@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:07:50.634428916Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:07:50.651857232Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused"}
+{"Time":"2026-10-18T00:07:50.651993107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused","Output":"=== RUN   TestScoutClassBooleanKeepsUnsafeViewsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.652060358Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused","Output":"=== PAUSE TestScoutClassBooleanKeepsUnsafeViewsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.652063313Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused"}
+{"Time":"2026-10-18T00:07:50.652065626Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused"}
+{"Time":"2026-10-18T00:07:50.652067589Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused","Output":"=== CONT  TestScoutClassBooleanKeepsUnsafeViewsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.948155542Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused","Output":"    scout_class_boolean_test.go:21: neighbor must remain stopped, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:50.948295704Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused","Output":"--- FAIL: TestScoutClassBooleanKeepsUnsafeViewsRefused (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.948309284Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestScoutClassBooleanKeepsUnsafeViewsRefused","Elapsed":0.3}
+{"Time":"2026-10-18T00:07:50.948328683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.958949556Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.319s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:50.959003978Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.325}

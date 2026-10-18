@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -360,7 +360,7 @@
+ 	}
+ 	var notYet *lower.NotYet
+ 	if errors.As(err, &notYet) {
+-		return []observation{{"NotYet", normalize(notYet.What), notYet.Where}}, true
++		return nil, true
+ 	}
+ 	return []observation{{"lower", normalize(err.Error()), path}}, true
+ }

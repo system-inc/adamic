@@ -1,0 +1,11 @@
+--- a/internal/lower/nullable_objects.go
++++ b/internal/lower/nullable_objects.go
+@@ -170,7 +170,7 @@
+ func (l *lowering) nullableObjectViewHazard(node *ast.Node, contextual *checker.Type) bool {
+ 	// RegExp replacement adapts the closure's actual signature instead of sharing
+ 	// lib.d.ts's callable ABI, including its declared return conversion.
+-	if l.regexReplacementArgument(node) {
++	if false && l.regexReplacementArgument(node) {
+ 		return false
+ 	}
+ 	return !freshNullableObjectStorage(node) && l.nullableObjectSharedView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{})

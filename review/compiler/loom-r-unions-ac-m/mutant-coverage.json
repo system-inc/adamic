@@ -1,0 +1,38 @@
+{
+  "caught": [
+    "null-box",
+    "runtime-typeof",
+    "lower-typeof",
+    "nullable-admission"
+  ],
+  "stopped": {
+    "topic": "equality-observation",
+    "reason": "Go compilation failed with no space left on device before any test ran",
+    "not_counted_as_caught": true,
+    "rerun": false
+  },
+  "not_run": [
+    "class-zero",
+    "class-optional",
+    "boxed-check",
+    "boxed-observation",
+    "object-boundary",
+    "object-tag",
+    "object-optional",
+    "object-null-field",
+    "string-check",
+    "string-tag",
+    "local-nullish",
+    "regex-adapter",
+    "shared-view",
+    "lookup",
+    "local-equality",
+    "object-local-runtime",
+    "object-local",
+    "meter-drop-notyet",
+    "meter-json-shape",
+    "meter-revoke-boolean-fields",
+    "main-narrow-literal-refusal"
+  ],
+  "instruction": "User directed push and report missing coverage rather than rerun a stopping mutant."
+}

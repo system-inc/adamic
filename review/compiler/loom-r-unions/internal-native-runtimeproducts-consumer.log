@@ -1,0 +1,6 @@
+=== RUN   TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== PAUSE TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== CONT  TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+    census_test.go:736: build go_list_-export__./internal/native_listing.json 2d4ed381669c miss 9.92
+--- PASS: TestTheRuntimeBuildReachesOnlyItsDeclaredFiles (17.43s)
+PASS

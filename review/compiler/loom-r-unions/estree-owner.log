@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:11:48.658633885Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles"}
+{"Time":"2026-10-18T00:11:48.663688685Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle"}
+{"Time":"2026-10-18T00:11:48.663764309Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle","Output":"=== RUN   TestProduct_EstreeGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:48.66378491Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle","Output":"=== PAUSE TestProduct_EstreeGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:48.663787534Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle"}
+{"Time":"2026-10-18T00:11:48.66379131Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle"}
+{"Time":"2026-10-18T00:11:48.663793133Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle","Output":"=== CONT  TestProduct_EstreeGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:11.016628573Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle","Output":"    oracles.go:172: build estree-go-oracle-v1_oracle-owner-v1 000c1908e2dd miss 22.34\n"}
+{"Time":"2026-10-18T00:12:11.016702054Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle","Output":"--- PASS: TestProduct_EstreeGoOracle (22.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:11.01670605Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Test":"TestProduct_EstreeGoOracle","Elapsed":22.35}
+{"Time":"2026-10-18T00:12:11.016725048Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:11.019480045Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree/oracles\t22.360s\n"}
+{"Time":"2026-10-18T00:12:11.019509279Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree/oracles","Elapsed":22.361}

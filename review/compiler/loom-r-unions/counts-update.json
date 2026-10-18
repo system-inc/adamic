@@ -1,0 +1,19 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestCountsAreRecorded_[0-9]+$",
+    "-count=1",
+    "-timeout",
+    "180s",
+    "-parallel",
+    "4",
+    "-json",
+    "-args",
+    "-update-counts"
+  ],
+  "seconds": 169.696,
+  "exit": 0
+}

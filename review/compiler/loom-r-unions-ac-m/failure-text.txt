@@ -1,0 +1,2 @@
+main_test.go:79: report = main.report{Root:"/workspace/adamic/cmd/adamic-meter/testdata/corpus", FilesExamined:2, JavaScriptSkipped:0, FilesReachingLowering:2, Reasons:[]*main.finding{(*main.finding)(0x2847c32f38c0)}, Adaptations:[]main.adaptation(nil)}
+main_test.go:24: counts = map[string]int{"Refused":1}, want one Refused and one NotYet

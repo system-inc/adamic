@@ -1,0 +1,17 @@
+{"Time":"2026-10-16T08:30:10.936468556Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-16T08:30:10.941192579Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause"}
+{"Time":"2026-10-16T08:30:10.941257617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Output":"=== RUN   TestScoutStringRouteCountsCause\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:30:10.941274552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Output":"=== PAUSE TestScoutStringRouteCountsCause\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:30:10.941276966Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause"}
+{"Time":"2026-10-16T08:30:10.94127958Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause"}
+{"Time":"2026-10-16T08:30:10.941281352Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Output":"=== CONT  TestScoutStringRouteCountsCause\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:30:13.488941642Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Output":"    scout_nullable_objects_test.go:35: | internal/oracle/testdata/scout_boxed_scalar_fields.a | 62 | 62 | 95 | 150 | 6 | 0 |\n"}
+{"Time":"2026-10-16T08:30:13.598551107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Output":"    scout_nullable_objects_test.go:35: | internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 11 | 34 | 10 | 0 |\n"}
+{"Time":"2026-10-16T08:30:13.60019295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Output":"--- PASS: TestScoutStringRouteCountsCause (2.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:30:13.600209806Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestScoutStringRouteCountsCause","Elapsed":2.66}
+{"Time":"2026-10-16T08:30:13.600230988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:30:13.600234363Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-16T08:30:13.600236265Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=0\n"}
+{"Time":"2026-10-16T08:30:13.600238118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-16T08:30:13.600696156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.664s\n"}
+{"Time":"2026-10-16T08:30:13.600722776Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.664}

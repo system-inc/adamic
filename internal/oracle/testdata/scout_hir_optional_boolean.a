@@ -1,0 +1,3 @@
+interface Terminal { readonly optional?: boolean; }
+function read(terminal: Terminal): boolean { return terminal.optional ? true : false; }
+console.log(read({ optional: true }) ? 'true' : 'false');

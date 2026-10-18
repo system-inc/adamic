@@ -1,0 +1,10 @@
+null-box 1 16.252 True
+runtime-typeof 1 15.852 True
+lower-typeof 1 15.69 True
+nullable-admission 1 14.427 True
+equality-observation 1 13.446 False
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-unions-ac-m/run-mutants.py", line 16, in <module>
+    assert killed and not large,(c['topic'],large)
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('equality-observation', [])

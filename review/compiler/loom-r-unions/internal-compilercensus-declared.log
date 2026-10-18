@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:19:49.504087692Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilercensus"}
+{"Time":"2026-10-18T00:19:49.507148418Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap"}
+{"Time":"2026-10-18T00:19:49.507216451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap","Output":"=== RUN   TestDependenciesCoverTheDeclaredMap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:49.507239446Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap","Output":"=== PAUSE TestDependenciesCoverTheDeclaredMap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:49.50724195Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap"}
+{"Time":"2026-10-18T00:19:49.507244583Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap"}
+{"Time":"2026-10-18T00:19:49.507246366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap","Output":"=== CONT  TestDependenciesCoverTheDeclaredMap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:50.000190472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap","Output":"    dependencies_test.go:121: 15 declared, each derived among the census's 81\n"}
+{"Time":"2026-10-18T00:19:50.000269912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap","Output":"--- PASS: TestDependenciesCoverTheDeclaredMap (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:50.000273387Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestDependenciesCoverTheDeclaredMap","Elapsed":0.49}
+{"Time":"2026-10-18T00:19:50.000292666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:50.001206956Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilercensus\t0.497s\n"}
+{"Time":"2026-10-18T00:19:50.001232034Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilercensus","Elapsed":0.497}

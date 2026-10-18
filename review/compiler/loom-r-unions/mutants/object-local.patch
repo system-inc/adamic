@@ -1,0 +1,11 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -241,7 +241,7 @@
+ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+ 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
+ 	if l.result.Locals[local].Type == ir.Union {
+-		if l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {
++		if false && l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {
+ 			return l.checkedNullableObject(node, read), nil
+ 		}
+ 		// Where the checker has narrowed it to fewer members held one way, it's read as that.

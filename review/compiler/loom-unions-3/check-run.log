@@ -1,0 +1,15 @@
+counts-regeneration 0 18.687
+counts-table 0 3.076
+lower-focus 0 9.368
+oracle-focus 0 6.0
+fixtures 0 7.983
+regex-adapter 0 15.626
+stage1-gaps 0 15.439
+flow-consumers 1 20.496
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-unions-3/check.py", line 33, in <module>
+    run('flow-consumers',['go','test','./internal/flow','-run','^TestFlowCorpusRemainder$',*standard])
+  File "/workspace/adamic/review/compiler/loom-unions-3/check.py", line 18, in run
+    assert completed.returncode==expected,(label,completed.returncode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('flow-consumers', 1)

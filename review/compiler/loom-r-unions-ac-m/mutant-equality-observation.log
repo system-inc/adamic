@@ -1,0 +1,8 @@
+{"ImportPath":"github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]","Action":"build-output","Output":"compile: writing output: write $WORK/b132/_pkg_.a: no space left on device\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]","Action":"build-fail"}
+{"ImportPath":"github.com/system-inc/adamic/internal/lower","Action":"build-output","Output":"github.com/system-inc/adamic/internal/lower: write /tmp/adamic-gate/go-build2351692519/b303/vet.cfg: no space left on device\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/lower","Action":"build-fail"}
+{"Time":"2026-10-18T21:07:06.579039768Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T21:07:06.579090212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-18T21:07:06.57910248Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]"}

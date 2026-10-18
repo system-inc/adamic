@@ -1,0 +1,46 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a (1.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a (1.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a (1.36s)
+PASS
+gate cache: native hits=2 misses=6
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.433s
