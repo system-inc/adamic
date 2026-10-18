@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:39:21.78476247Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-18T19:39:21.80459342Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram"}
+{"Time":"2026-10-18T19:39:21.804680021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"=== RUN   TestFreshCorpusUnitsCoverEveryProgram\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:39:21.804703656Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"=== PAUSE TestFreshCorpusUnitsCoverEveryProgram\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:39:21.80470612Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram"}
+{"Time":"2026-10-18T19:39:21.804713331Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram"}
+{"Time":"2026-10-18T19:39:21.804715153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"=== CONT  TestFreshCorpusUnitsCoverEveryProgram\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:39:21.806576512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"    corpus_coverage_test.go:45: corpus coverage at 574: \"../oracle/testdata/non_null_possible_read.a\" is missing or duplicated\n","OutputType":"error"}
+{"Time":"2026-10-18T19:39:21.806598245Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"--- FAIL: TestFreshCorpusUnitsCoverEveryProgram (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:39:21.806606317Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Elapsed":0}
+{"Time":"2026-10-18T19:39:21.806618285Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:39:21.815109454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fresh\t0.028s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:39:21.815147421Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.03}

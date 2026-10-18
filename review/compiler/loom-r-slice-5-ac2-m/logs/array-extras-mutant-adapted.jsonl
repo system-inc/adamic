@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:36:33.617961582Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T19:36:33.622773851Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON"}
+{"Time":"2026-10-18T19:36:33.622862875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON","Output":"=== RUN   TestParserConstructionRuntimeMutantArrayExtrasInJSON\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:36:33.622884848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON","Output":"=== PAUSE TestParserConstructionRuntimeMutantArrayExtrasInJSON\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:36:33.622887402Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON"}
+{"Time":"2026-10-18T19:36:33.622891038Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON"}
+{"Time":"2026-10-18T19:36:33.622894423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON","Output":"=== CONT  TestParserConstructionRuntimeMutantArrayExtrasInJSON\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:36:50.497114886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON","Output":"    parser_construction_test.go:227: Node disagreement caught runtime mutant: got \"[1,2,-1]\\n\", Node \"[1,2]\\n\"\n"}
+{"Time":"2026-10-18T19:36:50.497175027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON","Output":"--- PASS: TestParserConstructionRuntimeMutantArrayExtrasInJSON (16.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:36:50.49719063Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParserConstructionRuntimeMutantArrayExtrasInJSON","Elapsed":16.87}
+{"Time":"2026-10-18T19:36:50.497210029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:36:50.500069228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t16.882s\n"}
+{"Time":"2026-10-18T19:36:50.500101496Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":16.882}

@@ -1,0 +1,64 @@
+[
+  {
+    "package": "./internal/boundedrun",
+    "tests": [
+      "TestDeadlineKillsGrandchild"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "tests": [
+      "TestNewAdmissionMismatch"
+    ]
+  },
+  {
+    "package": "./internal/compilercensus",
+    "tests": [
+      "TestEveryCCompilerRunsThroughNative"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "tests": [
+      "TestSharedCache"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "tests": []
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "tests": [
+      "TestSettleParsesOnlyAskedCalls"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "tests": []
+  },
+  {
+    "package": "./internal/tracked",
+    "tests": [
+      "TestAdversarialEntries"
+    ]
+  },
+  {
+    "package": "./internal/toolchain",
+    "tests": [
+      "TestAToolIsFoundUnderTheToolsDirectoryAndOnlyThereInASandbox"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "tests": [
+      "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec"
+    ]
+  },
+  {
+    "package": "./stage3/lane",
+    "tests": [
+      "TestApplyPython"
+    ]
+  }
+]

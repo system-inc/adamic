@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:26:21.194615954Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta"}
+{"Time":"2026-10-18T00:26:21.196962983Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch"}
+{"Time":"2026-10-18T00:26:21.197005978Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"=== RUN   TestNewAdmissionMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:21.197023704Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"=== PAUSE TestNewAdmissionMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:21.197025928Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch"}
+{"Time":"2026-10-18T00:26:21.197032357Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch"}
+{"Time":"2026-10-18T00:26:21.19703428Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"=== CONT  TestNewAdmissionMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:21.283683316Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Output":"--- PASS: TestNewAdmissionMismatch (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:21.283726641Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Test":"TestNewAdmissionMismatch","Elapsed":0.09}
+{"Time":"2026-10-18T00:26:21.283781734Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:21.284320784Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-admission-delta\t0.089s\n"}
+{"Time":"2026-10-18T00:26:21.284350369Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-admission-delta","Elapsed":0.09}

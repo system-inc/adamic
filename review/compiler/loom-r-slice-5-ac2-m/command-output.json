@@ -1,0 +1,12 @@
+{
+  "a-check.log": "{'refused': 16, 'checked': 43} {'a-check': 0}\nPASS\n",
+  "final-build.log": "",
+  "native-repaired-batches.log": "internal/native 0 0\ninternal/native 1 0\ninternal/native 2 0\ninternal/native 3 0\n",
+  "final-vet.log": "",
+  "oracle-pending-batches.log": "internal/oracle 0 0\n",
+  "apply.log": "Auto-merging internal/fresh/corpus_units_test.go\nCONFLICT (content): Merge conflict in internal/fresh/corpus_units_test.go\nAuto-merging internal/ir/ir.go\nAuto-merging internal/lower/functions.go\nAuto-merging internal/lower/object.go\nAuto-merging internal/native/runtime/json_stringify.c\nCONFLICT (content): Merge conflict in internal/native/runtime/json_stringify.c\nAuto-merging internal/native/tsgo.go\nAuto-merging internal/oracle/counts.md\nAuto-merging internal/oracle/oracle_test.go\nAuto-merging review/test-split-flow/generate.py\nAuto-merging review/test-split-flow/units.json\nerror: could not apply 9947f261... Carry compiler slice and repair relocated freshness readers\nhint: after resolving the conflicts, mark the corrected paths\nhint: with 'git add <paths>' or 'git rm <paths>'\nhint: Disable this message with \"git config set advice.mergeConflict false\"\n",
+  "vet.log": "",
+  "final-gofmt.log": "",
+  "gofmt.log": "",
+  "restart": "Environment went offline/starting after validation finished. Workspace and logs persisted. Recreated /tmp/adamic-gate with mode 1777 after the restart before the inventory-only queries."
+}

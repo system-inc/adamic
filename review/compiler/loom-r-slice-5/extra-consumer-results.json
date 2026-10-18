@@ -1,0 +1,1756 @@
+[
+  {
+    "package": "./bench/regex",
+    "command": [
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.2956968800000368,
+    "tests": []
+  },
+  {
+    "package": "./bridge/tsgo",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^(TestTSGoRequiresLink)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 11.465018737000037,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:11:46.086239486Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/bridge/tsgo",
+        "Test": "TestTSGoRequiresLink",
+        "Elapsed": 0.12
+      }
+    ]
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "command": [
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^(TestRuntimeFeaturesMatchNode)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 12.849531272000036,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:11:58.9461838Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+        "Test": "TestRuntimeFeaturesMatchNode",
+        "Elapsed": 5.44
+      }
+    ]
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 7.616274684000018,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:12:06.587460565Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic-meter",
+        "Test": "TestOptionalPositionCountsUTF16Surrogates",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^(TestAdaptSingletonArrayCallback)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 6.492557939999983,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:12:13.066884724Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+        "Test": "TestAdaptSingletonArrayCallback",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "command": [
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^(TestCheckKeyTellsTheCompilerFromTscWhole)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.2984709220000923,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:12:16.400308827Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/compilerinputs",
+        "Test": "TestCheckKeyTellsTheCompilerFromTscWhole",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "package": "./internal/fuzz",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^(TestFindingReproducesAlone)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 8.609476974000017,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:12:24.824455688Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/clang_flakes",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.832801596Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/clang_always_fails",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T00:12:24.850289879Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/silent_clang_death",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.864263273Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/compiler_crash",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T00:12:24.882424488Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/backend_compiler_crash",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.90127495Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/native_death",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.919536727Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/node_death",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.940306314Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/backend_death",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.959857128Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone/leak_runner_death",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T00:12:24.959876767Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Test": "TestFindingReproducesAlone",
+        "Elapsed": 0.15
+      }
+    ]
+  },
+  {
+    "package": "./internal/leakcheck",
+    "command": [
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^(TestReportedLeakIsRejected)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.3194507690000137,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:12:25.288698831Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/leakcheck",
+        "Test": "TestReportedLeakIsRejected",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^(TestOriginalCycleLedger)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 54.02017412999999,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:13:19.284172777Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/internal/lower/cycleledger",
+        "Test": "TestOriginalCycleLedger",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/runtimeproducts",
+      "-run",
+      "^(TestTheRuntimeBuildReachesOnlyItsDeclaredFiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.3525611449999815,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:13:23.614419807Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+        "Test": "TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+        "Elapsed": 3.44
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^(TestCompositionMatchesGo_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 72.165074075,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:14:35.830681869Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+        "Test": "TestCompositionMatchesGo_000",
+        "Elapsed": 63.12
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbers_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.095680915000003,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:15:48.226699436Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+        "Test": "TestCSSNumbers_000",
+        "Elapsed": 0.64
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbers_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 2.127671704000022,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:16:52.044557277Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+        "Test": "TestCSSNumbers_000",
+        "Elapsed": 0.54
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbers_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 2.074663837000003,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:17:49.140313348Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+        "Test": "TestCSSNumbers_000",
+        "Elapsed": 0.54
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestCSSStrings_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 5.0498407060000545,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:17:54.149700839Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+        "Test": "TestCSSStrings_000",
+        "Elapsed": 0.46
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^(TestAcceptanceMutants_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 5.793310511999948,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:17:59.943889855Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/estree",
+        "Test": "TestAcceptanceMutants_000",
+        "Elapsed": 1
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/formatfiles",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoes_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 5.143566273000033,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:18:05.124393831Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "Test": "TestThePortParsesAsGoCohereDoes_000",
+        "Elapsed": 0.41
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^(TestThePortAnswersAsGoCohereAndGitDo_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 5.040034253000044,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:18:10.155465265Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "Test": "TestThePortAnswersAsGoCohereAndGitDo_000",
+        "Elapsed": 0.41
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.849308042999951,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:18:15.980251753Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:18:15.980348418Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts",
+        "Elapsed": 1.2
+      },
+      {
+        "Time": "2026-10-18T00:18:15.9803562Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/graphql",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql/printer",
+      "-run",
+      "^(TestPrinterAsGoCohere_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 10.873397805000081,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:18:26.859413278Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+        "Test": "TestPrinterAsGoCohere_000",
+        "Elapsed": 6.15
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestPortMatchesGoCohereClassOrder_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 6.701932276000093,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:18:33.56499913Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+        "Test": "TestPortMatchesGoCohereClassOrder_000",
+        "Elapsed": 1.46
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^(TestDecodedOptionsAndMutant_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 30.99348528600001,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:19:04.574505548Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestDecodedOptionsAndMutant_000",
+        "Elapsed": 24.67
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers",
+      "-run",
+      "^(TestMessageRefusalsMatchGo)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.146760458000017,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:19:11.717637426Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+        "Test": "TestMessageRefusalsMatchGo",
+        "Elapsed": 2.74
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^(TestCommentMutants_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 5.140284456000018,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:19:16.842064171Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+        "Test": "TestCommentMutants_000",
+        "Elapsed": 0.45
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^(TestShapeFixtures_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 11.084543029999963,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:19:27.922668248Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+        "Test": "TestShapeFixtures_000",
+        "Elapsed": 6.51
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 34.03698059399994,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:20:01.990929939Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+        "Test": "TestCompileProfiles",
+        "Elapsed": 29.32
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 30.584039071999996,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:20:32.541767383Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+        "Test": "TestCompileProfiles",
+        "Elapsed": 25.24
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 27.38640829799988,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:20:59.973410334Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+        "Test": "TestCompileProfiles",
+        "Elapsed": 23.03
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 27.825861433,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:21:27.785898005Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+        "Test": "TestCompileProfiles",
+        "Elapsed": 23.39
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestTokenizerEvents_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.4616408559998035,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:21:35.247802318Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "Test": "TestTokenizerEvents_000",
+        "Elapsed": 1.95
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 6.161983800999906,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:21:41.382363052Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+        "Test": "TestDelimiterExpressionMatchesNode",
+        "Elapsed": 1.11
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/mediaquery",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 6.004658996999979,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:21:47.102577533Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts",
+        "Elapsed": 1.13
+      },
+      {
+        "Time": "2026-10-18T00:21:47.110676273Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts",
+        "Elapsed": 1.14
+      },
+      {
+        "Time": "2026-10-18T00:21:47.142438758Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts",
+        "Elapsed": 1.15
+      },
+      {
+        "Time": "2026-10-18T00:21:47.389079236Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts",
+        "Elapsed": 1.17
+      },
+      {
+        "Time": "2026-10-18T00:21:47.38995988Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts",
+        "Elapsed": 0.28
+      },
+      {
+        "Time": "2026-10-18T00:21:47.389982023Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts",
+        "Elapsed": 0.29
+      },
+      {
+        "Time": "2026-10-18T00:21:47.390022544Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.797298233999982,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:21:52.165442416Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:21:52.170195183Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:21:52.174773087Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:21:52.274409302Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-18T00:21:53.184464222Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:21:53.184512054Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+        "Elapsed": 1.02
+      },
+      {
+        "Time": "2026-10-18T00:21:53.184521027Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/selector",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.737176160999979,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:21:57.918459452Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:21:57.918489787Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:21:57.918496788Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/suppression",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.743060620000051,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:22:03.696908464Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+        "Elapsed": 1.15
+      },
+      {
+        "Time": "2026-10-18T00:22:03.696950387Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+        "Elapsed": 1.15
+      },
+      {
+        "Time": "2026-10-18T00:22:03.696956736Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/suppression",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^(TestExpressionsAgainstGoAndPrettier_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.94204387700006,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:22:08.646699048Z",
+        "Action": "skip",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+        "Test": "TestExpressionsAgainstGoAndPrettier_000",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^(TestShadowIndexMissingBinding_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 94.96748148000006,
+    "tests": []
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 8.567950911000025,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:23:52.050847051Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+        "Elapsed": 1.75
+      },
+      {
+        "Time": "2026-10-18T00:23:52.058011995Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+        "Elapsed": 1.76
+      },
+      {
+        "Time": "2026-10-18T00:23:52.074313256Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+        "Elapsed": 1.76
+      },
+      {
+        "Time": "2026-10-18T00:23:52.157906752Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+        "Elapsed": 1.78
+      },
+      {
+        "Time": "2026-10-18T00:23:52.157960112Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:23:52.157969436Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^(TestComposeMatchGo_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 6.862060849000045,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:23:59.020717934Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+        "Test": "TestComposeMatchGo_000",
+        "Elapsed": 0.4
+      }
+    ]
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^(TestParserChildGuard_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 18.637580750000097,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:24:17.672780054Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/parser",
+        "Test": "TestParserChildGuard_000",
+        "Elapsed": 13.86
+      }
+    ]
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/scanner",
+      "-run",
+      "^(TestScannerAgreesWithTypescriptGo_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 5.597946378000188,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:24:23.255188041Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "Test": "TestScannerAgreesWithTypescriptGo_000",
+        "Elapsed": 0.95
+      }
+    ]
+  },
+  {
+    "package": "./stage3/census/tool",
+    "command": [
+      "go",
+      "test",
+      "./stage3/census/tool",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.11430590800000573,
+    "tests": []
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "command": [
+      "go",
+      "test",
+      "./stage3/drivers/parser/probe",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.1651216380000733,
+    "tests": []
+  },
+  {
+    "package": "./stage3/fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^(TestFixturesAssertions)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 11.903169821999882,
+    "tests": [
+      {
+        "Time": "2026-10-18T00:24:32.510319212Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/01_map_call.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.518299862Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/16_unknown_chain.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.5258265Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/06_memoize_clear.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.529009326Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.557632636Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/16_unknown_chain.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.557656171Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/16_unknown_chain.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:32.559987977Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/01_map_call.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.559993726Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/01_map_call.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:32.561455664Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/06_memoize_clear.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.561462765Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/06_memoize_clear.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:32.635699152Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/03_exports_field.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.635705932Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/05_regex_call_index.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.63978776Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/04_field_then_call.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.681894885Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/03_exports_field.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.681906302Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/03_exports_field.a",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:24:32.686332398Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/05_regex_call_index.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.686343275Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/05_regex_call_index.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:32.689428694Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/04_field_then_call.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.689438669Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/04_field_then_call.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:32.758387029Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/02_code_point_call.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.762236116Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.78224223Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/02_code_point_call.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.782250462Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/02_code_point_call.a",
+        "Elapsed": 0.1
+      },
+      {
+        "Time": "2026-10-18T00:24:32.793120487Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/15_mutable_view.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.829902094Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/15_mutable_view.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.829910777Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/15_mutable_view.a",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:24:32.883550023Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/14_structural_cache.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.921683293Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/08_optional_start.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.932465906Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/14_structural_cache.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.932476052Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/14_structural_cache.a",
+        "Elapsed": 0.15
+      },
+      {
+        "Time": "2026-10-18T00:24:32.954347829Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/08_optional_start.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:32.95436804Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/08_optional_start.a",
+        "Elapsed": 0.12
+      },
+      {
+        "Time": "2026-10-18T00:24:33.018382051Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/10_union_kind.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:33.033075645Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/09_interface_kind.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:33.068463716Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/09_interface_kind.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:33.06848607Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/09_interface_kind.a",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:24:33.150368184Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/12_union_target.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:33.178242097Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/12_union_target.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:33.178250059Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/12_union_target.a",
+        "Elapsed": 0.11
+      },
+      {
+        "Time": "2026-10-18T00:24:33.257971774Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/18_const_tuple.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.042946373Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a/native",
+        "Elapsed": 1.47
+      },
+      {
+        "Time": "2026-10-18T00:24:34.045025088Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.04505262Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a",
+        "Elapsed": 1.61
+      },
+      {
+        "Time": "2026-10-18T00:24:34.13559169Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.214363667Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a/native",
+        "Elapsed": 1.42
+      },
+      {
+        "Time": "2026-10-18T00:24:34.21437879Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.214383757Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a",
+        "Elapsed": 1.52
+      },
+      {
+        "Time": "2026-10-18T00:24:34.302387336Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.343267016Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.343277211Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:34.439591436Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/17_brand_upcast.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.483464621Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/17_brand_upcast.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.483480655Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/17_brand_upcast.a",
+        "Elapsed": 0.14
+      },
+      {
+        "Time": "2026-10-18T00:24:34.496642657Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/10_union_kind.a/native",
+        "Elapsed": 1.44
+      },
+      {
+        "Time": "2026-10-18T00:24:34.498280019Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/10_union_kind.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.576534412Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/10_union_kind.a",
+        "Elapsed": 1.56
+      },
+      {
+        "Time": "2026-10-18T00:24:34.576605259Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/07_indexed_operation.a/node",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.61432757Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/07_indexed_operation.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:34.739732604Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/07_indexed_operation.a",
+        "Elapsed": 0.13
+      },
+      {
+        "Time": "2026-10-18T00:24:34.739815729Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/18_const_tuple.a/native",
+        "Elapsed": 1.45
+      },
+      {
+        "Time": "2026-10-18T00:24:34.739828138Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/18_const_tuple.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:35.45204094Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/18_const_tuple.a",
+        "Elapsed": 1.57
+      },
+      {
+        "Time": "2026-10-18T00:24:35.452090915Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a/native",
+        "Elapsed": 1.29
+      },
+      {
+        "Time": "2026-10-18T00:24:35.452106809Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a/stage0",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:35.452113179Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a",
+        "Elapsed": 1.41
+      },
+      {
+        "Time": "2026-10-18T00:24:35.452118136Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions/assertions",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T00:24:35.45212751Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage3/fixtures",
+        "Test": "TestFixturesAssertions",
+        "Elapsed": 4.19
+      }
+    ]
+  }
+]

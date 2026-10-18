@@ -1,0 +1,13 @@
+Rebase slice 5 lowering on pinned main
+
+Apply only 05eb9043 own diff to dbdf977f5b.
+
+Conservative choices: retain main packed caches, static owner tracking and
+async readiness rules. Publish reference children of interior NodeArray
+metadata without retaining its header. Keep Program-region lifetime pending.
+Preserve source TypeScript compatibility fixture dialects.
+
+Move deliberate refusal controls under non_null_refused.
+
+Core focused checks pass. Consumer budget failures and missing gate inputs
+remain explicit limitations in review/compiler/loom-r-slice-5/REPORT.md.

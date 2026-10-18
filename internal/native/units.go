@@ -164,7 +164,12 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		if declaration.name == ";" && limit >= 3 {
 			declaration.name = declaration.tokens[limit-2].text
 		}
-		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
+		// The emitter declares the parallel-map runtime ABI before using it. Keep
+		// those prototypes in the shared header without renaming runtime symbols.
+		if declaration.body < 0 && declaration.initializer < 0 && declaration.tokens[0].text != "static" && (declaration.name == "adamic_parallel_map" || declaration.name == "adamic_parallel_map_move") {
+			declaration.name = ""
+		}
+		if declaration.name != "" && declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
 		}
 		declarations = append(declarations, declaration)
@@ -385,7 +390,10 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	defer os.RemoveAll(directory)
 	if library == "" {
-		library, err = RuntimeLibraryForSource("", source, options)
+		// Split and Jobs describe program compilation, never a different runtime archive.
+		runtimeOptions := options
+		runtimeOptions.Split, runtimeOptions.Jobs = false, 0
+		library, err = RuntimeLibraryForSource("", source, runtimeOptions)
 		if err != nil {
 			return err
 		}

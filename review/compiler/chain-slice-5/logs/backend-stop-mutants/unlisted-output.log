@@ -1,0 +1,11 @@
+=== RUN   TestUnlistedBackendAgreement
+=== PAUSE TestUnlistedBackendAgreement
+=== CONT  TestUnlistedBackendAgreement
+    backend_stops_test.go:76: unlisted backend divergence: stdout differs; JavaScript exit 0 stdout "In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra!\n" stderr ""; native exit 0 stdout "In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra\n" stderr ""
+--- FAIL: TestUnlistedBackendAgreement (0.72s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.731s
+FAIL

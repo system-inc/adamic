@@ -1,0 +1,42 @@
+{
+  "source": "9947f26139e9a1fbbbff2d29949b0d9490b35a0b",
+  "base": "ca0d1e1500d5ac663b62e196b0b68e3b4f7047be",
+  "extra_lines": [
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "    // Borrowed record views have no shape or construction metadata."
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "    // Reserved and unset shaped slots are omitted before reading their storage."
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "    if (object->shape != NULL && (!adamic_object_present(object, field->slot) || !adamic_object_initialized(object)[field->slot])) { return; }"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "-",
+      "line": "\t\t\tfor (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "\t\t\tif (object->shape == NULL || object->write_order == NULL) {"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "\t\t\t\tfor (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "\t\t\t\t\t\tif (schema->fields[index].slot == order[position]) { write_field(w, object, &schema->fields[index], slots, depth, &written); break; }"
+    }
+  ],
+  "comparison": "Signed added/removed line multiset of final patch against main versus source commit own patch. Unchanged main lines are excluded."
+}

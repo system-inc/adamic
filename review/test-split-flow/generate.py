@@ -36,7 +36,11 @@ families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRang
 manifest = []
 for package in ['flow', 'fresh']:
     paths = []
-    for pattern in patterns:
+    package_patterns = patterns + ([
+        "internal/oracle/testdata/non_null_refused/non_null_possible_*.a",
+        "internal/oracle/testdata/non_null_refused/non_null_refuse_*.a",
+    ] if package == "fresh" else [])
+    for pattern in package_patterns:
         # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
         if package == 'fresh' and pattern.endswith('non_null*.ts'):
             continue

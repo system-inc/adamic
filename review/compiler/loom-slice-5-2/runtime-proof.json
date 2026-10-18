@@ -1,0 +1,22 @@
+{
+  "source": "bcb03d95cab6a83e6a23cc2e1669d5c145d911ff",
+  "source_base": "c0fd8945b872e57a341ccee5973e3f4d1b75c34b",
+  "main": "27d661a838681d3144808e108e3e61e32e940a69",
+  "same_runtime_changes": true,
+  "paths": [
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/array.c",
+    "internal/native/runtime/class_features.c",
+    "internal/native/runtime/class_static.c",
+    "internal/native/runtime/construction.c",
+    "internal/native/runtime/heap.c",
+    "internal/native/runtime/json_stringify.c",
+    "internal/native/runtime/library_language.c",
+    "internal/native/runtime/library_object.c",
+    "internal/native/runtime/object.c",
+    "internal/native/runtime/region.c",
+    "internal/native/runtime/stack.c",
+    "internal/native/runtime/union.c",
+    "oracle/adamic.mjs"
+  ]
+}

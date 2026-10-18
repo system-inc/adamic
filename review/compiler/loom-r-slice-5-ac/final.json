@@ -1,0 +1,888 @@
+{
+  "gate_sha": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": {
+    "internal/lower/testdata/placeholders/nonliteral.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/placeholders/nonliteral.a:4:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03484203199997182
+    },
+    "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3510,
+      "stdout_sha256": "e605d6423f9dde34f11d7bb8fb2b34b85cf4458fdbe1320ba8ffea2aef3fea05",
+      "seconds": 0.03434171100002459
+    },
+    "internal/oracle/testdata/backend_stop_catches.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1843,
+      "stdout_sha256": "f4459bc1eb5c024e9197be26df682c7dbd7d40af440562f0e587a85d3e09e967",
+      "seconds": 0.03890119999999797
+    },
+    "internal/oracle/testdata/d96d304_try_stack.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1397,
+      "stdout_sha256": "8c1d550a95595d696303ce5371d56e63c27ebbae416d097a6206ad344968b0e4",
+      "seconds": 0.03712941399999181
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_possible_read.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:4:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03737566800003833
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a:4:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.04056266599997116
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a:2:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.035451537000028566
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a:3:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.036482206000016504
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a:2:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.035759003999999095
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a:2:28: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03637795899999219
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_element.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_element.a:2:17: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.035265988999981346
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a:3:9: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03428883100002622
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a:2:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.043681862000028104
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_null.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_null.a:2:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03917860700005349
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_return.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_return.a:2:35: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03860240099999146
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a:2:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.0408608139999842
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a:2:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03463230699998121
+    },
+    "internal/oracle/testdata/placeholder_nonnull_alias_reset.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7752,
+      "stdout_sha256": "05346613855f4aa79c95943f9b2e58026dccd733a202bbd20e8e71e410da3c52",
+      "seconds": 0.03225458899999012
+    },
+    "internal/oracle/testdata/placeholder_nonnull_assignment_result.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2545,
+      "stdout_sha256": "cad91a123a4e91654e5d32674c41598246fd5fc5e5515d254841fb59010c6c9e",
+      "seconds": 0.03219612700002017
+    },
+    "internal/oracle/testdata/placeholder_nonnull_before_use.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1736,
+      "stdout_sha256": "ab6370f6cdabe6448bb4a79aa80f6eb1653ef51c7a0bde63ed0ac53870971a21",
+      "seconds": 0.03172231500002454
+    },
+    "internal/oracle/testdata/placeholder_nonnull_field.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 13919,
+      "stdout_sha256": "8b348a179ebda96d75164b41938ebbe700dbcd02b6a66b2c01c05d3cfd956ecb",
+      "seconds": 0.03467270699997016
+    },
+    "internal/oracle/testdata/placeholder_nonnull_local.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5739,
+      "stdout_sha256": "27d17209ad2b897769921ae2001e2d7c70262941bd8dce6d1b31cfb13c82b4d4",
+      "seconds": 0.03123186400000577
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_before_use.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1764,
+      "stdout_sha256": "976e98180f31e660073f7eac382bdd5f0ccf78cb54d428601bdfdbbee9ea32c4",
+      "seconds": 0.03765829299999268
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8000,
+      "stdout_sha256": "0e0ee524790236045d08cfa5fffd759f41b6280b0f16c920e0e0fdfbf9d623c1",
+      "seconds": 0.035354102000042076
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_copy.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 41780,
+      "stdout_sha256": "ecb9ab14bd3b94d5f8fd5c5479acfb30b1b95d4bc298af78f05e451b49d55118",
+      "seconds": 0.03847198500000104
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_equality.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4697,
+      "stdout_sha256": "c2a9ad9f8e4eb485929f52855931acef2b2f51c12d3472aaf4386452d0ecd84b",
+      "seconds": 0.03809068699996487
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_json.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4050,
+      "stdout_sha256": "ed093bfd34a8535bdabb0cd5cb82e610a2c1fc3a5424295a25c024a31c45a56b",
+      "seconds": 0.03494386500000246
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_loose.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 16732,
+      "stdout_sha256": "ff2c340a3c74b03af30f49a24a6a1ec845207f1223d3f1c6c3d9a59d90ddbaaa",
+      "seconds": 0.03400257100003046
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_optional.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7509,
+      "stdout_sha256": "18e8a2d327d56dbcffbd00c5d0e961fc374f547ac3992bb9df98d2c6a95e28eb",
+      "seconds": 0.03750311999999667
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2858,
+      "stdout_sha256": "8a8653f863e7f3a87651cea393e87ff8cf323bf6c85ca717fa35225d0d0b7334",
+      "seconds": 0.03526428599997189
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4513,
+      "stdout_sha256": "666b156ea194cfb9595b32dbacd33b5f90771ba75c100709ad39110cc887aeda",
+      "seconds": 0.03783929500002614
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_typeof.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3081,
+      "stdout_sha256": "01aa973faa371930822992664b04b6d8888787b5c0788e5a8cf31856bbde6771",
+      "seconds": 0.036861665999992965
+    },
+    "internal/oracle/testdata/placeholder_nonnull_observe.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 38649,
+      "stdout_sha256": "c1cf069ba9deaa45918e0f372cc9da0925bf6e238807c70aacc48bef8529013f",
+      "seconds": 0.04207898900000373
+    },
+    "internal/oracle/testdata/placeholder_nonnull_return_assignment.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2775,
+      "stdout_sha256": "499af112b10e6d5352280d9bcb5a2f6387f54e3fd70cd1d9d70acf68254ebdf1",
+      "seconds": 0.03375759300001846
+    },
+    "internal/oracle/testdata/placeholder_nonnull_saved_leak.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2830,
+      "stdout_sha256": "c393f8eadcc180b7b1d64da8d00075ff56777c7e30912777a0216a59f8b74a41",
+      "seconds": 0.03613733299999922
+    },
+    "internal/oracle/testdata/placeholder_nonnull_scanner.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4761,
+      "stdout_sha256": "2b53083d22ca330733737b8819ffdf5bea321b6ec46e76c73fefd1ed0d15fb69",
+      "seconds": 0.03521071599999459
+    },
+    "stage3/parser-ahead/factories/already-complete.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3624,
+      "stdout_sha256": "0f7b053265e620fb2d9b98de3626f3eacb3e5f4ffed1c3e2a28142bd5168ff54",
+      "seconds": 0.03722643399999015
+    },
+    "stage3/parser-ahead/factories/complete.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7062,
+      "stdout_sha256": "153b74c1c1d5facd004d4d0298d80594a91b5201bd1a5d20112a5f07326a5547",
+      "seconds": 0.03706922399999257
+    },
+    "stage3/parser-ahead/factories/escaped.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5095,
+      "stdout_sha256": "8188d414243d1cd73d5466bfd9092d5f5036e3066c4be31962f27ff935d5c497",
+      "seconds": 0.035824918999992406
+    },
+    "stage3/parser-ahead/factories/scout.a": {
+      "status": "refused",
+      "reason": "a cast the runtime can't check",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/parser-ahead/factories/scout.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.035029893999990236
+    },
+    "stage3/parser-ahead/node-array/fields.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10638,
+      "stdout_sha256": "542b3b799729499b15065e6404cf022c24e010691b74f4179c163505669c4894",
+      "seconds": 0.043545987000015884
+    },
+    "stage3/parser-ahead/node-array/presence.a": {
+      "status": "refused",
+      "reason": "an unproven relation from { kind: number",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/parser-ahead/node-array/presence.a:4:13: Adamic 0.1 refuses an unproven relation from { kind: number; }[] to OptionalNodeArray<Node>: optional field cache has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.040003962000014326
+    },
+    "stage3/parser-ahead/rulings/factory-unset.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9354,
+      "stdout_sha256": "f85f4346ca40c7a461f329c6013da4ee6d7e205ae5f0a1eb4411efdc51da6718",
+      "seconds": 0.03507528199997978
+    },
+    "stage3/parser-ahead/rulings/factory-use.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3841,
+      "stdout_sha256": "3d66c0051ea044691d744ab11f41f0eea528b37051ec0a3fc1233e126abcafe0",
+      "seconds": 0.03980521800002634
+    },
+    "stage3/parser-ahead/rulings/node-array-json.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5606,
+      "stdout_sha256": "237d1f7cdf0abda3b290363301a88acefd7669278769435333729981db52c8c6",
+      "seconds": 0.04399192199997515
+    },
+    "stage3/parser-ahead/rulings/node-array-keys.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6224,
+      "stdout_sha256": "ce8b17569473baf772527726a30b7cf4578708892500a86d89bb7aa63510d25d",
+      "seconds": 0.041549268999972355
+    },
+    "stage3/parser-ahead/rulings/node-array-length.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5881,
+      "stdout_sha256": "5b0b20fad07fb3ce1adcc56f9d4fad747ed36496792a4b4378d59dc12f84f78b",
+      "seconds": 0.037855602999968596
+    },
+    "stage3/parser-ahead/rulings/node-array-unset.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 11374,
+      "stdout_sha256": "90721d989f11632fa67c0cc5e860c9dcbfd5ce4a0df783858c17e98751afb973",
+      "seconds": 0.03635625699996581
+    },
+    "stage3/parser-ahead/rulings/null-placeholder-pending.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3745,
+      "stdout_sha256": "0dde10470b52356bc885441ceeb9498d33b5c4e7e3feec7bf717ace6613b058e",
+      "seconds": 0.04449684599995862
+    },
+    "stage3/parser-ahead/rulings/own-key-order.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 11953,
+      "stdout_sha256": "153bb3ba7c40460761a43045f13fb56f38ba11355afa20202484946affc3add1",
+      "seconds": 0.04314131000000998
+    },
+    "stage3/parser-next/speculation/arrow-tryparse.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7131,
+      "stdout_sha256": "3eb07b2cabe7a78d9f9449725fee73eb128f0c6a584827d686ad94151712e924",
+      "seconds": 0.03593733700000712
+    },
+    "stage3/parser-next/speculation/misfit.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3423,
+      "stdout_sha256": "775a8244c8c3291d3c045b2dd5394ba7913a3ba1b6e8bb3c68b6549961c7b8fe",
+      "seconds": 0.032159601999978804
+    },
+    "stage3/parser-next/speculation/named-lookahead.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7232,
+      "stdout_sha256": "255a7f6cde3732029ef317216ec9baef850178cce15d90517898eaf151457431",
+      "seconds": 0.034833608999974786
+    },
+    "stage3/parser-next/speculation/named-tryparse.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7587,
+      "stdout_sha256": "a00fa4ec58d1ad0dd185c01e2f5ac2ec880009107781bbc25c78f84eabdbdfbf",
+      "seconds": 0.03586271500000748
+    },
+    "stage3/parser-next/speculation/truthiness-rewind.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 14216,
+      "stdout_sha256": "72c4801d01de41a74228a2ddd6e77196b20b6b745a661f9adde794fec4eb284e",
+      "seconds": 0.04517549100000906
+    },
+    "stage3/parser-next/stack/benchmark.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6926,
+      "stdout_sha256": "617bdd6131b1c76695e718e5354fcb9e08483faca3d2ff3143d696b5ca2330a0",
+      "seconds": 0.03460216700000274
+    },
+    "stage3/parser-next/stack/legal.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6317,
+      "stdout_sha256": "f86f92f6dfc6bf1001e472e1808bb45f98d5f7931c3f4da5b8156198111d2c04",
+      "seconds": 0.03754216800001586
+    },
+    "stage3/parser-next/stack/pathological.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6326,
+      "stdout_sha256": "2334dc8caaefcfdce0ea4aa33a45071aa6ea7f5ba3c94dbafa1c875d23d18a2a",
+      "seconds": 0.03316237900003216
+    }
+  },
+  "predicate": {
+    "internal/lower/testdata/placeholders/nonliteral.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/placeholders/nonliteral.a:4:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/backend_stop_catches.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/d96d304_try_stack.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_possible_read.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:4:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a:4:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a:2:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a:3:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a:2:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a:2:28: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_element.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_element.a:2:17: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a:3:9: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a:2:26: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_null.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_null.a:2:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_return.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_return.a:2:35: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a:2:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a:2:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/placeholder_nonnull_alias_reset.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_assignment_result.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_before_use.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_field.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_local.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_before_use.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_copy.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_equality.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_json.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_loose.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_optional.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_typeof.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_observe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_return_assignment.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_saved_leak.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_scanner.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/already-complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/escaped.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/scout.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/factories/scout.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-ca"
+    },
+    "stage3/parser-ahead/node-array/fields.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/node-array/presence.a": {
+      "outcome": "refused",
+      "expected": "refused an unproven relation",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/node-array/presence.a:4:13: Adamic 0.1 refuses an unproven relation from { kind: number; }[] to OptionalNodeArray<Node>: optional field cache has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object wi"
+    },
+    "stage3/parser-ahead/rulings/factory-unset.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/factory-use.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-json.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-keys.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-length.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-unset.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/null-placeholder-pending.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/own-key-order.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/arrow-tryparse.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/misfit.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/named-lookahead.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/named-tryparse.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/truthiness-rewind.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/stack/benchmark.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/stack/legal.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/stack/pathological.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null,
+  "seconds": {
+    "a-check": 2.3
+  },
+  "counts": {
+    "refused": 16,
+    "checked": 42
+  }
+}

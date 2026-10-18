@@ -1,0 +1,402 @@
+[
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.072089569Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a",
+    "Elapsed": 0.09
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.099802064Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestPossibleNonNullAdamicAssertionsAreRefused/read",
+    "Elapsed": 0.1
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.099866611Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a",
+    "Elapsed": 0.11
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.106484562Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestCheckedNonNullAdamicRefusal",
+    "Elapsed": 0.12
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.146704021Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestPossibleNonNullAdamicAssertionsAreRefused/typeerror",
+    "Elapsed": 0.05
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.146830791Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "Elapsed": 0.16
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.159796295Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a",
+    "Elapsed": 0.06
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.189588727Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a",
+    "Elapsed": 0.08
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.250434138Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a",
+    "Elapsed": 0.06
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.25829065Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a",
+    "Elapsed": 0.11
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.292815889Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a",
+    "Elapsed": 0.13
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.318421497Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a",
+    "Elapsed": 0.06
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:05.318460305Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a",
+    "Elapsed": 0.07
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:07.718279065Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetReaders",
+    "Elapsed": 2.74
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:13.328585444Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a",
+    "Elapsed": 0.04
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:13.328696651Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts",
+    "Elapsed": 8.26
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:13.328717432Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts",
+    "Elapsed": 8.04
+  },
+  {
+    "log": "header-readers.jsonl",
+    "Time": "2026-10-18T08:50:13.328823952Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused",
+    "Elapsed": 0
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.075726475Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestCountsAreRecordedTable",
+    "Elapsed": 0
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.158710409Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a",
+    "Elapsed": 0.08
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.159130851Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestPossibleNonNullAdamicAssertionsAreRefused/read",
+    "Elapsed": 0.08
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.160643084Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestCheckedNonNullAdamicRefusal",
+    "Elapsed": 0.09
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.177988843Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a",
+    "Elapsed": 0.1
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.239214407Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a",
+    "Elapsed": 0.06
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.24019456Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestPossibleNonNullAdamicAssertionsAreRefused/typeerror",
+    "Elapsed": 0.08
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.240201501Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestPossibleNonNullAdamicAssertionsAreRefused",
+    "Elapsed": 0.17
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.247437796Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a",
+    "Elapsed": 0.09
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.258109985Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a",
+    "Elapsed": 0.1
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.296648664Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a",
+    "Elapsed": 0.06
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.305441894Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a",
+    "Elapsed": 0.07
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.314455881Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a",
+    "Elapsed": 0.05
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:34.345058102Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a",
+    "Elapsed": 0.04
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:35.664878497Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a",
+    "Elapsed": 0.03
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:35.665061472Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts",
+    "Elapsed": 1.42
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:35.665068933Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts",
+    "Elapsed": 1.36
+  },
+  {
+    "log": "header-tests-final.jsonl",
+    "Time": "2026-10-18T08:54:35.665077836Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestImpossibleNonNullFixturesAreRefused",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.943934519Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_element_a_642d760771d2",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.943959586Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_checked_a_15fb80217f3b",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.943971264Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_logical_a_d8ec7fe16365",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.943988099Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_undefined_a_7b36c538740b",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.944014839Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_null_a_bc3f0b62bf50",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.944020438Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_return_a_835892235f21",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.944034078Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_possible_typeerror_a_6a25b0740445",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.944045566Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_argument_a_5044636ebaa9",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.94405525Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_expression_a_fd86ddc65e92",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.94408826Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_conditional_a_9e4099a84016",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.94410208Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_comparison_a_af272e60c968",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.944107368Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_possible_read_a_03dbf385a467",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.945591028Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshWrites____oracle_testdata_non_null_refuse_spread_a_3f0140d4d4aa",
+    "Elapsed": 0
+  },
+  {
+    "log": "fresh-path-readers.jsonl",
+    "Time": "2026-10-18T08:52:35.945620072Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fresh",
+    "Test": "TestFreshCorpusUnitsCoverEveryProgram",
+    "Elapsed": 0
+  }
+]

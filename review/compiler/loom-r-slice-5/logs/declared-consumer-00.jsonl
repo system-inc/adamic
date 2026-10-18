@@ -1,0 +1,10 @@
+{"Time":"2026-10-18T00:26:20.397642685Z","Action":"start","Package":"github.com/system-inc/adamic/internal/boundedrun"}
+{"Time":"2026-10-18T00:26:20.399157257Z","Action":"run","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestDeadlineKillsGrandchild"}
+{"Time":"2026-10-18T00:26:20.39921223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestDeadlineKillsGrandchild","Output":"=== RUN   TestDeadlineKillsGrandchild\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:20.615531045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestDeadlineKillsGrandchild","Output":"child /tmp/adamic-gate/TestDeadlineKillsGrandchild3176011591/001/fake-node []: deadline/cancellation expired; killing process group; descendants=[]\n"}
+{"Time":"2026-10-18T00:26:20.716120977Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestDeadlineKillsGrandchild","Output":"    run_test.go:27: child=/tmp/adamic-gate/TestDeadlineKillsGrandchild3176011591/001/fake-node killed_seconds=0.301 diagnostic=child /tmp/adamic-gate/TestDeadlineKillsGrandchild3176011591/001/fake-node: context deadline exceeded; process group killed\n"}
+{"Time":"2026-10-18T00:26:20.71620281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestDeadlineKillsGrandchild","Output":"--- PASS: TestDeadlineKillsGrandchild (0.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:20.716210312Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestDeadlineKillsGrandchild","Elapsed":0.32}
+{"Time":"2026-10-18T00:26:20.716250923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:20.716618065Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Output":"ok  \tgithub.com/system-inc/adamic/internal/boundedrun\t0.319s\n"}
+{"Time":"2026-10-18T00:26:20.7166347Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/boundedrun","Elapsed":0.319}

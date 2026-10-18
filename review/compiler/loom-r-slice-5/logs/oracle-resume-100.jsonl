@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:14:27.257653558Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T00:14:27.267758606Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths"}
+{"Time":"2026-10-18T00:14:27.26790111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths","Output":"=== RUN   TestParserSpeculationProductsUseDisplayedPaths\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:27.267932076Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths","Output":"=== PAUSE TestParserSpeculationProductsUseDisplayedPaths\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:27.26793443Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths"}
+{"Time":"2026-10-18T00:14:27.267937034Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths"}
+{"Time":"2026-10-18T00:14:27.267939758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths","Output":"=== CONT  TestParserSpeculationProductsUseDisplayedPaths\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:27.356221386Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths","Output":"--- PASS: TestParserSpeculationProductsUseDisplayedPaths (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:27.35627029Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserSpeculationProductsUseDisplayedPaths","Elapsed":0.09}
+{"Time":"2026-10-18T00:14:27.356289779Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:27.358012439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.096s\n"}
+{"Time":"2026-10-18T00:14:27.358091508Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.1}

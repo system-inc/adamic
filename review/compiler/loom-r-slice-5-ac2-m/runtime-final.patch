@@ -1,0 +1,305 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index f8273026..aede2e20 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -326,0 +327,2 @@ typedef struct adamic_object {
++	// NULL for a complete shape; SIZE_MAX means reserved but not own.
++	size_t *write_order;
+@@ -352,0 +355,6 @@ static inline size_t adamic_slot_index(const adamic_object *object, const adamic
++// Construction storage is reserved at allocation, independently of property presence.
++bool adamic_object_present(const adamic_object *object, size_t index);
++void adamic_object_publish(adamic_object *object, size_t index);
++size_t *adamic_object_ordered(const adamic_object *object);
++adamic_object *adamic_object_construct(const adamic_shape *shape);
++
+@@ -451,0 +460 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name,
++adamic_value *adamic_object_field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner);
+@@ -465 +474 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
+-	if (slot == object->shape->count) { return NULL; }
++	if (slot == object->shape->count || !adamic_object_present(object, slot)) { return NULL; }
+@@ -507,0 +517,2 @@ typedef struct adamic_array {
++	// An interior fixed layout, owned by this allocation, never a wrapper.
++	adamic_object *metadata; // Never retained, never escapes as a value; retaining then releasing its zero-count header frees interior array storage.
+@@ -508,0 +520,3 @@ typedef struct adamic_array {
++adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras);
++adamic_array *adamic_node_array_keys(const adamic_array *array);
++
+@@ -1186 +1200 @@ _Noreturn void adamic_stack_overflow(void);
+-#define ADAMIC_CHECK_STACK() \
++#define ADAMIC_CHECK_STACK_MESSAGE(message) \
+@@ -1192 +1206 @@ _Noreturn void adamic_stack_overflow(void);
+-			adamic_stack_overflow(); \
++			adamic_panic(message, sizeof(message) - 1); \
+@@ -1196 +1210 @@ _Noreturn void adamic_stack_overflow(void);
+-#define ADAMIC_CHECK_STACK() \
++#define ADAMIC_CHECK_STACK_MESSAGE(message) \
+@@ -1199 +1213 @@ _Noreturn void adamic_stack_overflow(void);
+-			adamic_stack_overflow(); \
++			adamic_panic(message, sizeof(message) - 1); \
+@@ -1203,0 +1218,4 @@ _Noreturn void adamic_stack_overflow(void);
++// Names are compile-time string literals; the guard allocates nothing.
++#define ADAMIC_CHECK_STACK() ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded")
++#define ADAMIC_CHECK_STACK_NAMED(name) ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded in " name)
++
+diff --git a/internal/native/runtime/array.c b/internal/native/runtime/array.c
+index c194282f..c90f47e9 100644
+--- a/internal/native/runtime/array.c
++++ b/internal/native/runtime/array.c
+@@ -17,0 +18 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
++	array->metadata = NULL;
+diff --git a/internal/native/runtime/class_features.c b/internal/native/runtime/class_features.c
+index 7b7f472c..9c19a8e9 100644
+--- a/internal/native/runtime/class_features.c
++++ b/internal/native/runtime/class_features.c
+@@ -42,0 +43 @@ adamic_array *adamic_class_object_keys(const adamic_object *object) {
++    if (object->write_order != NULL) return adamic_object_keys(object);
+diff --git a/internal/native/runtime/class_static.c b/internal/native/runtime/class_static.c
+index e50f862d..94650fb3 100644
+--- a/internal/native/runtime/class_static.c
++++ b/internal/native/runtime/class_static.c
+@@ -16,0 +17 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
++        adamic_object_publish(object, adamic_slot_index(object, slot));
+diff --git a/internal/native/runtime/construction.c b/internal/native/runtime/construction.c
+new file mode 100644
+index 00000000..c82bc21a
+--- /dev/null
++++ b/internal/native/runtime/construction.c
+@@ -0,0 +1,79 @@
++// construction.c: fixed storage whose own properties appear only on actual writes.
++#include "adamic.h"
++
++#include <stdlib.h>
++#include <string.h>
++
++static size_t construction_size(const adamic_shape *shape) {
++ size_t per_field = sizeof(adamic_value) + 2 + sizeof(size_t);
++ if (shape->count > (SIZE_MAX - sizeof(adamic_object) - _Alignof(size_t)) / per_field) {
++  adamic_panic("out of memory", sizeof "out of memory" - 1);
++ }
++ size_t before_order = sizeof(adamic_object) + shape->count * (sizeof(adamic_value) + 2);
++ size_t aligned = (before_order + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);
++ return aligned + shape->count * sizeof(size_t);
++}
++
++static void construction_start(adamic_object *object, const adamic_shape *shape) {
++ object->shape = shape;
++ object->class = NULL;
++ object->frozen = false;
++ object->tuple = false;
++ memset(object->slots, 0, shape->count * sizeof(adamic_value));
++ memset(adamic_object_initialized(object), 0, shape->count);
++ memset(adamic_object_field_types(object), 0, shape->count);
++ size_t order_offset = construction_size(shape) - shape->count * sizeof(size_t);
++ object->write_order = (size_t *)(void *)((unsigned char *)object + order_offset);
++ for (size_t index = 0; index < shape->count; index++) object->write_order[index] = SIZE_MAX;
++}
++
++bool adamic_object_present(const adamic_object *object, size_t index) {
++ return object->write_order == NULL || object->write_order[index] != SIZE_MAX;
++}
++
++void adamic_object_publish(adamic_object *object, size_t index) {
++ if (object->write_order == NULL || object->write_order[index] != SIZE_MAX) return;
++ size_t order = 0;
++ for (size_t previous = 0; previous < object->shape->count; previous++) {
++  if (object->write_order[previous] != SIZE_MAX && object->write_order[previous] >= order) order = object->write_order[previous] + 1;
++ }
++ object->write_order[index] = order;
++}
++
++adamic_object *adamic_object_construct(const adamic_shape *shape) {
++ adamic_object *object = adamic_allocate(construction_size(shape), adamic_kind_object);
++ construction_start(object, shape);
++ return object;
++}
++
++adamic_array *adamic_node_array_new(size_t capacity, bool references, const adamic_shape *extras) {
++ size_t metadata_size = construction_size(extras);
++ if (metadata_size > SIZE_MAX - sizeof(adamic_array) || capacity > SIZE_MAX / sizeof(adamic_value)) {
++  adamic_panic("out of memory", sizeof "out of memory" - 1);
++ }
++ adamic_array *array = adamic_allocate(sizeof *array + metadata_size, adamic_kind_array);
++ array->length = 0;
++ array->capacity = capacity;
++ array->references = references;
++ array->properties = NULL;
++ array->elements = capacity == 0 ? NULL : malloc(capacity * sizeof(adamic_value));
++ if (capacity != 0 && array->elements == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
++ array->metadata = (adamic_object *)(void *)(array + 1);
++ // Interior storage is not independently retained or freed. The array releases its children.
++ array->metadata->heap = (adamic_heap){0, adamic_kind_object, 0};
++ construction_start(array->metadata, extras);
++ return array;
++}
++
++adamic_array *adamic_node_array_keys(const adamic_array *array) {
++ adamic_array *keys = adamic_array_new(array->length, true);
++ for (size_t index = 0; index < array->length; index++) {
++  adamic_array_push(keys, (adamic_value){.reference = adamic_string_from_number((double)index)});
++ }
++ if (array->metadata != NULL) {
++  adamic_array *extras = adamic_object_keys(array->metadata);
++  for (size_t index = 0; index < extras->length; index++) adamic_array_push(keys, (adamic_value){.reference = adamic_retain(extras->elements[index].reference)});
++  adamic_release(extras);
++ }
++ return keys;
++}
+diff --git a/internal/native/runtime/heap.c b/internal/native/runtime/heap.c
+index 5314fb53..1d79014d 100644
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -379,0 +380 @@ static void free_one(void *value) {
++		if (array->metadata != NULL) adamic_object_free_children(array->metadata, let_go);
+diff --git a/internal/native/runtime/json_stringify.c b/internal/native/runtime/json_stringify.c
+index f1b292a7..f959de6e 100644
+--- a/internal/native/runtime/json_stringify.c
++++ b/internal/native/runtime/json_stringify.c
+@@ -173,0 +174,3 @@ static void write_field(json_writer *w, const adamic_object *object, const adami
++    // Borrowed record views have no shape or construction metadata.
++    // Reserved and unset shaped slots are omitted before reading their storage.
++    if (object->shape != NULL && (!adamic_object_present(object, field->slot) || !adamic_object_initialized(object)[field->slot])) { return; }
+@@ -260 +263,11 @@ static bool write_prepared_body(json_writer *w, adamic_value value, const adamic
+-			for (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }
++			if (object->shape == NULL || object->write_order == NULL) {
++				for (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }
++			} else {
++				size_t *order = adamic_object_ordered(object);
++				for (size_t position = 0; position < object->shape->count; position++) {
++					for (size_t index = 0; index < schema->count; index++) {
++						if (schema->fields[index].slot == order[position]) { write_field(w, object, &schema->fields[index], slots, depth, &written); break; }
++					}
++				}
++				free(order);
++			}
+diff --git a/internal/native/runtime/library_language.c b/internal/native/runtime/library_language.c
+index bcda3b19..9de75ddf 100644
+--- a/internal/native/runtime/library_language.c
++++ b/internal/native/runtime/library_language.c
+@@ -29,0 +30 @@ adamic_array *adamic_plain_object_keys(const adamic_object *object) {
++	if (object->write_order != NULL) return adamic_object_keys(object);
+diff --git a/internal/native/runtime/library_object.c b/internal/native/runtime/library_object.c
+index d768d262..5b6432f2 100644
+--- a/internal/native/runtime/library_object.c
++++ b/internal/native/runtime/library_object.c
+@@ -47 +47 @@ bool adamic_object_has_own(const adamic_object *object, const adamic_string *key
+-  if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
++  if (adamic_object_present(object, index) && name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
+@@ -74 +74 @@ static int compare_names(const char *left, const char *right) {
+-static size_t *ordered(const adamic_object *object) {
++size_t *adamic_object_ordered(const adamic_object *object) {
+@@ -81 +81,7 @@ static size_t *ordered(const adamic_object *object) {
+-  while (place > 0 && compare_names(object->shape->names[index], object->shape->names[indices[place - 1]]) < 0) {
++  while (place > 0) {
++   size_t previous = indices[place - 1];
++   int comparison = compare_names(object->shape->names[index], object->shape->names[previous]);
++   if (comparison == 0 && object->write_order != NULL) {
++    comparison = object->write_order[index] < object->write_order[previous] ? -1 : 0;
++   }
++   if (comparison >= 0) break;
+@@ -101 +107 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
+- size_t *indices = ordered(object);
++ size_t *indices = adamic_object_ordered(object);
+@@ -105 +111 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
+-  if (name[0] == '#') continue;
++  if (name[0] == '#' || !adamic_object_present(object, indices[at])) continue;
+@@ -113 +119 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
+- size_t *indices = ordered(object);
++ size_t *indices = adamic_object_ordered(object);
+@@ -123 +129 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
+-  if (name[0] == '#') continue;
++  if (name[0] == '#' || !adamic_object_present(object, indices[at])) continue;
+@@ -139 +145 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
+- size_t *indices = ordered(source);
++ size_t *indices = adamic_object_ordered(source);
+@@ -142,0 +149 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
++  if (!adamic_object_present(source, index)) continue;
+@@ -151,0 +159 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
++  adamic_object_publish(target, adamic_slot_index(target, slot));
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index b6b41102..11c63b2e 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -15,0 +16 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
++	object->write_order = NULL;
+@@ -25 +26 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
+-static adamic_value *field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner) {
++adamic_value *adamic_object_field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner) {
+@@ -44 +45,2 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
+-	adamic_object *object = adamic_object_new(shape);
++	adamic_object *object = source->write_order == NULL ? adamic_object_new(shape) : adamic_object_construct(shape);
++	if (source->write_order != NULL) memcpy(object->write_order, source->write_order, shape->count * sizeof(size_t));
+@@ -46,0 +49 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
++		if (!adamic_object_present(source, index)) continue;
+@@ -54 +57 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
+-			adamic_value *found = expression == NULL ? field_owned(source, shape->names[index], &cache, &owner) : adamic_object_read_mode(source, shape->names[index], &cache, expression, NULL, &owner);
++			adamic_value *found = expression == NULL ? adamic_object_field_owned(source, shape->names[index], &cache, &owner) : adamic_object_read_mode(source, shape->names[index], &cache, expression, NULL, &owner);
+@@ -82 +85 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+-			return true;
++			return adamic_object_present(object, index);
+@@ -171 +174 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
+-	if (slot == object->shape->count) { return NULL; }
++	if (slot == object->shape->count || !adamic_object_present(object, slot)) { return NULL; }
+@@ -236,0 +240 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
++	adamic_object_publish(object, adamic_slot_index(object, slot));
+@@ -297 +301,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
+-	adamic_value *slot = adamic_object_optional_field(object, name, cache);
++	adamic_value *slot = adamic_object_optional_find(object, name, cache);
++	// An absent reserved field still has writable storage. Find it without rereading a shared cache.
++	if (slot == NULL) {
++		for (size_t index = 0; index < object->shape->count; index++) {
++			if (strcmp(object->shape->names[index], name) == 0) { slot = &object->slots[index]; break; }
++		}
++	}
+@@ -309 +319 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
+-	adamic_value *slot = field_owned(object, name, cache, &owner);
++	adamic_value *slot = adamic_object_field_owned(object, name, cache, &owner);
+diff --git a/internal/native/runtime/region.c b/internal/native/runtime/region.c
+index 2952669f..25ba0839 100644
+--- a/internal/native/runtime/region.c
++++ b/internal/native/runtime/region.c
+@@ -67,0 +68 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
++	object->write_order = NULL;
+diff --git a/internal/native/runtime/share.c b/internal/native/runtime/share.c
+index f02ff085..4344ee8b 100644
+--- a/internal/native/runtime/share.c
++++ b/internal/native/runtime/share.c
+@@ -95,0 +96,7 @@ void adamic_share(void *value) {
++			// Metadata is interior storage; publish its children, never its zero-count header.
++			if (array->metadata != NULL) {
++				adamic_object *metadata = array->metadata;
++				for (size_t i = 0; i < metadata->shape->count; i++) {
++					if (metadata->shape->references[i]) { append(&pending, metadata->slots[i].reference); }
++				}
++			}
+diff --git a/internal/native/runtime/stack.c b/internal/native/runtime/stack.c
+index 4996ab93..cae60ba7 100644
+--- a/internal/native/runtime/stack.c
++++ b/internal/native/runtime/stack.c
+@@ -59,2 +59,3 @@ __attribute__((constructor)) static void find_stack_limit(void) {
+-	// A stack too small to keep even that gets no check rather than one that fires at once.
+-	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : 0;
++	// A stack too small for the panic reserve must stop at the next guarded
++	// function. Disabling its check would turn recursion into a bare crash.
++	adamic_stack_limit = size > reserved && base > size ? base - size + reserved : UINTPTR_MAX;
+diff --git a/internal/native/runtime/union.c b/internal/native/runtime/union.c
+index b2fc483e..b370d6e2 100644
+--- a/internal/native/runtime/union.c
++++ b/internal/native/runtime/union.c
+@@ -141,0 +142 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
++			if (!adamic_object_present(object, index)) continue;
+@@ -158,0 +160 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
++		if (array->metadata != NULL && adamic_has_property(&array->metadata->heap, name)) return true;
+@@ -166,0 +169 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
++	if (!adamic_object_present(object, index) || !adamic_object_initialized(object)[index]) return NULL;
+@@ -168,0 +172,5 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
++	if (object->write_order!=NULL) {
++		unsigned char actual=adamic_object_field_types(object)[index];
++		if (actual==1) return adamic_box_number(slot.number);
++		if (actual==2) return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
++	}
+@@ -202,0 +211,5 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
++		if (array->metadata != NULL) {
++			for (size_t index = 0; index < array->metadata->shape->count; index++) {
++				if (strcmp(name, array->metadata->shape->names[index]) == 0) return dynamic_slot(array->metadata, index);
++			}
++		}

@@ -1,0 +1,40 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "05eb9043dc8b01b32402ce33b91f97aadf524305",
+  "focused_successful_commands": 38,
+  "fixture_programs": 55,
+  "independent_mutants": 29,
+  "additional_consumers_attempted": 42,
+  "additional_consumers_total": 42,
+  "failed_consumers": [
+    "./stage1/cohere/cssnumbers",
+    "./stage1/cohere/cssstrings",
+    "./stage1/cohere/estree",
+    "./stage1/cohere/formatfiles",
+    "./stage1/cohere/gitignore",
+    "./stage1/cohere/graphql/printer",
+    "./stage1/cohere/json",
+    "./stage1/cohere/lint",
+    "./stage1/cohere/lint/helpers",
+    "./stage1/cohere/lint/helpers/comments",
+    "./stage1/cohere/markdownblocks",
+    "./stage1/cohere/typeaware",
+    "./stage1/cohere/yaml",
+    "./stage1/typescript/parser",
+    "./stage1/typescript/scanner"
+  ],
+  "over_budget": [
+    {
+      "test": "TestCompositionMatchesGo_000",
+      "seconds": 63.12
+    }
+  ],
+  "timed_out_consumers": [
+    "./stage1/cohere/typeaware"
+  ],
+  "complete_green": false,
+  "declared_consumers_attempted": 11,
+  "declared_consumer_failures": [
+    "./stage3/lane"
+  ]
+}
