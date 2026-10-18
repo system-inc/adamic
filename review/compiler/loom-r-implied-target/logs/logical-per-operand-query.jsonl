@@ -1,0 +1,31 @@
+{"Time":"2026-10-18T00:07:40.314038026Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T00:07:40.321507672Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.321597326Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"=== RUN   TestImpliedTargetOrQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.323470751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"=== PAUSE TestImpliedTargetOrQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.323477441Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.323481357Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.323484241Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce","Output":"=== RUN   TestImpliedTargetAndQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.323489139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce","Output":"=== PAUSE TestImpliedTargetAndQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.323492263Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.323495518Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.323498142Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"=== RUN   TestImpliedTargetNullishQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.323502859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"=== PAUSE TestImpliedTargetNullishQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.323505413Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.323508478Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.323510781Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"=== CONT  TestImpliedTargetOrQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.324465305Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.324475851Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"=== CONT  TestImpliedTargetNullishQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.325124259Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce"}
+{"Time":"2026-10-18T00:07:40.325133533Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce","Output":"=== CONT  TestImpliedTargetAndQueriesOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.466605731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce","Output":"    implied_target_test.go:37: implied target queried parent kind KindBinaryExpression more than once\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:40.466728755Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce","Output":"--- FAIL: TestImpliedTargetAndQueriesOnce (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.469385309Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetAndQueriesOnce","Elapsed":0.14}
+{"Time":"2026-10-18T00:07:40.469418008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"    implied_target_test.go:37: implied target queried parent kind KindBinaryExpression more than once\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:40.469796663Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Output":"--- FAIL: TestImpliedTargetOrQueriesOnce (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.475360816Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetOrQueriesOnce","Elapsed":0.15}
+{"Time":"2026-10-18T00:07:40.475373134Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"    implied_target_test.go:37: implied target queried parent kind KindBinaryExpression more than once\n","OutputType":"error"}
+{"Time":"2026-10-18T00:07:40.475540003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Output":"--- FAIL: TestImpliedTargetNullishQueriesOnce (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.475613323Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestImpliedTargetNullishQueriesOnce","Elapsed":0.15}
+{"Time":"2026-10-18T00:07:40.475615466Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.47738046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.163s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:40.477431386Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.163}

@@ -617,20 +617,15 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
-			return l.checker.GetTypeAtLocation(parent)
+			return l.impliedExpressionTarget(parent)
 		}
 	case ast.KindBinaryExpression:
 		switch parent.AsBinaryExpression().OperatorToken.Kind {
 		case ast.KindQuestionQuestionToken, ast.KindBarBarToken, ast.KindAmpersandAmpersandToken:
-			return l.checker.GetTypeAtLocation(parent)
+			return l.impliedExpressionTarget(parent)
 		}
 	case ast.KindArrayLiteralExpression:
-		literal := l.checker.GetTypeAtLocation(parent)
-		if l.checker.IsArrayType(literal) {
-			if arguments := l.checker.GetTypeArguments(literal); len(arguments) == 1 {
-				return arguments[0]
-			}
-		}
+		return l.impliedExpressionTarget(parent)
 	case ast.KindReturnStatement, ast.KindArrowFunction:
 		if parent.Kind == ast.KindArrowFunction && parent.AsArrowFunction().Body != child {
 			return nil
@@ -645,6 +640,34 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 		return l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(function))
 	}
 	return nil
+}
+
+// impliedExpressionTarget asks once per parent expression, even for nil tuple
+// element targets. The checker and source tree stay fixed for this lowering;
+// branches share the parent's type and array elements share its element type.
+func (l *lowering) impliedExpressionTarget(parent *ast.Node) *checker.Type {
+	if target, ok := l.impliedTargets[parent]; ok {
+		return target
+	}
+	query := l.impliedTargetQuery
+	if query == nil {
+		query = l.checker.GetTypeAtLocation
+	}
+	target := query(parent)
+	if parent.Kind == ast.KindArrayLiteralExpression {
+		literal := target
+		target = nil
+		if l.checker.IsArrayType(literal) {
+			if arguments := l.checker.GetTypeArguments(literal); len(arguments) == 1 {
+				target = arguments[0]
+			}
+		}
+	}
+	if l.impliedTargets == nil {
+		l.impliedTargets = make(map[*ast.Node]*checker.Type)
+	}
+	l.impliedTargets[parent] = target
+	return target
 }
 
 // destructuringTarget is the array pattern a value is assigned into, [a, b] = value, or nil.

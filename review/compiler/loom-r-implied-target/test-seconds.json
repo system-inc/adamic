@@ -1,0 +1,3159 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestFlowCorpusUnitsCoverEveryProgram",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_flow-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestStatAtimeSelfCycleRemainsUnproven",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_fresh-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestClassMethodOutsideSelfCycleRemainsUnproven",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_fresh-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/fresh",
+    "test": "TestRegexOperandsStillJudgeCycleWrites",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_fresh-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestClassFeaturesAccessorCaptureCycle",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_array_seen_as_a_wider_array",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider_inside_a_readonly_array",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_parameter's_default",
+    "result": "pass",
+    "seconds": 0.31,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_a_plain_array",
+    "result": "pass",
+    "seconds": 0.14,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_annotated_destructuring",
+    "result": "pass",
+    "seconds": 0.14,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_destructuring_assignment's_element_seen_wider",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_fresh_copy's_elements_seen_wider",
+    "result": "pass",
+    "seconds": 0.24,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_plain_object_seen_as_a_class",
+    "result": "pass",
+    "seconds": 0.22,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_tuple's_later_element",
+    "result": "pass",
+    "seconds": 0.27,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_method's_parameter,_bivariant_in_tsc",
+    "result": "pass",
+    "seconds": 0.19,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_class_target",
+    "result": "pass",
+    "seconds": 0.31,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_method's_return",
+    "result": "pass",
+    "seconds": 0.22,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_return_tsc_reduced_to_the_wider",
+    "result": "pass",
+    "seconds": 0.2,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_conditional_tsc_reduced_to_the_wider_branch",
+    "result": "pass",
+    "seconds": 0.19,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_literal's_element_tsc_reduced_to_the_wider",
+    "result": "pass",
+    "seconds": 0.28,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_as",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_union_target",
+    "result": "pass",
+    "seconds": 0.2,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_union_source",
+    "result": "pass",
+    "seconds": 0.22,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_object_spread",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_class_field's_initializer",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_shorthand_property",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_type_parameter_whose_constraint_is_narrower,_seen_as_the_wider_array",
+    "result": "pass",
+    "seconds": 0.17,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestClassFeaturesStaticInterfaceCycle",
+    "result": "pass",
+    "seconds": 0.17,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_writable_inside_a_readonly_array",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_of_a_primitive_turned_writable",
+    "result": "pass",
+    "seconds": 0.21,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_array_field_turned_writable",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_made_writable_by_a_mapped_type",
+    "result": "pass",
+    "seconds": 0.2,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_object_seen_with_a_mutable_field_weak_in_one_view_only",
+    "result": "pass",
+    "seconds": 0.17,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_readonly_field_turned_back_into_a_writable_one",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_array_of_targets_seen_as_an_array_of_Weak",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_intersection's_array_seen_as_an_intersection's",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint_behind_a_readonly_property",
+    "result": "pass",
+    "seconds": 0.14,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_array_of_arrays_seen_wider_behind_readonly",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_inferred_type_argument_makes_a_generic_write_unsafe",
+    "result": "pass",
+    "seconds": 0.21,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/an_explicit_type_argument_widens_a_mutable_parameter",
+    "result": "pass",
+    "seconds": 0.19,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_type_parameter's_constraint:_a_Narrow_into_a_Pack_slot",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_map's_values_seen_wider,_passed",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_function_seen_as_taking_a_narrower_array",
+    "result": "pass",
+    "seconds": 0.2,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused/a_mutable_field_seen_as_a_wider_field",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAMutableLocationSeenWiderIsRefused",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself",
+    "result": "pass",
+    "seconds": 0.17,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names",
+    "result": "pass",
+    "seconds": 0.74,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field",
+    "result": "pass",
+    "seconds": 0.8,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter",
+    "result": "pass",
+    "seconds": 0.73,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself",
+    "result": "pass",
+    "seconds": 0.63,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type",
+    "result": "pass",
+    "seconds": 0.46,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write",
+    "result": "pass",
+    "seconds": 0.64,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type",
+    "result": "pass",
+    "seconds": 0.74,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write",
+    "result": "pass",
+    "seconds": 0.68,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_new_Map",
+    "result": "pass",
+    "seconds": 0.84,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_new_Map_passed",
+    "result": "pass",
+    "seconds": 0.6,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs",
+    "result": "pass",
+    "seconds": 0.65,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies",
+    "result": "pass",
+    "seconds": 0.76,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays",
+    "result": "pass",
+    "seconds": 0.69,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field",
+    "result": "pass",
+    "seconds": 0.63,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map",
+    "result": "pass",
+    "seconds": 0.57,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice",
+    "result": "pass",
+    "seconds": 0.61,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one",
+    "result": "pass",
+    "seconds": 0.52,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one",
+    "result": "pass",
+    "seconds": 0.6,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type",
+    "result": "pass",
+    "seconds": 0.72,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider",
+    "result": "pass",
+    "seconds": 0.67,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array",
+    "result": "pass",
+    "seconds": 0.49,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestAViewThatCantWriteIsNotRefused",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumNamespaceSharedCycle",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEmptyNeverMapCannotGainWritableInhabitants",
+    "result": "pass",
+    "seconds": 0.19,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarLiteralShapesOnce",
+    "result": "pass",
+    "seconds": 0.96,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/variable",
+    "result": "pass",
+    "seconds": 0.4,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/enum_object_writable_view",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/structural_enum_object_array",
+    "result": "pass",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/structural_string_enum_object",
+    "result": "pass",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetLargeArrayQueriesOnce",
+    "result": "pass",
+    "seconds": 0.83,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/structural_numeric_enum_object",
+    "result": "pass",
+    "seconds": 0.21,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/generic_class_invariant",
+    "result": "pass",
+    "seconds": 0.07,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/map_alias",
+    "result": "pass",
+    "seconds": 0.31,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/mutable_field_alias",
+    "result": "pass",
+    "seconds": 0.4,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/class_field",
+    "result": "pass",
+    "seconds": 0.37,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/optional_union",
+    "result": "pass",
+    "seconds": 0.52,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/object_assign",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/override",
+    "result": "pass",
+    "seconds": 0.53,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/function_view",
+    "result": "pass",
+    "seconds": 0.55,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/readonly_into_enum_array",
+    "result": "pass",
+    "seconds": 0.49,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/array_alias",
+    "result": "pass",
+    "seconds": 0.38,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetAndQueriesOnce",
+    "result": "pass",
+    "seconds": 2.97,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/compound",
+    "result": "pass",
+    "seconds": 0.59,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/increment",
+    "result": "pass",
+    "seconds": 0.43,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/array_literal",
+    "result": "pass",
+    "seconds": 0.52,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/literal_property",
+    "result": "pass",
+    "seconds": 0.49,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/assignment",
+    "result": "pass",
+    "seconds": 0.55,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/argument",
+    "result": "pass",
+    "seconds": 0.46,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/member_initializer",
+    "result": "pass",
+    "seconds": 0.39,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews/initializer",
+    "result": "pass",
+    "seconds": 0.49,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestEnumSlotViews",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetConditionalQueriesOnce",
+    "result": "pass",
+    "seconds": 8.49,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-02.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetTupleCachesNil",
+    "result": "pass",
+    "seconds": 0.09,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-03.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+    "result": "pass",
+    "seconds": 0.09,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-03.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetOrQueriesOnce",
+    "result": "pass",
+    "seconds": 0.57,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-03.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetNullishQueriesOnce",
+    "result": "pass",
+    "seconds": 1.47,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-03.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNestedCallbackCycleIsRefused",
+    "result": "pass",
+    "seconds": 0.19,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-04.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "result": "pass",
+    "seconds": 0.2,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-04.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "result": "pass",
+    "seconds": 0.21,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-04.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNamespaceCallGraphCycleUnion",
+    "result": "pass",
+    "seconds": 0.22,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-04.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNestedFunctionCycleIsRefused",
+    "result": "pass",
+    "seconds": 0.12,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/argument",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/initializer",
+    "result": "pass",
+    "seconds": 0.11,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/tuple_element",
+    "result": "pass",
+    "seconds": 0.11,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/spread",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/spread_other_missing",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/return",
+    "result": "pass",
+    "seconds": 0.09,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/shorthand",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/readonly",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/property_write",
+    "result": "pass",
+    "seconds": 0.07,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/parameter_default",
+    "result": "pass",
+    "seconds": 0.07,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/nested",
+    "result": "pass",
+    "seconds": 0.11,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/class_field",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/incompatible",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/captured_extra_reference",
+    "result": "pass",
+    "seconds": 0.73,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+    "result": "pass",
+    "seconds": 0.78,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/field_access_paths",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/field",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/generic",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/arrow",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/cast",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/assignment",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused/array_element",
+    "result": "pass",
+    "seconds": 0.09,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningRefused",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/later_escape_refuses_all_consumers",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/let_binding",
+    "result": "pass",
+    "seconds": 0.31,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/prior_escape",
+    "result": "pass",
+    "seconds": 0.26,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/function_return",
+    "result": "pass",
+    "seconds": 0.24,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/hidden_field_cast",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/hidden_force",
+    "result": "pass",
+    "seconds": 0.27,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/ordinary_call",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries/stored_wider_view",
+    "result": "pass",
+    "seconds": 0.43,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNodeHostOptionsRefusalBoundaries",
+    "result": "pass",
+    "seconds": 2.87,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-05.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalWideningSpreadOverwrite",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_mutable_array",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_nominal_identity",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_mutable_optional_field",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_nested_optional",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/upcast_mutable_optional_elements",
+    "result": "pass",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+    "result": "pass",
+    "seconds": 0.39,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/upcast_invariant_optional_class_argument",
+    "result": "pass",
+    "seconds": 0.09,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/upcast_hidden_optional",
+    "result": "pass",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_readonly_to_writable",
+    "result": "pass",
+    "seconds": 0.08,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_hidden_optional",
+    "result": "pass",
+    "seconds": 0.11,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/upcast_nominal_identity",
+    "result": "pass",
+    "seconds": 0.11,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/upcast_function_parameter",
+    "result": "pass",
+    "seconds": 0.14,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_mutable_field",
+    "result": "pass",
+    "seconds": 0.12,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_nested_mutable_literal",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/upcast_mutable_array",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse/satisfies_function_parameter",
+    "result": "pass",
+    "seconds": 0.16,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsRefuse",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestProvenRelationsErase",
+    "result": "pass",
+    "seconds": 1.26,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-06.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/early_value",
+    "result": "pass",
+    "seconds": 9.89,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/initialized_value",
+    "result": "pass",
+    "seconds": 0.34,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/indirect_value",
+    "result": "pass",
+    "seconds": 0.32,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/early_plain_class",
+    "result": "pass",
+    "seconds": 0.32,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class",
+    "result": "pass",
+    "seconds": 0.33,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/early_extends",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks/initialized_extends",
+    "result": "pass",
+    "seconds": 0.3,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "result": "pass",
+    "seconds": 11.8,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower-07.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower/cycleledger",
+    "test": "TestOriginalCycleLedger",
+    "result": "skip",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_lower_cycleledger-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeMixedCountedCycleProbe",
+    "result": "pass",
+    "seconds": 8.27,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_native-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a",
+    "result": "pass",
+    "seconds": 0.44,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a",
+    "result": "pass",
+    "seconds": 0.43,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a",
+    "result": "pass",
+    "seconds": 0.42,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a",
+    "result": "pass",
+    "seconds": 0.37,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a",
+    "result": "pass",
+    "seconds": 0.44,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a",
+    "result": "pass",
+    "seconds": 0.39,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a",
+    "result": "pass",
+    "seconds": 0.36,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a",
+    "result": "pass",
+    "seconds": 0.36,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a",
+    "result": "pass",
+    "seconds": 0.36,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a",
+    "result": "pass",
+    "seconds": 0.38,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a",
+    "result": "pass",
+    "seconds": 0.35,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a",
+    "result": "pass",
+    "seconds": 0.36,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/ctor_set.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/another_view.a",
+    "result": "pass",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/wraps_argument.a",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/spread_old.a",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/spread_array.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/splice.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/set_iterator.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/set_add.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/returns_global.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/returns_argument.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/one_call.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/older_instance.a",
+    "result": "pass",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/next_iteration.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/map_set.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/map_key.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/map_iterator.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/map_callback.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/global_then_function.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/index_write.a",
+    "result": "pass",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/escapes_after_return.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/fill.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/devirt_fresh_method_keeps_argument.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/ctor_wrapped.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_same.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/ctor_readonly.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/concat.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/constructor_tie.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/closure_captures.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/caught.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/captured_before.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_wrapper.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_then_throws.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_twice_deferred.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_targets_virtual.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_escaped_parent.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_returns_argument.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_owner.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_one_bad_site.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_leaks_parent.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_grandchild.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/array_from.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_comparator.a",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused/call_clobbers.a",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFreshWriteProbesStayRefused",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a",
+    "result": "pass",
+    "seconds": 3.49,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestClosureMergeRefusals",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/structural/absent",
+    "result": "pass",
+    "seconds": 0.17,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleLoadTimeReads/read/a.a",
+    "result": "pass",
+    "seconds": 3.7,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+    "result": "pass",
+    "seconds": 0.61,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+    "result": "pass",
+    "seconds": 0.52,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleLoadTimeReads/classes/c.a",
+    "result": "pass",
+    "seconds": 0.64,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+    "result": "pass",
+    "seconds": 0.63,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+    "result": "pass",
+    "seconds": 1.33,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/option-element/absent",
+    "result": "pass",
+    "seconds": 0.26,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+    "result": "pass",
+    "seconds": 0.63,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleLoadTimeReads/classes/a.a",
+    "result": "pass",
+    "seconds": 0.5,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+    "result": "pass",
+    "seconds": 0.56,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/absent",
+    "result": "pass",
+    "seconds": 0.18,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+    "result": "pass",
+    "seconds": 0.56,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleLoadTimeReads/indirect/b.a",
+    "result": "pass",
+    "seconds": 0.5,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+    "result": "pass",
+    "seconds": 0.68,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+    "result": "pass",
+    "seconds": 0.39,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch",
+    "result": "pass",
+    "seconds": 0.14,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleLoadTimeReads/hoisted/a.a",
+    "result": "pass",
+    "seconds": 0.38,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleLoadTimeReads",
+    "result": "pass",
+    "seconds": 5.72,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNestedCycleRefusal",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStage3EnumBoundaries/06_set_node_flags.a",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStage3EnumBoundaries/11_format_syntax_kind.a",
+    "result": "pass",
+    "seconds": 0.08,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStage3EnumBoundaries/08_debug_format_enum.a",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStage3EnumBoundaries",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestImportCycleRuntimeCalls",
+    "result": "pass",
+    "seconds": 2.96,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNestedSiblingCycleMutantIsCaught",
+    "result": "pass",
+    "seconds": 9.61,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_internal_oracle-01.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "result": "pass",
+    "seconds": 1.1,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage1_typescript_parser-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/04_directory_callback/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/05_safe_load_read/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/01_call_time/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/05_safe_load_read/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/05_safe_load_read/main.a",
+    "result": "pass",
+    "seconds": 0.12,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/04_directory_callback/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/04_directory_callback/main.a",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a",
+    "result": "pass",
+    "seconds": 0.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/03_extensions/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/08_named_reexports/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/01_call_time/main.a/native",
+    "result": "pass",
+    "seconds": 1.42,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/01_call_time/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/01_call_time/main.a",
+    "result": "pass",
+    "seconds": 1.55,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/03_extensions/main.a/native",
+    "result": "pass",
+    "seconds": 1.44,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/03_extensions/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/03_extensions/main.a",
+    "result": "pass",
+    "seconds": 1.56,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/08_named_reexports/main.a/native",
+    "result": "pass",
+    "seconds": 1.45,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/08_named_reexports/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/08_named_reexports/main.a",
+    "result": "pass",
+    "seconds": 1.57,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/native",
+    "result": "pass",
+    "seconds": 1.47,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a",
+    "result": "pass",
+    "seconds": 1.6,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/09_function_value_load/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/node",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/native",
+    "result": "pass",
+    "seconds": 1.34,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a",
+    "result": "pass",
+    "seconds": 1.45,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/native",
+    "result": "pass",
+    "seconds": 1.32,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a",
+    "result": "pass",
+    "seconds": 1.44,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/09_function_value_load/main.a/native",
+    "result": "pass",
+    "seconds": 1.35,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/09_function_value_load/main.a/stage0",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles/09_function_value_load/main.a",
+    "result": "pass",
+    "seconds": 1.47,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles/cycles",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesCycles",
+    "result": "pass",
+    "seconds": 4.13,
+    "log": "review/compiler/loom-r-implied-target/logs/github.com_system-inc_adamic_stage3_fixtures-00.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_008",
+    "result": "pass",
+    "seconds": 51.63,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_024",
+    "result": "pass",
+    "seconds": 51.63,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_000",
+    "result": "pass",
+    "seconds": 62.91,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_016",
+    "result": "pass",
+    "seconds": 62.92,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_022",
+    "result": "pass",
+    "seconds": 27.18,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_021",
+    "result": "pass",
+    "seconds": 17.19,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_020",
+    "result": "pass",
+    "seconds": 18.3,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCountsAreRecorded_023",
+    "result": "pass",
+    "seconds": 30.27,
+    "log": "review/compiler/loom-r-implied-target/logs/counts-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_000",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_127",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_063",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_124",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_095",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_122",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_120",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_119",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_117",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_116",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_115",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_118",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_123",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_112",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_126",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_113",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_108",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_107",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_106",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_109",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_103",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_102",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_101",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_100",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_099",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_098",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_114",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_096",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_079",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_110",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_094",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_097",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_093",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_090",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_089",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_088",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_091",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_086",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_085",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_084",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_083",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_104",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_082",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_081",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_071",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_087",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_092",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_080",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_078",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_077",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_076",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_074",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_073",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_072",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_069",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_068",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_065",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_066",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_070",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_062",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_032",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_061",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_059",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_058",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_057",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_056",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_075",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_054",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_053",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_052",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_051",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_050",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_049",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_048",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_055",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_067",
+    "result": "pass",
+    "seconds": 0.07,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_045",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_044",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_043",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_060",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_047",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_041",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_039",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_040",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_037",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_046",
+    "result": "pass",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_042",
+    "result": "pass",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_034",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_033",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_064",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_035",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_031",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_030",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_029",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_028",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_027",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_038",
+    "result": "pass",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_026",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_036",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_023",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_022",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_021",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_020",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_019",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_018",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_016",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_008",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_024",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_013",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_012",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_017",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_010",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_009",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_011",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_004",
+    "result": "pass",
+    "seconds": 0.01,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_014",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_007",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_015",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_006",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_001",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_003",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_002",
+    "result": "pass",
+    "seconds": 0.02,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_005",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_105/internal/oracle/testdata/node_options_widening.a",
+    "result": "pass",
+    "seconds": 25.13,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_105",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_111/internal/oracle/testdata/optional_widening_declared.a",
+    "result": "pass",
+    "seconds": 25.16,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_111",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_125/internal/oracle/testdata/optional_widening_class.a",
+    "result": "pass",
+    "seconds": 25.34,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_125",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_121/internal/oracle/testdata/optional_widening_fresh.a",
+    "result": "pass",
+    "seconds": 25.37,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_121",
+    "result": "pass",
+    "seconds": 0,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_025/internal/oracle/testdata/invariance_readonly.a",
+    "result": "pass",
+    "seconds": 0.78,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_025",
+    "result": "pass",
+    "seconds": 0.03,
+    "log": "review/compiler/loom-r-implied-target/logs/oracle-neighbors.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+    "result": "fail",
+    "seconds": 0.06,
+    "log": "review/compiler/loom-r-implied-target/logs/shape-ignores-name.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetConditionalQueriesOnce",
+    "result": "fail",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/conditional-per-branch-query.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetLargeArrayQueriesOnce",
+    "result": "fail",
+    "seconds": 0.1,
+    "log": "review/compiler/loom-r-implied-target/logs/array-per-element-query.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+    "result": "fail",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/shape-includes-reference.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetTupleCachesNil",
+    "result": "fail",
+    "seconds": 0.04,
+    "log": "review/compiler/loom-r-implied-target/logs/nil-cache-miss.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+    "result": "fail",
+    "seconds": 0.05,
+    "log": "review/compiler/loom-r-implied-target/logs/shape-ignores-type.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetAndQueriesOnce",
+    "result": "fail",
+    "seconds": 0.14,
+    "log": "review/compiler/loom-r-implied-target/logs/logical-per-operand-query.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetOrQueriesOnce",
+    "result": "fail",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/logical-per-operand-query.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetNullishQueriesOnce",
+    "result": "fail",
+    "seconds": 0.15,
+    "log": "review/compiler/loom-r-implied-target/logs/logical-per-operand-query.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarLiteralShapesOnce",
+    "result": "fail",
+    "seconds": 0.26,
+    "log": "review/compiler/loom-r-implied-target/logs/shape-per-literal.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReaders",
+    "result": "pass",
+    "seconds": 25.73,
+    "log": "review/compiler/loom-r-implied-target/logs/readers.jsonl"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCycleScalarShapeKeysPreserveDistinctFields",
+    "result": "fail",
+    "seconds": 0.08,
+    "log": "review/compiler/loom-r-implied-target/logs/shape-ignores-readonly.jsonl"
+  }
+]
