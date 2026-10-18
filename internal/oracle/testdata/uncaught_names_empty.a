@@ -1,0 +1,9 @@
+// An error with both name and message empty is reported as the empty string.
+try {
+	throw new Error('');
+} catch (error) {
+	if (error instanceof Error) {
+		error.name = '';
+		throw error;
+	}
+}
