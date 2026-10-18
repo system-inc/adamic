@@ -23,6 +23,7 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 		t.Fatal(err)
 	}
 	units := map[string]string{}
+	selectedFiles := map[string]map[string]string{}
 	for _, path := range files {
 		active, err := build.Default.MatchFile(".", path)
 		if err != nil {
@@ -73,7 +74,7 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 				continue
 			}
 			call, ok := statement.X.(*ast.CallExpr)
-			if !ok || len(call.Args) != 2 || call.Ellipsis.IsValid() {
+			if !ok || len(call.Args) < 2 || call.Ellipsis.IsValid() {
 				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
 				continue
 			}
@@ -96,10 +97,40 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if previous, exists := units[directory]; exists {
-				t.Errorf("fixture directory %s has duplicate units %s and %s", directory, previous, function.Name.Name)
+			if len(call.Args) == 2 {
+				if previous, exists := units[directory]; exists {
+					t.Errorf("fixture directory %s has duplicate units %s and %s", directory, previous, function.Name.Name)
+				}
+				if len(selectedFiles[directory]) != 0 {
+					t.Errorf("fixture directory %s mixes directory and fixture units", directory)
+				}
+				units[directory] = function.Name.Name
+			} else {
+				if _, exists := units[directory]; exists {
+					t.Errorf("fixture directory %s mixes directory and fixture units", directory)
+				}
+				if selectedFiles[directory] == nil {
+					selectedFiles[directory] = map[string]string{}
+				}
+				for _, argument := range call.Args[2:] {
+					literal, ok := argument.(*ast.BasicLit)
+					if !ok || literal.Kind != token.STRING {
+						t.Errorf("%s must name literal fixture files", function.Name.Name)
+						continue
+					}
+					file, err := strconv.Unquote(literal.Value)
+					if err != nil {
+						t.Fatal(err)
+					}
+					if !validFixturePath(file) {
+						t.Errorf("invalid fixture unit %q", file)
+					}
+					if previous, exists := selectedFiles[directory][file]; exists {
+						t.Errorf("fixture %s/%s has duplicate units %s and %s", directory, file, previous, function.Name.Name)
+					}
+					selectedFiles[directory][file] = function.Name.Name
+				}
 			}
-			units[directory] = function.Name.Name
 		}
 	}
 	entries, err := os.ReadDir(*fixtureRoot)
@@ -135,7 +166,7 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 		}
 		directories++
 		unit, exists := units[directory]
-		if !exists {
+		if !exists && len(selectedFiles[directory]) == 0 {
 			t.Errorf("fixture directory %s has no top-level test", directory)
 			continue
 		}
@@ -152,12 +183,27 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 		if len(rows) == 0 {
 			t.Errorf("fixture directory %s is empty", directory)
 		}
+		if !exists {
+			for _, row := range rows {
+				if _, owned := selectedFiles[directory][row.File]; !owned {
+					t.Errorf("fixture %s/%s has no top-level test", directory, row.File)
+				}
+				delete(selectedFiles[directory], row.File)
+			}
+			for file := range selectedFiles[directory] {
+				t.Errorf("fixture unit names nonexistent fixture %s/%s", directory, file)
+			}
+			delete(selectedFiles, directory)
+		}
 		fixtures += len(rows)
 		t.Logf("%s directory=%s fixtures=%d", unit, directory, len(rows))
 		delete(units, directory)
 	}
 	for directory, unit := range units {
 		t.Errorf("top-level test %s names nonexistent fixture directory %s", unit, directory)
+	}
+	for directory := range selectedFiles {
+		t.Errorf("fixture units name nonexistent directory %s", directory)
 	}
 	if directories == 0 || fixtures == 0 {
 		t.Fatal("empty fixture directory union")

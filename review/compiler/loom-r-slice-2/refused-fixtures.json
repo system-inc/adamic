@@ -1,0 +1,82 @@
+[
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/4ddd17f_long_name.a",
+    "source": "internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/9984394_error_spread.a",
+    "source": "internal/oracle/testdata/miscompile_2a/9984394_error_spread.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/classfeat_maybe_setter.a",
+    "source": "internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a",
+    "source": "internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a",
+    "source": "internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/error_subclass_spread.a",
+    "source": "internal/oracle/testdata/miscompile_2a/error_subclass_spread.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/iterators_derived_symbol.a",
+    "source": "internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/iterators_override_source.a",
+    "source": "internal/oracle/testdata/miscompile_2a/iterators_override_source.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_each.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_narrowed_each.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_find.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_map.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_narrowed_map.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_reduce.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_narrowed_reduce.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_some.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_narrowed_some.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_sort.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_narrowed_sort.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_view_method.a",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/weak_miscompiles_refused/9984394_view_method_parameter.a",
+    "source": "internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a",
+    "identical": true
+  }
+]

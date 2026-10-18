@@ -1,0 +1,14 @@
+{"Time":"2026-10-18T00:24:01.531735401Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-18T00:24:01.53592237Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness"}
+{"Time":"2026-10-18T00:24:01.536041477Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"=== RUN   TestArrayGrowthWitness\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:01.536099163Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"    support_test.go:57: markdownblocks memory capacity: 16 units (512 MiB each)\n"}
+{"Time":"2026-10-18T00:24:01.536107195Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"=== PAUSE TestArrayGrowthWitness\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:01.536109008Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness"}
+{"Time":"2026-10-18T00:24:01.536114325Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness"}
+{"Time":"2026-10-18T00:24:01.536115948Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"=== CONT  TestArrayGrowthWitness\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:02.586491087Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"    array_growth_gap_test.go:32: Node extends the array; both compiled backends panic. The production map appends with push.\n"}
+{"Time":"2026-10-18T00:24:02.58655383Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"--- PASS: TestArrayGrowthWitness (1.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:02.586572187Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Elapsed":1.05}
+{"Time":"2026-10-18T00:24:02.586597235Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:24:02.587579316Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t1.056s\n"}
+{"Time":"2026-10-18T00:24:02.587623491Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.056}

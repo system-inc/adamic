@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:17:22.87571352Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-18T00:17:22.880617432Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-18T00:17:22.880680946Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== RUN   TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:22.88070378Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== PAUSE TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:22.880706054Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-18T00:17:22.880711392Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-18T00:17:22.880713084Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== CONT  TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:22.885621834Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"--- PASS: TestUsageExitStatus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:22.885685268Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Elapsed":0}
+{"Time":"2026-10-18T00:17:22.885698798Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:22.885812577Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t0.010s\n"}
+{"Time":"2026-10-18T00:17:22.885822372Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.01}

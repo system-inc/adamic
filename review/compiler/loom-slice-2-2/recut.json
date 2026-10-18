@@ -1,0 +1,18 @@
+{
+  "base": "199174800998904d8d646dfa5892f512cd5cb20f",
+  "source": "0a757e0ce28a55fa82797cfc46f68211972e4cdd",
+  "conflicts": [],
+  "counts_resolution": "Restored origin/main counts before one regeneration.",
+  "setup_command": "export GOPROXY='https://proxy.golang.org|direct'; timeout 600 bash cloud/setup.sh",
+  "setup_exit": 124,
+  "setup_stop": "go list -deps -export -json ./...",
+  "environment_file": "/workspace/adamic-tools/env.sh",
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "final_base": "118885dd60fb28db126bddfc55a2d861beea5e26",
+  "rebase_count": 1,
+  "rebase_conflicts": [
+    "internal/oracle/counts.md"
+  ],
+  "final_counts_resolution": "Restored the new main table and regenerated once on the final base."
+}

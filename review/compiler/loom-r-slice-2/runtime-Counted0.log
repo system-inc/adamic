@@ -1,0 +1,16 @@
+{"Time":"2026-10-18T00:12:00.132638518Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T00:12:00.141109983Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0"}
+{"Time":"2026-10-18T00:12:00.141230472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"=== RUN   TestProduct_NativeRuntimesCounted0\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:00.141263662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"=== PAUSE TestProduct_NativeRuntimesCounted0\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:00.141266876Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0"}
+{"Time":"2026-10-18T00:12:00.141271253Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0"}
+{"Time":"2026-10-18T00:12:00.141274678Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"=== CONT  TestProduct_NativeRuntimesCounted0\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:02.373234531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"    runtimes_test.go:53: build native-runtime 867f5262e276 miss 1.20\n"}
+{"Time":"2026-10-18T00:12:04.372035022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"    runtimes_test.go:53: build native-runtime 869d57935bc4 miss 1.14\n"}
+{"Time":"2026-10-18T00:12:06.366629746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"    runtimes_test.go:53: build native-runtime 848fde59e367 miss 1.06\n"}
+{"Time":"2026-10-18T00:12:08.387563076Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"    runtimes_test.go:53: build native-runtime c2800fba117f miss 1.07\n"}
+{"Time":"2026-10-18T00:12:08.387614573Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Output":"--- PASS: TestProduct_NativeRuntimesCounted0 (8.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:08.387617357Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestProduct_NativeRuntimesCounted0","Elapsed":8.25}
+{"Time":"2026-10-18T00:12:08.38763915Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:08.389688057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t8.256s\n"}
+{"Time":"2026-10-18T00:12:08.389707607Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":8.257}

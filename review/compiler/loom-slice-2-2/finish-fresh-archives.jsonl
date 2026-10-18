@@ -1,0 +1,13 @@
+{"Time":"2026-10-13T22:30:36.147195717Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-13T22:30:36.226193383Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh"}
+{"Time":"2026-10-13T22:30:36.226304694Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh","Output":"=== RUN   TestProduct_CallTargetReaderArchivesFresh\n","OutputType":"frame"}
+{"Time":"2026-10-13T22:30:36.226368496Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh","Output":"=== PAUSE TestProduct_CallTargetReaderArchivesFresh\n","OutputType":"frame"}
+{"Time":"2026-10-13T22:30:36.226373416Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh"}
+{"Time":"2026-10-13T22:30:36.226379367Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh"}
+{"Time":"2026-10-13T22:30:36.22638258Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh","Output":"=== CONT  TestProduct_CallTargetReaderArchivesFresh\n","OutputType":"frame"}
+{"Time":"2026-10-13T22:31:02.549138361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh","Output":"    call_targets_guard_test.go:337: build call-target-export-members_fresh ab23aee93e40 miss 15.98\n"}
+{"Time":"2026-10-13T22:31:02.549310505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh","Output":"--- PASS: TestProduct_CallTargetReaderArchivesFresh (26.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T22:31:02.549318531Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestProduct_CallTargetReaderArchivesFresh","Elapsed":26.32}
+{"Time":"2026-10-13T22:31:02.549428402Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T22:31:02.566133333Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t26.418s\n"}
+{"Time":"2026-10-13T22:31:02.566399748Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":26.419}

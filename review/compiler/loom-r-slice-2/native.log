@@ -1,0 +1,20 @@
+{"Time":"2026-10-18T00:12:55.53286086Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:12:55.537507514Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty"}
+{"Time":"2026-10-18T00:12:55.537569667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty","Output":"=== RUN   TestErrorUndefinedMessageHasNoOwnProperty\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:55.537914309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty","Output":"=== PAUSE TestErrorUndefinedMessageHasNoOwnProperty\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:55.537926107Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty"}
+{"Time":"2026-10-18T00:12:55.537930604Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode"}
+{"Time":"2026-10-18T00:12:55.537935571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode","Output":"=== RUN   TestSplitSelfCompareAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:55.53794162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode","Output":"=== PAUSE TestSplitSelfCompareAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:55.537944084Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode"}
+{"Time":"2026-10-18T00:12:55.537947118Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty"}
+{"Time":"2026-10-18T00:12:55.537950032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty","Output":"=== CONT  TestErrorUndefinedMessageHasNoOwnProperty\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:55.537953237Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode"}
+{"Time":"2026-10-18T00:12:55.53795542Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode","Output":"=== CONT  TestSplitSelfCompareAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:00.361902342Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode","Output":"--- PASS: TestSplitSelfCompareAgreesWithNode (4.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:02.999120396Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitSelfCompareAgreesWithNode","Elapsed":4.82}
+{"Time":"2026-10-18T00:13:02.999189109Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty","Output":"--- PASS: TestErrorUndefinedMessageHasNoOwnProperty (7.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:02.999197331Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestErrorUndefinedMessageHasNoOwnProperty","Elapsed":7.46}
+{"Time":"2026-10-18T00:13:02.999204902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:03.000408698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t7.467s\n"}
+{"Time":"2026-10-18T00:13:03.000429018Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":7.468}

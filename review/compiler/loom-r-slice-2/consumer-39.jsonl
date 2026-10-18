@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:25:17.043122607Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-18T00:25:17.047461462Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce"}
+{"Time":"2026-10-18T00:25:17.047508101Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce","Output":"=== RUN   TestCompilerShardsHoldEveryFileOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:25:17.047663442Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce","Output":"=== PAUSE TestCompilerShardsHoldEveryFileOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:25:17.047669071Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce"}
+{"Time":"2026-10-18T00:25:17.047671544Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce"}
+{"Time":"2026-10-18T00:25:17.047673557Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce","Output":"=== CONT  TestCompilerShardsHoldEveryFileOnce\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:25:17.047676091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce","Output":"    compiler_expressions_shards_test.go:143: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout\n"}
+{"Time":"2026-10-18T00:25:17.047688469Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce","Output":"--- SKIP: TestCompilerShardsHoldEveryFileOnce (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:25:17.047690503Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerShardsHoldEveryFileOnce","Elapsed":0}
+{"Time":"2026-10-18T00:25:17.047701499Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:25:17.047768318Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.004s\n"}
+{"Time":"2026-10-18T00:25:17.047789269Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.005}
