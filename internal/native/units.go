@@ -467,7 +467,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	arguments := append(Flags(options), "-o", output)
+	arguments := append(LinkFlags(options), "-o", output)
 	for index, object := range objects {
 		name := fmt.Sprintf("unit-%d.o", index)
 		if err := os.Symlink(object, filepath.Join(directory, name)); err != nil {
