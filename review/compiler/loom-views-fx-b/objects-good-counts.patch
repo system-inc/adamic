@@ -1,0 +1,132 @@
+--- main/stage3/interface-downcasts/lane1/objects-good.a.c
++++ fixed/stage3/interface-downcasts/lane1/objects-good.a.c
+@@ -23,16 +23,13 @@
+ 
+ static adamic_slot_cache adamic_cache_2;
+ static adamic_slot_cache adamic_cache_4;
+-static adamic_slot_cache adamic_cache_7;
+-static adamic_slot_cache adamic_cache_10;
+ static const char *const adamic_shape_0_names[] = {"ready", "label"};
+ static const bool adamic_shape_0_references[] = {false, true};
+ static const adamic_shape adamic_shape_0 = {2, adamic_shape_0_names, adamic_shape_0_references, NULL};
+ static const char *const adamic_shape_1_names[] = {"kind", "child"};
+ static const bool adamic_shape_1_references[] = {true, true};
+ static const adamic_shape adamic_shape_1 = {2, adamic_shape_1_names, adamic_shape_1_references, NULL};
+-static adamic_slot_cache adamic_cache_25;
+-static adamic_slot_cache adamic_cache_33;
++static adamic_slot_cache adamic_cache_21;
+ 
+ static adamic_object * adamic_function_0_narrow(adamic_object * adamic_local_4_node) {
+ 	ADAMIC_CHECK_STACK();
+@@ -49,66 +46,60 @@
+ 
+ static adamic_string * adamic_function_1_visit(adamic_object * adamic_local_5_child) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_value adamic_temporary_6 = adamic_object_view(adamic_local_5_child, "ready", &adamic_cache_7, 2, "boolean", "child.ready");
+-	if (!((adamic_temporary_6.boolean == false) || (adamic_temporary_6.boolean == true))) adamic_view_literal_failure("child.ready", "boolean", 2, adamic_temporary_6);
+-	bool adamic_temporary_8 = adamic_temporary_6.boolean;
+-	adamic_value adamic_temporary_9 = adamic_object_view(adamic_local_5_child, "label", &adamic_cache_10, 3, "string", "child.label");
+-	adamic_string * adamic_temporary_11 = adamic_retain((adamic_string *)adamic_temporary_9.reference);
+-	adamic_string * adamic_temporary_12 = adamic_string_concat(3, (adamic_string *const[]){((adamic_temporary_8) ? &adamic_string_true : &adamic_string_false), &adamic_string_1, adamic_temporary_11});
+-	adamic_string * adamic_temporary_13 = adamic_temporary_12;
+-	adamic_release(adamic_temporary_11);
+-	return adamic_temporary_13;
++	bool adamic_temporary_6 = (&adamic_local_5_child->slots[0])->boolean;
++	adamic_string * adamic_temporary_7 = ((adamic_string *)(&adamic_local_5_child->slots[1])->reference);
++	adamic_string * adamic_temporary_8 = adamic_string_concat(3, (adamic_string *const[]){((adamic_temporary_6) ? &adamic_string_true : &adamic_string_false), &adamic_string_1, adamic_temporary_7});
++	adamic_string * adamic_temporary_9 = adamic_temporary_8;
++	return adamic_temporary_9;
+ 	adamic_unreachable();
+ }
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_string * adamic_temporary_14 = adamic_string_repeat(&adamic_string_2, (0x1p+01));
+-	adamic_object * adamic_temporary_15 = adamic_object_new(&adamic_shape_0);
+-	adamic_object_field_types(adamic_temporary_15)[0] = 2;
+-	adamic_temporary_15->slots[0].boolean = true;
+-	adamic_object_field_types(adamic_temporary_15)[1] = 3;
+-	adamic_temporary_15->slots[1].reference = adamic_temporary_14;
+-	adamic_object * adamic_temporary_16 = adamic_object_new(&adamic_shape_1);
+-	adamic_object_field_types(adamic_temporary_16)[0] = 3;
+-	adamic_temporary_16->slots[0].reference = adamic_retain(&adamic_string_0);
+-	adamic_object_field_types(adamic_temporary_16)[1] = 4;
+-	adamic_temporary_16->slots[1].reference = adamic_temporary_15;
+-	adamic_object * adamic_temporary_17 = adamic_global_0_raw;
+-	adamic_global_0_raw = adamic_temporary_16;
+-	adamic_release(adamic_temporary_17);
++	adamic_string * adamic_temporary_10 = adamic_string_repeat(&adamic_string_2, (0x1p+01));
++	adamic_object * adamic_temporary_11 = adamic_object_new(&adamic_shape_0);
++	adamic_object_field_types(adamic_temporary_11)[0] = 2;
++	adamic_temporary_11->slots[0].boolean = true;
++	adamic_object_field_types(adamic_temporary_11)[1] = 3;
++	adamic_temporary_11->slots[1].reference = adamic_temporary_10;
++	adamic_object * adamic_temporary_12 = adamic_object_new(&adamic_shape_1);
++	adamic_object_field_types(adamic_temporary_12)[0] = 3;
++	adamic_temporary_12->slots[0].reference = adamic_retain(&adamic_string_0);
++	adamic_object_field_types(adamic_temporary_12)[1] = 4;
++	adamic_temporary_12->slots[1].reference = adamic_temporary_11;
++	adamic_object * adamic_temporary_13 = adamic_global_0_raw;
++	adamic_global_0_raw = adamic_temporary_12;
++	adamic_release(adamic_temporary_13);
+ 	adamic_ready_0 = true;
+-	adamic_object * adamic_temporary_18 = adamic_retain(adamic_global_0_raw);
+-	adamic_object * adamic_temporary_19 = adamic_global_1_held;
+-	adamic_global_1_held = adamic_temporary_18;
+-	adamic_release(adamic_temporary_19);
++	adamic_object * adamic_temporary_14 = adamic_retain(adamic_global_0_raw);
++	adamic_object * adamic_temporary_15 = adamic_global_1_held;
++	adamic_global_1_held = adamic_temporary_14;
++	adamic_release(adamic_temporary_15);
+ 	adamic_ready_1 = true;
+-	adamic_object * adamic_temporary_20 = adamic_global_1_held;
+-	adamic_object * adamic_temporary_21 = adamic_function_0_narrow(adamic_temporary_20);
+-	adamic_object * adamic_temporary_22 = adamic_global_2_view;
+-	adamic_global_2_view = adamic_temporary_21;
+-	adamic_release(adamic_temporary_22);
++	adamic_object * adamic_temporary_16 = adamic_global_1_held;
++	adamic_object * adamic_temporary_17 = adamic_function_0_narrow(adamic_temporary_16);
++	adamic_object * adamic_temporary_18 = adamic_global_2_view;
++	adamic_global_2_view = adamic_temporary_17;
++	adamic_release(adamic_temporary_18);
+ 	adamic_ready_2 = true;
+-	adamic_object * adamic_temporary_23 = adamic_global_2_view;
+-	adamic_value adamic_temporary_24 = adamic_object_view(adamic_temporary_23, "child", &adamic_cache_25, 4, "{ readonly ready: boolean; readonly label: string; }", "view.child");
+-	adamic_object * adamic_temporary_26 = adamic_retain((adamic_object *)adamic_temporary_24.reference);
+-	adamic_object * adamic_temporary_27 = adamic_global_3_alias;
+-	adamic_global_3_alias = adamic_temporary_26;
+-	adamic_release(adamic_temporary_27);
++	adamic_object * adamic_temporary_19 = adamic_global_2_view;
++	adamic_value adamic_temporary_20 = adamic_object_view(adamic_temporary_19, "child", &adamic_cache_21, 4, "{ readonly ready: boolean; readonly label: string; }", "view.child");
++	adamic_object * adamic_temporary_22 = adamic_retain((adamic_object *)adamic_temporary_20.reference);
++	adamic_object * adamic_temporary_23 = adamic_global_3_alias;
++	adamic_global_3_alias = adamic_temporary_22;
++	adamic_release(adamic_temporary_23);
+ 	adamic_ready_3 = true;
+-	adamic_object * adamic_temporary_28 = adamic_global_3_alias;
+-	adamic_string * adamic_temporary_29 = adamic_function_1_visit(adamic_temporary_28);
+-	adamic_write_line(adamic_stdout, adamic_temporary_29);
+-	adamic_release(adamic_temporary_29);
+-	adamic_object * adamic_temporary_30 = adamic_global_3_alias;
+-	adamic_object * adamic_temporary_31 = adamic_global_0_raw;
+-	adamic_value adamic_temporary_32 = adamic_object_view(adamic_temporary_31, "child", &adamic_cache_33, 4, "{ ready: boolean; label: string; }", "raw.child");
+-	adamic_object * adamic_temporary_34 = adamic_retain((adamic_object *)adamic_temporary_32.reference);
+-	bool adamic_temporary_35 = (adamic_temporary_30 == adamic_temporary_34);
+-	adamic_string * adamic_temporary_36 = adamic_string_concat(1, (adamic_string *const[]){((adamic_temporary_35) ? &adamic_string_true : &adamic_string_false)});
+-	adamic_write_line(adamic_stdout, adamic_temporary_36);
+-	adamic_release(adamic_temporary_36);
+-	adamic_release(adamic_temporary_34);
++	adamic_object * adamic_temporary_24 = adamic_global_3_alias;
++	adamic_string * adamic_temporary_25 = adamic_function_1_visit(adamic_temporary_24);
++	adamic_write_line(adamic_stdout, adamic_temporary_25);
++	adamic_release(adamic_temporary_25);
++	adamic_object * adamic_temporary_26 = adamic_global_3_alias;
++	adamic_object * adamic_temporary_27 = adamic_global_0_raw;
++	adamic_object * adamic_temporary_28 = ((adamic_object *)(&adamic_temporary_27->slots[1])->reference);
++	bool adamic_temporary_29 = (adamic_temporary_26 == adamic_temporary_28);
++	adamic_string * adamic_temporary_30 = adamic_string_concat(1, (adamic_string *const[]){((adamic_temporary_29) ? &adamic_string_true : &adamic_string_false)});
++	adamic_write_line(adamic_stdout, adamic_temporary_30);
++	adamic_release(adamic_temporary_30);
+ 	adamic_release(adamic_global_3_alias);
+ 	adamic_global_3_alias = NULL;
+ 	adamic_release(adamic_global_2_view);

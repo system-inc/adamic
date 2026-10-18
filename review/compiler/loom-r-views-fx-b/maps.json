@@ -1,0 +1,29 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/ir",
+    "-run",
+    "^TestEveryMapAProgramHoldsIsSorted$|^TestAProgramIsTheSameBytesEveryTimeGobWritesIt$",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 10.463,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestEveryMapAProgramHoldsIsSorted",
+      "Action": "pass",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+      "Action": "pass",
+      "Elapsed": 0.07
+    }
+  ]
+}

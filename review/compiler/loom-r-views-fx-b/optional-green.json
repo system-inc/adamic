@@ -1,0 +1,29 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestCheckedViewObjectPrimitiveSource$/optional-receiver",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 22.889,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "Action": "pass",
+      "Elapsed": 9.82
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewObjectPrimitiveSource",
+      "Action": "pass",
+      "Elapsed": 0
+    }
+  ]
+}

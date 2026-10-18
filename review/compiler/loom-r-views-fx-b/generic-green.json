@@ -1,0 +1,29 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestCheckedViewUntaggedSourceFlows$/generic/wrong",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 22.395,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+      "Action": "pass",
+      "Elapsed": 11.77
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewUntaggedSourceFlows",
+      "Action": "pass",
+      "Elapsed": 0
+    }
+  ]
+}
