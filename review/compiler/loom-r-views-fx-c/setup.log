@@ -1,0 +1,17 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+setup: submodules ready (0.081s)
+v24.19.0
+setup: go ready (0.085s)
+setup: node ready (0.085s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.012s
+setup: markdown dependencies ready (0.207s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.438s)
+setup: shared cache ready (1.291s)
+# github.com/system-inc/adamic/internal/native
+internal/native/emit_functions.go:364:12: e.callableUnionResult undefined (type *emitter has no field or method callableUnionResult)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/view_lazy.go:171:16: l.callableProducerViewRefusal undefined (type *lowering has no field or method callableProducerViewRefusal)
+internal/lower/view_unions_untagged.go:265:66: l.untaggedCallableABI undefined (type *lowering has no field or method untaggedCallableABI)
+internal/lower/view_unions_untagged.go:265:121: l.uniquelyAssignableCallable undefined (type *lowering has no field or method uniquelyAssignableCallable)

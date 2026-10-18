@@ -1,0 +1,61 @@
+{
+  "item": 135,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.096
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.059
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/p135_object_result-4123e0eab5d3/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: view.value expected function with known signature, found function with unknown signature\n",
+    "seconds": 0.045
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/4123e0eab5d3/p135_object_result.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/p135_object_result-4123e0eab5d3/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.101
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/p135_object_result-4123e0eab5d3/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: view.value expected function with known signature, found function with unknown signature\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}

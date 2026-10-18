@@ -1,0 +1,5 @@
+--- internal/lower/view_callable_producers.go
++++ internal/lower/view_callable_producers.go
+@@ -128 +128 @@
+-				if len(assignableMembers) != 0 && !compatible {
++				if len(assignableMembers) != 0 && !compatible && false {

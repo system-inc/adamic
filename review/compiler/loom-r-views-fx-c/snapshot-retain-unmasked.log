@@ -1,0 +1,12 @@
+=== RUN   TestLoomViewsCOriginal
+=== PAUSE TestLoomViewsCOriginal
+=== CONT  TestLoomViewsCOriginal
+    loom_views_c_test.go:32: native: exit codes differ, stderr ""
+    loom_views_c_test.go:32: sanitized: exit codes differ, stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==19124==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55c2648b6480 bp 0x7fff19b8cc20 sp 0x7fff19b8cb70 T0)\n==19124==The signal is caused by a READ memory access.\n==19124==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55c2648b6480 in adamic_is_shared /adamic-build/runtime/adamic.h:60:16\n    #1 0x55c2648b6480 in adamic_retain /adamic-build/runtime/adamic.h:94:23\n    #2 0x55c2648b6098 in main /adamic-build/main.c:104:29\n    #3 0x7ffa3474aca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7ffa3474ad64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55c2647cf540 in _start (/tmp/adamic-gate/TestLoomViewsCOriginal2355398387/001/program+0x5f540)\n\n==19124==Register values:\nrax = 0x40934a456d5cfa00  rbx = 0x00007fff19b8cb80  rcx = 0x08126948adab9f41  rdx = 0x40934a456d5cfa00  \nrdi = 0x40934a456d5cfa0c  rsi = 0x00007bfa325000c0  rbp = 0x00007fff19b8cc20  rsp = 0x00007fff19b8cb70  \n r8 = 0x00007c6a339e00b8   r9 = 0x00000f7f464a0018  r10 = 0x00007c6a339e00a0  r11 = 0x00000ab8cc91f8d8  \nr12 = 0x000055c26493c800  r13 = 0x00000f7f464c0000  r14 = 0x00007bfa32600000  r15 = 0x00007bfa32600020  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /adamic-build/runtime/adamic.h:60:16 in adamic_is_shared\n==19124==ABORTING\n"
+--- FAIL: TestLoomViewsCOriginal (15.84s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	15.849s
+FAIL

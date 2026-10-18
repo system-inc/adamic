@@ -1,0 +1,61 @@
+{
+  "item": 143,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/f5c224407418/fxspptb_oct9_native_p01_maybe_boolean_spread.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/f5c224407418/fxspptb_oct9_native_p01_maybe_boolean_spread.a"
+    ],
+    "exit": 0,
+    "stdout": "true\nundefined\n",
+    "stderr": "",
+    "seconds": 0.309
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-c",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/f5c224407418/fxspptb_oct9_native_p01_maybe_boolean_spread.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.138
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/fxspptb_oct9_native_p01_maybe_boolean_spread-f5c224407418/generated.mjs"
+    ],
+    "exit": 0,
+    "stdout": "true\nundefined\n",
+    "stderr": "",
+    "seconds": 0.119
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-c",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/f5c224407418/fxspptb_oct9_native_p01_maybe_boolean_spread.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/fxspptb_oct9_native_p01_maybe_boolean_spread-f5c224407418/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 3.087
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/branch-probes/fxspptb_oct9_native_p01_maybe_boolean_spread-f5c224407418/native"
+    ],
+    "exit": 0,
+    "stdout": "true\nundefined\n",
+    "stderr": "",
+    "seconds": 0.006
+  },
+  "agrees": true
+}

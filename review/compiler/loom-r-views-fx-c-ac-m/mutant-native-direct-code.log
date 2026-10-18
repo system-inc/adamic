@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:35:23.799945733Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T22:35:23.805856046Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions"}
+{"Time":"2026-10-18T22:35:23.80592637Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions","Output":"=== RUN   TestCallableProducerRegistryFiltersDirectFunctions\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:23.805948413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions","Output":"=== PAUSE TestCallableProducerRegistryFiltersDirectFunctions\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:23.805951457Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions"}
+{"Time":"2026-10-18T22:35:23.80595374Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions"}
+{"Time":"2026-10-18T22:35:23.805955693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions","Output":"=== CONT  TestCallableProducerRegistryFiltersDirectFunctions\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:23.837245789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions","Output":"    callable_producers_test.go:61: direct function 0 compared as closure code\n","OutputType":"error"}
+{"Time":"2026-10-18T22:35:23.83742283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions","Output":"--- FAIL: TestCallableProducerRegistryFiltersDirectFunctions (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:23.837428579Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallableProducerRegistryFiltersDirectFunctions","Elapsed":0.03}
+{"Time":"2026-10-18T22:35:23.837448378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:23.837814119Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.038s\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:35:23.837825856Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.038}

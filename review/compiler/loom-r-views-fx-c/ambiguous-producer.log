@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerAmbiguousRefused
+=== PAUSE TestCallableProducerAmbiguousRefused
+=== CONT  TestCallableProducerAmbiguousRefused
+    callable_producers_assignable_test.go:81: want located ambiguous-producer refusal, got /tmp/adamic-gate/TestCallableProducerAmbiguousRefused3421148736/001/main.a:7:20: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet
+--- FAIL: TestCallableProducerAmbiguousRefused (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.035s
+FAIL
