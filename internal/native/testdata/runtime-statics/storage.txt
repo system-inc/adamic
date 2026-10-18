@@ -267,3 +267,25 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+
+# Directory-host strings are immortal literals; slot caches use the atomic cache protocol.
+# The new path and WASI path adapters own no mutable static storage.
+`node_fs_directory.c:arrow:1`
+`node_fs_directory.c:before:1`
+`node_fs_directory.c:cache:1`
+`node_fs_directory.c:cache:2`
+`node_fs_directory.c:code:1`
+`node_fs_directory.c:colon:1`
+`node_fs_directory.c:comma:1`
+`node_fs_directory.c:dots:1`
+`node_fs_directory.c:end:1`
+`node_fs_directory.c:error_name:1`
+`node_fs_directory.c:quote:1`
+`node_fs_directory.c:quote:2`
+`node_fs_directory.c:target_before:1`
+`node_fs_directory.c:type_error_name:1`
+`runtime-file:node_fs_directory.c`
+`runtime-file:node_fs_directory.h`
+`runtime-file:node_fs_wasi.h`
+`runtime-file:node_path.c`
+`runtime-file:node_path.h`
