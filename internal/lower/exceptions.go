@@ -185,7 +185,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				return false
 			}
 		case ir.ProcessCall:
-			found = found || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
+			found = found || node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
 		case ir.NodeHostCall:
 			found = found || node.Throws
 		case ir.NodeFSFile:

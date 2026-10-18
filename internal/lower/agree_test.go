@@ -88,11 +88,11 @@ for (const value of values) { console.log(value.toString()); }
 		return strings.ReplaceAll(code, "computed", "wrong"), nil
 	}},
 	"PlantedWrongExit": {source: "console.log('computed');", mutate: func(code string) (string, error) {
-		index := strings.LastIndex(code, "return 0;")
+		index := strings.LastIndex(code, "return adamic_process_status();")
 		if index < 0 {
 			return "", errors.New("native main has no successful exit to mutate")
 		}
-		return code[:index] + strings.Replace(code[index:], "return 0;", "return 7;", 1), nil
+		return code[:index] + strings.Replace(code[index:], "return adamic_process_status();", "return 7;", 1), nil
 	}},
 }
 
