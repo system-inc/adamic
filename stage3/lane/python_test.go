@@ -19,10 +19,47 @@ func TestApplyPython(t *testing.T) {
 	runPython(t, "stage3", "test_apply")
 }
 
-func TestLanePython(t *testing.T) {
+// Each lane suite is a test of its own, so a red names the suite and a test's tail is one suite's, never eight's
+// under one bound.
+
+func TestLaneCheckPython(t *testing.T) {
 	t.Parallel()
-	runPython(t, "stage3/lane", "test_check", "test_table", "test_artifact", "test_case_observer", "test_measure_plan",
-		"test_profile", "test_shards", "test_worker_environment")
+	runPython(t, "stage3/lane", "test_check")
+}
+
+func TestLaneTablePython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_table")
+}
+
+func TestLaneArtifactPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_artifact")
+}
+
+func TestLaneCaseObserverPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_case_observer")
+}
+
+func TestLaneMeasurePlanPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_measure_plan")
+}
+
+func TestLaneProfilePython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_profile")
+}
+
+func TestLaneShardsPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_shards")
+}
+
+func TestLaneWorkerEnvironmentPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_worker_environment")
 }
 
 // stage3's other suites run from their own directories, which their imports name (caches, verdict's run and census,
