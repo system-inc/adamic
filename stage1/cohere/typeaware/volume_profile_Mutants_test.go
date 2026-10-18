@@ -166,17 +166,18 @@ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) st
 	return filepath.Join(directory, change.name)
 }
 
-// Cancel the entire child process group so a lowering command cannot leave its
-// compiler running after its 90-second context expires. No external timer tool
-// is required on Linux or macOS.
+// volumeProfileMutantCommand runs name in its own process group, cancelled with the test: a second before the test's
+// own deadline, the unit's budget (go test -timeout), so a lowering command never outlives the test, and never at a
+// clock of its own. A fixed 90 s here made three product tests' verdicts the builder's load: Eve's tree ffd70d0d killed
+// binding-slot's, first-binding's and scope-containment's mutant builds at 90.1 s, where Adam's and Eve's strace trees
+// built them clean (#h4hrxpe). No external timer tool is required on Linux or macOS.
 func volumeProfileMutantCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
-	deadline := time.Now().Add(90 * time.Second)
-	// Cancel children before an earlier test-wide timeout terminates the parent.
-	if testDeadline, ok := t.Deadline(); ok && testDeadline.Before(deadline) {
-		deadline = testDeadline.Add(-time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
+	if deadline, ok := t.Deadline(); ok {
+		cancel()
+		ctx, cancel = context.WithDeadline(context.Background(), deadline.Add(-time.Second))
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
