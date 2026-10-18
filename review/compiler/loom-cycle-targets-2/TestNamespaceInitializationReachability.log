@@ -1,0 +1,11 @@
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+=== RUN   TestNamespaceInitializationReachability/helper
+=== RUN   TestNamespaceInitializationReachability/cycle
+--- PASS: TestNamespaceInitializationReachability (0.19s)
+    --- PASS: TestNamespaceInitializationReachability/direct (0.07s)
+    --- PASS: TestNamespaceInitializationReachability/helper (0.07s)
+    --- PASS: TestNamespaceInitializationReachability/cycle (0.05s)
+PASS

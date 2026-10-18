@@ -1,0 +1,47 @@
+=== RUN   TestNamespaceLimitsStayLoud
+=== PAUSE TestNamespaceLimitsStayLoud
+=== CONT  TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/computed_enum
+=== RUN   TestNamespaceLimitsStayLoud/reopened_enum
+=== RUN   TestNamespaceLimitsStayLoud/early_enum
+=== RUN   TestNamespaceLimitsStayLoud/mutable_object_escape
+=== RUN   TestNamespaceLimitsStayLoud/object_value
+=== RUN   TestNamespaceLimitsStayLoud/reflection
+=== RUN   TestNamespaceLimitsStayLoud/reopening
+=== RUN   TestNamespaceLimitsStayLoud/function_merge_escape
+=== RUN   TestNamespaceLimitsStayLoud/class_merge
+=== RUN   TestNamespaceLimitsStayLoud/destructured_state
+=== RUN   TestNamespaceLimitsStayLoud/nested_object_var
+=== RUN   TestNamespaceLimitsStayLoud/rest_object_var
+=== RUN   TestNamespaceLimitsStayLoud/default_object_var
+=== RUN   TestNamespaceLimitsStayLoud/computed_member
+=== RUN   TestNamespaceLimitsStayLoud/replace_function
+=== RUN   TestNamespaceLimitsStayLoud/early_call
+=== RUN   TestNamespaceLimitsStayLoud/early_read
+=== RUN   TestNamespaceLimitsStayLoud/block_var
+=== RUN   TestNamespaceLimitsStayLoud/nested_early_read
+=== RUN   TestNamespaceLimitsStayLoud/explicit_receiver
+=== RUN   TestNamespaceLimitsStayLoud/ambient
+--- PASS: TestNamespaceLimitsStayLoud (1.23s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_enum (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopened_enum (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_enum (0.08s)
+    --- PASS: TestNamespaceLimitsStayLoud/mutable_object_escape (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/object_value (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/reflection (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopening (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/function_merge_escape (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/class_merge (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/destructured_state (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_object_var (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/rest_object_var (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/default_object_var (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_member (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/replace_function (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_call (0.07s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_read (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/block_var (0.05s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_early_read (0.04s)
+    --- PASS: TestNamespaceLimitsStayLoud/explicit_receiver (0.25s)
+    --- PASS: TestNamespaceLimitsStayLoud/ambient (0.04s)
+PASS

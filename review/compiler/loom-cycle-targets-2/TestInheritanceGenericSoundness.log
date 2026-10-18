@@ -1,0 +1,9 @@
+=== RUN   TestInheritanceGenericSoundness
+=== PAUSE TestInheritanceGenericSoundness
+=== CONT  TestInheritanceGenericSoundness
+=== RUN   TestInheritanceGenericSoundness/generic_narrowing
+=== RUN   TestInheritanceGenericSoundness/generic_inherited_cycle
+--- PASS: TestInheritanceGenericSoundness (0.08s)
+    --- PASS: TestInheritanceGenericSoundness/generic_narrowing (0.04s)
+    --- PASS: TestInheritanceGenericSoundness/generic_inherited_cycle (0.04s)
+PASS

@@ -1,0 +1,25 @@
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+--- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads (0.00s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (1.37s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (1.48s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (1.79s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (2.05s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (1.15s)
+PASS

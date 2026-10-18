@@ -1,0 +1,6 @@
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== CONT  TestNamespaceAmbientHostInitialization
+    namespaces_ambient_test.go:28: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitialization1620420357/003/main.a:3:22: stage 0 can't lower node:fs.native yet
+--- PASS: TestNamespaceAmbientHostInitialization (0.85s)
+PASS

@@ -1,0 +1,176 @@
+[
+  {
+    "name": "focused-initial",
+    "command": "timeout 180 go test ./internal/ir ./internal/lower ./internal/oracle ./cmd/adamic-gate -run '^(TestEveryMapAProgramHoldsIsSorted|TestEveryTestIsParallelOrSaysWhy|TestNativeAgreementRowsNameRegisteredPrograms|TestRuntimeSetsAreEachUsed|TestClosureTargets.*|TestNamespaceAmbient.*|TestClosureCycle.*|TestGettersCensus.*)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 124,
+    "seconds": 180.065
+  },
+  {
+    "name": "focused",
+    "command": "timeout 300 go test ./internal/ir ./internal/lower ./internal/oracle ./cmd/adamic-gate -run '^(TestEveryMapAProgramHoldsIsSorted|TestEveryTestIsParallelOrSaysWhy|TestNativeAgreementRowsNameRegisteredPrograms|TestRuntimeSetsAreEachUsed|TestClosureTargets.*|TestNamespaceAmbient.*|TestClosureCycle.*|TestGettersCensus.*)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 129.208
+  },
+  {
+    "name": "counts-unmatched",
+    "command": "timeout 600 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -parallel=4 -json -timeout 570s -args -update-counts",
+    "exit": 1,
+    "seconds": 5.396
+  },
+  {
+    "name": "counts-update",
+    "command": "timeout 600 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -parallel=4 -json -timeout 570s -args -update-counts",
+    "exit": 0,
+    "seconds": 106.457
+  },
+  {
+    "name": "lower-list",
+    "command": "timeout 120 go test ./internal/lower -list '^Test' -timeout 90s",
+    "exit": 0,
+    "seconds": 5.561
+  },
+  {
+    "name": "lower-shard-0",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestProduct_LowerAgreementNative|TestAgreementRejectsWrongLoweredOutput|TestAgreementRejectsEmptyAnswer|TestAgreementAcceptsComputedAnswer|TestAgreementAcceptsExpectedPanic|TestAgreementEnumConstantWitness|TestAgreementInheritedFieldWitness|TestAgreementParameterPropertyWitness|TestAgreementStaticInitializerWitness|TestAgreementParseIntRadixWitness|TestNativeAgreementRejectsWrongOutput|TestNativeAgreementRejectsWrongExit|TestNativeAgreementRowsNameRegisteredPrograms|TestMixedTupleSpreadIsNotYet|TestArgumentsLengthReadNeighbors|TestArgumentsLengthRefusalFixtures|TestArgumentsCountLocalsAreNumberedTheSameEveryTime|TestArgumentsLengthReadKeepsReaderFact|TestArrayPredicatePreservesDeclaredElementContract|TestArrayPredicateDoesNotMisclassifyNativeTuples)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 11.415
+  },
+  {
+    "name": "lower-shard-1",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestUnknownArrayPredicateRefusesUnrepresentedObservations|TestArrayPredicateCoexistsWithUnknownReflection|TestAsyncGeneratedIdentityCannotBeClaimedBySource|TestAsyncGapsNameTheMissingPiece|TestAsyncTypeOfCompoundFunctionValueIsNotYet|TestAsyncGeneratorsRemainRefused|TestUncheckableCastsStayRefused|TestCheckedCastProofAndElision|TestCensusMarkerResultIsAssignable|TestCensusMarkerZeroCallIsNotAssumedSafe|TestOptionalFunctionValueRelation|TestOverloadedShorthandFunctionValueStaysNotYet|TestCensusOverloadBinderGuards|TestCensusOverloadReturnProof|TestCensusPredicateInteractionBoundary|TestCensusPredicateInteractionEscapes|TestCensusPredicateMarkerKeepsProofBoundaries|TestCensusPredicateMarkerCallStaysNotYet|TestCensusOverloadRelation|TestCensusSmallFiniteKeyRead)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 5.868
+  },
+  {
+    "name": "lower-shard-2",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestCensusRestMutableElements|TestCensusBooleanDeadBranch|TestCheckPragmasAreRefused|TestCheckPragmaNeighborsCompile|TestTsgoHonorsNoCheckInAdamicFiles|TestClassFeaturesPrivateChecker|TestClassFeaturesPrivateStorage|TestClassFeaturesAccessorRefusals|TestClassFeaturesStaticDeclarationsExecute|TestClassFeaturesStaticSoundness|TestClassFeaturesAccessorCaptureCycle|TestClassFeaturesNarrowedAccessor|TestClassFeaturesStaticInterfaceCycle|TestClassFeaturesThrowingAccessorSpread|TestInheritanceRefusesUnsoundOverrides|TestInheritanceKeepsCheckerConstructorRules|TestInheritanceAllowsSoundOverrides|TestInheritanceHasClassIdentity|TestInheritanceCycleFinderIncludesInheritedFields|TestInheritanceRejectsUnsupportedConstructorShapes)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 4.952
+  },
+  {
+    "name": "lower-shard-3",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestInheritanceRefusesFalseNominalViews|TestInheritanceRefusesThisBeforeSuperReturns|TestInheritanceKeepsNominalTupleDestructuring|TestInheritanceGenericMonomorphizations|TestInheritanceRefusesGrowingGenericClasses|TestInheritanceGenericSoundness|TestInheritanceConditionalThisRules|TestInheritanceGenericViewsKeepNominalArguments|TestInheritanceGenericNominalConstraints|TestInheritanceNativeSignatureNeighbors|TestInheritanceNativeSignatureLimits|TestClassArgumentsUseCheckerIdentity|TestClassStaticInitializerCallIsEmitted|TestClassStaticSideEffectMatchesNode|TestClassWrongOutputIteratorReceiver|TestClassWrongOutputKeysRepair|TestClassWrongOutputPrivateRepair|TestClockGenericReturnsT01Shapes|TestClockGenericReturnsT01DeclinesBrandedPrimitives|TestClockGenericReturnsT01RejectsNullBeforeBody)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 15.405
+  },
+  {
+    "name": "lower-shard-4",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestClockGenericReturnsT01RejectsIndexBeforeBody|TestConstructorCacheOneArgumentRemainsNotYet|TestDefiniteAssignmentUsesReadiness|TestNestedEmptyArrayElementKinds|TestEmptyLiteralGenericReturnUsesSamePath|TestEntriesAllocationProof|TestEntriesRecordBoundaries|TestFlagEnumsOpen|TestFlagEnumsDomain|TestEnumNeverDefault|TestFlagEnumLiteralSpellings|TestFlagEnumMemberAliases|TestEnumNameEnumeration|TestFlagEnumInlineIteration|TestFlagEnumAliasBoundaries|TestEnumMemberValuesAndReverseNameMatchNode|TestEnumFlagProofsWithoutObservableLoweringEffect|TestEnumReverseMappingUsesSingleSlot|TestEnumInitializationReach|TestEnumInitializationGraphMemo)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 9.166
+  },
+  {
+    "name": "lower-shard-5",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestEnumNamespaceSharedCycle|TestNumericEnumsAreOpen|TestStringEnumsStayClosed|TestNumericEnumNeverProof|TestNumericEnumLiteralPromises|TestEnumSlotViews|TestEnumSwitchExhaustiveness|TestEnumLimitsStayLoud|TestConstEnumErasesRuntimeObject|TestEnumIdentityAcrossModules|TestReadonlyFieldsAreJudgedByTheirConstructorsWrites|TestParseIntMapUsesIndexRadix|TestFSOpenStringFlagsLower|TestFSRemoveDefaultRetryDelayLowers|TestFSExistsOperation|TestFSStatThrowsByDefault|TestFunctionValueUnionViewsStayNotYet|TestGenericFunctionPolymorphicRecursionIsRefused|TestGenericUnionFixtureHasSeparateInstances|TestGenericJSONUnionArrayIsNotYet)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 8.961
+  },
+  {
+    "name": "lower-shard-6",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestUndecidedCycleReadsUseReadyChecks|TestInputSpreadCoverage|TestDefaultTaggedInterfaceAdmission|TestIteratorGapsAreExplicit|TestIteratorViewsCannotHideReturn|TestIteratorViewsCannotEraseReceivers|TestIteratorDestructuringDoesNotLieAboutExhaustion|TestGeneratorsAreRefusedEvenWithoutYield|TestLiteralMethodCapturesCannotMakeCycles|TestLiteralMethodViewsDoNotLoseThis|TestLiteralMethodSignatureViewsDoNotLoseThis|TestIteratorDescriptorReasons|TestRepresentedMethodReplacementIsNotYet|TestDestructuredMethodsCannotLoadOwnSlots|TestGenericIteratorViewsPreserveNativeArguments|TestIteratorMapperIndexHasNumberRepresentation|TestIteratorSymbolKeysAreNotStringKeys|TestLibraryLanguageBoundaries|TestLibraryMapSetGapsStayRefused|TestLibraryMapSetIteratorCopyTypesRefused)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 8.865
+  },
+  {
+    "name": "lower-shard-7",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestLibraryMethodValues|TestLibraryMethodValueBoundaries|TestLibraryMethodValueSafety|TestNodeBufferRefusals|TestNodeFSFileOptionsBorrow|TestNodeFSFileDoesNotAuthorizeMutableWidening|TestNodeFSFileRefusesOptionEffects|TestNodeFSFileRefusesVoidValues|TestNodeFSFileRefusesPinnedUnsupportedOverloads|TestNodeFSFileNamespaceImport|TestNodeFSFileQualifiedErrorType|TestNodeFSFileKeepsDetachedMethodRefusal|TestNodeFSFileBufferBorrow|TestNodeFSFileScratchOptionsBorrow|TestNodeFSFileScratchOverloadsAreNamed|TestNodeHostConsumesArgument|TestNodeHostOptionsRefusalBoundaries|TestNodeHostOptionsConsumptionLowers|TestNodeHostOptionsReferencesAcrossFiles|TestNodeHostRmPresentUndefinedRefused)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 21.01
+  },
+  {
+    "name": "lower-shard-8",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestNodeLibraryNamesUnimplementedMembers|TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames|TestNodeLibraryDistinguishesReceiverOwners|TestNodeLibraryQualifiedTypeAssertion|TestObjectRefusalsExplainSoundness|TestObjectUnprovenShapesStayNotYet|TestLibraryRegexOffsetRequiresNoCaptures|TestLibrarySpreadRegExpUnion|TestLibrarySpreadErrorView|TestLibrarySpreadPlainProducers|TestLibrarySpreadMapView|TestLibrarySpreadSetView|TestLibrarySpreadDateView|TestLibrarySpreadTypedArrayView|TestLibraryStringRefusals|TestConsoleLowersToWriteLine|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestWhatZeroOneRefusesIsRefusedWithAFix|TestAMutableLocationSeenWiderIsRefused|TestAViewThatCantWriteIsNotRefused)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 9.895
+  },
+  {
+    "name": "lower-shard-9",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestATupleSeenAsAnArrayIsNotYet|TestAMethodReadAsAValueIsRefused|TestModuleNamespaceLimitsStayLoud|TestModuleNamespaceInitializedReadProof|TestCallableNamespaceLimitsStayLoud|TestCallableNamespaceReceiverStaysLoud|TestNamespaceClassEarlyConstructionStaysLoud|TestNamespaceReceiverArrowInheritsScope|TestNamespaceAmbientHostInitialization|TestNamespaceAmbientCwdInitialization|TestNamespaceAmbientContextsDoNotExecute|TestNamespaceCallGraphLinearWork|TestNamespaceCallGraphCycleUnion|TestNamespaceEnumInitializationIndependentOfModuleAnalysis|TestParserFactoryBindingHoisting|TestMissingBindingSymbolHasStructuredLocation|TestTscNamespaceDeclarationShapes|TestNamespaceLimitsStayLoud|TestNamespaceReceiverRefusal|TestNamespaceTypesErase)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 6.427
+  },
+  {
+    "name": "lower-shard-10",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestTracingNamespaceEscapeStaysNotYet|TestDebugNamespaceMergedCapabilities|TestNamespaceReturnedAssignmentLimits|TestNamespaceInitializationReachability|TestNamespaceClosedCallGraphEdges|TestEmptyNeverMapCannotGainWritableInhabitants|TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported|TestNonNullAssertionLowersToNullishPanic|TestNonNullAssertionOnPresentTypeIsErased|TestOptionalIndexingMapShapeRefused|TestOptionalIndexingKeepsIndexSignaturesRefused)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 4.868
+  },
+  {
+    "name": "lower-shard-11",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestOptionalIndexingKeepsUnsupportedStorageNotYet|TestOptionalWideningRefused|TestOptionalWideningSpreadOverwrite|TestOverloadInferenceWitnesses|TestAbfe962OverrideDefaultAddedRefusesNativeSignature|TestOverrideOptionalNumberRefusesNativeSignature|TestOverrideOptionalRefusesNativeSignature|TestParallelReadonlyCheckerRepresentation|TestParallelGlobalMarkingRoots|TestParameterPropertiesSoundness|TestParameterPropertyCheckerContracts|TestParameterPropertyCallbackReceiver|TestParameterPropertyValueMatchesNode|TestPredicateSummaryParameterIndex|TestPredicateOverloadRuntime|TestIndirectPredicateOverloadIsPending|TestPredicateBodyProof|TestConditionAssertionAdmission|TestPredicateCallbackContracts|TestEveryNeedsCallbackEffects)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 14.73
+  },
+  {
+    "name": "lower-shard-12",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestPredicateUseRegions|TestPredicateUsesBelongToEachCall|TestUnprovenPredicateReturnsAreRefused|TestPredicateBodiesAreProven|TestPrimitiveAdmittingSlotsUseBoxes|TestInheritedLibraryReadsNeverLoadOwnFieldsObject|TestInheritedLibraryReadsNeverLoadOwnFieldsArray|TestInheritedLibraryReadsNeverLoadOwnFieldsTuple|TestInheritedLibraryReadsNeverLoadOwnFieldsNumber|TestInheritedLibraryReadsNeverLoadOwnFieldsString|TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean|TestInheritedLibraryReadsNeverLoadOwnFieldsClass|TestInheritedLibraryReadsNeverLoadOwnFieldsMap|TestInheritedLibraryReadsNeverLoadOwnFieldsSet|TestInheritedLibraryReadsNeverLoadOwnFieldsFunction|TestInheritedLibraryReadsNeverLoadOwnFieldsError|TestInheritedLibraryReadsNeverLoadOwnFieldsUnion|TestInheritedLibraryReadReceiversEachHaveOneTest|TestPrototypeMethodsAreRefusedWithReasons|TestNullishPrototypeReadsAreRejectedByChecker)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 10.462
+  },
+  {
+    "name": "lower-shard-13",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestPrototypeHazardsBehindObjectViewsAreNotYet|TestUnrepresentedPrototypeCallsAreNotYet|TestIsPrototypeOfReadsExplainThePrototypeRefusal|TestProvenRelationsRefuse|TestProvenRelationsErase|TestReadinessElisionRequiresDominatingAssignment|TestRegExpNativeRefusals|TestRegExpSourceNode|TestRegExpUnicodeClassSourceAgreesWithNode|TestRegExpSlashClassSourceAgreesWithNode|TestRegExpEscapedSlashSourceAgreesWithNode|TestRepresentationClockSourceCheckedTypes|TestPrivateAndPublicStaticsAgreeWithNode|TestNamespaceFactoryBindingsAgreeWithNode|TestReadinessErrorIncludesReceiverExpression|TestSuppressionDirectivesAreRefused|TestSuppressionDirectiveSoundNeighbors|TestSwitchConditionalBreakFallsThrough|TestSwitchEmptyElseFallsThrough|TestSwitchEmptyCaseFallsThrough)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 6.718
+  },
+  {
+    "name": "lower-shard-14",
+    "command": "timeout 120 go test ./internal/lower -run '^(TestSwitchEmptyBlockFallsThrough|TestTasteRepresentationLimitsStayExplicit|TestTypedArraysLower|TestTypedArrayGaps|TestTypedArrayViewsCannotChangeRepresentation|TestTypedArrayFromArray|TestTypedArrayFromEmptyArray|TestUnknownReflectionRefusals|TestViewObjectContractsAreAvailableToEraser|TestViewObjectWritesNeedSourceCertificate|TestMixedUnionContractGraph|TestMixedUnionContractFailureDoesNotCertifyRetry|TestMixedUnionContractUnknownMemberFails|TestMixedUnionContractRecursiveMember|TestMixedUnionContractPhantomBrandUsesPrimitiveBase|TestMixedUnionContractPhantomVoidIsUndefined|TestUntaggedViewMemberTags|TestUntaggedViewStructuralFallback)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 5.433
+  },
+  {
+    "name": "affected-fixtures",
+    "command": "timeout 180 go test ./internal/oracle -run '^(TestNativeAgreesWithNode_[0-9]+|TestNativeAgreesWithNode_user_iterators)$/^internal$/^oracle$/^testdata$/^(route_targets_sort_values|borrow_chain_unknown|call_targets_element|generic_functions|instantiation_find|user_iterators)\\.a$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 16.197
+  },
+  {
+    "name": "instantiation-find",
+    "command": "timeout 180 go test ./internal/oracle -run '^TestInstantiationFind$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 9.473
+  },
+  {
+    "name": "mutants",
+    "command": "timeout 600 python3 /workspace/adamic/review/compiler/loom-r-cycle-targets/run-mutants.py",
+    "exit": 0,
+    "seconds": 103.765
+  },
+  {
+    "name": "admission-mutant",
+    "command": "timeout 180 python3 /workspace/adamic/review/compiler/loom-r-cycle-targets/run-admission-mutant.py",
+    "exit": 0,
+    "seconds": 29.487
+  },
+  {
+    "name": "readers",
+    "command": "timeout 180 go test ./internal/ir -run '^(TestCallTargetReaders|TestCallTargetsIncludeEveryDescendant|TestEveryMapAProgramHoldsIsSorted|TestAProgramIsTheSameBytesEveryTimeGobWritesIt|TestASortedMapIsNilWhereAPlainMapIs)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 53.952
+  },
+  {
+    "name": "vet",
+    "command": "timeout 180 go vet ./internal/ir ./internal/lower ./internal/oracle",
+    "exit": 0,
+    "seconds": 36.328
+  },
+  {
+    "name": "consumers",
+    "command": "timeout 180 go test ./internal/native ./internal/flow ./internal/fresh ./internal/javascript -run '^(TestCallTargetsElementBorrowPlan|TestBorrowChainTargets|TestLoopCallCoverage|TestDebuggerHasNoFlowInstruction|TestRegexOperandsStillJudgeCycleWrites|TestViewMixedUnionSelectsNumber)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 6.79
+  },
+  {
+    "name": "flow-corpus",
+    "command": "timeout 600 go test ./internal/flow -run '^(TestFlowCorpus.*|TestFlowProgram.*|TestFlowSingleAssignment.*|TestFlowMutationRanges.*|TestFlowGraphPaths.*|TestFlowLiveness.*)$' -count=1 -parallel=4 -json -timeout 570s",
+    "exit": 0,
+    "seconds": 110.92
+  },
+  {
+    "name": "table-and-families",
+    "command": "timeout 180 go test ./internal/oracle -run '^(TestCountsAreRecordedTable|TestFamiliesOwnEveryCaseOnce|TestFamilyWrappersAreCurrent)$' -count=1 -parallel=4 -json -timeout 90s",
+    "exit": 0,
+    "seconds": 4.408
+  }
+]

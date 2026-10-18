@@ -1,0 +1,12 @@
+Rebase closure target cycle rule onto pinned main
+
+Apply only 20fde75fa96b48f3dea2e3612b418acae666332f's own change
+onto dbdf977f5b8b0979d414ebe6f20e7aadd312e309. Keep main's generated
+cycle identity audit and the source's SortedMap closure fact cache.
+
+Regenerate counts with Linux clang 20.1.8. Main's newer
+instantiation_find witness also loses six retain/release pairs;
+its uncached Node and both-backend sanitizer agreement passes.
+
+Assumption: unknown closure producers remain cycle-capable.
+All six source-report mutants are caught by their intended assertions.

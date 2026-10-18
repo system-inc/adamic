@@ -1,0 +1,1 @@
+{"name": "counts-update", "command": "timeout 600 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -parallel=4 -json -timeout 570s -args -update-counts", "exit": 1, "seconds": 5.396}

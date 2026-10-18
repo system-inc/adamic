@@ -1,0 +1,5 @@
+omit-boundary-inputs: caught by ^TestClosureTargetsKnownCallerDoesNotHideUnknownCaller$
+unknown-is-empty: caught by ^TestClosureTargetsBoundOnlyProvenValues$
+omit-captures: caught by ^TestClosureCycleDirect$
+drop-return-target: caught by ^TestClosureTargetsFollowParametersReturnsAndMapValues$
+omit-map-captures: caught by ^TestClosureCycleMap$

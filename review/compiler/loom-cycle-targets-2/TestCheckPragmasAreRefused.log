@@ -1,0 +1,45 @@
+=== RUN   TestCheckPragmasAreRefused
+=== PAUSE TestCheckPragmasAreRefused
+=== CONT  TestCheckPragmasAreRefused
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_
+=== RUN   TestCheckPragmasAreRefused/ts-check///_@ts-check_
+=== PAUSE TestCheckPragmasAreRefused/ts-check///_@ts-check_
+=== RUN   TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_
+=== PAUSE TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_
+=== RUN   TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_
+=== PAUSE TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_
+=== RUN   TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_
+=== PAUSE TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_
+=== RUN   TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_
+=== PAUSE TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-check///_@ts-check_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_
+=== CONT  TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_
+=== CONT  TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_
+=== CONT  TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_
+=== CONT  TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_
+--- PASS: TestCheckPragmasAreRefused (0.00s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_ (0.08s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck/#!/usr/bin/env_node_//_@ts-nocheck_ (0.08s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck///_@ts-nocheck_//_@ts-check_//_@ts-nocheck_ (0.10s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check///_@ts-check_ (0.12s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck///_license___//_@ts-nocheck_ (0.07s)
+    --- PASS: TestCheckPragmasAreRefused/ts-nocheck////_@ts-nocheck_reason_ (0.07s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check///_license___//_@ts-check_ (0.08s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check///_@ts-check_//_@ts-check_//_@ts-nocheck_ (0.07s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check////_@ts-check_reason_ (0.06s)
+    --- PASS: TestCheckPragmasAreRefused/ts-check/#!/usr/bin/env_node_//_@ts-check_ (0.06s)
+PASS

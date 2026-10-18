@@ -1,0 +1,6 @@
+--- FAIL: TestNamespaceAmbientHostInitialization (1.30s)
+    --- FAIL: TestNamespaceAmbientHostInitialization/cwd (0.56s)
+        namespaces_ambient_test.go:42: expected independent host member NotYet, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.321s
+FAIL

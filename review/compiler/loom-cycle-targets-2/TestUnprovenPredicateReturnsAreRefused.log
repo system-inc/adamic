@@ -1,0 +1,109 @@
+=== RUN   TestUnprovenPredicateReturnsAreRefused
+=== PAUSE TestUnprovenPredicateReturnsAreRefused
+=== CONT  TestUnprovenPredicateReturnsAreRefused
+=== RUN   TestUnprovenPredicateReturnsAreRefused/unconditional_true
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/unconditional_true
+=== RUN   TestUnprovenPredicateReturnsAreRefused/different_variable
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/different_variable
+=== RUN   TestUnprovenPredicateReturnsAreRefused/wider_narrowing
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/wider_narrowing
+=== RUN   TestUnprovenPredicateReturnsAreRefused/partial_true_set
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/partial_true_set
+=== RUN   TestUnprovenPredicateReturnsAreRefused/narrower_narrowing
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/narrower_narrowing
+=== RUN   TestUnprovenPredicateReturnsAreRefused/false_branch_lie
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/false_branch_lie
+=== RUN   TestUnprovenPredicateReturnsAreRefused/positive_number
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/positive_number
+=== RUN   TestUnprovenPredicateReturnsAreRefused/opaque_call
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/opaque_call
+=== RUN   TestUnprovenPredicateReturnsAreRefused/modified_parameter
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/modified_parameter
+=== RUN   TestUnprovenPredicateReturnsAreRefused/captured_write
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/captured_write
+=== RUN   TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call
+=== RUN   TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write
+=== RUN   TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape
+=== RUN   TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch
+=== RUN   TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_empty
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_empty
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_early_return
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_early_return
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assert_cond_empty
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assert_cond_empty
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assert_cond_false
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assert_cond_false
+=== RUN   TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean
+=== RUN   TestUnprovenPredicateReturnsAreRefused/bodyless_signature
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/bodyless_signature
+=== RUN   TestUnprovenPredicateReturnsAreRefused/default_argument
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/default_argument
+=== RUN   TestUnprovenPredicateReturnsAreRefused/unknown_control_flow
+=== PAUSE TestUnprovenPredicateReturnsAreRefused/unknown_control_flow
+=== CONT  TestUnprovenPredicateReturnsAreRefused/unconditional_true
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape
+=== CONT  TestUnprovenPredicateReturnsAreRefused/positive_number
+=== CONT  TestUnprovenPredicateReturnsAreRefused/opaque_call
+=== CONT  TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter
+=== CONT  TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write
+=== CONT  TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call
+=== CONT  TestUnprovenPredicateReturnsAreRefused/captured_write
+=== CONT  TestUnprovenPredicateReturnsAreRefused/modified_parameter
+=== CONT  TestUnprovenPredicateReturnsAreRefused/partial_true_set
+=== CONT  TestUnprovenPredicateReturnsAreRefused/false_branch_lie
+=== CONT  TestUnprovenPredicateReturnsAreRefused/narrower_narrowing
+=== CONT  TestUnprovenPredicateReturnsAreRefused/different_variable
+=== CONT  TestUnprovenPredicateReturnsAreRefused/wider_narrowing
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation
+=== CONT  TestUnprovenPredicateReturnsAreRefused/unknown_control_flow
+=== CONT  TestUnprovenPredicateReturnsAreRefused/default_argument
+=== CONT  TestUnprovenPredicateReturnsAreRefused/bodyless_signature
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assert_cond_false
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assert_cond_empty
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_empty
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch
+=== CONT  TestUnprovenPredicateReturnsAreRefused/assertion_early_return
+=== CONT  TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch
+=== CONT  TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch
+--- PASS: TestUnprovenPredicateReturnsAreRefused (0.00s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/unconditional_true (0.09s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/opaque_call (0.10s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/positive_number (0.11s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_wider_shape (0.16s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/captured_write (0.17s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_call (0.22s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_write (0.24s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/aliased_discriminant_getter (0.26s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/partial_true_set (0.07s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/narrower_narrowing (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/false_branch_lie (0.09s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/modified_parameter (0.10s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/wider_narrowing (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/different_variable (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_call_invalidation (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/default_argument (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/unknown_control_flow (0.09s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/bodyless_signature (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assert_cond_false (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assert_cond_nonboolean (0.08s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assert_cond_empty (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_empty (0.06s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/nominal_guard_mismatch (0.04s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_early_return (0.05s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/assertion_wrong_branch (0.07s)
+    --- PASS: TestUnprovenPredicateReturnsAreRefused/nominal_assertion_mismatch (0.04s)
+PASS

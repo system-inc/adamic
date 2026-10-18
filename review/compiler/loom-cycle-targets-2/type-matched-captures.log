@@ -1,0 +1,18 @@
+=== RUN   TestNamespaceAmbientCwdInitialization
+=== PAUSE TestNamespaceAmbientCwdInitialization
+=== CONT  TestNamespaceAmbientCwdInitialization
+    namespaces_ambient_test.go:35: Lower refused acceptance row: /tmp/adamic-gate/TestNamespaceAmbientCwdInitialization2515982513/002/main.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestNamespaceAmbientCwdInitialization (1.63s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.655s
+=== RUN   TestClosureCycleAmbientCwd
+=== PAUSE TestClosureCycleAmbientCwd
+=== CONT  TestClosureCycleAmbientCwd
+    cycle_closure_targets_test.go:69: /workspace/adamic/stage3/namespace-init-sys/cwd.a:4:18: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)
+--- FAIL: TestClosureCycleAmbientCwd (4.01s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.029s
+FAIL

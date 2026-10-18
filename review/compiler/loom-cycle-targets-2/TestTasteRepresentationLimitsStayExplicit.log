@@ -1,0 +1,17 @@
+=== RUN   TestTasteRepresentationLimitsStayExplicit
+=== PAUSE TestTasteRepresentationLimitsStayExplicit
+=== CONT  TestTasteRepresentationLimitsStayExplicit
+=== RUN   TestTasteRepresentationLimitsStayExplicit/union_scalar_field
+=== RUN   TestTasteRepresentationLimitsStayExplicit/evolving_different_objects
+=== RUN   TestTasteRepresentationLimitsStayExplicit/explicit_any
+=== RUN   TestTasteRepresentationLimitsStayExplicit/computed_enum
+=== RUN   TestTasteRepresentationLimitsStayExplicit/enum_prototype
+=== RUN   TestTasteRepresentationLimitsStayExplicit/merged_enum
+--- PASS: TestTasteRepresentationLimitsStayExplicit (0.23s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/union_scalar_field (0.04s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/evolving_different_objects (0.04s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/explicit_any (0.04s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/computed_enum (0.04s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/enum_prototype (0.03s)
+    --- PASS: TestTasteRepresentationLimitsStayExplicit/merged_enum (0.04s)
+PASS

@@ -1,0 +1,61 @@
+=== RUN   TestNodeBufferRefusals
+=== PAUSE TestNodeBufferRefusals
+=== CONT  TestNodeBufferRefusals
+=== RUN   TestNodeBufferRefusals/buffer_alloc
+=== PAUSE TestNodeBufferRefusals/buffer_alloc
+=== RUN   TestNodeBufferRefusals/buffer_read
+=== PAUSE TestNodeBufferRefusals/buffer_read
+=== RUN   TestNodeBufferRefusals/hash_inherited_read
+=== PAUSE TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestNodeBufferRefusals/hash_copy
+=== PAUSE TestNodeBufferRefusals/hash_copy
+=== RUN   TestNodeBufferRefusals/crypto_random
+=== PAUSE TestNodeBufferRefusals/crypto_random
+=== RUN   TestNodeBufferRefusals/crypto_constructor
+=== PAUSE TestNodeBufferRefusals/crypto_constructor
+=== RUN   TestNodeBufferRefusals/buffer_isUtf8
+=== PAUSE TestNodeBufferRefusals/buffer_isUtf8
+=== RUN   TestNodeBufferRefusals/encoding
+=== PAUSE TestNodeBufferRefusals/encoding
+=== RUN   TestNodeBufferRefusals/algorithm
+=== PAUSE TestNodeBufferRefusals/algorithm
+=== RUN   TestNodeBufferRefusals/digest
+=== PAUSE TestNodeBufferRefusals/digest
+=== RUN   TestNodeBufferRefusals/catch
+=== PAUSE TestNodeBufferRefusals/catch
+=== RUN   TestNodeBufferRefusals/detached
+=== PAUSE TestNodeBufferRefusals/detached
+=== RUN   TestNodeBufferRefusals/typed_array_view
+=== PAUSE TestNodeBufferRefusals/typed_array_view
+=== RUN   TestNodeBufferRefusals/structural_hash_view
+=== PAUSE TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/buffer_alloc
+=== CONT  TestNodeBufferRefusals/encoding
+=== CONT  TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/typed_array_view
+=== CONT  TestNodeBufferRefusals/crypto_random
+=== CONT  TestNodeBufferRefusals/hash_copy
+=== CONT  TestNodeBufferRefusals/hash_inherited_read
+=== CONT  TestNodeBufferRefusals/buffer_read
+=== CONT  TestNodeBufferRefusals/buffer_isUtf8
+=== CONT  TestNodeBufferRefusals/crypto_constructor
+=== CONT  TestNodeBufferRefusals/catch
+=== CONT  TestNodeBufferRefusals/detached
+=== CONT  TestNodeBufferRefusals/digest
+=== CONT  TestNodeBufferRefusals/algorithm
+--- PASS: TestNodeBufferRefusals (0.00s)
+    --- PASS: TestNodeBufferRefusals/encoding (1.01s)
+    --- PASS: TestNodeBufferRefusals/structural_hash_view (1.15s)
+    --- PASS: TestNodeBufferRefusals/typed_array_view (1.21s)
+    --- PASS: TestNodeBufferRefusals/buffer_alloc (1.36s)
+    --- PASS: TestNodeBufferRefusals/buffer_read (0.83s)
+    --- PASS: TestNodeBufferRefusals/hash_inherited_read (1.04s)
+    --- PASS: TestNodeBufferRefusals/crypto_random (1.64s)
+    --- PASS: TestNodeBufferRefusals/hash_copy (1.65s)
+    --- PASS: TestNodeBufferRefusals/crypto_constructor (0.89s)
+    --- PASS: TestNodeBufferRefusals/buffer_isUtf8 (1.02s)
+    --- PASS: TestNodeBufferRefusals/catch (0.81s)
+    --- PASS: TestNodeBufferRefusals/detached (0.82s)
+    --- PASS: TestNodeBufferRefusals/digest (0.64s)
+    --- PASS: TestNodeBufferRefusals/algorithm (0.60s)
+PASS

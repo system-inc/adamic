@@ -1,0 +1,14 @@
+=== RUN   TestCountsAreRecorded_031
+=== PAUSE TestCountsAreRecorded_031
+=== CONT  TestCountsAreRecorded_031
+=== RUN   TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a
+=== PAUSE TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a
+=== CONT  TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a
+    counts_test.go:150: gate cache native miss
+--- PASS: TestCountsAreRecorded_031 (0.00s)
+    --- PASS: TestCountsAreRecorded_031/stage3/namespace-init-sys/cwd.a (5.54s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.571s

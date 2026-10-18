@@ -1,0 +1,193 @@
+=== RUN   TestInputSpreadCoverage
+=== PAUSE TestInputSpreadCoverage
+=== CONT  TestInputSpreadCoverage
+=== RUN   TestInputSpreadCoverage/fileStatus_alias.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_alias.a
+=== RUN   TestInputSpreadCoverage/fileStatus_array.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_array.a
+=== RUN   TestInputSpreadCoverage/fileStatus_local.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_local.a
+=== RUN   TestInputSpreadCoverage/fileStatus_nested.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_nested.a
+=== RUN   TestInputSpreadCoverage/fileStatus_parentheses.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_parentheses.a
+=== RUN   TestInputSpreadCoverage/fileStatus_tuple.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_tuple.a
+=== RUN   TestInputSpreadCoverage/programArguments_alias.a
+=== PAUSE TestInputSpreadCoverage/programArguments_alias.a
+=== RUN   TestInputSpreadCoverage/programArguments_array.a
+=== PAUSE TestInputSpreadCoverage/programArguments_array.a
+=== RUN   TestInputSpreadCoverage/programArguments_local.a
+=== PAUSE TestInputSpreadCoverage/programArguments_local.a
+=== RUN   TestInputSpreadCoverage/programArguments_nested.a
+=== PAUSE TestInputSpreadCoverage/programArguments_nested.a
+=== RUN   TestInputSpreadCoverage/programArguments_parentheses.a
+=== PAUSE TestInputSpreadCoverage/programArguments_parentheses.a
+=== RUN   TestInputSpreadCoverage/programArguments_tuple.a
+=== PAUSE TestInputSpreadCoverage/programArguments_tuple.a
+=== RUN   TestInputSpreadCoverage/readDirectory_alias.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_alias.a
+=== RUN   TestInputSpreadCoverage/readDirectory_array.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_array.a
+=== RUN   TestInputSpreadCoverage/readDirectory_local.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_local.a
+=== RUN   TestInputSpreadCoverage/readDirectory_nested.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_nested.a
+=== RUN   TestInputSpreadCoverage/readDirectory_parentheses.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_parentheses.a
+=== RUN   TestInputSpreadCoverage/readDirectory_tuple.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_tuple.a
+=== RUN   TestInputSpreadCoverage/readTextFile_alias.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_alias.a
+=== RUN   TestInputSpreadCoverage/readTextFile_array.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_array.a
+=== RUN   TestInputSpreadCoverage/readTextFile_local.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_local.a
+=== RUN   TestInputSpreadCoverage/readTextFile_nested.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_nested.a
+=== RUN   TestInputSpreadCoverage/readTextFile_parentheses.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_parentheses.a
+=== RUN   TestInputSpreadCoverage/readTextFile_tuple.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_tuple.a
+=== RUN   TestInputSpreadCoverage/utf8At_alias.a
+=== PAUSE TestInputSpreadCoverage/utf8At_alias.a
+=== RUN   TestInputSpreadCoverage/utf8At_array.a
+=== PAUSE TestInputSpreadCoverage/utf8At_array.a
+=== RUN   TestInputSpreadCoverage/utf8At_later.a
+=== PAUSE TestInputSpreadCoverage/utf8At_later.a
+=== RUN   TestInputSpreadCoverage/utf8At_local.a
+=== PAUSE TestInputSpreadCoverage/utf8At_local.a
+=== RUN   TestInputSpreadCoverage/utf8At_multiple.a
+=== PAUSE TestInputSpreadCoverage/utf8At_multiple.a
+=== RUN   TestInputSpreadCoverage/utf8At_nested.a
+=== PAUSE TestInputSpreadCoverage/utf8At_nested.a
+=== RUN   TestInputSpreadCoverage/utf8At_parentheses.a
+=== PAUSE TestInputSpreadCoverage/utf8At_parentheses.a
+=== RUN   TestInputSpreadCoverage/utf8At_tuple.a
+=== PAUSE TestInputSpreadCoverage/utf8At_tuple.a
+=== RUN   TestInputSpreadCoverage/utf8Length_alias.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_alias.a
+=== RUN   TestInputSpreadCoverage/utf8Length_array.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_array.a
+=== RUN   TestInputSpreadCoverage/utf8Length_empty.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_empty.a
+=== RUN   TestInputSpreadCoverage/utf8Length_local.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_local.a
+=== RUN   TestInputSpreadCoverage/utf8Length_nested.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_nested.a
+=== RUN   TestInputSpreadCoverage/utf8Length_parentheses.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_parentheses.a
+=== RUN   TestInputSpreadCoverage/utf8Length_tuple.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_tuple.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_alias.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_alias.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_array.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_array.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_later.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_later.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_local.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_local.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_multiple.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_multiple.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_nested.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_nested.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_tuple.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/fileStatus_alias.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_nested.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_multiple.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_local.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_later.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_array.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_alias.a
+=== CONT  TestInputSpreadCoverage/utf8Length_tuple.a
+=== CONT  TestInputSpreadCoverage/utf8Length_parentheses.a
+=== CONT  TestInputSpreadCoverage/utf8Length_nested.a
+=== CONT  TestInputSpreadCoverage/utf8Length_local.a
+=== CONT  TestInputSpreadCoverage/utf8Length_empty.a
+=== CONT  TestInputSpreadCoverage/utf8Length_array.a
+=== CONT  TestInputSpreadCoverage/utf8Length_alias.a
+=== CONT  TestInputSpreadCoverage/utf8At_tuple.a
+=== CONT  TestInputSpreadCoverage/utf8At_parentheses.a
+=== CONT  TestInputSpreadCoverage/utf8At_nested.a
+=== CONT  TestInputSpreadCoverage/utf8At_multiple.a
+=== CONT  TestInputSpreadCoverage/utf8At_local.a
+=== CONT  TestInputSpreadCoverage/utf8At_later.a
+=== CONT  TestInputSpreadCoverage/utf8At_array.a
+=== CONT  TestInputSpreadCoverage/utf8At_alias.a
+=== CONT  TestInputSpreadCoverage/readTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/readTextFile_parentheses.a
+=== CONT  TestInputSpreadCoverage/readTextFile_nested.a
+=== CONT  TestInputSpreadCoverage/readTextFile_local.a
+=== CONT  TestInputSpreadCoverage/readTextFile_array.a
+=== CONT  TestInputSpreadCoverage/readTextFile_alias.a
+=== CONT  TestInputSpreadCoverage/readDirectory_tuple.a
+=== CONT  TestInputSpreadCoverage/readDirectory_parentheses.a
+=== CONT  TestInputSpreadCoverage/readDirectory_nested.a
+=== CONT  TestInputSpreadCoverage/readDirectory_local.a
+=== CONT  TestInputSpreadCoverage/readDirectory_array.a
+=== CONT  TestInputSpreadCoverage/readDirectory_alias.a
+=== CONT  TestInputSpreadCoverage/programArguments_tuple.a
+=== CONT  TestInputSpreadCoverage/programArguments_parentheses.a
+=== CONT  TestInputSpreadCoverage/programArguments_nested.a
+=== CONT  TestInputSpreadCoverage/programArguments_local.a
+=== CONT  TestInputSpreadCoverage/programArguments_array.a
+=== CONT  TestInputSpreadCoverage/programArguments_alias.a
+=== CONT  TestInputSpreadCoverage/fileStatus_tuple.a
+=== CONT  TestInputSpreadCoverage/fileStatus_parentheses.a
+=== CONT  TestInputSpreadCoverage/fileStatus_nested.a
+=== CONT  TestInputSpreadCoverage/fileStatus_local.a
+=== CONT  TestInputSpreadCoverage/fileStatus_array.a
+--- PASS: TestInputSpreadCoverage (0.00s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_nested.a (0.17s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_tuple.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_alias.a (0.22s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_parentheses.a (0.25s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_later.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_local.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_multiple.a (0.19s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_array.a (0.12s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_tuple.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_alias.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_parentheses.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_nested.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_local.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_empty.a (0.14s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_array.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_alias.a (0.16s)
+    --- PASS: TestInputSpreadCoverage/utf8At_tuple.a (0.20s)
+    --- PASS: TestInputSpreadCoverage/utf8At_parentheses.a (0.14s)
+    --- PASS: TestInputSpreadCoverage/utf8At_nested.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/utf8At_multiple.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/utf8At_local.a (0.08s)
+    --- PASS: TestInputSpreadCoverage/utf8At_array.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/utf8At_later.a (0.12s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_tuple.a (0.09s)
+    --- PASS: TestInputSpreadCoverage/utf8At_alias.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_parentheses.a (0.09s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_nested.a (0.08s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_array.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_local.a (0.12s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_alias.a (0.08s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_tuple.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_nested.a (0.09s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_parentheses.a (0.12s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_array.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_local.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/programArguments_tuple.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_alias.a (0.11s)
+    --- PASS: TestInputSpreadCoverage/programArguments_local.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/programArguments_parentheses.a (0.12s)
+    --- PASS: TestInputSpreadCoverage/programArguments_nested.a (0.13s)
+    --- PASS: TestInputSpreadCoverage/programArguments_array.a (0.09s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_nested.a (0.06s)
+    --- PASS: TestInputSpreadCoverage/programArguments_alias.a (0.11s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_parentheses.a (0.09s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_tuple.a (0.11s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_local.a (0.07s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_array.a (0.10s)
+PASS

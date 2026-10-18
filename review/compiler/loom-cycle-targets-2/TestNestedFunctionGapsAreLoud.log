@@ -1,0 +1,11 @@
+=== RUN   TestNestedFunctionGapsAreLoud
+=== PAUSE TestNestedFunctionGapsAreLoud
+=== CONT  TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionGapsAreLoud/block
+=== RUN   TestNestedFunctionGapsAreLoud/generic
+=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this
+--- PASS: TestNestedFunctionGapsAreLoud (0.12s)
+    --- PASS: TestNestedFunctionGapsAreLoud/block (0.05s)
+    --- PASS: TestNestedFunctionGapsAreLoud/generic (0.03s)
+    --- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.04s)
+PASS
