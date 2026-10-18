@@ -357,6 +357,15 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regions_escapes.a", true, false},
 	{"internal/oracle/testdata/regions_paths.a", true, false},
 	{"internal/oracle/testdata/regions_spread_fresh.a", true, false},
+	{"internal/oracle/testdata/map_union_value_string_false.a", true, false},
+	{"internal/oracle/testdata/map_union_value_string_number.a", true, false},
+	{"internal/oracle/testdata/map_union_value_source_file.a", true, false},
+	{"internal/oracle/testdata/map_union_value_resolved_project.a", true, false},
+	{"internal/oracle/testdata/map_union_value_filesystem_entries.a", true, false},
+	{"internal/oracle/testdata/map_union_value_host_file_info.a", true, false},
+	{"internal/oracle/testdata/map_union_value_visit_result.a", true, false},
+	{"internal/oracle/testdata/map_union_value_paths.a", true, false},
+	{"internal/oracle/testdata/map_union_value_contextual_array.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// A constructor whose object a closure captures, kept in a global (integration's reading of
