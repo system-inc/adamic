@@ -1,0 +1,61 @@
+{
+  "item": 152,
+  "source": "review/compiler/loom-views-fx-d/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a"
+    ],
+    "exit": 0,
+    "stdout": "number\n",
+    "stderr": "",
+    "seconds": 0.456
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-d",
+      "js",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.297
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/fxspptb_oct9_native_p67_static_class_union_member-1e717dc21ea2/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n",
+    "seconds": 0.3
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-d",
+      "build",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a",
+      "-o",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/fxspptb_oct9_native_p67_static_class_union_member-1e717dc21ea2/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 4.854
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/fxspptb_oct9_native_p67_static_class_union_member-1e717dc21ea2/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n",
+    "seconds": 0.004
+  },
+  "agrees": false
+}

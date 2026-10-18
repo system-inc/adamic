@@ -1,0 +1,5 @@
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -241 +241 @@
+-			expected := statement.DeclaredType
++			expected := ""

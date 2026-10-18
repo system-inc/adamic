@@ -1,0 +1,5 @@
+--- a/control.a
++++ b/control.a
+@@ -1,2 +1 @@
+-// a-check: refused delete
+ const value: {count?: number} = {count: 1}; delete value.count;

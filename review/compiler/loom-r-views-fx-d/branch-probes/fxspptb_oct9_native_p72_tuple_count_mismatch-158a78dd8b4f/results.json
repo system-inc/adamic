@@ -1,0 +1,61 @@
+{
+  "item": 152,
+  "source": "review/compiler/loom-views-fx-d/baseline-sources/158a78dd8b4f/fxspptb_oct9_native_p72_tuple_count_mismatch.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-d/baseline-sources/158a78dd8b4f/fxspptb_oct9_native_p72_tuple_count_mismatch.a"
+    ],
+    "exit": 0,
+    "stdout": "first:1\n",
+    "stderr": "",
+    "seconds": 0.104
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-r-views-d",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-d/baseline-sources/158a78dd8b4f/fxspptb_oct9_native_p72_tuple_count_mismatch.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.067
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-d/branch-probes/fxspptb_oct9_native_p72_tuple_count_mismatch-158a78dd8b4f/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+    "seconds": 0.087
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-r-views-d",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-d/baseline-sources/158a78dd8b4f/fxspptb_oct9_native_p72_tuple_count_mismatch.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-d/branch-probes/fxspptb_oct9_native_p72_tuple_count_mismatch-158a78dd8b4f/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.264
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-r-views-fx-d/branch-probes/fxspptb_oct9_native_p72_tuple_count_mismatch-158a78dd8b4f/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n",
+    "seconds": 0.003
+  },
+  "agrees": false
+}

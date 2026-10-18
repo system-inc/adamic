@@ -1,0 +1,5 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1335 +1335 @@
+-	if property, ok := closure.(ir.Property); ok && property.ViewContract > 0 && len(spread) != 0 {
++	if property, ok := closure.(ir.Property); ok && property.ViewContract > 0 && len(spread) != 0 && false {

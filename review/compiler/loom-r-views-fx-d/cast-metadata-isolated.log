@@ -1,0 +1,8 @@
+=== RUN   TestViewCheckedCastMetadata
+=== PAUSE TestViewCheckedCastMetadata
+=== CONT  TestViewCheckedCastMetadata
+    view_cast_metadata_test.go:14: CheckedCast omitted field representation metadata
+--- FAIL: TestViewCheckedCastMetadata (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.007s
+FAIL

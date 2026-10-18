@@ -1,0 +1,5 @@
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -287 +287 @@
+-				if !program.CheckedFields[expression.Name] || expression.Method && !certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID]) {
++				if !program.CheckedFields[expression.Name] || expression.Method {

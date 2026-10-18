@@ -1,0 +1,16 @@
+{"name": "source-argument-layout", "test": "^TestLoomViewsDWideCallable$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 15.286989154999901}
+{"name": "native-depth-128", "test": "^TestFX7Depth65$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 37.79887376199997}
+{"name": "javascript-depth-128", "test": "^TestFX7Depth65$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 15.107480234000036}
+{"name": "native-write-type", "test": "^TestFX7TextP32$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 14.962535107999997}
+{"name": "javascript-write-type", "test": "^TestFX7TextP32$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 13.304155379999997}
+{"name": "native-object-kind", "test": "^TestFX7TextScalarTuple$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 36.94670080699996}
+{"name": "native-union-kind", "test": "^TestFX7TextP72$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 36.85334111099996}
+{"name": "tuple-unmarked", "test": "^TestLoomViewsDTupleUnion$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 14.30411458499998}
+{"name": "tuple-rejected-object", "test": "^TestLoomViewsDTupleObject$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 14.01735276799991}
+{"name": "ordinary-array-admitted", "test": "^TestFX7TupleMarkerRejectsOrdinaryArray$", "package": "./internal/javascript", "exit": 1, "caught": true, "seconds": 1.6816954170000145}
+{"name": "cast-metadata-isolated", "test": "^TestViewCheckedCastMetadata$", "package": "./internal/native", "exit": 1, "caught": true, "seconds": 15.958440713999948}
+{"name": "clear-contract-bad-callee", "test": "^TestLoomViewsDBadCallable$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 21.73951110500002}
+{"name": "native-static-kind", "test": "^TestFX7TextP67$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 36.24924295899996}
+{"name": "callable-spread", "test": "^TestCallableContractSpreadRefused$", "package": "./internal/lower", "exit": 1, "caught": true, "seconds": 17.00865176800005}
+{"name": "producer-mask", "test": "^TestLoomViewsDWideCallable$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 15.568554915999925}
+{"name": "native-scalar-static-kind", "test": "^TestFX7TextScalarStatic$", "package": "./internal/oracle", "exit": 1, "caught": true, "seconds": 34.682639163999966}

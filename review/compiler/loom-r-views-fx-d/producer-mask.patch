@@ -1,0 +1,5 @@
+--- a/internal/native/view_unions_callable_producers.go
++++ b/internal/native/view_unions_callable_producers.go
+@@ -94 +94 @@
+-				masks[i] = e.program.ViewContracts[child-1].RepresentationMask
++				masks[i] = 0

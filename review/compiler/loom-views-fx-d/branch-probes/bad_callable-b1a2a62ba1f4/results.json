@@ -1,0 +1,61 @@
+{
+  "item": 146,
+  "source": "review/compiler/loom-views-fx-d/baseline-sources/b1a2a62ba1f4/bad_callable.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/b1a2a62ba1f4/bad_callable.a"
+    ],
+    "exit": 0,
+    "stdout": "before\nargument\n99\n",
+    "stderr": "",
+    "seconds": 0.326
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-d",
+      "js",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/b1a2a62ba1f4/bad_callable.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.274
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/bad_callable-b1a2a62ba1f4/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "before\n",
+    "stderr": "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n",
+    "seconds": 0.462
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-d",
+      "build",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/baseline-sources/b1a2a62ba1f4/bad_callable.a",
+      "-o",
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/bad_callable-b1a2a62ba1f4/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 6.072
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic-views-b/review/compiler/loom-views-fx-d/branch-probes/bad_callable-b1a2a62ba1f4/native"
+    ],
+    "exit": 70,
+    "stdout": "before\n",
+    "stderr": "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n",
+    "seconds": 0.005
+  },
+  "agrees": false
+}

@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -277 +277 @@
+-		else if (value->class != NULL && value->class->is_static) { found = "function"; }
++		else if (false && value->class != NULL && value->class->is_static) { found = "function"; }

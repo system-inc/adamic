@@ -1,0 +1,28 @@
+--- a/internal/native/runtime/view_unions_mixed.c
++++ b/internal/native/runtime/view_unions_mixed.c
+@@ -66,11 +66,6 @@
+         return index;
+     }
+     const char *found = adamic_view_union_kind_name(value->kind);
+-    if (value->kind == adamic_view_union_object && value->payload.reference != NULL) {
+-        const adamic_object *object = value->payload.reference;
+-        if (object->tuple) { found = "array"; }
+-        else if (object->class != NULL && object->class->is_static) { found = "function"; }
+-    }
+     size_t capacity = strlen(expression) + 2 * strlen(declared) + strlen(found) + 96;
+     char *message = malloc(capacity);
+     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -180,5 +180,11 @@
+             if (adamic_view_untagged_plain_matches(contracts, count, root->members[i], &value)) { return root->members[i]; }
+         }
+     }
++    // Only this own-data adapter has proved the heap layout. Generic mixed
++    // selection must reject unavailable adapters without inspecting a payload.
++    if (value.kind == adamic_view_union_object && object != NULL) {
++        if (object->tuple) { value.kind = adamic_view_union_array; }
++        else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
++    }
+     return adamic_view_mixed_union_select(&value, NULL, 0, NULL, NULL, expression, declared);
+ }

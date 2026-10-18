@@ -1,0 +1,5 @@
+--- a/internal/native/emit_functions.go
++++ b/internal/native/emit_functions.go
+@@ -323 +323 @@
+-		packed, count = e.checkedCallableArguments(expression, closure)
++		packed, count = e.closureArguments(expression)
