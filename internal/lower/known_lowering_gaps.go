@@ -22,10 +22,6 @@ func (l *lowering) knownLoweringGap(node *ast.Node) error {
 				return l.notYet(node, "a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments")
 			}
 		}
-	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindPropertySignature:
-		if len(plainPropertyName(node)) > 4095 {
-			return l.notYet(node.Name(), "a property name longer than 4095 bytes; shorten the name until native metadata supports long strings")
-		}
 	case ast.KindClassDeclaration:
 		for _, clause := range nodesOf(node.AsClassDeclaration().HeritageClauses) {
 			if clause.AsHeritageClause().Token != ast.KindExtendsKeyword {
