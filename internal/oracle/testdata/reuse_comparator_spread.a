@@ -1,0 +1,17 @@
+// A sort comparator, named, that spreads its first parameter: reuse.go's comparators guard keeps the
+// parameter borrowed, since the sort hands it the array's elements without a count.
+interface Point {
+	x: number;
+	y: number;
+}
+function byY(left: Point, right: Point): number {
+	const moved = { ...left, x: 0 };
+	return moved.y - right.y;
+}
+const points: Point[] = [{ x: 1, y: 3 }, { x: 2, y: 1 }, { x: 3, y: 2 }];
+points.sort(byY);
+let text = '';
+for (const point of points) {
+	text += `${point.x},${point.y} `;
+}
+console.log(text);
