@@ -36,6 +36,7 @@ func registeredRules() []registeredRule {
 		{oracleConsistencyNoConsole(), oracleConsistencyNoConsoleOptions},
 		{oracleConsistencyNoHandBuiltDeclaredError(), oracleConsistencyNoHandBuiltDeclaredErrorOptions},
 		{oracleRequirePaginationArgumentName(), oracleRequirePaginationArgumentNameOptions},
+		{oracleDefaultParamLastCore(), oracleDefaultParamLastCoreOptions},
 		{oracleMaxClassesPerFile(), oracleMaxClassesPerFileOptions},
 		{oracleMaxDepth(), oracleMaxDepthOptions},
 		{oracleMaxNestedCallbacks(), oracleMaxNestedCallbacksOptions},

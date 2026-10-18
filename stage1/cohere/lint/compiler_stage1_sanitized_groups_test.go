@@ -894,3 +894,8 @@ func TestCompilerAndStage1Agree_6564_25(t *testing.T) {
 	t.Parallel()
 	compilerAgreementSubShard(t, 6564, 25)
 }
+
+func TestCompilerAndStage1Agree_CheckerSanitized_default_param_last(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "default-param-last")
+}

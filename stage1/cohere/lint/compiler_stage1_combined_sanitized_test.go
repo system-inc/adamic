@@ -26,6 +26,9 @@ const compilerAgreementCheckerGroupCount = 26
 // native.Options{Sanitize:true, Jobs:1}, Split=false, CPU 0, one core. The cut
 // consumes these prices in production dispatch order; they are not group IDs.
 var compilerAgreementCheckerPrices = map[string]int{
+	// default-param-last: measured on this port over pinned checker.ts, CPU 0, Clang 20.1.8;
+	// -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all, Split=false, Jobs=1.
+	"default-param-last":                                2516,
 	"no-debugger":                                       2578,
 	"no-empty":                                          2481,
 	"eqeqeq":                                            2576,

@@ -743,3 +743,13 @@ func TestProduct_LintMutant_vars_on_top(t *testing.T) {
 	t.Parallel()
 	requireMutantRuleProduct(t, "vars-on-top")
 }
+
+func TestMutants_default_param_last(t *testing.T) {
+	t.Parallel()
+	mutantRuleShard(t, "default-param-last")
+}
+
+func TestProduct_LintMutant_default_param_last(t *testing.T) {
+	t.Parallel()
+	requireMutantRuleProduct(t, "default-param-last")
+}
