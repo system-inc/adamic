@@ -1,0 +1,4 @@
+const {'foo': foo = 1} = obj;
+import {'bar' as bar} from 'bar';
+export {'baz' as baz} from 'baz';
+({foo: (foo), bar: (bar) = 1, baz: /**/baz} = obj);
