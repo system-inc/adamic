@@ -1,0 +1,14 @@
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+const attach = (root: Node): void => {
+	root.nodes.fill({ kind: `f`, nodes: [] }).push(root); // closes the cycle
+};
+let total = 0;
+for (let i = 0; i < 100; i++) {
+	const root: Node = { kind: `r${i}`, nodes: [] };
+	attach(root);
+	total += root.nodes.length;
+}
+console.log(`${total}`);
