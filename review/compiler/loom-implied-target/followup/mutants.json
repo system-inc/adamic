@@ -1,0 +1,78 @@
+[
+  {
+    "mutant": "array-per-element-query",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetLargeArrayQueriesOnce$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.868
+  },
+  {
+    "mutant": "conditional-per-branch-query",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetConditionalQueriesOnce$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.541
+  },
+  {
+    "mutant": "logical-per-operand-query",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTarget(Or|And|Nullish)QueriesOnce$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.91
+  },
+  {
+    "mutant": "nil-cache-miss",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetTupleCachesNil$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 9.792
+  }
+]

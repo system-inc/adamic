@@ -1,0 +1,16 @@
+{
+  "base": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "source": "3514d4ecfe25eea222744e25ca5ccce9fd9ee6bc",
+  "own_lowering_delta_preserved": true,
+  "conflicts": [],
+  "runtime_lines_changed": [],
+  "counts_rows_changed": [],
+  "new_oracle_fixtures": [],
+  "changed_code_files": [
+    "internal/lower/cycle_scalar_shapes_test.go",
+    "internal/lower/cycles.go",
+    "internal/lower/implied_target_test.go",
+    "internal/lower/invariance.go",
+    "internal/lower/lower.go"
+  ]
+}

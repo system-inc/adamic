@@ -1,0 +1,20 @@
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh > review/compiler/loom-implied-target/followup/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc
+# The temporary executable is profile.go.txt copied to .tmp-implied-profile/main.go.
+timeout 90 go build -o /tmp/implied-profile ./.tmp-implied-profile > review/compiler/loom-implied-target/followup/build.log 2>&1
+timeout 120 /tmp/implied-profile review/compiler/loom-implied-target/objects-sequential.a /tmp/implied.cpu > review/compiler/loom-implied-target/followup/profile-measure.json 2> review/compiler/loom-implied-target/followup/profile.log
+timeout 90 go tool pprof -top -cum /tmp/implied-profile /tmp/implied.cpu > review/compiler/loom-implied-target/followup/pprof-cumulative.txt 2>&1
+timeout 90 go build -o /tmp/implied-profile-after ./.tmp-implied-profile > review/compiler/loom-implied-target/followup/build-after.log 2>&1
+timeout 180 python3 review/compiler/loom-implied-target/followup/measure-sizes.py > review/compiler/loom-implied-target/followup/sizes.log 2>&1
+timeout 60 /tmp/implied-profile-after review/compiler/loom-implied-target/objects-sequential.a /tmp/implied-after.cpu > review/compiler/loom-implied-target/followup/after.json 2> review/compiler/loom-implied-target/followup/after.log
+timeout 30 go tool pprof -top -cum /tmp/implied-profile-after /tmp/implied-after.cpu > review/compiler/loom-implied-target/followup/pprof-after.txt 2>&1
+timeout 120 go test ./internal/lower -run '^TestCycleScalar' -count=1 -v -timeout 90s > review/compiler/loom-implied-target/followup/scalar-tests.log 2>&1
+timeout 660 python3 review/compiler/loom-implied-target/followup/run-shape-mutants.py > review/compiler/loom-implied-target/followup/shape-mutants.log 2>&1
+timeout 540 python3 review/compiler/loom-implied-target/followup/run-target-mutants.py > review/compiler/loom-implied-target/followup/target-mutants.log 2>&1
+timeout 360 go test $(cat review/compiler/loom-implied-target/reader-packages.txt) -run '^TestCycleScalar|^TestImpliedTarget|^TestAMutableLocationSeenWiderIsRefused$|^TestAViewThatCantWriteIsNotRefused$|^TestOptionalWidening|^TestNodeHostOptionsRefusalBoundaries$|^TestNodeFSFileDoesNotAuthorizeMutableWidening$|^TestEnumSlotViews$|^TestEmptyNeverMapCannotGainWritableInhabitants$|^TestProvenRelations|^TestStage3EnumBoundaries$|^TestClosureMergeRefusals$|^TestCheckedViewUntaggedSourceDispatch$|^Test.*Cycle|^TestLiteralMethodCapturesCannotMakeCycles$|^TestReadonlyFieldsAreJudgedByTheirConstructorsWrites$|^TestFreshWriteProbesStayRefused$' -count=1 -v -timeout 90s > review/compiler/loom-implied-target/followup/readers-focused.log 2>&1
+timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -v -timeout 90s > review/compiler/loom-implied-target/followup/reader-guard.log 2>&1
+timeout 120 go vet ./internal/lower > review/compiler/loom-implied-target/followup/vet.log 2>&1
+timeout 90 go build -o /tmp/implied-adamic ./cmd/adamic > review/compiler/loom-implied-target/followup/cli-build.log 2>&1
+timeout 300 python3 review/compiler/loom-implied-target/followup/compare-control.py > review/compiler/loom-implied-target/followup/backends.log 2>&1
