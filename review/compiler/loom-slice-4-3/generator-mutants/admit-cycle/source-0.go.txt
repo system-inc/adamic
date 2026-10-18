@@ -1,0 +1,23 @@
+package lower
+
+// A resumable frame is an ordinary owning object. Follow the same whole-program
+// type, hidden-shape, collection and closure capture edges as object cycle slots.
+func (f *cycleFinder) generatorFrames() error {
+	for _, function := range f.l.result.Functions {
+		if function.Generator == nil {
+			continue
+		}
+		types := function.Generator
+		target := f.l.localTypes[types.Frame]
+		for _, local := range types.FrameLocals {
+			proven, node := f.l.localTypes[local], f.l.localNodes[local]
+			if proven == nil || node == nil || f.weak(proven) || f.l.result.Locals[local].Global {
+				continue
+			}
+			if false && f.reaches(proven, cycleNode{proven: target}) {
+				return &Refused{Where: f.l.program.Where(node), What: "cycle-capable generator frame slot " + f.l.result.Locals[local].Name + " without weak", Fix: "keep the back-reference weak, or remove the owning path back to this generator"}
+			}
+		}
+	}
+	return nil
+}

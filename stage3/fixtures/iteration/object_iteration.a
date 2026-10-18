@@ -1,0 +1,10 @@
+// Reduced from binder.ts:432 and types.ts:1589. Keep the inherited array view.
+interface NodeArray extends ReadonlyArray<number> {
+    readonly pos?: number;
+}
+function visit(statements: NodeArray): void {
+    for (const statement of statements) {
+        console.log(`${statement}`);
+    }
+}
+visit([1, 2]);

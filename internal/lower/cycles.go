@@ -112,6 +112,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			return err
 		}
 	}
+	if err := finder.generatorFrames(); err != nil {
+		return err
+	}
 	for local, declared := range l.result.Locals {
 		if !declared.Captured || declared.Global {
 			continue
@@ -186,6 +189,9 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		return
 	}
 	f.seen = append(f.seen, proven)
+	if base := f.l.readonlyArrayView(proven); base != nil {
+		f.use(f.l.checker.GetElementTypeOfArrayType(base), where)
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range proven.Types() {
@@ -400,6 +406,9 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		}
 		if target.proven != nil && f.related(proven, target.proven) {
 			return true
+		}
+		if base := f.l.readonlyArrayView(proven); base != nil {
+			queue = append(queue, cycleNode{proven: f.l.checker.GetElementTypeOfArrayType(base)})
 		}
 		switch {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):

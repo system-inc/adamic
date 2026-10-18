@@ -1,0 +1,2 @@
+import { base } from '../leaf/base.a';
+export const value: number = base + 2;

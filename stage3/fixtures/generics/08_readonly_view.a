@@ -1,0 +1,10 @@
+// a-check: refused whose readonly field pos becomes writable
+// Reduced from TypeScript utilities.ts:10644, setTextRangePos; pin 050880ce.
+interface ReadonlyTextRange { readonly pos: number; }
+interface TextRange { pos: number; }
+function setTextRangePos<T extends ReadonlyTextRange>(range: T, pos: number): T {
+    (range as TextRange).pos = pos;
+    return range;
+}
+const range: ReadonlyTextRange = { pos: 1 };
+console.log(`${setTextRangePos(range, 2).pos}`);

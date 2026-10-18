@@ -1,0 +1,133 @@
+{"Time":"2026-10-14T12:04:18.647634945Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-14T12:04:18.657671974Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant"}
+{"Time":"2026-10-14T12:04:18.65777561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant","Output":"=== RUN   TestGeneratorParameterBorrowMutant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657806477Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant","Output":"=== PAUSE TestGeneratorParameterBorrowMutant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657809722Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant"}
+{"Time":"2026-10-14T12:04:18.657813127Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant"}
+{"Time":"2026-10-14T12:04:18.657815791Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant","Output":"=== RUN   TestGeneratorLocalBorrowMutant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657819186Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant","Output":"=== PAUSE TestGeneratorLocalBorrowMutant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.6578215Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant"}
+{"Time":"2026-10-14T12:04:18.657825656Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame"}
+{"Time":"2026-10-14T12:04:18.657827959Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame","Output":"=== RUN   TestGeneratorCycleFrame\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657832096Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame","Output":"=== PAUSE TestGeneratorCycleFrame\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657834509Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame"}
+{"Time":"2026-10-14T12:04:18.657836863Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic"}
+{"Time":"2026-10-14T12:04:18.657840729Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"=== RUN   TestGeneratorBasic\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657844875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"=== PAUSE TestGeneratorBasic\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657847349Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic"}
+{"Time":"2026-10-14T12:04:18.657850333Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation"}
+{"Time":"2026-10-14T12:04:18.657852396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"=== RUN   TestGeneratorCancellation\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.65785521Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"=== PAUSE TestGeneratorCancellation\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657857534Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation"}
+{"Time":"2026-10-14T12:04:18.657860248Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow"}
+{"Time":"2026-10-14T12:04:18.657863002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"=== RUN   TestGeneratorThrow\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657872677Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"=== PAUSE TestGeneratorThrow\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.65787486Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow"}
+{"Time":"2026-10-14T12:04:18.657877264Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults"}
+{"Time":"2026-10-14T12:04:18.657880509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"=== RUN   TestGeneratorDefaults\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657883854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"=== PAUSE TestGeneratorDefaults\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657886217Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults"}
+{"Time":"2026-10-14T12:04:18.657888791Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose"}
+{"Time":"2026-10-14T12:04:18.657891105Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"=== RUN   TestGeneratorClose\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657895711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"=== PAUSE TestGeneratorClose\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657898155Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose"}
+{"Time":"2026-10-14T12:04:18.65790135Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate"}
+{"Time":"2026-10-14T12:04:18.657904244Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"=== RUN   TestGeneratorDelegate\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.65790827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"=== PAUSE TestGeneratorDelegate\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657910624Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate"}
+{"Time":"2026-10-14T12:04:18.657913158Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow"}
+{"Time":"2026-10-14T12:04:18.657915471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"=== RUN   TestGeneratorDelegateThrow\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657923704Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"=== PAUSE TestGeneratorDelegateThrow\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657925927Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow"}
+{"Time":"2026-10-14T12:04:18.657928611Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant"}
+{"Time":"2026-10-14T12:04:18.657930804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"=== RUN   TestGeneratorReentrant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657933508Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"=== PAUSE TestGeneratorReentrant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657935872Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant"}
+{"Time":"2026-10-14T12:04:18.657938867Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned"}
+{"Time":"2026-10-14T12:04:18.657942963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"=== RUN   TestGeneratorOwned\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657946218Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"=== PAUSE TestGeneratorOwned\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.657948201Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned"}
+{"Time":"2026-10-14T12:04:18.657951215Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant"}
+{"Time":"2026-10-14T12:04:18.657953829Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant","Output":"=== CONT  TestGeneratorParameterBorrowMutant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.658097546Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned"}
+{"Time":"2026-10-14T12:04:18.658107731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"=== CONT  TestGeneratorOwned\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.658420803Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant"}
+{"Time":"2026-10-14T12:04:18.658431659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"=== CONT  TestGeneratorReentrant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:18.658437648Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow"}
+{"Time":"2026-10-14T12:04:18.658440653Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"=== CONT  TestGeneratorDelegateThrow\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:21.809721318Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"    generators_test.go:16: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:21.853541814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"    generators_test.go:15: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:21.855546706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"    generators_test.go:14: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:21.958709118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"    generators_test.go:16: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:22.049291133Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"    generators_test.go:15: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:22.067274554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"    generators_test.go:14: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:24.209783975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:27.563165232Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:27.635648139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant","Output":"    generator_borrow_mutants_test.go:13: ASan caught 2 frame storage mutations\n"}
+{"Time":"2026-10-14T12:04:27.635712907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant","Output":"--- PASS: TestGeneratorParameterBorrowMutant (8.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:27.635718285Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorParameterBorrowMutant","Elapsed":8.98}
+{"Time":"2026-10-14T12:04:27.635743713Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate"}
+{"Time":"2026-10-14T12:04:27.635753338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"=== CONT  TestGeneratorDelegate\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:27.714533544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"    generators_test.go:13: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:27.982343666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"    generators_test.go:13: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:27.991721889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:31.60114246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Output":"--- PASS: TestGeneratorReentrant (12.94s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:31.601186496Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorReentrant","Elapsed":12.94}
+{"Time":"2026-10-14T12:04:31.601193206Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose"}
+{"Time":"2026-10-14T12:04:31.601198564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"=== CONT  TestGeneratorClose\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:31.68469847Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Output":"--- PASS: TestGeneratorDelegateThrow (13.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:31.684746922Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegateThrow","Elapsed":13.03}
+{"Time":"2026-10-14T12:04:31.684753312Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults"}
+{"Time":"2026-10-14T12:04:31.684755896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"=== CONT  TestGeneratorDefaults\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:31.698931754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Output":"--- PASS: TestGeneratorOwned (13.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:31.698969641Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorOwned","Elapsed":13.04}
+{"Time":"2026-10-14T12:04:31.69897554Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow"}
+{"Time":"2026-10-14T12:04:31.698978074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"=== CONT  TestGeneratorThrow\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:31.804889053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"    generators_test.go:12: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:31.872056834Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"    generators_test.go:11: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:31.890429361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"    generators_test.go:10: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:32.281132543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"    generators_test.go:12: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:32.303301037Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"    generators_test.go:10: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:32.365128646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"    generators_test.go:11: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:35.019830377Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:35.61312353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:35.927349493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:37.908478604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:38.328546828Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Output":"--- PASS: TestGeneratorClose (6.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:38.328613118Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorClose","Elapsed":6.73}
+{"Time":"2026-10-14T12:04:38.32862099Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation"}
+{"Time":"2026-10-14T12:04:38.328623474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"=== CONT  TestGeneratorCancellation\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:38.499817487Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"    generators_test.go:9: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:38.896148997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"    generators_test.go:9: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:39.194740069Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Output":"--- PASS: TestGeneratorThrow (7.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:39.194783214Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorThrow","Elapsed":7.5}
+{"Time":"2026-10-14T12:04:39.194788993Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic"}
+{"Time":"2026-10-14T12:04:39.194791467Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"=== CONT  TestGeneratorBasic\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:39.32446074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"    generators_test.go:8: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:39.734017895Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"    generators_test.go:8: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:42.296143758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:42.877144888Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Output":"--- PASS: TestGeneratorDefaults (11.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:42.877188644Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDefaults","Elapsed":11.19}
+{"Time":"2026-10-14T12:04:42.877195694Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame"}
+{"Time":"2026-10-14T12:04:42.877198889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame","Output":"=== CONT  TestGeneratorCycleFrame\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:42.974679937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame","Output":"    generator_cycle_test.go:17: gate cache node miss\n"}
+{"Time":"2026-10-14T12:04:43.171022631Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame","Output":"--- PASS: TestGeneratorCycleFrame (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:43.171069511Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCycleFrame","Elapsed":0.3}
+{"Time":"2026-10-14T12:04:43.171076262Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant"}
+{"Time":"2026-10-14T12:04:43.171079216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant","Output":"=== CONT  TestGeneratorLocalBorrowMutant\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:43.212195389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"    oracle_test.go:614: gate cache native miss\n"}
+{"Time":"2026-10-14T12:04:46.130923538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Output":"--- PASS: TestGeneratorBasic (6.94s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:46.464005908Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorBasic","Elapsed":6.94}
+{"Time":"2026-10-14T12:04:46.46405383Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant","Output":"    generator_borrow_mutants_test.go:17: ASan caught 1 frame storage mutations\n"}
+{"Time":"2026-10-14T12:04:46.464335264Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant","Output":"--- PASS: TestGeneratorLocalBorrowMutant (3.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:46.772108597Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorLocalBorrowMutant","Elapsed":3.29}
+{"Time":"2026-10-14T12:04:46.772155127Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Output":"--- PASS: TestGeneratorCancellation (8.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:47.137911196Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorCancellation","Elapsed":8.44}
+{"Time":"2026-10-14T12:04:47.137950826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Output":"--- PASS: TestGeneratorDelegate (19.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:47.13802017Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestGeneratorDelegate","Elapsed":19.5}
+{"Time":"2026-10-14T12:04:47.138024036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-14T12:04:47.138035493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=9\n"}
+{"Time":"2026-10-14T12:04:47.138072599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=19\n"}
+{"Time":"2026-10-14T12:04:47.13808642Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-14T12:04:47.144046416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t28.496s\n"}
+{"Time":"2026-10-14T12:04:47.144147188Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":28.497}

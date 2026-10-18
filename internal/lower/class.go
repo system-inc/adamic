@@ -200,6 +200,9 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 	l.substitution, l.instance = substitution, lowered
 	l.classType, l.classNode, l.typeMapper = classType, declaration.Name(), mapper
 	defer func() { l.classType, l.classNode, l.typeMapper = outerClassType, outerClassNode, outerMapper }()
+	if err := l.genericBodyWitness(declaration); err != nil {
+		return nil, err
+	}
 	l.locals = map[*ast.Symbol]int{}
 	for symbol, local := range outerLocals {
 		if l.result.Locals[local].Global {

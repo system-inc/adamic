@@ -1,0 +1,119 @@
+diff --git a/cloud/fast-gate/compiler-dependencies.json b/cloud/fast-gate/compiler-dependencies.json
+index 41e7918c..d957c26d 100644
+--- a/cloud/fast-gate/compiler-dependencies.json
++++ b/cloud/fast-gate/compiler-dependencies.json
+@@ -15,6 +15,7 @@
+     "internal/tracked": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+     "internal/toolchain": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+     "stage1/cohere/executable": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
+-    "stage3/lane": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
++    "stage3/lane": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
++    "stage3/project-loader/probe": ["internal/load"]
+   }
+ }
+diff --git a/internal/ir/call_targets_guard_test.go b/internal/ir/call_targets_guard_test.go
+index 8dc1895d..36b7f052 100644
+--- a/internal/ir/call_targets_guard_test.go
++++ b/internal/ir/call_targets_guard_test.go
+@@ -26,6 +26,16 @@ import (
+ type targetReader struct{ owner, reason string }
+ 
+ var targetReaders = map[string]targetReader{
++	"internal/oracle/cast_test.go:TestCheckedCastMutants:Call.Function":                                       {"compiler", "selects the checked-cast function whose check the Node mutant removes"},
++	"internal/oracle/iteration_dispatch_mutant_test.go:TestIterationDispatchMutants:CallClosure.Closure":      {"compiler", "selects the cached next operand that the Node mutant rereads"},
++	"internal/oracle/method_values_mutant_test.go:runLibraryMethodValueMutantsShard:Call.Function":            {"compiler", "selects the library method wrapper mutated for Node comparison"},
++	"internal/oracle/notyet_library_string_bounds_test.go:TestNotYetLibraryStringBoundsMutants:Call.Function": {"compiler", "selects the string bounds function mutated for Node comparison"},
++	"internal/oracle/omitted_arguments_test.go:TestOmittedArgumentZeroMutantIsCaught:CallClosure.Closure":     {"compiler", "selects the closure call whose omitted argument the Node mutant changes"},
++	"internal/oracle/omitted_arguments_test.go:TestOmittedReaderZeroMutantIsCaught:CallClosure.Closure":       {"compiler", "selects the omitted-argument reader call mutated for Node comparison"},
++	"internal/oracle/parser_namespaces_test.go:TestParserCallableNamespaceMutant:Call.Function":               {"compiler", "selects the parser namespace callable mutated for Node comparison"},
++	"internal/oracle/private_generic_mutant_test.go:TestPrivateGenericMethodOwnerMutant:Call.Function":        {"compiler", "selects the private generic method owner mutated for Node comparison"},
++	"internal/oracle/syntax_substr_test.go:TestSyntaxSubstrMutants:Call.Function":                             {"compiler", "selects the substr wrapper mutated for Node comparison"},
++
+ 	"internal/native/arguments_length.go:spreadArguments:Call.Function":                               {"runtime", "names the spread call signature"},
+ 	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+ 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                {"compiler", "MayThrow and library failure propagation, routed in step 2"},
+@@ -94,7 +104,7 @@ func TestCallTargetReaders(t *testing.T) {
+ 			continue
+ 		}
+ 		base := filepath.Base(pkg.Dir)
+-		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow") {
++		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow" && base != "oracle") {
+ 			continue
+ 		}
+ 		for group, names := range [][]string{append(pkg.GoFiles, pkg.TestGoFiles...), pkg.XTestGoFiles} {
+@@ -185,7 +195,7 @@ func callTargetExports(t *testing.T) string {
+ 	t.Helper()
+ 	// leakcheck imports native and is otherwise listed only as a dependency of native's
+ 	// external test variant. Name it directly so its ordinary import path has export data.
+-	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow", "./internal/leakcheck")
++	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow", "./internal/leakcheck", "./internal/oracle")
+ }
+ 
+ func TestProduct_CallTargetExports(t *testing.T) {
+diff --git a/internal/lower/exceptions.go b/internal/lower/exceptions.go
+index 0df2214a..cad07d84 100644
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -198,7 +198,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
+ 			if node.Replacement != nil && l.result.ClosuresMayThrow {
+ 				found = true
+ 			}
+-		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
++		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+ 			// A call through a function value, written out or made by the runtime's loop.
+ 			if l.result.ClosuresMayThrow {
+ 				found = true
+@@ -231,7 +231,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
+ 					}
+ 				}
+ 			}
+-		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
++		case ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:
+ 			callsClosures = true
+ 		case ir.ArraySort:
+ 			if node.Callback != nil {
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index 4fe76965..1029c0d4 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -20,7 +20,6 @@ type refusal struct {
+ // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
+ var refusals = map[ast.Kind]refusal{
+ 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
+-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
+ 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
+ 	ast.KindWithStatement:     {"with", "name the object you mean"},
+ 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
+@@ -84,6 +83,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 		if found != nil {
+ 			return true
+ 		}
++		if err := l.genericBodyRefusal(node); err != nil {
++			found = err
++			return true
++		}
+ 		if branch := l.literalCallableBranch(node); branch != nil {
+ 			return visit(branch)
+ 		}
+@@ -91,6 +94,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 			found = l.predicateRefusal(node)
+ 			return found != nil
+ 		}
++		if err := l.intrinsicIteratorWrite(node); err != nil {
++			found = err
++			return true
++		}
+ 		if err := l.enumerationIndexedWriteRefusal(node); err != nil {
+ 			found = err
+ 			return true
+@@ -155,8 +162,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 		case ast.KindMethodDeclaration:
+ 			generator = node.AsMethodDeclaration().AsteriskToken != nil
+ 		}
+-		if generator {
+-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
++		if generator && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
++			found = &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use a synchronous generator; async resumption awaits the async ownership and cancellation model"}
+ 			return true
+ 		}
+ 		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise
