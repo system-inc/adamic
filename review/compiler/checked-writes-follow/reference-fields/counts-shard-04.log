@@ -1,0 +1,328 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/local_console.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/local_console.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/indexing.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/indexing.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/writes.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/writes.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/writes_past_end.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/writes_past_end.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/casts.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/casts.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/cast_fails.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/cast_fails.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/updates.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/updates.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/read_order.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/read_order.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_index.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_index.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/visits.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/visits.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/searches.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/searches.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/spreads.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/spreads.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/maybe_numbers.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/maybe_numbers.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/defaults.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/defaults.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/search_halves.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/search_halves.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/runtime_last_index_of.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/runtime_last_index_of.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_chain.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_chain.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_shared.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_shared.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_calls.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_calls.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_equal_headers.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_equal_headers.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/strings_more.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/strings_more.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/number_parsing.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/number_parsing.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_math.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_math.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_convert.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_convert.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_prototype.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_prototype.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/navigation.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/navigation.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/number_formats.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/number_formats.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/precision_range.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/precision_range.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/radixes.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/radixes.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/radix_range.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/radix_range.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/optional_numbers.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/optional_numbers.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_iteration.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_iteration.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/sorts.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/sorts.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/sort_releases.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/sort_releases.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/timsort.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/timsort.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/unused_parameters.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/unused_parameters.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_shrinks.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_shrinks.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/find_shrinks.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/find_shrinks.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/find_index_shrinks.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/find_index_shrinks.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/local_console.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/find_index_shrinks.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_equal_headers.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/find_shrinks.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_calls.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/local_console.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/find_index_shrinks.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/find_shrinks.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_calls.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_equal_headers.a
+    counts_test.go:233: gate cache native miss
+    counts_test.go:233: | internal/oracle/testdata/lint_runtime_equal_headers.a | 100 | 100 | 22 | 113 | 8 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/local_console.a
+    counts_test.go:233: | internal/oracle/testdata/local_console.a | 2 | 2 | 3 | 5 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_shared.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_calls.a
+    counts_test.go:233: | internal/oracle/testdata/lint_runtime_search_calls.a | 48 | 48 | 25 | 68 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_chain.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_boundaries.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/find_shrinks.a
+    counts_test.go:233: | internal/oracle/testdata/find_shrinks.a | 12 | 7 | 10 | 18 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/runtime_last_index_of.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/find_index_shrinks.a
+    counts_test.go:233: | internal/oracle/testdata/find_index_shrinks.a | 9 | 7 | 4 | 11 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/search_halves.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_shared.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/runtime_last_index_of.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_chain.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_boundaries.a
+    counts_test.go:233: | internal/oracle/testdata/lint_runtime_search_boundaries.a | 568 | 568 | 161 | 647 | 18 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/defaults.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/search_halves.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/defaults.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_shared.a
+    counts_test.go:233: | internal/oracle/testdata/lint_runtime_release_shared.a | 1008 | 1008 | 9249 | 7167 | 263 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/maybe_numbers.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/runtime_last_index_of.a
+    counts_test.go:233: | internal/oracle/testdata/runtime_last_index_of.a | 679 | 679 | 120 | 730 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/spreads.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/search_halves.a
+    counts_test.go:233: | internal/oracle/testdata/search_halves.a | 38 | 38 | 12 | 44 | 18 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/searches.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/maybe_numbers.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/spreads.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_chain.a
+    counts_test.go:233: | internal/oracle/testdata/lint_runtime_release_chain.a | 405034 | 405034 | 506032 | 304046 | 300003 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/visits.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/defaults.a
+    counts_test.go:233: | internal/oracle/testdata/defaults.a | 38 | 36 | 15 | 50 | 6 | 2 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_index.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/searches.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_index.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/visits.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/maybe_numbers.a
+    counts_test.go:233: | internal/oracle/testdata/maybe_numbers.a | 20 | 20 | 7 | 28 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/read_order.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/spreads.a
+    counts_test.go:233: | internal/oracle/testdata/spreads.a | 36 | 36 | 39 | 66 | 18 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/updates.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_index.a
+    counts_test.go:233: | internal/oracle/testdata/string_index.a | 58 | 58 | 44 | 141 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/cast_fails.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/read_order.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/cast_fails.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/updates.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/searches.a
+    counts_test.go:233: | internal/oracle/testdata/searches.a | 106 | 106 | 83 | 175 | 19 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/casts.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/visits.a
+    counts_test.go:233: | internal/oracle/testdata/visits.a | 95 | 95 | 124 | 208 | 23 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/writes_past_end.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/read_order.a
+    counts_test.go:233: | internal/oracle/testdata/read_order.a | 37 | 37 | 27 | 61 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/writes.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/casts.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/writes_past_end.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/writes.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/cast_fails.a
+    counts_test.go:233: | internal/oracle/testdata/cast_fails.a | 2 | 0 | 4 | 2 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/indexing.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/updates.a
+    counts_test.go:233: | internal/oracle/testdata/updates.a | 27 | 27 | 23 | 53 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/radixes.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/casts.a
+    counts_test.go:233: | internal/oracle/testdata/casts.a | 9 | 9 | 16 | 24 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_shrinks.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/writes.a
+    counts_test.go:233: | internal/oracle/testdata/writes.a | 8 | 8 | 25 | 33 | 8 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/unused_parameters.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/radixes.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/writes_past_end.a
+    counts_test.go:233: | internal/oracle/testdata/writes_past_end.a | 2 | 1 | 3 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/timsort.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_shrinks.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/unused_parameters.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/timsort.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/indexing.a
+    counts_test.go:233: | internal/oracle/testdata/indexing.a | 33 | 33 | 12 | 45 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/sort_releases.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/radixes.a
+    counts_test.go:233: | internal/oracle/testdata/radixes.a | 695 | 695 | 96 | 330 | 25 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/sorts.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/unused_parameters.a
+    counts_test.go:233: | internal/oracle/testdata/unused_parameters.a | 5 | 4 | 3 | 8 | 5 | 1 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_iteration.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_shrinks.a
+    counts_test.go:233: | internal/oracle/testdata/map_shrinks.a | 13 | 6 | 5 | 12 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/optional_numbers.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/sorts.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/timsort.a
+    counts_test.go:233: | internal/oracle/testdata/timsort.a | 2769 | 2769 | 48733 | 51186 | 308 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/radix_range.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_iteration.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/sort_releases.a
+    counts_test.go:233: | internal/oracle/testdata/sort_releases.a | 30 | 30 | 68 | 81 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_prototype.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/optional_numbers.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/radix_range.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_prototype.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/sorts.a
+    counts_test.go:233: | internal/oracle/testdata/sorts.a | 37 | 37 | 141 | 157 | 17 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/precision_range.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_iteration.a
+    counts_test.go:233: | internal/oracle/testdata/map_iteration.a | 146 | 146 | 200 | 304 | 21 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/number_formats.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/optional_numbers.a
+    counts_test.go:233: | internal/oracle/testdata/optional_numbers.a | 10 | 10 | 6 | 16 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/navigation.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/radix_range.a
+    counts_test.go:233: | internal/oracle/testdata/radix_range.a | 3 | 3 | 0 | 3 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_math.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/precision_range.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_prototype.a
+    counts_test.go:233: | internal/oracle/testdata/library_math_number_prototype.a | 71 | 71 | 1 | 73 | 8 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_convert.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/number_formats.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/navigation.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_math.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/precision_range.a
+    counts_test.go:233: | internal/oracle/testdata/precision_range.a | 4 | 3 | 1 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/number_parsing.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_convert.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/number_parsing.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/number_formats.a
+    counts_test.go:233: | internal/oracle/testdata/number_formats.a | 225 | 225 | 55 | 262 | 18 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/strings_more.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_math.a
+    counts_test.go:233: | internal/oracle/testdata/library_math_number_math.a | 1280 | 1280 | 25 | 1306 | 8 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/navigation.a
+    counts_test.go:233: | internal/oracle/testdata/navigation.a | 162 | 162 | 36 | 185 | 16 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/number_parsing.a
+    counts_test.go:233: | internal/oracle/testdata/number_parsing.a | 27 | 27 | 9 | 36 | 6 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/strings_more.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_convert.a
+    counts_test.go:233: | internal/oracle/testdata/library_math_number_convert.a | 196 | 196 | 199 | 364 | 7 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/strings_more.a
+    counts_test.go:233: | internal/oracle/testdata/strings_more.a | 112 | 112 | 38 | 163 | 8 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_equal_headers.a (0.32s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/local_console.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_calls.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/find_shrinks.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/find_index_shrinks.a (0.43s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_search_boundaries.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_shared.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/runtime_last_index_of.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/search_halves.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/lint_runtime_release_chain.a (0.51s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/defaults.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/maybe_numbers.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/spreads.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_index.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/searches.a (0.57s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/visits.a (0.54s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/read_order.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/cast_fails.a (0.39s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/updates.a (0.55s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/casts.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/writes.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/writes_past_end.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/indexing.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/radixes.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/unused_parameters.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_shrinks.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/timsort.a (0.43s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/sort_releases.a (0.39s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/sorts.a (0.45s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_iteration.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/optional_numbers.a (0.44s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/radix_range.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_prototype.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/precision_range.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/number_formats.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_math.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/navigation.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/number_parsing.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/library_math_number_convert.a (0.44s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/strings_more.a (0.30s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.236s

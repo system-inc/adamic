@@ -1,0 +1,34 @@
+=== RUN   TestRuntimeCheckedLibraryPush
+=== PAUSE TestRuntimeCheckedLibraryPush
+=== RUN   TestRuntimeCheckedLibraryPushRejectsLiteral
+=== PAUSE TestRuntimeCheckedLibraryPushRejectsLiteral
+=== RUN   TestRuntimeCheckedReferenceArrayKeepsContract
+=== PAUSE TestRuntimeCheckedReferenceArrayKeepsContract
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== RUN   TestObjectMetadataCacheIsPerEmission
+=== PAUSE TestObjectMetadataCacheIsPerEmission
+=== RUN   TestObjectMetadataCheckedWritesIsPerEmission
+=== PAUSE TestObjectMetadataCheckedWritesIsPerEmission
+=== CONT  TestRuntimeCheckedLibraryPush
+=== CONT  TestObjectMetadataCheckedWritesIsPerEmission
+--- PASS: TestObjectMetadataCheckedWritesIsPerEmission (0.00s)
+=== CONT  TestObjectMetadataCacheIsPerEmission
+--- PASS: TestObjectMetadataCacheIsPerEmission (0.00s)
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== CONT  TestRuntimeCheckedLibraryPushRejectsLiteral
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsLiteral (0.51s)
+=== CONT  TestRuntimeCheckedReferenceArrayKeepsContract
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsWrongElement (0.52s)
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsWeakerContract (0.53s)
+--- PASS: TestRuntimeCheckedLibraryPushRejectsLiteral (0.54s)
+--- PASS: TestRuntimeCheckedReferenceArrayKeepsContract (0.30s)
+--- PASS: TestRuntimeCheckedLibraryPush (0.88s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.948s

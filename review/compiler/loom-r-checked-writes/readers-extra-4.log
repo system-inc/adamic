@@ -1,0 +1,29 @@
+{"Time":"2026-10-18T00:16:08.274455483Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilerinputs"}
+{"Time":"2026-10-18T00:16:08.279031547Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole"}
+{"Time":"2026-10-18T00:16:08.279093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"=== RUN   TestCheckKeyTellsTheCompilerFromTscWhole\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279110646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"=== PAUSE TestCheckKeyTellsTheCompilerFromTscWhole\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279113481Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole"}
+{"Time":"2026-10-18T00:16:08.279116055Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks"}
+{"Time":"2026-10-18T00:16:08.279117857Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"=== RUN   TestLoweringIsWhatTheCompilerLinks\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279120702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"=== PAUSE TestLoweringIsWhatTheCompilerLinks\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279122324Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks"}
+{"Time":"2026-10-18T00:16:08.279124427Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T00:16:08.27912614Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== RUN   TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.2791531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== PAUSE TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279155754Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T00:16:08.279158238Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole"}
+{"Time":"2026-10-18T00:16:08.279159991Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"=== CONT  TestCheckKeyTellsTheCompilerFromTscWhole\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279190367Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T00:16:08.279192981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== CONT  TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279214132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"--- PASS: TestLoweringIsACopy (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.279217578Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Elapsed":0}
+{"Time":"2026-10-18T00:16:08.279227813Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks"}
+{"Time":"2026-10-18T00:16:08.279229716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"=== CONT  TestLoweringIsWhatTheCompilerLinks\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:08.287914312Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Output":"--- PASS: TestCheckKeyTellsTheCompilerFromTscWhole (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:09.173739423Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestCheckKeyTellsTheCompilerFromTscWhole","Elapsed":0.01}
+{"Time":"2026-10-18T00:16:09.173802087Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"    compilerinputs_test.go:84: 101 linked directories and module files, each under one of Lowering's 46 entries, each entry needed\n"}
+{"Time":"2026-10-18T00:16:09.173813875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Output":"--- PASS: TestLoweringIsWhatTheCompilerLinks (0.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:09.173819554Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsWhatTheCompilerLinks","Elapsed":0.89}
+{"Time":"2026-10-18T00:16:09.173821697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:09.177118114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilerinputs\t0.902s\n"}
+{"Time":"2026-10-18T00:16:09.177169271Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Elapsed":0.903}

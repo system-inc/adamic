@@ -1,0 +1,13 @@
+=== RUN   TestCheckedRuntimeStatusFields
+=== PAUSE TestCheckedRuntimeStatusFields
+=== CONT  TestCheckedRuntimeStatusFields
+    checked_runtime_fields_test.go:90: gate cache node miss
+    checked_runtime_fields_test.go:90: gate cache node miss
+    oracle_test.go:604: gate cache native miss
+    checked_runtime_fields_test.go:90: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/status.a: source Node exit 0 stdout "file 6 false\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeStatusFields (12.61s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.623s

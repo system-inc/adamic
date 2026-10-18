@@ -1,0 +1,152 @@
+{
+  "focused": {
+    "commands": 14,
+    "roots": 193,
+    "events": 203,
+    "max_seconds": 4.01
+  },
+  "reader-guard.log": {
+    "events": 2,
+    "max_seconds": 6.37,
+    "tests": [
+      {
+        "name": "TestEveryMapAProgramHoldsIsSorted",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "name": "TestCallTargetReaders",
+        "action": "pass",
+        "seconds": 6.37
+      }
+    ]
+  },
+  "counts-check.log": {
+    "events": 12,
+    "max_seconds": 2.6,
+    "tests": [
+      {
+        "name": "TestHeaderCounts10",
+        "action": "pass",
+        "seconds": 1.49
+      },
+      {
+        "name": "TestHeaderCounts06",
+        "action": "pass",
+        "seconds": 1.5
+      },
+      {
+        "name": "TestHeaderCounts00",
+        "action": "pass",
+        "seconds": 1.53
+      },
+      {
+        "name": "TestHeaderCounts08",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "name": "TestHeaderCounts07",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "name": "TestHeaderCounts09",
+        "action": "pass",
+        "seconds": 0.27
+      },
+      {
+        "name": "TestHeaderCounts05",
+        "action": "pass",
+        "seconds": 0.22
+      },
+      {
+        "name": "TestHeaderCounts03",
+        "action": "pass",
+        "seconds": 0.28
+      },
+      {
+        "name": "TestHeaderCounts04",
+        "action": "pass",
+        "seconds": 0.23
+      },
+      {
+        "name": "TestHeaderCounts01",
+        "action": "pass",
+        "seconds": 0.17
+      },
+      {
+        "name": "TestHeaderCounts02",
+        "action": "pass",
+        "seconds": 0.19
+      },
+      {
+        "name": "TestHeaderCounts11",
+        "action": "pass",
+        "seconds": 2.6
+      }
+    ]
+  },
+  "registry-guard.log": {
+    "events": 1,
+    "max_seconds": 0.01,
+    "tests": [
+      {
+        "name": "TestNativeAgreementRowsNameRegisteredPrograms",
+        "action": "pass",
+        "seconds": 0.01
+      }
+    ]
+  },
+  "oracle-guards.log": {
+    "events": 4,
+    "max_seconds": 0.94,
+    "tests": [
+      {
+        "name": "TestCountsAreRecordedTable",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "name": "TestFamilyWrappersAreCurrent",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "name": "TestFamiliesOwnEveryCaseOnce",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "name": "TestRuntimeSetsAreEachUsed",
+        "action": "pass",
+        "seconds": 0.94
+      }
+    ]
+  },
+  "parallel-guard.log": {
+    "events": 1,
+    "max_seconds": 0.23,
+    "tests": [
+      {
+        "name": "TestEveryTestIsParallelOrSaysWhy",
+        "action": "pass",
+        "seconds": 0.23
+      }
+    ]
+  },
+  "command-runtime-product.log": {
+    "events": 1,
+    "max_seconds": 1.14,
+    "tests": [
+      {
+        "name": "TestProduct_CommandRuntimeSanitized",
+        "action": "pass",
+        "seconds": 1.14
+      }
+    ]
+  },
+  "gate_tools_sha": "348ac0ff8936d366936238165e53967af6a4b93e",
+  "gate_source_sha256": "b1a2e35d19a98d2d8e8ebd36a0f681037ed04dcddd325bc7d49b55b5e6e093cc",
+  "compiler_sha256": "19ee1120d9a2d88105b93d222539403f904f36e8cc35c98c09eaac50bf669f3a"
+}

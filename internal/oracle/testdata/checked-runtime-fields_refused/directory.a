@@ -1,0 +1,10 @@
+// a-check: refused a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+import { readDirectory } from 'adamic';
+interface Result { readonly names: readonly string[] }
+const result = readDirectory('testdata/checked-runtime-fields_refused/dir');
+if (result.kind === 'Ok') {
+    const results: Result[] = [];
+const wider: { names: readonly string[] }[] = results;
+    results.push(result);
+    for (const item of results) console.log(item.names.join(','));
+}

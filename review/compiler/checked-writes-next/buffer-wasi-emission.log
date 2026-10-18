@@ -1,0 +1,8 @@
+=== RUN   TestWASIEmission
+=== RUN   TestWASIEmission/internal/oracle/testdata/node_buffer_bom.a
+=== PAUSE TestWASIEmission/internal/oracle/testdata/node_buffer_bom.a
+=== CONT  TestWASIEmission/internal/oracle/testdata/node_buffer_bom.a
+--- PASS: TestWASIEmission (0.12s)
+    --- PASS: TestWASIEmission/internal/oracle/testdata/node_buffer_bom.a (0.57s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.706s

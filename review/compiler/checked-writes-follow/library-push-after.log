@@ -1,0 +1,10 @@
+=== RUN   TestRuntimeCheckedLibraryPush
+=== PAUSE TestRuntimeCheckedLibraryPush
+=== RUN   TestRuntimeCheckedLibraryPushRejectsLiteral
+=== PAUSE TestRuntimeCheckedLibraryPushRejectsLiteral
+=== CONT  TestRuntimeCheckedLibraryPush
+=== CONT  TestRuntimeCheckedLibraryPushRejectsLiteral
+--- PASS: TestRuntimeCheckedLibraryPushRejectsLiteral (6.05s)
+--- PASS: TestRuntimeCheckedLibraryPush (9.18s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	9.190s

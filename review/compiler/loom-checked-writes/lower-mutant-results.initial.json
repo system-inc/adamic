@@ -1,0 +1,74 @@
+[
+  {
+    "name": "skip-signature-instantiation",
+    "overlay": "review/compiler/loom-checked-writes/skip-signature-instantiation.json",
+    "selector": "^TestCheckedSignatureInstantiation$",
+    "package": "./internal/lower",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "review/compiler/loom-checked-writes/skip-signature-instantiation.json",
+      "./internal/lower",
+      "-run",
+      "^TestCheckedSignatureInstantiation$",
+      "-count=1",
+      "-parallel=4",
+      "-v",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 13.131
+  },
+  {
+    "name": "disable-mapped-identity",
+    "overlay": "review/compiler/loom-checked-writes/disable-mapped-identity.json",
+    "selector": "^TestCheckedSignatureInstantiation$",
+    "package": "./internal/lower",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "review/compiler/loom-checked-writes/disable-mapped-identity.json",
+      "./internal/lower",
+      "-run",
+      "^TestCheckedSignatureInstantiation$",
+      "-count=1",
+      "-parallel=4",
+      "-v",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 13.256
+  },
+  {
+    "name": "accept-optional-mapped-identity",
+    "overlay": "review/compiler/loom-checked-writes/accept-optional-mapped-identity.json",
+    "selector": "^TestCheckedSignatureInstantiation$",
+    "package": "./internal/lower",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "review/compiler/loom-checked-writes/accept-optional-mapped-identity.json",
+      "./internal/lower",
+      "-run",
+      "^TestCheckedSignatureInstantiation$",
+      "-count=1",
+      "-parallel=4",
+      "-v",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 13.191
+  }
+]

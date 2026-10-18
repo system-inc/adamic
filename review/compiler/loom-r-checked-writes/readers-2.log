@@ -1,0 +1,26 @@
+{"Time":"2026-10-18T00:12:36.494742103Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-18T00:12:36.507123736Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestCaptureFactsCompilerTable"}
+{"Time":"2026-10-18T00:12:36.50721242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestCaptureFactsCompilerTable","Output":"=== RUN   TestCaptureFactsCompilerTable\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307039904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestCaptureFactsCompilerTable","Output":"    capture_facts_compiler_test.go:84: checked 88 compiler literal sites\n"}
+{"Time":"2026-10-18T00:12:37.3070972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestCaptureFactsCompilerTable","Output":"--- PASS: TestCaptureFactsCompilerTable (0.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307102308Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestCaptureFactsCompilerTable","Elapsed":0.8}
+{"Time":"2026-10-18T00:12:37.307155929Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-18T00:12:37.307159484Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== RUN   TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307164051Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== PAUSE TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307166735Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-18T00:12:37.30717012Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-18T00:12:37.307172984Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== RUN   TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307177371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== PAUSE TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307180025Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-18T00:12:37.307182969Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls"}
+{"Time":"2026-10-18T00:12:37.307185473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"=== CONT  TestMatcherNodeControls\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307188668Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse"}
+{"Time":"2026-10-18T00:12:37.307191162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"=== CONT  TestParse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.307195979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Output":"--- PASS: TestParse (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.475263274Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestParse","Elapsed":0}
+{"Time":"2026-10-18T00:12:37.475298236Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"    matcher_oracle_test.go:188: execution totals: 94 cases, 94 compared, 0 property stand-in unavailable\n"}
+{"Time":"2026-10-18T00:12:37.475314671Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Output":"--- PASS: TestMatcherNodeControls (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.475317686Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestMatcherNodeControls","Elapsed":0.17}
+{"Time":"2026-10-18T00:12:37.47532747Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:37.483320335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"ok  \tgithub.com/system-inc/adamic/internal/regexp\t0.988s\n"}
+{"Time":"2026-10-18T00:12:37.48336316Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.989}
