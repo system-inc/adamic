@@ -80,18 +80,34 @@ func TestScannerScratchRunnerPython(t *testing.T) {
 	runPython(t, "stage3/drivers/scanner", "test_scratch_runner")
 }
 
+// any-returns' known-answer fixture is a script, not a unittest suite: it inspects a three-callee fixture with stock
+// TypeScript, whose typescript and @types/node are stage3/api's install, and asserts its own lib-to-tsc mutant is
+// caught. Run without --evidence it writes nothing into the tree (#mpesmv7).
+func TestAnyReturnsFixture(t *testing.T) {
+	t.Parallel()
+	runPythonCommand(t, "stage3/census/any-returns", []string{"NODE_PATH=" + filepath.Join(repositoryRoot(t), "stage3/api/node_modules")}, "test_fixture.py")
+}
+
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
 // unittest's output when any of them fails.
 func runPython(t *testing.T, directory string, modules ...string) {
+	t.Helper()
+	runPythonCommand(t, directory, nil, append([]string{"-m", "unittest"}, modules...)...)
+}
+
+// runPythonCommand runs python3 with arguments from directory, environment added to the toolchain's, and fails with
+// its output when it fails.
+func runPythonCommand(t *testing.T, directory string, environment []string, arguments ...string) {
 	t.Helper()
 	root := repositoryRoot(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
-	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B", "-m", "unittest"}, modules...)...)
+	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B"}, arguments...)...)
 	// -B is this python's; the suites' own python children read PYTHONDONTWRITEBYTECODE, so none writes a
 	// __pycache__ into the tree (stage3/oracle's, on Cloud, before).
 	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir(), "PYTHONDONTWRITEBYTECODE=1")
+	command.Env = append(command.Env, environment...)
 	// Ordinary apply clones the pinned TypeScript from the gate input, which the toolchain's environment doesn't carry.
 	if source, ok := os.LookupEnv("ADAMIC_TYPESCRIPT_SOURCE"); ok {
 		command.Env = append(command.Env, "ADAMIC_TYPESCRIPT_SOURCE="+source)
