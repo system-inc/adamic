@@ -1,0 +1,34 @@
+{"Time":"2026-10-18T00:13:11.078120954Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T00:13:11.098074833Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant"}
+{"Time":"2026-10-18T00:13:11.098181444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant","Output":"=== RUN   TestParserStackGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098207062Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant","Output":"=== PAUSE TestParserStackGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098209315Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant"}
+{"Time":"2026-10-18T00:13:11.09821206Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost"}
+{"Time":"2026-10-18T00:13:11.098213872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Output":"=== RUN   TestParserStackGuardCost\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098216246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Output":"    parser_stack_test.go:128: set ADAMIC_MEASURE_STACK_GUARD=1 for the local cost record\n"}
+{"Time":"2026-10-18T00:13:11.098222525Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Output":"--- SKIP: TestParserStackGuardCost (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.09822543Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardCost","Elapsed":0}
+{"Time":"2026-10-18T00:13:11.098234493Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse"}
+{"Time":"2026-10-18T00:13:11.098235966Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse","Output":"=== RUN   TestPlaceholderUseCheckBeforeUse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098239461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse","Output":"=== PAUSE TestPlaceholderUseCheckBeforeUse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098240993Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse"}
+{"Time":"2026-10-18T00:13:11.098242796Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak"}
+{"Time":"2026-10-18T00:13:11.098244408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak","Output":"=== RUN   TestPlaceholderUseCheckSavedLeak\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098246732Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak","Output":"=== PAUSE TestPlaceholderUseCheckSavedLeak\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098248374Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak"}
+{"Time":"2026-10-18T00:13:11.098250417Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant"}
+{"Time":"2026-10-18T00:13:11.09825211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant","Output":"=== CONT  TestParserStackGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098254143Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak"}
+{"Time":"2026-10-18T00:13:11.098255735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak","Output":"=== CONT  TestPlaceholderUseCheckSavedLeak\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:11.098262806Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse"}
+{"Time":"2026-10-18T00:13:11.098264388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse","Output":"=== CONT  TestPlaceholderUseCheckBeforeUse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:13.282687504Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak","Output":"--- PASS: TestPlaceholderUseCheckSavedLeak (2.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:13.299426099Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckSavedLeak","Elapsed":2.19}
+{"Time":"2026-10-18T00:13:13.299468593Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse","Output":"--- PASS: TestPlaceholderUseCheckBeforeUse (2.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:13.340513251Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderUseCheckBeforeUse","Elapsed":2.2}
+{"Time":"2026-10-18T00:13:13.340550668Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant","Output":"    parser_stack_test.go:122: removed guard compiles and executes: exit 1, AddressSanitizer: stack-overflow\n"}
+{"Time":"2026-10-18T00:13:13.340795145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant","Output":"--- PASS: TestParserStackGuardMutant (2.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:13.340827394Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserStackGuardMutant","Elapsed":2.24}
+{"Time":"2026-10-18T00:13:13.340830398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:13.343463817Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.265s\n"}
+{"Time":"2026-10-18T00:13:13.343494613Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.265}

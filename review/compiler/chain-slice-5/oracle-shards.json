@@ -1,0 +1,172 @@
+[
+  {
+    "tests": [
+      "TestRuledBackendOutcomes",
+      "TestUnlistedBackendAgreement",
+      "TestTerminalStackStop",
+      "TestNonOverflowRangeErrorCatch",
+      "TestNonNullLiteralUnionInitializers",
+      "TestNonNullAdamicRefusal",
+      "TestParserAheadFactoryBoundariesComplete",
+      "TestParserAheadFactoryBoundariesEscaped"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRuledBackendOutcomes|TestUnlistedBackendAgreement|TestTerminalStackStop|TestNonOverflowRangeErrorCatch|TestNonNullLiteralUnionInitializers|TestNonNullAdamicRefusal|TestParserAheadFactoryBoundariesComplete|TestParserAheadFactoryBoundariesEscaped)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 24.858
+  },
+  {
+    "tests": [
+      "TestParserAheadFactoryCompleteControl",
+      "TestParserAheadNodeArraySourceFields",
+      "TestParserAheadNodeArraySourcePresence",
+      "TestParserConstructionSourceFactoryUnset",
+      "TestParserConstructionSourceOwnKeyOrder",
+      "TestParserConstructionSourceNodeArrayKeys",
+      "TestParserConstructionSourceNodeArrayJson",
+      "TestParserConstructionSourceNodeArrayLength"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserAheadFactoryCompleteControl|TestParserAheadNodeArraySourceFields|TestParserAheadNodeArraySourcePresence|TestParserConstructionSourceFactoryUnset|TestParserConstructionSourceOwnKeyOrder|TestParserConstructionSourceNodeArrayKeys|TestParserConstructionSourceNodeArrayJson|TestParserConstructionSourceNodeArrayLength)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 12.706
+  },
+  {
+    "tests": [
+      "TestParserConstructionSourceNodeArrayUnset",
+      "TestParserConstructionUnsetUse",
+      "TestParserConstructionNullPlaceholderDelivered",
+      "TestParserSpeculationSourcesNamedLookahead",
+      "TestParserSpeculationSourcesNamedTryparse",
+      "TestParserSpeculationSourcesArrowTryparse",
+      "TestParserSpeculationSourcesTruthinessRewind",
+      "TestParserSpeculationMisfit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserConstructionSourceNodeArrayUnset|TestParserConstructionUnsetUse|TestParserConstructionNullPlaceholderDelivered|TestParserSpeculationSourcesNamedLookahead|TestParserSpeculationSourcesNamedTryparse|TestParserSpeculationSourcesArrowTryparse|TestParserSpeculationSourcesTruthinessRewind|TestParserSpeculationMisfit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 13.498
+  },
+  {
+    "tests": [
+      "TestParserSpeculationRewindMutant",
+      "TestParserStackLegal",
+      "TestParserStackPathological",
+      "TestParserStackTinyLimit",
+      "TestParserStackGuardMutant",
+      "TestPlaceholderUseCheckBeforeUse",
+      "TestPlaceholderUseCheckSavedLeak",
+      "TestPlaceholderUseCheckNullBeforeUse"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationRewindMutant|TestParserStackLegal|TestParserStackPathological|TestParserStackTinyLimit|TestParserStackGuardMutant|TestPlaceholderUseCheckBeforeUse|TestPlaceholderUseCheckSavedLeak|TestPlaceholderUseCheckNullBeforeUse)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 17.695
+  },
+  {
+    "tests": [
+      "TestPlaceholderUseCheckNullSavedLeak",
+      "TestPlaceholderUseCheckAssignmentResult",
+      "TestPlaceholderUseCheckReturnAssignment",
+      "TestPlaceholderUseCheckAliasReset",
+      "TestPlaceholderNonliteralAssertionStillChecks",
+      "TestPlaceholderFlowMutantBeforeUse",
+      "TestPlaceholderFlowMutantSavedLeak",
+      "TestPlaceholderFlowMutantNullBeforeUse"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderUseCheckNullSavedLeak|TestPlaceholderUseCheckAssignmentResult|TestPlaceholderUseCheckReturnAssignment|TestPlaceholderUseCheckAliasReset|TestPlaceholderNonliteralAssertionStillChecks|TestPlaceholderFlowMutantBeforeUse|TestPlaceholderFlowMutantSavedLeak|TestPlaceholderFlowMutantNullBeforeUse)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 18.802
+  },
+  {
+    "tests": [
+      "TestPlaceholderFlowMutantNullSavedLeak",
+      "TestPlaceholderFlowMutantAssignmentResult",
+      "TestPlaceholderFlowMutantReturnAssignment",
+      "TestPlaceholderFlowMutantAliasReset",
+      "TestPlaceholderNullTagMutant",
+      "TestPlaceholderSpreadReadinessMutant",
+      "TestReadinessMutants",
+      "TestNonNullWeakFreedNamesExpression"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderFlowMutantNullSavedLeak|TestPlaceholderFlowMutantAssignmentResult|TestPlaceholderFlowMutantReturnAssignment|TestPlaceholderFlowMutantAliasReset|TestPlaceholderNullTagMutant|TestPlaceholderSpreadReadinessMutant|TestReadinessMutants|TestNonNullWeakFreedNamesExpression)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 26.896
+  },
+  {
+    "tests": [
+      "TestRequiredViewFieldPrimitive",
+      "TestRequiredViewFieldOperandOnce",
+      "TestDefaultTaggedSourceViews"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestDefaultTaggedSourceViews)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 22.294
+  }
+]

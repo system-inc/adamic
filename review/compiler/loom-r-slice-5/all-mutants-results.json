@@ -1,0 +1,487 @@
+[
+  {
+    "mutant": "plain-placeholder-map",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/plain-placeholder-map.json",
+      "./internal/ir",
+      "-run",
+      "^TestEveryMapAProgramHoldsIsSorted$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 13.822514728999977,
+    "catcher": "is a plain"
+  },
+  {
+    "mutant": "placeholder-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/placeholder-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserPlaceholderProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.255766698999992,
+    "catcher": "parser product changed"
+  },
+  {
+    "mutant": "factory-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/factory-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserFactoryProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 18.087858606999987,
+    "catcher": "parser product changed"
+  },
+  {
+    "mutant": "speculation-physical-path",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/speculation-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 29.045569591999993,
+    "catcher": "parser product changed"
+  },
+  {
+    "mutant": "branch-union",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/branch-union.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 19.16509045600003
+  },
+  {
+    "mutant": "omit-escape-missing",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/omit-escape-missing.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 18.200205452000034
+  },
+  {
+    "mutant": "erase-earlier-read",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/erase-earlier-read.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 19.686133425000037
+  },
+  {
+    "mutant": "trust-assertion",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/trust-assertion.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 16.601436278999984
+  },
+  {
+    "mutant": "slot-pos",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-pos.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 14.889422098000011
+  },
+  {
+    "mutant": "slot-end",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-end.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 13.707935271999986
+  },
+  {
+    "mutant": "slot-hasTrailingComma",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-hasTrailingComma.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 16.006097734000036
+  },
+  {
+    "mutant": "slot-transformFlags",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-transformFlags.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 12.349982695999984
+  },
+  {
+    "mutant": "drop-unset-use",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/drop-unset-use.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserConstructionUnsetUse$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 16.837462082000002
+  },
+  {
+    "mutant": "drop-speculation-check",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/drop-speculation-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationMisfit$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 20.001280078000036
+  },
+  {
+    "mutant": "disable-tiny-stack",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/disable-tiny-stack.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserStackTinyLimit$",
+      "-count=1",
+      "-v"
+    ],
+    "caught": true,
+    "exit": 1,
+    "seconds": 48.50816536000002
+  },
+  {
+    "name": "drop-flow-check",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/drop-flow-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseCheckSavedLeak$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 19.911431627999946
+  },
+  {
+    "name": "retain-alias-proof",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/retain-alias-proof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseCheckAliasReset$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 23.704520572999968
+  },
+  {
+    "name": "nullish-receiver-twice",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/nullish-receiver-twice.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_loose[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 18.408634054000004
+  },
+  {
+    "name": "json-ordinary-assertion",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/json-ordinary-assertion.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_json[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 19.030084862999956
+  },
+  {
+    "name": "admit-weak-slot",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/admit-weak-slot.json",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderWeakSlotStaysNotYet$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 7.5595564679999825
+  },
+  {
+    "name": "omit-refusal-state",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/omit-refusal-state.json",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningSpreadOverwrite$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 10.251277045999927
+  },
+  {
+    "name": "drop-native-nullish-tags",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/drop-native-nullish-tags.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_copy[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 24.524780763999956
+  },
+  {
+    "name": "drop-javascript-union-tag",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/drop-javascript-union-tag.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDefaultTaggedSourceViewsDefaultBoxedWrite$",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 10.765825080000013
+  },
+  {
+    "mutant": "unlisted-output",
+    "caught": true,
+    "exit": 1,
+    "catcher": "unlisted backend divergence: stdout differs",
+    "test": "TestUnlistedBackendSourceJavaScriptAgreement",
+    "evidence": [
+      "    backend_stops_test.go:68: unlisted backend divergence: stdout differs; exit 0 stdout \"In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra!\\n\" stderr \"\""
+    ]
+  },
+  {
+    "mutant": "drop-terminal-guard",
+    "caught": true,
+    "exit": 1,
+    "catcher": "exit codes differ",
+    "test": "TestTerminalStackStopJavaScript",
+    "evidence": [
+      "    backend_stops_test.go:117: terminal stack stop: ruled JavaScript outcome: exit codes differ (@system_adamic, task #z1vjxxd, chain step 24)"
+    ]
+  },
+  {
+    "mutant": "drop-range-error-kind",
+    "caught": true,
+    "exit": 1,
+    "catcher": "exit codes differ",
+    "test": "TestNativeAgreesWithNode/backend_stop_catches.a",
+    "evidence": [
+      "    oracle_test.go:751: JavaScript backend: exit codes differ"
+    ]
+  },
+  {
+    "mutant": "drop-overflow-message",
+    "caught": true,
+    "exit": 1,
+    "catcher": "non-overflow RangeError was terminal: exit codes differ",
+    "test": "TestNonOverflowRangeErrorCatch",
+    "evidence": [
+      "    backend_stops_test.go:177: non-overflow RangeError was terminal: exit codes differ; exit 70 stdout \"\" stderr \"adamic: panic: RangeError: Maximum call stack size exceeded\\n\""
+    ]
+  },
+  {
+    "mutant": "skip-metadata-sharing",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/skip-metadata-sharing.json",
+      "./internal/native",
+      "-run",
+      "^TestParserNodeArrayMetadataSharing$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 10.27870042099994,
+    "catcher": "TestParserNodeArrayMetadataSharing: metadata child not shared"
+  },
+  {
+    "mutant": "retain-interior-metadata",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/retain-interior-metadata.json",
+      "./internal/native",
+      "-run",
+      "^TestParserNodeArrayMetadataSharing$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 16.384606753999833,
+    "catcher": "TestParserNodeArrayMetadataSharing: interior metadata retained"
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "body_proofs": [
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_possible_read.a",
+      "body_unchanged": true,
+      "sha256": "83e60b805592839448e7fc6d3e4d899c045428b066c63573f35fe6601fa01fee"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_possible_typeerror.a",
+      "body_unchanged": true,
+      "sha256": "f79f350b3d0d9a15538790c6b814eeb58ce1ce60612d5d60f9a8b82d6f4d419b"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_argument.a",
+      "body_unchanged": true,
+      "sha256": "de4acb84dba46d9bf8673b136bd7550ddda3aa951596fbf9f78b84f9ba7367fc"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a",
+      "body_unchanged": true,
+      "sha256": "5ce9a9e11518592ef084da6ffebf4864fbc874ed2344dbd1597f218ed2f4c4b0"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_comparison.a",
+      "body_unchanged": true,
+      "sha256": "50276869b5cdd9270dd7ab4e420c3f18d6edee4906f106573089dd5d12f69a4c"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_conditional.a",
+      "body_unchanged": true,
+      "sha256": "3ed235e3d343621d2ebf651eb2408a30edff09c7f7e73b301fb5c92e1838bb7b"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_element.a",
+      "body_unchanged": true,
+      "sha256": "26845292f8c8442190ec717dc2133b58037502bf8a35487d8289ee8de93c7bd5"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_expression.a",
+      "body_unchanged": true,
+      "sha256": "bc69ea089eca6c1e57ed426a48f261df98e6ac84d1a16ba971f5e9bee27c963e"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_logical.a",
+      "body_unchanged": true,
+      "sha256": "bbe9f6e96ccc230730375b4acc807bb77e2fb5b546d0d38f4f958366a5632ace"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_null.a",
+      "body_unchanged": true,
+      "sha256": "88134f73410feb3dc7e378cb181e7ad19f6a921b1be499eb493433c4eb206219"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_return.a",
+      "body_unchanged": true,
+      "sha256": "e9b740c6816fc8e3efdf05758589eb4e24c68fca88c61822ee6448126635d093"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_spread.a",
+      "body_unchanged": true,
+      "sha256": "8c6aca2fb09a926cd846f90b5e1dcf5e23fc1b9bb38895aea6ed2cc0abdab86f"
+    },
+    {
+      "path": "internal/oracle/testdata/non_null_refused/non_null_refuse_undefined.a",
+      "body_unchanged": true,
+      "sha256": "de4acb84dba46d9bf8673b136bd7550ddda3aa951596fbf9f78b84f9ba7367fc"
+    }
+  ],
+  "counts_unchanged_from_source": true,
+  "counts_sha256": "1c750ef4bdddda92d0e3314944234fe2fd7c89db486424720222a34b9b9219d8",
+  "go_sources_unchanged_from_source": true
+}

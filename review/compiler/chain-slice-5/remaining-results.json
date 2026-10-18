@@ -1,0 +1,99 @@
+[
+  {
+    "package": "./cmd/adamic",
+    "tests": [
+      "TestExplainChecksOutput",
+      "TestExplainChecksDriver",
+      "TestPlaceholderExplainChecksOutputC",
+      "TestPlaceholderExplainChecksOutputJavaScript",
+      "TestPlaceholderExplainChecksOutputBuild"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^(TestExplainChecksOutput|TestExplainChecksDriver|TestPlaceholderExplainChecksOutputC|TestPlaceholderExplainChecksOutputJavaScript|TestPlaceholderExplainChecksOutputBuild)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 50.847119699999894
+  },
+  {
+    "package": "./internal/native",
+    "tests": [
+      "TestParserConstructionBackendOwnKeyOrder",
+      "TestParserConstructionBackendNodeArrayKeys",
+      "TestParserConstructionBackendNodeArrayJson",
+      "TestParserConstructionBackendNodeArrayLength",
+      "TestParserConstructionRuntimeMutantSynthesizedKey",
+      "TestParserConstructionRuntimeMutantDeclarationOrder",
+      "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+      "TestObjectMetadataCacheIsPerEmission"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestParserConstructionBackendOwnKeyOrder|TestParserConstructionBackendNodeArrayKeys|TestParserConstructionBackendNodeArrayJson|TestParserConstructionBackendNodeArrayLength|TestParserConstructionRuntimeMutantSynthesizedKey|TestParserConstructionRuntimeMutantDeclarationOrder|TestParserConstructionRuntimeMutantArrayExtrasInJSON|TestObjectMetadataCacheIsPerEmission)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 60.44311113399999
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestImpossibleNonNullFixturesAreRefused",
+      "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "TestLiteralDefaultPlaceholderAgreesWithNode",
+      "TestMigratedNonNullFixturesRemainCovered",
+      "TestTheOracleCatchesOneByte",
+      "TestParserProgramRegionLifetime",
+      "TestUninitializedIsNotNullishMutant",
+      "TestNonliteralInitializerCannotSkipCheck"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestImpossibleNonNullFixturesAreRefused|TestPossibleNonNullAdamicAssertionsAreRefused|TestLiteralDefaultPlaceholderAgreesWithNode|TestMigratedNonNullFixturesRemainCovered|TestTheOracleCatchesOneByte|TestParserProgramRegionLifetime|TestUninitializedIsNotNullishMutant|TestNonliteralInitializerCannotSkipCheck)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 17.13662658599992
+  },
+  {
+    "package": "./internal/oracle",
+    "tests": [
+      "TestLongArgumentsLeaveTheStackItsLimit",
+      "TestSmallStacksStillPanic",
+      "TestNarrowedFieldUsesSharedReadiness",
+      "TestViewFieldInheritedStaticReadiness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestLongArgumentsLeaveTheStackItsLimit|TestSmallStacksStillPanic|TestNarrowedFieldUsesSharedReadiness|TestViewFieldInheritedStaticReadiness)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 18.509609788000034
+  }
+]

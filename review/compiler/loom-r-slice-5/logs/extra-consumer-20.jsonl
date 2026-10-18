@@ -1,0 +1,14 @@
+{"Time":"2026-10-18T00:19:08.971396798Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-18T00:19:08.975671714Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-18T00:19:08.97575552Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== RUN   TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:08.975799426Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== PAUSE TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:08.97580186Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-18T00:19:08.975804634Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-18T00:19:08.975806407Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== CONT  TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:11.548942325Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"    helper_mutants_test.go:72: build helper-native c7db73e04841 miss 2.56\n"}
+{"Time":"2026-10-18T00:19:11.717259448Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"    helpers_test.go:160: build go build cohere /workspace/adamic/cohere/adamic_helper_oracle.go /workspace/adamic/cohere/adamic_helper_descriptors.go go-oracle-owner-v1: settle the oracle owner first\n","OutputType":"error"}
+{"Time":"2026-10-18T00:19:11.717601302Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"--- FAIL: TestMessageRefusalsMatchGo (2.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:11.717637426Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Elapsed":2.74}
+{"Time":"2026-10-18T00:19:11.717655373Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:11.720994947Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t2.749s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:11.721039353Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":2.75}

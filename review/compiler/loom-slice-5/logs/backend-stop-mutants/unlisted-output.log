@@ -1,0 +1,8 @@
+=== RUN   TestUnlistedBackendSourceJavaScriptAgreement
+=== PAUSE TestUnlistedBackendSourceJavaScriptAgreement
+=== CONT  TestUnlistedBackendSourceJavaScriptAgreement
+    backend_stops_test.go:68: unlisted backend divergence: stdout differs; exit 0 stdout "In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra!\n" stderr ""
+--- FAIL: TestUnlistedBackendSourceJavaScriptAgreement (0.30s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.358s
+FAIL

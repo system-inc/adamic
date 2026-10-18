@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:23:58.615943457Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-18T00:23:58.620586128Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000"}
+{"Time":"2026-10-18T00:23:58.620651537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000","Output":"=== RUN   TestComposeMatchGo_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:23:58.620668993Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000","Output":"=== PAUSE TestComposeMatchGo_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:23:58.620671146Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000"}
+{"Time":"2026-10-18T00:23:58.620676364Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000"}
+{"Time":"2026-10-18T00:23:58.620677936Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000","Output":"=== CONT  TestComposeMatchGo_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:23:59.020580448Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000","Output":"    oracles.go:338: build go build cohere ./command/formatter_comparison go-compose-oracle-owner-v1: settle the yaml/oracles owner first\n","OutputType":"error"}
+{"Time":"2026-10-18T00:23:59.020709071Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000","Output":"--- FAIL: TestComposeMatchGo_000 (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:23:59.020717934Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestComposeMatchGo_000","Elapsed":0.4}
+{"Time":"2026-10-18T00:23:59.020780779Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:23:59.023910294Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.408s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:23:59.023934912Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.408}

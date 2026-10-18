@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T00:18:09.735570466Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore"}
+{"Time":"2026-10-18T00:18:09.740410174Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000"}
+{"Time":"2026-10-18T00:18:09.740461702Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000","Output":"=== RUN   TestThePortAnswersAsGoCohereAndGitDo_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:09.740477716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000","Output":"=== PAUSE TestThePortAnswersAsGoCohereAndGitDo_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:09.74048006Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000"}
+{"Time":"2026-10-18T00:18:09.740482283Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000"}
+{"Time":"2026-10-18T00:18:09.740484306Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000","Output":"=== CONT  TestThePortAnswersAsGoCohereAndGitDo_000\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:10.155402019Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000","Output":"    answers_prepared_units_test.go:218: build go test -c cohere ./internal/gitignore oracle-oracle-owner-v1: settle the Go oracle owner first\n","OutputType":"error"}
+{"Time":"2026-10-18T00:18:10.15546198Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000","Output":"--- FAIL: TestThePortAnswersAsGoCohereAndGitDo_000 (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:10.155465265Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Test":"TestThePortAnswersAsGoCohereAndGitDo_000","Elapsed":0.41}
+{"Time":"2026-10-18T00:18:10.155487178Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:10.158996936Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/gitignore\t0.423s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:18:10.159051908Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/gitignore","Elapsed":0.424}
