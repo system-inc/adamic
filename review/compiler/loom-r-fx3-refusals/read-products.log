@@ -1,0 +1,78 @@
+=== RUN   TestNativeAgreementRowsNameRegisteredPrograms
+=== PAUSE TestNativeAgreementRowsNameRegisteredPrograms
+=== RUN   TestArrayNarrowingEveryRefused
+=== PAUSE TestArrayNarrowingEveryRefused
+=== RUN   TestArrayNarrowingInferredRefused
+=== PAUSE TestArrayNarrowingInferredRefused
+=== RUN   TestArrayNarrowingReadonlyRefused
+=== PAUSE TestArrayNarrowingReadonlyRefused
+=== RUN   TestArrayNarrowingEarlyReturnRefused
+=== PAUSE TestArrayNarrowingEarlyReturnRefused
+=== RUN   TestArrayNarrowingPropertyRefused
+=== PAUSE TestArrayNarrowingPropertyRefused
+=== RUN   TestArrayNarrowingForwardRefused
+=== PAUSE TestArrayNarrowingForwardRefused
+=== RUN   TestArrayNarrowingCatRefused
+=== PAUSE TestArrayNarrowingCatRefused
+=== RUN   TestArrayNarrowingFindRefused
+=== PAUSE TestArrayNarrowingFindRefused
+=== RUN   TestArrayNarrowingFindLastRefused
+=== PAUSE TestArrayNarrowingFindLastRefused
+=== RUN   TestArrayNarrowingOptionalNumberAgrees
+=== PAUSE TestArrayNarrowingOptionalNumberAgrees
+=== RUN   TestArrayNarrowingOptionalStringAgrees
+=== PAUSE TestArrayNarrowingOptionalStringAgrees
+=== RUN   TestArrayNarrowingSomeNegatedAgrees
+=== PAUSE TestArrayNarrowingSomeNegatedAgrees
+=== RUN   TestArrayNarrowingFindLastIndexAgrees
+=== PAUSE TestArrayNarrowingFindLastIndexAgrees
+=== RUN   TestArrayNarrowingPreservedUnionAgrees
+=== PAUSE TestArrayNarrowingPreservedUnionAgrees
+=== RUN   TestArrayNarrowingBooleanCallbackAgrees
+=== PAUSE TestArrayNarrowingBooleanCallbackAgrees
+=== RUN   TestFX5NumberLiteralRefused
+=== PAUSE TestFX5NumberLiteralRefused
+=== RUN   TestFX5NumberValueRefused
+=== PAUSE TestFX5NumberValueRefused
+=== RUN   TestFX5MixedLiteralAgrees
+=== PAUSE TestFX5MixedLiteralAgrees
+=== CONT  TestNativeAgreementRowsNameRegisteredPrograms
+=== CONT  TestArrayNarrowingOptionalNumberAgrees
+=== CONT  TestArrayNarrowingPropertyRefused
+=== CONT  TestArrayNarrowingReadonlyRefused
+--- PASS: TestNativeAgreementRowsNameRegisteredPrograms (0.03s)
+=== CONT  TestArrayNarrowingInferredRefused
+--- PASS: TestArrayNarrowingPropertyRefused (0.07s)
+=== CONT  TestArrayNarrowingEveryRefused
+--- PASS: TestArrayNarrowingReadonlyRefused (0.07s)
+=== CONT  TestArrayNarrowingEarlyReturnRefused
+--- PASS: TestArrayNarrowingInferredRefused (0.06s)
+=== CONT  TestArrayNarrowingFindRefused
+--- PASS: TestArrayNarrowingEarlyReturnRefused (0.05s)
+=== CONT  TestArrayNarrowingFindLastRefused
+--- PASS: TestArrayNarrowingEveryRefused (0.06s)
+=== CONT  TestArrayNarrowingBooleanCallbackAgrees
+--- PASS: TestArrayNarrowingFindRefused (0.06s)
+=== CONT  TestFX5MixedLiteralAgrees
+--- PASS: TestArrayNarrowingFindLastRefused (0.04s)
+=== CONT  TestFX5NumberValueRefused
+--- PASS: TestFX5NumberValueRefused (0.04s)
+=== CONT  TestFX5NumberLiteralRefused
+--- PASS: TestFX5NumberLiteralRefused (0.03s)
+=== CONT  TestArrayNarrowingFindLastIndexAgrees
+--- PASS: TestArrayNarrowingBooleanCallbackAgrees (0.88s)
+=== CONT  TestArrayNarrowingPreservedUnionAgrees
+--- PASS: TestFX5MixedLiteralAgrees (0.89s)
+=== CONT  TestArrayNarrowingCatRefused
+--- PASS: TestArrayNarrowingCatRefused (0.02s)
+=== CONT  TestArrayNarrowingSomeNegatedAgrees
+--- PASS: TestArrayNarrowingOptionalNumberAgrees (1.06s)
+=== CONT  TestArrayNarrowingOptionalStringAgrees
+--- PASS: TestArrayNarrowingFindLastIndexAgrees (0.84s)
+=== CONT  TestArrayNarrowingForwardRefused
+--- PASS: TestArrayNarrowingForwardRefused (0.03s)
+--- PASS: TestArrayNarrowingPreservedUnionAgrees (0.23s)
+--- PASS: TestArrayNarrowingSomeNegatedAgrees (0.20s)
+--- PASS: TestArrayNarrowingOptionalStringAgrees (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.282s

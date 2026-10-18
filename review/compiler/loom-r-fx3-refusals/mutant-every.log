@@ -1,0 +1,8 @@
+=== RUN   TestArrayNarrowingEveryRefused
+=== PAUSE TestArrayNarrowingEveryRefused
+=== CONT  TestArrayNarrowingEveryRefused
+    array_narrowing_test.go:75: want refusal at narrowing site /workspace/adamic/internal/lower/testdata/array_narrowing/every.a:4:5, got <nil>
+--- FAIL: TestArrayNarrowingEveryRefused (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.038s
+FAIL
