@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "go",
+      "build",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand/main-overlay.json",
+      "-o",
+      "/tmp/adamic-gate/string-brand-admission-qtx6qy20/main",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 12.037
+  },
+  {
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/adamic-gate/string-brand-admission-qtx6qy20/after",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 2.629
+  }
+]

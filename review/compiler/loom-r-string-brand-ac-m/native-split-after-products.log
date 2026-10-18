@@ -1,0 +1,19 @@
+{"Time":"2026-10-18T19:20:39.701398441Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T19:20:39.705858682Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00"}
+{"Time":"2026-10-18T19:20:39.705939311Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"=== RUN   TestSplitTSGoAgreesUnit00\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:20:42.698661974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:165: build go_build_./bridge/tsgo/archive_tsgo.a f19f444a0b57 hit 0.36\n"}
+{"Time":"2026-10-18T19:20:43.591056329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:165: build split-tsgo-source edebba3740e1 hit 0.01\n"}
+{"Time":"2026-10-18T19:20:43.725273774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:165: build split-tsgo-baseline 7681c0a6c49b hit 0.01\n"}
+{"Time":"2026-10-18T19:20:43.725330949Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:165: product fetch phase 4.019s\n"}
+{"Time":"2026-10-18T19:20:43.79929772Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"    units_tsgo_test.go:165: whole checker run phase 0.074s\n"}
+{"Time":"2026-10-18T19:20:43.79934474Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00/cache_0"}
+{"Time":"2026-10-18T19:20:43.799352161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00/cache_0","Output":"=== RUN   TestSplitTSGoAgreesUnit00/cache_0\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:20:45.065073222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00/cache_0","Output":"    units_tsgo_test.go:158: checker uncached=0: 92 identical bytes: file\t/tmp/adamic-gate/TestSplitTSGoAgreesUnit002701925318/001/sample.a\n"}
+{"Time":"2026-10-18T19:20:45.065122084Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00/cache_0","Output":"        findings 0 queries 1\n"}
+{"Time":"2026-10-18T19:20:45.065143005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00/cache_0","Output":"--- PASS: TestSplitTSGoAgreesUnit00/cache_0 (1.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:20:45.065150616Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00/cache_0","Elapsed":1.27}
+{"Time":"2026-10-18T19:20:45.06695995Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Output":"--- PASS: TestSplitTSGoAgreesUnit00 (5.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:20:45.066974181Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitTSGoAgreesUnit00","Elapsed":5.36}
+{"Time":"2026-10-18T19:20:45.066978147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:20:45.075941061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t5.374s\n"}
+{"Time":"2026-10-18T19:20:45.075972217Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.375}

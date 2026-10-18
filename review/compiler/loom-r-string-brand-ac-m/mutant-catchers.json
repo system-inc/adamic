@@ -1,0 +1,58 @@
+[
+  {
+    "log": "mutant-drop-undefined.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStringBrandOptional",
+    "seconds": 2.92,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-literal-refinement.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestStringBrandCastKeepsLiterals",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-paths-representation-regression.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestElementAccessCompilerAreaBoundaries/paths",
+    "seconds": 2.6,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-paths-representation-regression.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestElementAccessCompilerAreaBoundaries",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-read-brand.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStringBrandReadRefused",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-real-field-phantom.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestStringBrandRealRefused",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-unchecked-missing-cast.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestStringBrandCastChecksMissing",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  }
+]

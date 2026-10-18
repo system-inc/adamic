@@ -1,0 +1,56 @@
+[
+  {
+    "topic": "real-field-phantom",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/real-field-phantom.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestStringBrandRealRefused$",
+    "catcher": "want named refusal for actual"
+  },
+  {
+    "topic": "drop-undefined",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/drop-undefined.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestStringBrandOptional$",
+    "catcher": "exit codes differ; Node"
+  },
+  {
+    "topic": "read-brand",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/read-brand.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestStringBrandReadRefused$",
+    "catcher": "want named refusal for __brand"
+  },
+  {
+    "topic": "literal-refinement",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/literal-refinement.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestStringBrandCastKeepsLiterals$",
+    "catcher": "unproven string literal refinement admitted"
+  },
+  {
+    "topic": "unchecked-missing-cast",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/unchecked-missing-cast.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestStringBrandCastChecksMissing$",
+    "catcher": "missing checked undefined removal"
+  },
+  {
+    "topic": "paths-representation-regression",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/paths-representation-regression.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestElementAccessCompilerAreaBoundaries$/paths$",
+    "catcher": "a function returning Path | undefined"
+  }
+]

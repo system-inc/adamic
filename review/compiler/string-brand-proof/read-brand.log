@@ -1,0 +1,8 @@
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== CONT  TestStringBrandReadRefused
+    string_brand_test.go:53: want named refusal for __brand, got /workspace/adamic/internal/oracle/testdata/string_brand_refused/read.a:2:59: stage 0 can't lower .__brand on a string yet
+--- FAIL: TestStringBrandReadRefused (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.089s
+FAIL

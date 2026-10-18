@@ -1,0 +1,9 @@
+javascript-consumers 0 1.976
+command-consumers 1 9.773
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-string-brand/consumer-check.py", line 26, in <module>
+    run('command-consumers',['go','test','./cmd/adamic','-run','^TestNonNullExplainChecks$',*standard])
+  File "/workspace/adamic/review/compiler/loom-r-string-brand/consumer-check.py", line 18, in run
+    assert completed.returncode==expected,(label,completed.returncode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('command-consumers', 1)

@@ -1,0 +1,282 @@
+[
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 84.357
+  },
+  {
+    "label": "lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 137.777
+  },
+  {
+    "label": "native-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 416.252
+  },
+  {
+    "label": "native-split-after-products",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestSplitTSGoAgreesUnit00$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 8.376
+  },
+  {
+    "label": "oracle-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 427.796
+  },
+  {
+    "label": "oracle-all-fixed",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 340.614
+  },
+  {
+    "label": "readers-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 35.653
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.222
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/..."
+    ],
+    "exit": 0,
+    "seconds": 7.5
+  },
+  {
+    "label": "mutant-real-field-phantom",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/real-field-phantom.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandRealRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.189
+  },
+  {
+    "label": "mutant-drop-undefined",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/drop-undefined.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandOptional$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.105
+  },
+  {
+    "label": "mutant-read-brand",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/read-brand.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStringBrandReadRefused$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.202
+  },
+  {
+    "label": "mutant-literal-refinement",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/literal-refinement.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringBrandCastKeepsLiterals$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.916
+  },
+  {
+    "label": "mutant-unchecked-missing-cast",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/unchecked-missing-cast.json",
+      "./internal/lower",
+      "-run",
+      "^TestStringBrandCastChecksMissing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.819
+  },
+  {
+    "label": "mutant-paths-representation-regression",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/mutants/paths-representation-regression.json",
+      "./internal/oracle",
+      "-run",
+      "^TestElementAccessCompilerAreaBoundaries$/paths$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.043
+  }
+]

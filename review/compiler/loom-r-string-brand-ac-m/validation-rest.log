@@ -1,0 +1,9 @@
+native-split-after-products 0 8.376
+oracle-all 1 427.796
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/validate-rest.py", line 22, in <module>
+    run('oracle-all',['go','test','./internal/oracle/...',*standard])
+  File "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/validate-rest.py", line 11, in run
+    assert r.returncode==expected,(label,r.returncode)
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('oracle-all', 1)

@@ -1,0 +1,56 @@
+=== RUN   TestStringBrandEscape
+=== PAUSE TestStringBrandEscape
+=== RUN   TestStringBrandUnescape
+=== PAUSE TestStringBrandUnescape
+=== RUN   TestStringBrandMap
+=== PAUSE TestStringBrandMap
+=== RUN   TestStringBrandOptional
+=== PAUSE TestStringBrandOptional
+=== RUN   TestStringBrandPlain
+=== PAUSE TestStringBrandPlain
+=== RUN   TestStringBrandReadRefused
+=== PAUSE TestStringBrandReadRefused
+=== RUN   TestStringBrandIndexRefused
+=== PAUSE TestStringBrandIndexRefused
+=== RUN   TestStringBrandRealRefused
+=== PAUSE TestStringBrandRealRefused
+=== RUN   TestStringBrandValue
+=== PAUSE TestStringBrandValue
+=== RUN   TestStringBrandVoid
+=== PAUSE TestStringBrandVoid
+=== RUN   TestStringBrandDestructureRefused
+=== PAUSE TestStringBrandDestructureRefused
+=== RUN   TestStringBrandUnknownCastRefused
+=== PAUSE TestStringBrandUnknownCastRefused
+=== CONT  TestStringBrandEscape
+=== CONT  TestStringBrandIndexRefused
+=== CONT  TestStringBrandReadRefused
+=== CONT  TestStringBrandVoid
+=== CONT  TestStringBrandOptional
+--- PASS: TestStringBrandReadRefused (0.29s)
+=== CONT  TestStringBrandPlain
+--- PASS: TestStringBrandIndexRefused (0.30s)
+=== CONT  TestStringBrandUnknownCastRefused
+--- PASS: TestStringBrandUnknownCastRefused (0.29s)
+=== CONT  TestStringBrandDestructureRefused
+--- PASS: TestStringBrandDestructureRefused (0.21s)
+=== CONT  TestStringBrandValue
+--- PASS: TestStringBrandPlain (1.83s)
+=== CONT  TestStringBrandRealRefused
+--- PASS: TestStringBrandRealRefused (0.19s)
+=== CONT  TestStringBrandMap
+--- PASS: TestStringBrandEscape (2.31s)
+=== CONT  TestStringBrandUnescape
+--- PASS: TestStringBrandOptional (2.42s)
+=== NAME  TestStringBrandVoid
+    string_brand_test.go:70: exit codes differ; Node oracle.run{stdout:[]uint8{0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x3a, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x3a, 0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}; backend oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x68, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x2e, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x20, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x20, 0x6e, 0x6f, 0x20, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x20, 0x6f, 0x66, 0x20, 0x5f, 0x5f, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x5f, 0x5f, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, exitCode:70}
+--- FAIL: TestStringBrandVoid (2.60s)
+--- PASS: TestStringBrandValue (2.68s)
+--- PASS: TestStringBrandUnescape (1.95s)
+--- PASS: TestStringBrandMap (2.39s)
+FAIL
+gate cache: native hits=0 misses=20
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.732s
+FAIL

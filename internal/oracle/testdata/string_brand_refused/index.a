@@ -1,0 +1,4 @@
+// a-check: refused a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field
+type Brand = string & { readonly __brand: void };
+function observe(value: Brand, key: "__brand"): void { console.log(typeof value[key]); }
+observe("x" as Brand, "__brand");

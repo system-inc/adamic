@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:35:34.935848406Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T19:35:34.941161245Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused"}
+{"Time":"2026-10-18T19:35:34.941232971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused","Output":"=== RUN   TestStringBrandRealRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:35:34.941276185Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused","Output":"=== PAUSE TestStringBrandRealRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:35:34.941278858Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused"}
+{"Time":"2026-10-18T19:35:34.941281132Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused"}
+{"Time":"2026-10-18T19:35:34.941283806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused","Output":"=== CONT  TestStringBrandRealRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:35:34.968988697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused","Output":"    string_brand_test.go:58: want named refusal for actual, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T19:35:34.969062577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused","Output":"--- FAIL: TestStringBrandRealRefused (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:35:34.969068946Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStringBrandRealRefused","Elapsed":0.03}
+{"Time":"2026-10-18T19:35:34.969088555Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:35:34.969169354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.033s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:35:34.969188993Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.033}

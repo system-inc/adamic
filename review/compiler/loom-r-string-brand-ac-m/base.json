@@ -1,0 +1,9 @@
+{
+  "base": "5a94465370ea0172e25aae8c13478e59e40c2bb4",
+  "source": "539788fef585ab910f78f5df41463ccb48902e0b",
+  "source_parent": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+  "conflicts": [
+    "internal/oracle/counts.md"
+  ],
+  "counts_resolution": "take main table and regenerate, never hand merge"
+}

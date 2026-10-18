@@ -1,0 +1,30 @@
+=== RUN   TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== PAUSE TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== RUN   TestStringBrandRepresentation
+=== PAUSE TestStringBrandRepresentation
+=== RUN   TestStringBrandRepresentationRejectsLayout
+=== PAUSE TestStringBrandRepresentationRejectsLayout
+=== RUN   TestStringBrandCastKeepsLiterals
+=== PAUSE TestStringBrandCastKeepsLiterals
+=== RUN   TestStringBrandCastChecksMissing
+=== PAUSE TestStringBrandCastChecksMissing
+=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+=== RUN   TestMixedUnionContractPhantomVoidIsUndefined
+=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestClockGenericReturnsT01DeclinesBrandedPrimitives
+=== CONT  TestStringBrandCastChecksMissing
+=== CONT  TestMixedUnionContractPhantomVoidIsUndefined
+=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase
+--- PASS: TestStringBrandCastChecksMissing (0.45s)
+=== CONT  TestStringBrandRepresentationRejectsLayout
+--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.63s)
+=== CONT  TestStringBrandCastKeepsLiterals
+--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.74s)
+=== CONT  TestStringBrandRepresentation
+--- PASS: TestClockGenericReturnsT01DeclinesBrandedPrimitives (0.82s)
+--- PASS: TestStringBrandCastKeepsLiterals (0.38s)
+--- PASS: TestStringBrandRepresentation (0.52s)
+--- PASS: TestStringBrandRepresentationRejectsLayout (1.44s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.965s

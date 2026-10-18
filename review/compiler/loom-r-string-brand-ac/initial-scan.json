@@ -1,0 +1,128 @@
+{
+  "exit": 1,
+  "results": {
+    "internal/oracle/testdata/string_brand_escape.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/string_brand_map.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/string_brand_optional.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/string_brand_plain.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/string_brand_refused/destructure.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    "internal/oracle/testdata/string_brand_refused/index.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/index.a:2:75: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    "internal/oracle/testdata/string_brand_refused/read.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/read.a:2:59: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    "internal/oracle/testdata/string_brand_refused/real.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/real.a:2:1: Adamic 0.1 refuses a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field"
+    },
+    "internal/oracle/testdata/string_brand_refused/unknown.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/unknown.a:3:21: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adam"
+    },
+    "internal/oracle/testdata/string_brand_unescape.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/string_brand_value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "review/compiler/string-brand-proof/void-view-probe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "observations": {
+    "internal/oracle/testdata/string_brand_escape.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5481
+    },
+    "internal/oracle/testdata/string_brand_map.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9367
+    },
+    "internal/oracle/testdata/string_brand_optional.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7813
+    },
+    "internal/oracle/testdata/string_brand_plain.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3003
+    },
+    "internal/oracle/testdata/string_brand_refused/destructure.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/string_brand_refused/index.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/index.a:2:75: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/string_brand_refused/read.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/read.a:2:59: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/string_brand_refused/real.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/real.a:2:1: Adamic 0.1 refuses a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/string_brand_refused/unknown.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/unknown.a:3:21: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0
+    },
+    "internal/oracle/testdata/string_brand_unescape.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5361
+    },
+    "internal/oracle/testdata/string_brand_value.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4736
+    },
+    "review/compiler/string-brand-proof/void-view-probe.a": {
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8351
+    }
+  },
+  "failure": "a-check failed for 5 files:\ninternal/oracle/testdata/string_brand_refused/destructure.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use )\ninternal/oracle/testdata/string_brand_refused/index.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/index.a:2:75: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an exp)\ninternal/oracle/testdata/string_brand_refused/read.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/read.a:2:59: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an expl)\ninternal/oracle/testdata/string_brand_refused/real.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/real.a:2:1: Adamic 0.1 refuses a string brand member actual with a runtime layout; keep the brand phantom and unread, or use an )\ninternal/oracle/testdata/string_brand_refused/unknown.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/unknown.a:3:21: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with u)"
+}

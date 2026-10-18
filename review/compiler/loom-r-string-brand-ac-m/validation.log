@@ -1,0 +1,10 @@
+counts-regenerate 0 84.357
+lower-all 0 137.777
+native-all 0 416.252
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/validate.py", line 23, in <module>
+    run('native-all',['go','test','./internal/native/...',*standard])
+  File "/workspace/adamic/review/compiler/loom-r-string-brand-ac-m/validate.py", line 19, in run
+    (out/(label+'-over-limit.json')).write_text(json.dumps(oversized,indent=2));raise AssertionError((label,oversized))
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('native-all', [{'test': 'TestSplitTSGoAgreesUnit00', 'seconds': 163.58}])

@@ -1,0 +1,16 @@
+[
+  {
+    "file": "internal/oracle/testdata/string_brand_refused/destructure.a",
+    "mutation": "removed-header",
+    "exit": 1,
+    "caught_by": "unchanged README-pinned Gate.aCheck with current branch compiler",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/string_brand_refused/destructure.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use )"
+  },
+  {
+    "file": "internal/oracle/testdata/string_brand_refused/destructure.a",
+    "mutation": "wrong-reason",
+    "exit": 1,
+    "caught_by": "unchanged README-pinned Gate.aCheck with current branch compiler",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/string_brand_refused/destructure.a: refused, expected refused deliberately unmatched brand reason (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:3:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use )"
+  }
+]

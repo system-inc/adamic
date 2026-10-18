@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T08:46:37.426868834Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T08:46:37.431114949Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals"}
+{"Time":"2026-10-18T08:46:37.431194716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals","Output":"=== RUN   TestStringBrandCastKeepsLiterals\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:37.431261164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals","Output":"=== PAUSE TestStringBrandCastKeepsLiterals\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:37.431264319Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals"}
+{"Time":"2026-10-18T08:46:37.431267103Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals"}
+{"Time":"2026-10-18T08:46:37.431268946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals","Output":"=== CONT  TestStringBrandCastKeepsLiterals\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:37.459553402Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals","Output":"    string_brand_test.go:51: unproven string literal refinement admitted\n","OutputType":"error"}
+{"Time":"2026-10-18T08:46:37.459605629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals","Output":"--- FAIL: TestStringBrandCastKeepsLiterals (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:37.459618979Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringBrandCastKeepsLiterals","Elapsed":0.03}
+{"Time":"2026-10-18T08:46:37.459641842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:37.459751985Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.033s\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:46:37.45976855Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.033}

@@ -1,0 +1,18 @@
+{
+  "exit": 1,
+  "results": {
+    "internal/oracle/testdata/string_brand_refused/destructure.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field"
+    }
+  },
+  "observations": {
+    "internal/oracle/testdata/string_brand_refused/destructure.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use an explicit object with a string field\n",
+      "stdout_bytes": 0
+    }
+  },
+  "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/string_brand_refused/destructure.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/string_brand_refused/destructure.a:2:48: Adamic 0.1 refuses a string brand member __brand read at runtime; keep the brand phantom and unread, or use )"
+}

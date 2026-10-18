@@ -11,6 +11,7 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
+	stringBrand    bool
 	structuralView bool
 	interfaceView  bool
 	field          string
@@ -109,6 +110,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
+	}
+	if l.stringBrandCast(source, target) {
+		return castProof{stringBrand: true}, nil
 	}
 	members, targets := castMembers(source), castMembers(target)
 	allClasses := true

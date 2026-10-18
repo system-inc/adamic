@@ -1,0 +1,22 @@
+{
+  "docs/0.1.md": true,
+  "internal/lower/cast.go": true,
+  "internal/lower/cast_proof.go": true,
+  "internal/lower/clock_generic_returns_t_01_test.go": true,
+  "internal/lower/expression.go": true,
+  "internal/lower/refusals.go": true,
+  "internal/lower/string_brand.go": true,
+  "internal/lower/string_brand_test.go": true,
+  "internal/oracle/string_brand_test.go": true,
+  "internal/oracle/testdata/string_brand_escape.a": true,
+  "internal/oracle/testdata/string_brand_map.a": true,
+  "internal/oracle/testdata/string_brand_optional.a": true,
+  "internal/oracle/testdata/string_brand_plain.a": true,
+  "internal/oracle/testdata/string_brand_refused/destructure.a": true,
+  "internal/oracle/testdata/string_brand_refused/index.a": true,
+  "internal/oracle/testdata/string_brand_refused/read.a": true,
+  "internal/oracle/testdata/string_brand_refused/real.a": true,
+  "internal/oracle/testdata/string_brand_refused/unknown.a": true,
+  "internal/oracle/testdata/string_brand_unescape.a": true,
+  "internal/oracle/testdata/string_brand_value.a": true
+}
