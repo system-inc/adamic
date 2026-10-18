@@ -1,0 +1,19 @@
+[
+  {
+    "name": "unique-certificate-fixed-witness",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableProducerAmbiguousCertificate$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 26.158
+  }
+]

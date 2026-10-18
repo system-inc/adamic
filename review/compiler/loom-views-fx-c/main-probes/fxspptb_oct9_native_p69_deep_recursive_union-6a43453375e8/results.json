@@ -1,0 +1,61 @@
+{
+  "item": 151,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.085
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.066
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p69_deep_recursive_union-6a43453375e8/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+    "seconds": 0.041
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p69_deep_recursive_union-6a43453375e8/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.068
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p69_deep_recursive_union-6a43453375e8/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}

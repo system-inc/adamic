@@ -1,0 +1,61 @@
+{
+  "item": 138,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/d7286c5c4c87/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/d7286c5c4c87/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.08
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/d7286c5c4c87/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.062
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p69_tuple_view_over_tuple_union-d7286c5c4c87/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value narrowed read has a different member\n",
+    "seconds": 0.044
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/d7286c5c4c87/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p69_tuple_view_over_tuple_union-d7286c5c4c87/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.157
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p69_tuple_view_over_tuple_union-d7286c5c4c87/native"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.003
+  },
+  "agrees": false
+}

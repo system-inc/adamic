@@ -1,0 +1,61 @@
+{
+  "item": 140,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/939d79256bbb/fxspptb_oct9_views_p33_boxed_slot_union_member.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/939d79256bbb/fxspptb_oct9_views_p33_boxed_slot_union_member.a"
+    ],
+    "exit": 0,
+    "stdout": "3\nundefined\n",
+    "stderr": "",
+    "seconds": 0.083
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/939d79256bbb/fxspptb_oct9_views_p33_boxed_slot_union_member.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.066
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p33_boxed_slot_union_member-939d79256bbb/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "3\n",
+    "stderr": "adamic: panic: field read failed: <write>.name is not a undefined; expected undefined, found string\n",
+    "seconds": 0.034
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/939d79256bbb/fxspptb_oct9_views_p33_boxed_slot_union_member.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p33_boxed_slot_union_member-939d79256bbb/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.186
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p33_boxed_slot_union_member-939d79256bbb/native"
+    ],
+    "exit": 70,
+    "stdout": "3\n",
+    "stderr": "adamic: panic: field read failed: <write>.name is not a ; expected , found string\n",
+    "seconds": 0.003
+  },
+  "agrees": false
+}

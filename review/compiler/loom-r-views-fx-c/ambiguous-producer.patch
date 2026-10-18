@@ -1,0 +1,5 @@
+--- internal/lower/view_callable_producers.go
++++ internal/lower/view_callable_producers.go
+@@ -125 +125 @@
+-				if len(assignableMembers) > 1 {
++				if false {
