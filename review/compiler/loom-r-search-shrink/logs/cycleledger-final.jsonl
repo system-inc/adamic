@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:05:28.140446676Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower/cycleledger"}
+{"Time":"2026-10-18T22:05:28.204986632Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger"}
+{"Time":"2026-10-18T22:05:28.205082214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger","Output":"=== RUN   TestOriginalCycleLedger\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:05:28.205109445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger","Output":"=== PAUSE TestOriginalCycleLedger\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:05:28.205111748Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger"}
+{"Time":"2026-10-18T22:05:28.205114112Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger"}
+{"Time":"2026-10-18T22:05:28.205116004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger","Output":"=== CONT  TestOriginalCycleLedger\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:05:28.205118418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger","Output":"    ledger_test.go:34: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics\n"}
+{"Time":"2026-10-18T22:05:28.205128283Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger","Output":"--- SKIP: TestOriginalCycleLedger (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:05:28.205130085Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Test":"TestOriginalCycleLedger","Elapsed":0}
+{"Time":"2026-10-18T22:05:28.205141793Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:05:28.205181632Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower/cycleledger\t0.061s\n"}
+{"Time":"2026-10-18T22:05:28.205192658Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Elapsed":0.065}

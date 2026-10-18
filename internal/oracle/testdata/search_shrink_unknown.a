@@ -1,0 +1,7 @@
+const list = [1, 2, 3];
+const found = list.find((item: unknown, index: number): boolean => {
+	console.log(`${index} ${typeof item === 'number' ? item + 10 : -1}`);
+	list.pop();
+	return item === undefined;
+});
+console.log(`${found ?? 'none'}`);
