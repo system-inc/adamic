@@ -25,6 +25,24 @@ func TestLanePython(t *testing.T) {
 		"test_profile", "test_shards", "test_worker_environment")
 }
 
+// stage3's other suites run from their own directories, which their imports name (caches, verdict's run and census,
+// the scanner driver's runner), so each is a test of its own here (#mpesmv7).
+
+func TestCachesPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3", "test_caches")
+}
+
+func TestVerdictPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/verdict", "test_verdict")
+}
+
+func TestScannerScratchRunnerPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/drivers/scanner", "test_scratch_runner")
+}
+
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
 // unittest's output when any of them fails.
 func runPython(t *testing.T, directory string, modules ...string) {
