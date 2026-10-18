@@ -1,0 +1,11 @@
+--- a/internal/lower/boxed_scalar_fields.go
++++ b/internal/lower/boxed_scalar_fields.go
+@@ -27,7 +27,7 @@
+ 	if narrowed.Present() == ir.Boolean {
+ 		name = "boolean"
+ 	} else if narrowed == ir.String {
+-		name = "string"
++		name = "number"
+ 	}
+ 	b := l.libraryArrayBuilder([]ir.Expression{read})
+ 	held := b.read(b.parameters[0])

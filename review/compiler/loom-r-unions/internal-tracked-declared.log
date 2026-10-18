@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:19:53.317291864Z","Action":"start","Package":"github.com/system-inc/adamic/internal/tracked"}
+{"Time":"2026-10-18T00:19:53.319984486Z","Action":"run","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference"}
+{"Time":"2026-10-18T00:19:53.320032489Z","Action":"output","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference","Output":"=== RUN   TestChangedNamesEveryDifference\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:53.320049845Z","Action":"output","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference","Output":"=== PAUSE TestChangedNamesEveryDifference\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:53.320052148Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference"}
+{"Time":"2026-10-18T00:19:53.320054311Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference"}
+{"Time":"2026-10-18T00:19:53.320055924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference","Output":"=== CONT  TestChangedNamesEveryDifference\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:53.451084292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference","Output":"--- PASS: TestChangedNamesEveryDifference (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:53.451123582Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/tracked","Test":"TestChangedNamesEveryDifference","Elapsed":0.13}
+{"Time":"2026-10-18T00:19:53.451141959Z","Action":"output","Package":"github.com/system-inc/adamic/internal/tracked","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:53.451736336Z","Action":"output","Package":"github.com/system-inc/adamic/internal/tracked","Output":"ok  \tgithub.com/system-inc/adamic/internal/tracked\t0.134s\n"}
+{"Time":"2026-10-18T00:19:53.451756646Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/tracked","Elapsed":0.134}

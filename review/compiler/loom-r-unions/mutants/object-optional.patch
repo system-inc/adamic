@@ -1,0 +1,11 @@
+--- a/internal/lower/nullable_objects.go
++++ b/internal/lower/nullable_objects.go
+@@ -102,7 +102,7 @@
+ 	b := l.libraryArrayBuilder([]ir.Expression{read})
+ 	held := b.read(b.parameters[0])
+ 	absent := ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
+-	return b.finish("optional_nullable_object", ir.Conditional{Condition: absent, WhenTrue: ir.Undefined{Of: ir.Object}, WhenNot: ir.Narrow{Value: held, To: ir.Object}, Of: ir.Object})
++	return b.finish("optional_nullable_object", ir.Conditional{Condition: absent, WhenTrue: ir.ObjectLiteral{Fields: []ir.Field{{Name: "text", Value: ir.StringConstant{Index: l.constant("mutant")}}}}, WhenNot: ir.Narrow{Value: held, To: ir.Object}, Of: ir.Object})
+ }
+ 
+ // A value boundary can normalize a pointer. Shared fields, elements and callable

@@ -1,0 +1,10 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -95,6 +95,7 @@
+ 		// An object with call signatures is a function, held as a closure.
+ 		return ir.Closure, true
+ 	case flags&checker.TypeFlagsUnion != 0:
++		if nullableStringUnion(proven) { return 0, false }
+ 		if l.includesNull(proven) && !dynamicObjectType(proven) {
+ 			// Preserve the area's nullable reference and RegExp protocols. Only
+ 			// differently stored members need the boxed union representation.

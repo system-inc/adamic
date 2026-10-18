@@ -1,0 +1,11 @@
+--- a/internal/lower/nullable_objects.go
++++ b/internal/lower/nullable_objects.go
+@@ -63,7 +63,7 @@
+ 	message := "union member where the checker narrowed it away: a call since the narrowing put it back"
+ 	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+ 	result := ir.Expression(ir.Narrow{Value: held, To: ir.Object})
+-	if l.includesNull(observed) {
++	if false && l.includesNull(observed) {
+ 		result = ir.Conditional{Condition: null, WhenTrue: ir.Null{Of: ir.Object}, WhenNot: result, Of: ir.Object}
+ 	}
+ 	call := b.finish("narrowed_nullable_object", result)

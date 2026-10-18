@@ -1,0 +1,134 @@
+=== RUN   TestFixturesEnums
+=== PAUSE TestFixturesEnums
+=== CONT  TestFixturesEnums
+    fixtures_test.go:216: build stage3-fixture-oracle-hook 34e908554948 miss 7.40
+=== RUN   TestFixturesEnums/enums
+=== PAUSE TestFixturesEnums/enums
+=== CONT  TestFixturesEnums/enums
+=== RUN   TestFixturesEnums/enums/01_token_range.a
+=== PAUSE TestFixturesEnums/enums/01_token_range.a
+=== RUN   TestFixturesEnums/enums/02_node_range.a
+=== PAUSE TestFixturesEnums/enums/02_node_range.a
+=== RUN   TestFixturesEnums/enums/03_jsdoc_range.a
+=== PAUSE TestFixturesEnums/enums/03_jsdoc_range.a
+=== RUN   TestFixturesEnums/enums/04_parse_tree_mask.a
+=== PAUSE TestFixturesEnums/enums/04_parse_tree_mask.a
+=== RUN   TestFixturesEnums/enums/05_local_export_flags.a
+=== PAUSE TestFixturesEnums/enums/05_local_export_flags.a
+=== RUN   TestFixturesEnums/enums/06_set_node_flags.a
+=== PAUSE TestFixturesEnums/enums/06_set_node_flags.a
+=== RUN   TestFixturesEnums/enums/07_regex_array_map.a
+=== PAUSE TestFixturesEnums/enums/07_regex_array_map.a
+=== RUN   TestFixturesEnums/enums/08_debug_format_enum.a
+=== PAUSE TestFixturesEnums/enums/08_debug_format_enum.a
+=== RUN   TestFixturesEnums/enums/09_symbol_exclusion_mask.a
+=== PAUSE TestFixturesEnums/enums/09_symbol_exclusion_mask.a
+=== RUN   TestFixturesEnums/enums/10_string_enum.a
+=== PAUSE TestFixturesEnums/enums/10_string_enum.a
+=== RUN   TestFixturesEnums/enums/11_format_syntax_kind.a
+=== PAUSE TestFixturesEnums/enums/11_format_syntax_kind.a
+=== RUN   TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a
+=== PAUSE TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a
+=== RUN   TestFixturesEnums/enums/13_regex_map_keys.a
+=== PAUSE TestFixturesEnums/enums/13_regex_map_keys.a
+=== CONT  TestFixturesEnums/enums/01_token_range.a
+=== CONT  TestFixturesEnums/enums/13_regex_map_keys.a
+=== RUN   TestFixturesEnums/enums/01_token_range.a/node
+=== RUN   TestFixturesEnums/enums/01_token_range.a/native
+=== RUN   TestFixturesEnums/enums/13_regex_map_keys.a/node
+=== RUN   TestFixturesEnums/enums/13_regex_map_keys.a/native
+=== RUN   TestFixturesEnums/enums/01_token_range.a/stage0
+=== CONT  TestFixturesEnums/enums/10_string_enum.a
+=== RUN   TestFixturesEnums/enums/13_regex_map_keys.a/stage0
+=== CONT  TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a
+=== RUN   TestFixturesEnums/enums/10_string_enum.a/node
+=== RUN   TestFixturesEnums/enums/10_string_enum.a/native
+=== RUN   TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/node
+=== RUN   TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/native
+=== RUN   TestFixturesEnums/enums/10_string_enum.a/stage0
+=== CONT  TestFixturesEnums/enums/11_format_syntax_kind.a
+=== RUN   TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/stage0
+=== CONT  TestFixturesEnums/enums/04_parse_tree_mask.a
+=== RUN   TestFixturesEnums/enums/11_format_syntax_kind.a/node
+=== RUN   TestFixturesEnums/enums/04_parse_tree_mask.a/node
+=== RUN   TestFixturesEnums/enums/11_format_syntax_kind.a/stage0
+=== CONT  TestFixturesEnums/enums/06_set_node_flags.a
+=== RUN   TestFixturesEnums/enums/04_parse_tree_mask.a/native
+=== RUN   TestFixturesEnums/enums/06_set_node_flags.a/node
+=== RUN   TestFixturesEnums/enums/06_set_node_flags.a/stage0
+=== CONT  TestFixturesEnums/enums/05_local_export_flags.a
+=== RUN   TestFixturesEnums/enums/05_local_export_flags.a/node
+=== RUN   TestFixturesEnums/enums/05_local_export_flags.a/native
+=== RUN   TestFixturesEnums/enums/04_parse_tree_mask.a/stage0
+=== CONT  TestFixturesEnums/enums/03_jsdoc_range.a
+=== RUN   TestFixturesEnums/enums/05_local_export_flags.a/stage0
+=== CONT  TestFixturesEnums/enums/09_symbol_exclusion_mask.a
+=== RUN   TestFixturesEnums/enums/03_jsdoc_range.a/node
+=== RUN   TestFixturesEnums/enums/03_jsdoc_range.a/native
+=== RUN   TestFixturesEnums/enums/09_symbol_exclusion_mask.a/node
+=== RUN   TestFixturesEnums/enums/09_symbol_exclusion_mask.a/native
+=== RUN   TestFixturesEnums/enums/03_jsdoc_range.a/stage0
+=== CONT  TestFixturesEnums/enums/02_node_range.a
+=== RUN   TestFixturesEnums/enums/09_symbol_exclusion_mask.a/stage0
+=== CONT  TestFixturesEnums/enums/08_debug_format_enum.a
+=== RUN   TestFixturesEnums/enums/02_node_range.a/node
+=== RUN   TestFixturesEnums/enums/02_node_range.a/native
+=== RUN   TestFixturesEnums/enums/08_debug_format_enum.a/node
+=== RUN   TestFixturesEnums/enums/08_debug_format_enum.a/stage0
+=== CONT  TestFixturesEnums/enums/07_regex_array_map.a
+=== RUN   TestFixturesEnums/enums/07_regex_array_map.a/node
+=== RUN   TestFixturesEnums/enums/07_regex_array_map.a/native
+=== RUN   TestFixturesEnums/enums/02_node_range.a/stage0
+=== RUN   TestFixturesEnums/enums/07_regex_array_map.a/stage0
+--- PASS: TestFixturesEnums (10.29s)
+    --- PASS: TestFixturesEnums/enums (0.00s)
+        --- PASS: TestFixturesEnums/enums/01_token_range.a (2.02s)
+            --- PASS: TestFixturesEnums/enums/01_token_range.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/01_token_range.a/native (1.86s)
+            --- PASS: TestFixturesEnums/enums/01_token_range.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/13_regex_map_keys.a (2.03s)
+            --- PASS: TestFixturesEnums/enums/13_regex_map_keys.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/13_regex_map_keys.a/native (1.79s)
+            --- PASS: TestFixturesEnums/enums/13_regex_map_keys.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/10_string_enum.a (1.48s)
+            --- PASS: TestFixturesEnums/enums/10_string_enum.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/10_string_enum.a/native (1.38s)
+            --- PASS: TestFixturesEnums/enums/10_string_enum.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a (1.48s)
+            --- PASS: TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/native (1.37s)
+            --- PASS: TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/11_format_syntax_kind.a (0.15s)
+            --- PASS: TestFixturesEnums/enums/11_format_syntax_kind.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/11_format_syntax_kind.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/06_set_node_flags.a (0.10s)
+            --- PASS: TestFixturesEnums/enums/06_set_node_flags.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/06_set_node_flags.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/04_parse_tree_mask.a (2.26s)
+            --- PASS: TestFixturesEnums/enums/04_parse_tree_mask.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/04_parse_tree_mask.a/native (2.12s)
+            --- PASS: TestFixturesEnums/enums/04_parse_tree_mask.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/05_local_export_flags.a (2.09s)
+            --- PASS: TestFixturesEnums/enums/05_local_export_flags.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/05_local_export_flags.a/native (1.97s)
+            --- PASS: TestFixturesEnums/enums/05_local_export_flags.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/03_jsdoc_range.a (1.37s)
+            --- PASS: TestFixturesEnums/enums/03_jsdoc_range.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/03_jsdoc_range.a/native (1.24s)
+            --- PASS: TestFixturesEnums/enums/03_jsdoc_range.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/09_symbol_exclusion_mask.a (1.39s)
+            --- PASS: TestFixturesEnums/enums/09_symbol_exclusion_mask.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/09_symbol_exclusion_mask.a/native (1.25s)
+            --- PASS: TestFixturesEnums/enums/09_symbol_exclusion_mask.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/08_debug_format_enum.a (0.12s)
+            --- PASS: TestFixturesEnums/enums/08_debug_format_enum.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/08_debug_format_enum.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/02_node_range.a (1.45s)
+            --- PASS: TestFixturesEnums/enums/02_node_range.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/02_node_range.a/native (1.33s)
+            --- PASS: TestFixturesEnums/enums/02_node_range.a/stage0 (0.00s)
+        --- PASS: TestFixturesEnums/enums/07_regex_array_map.a (1.49s)
+            --- PASS: TestFixturesEnums/enums/07_regex_array_map.a/node (0.00s)
+            --- PASS: TestFixturesEnums/enums/07_regex_array_map.a/native (1.38s)
+            --- PASS: TestFixturesEnums/enums/07_regex_array_map.a/stage0 (0.00s)
+PASS

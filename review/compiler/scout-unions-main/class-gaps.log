@@ -1,0 +1,20 @@
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts (4.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	4.214s
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts (4.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/values	4.119s

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/typeaware",
+    "-run",
+    "^TestTypeAwareUnitDeadline$",
+    "-count=1",
+    "-timeout",
+    "60s",
+    "-parallel",
+    "2",
+    "-json"
+  ],
+  "seconds": 4.388,
+  "exit": 0
+}

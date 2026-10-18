@@ -1,0 +1,6 @@
+=== RUN   TestBundledParserDifference
+=== PAUSE TestBundledParserDifference
+=== CONT  TestBundledParserDifference
+    format_test.go:185: set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestBundledParserDifference (0.00s)
+PASS

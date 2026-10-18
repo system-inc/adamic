@@ -1,0 +1,785 @@
+[
+  {
+    "label": "counts-regeneration",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/(scout_|taste_stage3_representations)",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 18.687
+  },
+  {
+    "label": "counts-table",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecordedTable$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 3.076
+  },
+  {
+    "label": "lower-focus",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^Test(NullableStringAdmission|ScoutClassBooleanKeepsUnsafeViewsRefused|NullableObjectSharedStorageStaysNotYet|NullableObjectUnionKeepsStrongCyclesRefused|TasteBoxedScalarFieldNowLowers|TasteRepresentationLimitsStayExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 9.368
+  },
+  {
+    "label": "oracle-focus",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^Test(NullableStringFieldCheckMutant|NullableObjectStorage.*)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 6.0
+  },
+  {
+    "label": "fixtures",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/(scout_|taste_stage3_representations)",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.983
+  },
+  {
+    "label": "regex-adapter",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/regexp_replace/callback.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 15.626
+  },
+  {
+    "label": "stage1-gaps",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "./stage1/cohere/values",
+      "-run",
+      "^TestEachGapStandsWhereGapsMdSaysItDoes$/gaps/(3_optional_boolean|2_boolean_or_undefined_field)",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 15.439
+  },
+  {
+    "label": "flow-consumers",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusRemainder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 20.496
+  },
+  {
+    "label": "storage-after-move",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNullableObjectStorage.*$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 10.933
+  },
+  {
+    "label": "counts-cause",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/counts-cause.json",
+      "./internal/oracle",
+      "-run",
+      "^TestScoutStringRouteCountsCause$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 16.192
+  },
+  {
+    "label": "flow-consumers",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusRemainder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 6.348
+  },
+  {
+    "label": "fresh-consumers",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFreshCorpusRemainder$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.405
+  },
+  {
+    "label": "native-consumers",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestInheritanceMemoryPlans$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.794
+  },
+  {
+    "label": "guards-ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestEveryMapAProgramHoldsIsSorted$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 13.291
+  },
+  {
+    "label": "guards-runtime",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestRuntimeSetsAreEachUsed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 4.541
+  },
+  {
+    "label": "guards-registration",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestNativeAgreementRowsNameRegisteredPrograms$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.795
+  },
+  {
+    "label": "guards-parallel",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.221
+  },
+  {
+    "label": "readers",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 8.33
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/oracle",
+      "./stage1/cohere/selector",
+      "./stage1/cohere/values"
+    ],
+    "exit": 0,
+    "seconds": 3.183
+  },
+  {
+    "label": "mutant-null-box",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/null-box.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_strings.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 10.679
+  },
+  {
+    "label": "mutant-runtime-typeof",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/runtime-typeof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_tsc_nullish_content.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 10.921
+  },
+  {
+    "label": "mutant-lower-typeof",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/lower-typeof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_tsc_nullish_content.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 12.428
+  },
+  {
+    "label": "mutant-nullable-admission",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/nullable-admission.json",
+      "./internal/lower",
+      "-run",
+      "TestNullableStringAdmission",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 8.909
+  },
+  {
+    "label": "mutant-equality-observation",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/equality-observation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_strings.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.496
+  },
+  {
+    "label": "mutant-class-zero",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/class-zero.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_class_boolean_fields.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.442
+  },
+  {
+    "label": "mutant-class-optional",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/class-optional.json",
+      "./internal/lower",
+      "-run",
+      "TestScoutClassBooleanKeepsUnsafeViewsRefused",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.315
+  },
+  {
+    "label": "mutant-boxed-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/boxed-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_boxed_scalar_stale_field.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.952
+  },
+  {
+    "label": "mutant-boxed-observation",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/boxed-observation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_boxed_scalar_fields.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.031
+  },
+  {
+    "label": "mutant-object-boundary",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/object-boundary.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_objects.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.958
+  },
+  {
+    "label": "mutant-object-tag",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/object-tag.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_object_stale_field.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.761
+  },
+  {
+    "label": "mutant-object-optional",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/object-optional.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_objects.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.938
+  },
+  {
+    "label": "mutant-object-null-field",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/object-null-field.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_object_null_field.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.135
+  },
+  {
+    "label": "mutant-string-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/string-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_stale_field.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 6.05
+  },
+  {
+    "label": "mutant-string-tag",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/string-tag.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_fields_locals.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.56
+  },
+  {
+    "label": "mutant-local-nullish",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/local-nullish.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_fields_locals.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.626
+  },
+  {
+    "label": "mutant-regex-adapter",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/regex-adapter.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/regexp_replace/callback.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.901
+  },
+  {
+    "label": "mutant-shared-view",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/shared-view.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNullableObjectStorageArray$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.021
+  },
+  {
+    "label": "mutant-lookup",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/lookup.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNullableObjectStorageLookup$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.726
+  },
+  {
+    "label": "mutant-local-equality",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/local-equality.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_fields_locals.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.719
+  },
+  {
+    "label": "mutant-object-local-runtime",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/object-local-runtime.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_object_stale_local.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.313
+  },
+  {
+    "label": "mutant-object-local",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-unions-3/mutants/object-local.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_objects.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 5.641
+  }
+]
