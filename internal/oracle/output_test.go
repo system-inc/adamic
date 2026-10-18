@@ -12,7 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -290,82 +289,8 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 	})
 }
 
-// A program stopped from outside by SIGTERM, SIGINT or SIGHUP: Node has written every line, and is
-// killed by the signal. Native must write out what its buffer holds and be killed by the same signal,
-// under the sanitizers too. No run is signaled after a fixed delay, which a loaded machine can
-// outrun: Node and the JavaScript backend are signaled once their line is on the pipe, and native,
-// whose line stays in its buffer until the signal, once it has spent half a second of its own CPU
-// time, which only the fixture's spin after the line can spend. Load can't fake CPU time.
-// Started with the three signals ignored by its parent (as under nohup, or a background job), Node
-// resets them at startup and is stopped all the same, so native must be too.
-func TestASignalLeavesWhatWasPrinted(t *testing.T) {
-	t.Parallel()
-	for _, ignored := range []bool{false, true} {
-		for _, stop := range []syscall.Signal{syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
-			name := stop.String()
-			if ignored {
-				name += " inherited ignored"
-			}
-			t.Run(name, func(t *testing.T) {
-				t.Parallel()
-				cacheProbe(t, "internal/oracle/testdata/killed_after_output.a", nil, "", func() {
-
-					path, binary, script := sanitized(t, "internal/oracle/testdata/killed_after_output.a")
-					runner := filepath.Join(repository, "oracle", "node.mjs")
-					stopped := func(name string, arguments ...string) (string, []byte) {
-						onNode, label := name == "node", filepath.Base(append([]string{name}, arguments...)[len(arguments)])
-						if ignored {
-							// sh ignores the three, then execs the program in its place, with the same pid.
-							arguments = append([]string{"-c", `trap "" TERM INT HUP; exec "$0" "$@"`, name}, arguments...)
-							name = "sh"
-						}
-						command := bounded(t, name, arguments...)
-						if runtime.GOOS == "linux" {
-							command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
-						}
-						var stdout, stderr lockedBuffer
-						command.Stdout, command.Stderr = &stdout, &stderr
-						if err := command.Start(); err != nil {
-							t.Fatal(err)
-						}
-						ready := func() bool {
-							if onNode {
-								return bytes.Contains(stdout.Bytes(), []byte("\n"))
-							}
-							return cpuSeconds(t, command.Process.Pid) >= 0.5
-						}
-						for deadline := time.Now().Add(30 * time.Second); !ready(); time.Sleep(10 * time.Millisecond) {
-							if time.Now().After(deadline) {
-								t.Fatalf("%s never reached its spin in 30 s; stdout %q, stderr %q", label, stdout.Bytes(), stderr.String())
-							}
-						}
-						command.Process.Signal(stop)
-						command.Wait()
-						status := command.ProcessState.Sys().(syscall.WaitStatus)
-						ended := fmt.Sprintf("exit %d", status.ExitStatus())
-						if status.Signaled() {
-							ended = "killed by " + status.Signal().String()
-						}
-						rememberRun(t, run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()})
-						return ended + ", stderr " + strconv.Quote(stderr.String()), stdout.Bytes()
-					}
-					nodeEnded, node := stopped("node", "--disable-warning=ExperimentalWarning", runner, path)
-					if nodeEnded != "killed by "+stop.String()+`, stderr ""` || len(node) == 0 {
-						t.Fatalf("want Node killed by %s after its line, got %s, stdout %q", stop, nodeEnded, node)
-					}
-					for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-						ended, printed := stopped(other[0], other[1:]...)
-						if ended != nodeEnded || !bytes.Equal(printed, node) {
-							t.Errorf("%s: %s, stdout %q; Node: %s, stdout %q", filepath.Base(other[len(other)-1]), ended, printed, nodeEnded, node)
-						}
-					}
-
-				})
-			})
-		}
-	}
-}
-
+// Each signal, inherited disposition and process leg is a bounded top-level test.
+// Native readiness uses CPU time, since its line stays buffered until termination.
 // lockedBuffer is a child's output, read while the child still writes it.
 type lockedBuffer struct {
 	lock   sync.Mutex
