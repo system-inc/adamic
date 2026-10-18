@@ -1,0 +1,13 @@
+=== RUN   TestFlowCorpusUnitsCoverEveryProgram
+=== PAUSE TestFlowCorpusUnitsCoverEveryProgram
+=== RUN   TestFlowCorpusRemainder
+=== PAUSE TestFlowCorpusRemainder
+=== CONT  TestFlowCorpusUnitsCoverEveryProgram
+=== CONT  TestFlowCorpusRemainder
+    corpus_coverage_test.go:134: remainder ran 19 programs
+--- PASS: TestFlowCorpusRemainder (0.02s)
+=== NAME  TestFlowCorpusUnitsCoverEveryProgram
+    corpus_coverage_test.go:101: 854 programs, 3416 analysis pieces, 838 selectable units
+--- PASS: TestFlowCorpusUnitsCoverEveryProgram (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	0.097s

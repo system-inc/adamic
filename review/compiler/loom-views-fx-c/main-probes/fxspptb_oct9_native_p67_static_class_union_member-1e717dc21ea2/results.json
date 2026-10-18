@@ -1,0 +1,61 @@
+{
+  "item": 152,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a"
+    ],
+    "exit": 0,
+    "stdout": "number\n",
+    "stderr": "",
+    "seconds": 0.083
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.048
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p67_static_class_union_member-1e717dc21ea2/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n",
+    "seconds": 0.046
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1e717dc21ea2/fxspptb_oct9_native_p67_static_class_union_member.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p67_static_class_union_member-1e717dc21ea2/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.063
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_native_p67_static_class_union_member-1e717dc21ea2/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found object\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}

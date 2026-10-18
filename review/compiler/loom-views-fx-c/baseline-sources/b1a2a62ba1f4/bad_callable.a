@@ -1,0 +1,9 @@
+type Target = ((value: number) => number) | ((value: string | number) => number);
+interface Root { readonly kind: 'Receiver'; }
+interface Receiver extends Root { readonly value: Target; }
+const raw = { kind: 'Receiver' as const, value: (value: boolean): number => value ? 99 : 7 };
+const base: Root = raw;
+const view = base as Receiver;
+function argument(): number { console.log('argument'); return 4; }
+console.log('before');
+console.log(`${view.value(argument())}`);

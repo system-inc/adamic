@@ -1,0 +1,61 @@
+{
+  "item": 146,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/b1a2a62ba1f4/bad_callable.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/b1a2a62ba1f4/bad_callable.a"
+    ],
+    "exit": 0,
+    "stdout": "before\nargument\n99\n",
+    "stderr": "",
+    "seconds": 0.095
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/b1a2a62ba1f4/bad_callable.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.061
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/bad_callable-b1a2a62ba1f4/generated.mjs"
+    ],
+    "exit": 0,
+    "stdout": "before\nargument\n99\n",
+    "stderr": "",
+    "seconds": 0.041
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/b1a2a62ba1f4/bad_callable.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/bad_callable-b1a2a62ba1f4/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.083
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/bad_callable-b1a2a62ba1f4/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: kind is not a string; expected string, found unsupported representation\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}

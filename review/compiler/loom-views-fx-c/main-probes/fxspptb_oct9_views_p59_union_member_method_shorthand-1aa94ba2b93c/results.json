@@ -1,0 +1,61 @@
+{
+  "item": 135,
+  "source": "review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.099
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.054
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p59_union_member_method_shorthand-1aa94ba2b93c/generated.mjs"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: (base as Holder).value matches no member of Left | Right; expected Left | Right, found object\n",
+    "seconds": 0.044
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-views-cd-main",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/baseline-sources/1aa94ba2b93c/fxspptb_oct9_views_p59_union_member_method_shorthand.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p59_union_member_method_shorthand-1aa94ba2b93c/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.021
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-views-fx-c/main-probes/fxspptb_oct9_views_p59_union_member_method_shorthand-1aa94ba2b93c/native"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: field read failed: (base as Holder).value matches no member of Left | Right; expected Left | Right, found object\n",
+    "seconds": 0.001
+  },
+  "agrees": false
+}
