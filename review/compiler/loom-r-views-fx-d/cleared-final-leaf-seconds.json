@@ -1,0 +1,207 @@
+[
+  {
+    "test": "TestFX7TupleMarkerRejectsOrdinaryArray",
+    "seconds": 0.04,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7ViewCycle",
+    "seconds": 0.05,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractSpreadRefused",
+    "seconds": 0.21,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractP18",
+    "seconds": 0.61,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractReceiverEvaluatedOnce",
+    "seconds": 0.67,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractReceiverBinding",
+    "seconds": 0.69,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractPlainSpread",
+    "seconds": 0.73,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractWideProducer",
+    "seconds": 0.74,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallableContractP20",
+    "seconds": 0.39,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestViewCheckedCastMetadata",
+    "seconds": 0.0,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TupleSelectionBeforeDiagnosticKindRelease",
+    "seconds": 4.77,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TupleSelectionBeforeDiagnosticKindSanitized",
+    "seconds": 4.87,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7ViewCycleAndStackGuard",
+    "seconds": 5.06,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestRuntimeSetsAreEachUsed",
+    "seconds": 2.07,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7Depth65",
+    "seconds": 4.8,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDTupleUnionJavaScript",
+    "seconds": 4.9,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextScalarStaticJavaScript",
+    "seconds": 0.17,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextP33",
+    "seconds": 2.99,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDTupleObjectSanitized",
+    "seconds": 5.14,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextScalarStatic",
+    "seconds": 0.28,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextScalarStaticSanitized",
+    "seconds": 0.48,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDOriginal",
+    "seconds": 5.7,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextP72",
+    "seconds": 0.68,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextScalarTuple",
+    "seconds": 0.78,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextP67",
+    "seconds": 0.91,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextP32",
+    "seconds": 0.74,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDCallableUnion",
+    "seconds": 1.22,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7TextP09",
+    "seconds": 0.71,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDTupleUnion",
+    "seconds": 0.31,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7Depth2000",
+    "seconds": 1.1,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDBadCallable",
+    "seconds": 1.27,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7Depth65JavaScript",
+    "seconds": 0.27,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDWideCallable",
+    "seconds": 0.66,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDTupleUnionSanitized",
+    "seconds": 0.42,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDTupleObject",
+    "seconds": 0.26,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDWideCallableJavaScript",
+    "seconds": 0.2,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7Depth65Sanitized",
+    "seconds": 0.62,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDTupleObjectJavaScript",
+    "seconds": 0.15,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestFX7Depth200",
+    "seconds": 0.95,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestLoomViewsDWideCallableSanitized",
+    "seconds": 0.45,
+    "log": "cleared-final-focused.log"
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "seconds": 18.65,
+    "log": "cleared-final-reader-guard.log"
+  }
+]

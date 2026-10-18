@@ -1,0 +1,432 @@
+=== RUN   TestStage3FixtureHook
+=== PAUSE TestStage3FixtureHook
+=== CONT  TestStage3FixtureHook
+    stage3_hook_test.go:15: called only by the Stage 3 fixture runner
+--- SKIP: TestStage3FixtureHook (0.00s)
+=== RUN   TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a
+    review_test.go:91: awaits library/area-on-next-2: refused at compile time by step 20's own-property reflection refusal on area/library; every Adamic mode answers differently from Node on main today
+--- SKIP: TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a (0.00s)
+=== RUN   TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a
+    review_test.go:91: awaits library/area-on-next-2: refused at compile time by the V8-divergence shape refusal on area/library; native answers differently from Node on main today
+--- SKIP: TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_8e67677_structural_optional.a
+    review_test.go:91: awaits area/library: library's structural RegExp methods and prototype-free named groups (a335a760) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_8e67677_structural_optional.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_4e1649c_generic_receiver_number.a
+    review_test.go:91: awaits area/library: library's generic String receivers and fill (6a5fecee) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_4e1649c_generic_receiver_number.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_57f2d04_find_last_shrinks2.a
+    review_test.go:91: awaits #b75jjs3: compiler/search-shrink, @system_adamic's Oct 8 ruling: the item is typed string, so a named exit 70 check at the call into the callback
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_57f2d04_find_last_shrinks2.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_8e67677_structural_method.a
+    review_test.go:91: awaits area/library: library's structural RegExp methods and prototype-free named groups (a335a760) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_8e67677_structural_method.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_defined_in_try.a
+    review_test.go:91: awaits #cxr5x2v: step 21, exceptions in native code, makes the runtime error catchable as Node's is
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_defined_in_try.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_uncaught_name.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_uncaught_name.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_view_method.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_view_method.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_view_method_parameter.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (silent today)
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_9984394_view_method_parameter.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_4e1649c_generic_receiver.a
+    review_test.go:91: awaits area/library: library's generic String receivers and fill (6a5fecee) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_4e1649c_generic_receiver.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_8e67677_long_backtrack.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_8e67677_long_backtrack.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_8e67677_quadratic_test.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_8e67677_quadratic_test.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_047cb0d_n_try.a
+    review_test.go:91: awaits #cxr5x2v: step 21, exceptions in native code, makes the runtime error catchable as Node's is
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_047cb0d_n_try.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_4e1649c_generic_template.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_4e1649c_generic_template.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_93122fa_t_v2.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_93122fa_t_v2.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_native_p06_undefined_other_name.a
+    review_test.go:91: awaits #aecx10a: fifth reading 147, writing undefined to a field named like a checked view field aborts
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_native_p06_undefined_other_name.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_native_p26_callable_or_undefined.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_native_p26_callable_or_undefined.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_4ddd17f_weak_single_narrowed.a
+    review_test.go:91: awaits #z1vjxxd: a ruled loud stop in native that the JavaScript backend can't reproduce; pinned once the backend parity is decided
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_4ddd17f_weak_single_narrowed.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_8e67677_quadratic_exec.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_8e67677_quadratic_exec.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_93122fa_t_v1.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_93122fa_t_v1.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_9984394_error_spread.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (silent today)
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_9984394_error_spread.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_903f25b_groups_proto2.a
+    review_test.go:91: awaits area/library: library's structural RegExp methods and prototype-free named groups (a335a760) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_903f25b_groups_proto2.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_93122fa_t_t5.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_93122fa_t_t5.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_d96d304_try_repeat.a
+    review_test.go:91: awaits #cxr5x2v: step 21, exceptions in native code, makes the runtime error catchable as Node's is
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_d96d304_try_repeat.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_native_p67_static_class_union_member.a
+    review_test.go:91: awaits #aecx10a: fifth reading 152, native and JavaScript stderr disagree on a checked failure, so it can't be pinned yet
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_native_p67_static_class_union_member.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_iterators_override_source.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (a compiler panic becomes NotYet; the lowering itself is step 20)
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_iterators_override_source.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p14_callable_union_no_view.a
+    review_test.go:91: awaits #aecx10a: fifth reading 154, calling a union of two function types reads the raw result as a union
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p14_callable_union_no_view.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a
+    review_test.go:91: awaits #aecx10a: fifth reading 142, a view with an unsupported member reads a numeric slot as a reference (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a
+    review_test.go:91: awaits #aecx10a: fifth reading 142, a view with an unsupported member reads a numeric slot as a reference (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p70_recursive_depth_70.a
+    review_test.go:91: awaits #aecx10a: fifth reading 151, a recursive union chain past the depth bound fails membership
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p70_recursive_depth_70.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    review_test.go:91: awaits #aecx10a: fifth reading 148, a plain read of undefined aborts when any view checks a field of that name
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_native_p75_unviewed_undefined_read.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_views_p62_union_member_arrow_inferred.a
+    review_test.go:91: awaits #1fk58py: fifth reading 135, a valid callable producer panics at the read instead of being refused
+--- SKIP: TestReviewProgramsAgreeWithNode_008/fxspptb_oct9_views_p62_union_member_arrow_inferred.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_views_p38_same_name_string_undefined.a
+    review_test.go:91: awaits #1fk58py: fifth reading 134, a same-named field on an unviewed object breaks a valid program (compiler crash or panic)
+--- SKIP: TestReviewProgramsAgreeWithNode_010/fxspptb_oct9_views_p38_same_name_string_undefined.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_bdb950b_gap_nul.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_bdb950b_gap_nul.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_4ddd17f_opt_3.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (bad C today)
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_4ddd17f_opt_3.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_4e1649c_generic_pad_fill.a
+    review_test.go:91: awaits area/library: library's generic String receivers and fill (6a5fecee) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_4e1649c_generic_pad_fill.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_9984394_narrowed_map.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_9984394_narrowed_map.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_d96d304_try_finally_concat.a
+    review_test.go:91: awaits #cxr5x2v: step 21, exceptions in native code, makes the runtime error catchable as Node's is
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_d96d304_try_finally_concat.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_4ddd17f_long_name.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (bad C today)
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_4ddd17f_long_name.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_a34388d_cyc_iterable.a
+    review_test.go:91: awaits #7g4qv2b: the Map, holder and iterator cycle leaks under LeakSanitizer until cycles are decided
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_a34388d_cyc_iterable.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_4e1649c_generic_pad_fill_call.a
+    review_test.go:91: awaits area/library: library's generic String receivers and fill (6a5fecee) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_4e1649c_generic_pad_fill_call.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_8e67677_null_undefined_inline.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_8e67677_null_undefined_inline.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_903f25b_iterator_tag.a
+    review_test.go:91: awaits area/library: library's iterator toStringTag families (8f4886ed) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_903f25b_iterator_tag.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_93122fa_t_v5.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_93122fa_t_v5.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_native_p01_maybe_boolean_spread.a
+    review_test.go:91: awaits #aecx10a: fifth reading 143, a maybe-boolean snapshot after a spread retains a stale reference
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_native_p01_maybe_boolean_spread.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_native_p18_cast_kind_no_field_types.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_predicates_q22_every_inferred_built.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_predicates_q22_every_inferred_built.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_predicates_q31_every_class_union.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_predicates_q31_every_class_union.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_predicates_q38_property_every.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_predicates_q38_property_every.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_views_p37_union_field_same_name.a
+    review_test.go:91: awaits #1fk58py: fifth reading 134, a same-named field on an unviewed object breaks a valid program (compiler crash or panic)
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_views_p37_union_field_same_name.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a
+    review_test.go:91: awaits #1fk58py: fifth reading 136, destructuring a views-v2 union field loses its contract (compiler crash)
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    review_test.go:91: awaits #1fk58py: fifth reading 138, the JavaScript backend reads a tuple as an array where native reads it as an object
+--- SKIP: TestReviewProgramsAgreeWithNode_011/fxspptb_oct9_views_p68_object_view_over_tuple.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_classfeat_maybe_setter.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (bad C today)
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_classfeat_maybe_setter.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_classfeat_static_virtual.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_classfeat_static_virtual.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_d96d304_try_pad.a
+    review_test.go:91: awaits #cxr5x2v: step 21, exceptions in native code, makes the runtime error catchable as Node's is
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_d96d304_try_pad.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_native_p20_callable_member_call_good.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_native_p20_callable_member_call_good.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_native_p24_tuple_from_object_entries.a
+    review_test.go:91: awaits #aecx10a: fifth reading 150, runtime-made pairs aren't tuples to a view (Map and Object entries)
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_native_p24_tuple_from_object_entries.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_native_p35_class_in_union.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_native_p35_class_in_union.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_views_p53_callable_union_destructure_good.a
+    review_test.go:91: awaits #1fk58py: fifth reading 136, destructuring a views-v2 union field loses its contract (compiler crash)
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_views_p53_callable_union_destructure_good.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_views_p70_length_view_over_tuple.a
+    review_test.go:91: awaits #1fk58py: fifth reading 137, a view over a real tuple crashes the compiler
+--- SKIP: TestReviewProgramsAgreeWithNode_007/fxspptb_oct9_views_p70_length_view_over_tuple.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_8e67677_quadratic_matchall.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_8e67677_quadratic_matchall.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_903f25b_private_mangled.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_903f25b_private_mangled.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_9984394_lib_codepoint.a
+    review_test.go:91: awaits #cxr5x2v: step 21, exceptions in native code, makes the runtime error catchable as Node's is
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_9984394_lib_codepoint.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_9984394_narrowed_reduce.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_9984394_narrowed_reduce.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_oct8_nodehost_fs_numeric_error.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_oct8_nodehost_fs_numeric_error.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_oct9_native_p34_typed_array_in_union.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_oct9_native_p34_typed_array_in_union.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_oct9_views_p06_element_access_boolean_wrong.a
+    review_test.go:91: awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_oct9_views_p06_element_access_boolean_wrong.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_004/fxspptb_oct9_views_p38_same_name_maybe_number.a
+    review_test.go:91: awaits #1fk58py: fifth reading 134, a same-named field on an unviewed object breaks a valid program (compiler crash or panic)
+--- SKIP: TestReviewProgramsAgreeWithNode_004/fxspptb_oct9_views_p38_same_name_maybe_number.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_047cb0d_f_maybe.a
+    review_test.go:91: awaits #b75jjs3: compiler/search-shrink, @system_adamic's Oct 8 ruling: the callback admits undefined, so it matches Node
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_047cb0d_f_maybe.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_4ddd17f_weak_union_narrowed.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_4ddd17f_weak_union_narrowed.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_4e1649c_generic_receiver_charat.a
+    review_test.go:91: awaits area/library: library's generic String receivers and fill (6a5fecee) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_4e1649c_generic_receiver_charat.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_57f2d04_find_last_shrinks.a
+    review_test.go:91: awaits #b75jjs3: compiler/search-shrink, @system_adamic's Oct 8 ruling: the item is typed string, so a named exit 70 check at the call into the callback
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_57f2d04_find_last_shrinks.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a
+    review_test.go:91: awaits #8ng1j76: findings 123 and 129, an overload or optional-call claim stops at a named check (exit 70) where Node continues; intended or fixed is to be ruled
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct8_predicates_p14_overload_optional_chain_container.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p17_callable_call_first_half.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p17_callable_call_first_half.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p23_tuple_from_map_entries.a
+    review_test.go:91: awaits #aecx10a: fifth reading 150, runtime-made pairs aren't tuples to a view (Map and Object entries)
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p23_tuple_from_map_entries.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p54_maybe_b.a
+    review_test.go:91: awaits #aecx10a: fifth reading 144, a number or boolean | undefined view field crashes the compiler
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p54_maybe_b.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p59_map_null_write.a
+    review_test.go:91: awaits #aecx10a: fifth reading 149, a nullable array or Map field initialised to null can't be assigned
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_native_p59_map_null_write.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q01_findlast_union_number.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 128, findLast with a narrowing predicate emits C clang rejects
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q01_findlast_union_number.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a
+    review_test.go:91: awaits #8ng1j76: findings 123 and 129, an overload or optional-call claim stops at a named check (exit 70) where Node continues; intended or fixed is to be ruled
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_oct8_predicates_p27_overload_parameter_rebound.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_oct9_predicates_q02_findlast_inferred.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 128, findLast with a narrowing predicate emits C clang rejects
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_oct9_predicates_q02_findlast_inferred.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_oct9_views_p05_element_access_number_wrong.a
+    review_test.go:91: awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_oct9_views_p05_element_access_number_wrong.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_006/fxspptb_oct9_views_p19_callable_union_call_element.a
+    review_test.go:91: awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check
+--- SKIP: TestReviewProgramsAgreeWithNode_006/fxspptb_oct9_views_p19_callable_union_call_element.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_d7054e9_this_arrow.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (silent today)
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_d7054e9_this_arrow.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_9984394_narrowed_some.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_9984394_narrowed_some.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_9984394_narrowed_sort.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_9984394_narrowed_sort.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q18_every_mixed_literal.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q18_every_mixed_literal.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q19_union_literal_index.a
+    review_test.go:91: awaits compiler/fx5-literal-refusal: fifth reading 130, a union-typed array built from an all-number literal is unboxed
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q19_union_literal_index.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q20_every_pass_to_function.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_predicates_q20_every_pass_to_function.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a
+    review_test.go:91: awaits #1fk58py: fifth reading 135, a valid callable producer panics at the read instead of being refused
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_views_p22_callable_union_fewer_parameters.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_views_p23_callable_union_literal_result.a
+    review_test.go:91: awaits #1fk58py: fifth reading 135, a valid callable producer panics at the read instead of being refused
+--- SKIP: TestReviewProgramsAgreeWithNode_009/fxspptb_oct9_views_p23_callable_union_literal_result.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_047cb0d_f_maybe_ref.a
+    review_test.go:91: awaits #b75jjs3: compiler/search-shrink, @system_adamic's Oct 8 ruling: the callback admits undefined, so it matches Node
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_047cb0d_f_maybe_ref.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_oct8_nodehost_fs_error_preview.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_oct8_nodehost_fs_error_preview.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_native_p54_maybe_n.a
+    review_test.go:91: awaits #aecx10a: fifth reading 144, a number or boolean | undefined view field crashes the compiler
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_native_p54_maybe_n.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_predicates_q21_every_readonly_built.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_predicates_q21_every_readonly_built.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_predicates_q32_every_negated_return.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 127, every with a narrowing predicate reads boxed union slots as the target type (silent wrong output)
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_predicates_q32_every_negated_return.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_views_p21_callable_union_function_declaration.a
+    review_test.go:91: awaits #1fk58py: fifth reading 133, a callable-union producer that is a function declaration emits C clang rejects
+--- SKIP: TestReviewProgramsAgreeWithNode_005/fxspptb_oct9_views_p21_callable_union_function_declaration.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_8e67677_class_octal.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_8e67677_class_octal.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_9984394_narrowed_each.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_9984394_narrowed_each.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_d96d304_try_stack.a
+    review_test.go:91: awaits #z1vjxxd: a ruled loud stop in native that the JavaScript backend can't reproduce; pinned once the backend parity is decided
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_d96d304_try_stack.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_8e67677_class_escapes.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_8e67677_class_escapes.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_8e67677_class_string_duplicates.a
+    review_test.go:91: awaits library/area-on-next-2: library's area at da2c5f71 (#jj9z3qn) carries the fix
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_8e67677_class_string_duplicates.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_a34388d_cyc_iface.a
+    review_test.go:91: awaits #7g4qv2b: the Map, holder and iterator cycle leaks under LeakSanitizer until cycles are decided
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_a34388d_cyc_iface.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_001/fxspptb_903f25b_groups_proto.a
+    review_test.go:91: awaits area/library: library's structural RegExp methods and prototype-free named groups (a335a760) make it agree with Node
+--- SKIP: TestReviewProgramsAgreeWithNode_001/fxspptb_903f25b_groups_proto.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_001/fxspptb_9984394_narrowed_find.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet
+--- SKIP: TestReviewProgramsAgreeWithNode_001/fxspptb_9984394_narrowed_find.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_native_p33_map_in_union.a
+    review_test.go:91: awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_native_p33_map_in_union.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_native_p69_deep_recursive_union.a
+    review_test.go:91: awaits #aecx10a: fifth reading 151, a recursive union chain past the depth bound fails membership
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_native_p69_deep_recursive_union.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p08_null_array_write.a
+    review_test.go:91: awaits #aecx10a: fifth reading 149, a nullable array or Map field initialised to null can't be assigned
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p08_null_array_write.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p32_fs_rm_force_undefined.a
+    review_test.go:91: awaits #aecx10a: fifth reading 155 (library), rmSync with force undefined removes the directory where Node throws
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p32_fs_rm_force_undefined.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p60_named_function_producer.a
+    review_test.go:91: awaits #aecx10a: fifth reading 145, a callable-union recorded producer that isn't a closure emits C clang rejects
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p60_named_function_producer.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p61_method_value_producer.a
+    review_test.go:91: awaits #aecx10a: fifth reading 145, a callable-union recorded producer that isn't a closure emits C clang rejects
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_native_p61_method_value_producer.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_predicates_q03_findlast_undefined_target.a
+    review_test.go:91: awaits compiler/fx5-every-refusal: fifth reading 128, findLast with a narrowing predicate emits C clang rejects
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_predicates_q03_findlast_undefined_target.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_predicates_q04_optional_call_container.a
+    review_test.go:91: awaits #8ng1j76: findings 123 and 129, an overload or optional-call claim stops at a named check (exit 70) where Node continues; intended or fixed is to be ruled
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_predicates_q04_optional_call_container.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_001/fxspptb_d7054e9_this_arrow_number.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (silent today)
+--- SKIP: TestReviewProgramsAgreeWithNode_001/fxspptb_d7054e9_this_arrow_number.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_001/fxspptb_oct9_native_p72_tuple_count_mismatch.a
+    review_test.go:91: awaits #aecx10a: fifth reading 152, native and JavaScript stderr disagree on a checked failure, so it can't be pinned yet
+--- SKIP: TestReviewProgramsAgreeWithNode_001/fxspptb_oct9_native_p72_tuple_count_mismatch.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_001/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    review_test.go:91: awaits #aecx10a: fifth reading 148, a plain read of undefined aborts when any view checks a field of that name
+--- SKIP: TestReviewProgramsAgreeWithNode_001/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_views_p35_write_after_view_valid.a
+    review_test.go:91: awaits #1fk58py: fifth reading 134, a same-named field on an unviewed object breaks a valid program (compiler crash or panic)
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_views_p35_write_after_view_valid.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p09_tuple_destructure_wrong.a
+    review_test.go:91: awaits #1fk58py: fifth reading 140, the wrong-view panic text differs between native and JavaScript, so it can't be pinned yet
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p09_tuple_destructure_wrong.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p32_boxed_slot_string_good.a
+    review_test.go:91: awaits #1fk58py: fifth reading 140, the wrong-view panic text differs between native and JavaScript, so it can't be pinned yet
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p32_boxed_slot_string_good.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p36_write_unrelated_same_name.a
+    review_test.go:91: awaits #1fk58py: fifth reading 134, a same-named field on an unviewed object breaks a valid program (compiler crash or panic)
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p36_write_unrelated_same_name.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p59_union_member_method_shorthand.a
+    review_test.go:91: awaits #1fk58py: fifth reading 135, a valid callable producer panics at the read instead of being refused
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p59_union_member_method_shorthand.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p72_mixed_element_access_wrong.a
+    review_test.go:91: awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check
+--- SKIP: TestReviewProgramsAgreeWithNode_002/fxspptb_oct9_views_p72_mixed_element_access_wrong.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_classfeat_method_view.a
+    review_test.go:91: awaits #eep1m5z: open in compiler, no fixing branch yet
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_classfeat_method_view.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    review_test.go:91: awaits #1fk58py: fifth reading 138, the JavaScript backend reads a tuple as an array where native reads it as an object
+--- SKIP: TestReviewProgramsAgreeWithNode_003/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_iterators_derived_symbol.a
+    review_test.go:91: awaits #63pvx2b: compiler/miscompile-fxspptb-2, the second fix-forward batch, makes it a pinned refusal or NotYet (a compiler panic becomes NotYet; the lowering itself is step 20)
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_iterators_derived_symbol.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_native_p04_undefined_slot_write.a
+    review_test.go:91: awaits #aecx10a: fifth reading 147, writing undefined to a field named like a checked view field aborts
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_native_p04_undefined_slot_write.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_predicates_q17_union_literal_all_numbers_some.a
+    review_test.go:91: awaits compiler/fx5-literal-refusal: fifth reading 130, a union-typed array built from an all-number literal is unboxed
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_predicates_q17_union_literal_all_numbers_some.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_views_p01_element_access_wrong.a
+    review_test.go:91: awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_views_p01_element_access_wrong.a (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_views_p33_boxed_slot_union_member.a
+    review_test.go:91: awaits #1fk58py: fifth reading 140, the wrong-view panic text differs between native and JavaScript, so it can't be pinned yet
+--- SKIP: TestReviewProgramsAgreeWithNode_000/fxspptb_oct9_views_p33_boxed_slot_union_member.a (0.00s)
+=== RUN   TestCheckedViewUntaggedArrayPending/good
+=== PAUSE TestCheckedViewUntaggedArrayPending/good
+=== RUN   TestCheckedViewUntaggedArrayPending/wrong
+=== PAUSE TestCheckedViewUntaggedArrayPending/wrong
+=== RUN   TestCheckedViewUntaggedArrayPending/nested
+=== PAUSE TestCheckedViewUntaggedArrayPending/nested
+=== RUN   TestCheckedViewUntaggedArrayPending/empty
+=== PAUSE TestCheckedViewUntaggedArrayPending/empty
+=== RUN   TestCheckedViewUntaggedArrayPending/mixed
+=== PAUSE TestCheckedViewUntaggedArrayPending/mixed
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== CONT  TestCheckedViewUntaggedArrayPending/good
+    checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewUntaggedArrayPending/good (0.08s)
+=== CONT  TestCheckedViewUntaggedArrayPending/empty
+    checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewUntaggedArrayPending/empty (0.05s)
+=== CONT  TestCheckedViewUntaggedArrayPending/mixed
+    checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewUntaggedArrayPending/mixed (0.15s)
+=== CONT  TestCheckedViewUntaggedArrayPending/nested
+=== CONT  TestCheckedViewUntaggedArrayPending/wrong
+    checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewUntaggedArrayPending/nested (0.11s)
+    checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewUntaggedArrayPending/wrong (0.10s)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-boolean
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.00s)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.00s)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-good
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-good (0.00s)

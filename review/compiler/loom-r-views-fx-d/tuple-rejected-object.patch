@@ -1,0 +1,5 @@
+--- a/internal/javascript/readiness.go
++++ b/internal/javascript/readiness.go
+@@ -8 +8 @@
+-const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
++const adamicViewObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map);

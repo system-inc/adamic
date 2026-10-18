@@ -1,0 +1,14 @@
+=== RUN   TestFX7TextP67
+=== PAUSE TestFX7TextP67
+=== CONT  TestFX7TextP67
+    fx7_depth_texts_test.go:100: gate cache node miss
+    fx7_depth_texts_test.go:100: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
+    fx7_depth_texts_test.go:100: : stderr differs; stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found object\n"
+    fx7_depth_texts_test.go:100: : stderr differs; stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found object\n"
+--- FAIL: TestFX7TextP67 (22.47s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	22.479s
+FAIL

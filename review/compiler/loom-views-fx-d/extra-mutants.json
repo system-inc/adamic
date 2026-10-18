@@ -1,0 +1,87 @@
+[
+  {
+    "name": "cast-metadata-isolated",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestViewCheckedCastMetadata$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 7.968
+  },
+  {
+    "name": "clear-contract-bad-callee",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDBadCallable$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 8.004
+  },
+  {
+    "name": "native-static-kind",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7TextP67$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 28.795
+  },
+  {
+    "name": "callable-spread",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestCallableContractSpreadRefused$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 18.541
+  },
+  {
+    "name": "producer-mask",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDWideCallable$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 31.097
+  }
+]

@@ -1,0 +1,9 @@
+=== RUN   TestNormalizeLongMeasurements
+    normalize_benchmark_test.go:20: set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements
+--- SKIP: TestNormalizeLongMeasurements (0.00s)
+=== RUN   TestRecordBenchmark
+    record_test.go:413: set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons
+--- SKIP: TestRecordBenchmark (0.00s)
+=== RUN   TestMeasureClangUnits
+    units_measure_test.go:21: set ADAMIC_CLANG_MEASURE to emitted C evidence directory
+--- SKIP: TestMeasureClangUnits (0.00s)

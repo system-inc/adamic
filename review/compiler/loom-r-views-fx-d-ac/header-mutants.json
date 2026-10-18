@@ -1,0 +1,46 @@
+{
+  "source": "stage3/census/repro/r37/main.a",
+  "unchanged_source_sha256": "97e28550074fafc9852afdfa020eaca5a6f33c26cc8dd728e6be81b40aefd06c",
+  "temporary_copy": true,
+  "rows": [
+    {
+      "name": "control",
+      "predicate_exit": 0,
+      "seconds": 2.2468,
+      "result": {
+        "outcome": "refused",
+        "expected": "refused delete",
+        "first": "adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:2:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go"
+      },
+      "compiler_exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:2:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n",
+      "failure": null
+    },
+    {
+      "name": "removed-header",
+      "predicate_exit": 1,
+      "seconds": 1.7412,
+      "result": {
+        "outcome": "refused",
+        "expected": "checked",
+        "first": "adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:1:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go"
+      },
+      "compiler_exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:1:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n",
+      "failure": "a-check failed for 1 file:\n/tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a: refused, expected checked (adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:1:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go)"
+    },
+    {
+      "name": "wrong-reason",
+      "predicate_exit": 1,
+      "seconds": 1.6594,
+      "result": {
+        "outcome": "refused",
+        "expected": "refused deliberately wrong refusal reason",
+        "first": "adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:2:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go"
+      },
+      "compiler_exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:2:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n",
+      "failure": "a-check failed for 1 file:\n/tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a: refused, expected refused deliberately wrong refusal reason (adamic: /tmp/adamic-gate/views-d-a-check-0otjd8z1/control.a:2:45: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go)"
+    }
+  ]
+}

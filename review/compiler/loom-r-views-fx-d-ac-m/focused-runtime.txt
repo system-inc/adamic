@@ -1,0 +1,14 @@
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== RUN   TestFX7TupleSelectionBeforeDiagnosticKindRelease
+=== PAUSE TestFX7TupleSelectionBeforeDiagnosticKindRelease
+=== RUN   TestFX7TupleSelectionBeforeDiagnosticKindSanitized
+=== PAUSE TestFX7TupleSelectionBeforeDiagnosticKindSanitized
+=== CONT  TestFX7ViewCycleAndStackGuard
+=== CONT  TestFX7TupleSelectionBeforeDiagnosticKindSanitized
+=== CONT  TestFX7TupleSelectionBeforeDiagnosticKindRelease
+--- PASS: TestFX7TupleSelectionBeforeDiagnosticKindRelease (9.32s)
+--- PASS: TestFX7TupleSelectionBeforeDiagnosticKindSanitized (15.01s)
+--- PASS: TestFX7ViewCycleAndStackGuard (15.20s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	15.220s

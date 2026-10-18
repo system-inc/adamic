@@ -1,0 +1,206 @@
+[
+  {
+    "name": "cast-metadata",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDOriginal$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 12.156
+  },
+  {
+    "name": "clear-callable-contract",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDCallableUnion$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "caught": false,
+    "seconds": 22.885
+  },
+  {
+    "name": "source-argument-layout",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDWideCallable$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.597
+  },
+  {
+    "name": "native-depth-128",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7Depth65$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 27.389
+  },
+  {
+    "name": "javascript-depth-128",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7Depth65$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 11.264
+  },
+  {
+    "name": "native-write-type",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7TextP32$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 19.646
+  },
+  {
+    "name": "javascript-write-type",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7TextP32$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 13.46
+  },
+  {
+    "name": "native-object-kind",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7TextScalarTuple$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 27.481
+  },
+  {
+    "name": "native-union-kind",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestFX7TextP72$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 24.791
+  },
+  {
+    "name": "tuple-unmarked",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDTupleUnion$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 11.438
+  },
+  {
+    "name": "tuple-rejected-object",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLoomViewsDTupleObject$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 11.526
+  },
+  {
+    "name": "ordinary-array-admitted",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^TestFX7TupleMarkerRejectsOrdinaryArray$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 1.274
+  }
+]

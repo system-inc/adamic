@@ -1,0 +1,50 @@
+=== RUN   TestFX7ViewCycle
+=== PAUSE TestFX7ViewCycle
+=== RUN   TestFX7TupleMarkerRejectsOrdinaryArray
+=== PAUSE TestFX7TupleMarkerRejectsOrdinaryArray
+=== CONT  TestFX7ViewCycle
+=== CONT  TestFX7TupleMarkerRejectsOrdinaryArray
+--- PASS: TestFX7TupleMarkerRejectsOrdinaryArray (0.83s)
+--- PASS: TestFX7ViewCycle (2.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	2.139s
+=== RUN   TestCallableContractP18
+=== PAUSE TestCallableContractP18
+=== RUN   TestCallableContractP20
+=== PAUSE TestCallableContractP20
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractReceiverBinding
+=== PAUSE TestCallableContractReceiverBinding
+=== RUN   TestCallableContractReceiverEvaluatedOnce
+=== PAUSE TestCallableContractReceiverEvaluatedOnce
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableContractPlainSpread
+=== PAUSE TestCallableContractPlainSpread
+=== CONT  TestCallableContractP18
+=== CONT  TestCallableContractReceiverEvaluatedOnce
+=== CONT  TestCallableContractPlainSpread
+=== CONT  TestCallableContractSpreadRefused
+=== CONT  TestCallableContractWideProducer
+--- PASS: TestCallableContractSpreadRefused (0.87s)
+=== CONT  TestCallableContractReceiverBinding
+--- PASS: TestCallableContractPlainSpread (1.77s)
+=== CONT  TestCallableContractP20
+--- PASS: TestCallableContractWideProducer (1.84s)
+--- PASS: TestCallableContractP18 (2.05s)
+--- PASS: TestCallableContractReceiverEvaluatedOnce (2.15s)
+--- PASS: TestCallableContractReceiverBinding (1.39s)
+--- PASS: TestCallableContractP20 (0.68s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.530s
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== RUN   TestViewCheckedCastMetadata
+=== PAUSE TestViewCheckedCastMetadata
+=== CONT  TestFX7ViewCycleAndStackGuard
+=== CONT  TestViewCheckedCastMetadata
+--- PASS: TestViewCheckedCastMetadata (0.00s)
+--- PASS: TestFX7ViewCycleAndStackGuard (35.36s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	35.393s

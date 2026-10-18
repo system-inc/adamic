@@ -1,0 +1,5 @@
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -186 +186 @@
+-        if (object->tuple) { value.kind = adamic_view_union_array; }
++        if (false) { value.kind = adamic_view_union_array; }

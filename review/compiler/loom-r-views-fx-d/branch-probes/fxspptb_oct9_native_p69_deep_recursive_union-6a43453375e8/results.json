@@ -1,0 +1,61 @@
+{
+  "item": 151,
+  "source": "review/compiler/loom-views-fx-d/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a",
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-views-fx-d/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.098
+  },
+  "js_compile": {
+    "command": [
+      "/tmp/loom-r-views-d",
+      "js",
+      "/workspace/adamic/review/compiler/loom-views-fx-d/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a"
+    ],
+    "exit": 0,
+    "stderr": "",
+    "seconds": 0.052
+  },
+  "js": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-d/branch-probes/fxspptb_oct9_native_p69_deep_recursive_union-6a43453375e8/generated.mjs"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.047
+  },
+  "native_compile": {
+    "command": [
+      "/tmp/loom-r-views-d",
+      "build",
+      "/workspace/adamic/review/compiler/loom-views-fx-d/baseline-sources/6a43453375e8/fxspptb_oct9_native_p69_deep_recursive_union.a",
+      "-o",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-d/branch-probes/fxspptb_oct9_native_p69_deep_recursive_union-6a43453375e8/native"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 1.201
+  },
+  "native": {
+    "command": [
+      "/workspace/adamic/review/compiler/loom-r-views-fx-d/branch-probes/fxspptb_oct9_native_p69_deep_recursive_union-6a43453375e8/native"
+    ],
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "seconds": 0.002
+  },
+  "agrees": true
+}

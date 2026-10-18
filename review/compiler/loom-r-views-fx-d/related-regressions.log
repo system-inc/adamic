@@ -1,0 +1,315 @@
+=== RUN   TestInheritanceRefusesFalseNominalViews
+=== PAUSE TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceGenericViewsKeepNominalArguments
+=== PAUSE TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestFunctionValueUnionViewsStayNotYet
+=== PAUSE TestFunctionValueUnionViewsStayNotYet
+=== RUN   TestAViewThatCantWriteIsNotRefused
+=== PAUSE TestAViewThatCantWriteIsNotRefused
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceReceiverStaysLoud
+=== PAUSE TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestReadinessElisionRequiresDominatingAssignment
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment
+=== RUN   TestReadinessErrorIncludesReceiverExpression
+=== PAUSE TestReadinessErrorIncludesReceiverExpression
+=== RUN   TestViewObjectContractsAreAvailableToEraser
+=== PAUSE TestViewObjectContractsAreAvailableToEraser
+=== RUN   TestViewObjectWritesNeedSourceCertificate
+=== PAUSE TestViewObjectWritesNeedSourceCertificate
+=== RUN   TestUntaggedViewMemberTags
+=== PAUSE TestUntaggedViewMemberTags
+=== RUN   TestUntaggedViewStructuralFallback
+=== PAUSE TestUntaggedViewStructuralFallback
+=== CONT  TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceRefusesFalseNominalViews/weak_structural
+=== PAUSE TestInheritanceRefusesFalseNominalViews/weak_structural
+=== RUN   TestInheritanceRefusesFalseNominalViews/source_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/source_union
+=== CONT  TestReadinessElisionRequiresDominatingAssignment
+=== RUN   TestInheritanceRefusesFalseNominalViews/target_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/target_union
+=== CONT  TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestInheritanceRefusesFalseNominalViews/nested_array
+=== PAUSE TestInheritanceRefusesFalseNominalViews/nested_array
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== RUN   TestInheritanceRefusesFalseNominalViews/structural_object
+=== PAUSE TestInheritanceRefusesFalseNominalViews/structural_object
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestFunctionValueUnionViewsStayNotYet
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestAViewThatCantWriteIsNotRefused
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== CONT  TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestViewObjectWritesNeedSourceCertificate
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestUntaggedViewStructuralFallback
+--- PASS: TestUntaggedViewStructuralFallback (0.00s)
+=== CONT  TestUntaggedViewMemberTags
+--- PASS: TestUntaggedViewMemberTags (0.00s)
+=== CONT  TestViewObjectContractsAreAvailableToEraser
+--- PASS: TestCallableNamespaceReceiverStaysLoud (0.15s)
+=== CONT  TestReadinessErrorIncludesReceiverExpression
+--- PASS: TestInheritanceGenericViewsKeepNominalArguments (0.27s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/weak_structural
+--- PASS: TestViewObjectContractsAreAvailableToEraser (0.26s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+--- PASS: TestViewObjectWritesNeedSourceCertificate (0.38s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestInheritanceRefusesFalseNominalViews/structural_object
+--- PASS: TestReadinessErrorIncludesReceiverExpression (0.33s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== CONT  TestInheritanceRefusesFalseNominalViews/target_union
+=== CONT  TestInheritanceRefusesFalseNominalViews/nested_array
+=== CONT  TestInheritanceRefusesFalseNominalViews/source_union
+--- PASS: TestFunctionValueUnionViewsStayNotYet (0.66s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+--- PASS: TestInheritanceRefusesFalseNominalViews (0.00s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/weak_structural (0.14s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_override (0.14s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_class (0.15s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/structural_object (0.15s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/target_union (0.04s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/nested_array (0.13s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/source_union (0.11s)
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-write
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.14s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.15s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.14s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.12s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.11s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.12s)
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+--- PASS: TestReadinessElisionRequiresDominatingAssignment (0.00s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/branch-join (0.20s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-missing-join (0.23s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-join (0.22s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/finally-write (0.22s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-write (0.23s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/catch-write (0.22s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/do-loop (0.18s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-write (0.20s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-read (0.27s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/throw-before-write (0.29s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/loop-body (0.18s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/zero-iteration (0.18s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+--- PASS: TestAViewThatCantWriteIsNotRefused (0.01s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.40s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.40s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.48s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.41s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.43s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.37s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.44s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.44s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.40s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.44s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.17s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.34s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.44s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.51s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.39s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.34s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.16s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.08s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.14s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.48s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.46s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.45s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.36s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.24s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.208s
+=== RUN   TestViewCheckedCastMetadata
+=== PAUSE TestViewCheckedCastMetadata
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestViewCheckedCastMetadata
+--- PASS: TestViewCheckedCastMetadata (0.01s)
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/0
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/1
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/2
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/4
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/false/5
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/0
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/1
+    view_unions_mixed_test.go:53: got exit status 1, stdout "", stderr "=================================================================\n==24871==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7b061c700041 at pc 0x559fde057a8d bp 0x7ffdd735c0d0 sp 0x7ffdd735c0c8\nREAD of size 1 at 0x7b061c700041 thread T0\n    #0 0x559fde057a8c in adamic_view_mixed_union_select /adamic-runtime/view_unions_mixed.c:71:21\n    #1 0x559fddfeec6e in main /adamic-build/main.c:15:8\n    #2 0x7f061e669ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f061e669d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x559fddf08540 in _start (/tmp/adamic-gate/TestViewMixedUnionUnknownAndUnavailabletrue3602319559/001/mixed-union+0x5f540)\n\nAddress 0x7b061c700041 is located in stack of thread T0 at offset 65 in frame\n    #0 0x559fddfeea07 in main /adamic-build/main.c:5\n\n  This frame has 3 object(s):\n    [32, 36) 'object' (line 7)\n    [48, 64) 'value' (line 8) <== Memory access at offset 65 overflows this variable\n    [80, 104) 'member' (line 9)\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow /adamic-runtime/view_unions_mixed.c:71:21 in adamic_view_mixed_union_select\nShadow bytes around the buggy address:\n  0x7b061c6ffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c6ffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c6ffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c6fff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c6fff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7b061c700000: f1 f1 f1 f1 04 f2 00 00[f2]f2 00 00 00 f3 f3 f3\n  0x7b061c700080: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c700100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c700180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c700200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b061c700280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==24871==ABORTING\n"; want exit 70 and "adamic: panic: field read failed: view.value matches no member of Left | Right; expected Left | Right, found object\n"
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/2
+    view_unions_mixed_test.go:53: got exit status 1, stdout "", stderr "=================================================================\n==24873==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7b763b300041 at pc 0x55a875eeca8d bp 0x7ffd92650a70 sp 0x7ffd92650a68\nREAD of size 1 at 0x7b763b300041 thread T0\n    #0 0x55a875eeca8c in adamic_view_mixed_union_select /adamic-runtime/view_unions_mixed.c:71:21\n    #1 0x55a875e83c6e in main /adamic-build/main.c:15:8\n    #2 0x7f763d2a8ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f763d2a8d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55a875d9d540 in _start (/tmp/adamic-gate/TestViewMixedUnionUnknownAndUnavailabletrue3602319559/001/mixed-union+0x5f540)\n\nAddress 0x7b763b300041 is located in stack of thread T0 at offset 65 in frame\n    #0 0x55a875e83a07 in main /adamic-build/main.c:5\n\n  This frame has 3 object(s):\n    [32, 36) 'object' (line 7)\n    [48, 64) 'value' (line 8) <== Memory access at offset 65 overflows this variable\n    [80, 104) 'member' (line 9)\nHINT: this may be a false positive if your program uses some custom stack unwind mechanism, swapcontext or vfork\n      (longjmp and C++ exceptions *are* supported)\nSUMMARY: AddressSanitizer: stack-buffer-overflow /adamic-runtime/view_unions_mixed.c:71:21 in adamic_view_mixed_union_select\nShadow bytes around the buggy address:\n  0x7b763b2ffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b2ffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b2ffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b2fff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b2fff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7b763b300000: f1 f1 f1 f1 04 f2 00 00[f2]f2 00 00 00 f3 f3 f3\n  0x7b763b300080: f3 f3 f3 f3 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b300100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b300180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b300200: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b763b300280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==24873==ABORTING\n"; want exit 70 and "adamic: panic: field read failed: view.value matches no member of Left | Right; expected Left | Right, found object\n"
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/4
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/true/5
+--- FAIL: TestViewMixedUnionUnknownAndUnavailable (3.81s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/false (2.43s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/0 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/1 (0.02s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/2 (0.01s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/3 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/4 (0.00s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/false/5 (0.00s)
+    --- FAIL: TestViewMixedUnionUnknownAndUnavailable/true (1.39s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/0 (0.00s)
+        --- FAIL: TestViewMixedUnionUnknownAndUnavailable/true/1 (0.03s)
+        --- FAIL: TestViewMixedUnionUnknownAndUnavailable/true/2 (0.02s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/3 (0.01s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/4 (0.01s)
+        --- PASS: TestViewMixedUnionUnknownAndUnavailable/true/5 (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	3.842s
+=== RUN   TestViewMixedUnionSelectsNumber
+=== PAUSE TestViewMixedUnionSelectsNumber
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestViewMixedUnionSelectsNumber
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/unknown
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/missing_adapter
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/missing_contract
+--- PASS: TestViewMixedUnionSelectsNumber (0.24s)
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/literal_false
+--- PASS: TestViewMixedUnionUnknownAndUnavailable (0.48s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/unknown (0.14s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/missing_adapter (0.09s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/missing_contract (0.06s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined (0.07s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/literal_false (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.481s
+FAIL

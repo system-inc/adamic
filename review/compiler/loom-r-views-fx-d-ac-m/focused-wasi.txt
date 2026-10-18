@@ -1,0 +1,57 @@
+=== RUN   TestWASIAgreesWithNode_007
+=== PAUSE TestWASIAgreesWithNode_007
+=== RUN   TestViewsDeepChainRecursiveWalkMutant
+=== PAUSE TestViewsDeepChainRecursiveWalkMutant
+=== CONT  TestWASIAgreesWithNode_007
+=== CONT  TestViewsDeepChainRecursiveWalkMutant
+    views_deep_chain_test.go:47: gate cache node miss
+=== NAME  TestWASIAgreesWithNode_007
+    families_generated_test.go:710: WASI shard setup (Node identity, three native runtime archives): 4.579s
+=== RUN   TestWASIAgreesWithNode_007/internal/oracle/testdata/regexp_match.a
+=== PAUSE TestWASIAgreesWithNode_007/internal/oracle/testdata/regexp_match.a
+=== RUN   TestWASIAgreesWithNode_007/internal/oracle/testdata/class_features_static_private.a
+=== PAUSE TestWASIAgreesWithNode_007/internal/oracle/testdata/class_features_static_private.a
+=== RUN   TestWASIAgreesWithNode_007/internal/oracle/testdata/entries_checked_boolean.a
+=== PAUSE TestWASIAgreesWithNode_007/internal/oracle/testdata/entries_checked_boolean.a
+=== RUN   TestWASIAgreesWithNode_007/stage3/interface-downcasts/fx7/depth-2000.a
+=== PAUSE TestWASIAgreesWithNode_007/stage3/interface-downcasts/fx7/depth-2000.a
+=== RUN   TestWASIAgreesWithNode_007/stage3/namespaces/shapes/ReactNames.a
+=== PAUSE TestWASIAgreesWithNode_007/stage3/namespaces/shapes/ReactNames.a
+=== RUN   TestWASIAgreesWithNode_007/internal/oracle/testdata/nested_mixed.a
+=== PAUSE TestWASIAgreesWithNode_007/internal/oracle/testdata/nested_mixed.a
+=== RUN   TestWASIAgreesWithNode_007/stage3/fixtures/self-compare/array-fill.a
+=== PAUSE TestWASIAgreesWithNode_007/stage3/fixtures/self-compare/array-fill.a
+=== CONT  TestWASIAgreesWithNode_007/internal/oracle/testdata/regexp_match.a
+=== CONT  TestWASIAgreesWithNode_007/stage3/namespaces/shapes/ReactNames.a
+=== CONT  TestWASIAgreesWithNode_007/stage3/fixtures/self-compare/array-fill.a
+=== CONT  TestWASIAgreesWithNode_007/stage3/interface-downcasts/fx7/depth-2000.a
+=== NAME  TestWASIAgreesWithNode_007/internal/oracle/testdata/regexp_match.a
+    wasi_test.go:73: gate cache node miss
+=== NAME  TestWASIAgreesWithNode_007/stage3/namespaces/shapes/ReactNames.a
+    wasi_test.go:73: gate cache node miss
+=== NAME  TestWASIAgreesWithNode_007/stage3/fixtures/self-compare/array-fill.a
+    wasi_test.go:73: gate cache node miss
+=== NAME  TestWASIAgreesWithNode_007/stage3/interface-downcasts/fx7/depth-2000.a
+    wasi_test.go:73: gate cache node miss
+=== CONT  TestWASIAgreesWithNode_007/internal/oracle/testdata/class_features_static_private.a
+    wasi_test.go:73: gate cache node miss
+=== CONT  TestWASIAgreesWithNode_007/internal/oracle/testdata/entries_checked_boolean.a
+    wasi_test.go:73: gate cache node miss
+=== CONT  TestWASIAgreesWithNode_007/internal/oracle/testdata/nested_mixed.a
+    wasi_test.go:73: gate cache node miss
+=== NAME  TestViewsDeepChainRecursiveWalkMutant
+    views_deep_chain_test.go:100: Node exit 0 stdout "true\n"; recursive walk exit 70 stdout "" stderr "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+--- PASS: TestViewsDeepChainRecursiveWalkMutant (40.07s)
+--- PASS: TestWASIAgreesWithNode_007 (4.58s)
+    --- PASS: TestWASIAgreesWithNode_007/stage3/namespaces/shapes/ReactNames.a (15.68s)
+    --- PASS: TestWASIAgreesWithNode_007/stage3/fixtures/self-compare/array-fill.a (15.76s)
+    --- PASS: TestWASIAgreesWithNode_007/stage3/interface-downcasts/fx7/depth-2000.a (15.82s)
+    --- PASS: TestWASIAgreesWithNode_007/internal/oracle/testdata/regexp_match.a (16.08s)
+    --- PASS: TestWASIAgreesWithNode_007/internal/oracle/testdata/entries_checked_boolean.a (0.81s)
+    --- PASS: TestWASIAgreesWithNode_007/internal/oracle/testdata/class_features_static_private.a (1.54s)
+    --- PASS: TestWASIAgreesWithNode_007/internal/oracle/testdata/nested_mixed.a (19.87s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	40.298s

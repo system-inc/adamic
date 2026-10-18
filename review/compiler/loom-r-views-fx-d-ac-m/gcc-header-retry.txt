@@ -1,0 +1,7 @@
+=== RUN   TestLongUnicodePortabilityGCC
+=== PAUSE TestLongUnicodePortabilityGCC
+=== CONT  TestLongUnicodePortabilityGCC
+    c_portability_oracle_test.go:25: gcc: both backends match Node; ASan, UBSan and leak detection clean
+--- PASS: TestLongUnicodePortabilityGCC (20.13s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	20.187s

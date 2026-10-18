@@ -1,0 +1,93 @@
+typedef struct plain_match_path {
+    size_t contract;
+    const void *reference;
+    const struct plain_match_path *previous;
+} plain_match_path;
+
+static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value, size_t depth, const plain_match_path *path) {
+    bool reference = value->kind == adamic_view_union_object || value->kind == adamic_view_union_array;
+    if (reference && value->payload.reference != NULL) {
+        for (const plain_match_path *seen = path; seen != NULL; seen = seen->previous) {
+            if (seen->contract == id && seen->reference == value->payload.reference) { return true; }
+        }
+    }
+    plain_match_path current = {id, reference ? value->payload.reference : NULL, path};
+    path = &current;
+    ADAMIC_CHECK_STACK();
+    if (id == 0 || id > count) { return false; }
+    const adamic_view_untagged_contract *contract = &contracts[id - 1];
+    if (value->kind == adamic_view_union_undefined && contract->undefined) { return true; }
+    if (contract->kind == 1) {
+        adamic_view_union_kind wanted = (contract->of == adamic_rep_number || contract->of == adamic_rep_maybe_number) ? adamic_view_union_number : (contract->of == adamic_rep_boolean || contract->of == adamic_rep_maybe_boolean) ? adamic_view_union_boolean : contract->of == adamic_rep_string ? adamic_view_union_string : adamic_view_union_unknown;
+        if (wanted == adamic_view_union_unknown || value->kind != wanted) { return false; }
+        if (contract->allowed_count == 0) { return true; }
+        for (size_t i = 0; i < contract->allowed_count; i++) {
+            if (tag_matches(value, &contract->allowed[i])) { return true; }
+        }
+        return false;
+    }
+    if (contract->kind == 5) {
+        if (value->kind != adamic_view_union_function || value->payload.reference == NULL) { return false; }
+        const adamic_closure *closure = value->payload.reference;
+        for (size_t i = 0; i < contract->producer_count; i++) {
+            const adamic_view_untagged_callable_producer *producer = &contract->producers[i];
+            bool identity = closure->code == producer->code;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+            identity = closure->counted == producer->counted && (closure->counted ? closure->counted_code == producer->counted_code : closure->code == producer->code);
+#endif
+            if (identity && adamic_view_callable_signatures_match(producer->signature, contract->callable)) { return true; }
+        }
+        return false;
+    }
+    /* V3 owns array element storage and hole-aware reads. The lowering rejects
+     * this arm before emission; an injected descriptor still fails closed. */
+    if (contract->kind == 3) { return false; }
+    if (contract->kind == 4) {
+        for (size_t i = 0; i < contract->member_count; i++) {
+            if (plain_matches_depth(contracts, count, contract->members[i], value, depth + 1, path)) { return true; }
+        }
+        return false;
+    }
+    if (contract->kind == 6) { return value->kind == adamic_view_union_null; }
+    if (contract->kind == 7) { return value->kind == adamic_view_union_undefined; }
+    if (contract->kind != 2 || value->kind != adamic_view_union_object || value->payload.reference == NULL) { return false; }
+    const adamic_object *object = value->payload.reference;
+    if (object->class != NULL && object->class->is_static) { return false; }
+    if (contract->fixed_tuple && (!object->tuple || object->shape->count != contract->tuple_count)) { return false; }
+    /* An open kind contract remains a checked selector, not a payload
+     * certificate. Numeric enums intentionally admit unnamed numbers. */
+    for (size_t i = 0; i < contract->field_count; i++) {
+        const adamic_view_untagged_field *field = &contract->fields[i];
+        if (field->optional || strcmp(field->name, "kind") != 0 || field->contract == 0 || field->contract > count) { continue; }
+        const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
+        if (child->kind != 1 || (child->of != adamic_rep_number && child->of != adamic_rep_boolean && child->of != adamic_rep_string)) { continue; }
+        adamic_view_union_value slot;
+        return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path);
+    }
+    /* A member's own finite tags select it without inspecting unread payloads.
+     * Subsequent reads still use the existing per-field checks. */
+    bool tagged = false;
+    for (size_t i = 0; i < contract->field_count; i++) {
+        const adamic_view_untagged_field *field = &contract->fields[i];
+        if (field->optional || field->contract == 0 || field->contract > count) { continue; }
+        const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
+        if (child->kind != 1 || child->allowed_count == 0) { continue; }
+        tagged = true;
+        adamic_view_union_value slot;
+        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }
+    }
+    if (tagged) { return true; }
+    for (size_t i = 0; i < contract->field_count; i++) {
+        const adamic_view_untagged_field *field = &contract->fields[i];
+        adamic_slot_cache cache = {0};
+        adamic_value *present = adamic_object_optional_field(object, field->name, &cache);
+        if (present == NULL && field->optional) { continue; }
+        adamic_view_union_value slot;
+        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }
+    }
+    return true;
+}
+
+bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value) {
+    return plain_matches_depth(contracts, count, id, value, 0, NULL);
+}

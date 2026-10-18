@@ -1,0 +1,12 @@
+=== RUN   TestLoomViewsDWideCallable
+=== PAUSE TestLoomViewsDWideCallable
+=== CONT  TestLoomViewsDWideCallable
+    loom_views_d_test.go:89: gate cache node hit
+    loom_views_d_test.go:89: native: exit codes differ, stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+--- FAIL: TestLoomViewsDWideCallable (3.63s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.644s
+FAIL

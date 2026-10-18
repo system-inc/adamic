@@ -1,0 +1,13 @@
+=== RUN   TestFX7Depth65JavaScript
+=== PAUSE TestFX7Depth65JavaScript
+=== CONT  TestFX7Depth65JavaScript
+    fx7_depth_texts_test.go:40: gate cache node hit
+    fx7_depth_texts_test.go:40: gate cache node miss
+    fx7_depth_texts_test.go:40: javascript: exit codes differ; stderr "adamic: panic: field read failed: view.value matches no member of Link | Other; expected Link | Other, found object\n"
+--- FAIL: TestFX7Depth65JavaScript (3.37s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.382s
+FAIL
