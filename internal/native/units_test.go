@@ -2,11 +2,13 @@ package native
 
 import (
 	"bytes"
+	"context"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -102,6 +104,32 @@ func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
 	}
 }
 
+// Regexp's compiled programs carry an alignment attribute after their name. Two of them in one
+// program used to both be named __attribute__ and fail the split as duplicate definitions.
+func TestSplitNamesAttributedDeclarations(t *testing.T) {
+	t.Parallel()
+	source := "#include \"adamic.h\"\nstatic const int adamic_a __attribute__((aligned(64))) = 1;\nstatic const int adamic_b __attribute__((aligned(64))) = 2;\nint main(void) { return adamic_a + adamic_b - 3; }\n"
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"adamic_unit_adamic_a", "adamic_unit_adamic_b"} {
+		if !strings.Contains(header, "extern const int "+name+" __attribute__((aligned(64)));") {
+			t.Fatalf("%s not declared with its attribute:\n%s", name, header)
+		}
+	}
+	var all strings.Builder
+	for _, unit := range units {
+		all.WriteString(unit.source)
+	}
+	if strings.Contains(header+all.String(), "adamic_unit___attribute__") {
+		t.Fatal("an attribute was taken for a name")
+	}
+	if !strings.Contains(all.String(), "return adamic_unit_adamic_a + adamic_unit_adamic_b - 3;") {
+		t.Fatalf("references not rewritten:\n%s", all.String())
+	}
+}
+
 // Not parallel: this check deliberately mutates a header between cache lookups.
 func TestUnitSystemHeaderProvenance(t *testing.T) {
 	compiler, err := toolchain.Path("clang")
@@ -158,4 +186,77 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 		t.Fatalf("user-header extension must be rejected: %v", err)
 	}
 	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")
+}
+
+// Attributed constants must keep distinct bindings after splitting. The mutant remains valid
+// C with clean sanitizer and exit observations; only Node's stdout distinguishes it.
+func TestSplitAttributedBindingsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	run := func(command string, args ...string) string {
+		t.Helper()
+		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		defer cancel()
+		cmd := exec.CommandContext(ctx, command, args...)
+		var stderr strings.Builder
+		cmd.Stderr = &stderr
+		output, err := cmd.Output()
+		if err != nil || stderr.Len() != 0 {
+			t.Fatalf("execution: %v stderr=%s", err, &stderr)
+		}
+		return string(output)
+	}
+	expected := run("node", "-e", "const a = 1, b = 2; console.log(10 * a + b)")
+	source := `#include "adamic.h"
+#include <stdio.h>
+static const int adamic_a __attribute__((aligned(64))) = 1;
+static const int adamic_b __attribute__((aligned(64))) = 2;
+int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
+`
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var joined strings.Builder
+	joined.WriteString(header)
+	for _, unit := range units {
+		joined.WriteString(strings.TrimPrefix(unit.source, "#include \"units.h\"\n"))
+	}
+	for _, target := range []string{"native", "wasm32-wasi"} {
+		t.Run(target, func(t *testing.T) {
+			for _, mutant := range []bool{false, true} {
+				code := joined.String()
+				if target == "native" {
+					code = source
+				}
+				if mutant {
+					if target == "native" {
+						code = strings.Replace(code, "10 * adamic_a + adamic_b", "10 * adamic_a + adamic_a", 1)
+					} else {
+						code = strings.Replace(code, "10 * adamic_unit_adamic_a + adamic_unit_adamic_b", "10 * adamic_unit_adamic_a + adamic_unit_adamic_a", 1)
+					}
+				}
+				binary := filepath.Join(t.TempDir(), "program")
+				options := Options{Split: true, Sanitize: true, Jobs: 2}
+				if target == "wasm32-wasi" {
+					options = Options{Target: target}
+				}
+				if err := Build(code, binary, options); err != nil {
+					t.Fatal(err)
+				}
+				actual := ""
+				if target == "native" {
+					actual = run(binary)
+				} else {
+					actual = run("node", "--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", binary)
+				}
+				if !mutant && actual != expected {
+					t.Fatalf("control stdout=%q Node=%q", actual, expected)
+				}
+				if mutant && actual == expected {
+					t.Fatal("binding mutant survived Node comparison")
+				}
+				t.Logf("mutant=%t: clean exit/stderr; stdout=%q Node=%q", mutant, actual, expected)
+			}
+		})
+	}
 }
