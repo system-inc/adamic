@@ -1,0 +1,46 @@
+=== RUN   TestEveryMapAProgramHoldsIsSorted
+=== PAUSE TestEveryMapAProgramHoldsIsSorted
+=== CONT  TestEveryMapAProgramHoldsIsSorted
+--- PASS: TestEveryMapAProgramHoldsIsSorted (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.019s
+=== RUN   TestNativeAgreementRowsNameRegisteredPrograms
+=== PAUSE TestNativeAgreementRowsNameRegisteredPrograms
+=== CONT  TestNativeAgreementRowsNameRegisteredPrograms
+--- PASS: TestNativeAgreementRowsNameRegisteredPrograms (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.058s
+=== RUN   TestEveryTestIsParallelOrSaysWhy
+=== PAUSE TestEveryTestIsParallelOrSaysWhy
+=== RUN   TestEveryDuplicatedProductDeclarationAgrees
+=== PAUSE TestEveryDuplicatedProductDeclarationAgrees
+=== CONT  TestEveryTestIsParallelOrSaysWhy
+=== CONT  TestEveryDuplicatedProductDeclarationAgrees
+=== NAME  TestEveryTestIsParallelOrSaysWhy
+    parallel_test.go:46: checked 18127 top-level tests; 7 fail the parallel rule
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): cmd/adamic-test262/cache_test.go	TestCacheBypass
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): cmd/adamic-test262/cache_test.go	TestCompilerCacheAcrossScratchDirectories
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): cmd/adamic-test262/cache_test.go	TestParallelCachedMatchesSerial
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): cmd/adamic-test262/edit_test.go	TestEditCacheSeparation
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): cmd/adamic-test262/edit_test.go	TestLoweringSourceEdit
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/native/normalize_benchmark_test.go	TestNormalizeLongMeasurements
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/cache_test.go	TestGateCacheUncached
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/enums_test.go	TestEnumSemanticMutants
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/library_map_set_test.go	TestLibraryMapSetMutants
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/namespaces_test.go	TestNamespaceSemanticMutants
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/parameter_properties_test.go	TestParameterPropertyMutants
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/wasi_test.go	TestWASIOracleCatchesMutants
+    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/wasi_test.go	TestWASIRunnerCatchesMutants
+    parallel_test.go:83: serial baseline contains 20 entries
+--- PASS: TestEveryTestIsParallelOrSaysWhy (0.75s)
+=== NAME  TestEveryDuplicatedProductDeclarationAgrees
+    products_test.go:58: checked 1330 product declarations; declared in more than one place: TestProduct_Adamic (3)
+--- PASS: TestEveryDuplicatedProductDeclarationAgrees (0.78s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-gate	0.791s
+=== RUN   TestRuntimeSetsAreEachUsed
+=== PAUSE TestRuntimeSetsAreEachUsed
+=== CONT  TestRuntimeSetsAreEachUsed
+--- PASS: TestRuntimeSetsAreEachUsed (1.61s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	1.631s

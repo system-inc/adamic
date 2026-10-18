@@ -1,0 +1,27 @@
+[
+  {
+    "log": "readers.log.txt",
+    "test": "TestCallTargetReaders",
+    "seconds": 3.0
+  },
+  {
+    "log": "flow.log.txt",
+    "test": "TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a",
+    "seconds": 0.21
+  },
+  {
+    "log": "fixture.log.txt",
+    "test": "TestNativeAgreesWithNode_097/internal/oracle/testdata/string_destructuring.a",
+    "seconds": 5.84
+  },
+  {
+    "log": "counts.log.txt",
+    "test": "TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a",
+    "seconds": 0.0
+  },
+  {
+    "log": "lower.log.txt",
+    "test": "TestStringDestructuringMemberDiagnostic",
+    "seconds": 0.12
+  }
+]

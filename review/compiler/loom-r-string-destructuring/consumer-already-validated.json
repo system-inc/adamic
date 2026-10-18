@@ -1,0 +1,24 @@
+[
+  {
+    "package": "./internal/flow",
+    "tests": [
+      "TestFlowCorpusUnitsCoverEveryProgram",
+      "TestFlowCorpusSetupIsShared",
+      "TestFlowCorpusRemainder"
+    ]
+  },
+  {
+    "package": "./internal/ir",
+    "tests": [
+      "TestCallTargetReaders",
+      "TestEveryMapAProgramHoldsIsSorted"
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "tests": [
+      "TestStringDestructuring.*",
+      "Test.*Destructur.*"
+    ]
+  }
+]

@@ -1,0 +1,54 @@
+=== RUN   TestGeneratedProgramsCheckAndLower
+=== PAUSE TestGeneratedProgramsCheckAndLower
+=== CONT  TestGeneratedProgramsCheckAndLower
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-006-010
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-006-010
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-011-015
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-011-015
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-016-020
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-016-020
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-021-025
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-021-025
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-026-030
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-026-030
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-036-040
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-036-040
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-041-045
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-041-045
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-046-050
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-046-050
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-051-055
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-051-055
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-056-060
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-056-060
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-046-050
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-016-020
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-056-060
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-051-055
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-041-045
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-026-030
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-036-040
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-021-025
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-011-015
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-006-010
+--- PASS: TestGeneratedProgramsCheckAndLower (0.00s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-031-035 (2.32s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-016-020 (2.53s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-046-050 (2.75s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-001-005 (2.82s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-051-055 (1.54s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-041-045 (2.25s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-056-060 (2.80s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-026-030 (2.33s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-036-040 (3.91s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-011-015 (3.80s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-006-010 (3.80s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-021-025 (3.97s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fuzz	8.982s

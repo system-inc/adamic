@@ -1,0 +1,5 @@
+=== RUN   TestCompileProfiles
+    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled
+--- PASS: TestCompileProfiles (48.50s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle	48.512s

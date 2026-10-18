@@ -1,0 +1,24 @@
+=== RUN   TestClosedComparatorGaps
+=== PAUSE TestClosedComparatorGaps
+=== RUN   TestNestedConstructorGap
+=== PAUSE TestNestedConstructorGap
+=== CONT  TestClosedComparatorGaps
+=== RUN   TestClosedComparatorGaps/3_numeric_or.ts
+=== CONT  TestNestedConstructorGap
+=== PAUSE TestClosedComparatorGaps/3_numeric_or.ts
+=== RUN   TestClosedComparatorGaps/2_optional_index.ts
+=== PAUSE TestClosedComparatorGaps/2_optional_index.ts
+=== RUN   TestClosedComparatorGaps/4_last_index_position.ts
+=== PAUSE TestClosedComparatorGaps/4_last_index_position.ts
+=== CONT  TestClosedComparatorGaps/3_numeric_or.ts
+=== CONT  TestClosedComparatorGaps/4_last_index_position.ts
+=== CONT  TestClosedComparatorGaps/2_optional_index.ts
+=== NAME  TestNestedConstructorGap
+    gaps_test.go:36: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.53s)
+--- PASS: TestClosedComparatorGaps (0.00s)
+    --- PASS: TestClosedComparatorGaps/2_optional_index.ts (2.53s)
+    --- PASS: TestClosedComparatorGaps/3_numeric_or.ts (2.59s)
+    --- PASS: TestClosedComparatorGaps/4_last_index_position.ts (2.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.712s
