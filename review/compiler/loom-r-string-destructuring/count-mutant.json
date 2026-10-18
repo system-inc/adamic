@@ -1,0 +1,12 @@
+{
+  "name": "recorded-allocation-plus-one",
+  "exit": 1,
+  "caught": true,
+  "catchers": [
+    "recorded 35 versus measurement-product 34",
+    "recorded 35 versus independent measurement 34"
+  ],
+  "command": "ADAMIC_FAMILY_PROBE='TestCountsAreRecorded=internal/oracle/testdata/string_destructuring.a' timeout 120 go test ./internal/oracle -run '^TestCountsAreRecorded_001$/internal/oracle/testdata/string_destructuring[.]a$' -count=1 -timeout 90s -v -parallel 4",
+  "leafSeconds": 0.12,
+  "productSetupAndShardSeconds": 61.0
+}

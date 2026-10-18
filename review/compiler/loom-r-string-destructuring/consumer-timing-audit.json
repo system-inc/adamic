@@ -1,0 +1,1682 @@
+[
+  {
+    "log": "consumer-bridge_tsgo.log.txt",
+    "status": "PASS",
+    "test": "TestTSGoRequiresLink",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-cloud_reports_decode-ascii.log.txt",
+    "status": "PASS",
+    "test": "TestRuntimeFeaturesMatchNode",
+    "seconds": 13.35
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_erased",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_erased/c",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_erased/js",
+    "seconds": 0.68
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_erased/build",
+    "seconds": 9.26
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_some_empty",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_some_empty/c",
+    "seconds": 0.11
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_some_empty/js",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_some_empty/build",
+    "seconds": 9.69
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_some_false_read",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_some_false_read/c",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_some_false_read/js",
+    "seconds": 0.14
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "seconds": 9.53
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_assertion",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_assertion/c",
+    "seconds": 0.1
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_assertion/js",
+    "seconds": 0.16
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_assertion/build",
+    "seconds": 8.96
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_some_true_only",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_some_true_only/c",
+    "seconds": 0.13
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "PASS",
+    "test": "TestExplainChecksOutput/overload_some_true_only/js",
+    "seconds": 0.12
+  },
+  {
+    "log": "consumer-cmd_adamic.log.txt",
+    "status": "FAIL",
+    "test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "seconds": 1.91
+  },
+  {
+    "log": "consumer-cmd_adamic-meter.log.txt",
+    "status": "PASS",
+    "test": "TestOptionalPositionCountsUTF16Surrogates",
+    "seconds": 0.02
+  },
+  {
+    "log": "consumer-cmd_adamic-test262.log.txt",
+    "status": "PASS",
+    "test": "TestAdaptSingletonArrayCallback",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-internal_compilerinputs.log.txt",
+    "status": "PASS",
+    "test": "TestCheckKeyTellsTheCompilerFromTscWhole",
+    "seconds": 0.03
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder",
+    "seconds": 4.33
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_first.a",
+    "seconds": 0.15
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_last.a",
+    "seconds": 0.09
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/accessor_spread_throw_middle.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_discard.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_parameters.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_eager.a",
+    "seconds": 0.08
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_empty.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_reject_nested.a",
+    "seconds": 0.05
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_typeof.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_unions.a",
+    "seconds": 0.07
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_coverage_values.a",
+    "seconds": 0.06
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_nested.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_plain.a",
+    "seconds": 0.04
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_three.a",
+    "seconds": 0.1
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_throw.a",
+    "seconds": 0.08
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/async_typeof.a",
+    "seconds": 0.14
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/determinism_dispatch.a",
+    "seconds": 0.32
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_array.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_callback.a",
+    "seconds": 0.14
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_find.a",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_first.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/instantiation_last.a",
+    "seconds": 0.09
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/node_fs_rm_options.a",
+    "seconds": 1.14
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/plain_data_spread.a",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_gap.a",
+    "seconds": 0.12
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/static_constructor_spread_owned.a",
+    "seconds": 0.12
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/string_destructuring.a",
+    "seconds": 0.15
+  },
+  {
+    "log": "consumer-internal_fresh.log.txt",
+    "status": "PASS",
+    "test": "TestFreshCorpusRemainder/../oracle/testdata/template_nullish.a",
+    "seconds": 0.13
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-031-035",
+    "seconds": 2.32
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-016-020",
+    "seconds": 2.53
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-046-050",
+    "seconds": 2.75
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-001-005",
+    "seconds": 2.82
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-051-055",
+    "seconds": 1.54
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-041-045",
+    "seconds": 2.25
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-056-060",
+    "seconds": 2.8
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-026-030",
+    "seconds": 2.33
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-036-040",
+    "seconds": 3.91
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-011-015",
+    "seconds": 3.8
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-006-010",
+    "seconds": 3.8
+  },
+  {
+    "log": "consumer-internal_fuzz.log.txt",
+    "status": "PASS",
+    "test": "TestGeneratedProgramsCheckAndLower/seeds-021-025",
+    "seconds": 3.97
+  },
+  {
+    "log": "consumer-internal_javascript.log.txt",
+    "status": "PASS",
+    "test": "TestViewMixedUnionSelectsNumber",
+    "seconds": 0.11
+  },
+  {
+    "log": "consumer-internal_lower_cycleledger.log.txt",
+    "status": "SKIP",
+    "test": "TestOriginalCycleLedger",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-internal_native.log.txt",
+    "status": "PASS",
+    "test": "TestStringsMatchJavaScript",
+    "seconds": 33.64
+  },
+  {
+    "log": "consumer-internal_oracle.log.txt",
+    "status": "PASS",
+    "test": "TestCountsAreRecordedTable",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-internal_oracle.log.txt",
+    "status": "PASS",
+    "test": "TestRuntimeSetsAreEachUsed",
+    "seconds": 1.7
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestClosedEmptyArrayUnionGap",
+    "seconds": 2.87
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestClosedParserRegexGap",
+    "seconds": 5.32
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestClosedOptionalBooleanConditionGap",
+    "seconds": 0.54
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestClosedPrinterRegexGap",
+    "seconds": 1.72
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.41
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-stage1_cohere_css.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-stage1_cohere_cssnumbers.log.txt",
+    "status": "PASS",
+    "test": "TestCSSNumbersAnswerProductsRekey",
+    "seconds": 0.44
+  },
+  {
+    "log": "consumer-stage1_cohere_cssstrings.log.txt",
+    "status": "PASS",
+    "test": "TestMultiPushGap",
+    "seconds": 0.32
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "FAIL",
+    "test": "TestRawInputGap",
+    "seconds": 4.62
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "PASS",
+    "test": "TestParserRecoveryGap",
+    "seconds": 57.64
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "PASS",
+    "test": "TestInterfaceTypeMethodGap",
+    "seconds": 3.08
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "SKIP",
+    "test": "TestRecoveryLibraryGaps",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "SKIP",
+    "test": "TestTypeMemberLibraryGap",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "SKIP",
+    "test": "TestCookedSurrogateLibraryGap",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "SKIP",
+    "test": "TestPinnedNumericGaps",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "PASS",
+    "test": "TestMethodReplacementGap",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-stage1_cohere_estree.log.txt",
+    "status": "PASS",
+    "test": "TestPostfixValueGap",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo",
+    "seconds": 0.6
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/bare_dot_i",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/single_dot",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/double_dot",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/no_dot",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/trailing_dot",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/last_of_multiple_dots",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/absolute_nested_dotfile",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/absolute_root_dotfile",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/root",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/empty",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/relative_nested_dotfile",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/dot_before_separator",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/nested_trailing_dot",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/bare_Unicode_dotfile",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/Unicode_extension",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/dot_at_zero_without_slash",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_formatfiles.log.txt",
+    "status": "PASS",
+    "test": "TestExtAgreesWithGo/escaped_extension",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_from_char_code.ts",
+    "seconds": 3.46
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/8_tuple_value.ts",
+    "seconds": 3.61
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_method.ts",
+    "seconds": 3.68
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_array_from.ts",
+    "seconds": 3.78
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_function.ts",
+    "seconds": 1.02
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_function_value.ts",
+    "seconds": 1.18
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_bitwise.ts",
+    "seconds": 1.26
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_boolean_element.ts",
+    "seconds": 1.43
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/7_maybe_number_compared.ts",
+    "seconds": 0.9
+  },
+  {
+    "log": "consumer-stage1_cohere_gitignore.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/9_return_panic.ts",
+    "seconds": 0.76
+  },
+  {
+    "log": "consumer-stage1_cohere_graphql.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_graphql.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts",
+    "seconds": 0.28
+  },
+  {
+    "log": "consumer-stage1_cohere_graphql.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts",
+    "seconds": 2.53
+  },
+  {
+    "log": "consumer-stage1_cohere_graphql_printer.log.txt",
+    "status": "PASS",
+    "test": "TestPrinterConstructorGap",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-stage1_cohere_json.log.txt",
+    "status": "PASS",
+    "test": "TestDocumentedStageZeroGaps",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_json.log.txt",
+    "status": "PASS",
+    "test": "TestDocumentedStageZeroGaps/multiplePush.ts",
+    "seconds": 0.3
+  },
+  {
+    "log": "consumer-stage1_cohere_json.log.txt",
+    "status": "PASS",
+    "test": "TestDocumentedStageZeroGaps/repeatInTry.ts",
+    "seconds": 0.31
+  },
+  {
+    "log": "consumer-stage1_cohere_json.log.txt",
+    "status": "PASS",
+    "test": "TestClosedEmptyFallbackGap",
+    "seconds": 2.23
+  },
+  {
+    "log": "consumer-stage1_cohere_lint.log.txt",
+    "status": "PASS",
+    "test": "TestNestedConstructorGap",
+    "seconds": 0.53
+  },
+  {
+    "log": "consumer-stage1_cohere_lint.log.txt",
+    "status": "PASS",
+    "test": "TestClosedComparatorGaps",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_lint.log.txt",
+    "status": "PASS",
+    "test": "TestClosedComparatorGaps/2_optional_index.ts",
+    "seconds": 2.53
+  },
+  {
+    "log": "consumer-stage1_cohere_lint.log.txt",
+    "status": "PASS",
+    "test": "TestClosedComparatorGaps/3_numeric_or.ts",
+    "seconds": 2.59
+  },
+  {
+    "log": "consumer-stage1_cohere_lint.log.txt",
+    "status": "PASS",
+    "test": "TestClosedComparatorGaps/4_last_index_position.ts",
+    "seconds": 2.59
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_helpers.log.txt",
+    "status": "PASS",
+    "test": "TestKnownGapsAreExplicit",
+    "seconds": 6.87
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_helpers_comments.log.txt",
+    "status": "FAIL",
+    "test": "TestJsxParserGapIsExplicit",
+    "seconds": 25.54
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_regex.log.txt",
+    "status": "PASS",
+    "test": "TestDynamicPatternGap",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_regex.log.txt",
+    "status": "FAIL",
+    "test": "TestOptionDialectGap",
+    "seconds": 1.45
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_rules_no-underscore-dangle.log.txt",
+    "status": "PASS",
+    "test": "TestCompileProfiles",
+    "seconds": 48.5
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_rules_no-unsafe-negation.log.txt",
+    "status": "PASS",
+    "test": "TestCompileProfiles",
+    "seconds": 42.99
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_rules_no-unsafe-optional-chaining.log.txt",
+    "status": "PASS",
+    "test": "TestCompileProfiles",
+    "seconds": 36.0
+  },
+  {
+    "log": "consumer-stage1_cohere_lint_rules_typescript-no-this-alias.log.txt",
+    "status": "PASS",
+    "test": "TestCompileProfiles",
+    "seconds": 33.82
+  },
+  {
+    "log": "consumer-stage1_cohere_markdownblocks.log.txt",
+    "status": "PASS",
+    "test": "TestArrayGrowthWitness",
+    "seconds": 1.91
+  },
+  {
+    "log": "consumer-stage1_cohere_markdowninline.log.txt",
+    "status": "PASS",
+    "test": "TestDelimiterExpressionMatchesNode",
+    "seconds": 1.8
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts",
+    "seconds": 2.23
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts",
+    "seconds": 2.28
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts",
+    "seconds": 2.32
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts",
+    "seconds": 2.33
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts",
+    "seconds": 0.54
+  },
+  {
+    "log": "consumer-stage1_cohere_mediaquery.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts",
+    "seconds": 0.66
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.26
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.31
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.32
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "seconds": 0.22
+  },
+  {
+    "log": "consumer-stage1_cohere_selector.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "seconds": 2.17
+  },
+  {
+    "log": "consumer-stage1_cohere_static_single_assignment.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_static_single_assignment.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts",
+    "seconds": 0.31
+  },
+  {
+    "log": "consumer-stage1_cohere_static_single_assignment.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts",
+    "seconds": 0.35
+  },
+  {
+    "log": "consumer-stage1_cohere_suppression.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_suppression.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+    "seconds": 1.73
+  },
+  {
+    "log": "consumer-stage1_cohere_suppression.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+    "seconds": 1.74
+  },
+  {
+    "log": "consumer-stage1_cohere_tsprinter.log.txt",
+    "status": "PASS",
+    "test": "TestClassInterfaceMethodGap",
+    "seconds": 2.37
+  },
+  {
+    "log": "consumer-stage1_cohere_tsprinter.log.txt",
+    "status": "PASS",
+    "test": "TestClosedOptionalBooleanFunctionGap",
+    "seconds": 0.48
+  },
+  {
+    "log": "consumer-stage1_cohere_tsprinter.log.txt",
+    "status": "PASS",
+    "test": "TestClosedPrefixUpdateValueGap",
+    "seconds": 0.47
+  },
+  {
+    "log": "consumer-stage1_cohere_tsprinter.log.txt",
+    "status": "PASS",
+    "test": "TestCompilerGaps",
+    "seconds": 0.14
+  },
+  {
+    "log": "consumer-stage1_cohere_tsprinter.log.txt",
+    "status": "PASS",
+    "test": "TestCompilerGaps/defaultSort",
+    "seconds": 0.14
+  },
+  {
+    "log": "consumer-stage1_cohere_typeaware.log.txt",
+    "status": "PASS",
+    "test": "TestTypeAwareKeysNameTheBuildsCompiler",
+    "seconds": 0.24
+  },
+  {
+    "log": "consumer-stage1_cohere_typeaware.log.txt",
+    "status": "PASS",
+    "test": "TestTypeAwareKeysCarryNoMachinePath",
+    "seconds": 5.02
+  },
+  {
+    "log": "consumer-stage1_cohere_values.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage1_cohere_values.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+    "seconds": 0.34
+  },
+  {
+    "log": "consumer-stage1_cohere_values.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+    "seconds": 1.89
+  },
+  {
+    "log": "consumer-stage1_cohere_values.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+    "seconds": 1.98
+  },
+  {
+    "log": "consumer-stage1_cohere_values.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+    "seconds": 1.65
+  },
+  {
+    "log": "consumer-stage1_cohere_values.log.txt",
+    "status": "PASS",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+    "seconds": 2.0
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestLexerGaps",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestLexerGaps/multiplePush.ts",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedValuePresenceGap",
+    "seconds": 5.16
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedStringPresenceGap",
+    "seconds": 5.18
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps",
+    "seconds": 6.32
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/assignmentValue.ts",
+    "seconds": 5.18
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/dynamicCase.ts",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/negativeCase.ts",
+    "seconds": 0.19
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/stringFallback.ts",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/valueConjunction.ts",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/prefixIncrement.ts",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-stage1_cohere_yaml.log.txt",
+    "status": "PASS",
+    "test": "TestClosedLexerGaps/emptyAlternative.ts",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage1_typescript_parser.log.txt",
+    "status": "PASS",
+    "test": "TestClosedOptionalFunctionValueGap",
+    "seconds": 1.83
+  },
+  {
+    "log": "consumer-stage1_typescript_parser.log.txt",
+    "status": "PASS",
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "seconds": 0.47
+  },
+  {
+    "log": "consumer-stage1_typescript_parser.log.txt",
+    "status": "PASS",
+    "test": "TestStrongAstParentGap",
+    "seconds": 0.22
+  },
+  {
+    "log": "consumer-stage1_typescript_parser.log.txt",
+    "status": "PASS",
+    "test": "TestPushSpreadGap",
+    "seconds": 0.24
+  },
+  {
+    "log": "consumer-stage1_typescript_parser.log.txt",
+    "status": "PASS",
+    "test": "TestClassMethodInterfaceGap",
+    "seconds": 0.24
+  },
+  {
+    "log": "consumer-stage1_typescript_scanner.log.txt",
+    "status": "PASS",
+    "test": "TestGapStandsWhereGapsMdSays",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage1_typescript_scanner.log.txt",
+    "status": "PASS",
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects",
+    "seconds": 14.09
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/17_container_rest.a",
+    "seconds": 0.16
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/17_container_rest.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/17_container_rest.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/01_reference_spreads.a",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/01_reference_spreads.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/01_reference_spreads.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/08_loop_state.a",
+    "seconds": 0.22
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/08_loop_state.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/08_loop_state.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/25_map_generator.a",
+    "seconds": 0.24
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/04_trace_metadata.a",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/04_trace_metadata.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/04_trace_metadata.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/06_watch_close.a",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/06_watch_close.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/06_watch_close.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/05_polling_array_metadata.a",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/05_polling_array_metadata.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/05_polling_array_metadata.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/12_decorator_descriptor.a",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/12_decorator_descriptor.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/12_decorator_descriptor.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/02_polling_levels.a",
+    "seconds": 0.18
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/02_polling_levels.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/02_polling_levels.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a",
+    "seconds": 0.24
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/15_accessor_absence.a",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/15_accessor_absence.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/15_accessor_absence.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/16_version_defaults.a",
+    "seconds": 0.22
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/16_version_defaults.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/16_version_defaults.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/20_queue_optional_call.a",
+    "seconds": 0.19
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/20_queue_optional_call.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/20_queue_optional_call.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a",
+    "seconds": 2.6
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a/native",
+    "seconds": 2.41
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/07_synthetic_reference.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/22_nested_optional_calls.a",
+    "seconds": 0.2
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/22_nested_optional_calls.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/22_nested_optional_calls.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/27_delete_substitution.a",
+    "seconds": 0.33
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/27_delete_substitution.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/27_delete_substitution.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/30_host_optional_method.a",
+    "seconds": 0.21
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/30_host_optional_method.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/30_host_optional_method.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a",
+    "seconds": 2.84
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a/native",
+    "seconds": 2.66
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/24_transformation_accessors.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/29_parameter_default.a",
+    "seconds": 0.17
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/29_parameter_default.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/29_parameter_default.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/14_comment_pending.a",
+    "seconds": 3.06
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/14_comment_pending.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/14_comment_pending.a/native",
+    "seconds": 2.79
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/14_comment_pending.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/23_factory_getters.a",
+    "seconds": 2.76
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/23_factory_getters.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/23_factory_getters.a/native",
+    "seconds": 2.56
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/23_factory_getters.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/26_diagnostic_in.a",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/26_diagnostic_in.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/26_diagnostic_in.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/10_build_options.a",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/10_build_options.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/10_build_options.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/19_identifier_multimap.a",
+    "seconds": 0.23
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/19_identifier_multimap.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/19_identifier_multimap.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/28_debugger.a",
+    "seconds": 1.9
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/28_debugger.a/node",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/28_debugger.a/native",
+    "seconds": 1.73
+  },
+  {
+    "log": "consumer-stage3_fixtures.log.txt",
+    "status": "PASS",
+    "test": "TestFixturesObjects/objects/28_debugger.a/stage0",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-internal_leakcheck.log.txt",
+    "status": "PASS",
+    "test": "TestReportedLeakIsRejected",
+    "seconds": 0.0
+  },
+  {
+    "log": "consumer-internal_leakcheck.log.txt",
+    "status": "PASS",
+    "test": "TestCountedBalance",
+    "seconds": 0.0
+  }
+]

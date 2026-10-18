@@ -1,0 +1,11 @@
+compiler: rebase string destructuring onto dbdf977f
+
+Apply only 26077f9635a133aa87a2d7a51d7b1c765f907d55's own change.
+Conservative scope: retain static length bindings and explicit refusals for
+other string members and unsupported binding forms. Preserve main's newer work.
+
+No conflicted hunks or runtime C changes. Regenerate counts once on Linux
+with clang 20.1.8: one new row, no existing row changes. Validate focused
+lowering/oracle/flow/IR readers, the compiler-reader closure, vet and all four
+reported mutants. Keep fresh commands, logs and prerequisite resolutions in
+review/compiler/loom-r-string-destructuring/.

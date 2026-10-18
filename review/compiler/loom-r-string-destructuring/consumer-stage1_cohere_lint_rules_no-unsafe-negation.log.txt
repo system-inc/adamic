@@ -1,0 +1,5 @@
+=== RUN   TestCompileProfiles
+    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled
+--- PASS: TestCompileProfiles (42.99s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation	43.003s

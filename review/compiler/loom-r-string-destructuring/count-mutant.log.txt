@@ -1,0 +1,95 @@
+=== RUN   TestCountsAreRecorded_001
+=== PAUSE TestCountsAreRecorded_001
+=== CONT  TestCountsAreRecorded_001
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:213: gate cache native miss
+    counts_test.go:412: build count-measurements 6056df2cd007 miss 52.57
+=== RUN   TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a
+=== PAUSE TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a
+=== CONT  TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a
+    counts_test.go:485: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):
+        recorded: | internal/oracle/testdata/string_destructuring.a | 35 | 34 | 18 | 46 | 6 | 0 |
+        measured: | internal/oracle/testdata/string_destructuring.a | 34 | 34 | 18 | 46 | 6 | 0 |
+    counts_test.go:213: gate cache native hit
+    counts_test.go:491: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):
+        recorded: | internal/oracle/testdata/string_destructuring.a | 35 | 34 | 18 | 46 | 6 | 0 |
+        measured here: | internal/oracle/testdata/string_destructuring.a | 34 | 34 | 18 | 46 | 6 | 0 |
+--- FAIL: TestCountsAreRecorded_001 (61.00s)
+    --- FAIL: TestCountsAreRecorded_001/internal/oracle/testdata/string_destructuring.a (0.12s)
+FAIL
+gate cache: native hits=1 misses=73
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	61.161s
+FAIL

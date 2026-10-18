@@ -1,0 +1,17 @@
+=== RUN   TestClassInterfaceMethodGap
+    class_interface_gap_test.go:44: Node prints 17; lowering refuses before native emission: /tmp/adamic-gate/TestClassInterfaceMethodGap3321859994/001/gap.ts:6:28: stage 0 can't lower a class method through a view that erases its prototype origin yet
+    class_interface_gap_test.go:68: explicit callback prints 17 on Node, native and backend; leak-free; gap check rejects this normal-run mutant
+--- PASS: TestClassInterfaceMethodGap (2.37s)
+=== RUN   TestClosedOptionalBooleanFunctionGap
+--- PASS: TestClosedOptionalBooleanFunctionGap (0.48s)
+=== RUN   TestCompilerGaps
+=== PAUSE TestCompilerGaps
+=== RUN   TestClosedPrefixUpdateValueGap
+--- PASS: TestClosedPrefixUpdateValueGap (0.47s)
+=== CONT  TestCompilerGaps
+=== RUN   TestCompilerGaps/defaultSort
+    gaps_test.go:39: Node "im\n"; stage 0 /workspace/adamic/stage1/cohere/tsprinter/gaps/defaultSort.ts:2:1: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]
+--- PASS: TestCompilerGaps (0.14s)
+    --- PASS: TestCompilerGaps/defaultSort (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	3.488s

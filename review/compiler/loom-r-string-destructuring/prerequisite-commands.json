@@ -1,0 +1,130 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestProduct_NativeRuntimesSanitized0$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "GOMAXPROCS": "4",
+    "explicitDefaultBuildCacheInherited": true,
+    "exit": 0,
+    "log": "cli-runtime-product.log.txt"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestExplainChecksOutput$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "GOMAXPROCS": "4",
+    "explicitDefaultBuildCacheInherited": true,
+    "exit": 0,
+    "log": "cli-recheck.log.txt"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./stage1/cohere/estree/oracles",
+      "-run",
+      "^TestProduct_EstreeGoOracle$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "GOMAXPROCS": "4",
+    "explicitDefaultBuildCacheInherited": false,
+    "exit": 0,
+    "log": "estree-oracle-product.log.txt"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestRawInputGap$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "GOMAXPROCS": "4",
+    "explicitDefaultBuildCacheInherited": false,
+    "exit": 0,
+    "log": "estree-recheck.log.txt"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments/oracles",
+      "./stage1/cohere/lint/regex/oracles",
+      "-run",
+      "^(TestProduct_CommentsOracle|TestProduct_RegexOptionDialects)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "GOMAXPROCS": "4",
+    "explicitDefaultBuildCacheInherited": false,
+    "exit": 0,
+    "log": "lint-oracle-products.log.txt"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^(TestJsxParserGapIsExplicit|TestOptionDialectGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "GOMAXPROCS": "4",
+    "explicitDefaultBuildCacheInherited": false,
+    "exit": 0,
+    "log": "lint-recheck.log.txt"
+  }
+]

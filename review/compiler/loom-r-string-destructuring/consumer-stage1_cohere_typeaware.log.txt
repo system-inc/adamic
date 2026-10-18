@@ -1,0 +1,10 @@
+=== RUN   TestTypeAwareKeysNameTheBuildsCompiler
+--- PASS: TestTypeAwareKeysNameTheBuildsCompiler (0.24s)
+=== RUN   TestTypeAwareKeysCarryNoMachinePath
+=== PAUSE TestTypeAwareKeysCarryNoMachinePath
+=== CONT  TestTypeAwareKeysCarryNoMachinePath
+    typeaware_test.go:366: native: one name key and one declared key (17da04518d83) from two machines
+    typeaware_test.go:366: emitted C: one name key and one declared key (b455e91e8ebc) from two machines
+--- PASS: TestTypeAwareKeysCarryNoMachinePath (5.02s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	5.289s

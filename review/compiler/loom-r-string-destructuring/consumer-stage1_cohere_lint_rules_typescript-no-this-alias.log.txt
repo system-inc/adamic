@@ -1,0 +1,5 @@
+=== RUN   TestCompileProfiles
+    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled
+--- PASS: TestCompileProfiles (33.82s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias	33.830s

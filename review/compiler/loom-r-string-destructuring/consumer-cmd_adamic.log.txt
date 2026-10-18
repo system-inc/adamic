@@ -1,0 +1,119 @@
+=== RUN   TestExplainChecksOutput
+=== PAUSE TestExplainChecksOutput
+=== CONT  TestExplainChecksOutput
+=== RUN   TestExplainChecksOutput/overload_some_empty
+=== PAUSE TestExplainChecksOutput/overload_some_empty
+=== RUN   TestExplainChecksOutput/overload_some_false_read
+=== PAUSE TestExplainChecksOutput/overload_some_false_read
+=== RUN   TestExplainChecksOutput/overload_some_true_only
+=== PAUSE TestExplainChecksOutput/overload_some_true_only
+=== RUN   TestExplainChecksOutput/overload_erased
+=== PAUSE TestExplainChecksOutput/overload_erased
+=== RUN   TestExplainChecksOutput/overload_assertion
+=== PAUSE TestExplainChecksOutput/overload_assertion
+=== CONT  TestExplainChecksOutput/overload_some_empty
+=== RUN   TestExplainChecksOutput/overload_some_empty/c
+=== PAUSE TestExplainChecksOutput/overload_some_empty/c
+=== RUN   TestExplainChecksOutput/overload_some_empty/js
+=== PAUSE TestExplainChecksOutput/overload_some_empty/js
+=== RUN   TestExplainChecksOutput/overload_some_empty/build
+=== PAUSE TestExplainChecksOutput/overload_some_empty/build
+=== CONT  TestExplainChecksOutput/overload_erased
+=== RUN   TestExplainChecksOutput/overload_erased/c
+=== PAUSE TestExplainChecksOutput/overload_erased/c
+=== RUN   TestExplainChecksOutput/overload_erased/js
+=== PAUSE TestExplainChecksOutput/overload_erased/js
+=== RUN   TestExplainChecksOutput/overload_erased/build
+=== PAUSE TestExplainChecksOutput/overload_erased/build
+=== CONT  TestExplainChecksOutput/overload_some_false_read
+=== RUN   TestExplainChecksOutput/overload_some_false_read/c
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/c
+=== RUN   TestExplainChecksOutput/overload_some_false_read/js
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/js
+=== RUN   TestExplainChecksOutput/overload_some_false_read/build
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/build
+=== CONT  TestExplainChecksOutput/overload_assertion
+=== RUN   TestExplainChecksOutput/overload_assertion/c
+=== PAUSE TestExplainChecksOutput/overload_assertion/c
+=== RUN   TestExplainChecksOutput/overload_assertion/js
+=== PAUSE TestExplainChecksOutput/overload_assertion/js
+=== RUN   TestExplainChecksOutput/overload_assertion/build
+=== PAUSE TestExplainChecksOutput/overload_assertion/build
+=== CONT  TestExplainChecksOutput/overload_some_empty/c
+=== CONT  TestExplainChecksOutput/overload_erased/c
+=== CONT  TestExplainChecksOutput/overload_some_false_read/c
+=== CONT  TestExplainChecksOutput/overload_some_true_only
+=== RUN   TestExplainChecksOutput/overload_some_true_only/c
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/c
+=== RUN   TestExplainChecksOutput/overload_some_true_only/js
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/js
+=== RUN   TestExplainChecksOutput/overload_some_true_only/build
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/build
+=== CONT  TestExplainChecksOutput/overload_some_empty/build
+=== CONT  TestExplainChecksOutput/overload_some_empty/js
+=== CONT  TestExplainChecksOutput/overload_assertion/c
+=== CONT  TestExplainChecksOutput/overload_some_false_read/js
+=== CONT  TestExplainChecksOutput/overload_erased/build
+=== CONT  TestExplainChecksOutput/overload_erased/js
+=== CONT  TestExplainChecksOutput/overload_some_false_read/build
+=== CONT  TestExplainChecksOutput/overload_assertion/build
+=== NAME  TestExplainChecksOutput/overload_erased/build
+    checks_test.go:39: build: exit status 1, internal/lower/testdata/predicates/overload_erased.a:3:16: predicate overload 1 of isNumber
+          true: proven; implementation body proves this direction
+          false: proven; implementation body proves this direction
+        internal/lower/testdata/predicates/overload_erased.a:3:31: predicate overload 1 of isNumber
+          true: proven; implementation body proves this direction
+          false: proven; implementation body proves this direction
+        adamic: predicate checks: proven 4 checked 0 unobservable 0
+        adamic: cmd/adamic: runtime product not built ahead for features [] with options {Target: Request:false Split:false Jobs:0 Sanitize:true ThreadSanitize:false Count:false cpu: slabs:false}; run TestProduct_CommandRuntime tests first
+=== CONT  TestExplainChecksOutput/overload_assertion/js
+=== CONT  TestExplainChecksOutput/overload_some_true_only/c
+=== NAME  TestExplainChecksOutput/overload_some_empty/build
+    checks_test.go:39: build: exit status 1, internal/lower/testdata/predicates/overload_some_empty.a:7:20: predicate overload 1 of some
+          true: unobservable (proven); no narrowed read in the true region
+          false: unobservable (proven); no narrowed read in the false region
+        adamic: predicate checks: proven 2 checked 0 unobservable 2
+        adamic: cmd/adamic: runtime product not built ahead for features [] with options {Target: Request:false Split:false Jobs:0 Sanitize:true ThreadSanitize:false Count:false cpu: slabs:false}; run TestProduct_CommandRuntime tests first
+=== CONT  TestExplainChecksOutput/overload_some_true_only/js
+=== CONT  TestExplainChecksOutput/overload_some_true_only/build
+=== NAME  TestExplainChecksOutput/overload_some_false_read/build
+    checks_test.go:39: build: exit status 1, internal/lower/testdata/predicates/overload_some_false_read.a:7:9: predicate overload 1 of some
+          true: unobservable (proven); no narrowed read in the true region
+          false: checked; a narrowed read consumes this direction
+        adamic: predicate checks: proven 1 checked 1 unobservable 1
+        adamic: cmd/adamic: runtime product not built ahead for features [] with options {Target: Request:false Split:false Jobs:0 Sanitize:true ThreadSanitize:false Count:false cpu: slabs:false}; run TestProduct_CommandRuntime tests first
+=== NAME  TestExplainChecksOutput/overload_assertion/build
+    checks_test.go:39: build: exit status 1, internal/lower/testdata/predicates/overload_assertion.a:3:46: predicate overload 1 of lie
+          true: checked; a narrowed read consumes this direction
+        adamic: predicate checks: proven 0 checked 1 unobservable 0
+        adamic: cmd/adamic: runtime product not built ahead for features [] with options {Target: Request:false Split:false Jobs:0 Sanitize:true ThreadSanitize:false Count:false cpu: slabs:false}; run TestProduct_CommandRuntime tests first
+=== NAME  TestExplainChecksOutput/overload_some_true_only/build
+    checks_test.go:39: build: exit status 1, internal/lower/testdata/predicates/overload_some_true_only.a:7:9: predicate overload 1 of some
+          true: checked; a narrowed read consumes this direction
+          false: unobservable (proven); no narrowed read in the false region
+        adamic: predicate checks: proven 1 checked 1 unobservable 1
+        adamic: cmd/adamic: runtime product not built ahead for features [] with options {Target: Request:false Split:false Jobs:0 Sanitize:true ThreadSanitize:false Count:false cpu: slabs:false}; run TestProduct_CommandRuntime tests first
+--- FAIL: TestExplainChecksOutput (0.00s)
+    --- FAIL: TestExplainChecksOutput/overload_erased (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_erased/c (0.18s)
+        --- PASS: TestExplainChecksOutput/overload_erased/js (0.68s)
+        --- FAIL: TestExplainChecksOutput/overload_erased/build (9.26s)
+    --- FAIL: TestExplainChecksOutput/overload_some_empty (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_empty/c (0.11s)
+        --- PASS: TestExplainChecksOutput/overload_some_empty/js (0.21s)
+        --- FAIL: TestExplainChecksOutput/overload_some_empty/build (9.69s)
+    --- FAIL: TestExplainChecksOutput/overload_some_false_read (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_false_read/c (0.17s)
+        --- PASS: TestExplainChecksOutput/overload_some_false_read/js (0.14s)
+        --- FAIL: TestExplainChecksOutput/overload_some_false_read/build (9.53s)
+    --- FAIL: TestExplainChecksOutput/overload_assertion (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_assertion/c (0.10s)
+        --- PASS: TestExplainChecksOutput/overload_assertion/js (0.16s)
+        --- FAIL: TestExplainChecksOutput/overload_assertion/build (8.96s)
+    --- FAIL: TestExplainChecksOutput/overload_some_true_only (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_true_only/c (0.13s)
+        --- PASS: TestExplainChecksOutput/overload_some_true_only/js (0.12s)
+        --- FAIL: TestExplainChecksOutput/overload_some_true_only/build (1.91s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	11.731s
+FAIL
