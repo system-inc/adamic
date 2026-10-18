@@ -14,7 +14,9 @@ func TestReportedLeakIsRejected(t *testing.T) {
 	calls := 0
 	report, err := Check(Program{Sanitized: "fixture", Execute: func(environment []string, name string, arguments ...string) Run {
 		calls++
-		if len(environment) != 1 || environment[0] != "ASAN_OPTIONS=detect_leaks=1" || name != "fixture" {
+		// ADAMIC_LEAK_CHECK asks the runtime to mark an intentional exit (adamic.c), so the check
+		// can tell process.exit's teardown from a leak.
+		if len(environment) != 2 || environment[0] != "ASAN_OPTIONS=detect_leaks=1" || environment[1] != "ADAMIC_LEAK_CHECK=1" || name != "fixture" {
 			t.Fatal("leak detection was not requested", environment, name)
 		}
 		return Run{ExitCode: 1, Stderr: []byte("ERROR: LeakSanitizer: detected memory leaks\n")}
