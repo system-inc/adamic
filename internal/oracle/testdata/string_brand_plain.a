@@ -1,0 +1,4 @@
+type Path = string & { readonly __pathBrand: void };
+function read(values: readonly Path[], index: number): Path | undefined { return values[index]; }
+const values: readonly Path[] = [("path".repeat(30)) as Path, "" as Path];
+console.log(`${read(values, 0) ?? "missing"}:${read(values, 1) === ""}:${read(values, 2) === undefined}`);

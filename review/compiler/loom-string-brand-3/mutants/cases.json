@@ -1,0 +1,52 @@
+[
+  {
+    "topic": "real-field-phantom",
+    "file": "internal/lower/view_unions_primitive_brands.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-string-brand-3/mutants/real-field-phantom.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestStringBrandRealRefused$",
+    "catcher": "want named refusal for actual"
+  },
+  {
+    "topic": "drop-undefined",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-string-brand-3/mutants/drop-undefined.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestStringBrandOptional$",
+    "catcher": "exit codes differ; Node"
+  },
+  {
+    "topic": "read-brand",
+    "file": "internal/lower/string_brand.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-string-brand-3/mutants/read-brand.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestStringBrandReadRefused$",
+    "catcher": "want named refusal for __brand"
+  },
+  {
+    "topic": "literal-refinement",
+    "file": "internal/lower/string_brand.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-string-brand-3/mutants/literal-refinement.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestStringBrandCastKeepsLiterals$",
+    "catcher": "unproven string literal refinement admitted"
+  },
+  {
+    "topic": "unchecked-missing-cast",
+    "file": "internal/lower/cast.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-string-brand-3/mutants/unchecked-missing-cast.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestStringBrandCastChecksMissing$",
+    "catcher": "missing checked undefined removal"
+  }
+]

@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -174,7 +174,7 @@
+ 
+ func (l *lowering) includesUndefined(proven *checker.Type) bool {
+ 	if stringShape, missing := l.stringBrandRepresentation(proven); stringShape && missing {
+-		return true
++		return false
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
+ 		return proven.Flags()&checker.TypeFlagsUndefined != 0
