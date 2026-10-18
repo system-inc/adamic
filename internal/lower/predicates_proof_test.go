@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -78,8 +79,15 @@ func TestPredicateBodyProof(t *testing.T) {
 				if admission := l.predicateRefusal(predicate); admission != nil {
 					t.Fatalf("want checked-view admission, got %v", admission)
 				}
-				if !l.result.CheckedFields["kind"] {
-					t.Fatal("kind admission lost checked fields")
+				target := checked.GetTypeAtLocation(predicate.AsTypePredicateNode().Type)
+				members := []*checker.Type{target}
+				if target.Flags()&checker.TypeFlagsUnion != 0 {
+					members = target.Types()
+				}
+				for _, member := range members {
+					if !l.result.CheckedFields[checkedViewFieldKey(int(member.Id()), "kind")] {
+						t.Fatal("kind admission lost receiver-specific checked fields")
+					}
 				}
 
 			}

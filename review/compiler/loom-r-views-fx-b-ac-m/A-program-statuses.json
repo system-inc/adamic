@@ -1,0 +1,128 @@
+[
+  {
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/fx6_refused/p49.a",
+    "B_status": "refused",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/internal/lower/testdata/fx6_refused/p49.a:10:9: Adamic 0.1 refuses a destructured object-union view with an incompatible literal producer; build a member of Target before destructuring field value\n"
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "B_status": "checked",
+    "A_combined_exit": 0,
+    "A_combined_stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "B_status": "refused",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a",
+    "B_status": "refused",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.compute\n"
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p49_union_destructure_wrong.a",
+    "B_status": "refused",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p49_union_destructure_wrong.a:10:9: Adamic 0.1 refuses a destructured object-union view with an incompatible literal producer; build a member of Target before destructuring field value\n"
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a",
+    "B_status": "refused",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a:9:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-b/native_p21.a",
+    "B_status": "checked",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-b/native_p21.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-b/native_p37.a",
+    "B_status": "checked",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-b/native_p37.a:11:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+  },
+  {
+    "path": "review/compiler/loom-views-fx-b/views_p05.a",
+    "B_status": "refused",
+    "A_combined_exit": 1,
+    "A_combined_stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-b/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+  }
+]
