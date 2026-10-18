@@ -19,9 +19,6 @@ import (
 
 // unwrappedPythonSuites are the stage3 test_*.py no wrapper runs, each with why.
 var unwrappedPythonSuites = map[string]string{
-	"stage3/census/any-returns/test_fixture.py": "awaits a gate: its wrapper writes evidence only with --evidence, and the Queue " +
-		"reads any edit of this file as gate logic, since report.py prints its recipe and tsc-closure's scripts name a " +
-		"test_fixture.py by basename (#doorlaws); it comes back wrapped once that rule matches full paths",
 	"stage3/census/tsc-closure/test_fixture.py": "the known-answer check of a one-off measurement (rerun-2026-10-09): it takes the census binary " +
 		"and hidden-tools tree that prepare.py builds from f1502d13's tools against main with a full cohere checkout, as " +
 		"arguments, so it has nothing to run on alone",
