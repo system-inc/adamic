@@ -729,6 +729,28 @@
     "provides": "Requires an FMA-capable arm64 or amd64 CPU; amd64 capability is read from /proc/cpuinfo on Linux or sysctl hw.optional.fma on macOS (fusingProcessor, internal/native/contract_test.go). Every arm64 runs it."
   },
   {
+    "file": "internal/native/runtime_statics_host_test.go",
+    "test": "TestRuntimeStaticsHostWorkers",
+    "id": "TestRuntimeStaticsHostWorkers:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f",
+    "line": 12,
+    "condition": "goruntime.GOOS != \"linux\"",
+    "reads": [
+      "exec.LookPath(\"clang\")",
+      "os.ReadFile(\"../../bridge/tsgo/tsgo.h\")",
+      "os.ReadFile(file)",
+      "os.ReadFile(filepath.Join(*runtimeStaticsDirectory, file))"
+    ],
+    "callers": [
+      "TestRuntimeStaticsHostWorkers"
+    ],
+    "message": "\"requires Linux ThreadSanitizer\"",
+    "class": "not-applicable",
+    "provides": "Host worker proofs require Linux ThreadSanitizer (goruntime.GOOS != \"linux\"). Off Linux there is nothing to witness, so the skip is not-applicable on a darwin log (the Mac leg); the Linux gate runs it, and on any other platform it reads unknown.",
+    "platforms": [
+      "darwin"
+    ]
+  },
+  {
     "file": "internal/native/runtime_statics_parallel_test.go",
     "test": "runRuntimeStaticsParallel",
     "id": "TestRuntimeStaticsParallelUnit00,TestRuntimeStaticsParallelUnit01,TestRuntimeStaticsParallelUnit02,TestRuntimeStaticsParallelUnit03,TestRuntimeStaticsParallelUnit04,TestRuntimeStaticsParallelUnit05,TestRuntimeStaticsParallelUnit06,TestRuntimeStaticsParallelUnit07,TestRuntimeStaticsParallelUnit08,TestRuntimeStaticsParallelUnit09,TestRuntimeStaticsParallelUnit10,TestRuntimeStaticsParallelUnit11:dd1fd1f02f638e3d4be870368016a9087f4e5f406d54b50d6b16fbc47fcba95f",
