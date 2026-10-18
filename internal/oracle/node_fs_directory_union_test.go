@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"net"
 	"os"
 	"path/filepath"
 	"strings"
@@ -63,18 +62,24 @@ func TestNodeFSDirectoryUnionSpecialKinds(t *testing.T) {
 		t.Fatal(err)
 	}
 	shared := sharedDirectory(t)
-	root := filepath.Join(shared, "kinds")
-	if err := os.Mkdir(root, 0755); err != nil {
+	// Gate scratch paths can exceed sockaddr_un's limit. Keep that case in
+	// every run; bind the socket by its relative name from a child directory.
+	root := filepath.Join(shared, strings.Repeat("long-scratch-", 10), "kinds")
+	if err := os.MkdirAll(root, 0755); err != nil {
 		t.Fatal(err)
 	}
 	if err := syscall.Mkfifo(filepath.Join(root, "fifo"), 0600); err != nil {
 		t.Fatal(err)
 	}
-	listener, err := net.Listen("unix", filepath.Join(root, "socket"))
-	if err != nil {
-		t.Fatal(err)
+	socket := executeInput(t, inputRun{directory: root}, nil, "node", "--input-type=module", "-e",
+		`import net from 'node:net'; const server = net.createServer(); server.listen('socket', () => process.exit(0));`)
+	if socket.exitCode != 0 || len(socket.stdout) != 0 || len(socket.stderr) != 0 {
+		t.Fatalf("create socket fixture: %+v", socket)
 	}
-	defer listener.Close()
+	information, err := os.Lstat(filepath.Join(root, "socket"))
+	if err != nil || information.Mode()&os.ModeSocket == 0 {
+		t.Fatalf("want a real socket fixture: %v, %v", information, err)
+	}
 	if err := os.Symlink("/dev/null", filepath.Join(root, "character")); err != nil {
 		t.Fatal(err)
 	}
