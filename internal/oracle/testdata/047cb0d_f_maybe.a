@@ -1,0 +1,7 @@
+const counts: (number | undefined)[] = [1, 2, 3];
+const at = counts.findIndex((item) => {
+	console.log(`${item === undefined ? 'hole' : item}`);
+	counts.pop();
+	return false;
+});
+console.log(`${at}`);
