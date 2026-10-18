@@ -1,0 +1,5 @@
+=== RUN   TestCompileProfiles
+    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled
+--- PASS: TestCompileProfiles (22.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining	22.545s

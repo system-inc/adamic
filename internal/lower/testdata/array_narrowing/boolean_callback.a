@@ -1,0 +1,3 @@
+const items: (string | number)[] = [1, 2, 'discard'];
+items.pop();
+console.log(String(items.every((value): boolean => typeof value === 'number')));
