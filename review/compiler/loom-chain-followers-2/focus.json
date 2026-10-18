@@ -1,0 +1,74 @@
+{
+  "tests": {
+    "internal/lower": [
+      "TestCensusComputedRelation",
+      "TestCensusGenericRefusalInsideClosure",
+      "TestCensusQualifiedCast",
+      "TestClockGenericReturnsT01SupportsPhantomPrimitives",
+      "TestEmptyArrayInstantiations",
+      "TestEmptyArrayScalarFallbacksUseTruthiness",
+      "TestEmptyArrayViewsStillRefuse",
+      "TestGenericFunctionValueDifferentReferenceRepresentations",
+      "TestGenericFunctionValueEarlierIdentityComparisonIsNotYet",
+      "TestGenericFunctionValueIdentityCallsAreNotYet",
+      "TestGenericFunctionValueIdentityComparisonIsNotYet",
+      "TestGenericFunctionValueNamespaceDirectCallsKeepIdentity",
+      "TestGenericFunctionValueOperandContexts",
+      "TestGenericFunctionValueReferenceInstances",
+      "TestGenericFunctionValueUnionIdentityIsNotYet",
+      "TestGenericFunctionValuesHaveSeparateInstances",
+      "TestPhantomCastsAreErased",
+      "TestPhantomLiteralCastsStayRefused",
+      "TestPhantomOverloadOnlyBrandsKeepMainProof",
+      "TestPhantomPrimitiveNames",
+      "TestPhantomRealPathRefusal",
+      "TestPhantomRefusals",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestArrowFieldCaptureFrames",
+      "TestArrowSuperCaptureFrames",
+      "TestArrowStoredCaptureFrames",
+      "TestClassFeaturesThrowingAccessorSpread",
+      "TestNestedEmptyArrayElementKinds"
+    ],
+    "internal/oracle": [
+      "TestArrowThisField",
+      "TestArrowThisStored",
+      "TestArrowThisSuper",
+      "TestEmptyArrayRuntimeMutants",
+      "TestGenericFunctionValueWrongResultMutant",
+      "TestScannerConcatenationMutant",
+      "TestScannerPrimitiveConcatenationMutants",
+      "TestCheckedNonNullTypeScript",
+      "TestDebuggerNativeEmitsNothing"
+    ],
+    "internal/ir": [
+      "TestObjectSpreadAccessorEffects"
+    ]
+  },
+  "fixtures": [
+    "internal/oracle/testdata/arrow_this_field.a",
+    "internal/oracle/testdata/arrow_this_stored.a",
+    "internal/oracle/testdata/arrow_this_super.a",
+    "internal/oracle/testdata/generic_empty_array.a",
+    "internal/oracle/testdata/generic_function_value.a",
+    "internal/oracle/testdata/generic_function_value_arms.a",
+    "internal/oracle/testdata/host_phantom_optional_array.a",
+    "internal/oracle/testdata/host_phantom_overload_primitive.a",
+    "internal/oracle/testdata/native-generic-empty-array.a",
+    "internal/oracle/testdata/phantom_brands.a",
+    "internal/oracle/testdata/phantom_catch.a",
+    "internal/oracle/testdata/phantom_undefined.a",
+    "internal/oracle/testdata/scanner_expressions/number_spellings.a",
+    "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+    "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a"
+  ],
+  "main_witnesses": [
+    "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "internal/oracle/testdata/plain_data_spread.a",
+    "internal/oracle/testdata/static_constructor_spread_gap.a",
+    "internal/oracle/testdata/static_constructor_spread_owned.a",
+    "internal/oracle/testdata/template_nullish.a"
+  ]
+}

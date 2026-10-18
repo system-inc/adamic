@@ -1,0 +1,10 @@
+--- internal/lower/view_unions_primitive_brands.go
++++ internal/lower/view_unions_primitive_brands.go
+@@ -39,6 +39,7 @@
+ }
+ 
+ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
++ if true { return nil }
+ 	primitive, objects := l.phantomParts(proven)
+ 	if primitive == nil {
+ 		return nil

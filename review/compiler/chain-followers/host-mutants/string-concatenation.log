@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a:3:13: stage 0 can't lower a BinaryExpression with a string and a value yet
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.081s
+FAIL
