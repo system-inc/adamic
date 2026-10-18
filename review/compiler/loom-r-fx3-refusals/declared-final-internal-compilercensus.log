@@ -1,0 +1,7 @@
+=== RUN   TestDependenciesCoverTheDeclaredMap
+=== PAUSE TestDependenciesCoverTheDeclaredMap
+=== CONT  TestDependenciesCoverTheDeclaredMap
+    dependencies_test.go:121: 15 declared, each derived among the census's 81
+--- PASS: TestDependenciesCoverTheDeclaredMap (0.47s)
+PASS
+ok  	github.com/system-inc/adamic/internal/compilercensus	0.475s

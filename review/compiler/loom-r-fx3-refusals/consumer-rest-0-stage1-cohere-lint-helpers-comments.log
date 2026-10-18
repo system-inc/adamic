@@ -1,0 +1,9 @@
+=== RUN   TestJsxParserGapIsExplicit
+=== PAUSE TestJsxParserGapIsExplicit
+=== CONT  TestJsxParserGapIsExplicit
+    comments_test.go:89: build comments-native 7bc00c346c18 hit 0.13
+    comments_test.go:206: build go_build_cohere_/workspace/adamic/cohere/adamic_comments_oracle.go_go-oracle-owner-v1 ac07bce64abb hit 0.22
+    comments_test.go:235: 4 valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately
+--- PASS: TestJsxParserGapIsExplicit (3.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	3.087s

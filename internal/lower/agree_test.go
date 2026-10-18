@@ -73,9 +73,16 @@ type nativeAgreementProgram struct {
 // fetches, so a runner that reads products and never builds them
 // (ADAMIC_BUILD_CACHE=read) finds every binary. A program not here has no product.
 var nativeAgreementPrograms = map[string]nativeAgreementProgram{
-	"RegExpUnicodeClassSource": {source: "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
-	"RegExpSlashClassSource":   {source: "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
-	"RegExpEscapedSlashSource": {source: "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"},
+	"ArrayNarrowingOptionalNumber":  {source: "const items: (number | undefined)[] = [1, 2];\nif (items.every(value => value !== undefined)) console.log('total ' + items.reduce((a, b) => a + b, 0));\n"},
+	"ArrayNarrowingOptionalString":  {source: "const items: (string | undefined)[] = ['a', 'b'];\nif (items.every(value => value !== undefined)) console.log(items.join(''));\n"},
+	"ArrayNarrowingSomeNegated":     {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['a', 'b', 1];\nitems.pop();\nif (!items.some(isNumber)) {\n let text = '';\n for (const value of items) if (typeof value === 'string') text += value;\n console.log(text);\n}\n"},
+	"ArrayNarrowingFindLastIndex":   {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['x', 2, 4];\nconsole.log('index ' + items.findLastIndex(isNumber));\n"},
+	"ArrayNarrowingPreservedUnion":  {source: "function isScalar(value: string | number | boolean): value is string | number { return typeof value !== 'boolean'; }\nconst items: (string | number | boolean)[] = [1, 'b'];\nif (items.every(isScalar)) {\n for (const value of items) console.log(typeof value === 'number' ? 'number ' + value : value);\n}\n"},
+	"ArrayNarrowingBooleanCallback": {source: "const items: (string | number)[] = [1, 2, 'discard'];\nitems.pop();\nconsole.log(String(items.every((value): boolean => typeof value === 'number')));\n"},
+	"FX5MixedLiteral":               {source: "const items: (string | number)[] = [1, 'a'];\nconsole.log(`${typeof items[0]} ${items[0]}`);\nconsole.log(`${typeof items[1]} ${items[1]}`);\n"},
+	"RegExpUnicodeClassSource":      {source: "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
+	"RegExpSlashClassSource":        {source: "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
+	"RegExpEscapedSlashSource":      {source: "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"},
 	"TypedArrayFromArray": {source: `const values = new Uint8Array([1, 2]);
 console.log(values.length.toString());
 for (const value of values) { console.log(value.toString()); }

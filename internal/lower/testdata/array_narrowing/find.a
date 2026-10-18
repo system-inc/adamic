@@ -1,0 +1,4 @@
+function isNumber(value: string | number): value is number { return typeof value === 'number'; }
+const items: (string | number)[] = ['x', 2, 4];
+const found = items.find(isNumber);
+if (found !== undefined) console.log('found ' + found + ' / double ' + found * 2);

@@ -1,0 +1,8 @@
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== CONT  TestBuildRevisions
+    command_test.go:340: build admission-compiler: admission compiler is cmd/adamic-admission-delta TestProduct_AdmissionCompiler's to build
+--- FAIL: TestBuildRevisions (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.021s
+FAIL
