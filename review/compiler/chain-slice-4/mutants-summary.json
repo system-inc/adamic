@@ -1,0 +1,266 @@
+{
+  "count": 46,
+  "mutants": [
+    {
+      "member": "generic-body-relations",
+      "mutant": "drop-body",
+      "catcher": "dependent body semantic assertion",
+      "log": "generic-mutants/drop-body.log"
+    },
+    {
+      "member": "generic-body-relations",
+      "mutant": "drop-witness",
+      "catcher": "resolved witness semantic assertion",
+      "log": "generic-mutants/drop-witness.log"
+    },
+    {
+      "member": "generic-body-relations",
+      "mutant": "drop-mapper",
+      "catcher": "indexed mapper acceptance assertion",
+      "log": "generic-mutants/drop-mapper.log"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "numeric identity becomes 17",
+      "catcher": "Node stdout in native and JavaScript"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "optional number becomes undefined",
+      "catcher": "Node stdout in native and JavaScript"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "array callback optional number becomes undefined",
+      "catcher": "Node stdout in native and JavaScript"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "unique root double count",
+      "catcher": "audit root assertion"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "binder selection admits concrete names",
+      "catcher": "audit scoped binder assertion"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "unescaped union markdown",
+      "catcher": "audit refusal table parser assertion"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "missing enclosing binder parents",
+      "catcher": "independent parameters assertion"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "changed overlap allowed",
+      "catcher": "resume overlap assertion"
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "moved site treated as retirement",
+      "catcher": "retirement root assertion"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "next reread",
+      "catcher": "Node stdout in both backends",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "completion value enters body",
+      "catcher": "Node stdout in both backends",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close skipped on break",
+      "catcher": "Node stdout in both backends",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close on next throw",
+      "catcher": "Node stdout in both backends",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close throw replaces original",
+      "catcher": "Node stdout in both backends",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close skipped on outer continue",
+      "catcher": "Node stdout in both backends",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "snapshot-view",
+      "catcher": "Node stdout"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "strong-weak-slot",
+      "catcher": "ASan SEGV"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "allow-intrinsic-write",
+      "catcher": "intrinsic iterator refusal assertion"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "widen-mutable-element",
+      "catcher": "nested mutable slot refusal assertion"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "wrong snapshot reason",
+      "catcher": "exact NotYet snapshot assertion"
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "element-access-old-stop",
+      "catcher": "indexed NodeArray acceptance assertion"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "drop-transitive",
+      "catcher": "TestProjectReferencesTransitive: transitive",
+      "log": "loader-mutants/drop-transitive/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "declarations-only",
+      "catcher": "TestProjectLoaderReferenceSources: TS6305",
+      "log": "loader-mutants/declarations-only/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "allow-conflicts",
+      "catcher": "TestProjectReferencesConflictingOptions: want",
+      "log": "loader-mutants/allow-conflicts/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "drop-reference-audit",
+      "catcher": "TestProjectReferencesAudit: admitted",
+      "log": "loader-mutants/drop-reference-audit/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "duplicate-roots",
+      "catcher": "TestProjectReferencesDiamond: duplicate",
+      "log": "loader-mutants/duplicate-roots/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "physical-prelude",
+      "catcher": "TestProjectReferencesSharedPrelude: physical prelude console",
+      "log": "loader-mutants/physical-prelude/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "allow-cycle",
+      "catcher": "TestProjectReferencesCycle: circular",
+      "log": "loader-mutants/allow-cycle/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "entry-types-only",
+      "catcher": "TestProjectReferencesTypesUnion: ambient types union lost",
+      "log": "loader-mutants/entry-types-only/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "audit-entry-types-only",
+      "catcher": "TestProjectReferencesTypesUnion: audit lost ambient types union",
+      "log": "loader-mutants/audit-entry-types-only/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "skip-union-declarations",
+      "catcher": "TestProjectReferencesTypesUnionDuplicateSkipped: want both checker duplicate declarations",
+      "log": "loader-mutants/skip-union-declarations/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "audit-skip-union-declarations",
+      "catcher": "TestProjectReferencesTypesUnionDuplicateSkipped: want ordinary duplicate declarations",
+      "log": "loader-mutants/audit-skip-union-declarations/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "project-node-roots",
+      "catcher": "TestProjectLoaderNodeImportsKeepReferenceRoots: discarded referenced",
+      "log": "loader-mutants/project-node-roots/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "standalone-node-prelude",
+      "catcher": "TestProjectLoaderStandaloneNodeKeepsPrelude: lost prelude",
+      "log": "loader-mutants/standalone-node-prelude/test.log"
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "ordinary-project-old-selection",
+      "catcher": "mixed file build assertion",
+      "log": "loader-mutants/ordinary-project-old-selection/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "skip-finally",
+      "catcher": "stdout differs",
+      "log": "generator-mutants/skip-finally/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "delegate-return",
+      "catcher": "stdout differs",
+      "log": "generator-mutants/delegate-return/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "defer-default",
+      "catcher": "stdout differs",
+      "log": "generator-mutants/defer-default/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "first-next-argument",
+      "catcher": "stdout differs",
+      "log": "generator-mutants/first-next-argument/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "forget-pattern-parameter",
+      "catcher": "want the retained whole parameter's cycle refusal",
+      "log": "generator-mutants/forget-pattern-parameter/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "admit-cycle",
+      "catcher": "LeakSanitizer",
+      "log": "generator-mutants/admit-cycle/test.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "borrow local across suspension",
+      "catcher": "ASan heap-use-after-free",
+      "log": "oracle-members-final.log"
+    },
+    {
+      "member": "generators-main",
+      "mutant": "borrow parameter across suspension",
+      "catcher": "ASan heap-use-after-free",
+      "log": "oracle-members-final.log"
+    }
+  ]
+}

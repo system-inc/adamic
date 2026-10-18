@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "field-pure-load",
+    "exit": 1,
+    "catcher": "protocol accessor must leave the receiver escaped"
+  },
+  {
+    "mutant": "method-pure-load",
+    "exit": 1,
+    "catcher": "protocol accessor must leave the receiver escaped"
+  },
+  {
+    "mutant": "unowned-oracle-operand",
+    "exit": 1,
+    "catcher": "unapproved call-target read internal/oracle/iteration_dispatch_mutant_test.go:TestIterationDispatchMutants:CallClosure.Closure"
+  }
+]

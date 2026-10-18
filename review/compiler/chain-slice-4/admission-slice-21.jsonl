@@ -1,0 +1,60 @@
+{"kind":"accepted","path":"internal/oracle/testdata/review/refused/fxspptb_e23c7ab_v8_divergence.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_e4eec87_u02_optional_absent.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_e4eec87_u02_optional_absent.a:8:25: Adamic 0.1 refuses optional property value in Reading absent from structural source { label: string; }, which can hide fields; declare value on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"}
+{"kind":"accepted","path":"internal/oracle/testdata/review/refused/fxspptb_iterators_hidden_return.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/review/refused/fxspptb_iterators_override_this.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_iterators_sym_keys_view.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_iterators_sym_keys_view.a:14:12: Adamic 0.1 refuses a structural Object.keys view that can hide an iterable literal's symbol-key storage (adamic/symbol-key-view); pass a new plain object containing only the desired string-keyed fields to Object.keys"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p05_helper_second_parameter.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p05_helper_second_parameter.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"kind":"NotYet","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p12_find_undefined_target.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p12_find_undefined_target.a:5:15: stage 0 can't lower find predicate result representation conversion from string to undefined; use a loop with an explicit narrowed result yet"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p13_filter_wrong_parameter_helper.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p13_filter_wrong_parameter_helper.a:8:27: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument \"g\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+{"kind":"NotYet","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p21_find_inferred_number.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p21_find_inferred_number.a:2:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a:2:17: stage 0 can't lower filter predicate element representation conversion from boxed union to string; use a loop with an explicit narrowed copy yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p23_find_declared_predicate.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p23_find_declared_predicate.a:5:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a","reason":": Adamic 0.1 refuses checked view read of field compute with unsupported callable contract; prove or implement the callable contract before reading this field"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p48_callable_destructure_wrong.a","reason":": Adamic 0.1 refuses checked view read of field compute with unsupported callable contract; prove or implement the callable contract before reading this field"}
+{"kind":"NotYet","path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a","reason":": stage 0 can't lower checked view union arm awaits views-v3: array element kind yet"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p75_callable_from_map_value.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p75_callable_from_map_value.a:10:17: Adamic 0.1 refuses checked view read of field compute with unsupported callable contract; prove or implement the callable contract before reading this field"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_oct9_views_p76_union_member_class_field.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p76_union_member_class_field.a:14:15: Adamic 0.1 refuses checked view read of field value with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_p06_helper_second_parameter_undefined.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"kind":"NotYet","path":"internal/oracle/testdata/review/refused/fxspptb_p24_filter_proven_number.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_p24_filter_proven_number.a:5:17: stage 0 can't lower filter predicate element representation conversion from boxed union to number; use a loop with an explicit narrowed copy yet"}
+{"kind":"Refused","path":"internal/oracle/testdata/review/refused/non_null.a","reason":"/workspace/adamic/internal/oracle/testdata/review/refused/non_null.a:1:23: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_accessor.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_bound_method.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_callbacks.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_recursive.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_sort_values.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_try_loop.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_unknown.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/route_targets_virtual_fresh.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/runtime_last_index_of.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/scanner_nested_overload.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/search_from.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/search_from_sweep.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/search_halves.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/searches.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/self_assignments.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_arrays.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_closures.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_fnexpr.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_keep.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_keys.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_named_closures.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_named_keys.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_named_more.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_named_objects.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_numbers.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_foreach_objects.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_maybe_numbers.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/set_undefined.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/sets.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/shadowing.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/shared_slice_append.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/shared_slices.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/size_class_churn.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/sort_releases.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/sort_top_level.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/sorting.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/sorts.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/splice_empty.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/splices.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/spread_calls.a","reason":""}

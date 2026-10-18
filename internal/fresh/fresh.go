@@ -1271,6 +1271,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(expression.Name)
 		}
 		return a.fresh(anyField, value{})
+	case ir.GeneratorFrame:
+		return a.value(expression.Value)
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {
@@ -1362,6 +1364,12 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}
+	case ir.IteratorMethod:
+		// Protocol lookup can invoke an accessor and captures its receiver.
+		return a.call([]value{a.value(expression.Object)}, ir.Closure)
+	case ir.IteratorField:
+		// A result field can be an accessor with arbitrary effects.
+		return a.call([]value{a.value(expression.Object)}, expression.Type())
 	case ir.Property:
 		return a.load(a.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:

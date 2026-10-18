@@ -1,0 +1,12 @@
+=== RUN   TestStep16OptionalResultMutant
+=== PAUSE TestStep16OptionalResultMutant
+=== CONT  TestStep16OptionalResultMutant
+    step16_generics_test.go:143: gate cache node miss
+    step16_generics_test.go:167: gate cache node miss
+    step16_generics_test.go:175: present generic number changed to undefined caught by Node stdout in both backends; valid optional ABI, no sanitizer findings or leaks
+--- PASS: TestStep16OptionalResultMutant (1.28s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.299s

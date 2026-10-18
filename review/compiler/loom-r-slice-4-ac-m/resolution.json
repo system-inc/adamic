@@ -1,0 +1,45 @@
+{
+  "base": "5a94465370ea0172e25aae8c13478e59e40c2bb4",
+  "source": "f353ac21ba3bba9c45f6f85b5bedb283a98d43b3",
+  "conflicts": [
+    {
+      "path": "internal/lower/functions.go",
+      "hunk": "signature: destructured incoming parameter",
+      "main": "Keep heldAs selection of ir.String for string parameters, from a43b4e9b.",
+      "branch": "After allocating the typed incoming local, call noteLocal for generators so the whole parameter participates in cycle rejection.",
+      "main_lines_reverted": []
+    },
+    {
+      "path": "internal/lower/object.go",
+      "hunk": "elementType: contextual array element representation",
+      "main": "Keep the union-typed array built from a narrower literal refusal and nonempty contextual storage including Weak, from 49414912.",
+      "branch": "Resolve the contextual readonlyArrayView before checking its array storage, and unwrap readonly views of arrayType. Replace the else-if header with separate contextual handling to allow that normalization.",
+      "main_lines_reverted": [
+        "The contextual else-if header is replaced to perform readonly view normalization first; its refusal and storage logic remain."
+      ]
+    },
+    {
+      "path": "internal/oracle/counts.md",
+      "hunk": "entire conflicted generated table",
+      "resolution": "Restore main verbatim, regenerate once with Linux clang 20.1.8 using TestCountsAreRecorded -update-counts, audit 59 changed keys against source own rows."
+    }
+  ],
+  "runtime_extra_lines": [],
+  "assumptions": [
+    "The latest explicit full touched-package request supersedes earlier focused-only testing instructions.",
+    "Use fetched main 5a944653, newer than the supplied 5179838b.",
+    "Preserve both string representation and whole-generator-parameter ownership; unwrap readonly array views before applying main layout checks."
+  ],
+  "reader_repairs": [
+    {
+      "from_path": "internal/oracle/testdata/review/refused/fxspptb_iterators_hidden_return.a",
+      "to_path": "internal/oracle/testdata/review/agree/fxspptb_iterators_hidden_return.a",
+      "reason": "The new iterator dispatch correctly lowers this former refusal. Preserve its exact bytes and require Node agreement instead, per the review corpus README."
+    },
+    {
+      "from_path": "internal/oracle/testdata/review/refused/fxspptb_iterators_override_this.a",
+      "to_path": "internal/oracle/testdata/review/agree/fxspptb_iterators_override_this.a",
+      "reason": "The new iterator dispatch correctly lowers this former refusal. Preserve its exact bytes and require Node agreement instead, per the review corpus README."
+    }
+  ]
+}

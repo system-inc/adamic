@@ -1,0 +1,60 @@
+[
+  {
+    "path": "stage3/fixtures/iteration/generator.a",
+    "command": [
+      "/tmp/adamic-slice4-ac",
+      "build",
+      "stage3/fixtures/iteration/generator.a",
+      "-o",
+      "/tmp/adamic-slice4-counts/generator",
+      "--count"
+    ],
+    "result": "pass",
+    "recorded": [
+      14,
+      14,
+      33,
+      35,
+      13,
+      0
+    ],
+    "measured": [
+      14,
+      14,
+      33,
+      35,
+      13,
+      0
+    ],
+    "seconds": 4.447209690000022
+  },
+  {
+    "path": "stage3/fixtures/iteration/delegated_generator.a",
+    "command": [
+      "/tmp/adamic-slice4-ac",
+      "build",
+      "stage3/fixtures/iteration/delegated_generator.a",
+      "-o",
+      "/tmp/adamic-slice4-counts/delegated_generator",
+      "--count"
+    ],
+    "result": "pass",
+    "recorded": [
+      20,
+      20,
+      70,
+      74,
+      15,
+      0
+    ],
+    "measured": [
+      20,
+      20,
+      70,
+      74,
+      15,
+      0
+    ],
+    "seconds": 1.0193549489999896
+  }
+]

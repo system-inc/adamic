@@ -1,0 +1,398 @@
+{
+  "count": 49,
+  "mutants": [
+    {
+      "member": "generic-body-relations",
+      "mutant": "drop-body",
+      "catcher": "dependent body semantic assertion",
+      "historical_log": "generic-mutants/drop-body.log",
+      "current_log": "review/compiler/loom-r-slice-4/generic-mutants/drop-body.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generic-body-relations",
+      "mutant": "drop-witness",
+      "catcher": "resolved witness semantic assertion",
+      "historical_log": "generic-mutants/drop-witness.log",
+      "current_log": "review/compiler/loom-r-slice-4/generic-mutants/drop-witness.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generic-body-relations",
+      "mutant": "drop-mapper",
+      "catcher": "indexed mapper acceptance assertion",
+      "historical_log": "generic-mutants/drop-mapper.log",
+      "current_log": "review/compiler/loom-r-slice-4/generic-mutants/drop-mapper.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "numeric identity becomes 17",
+      "catcher": "Node stdout in native and JavaScript",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-3.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "optional number becomes undefined",
+      "catcher": "Node stdout in native and JavaScript",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-3.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "array callback optional number becomes undefined",
+      "catcher": "Node stdout in native and JavaScript",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/scout-array-result.go.txt.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "unique root double count",
+      "catcher": "audit root assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/mutant-run-6.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "binder selection admits concrete names",
+      "catcher": "audit scoped binder assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/mutant-run-6.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "unescaped union markdown",
+      "catcher": "audit refusal table parser assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/mutant-run-6.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "missing enclosing binder parents",
+      "catcher": "independent parameters assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/mutant-run-6.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "changed overlap allowed",
+      "catcher": "resume overlap assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/mutant-run-6.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generics-scout-main",
+      "mutant": "moved site treated as retirement",
+      "catcher": "retirement root assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/mutant-run-6.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "next reread",
+      "catcher": "Node stdout in both backends",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-2.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "completion value enters body",
+      "catcher": "Node stdout in both backends",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-2.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close skipped on break",
+      "catcher": "Node stdout in both backends",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-2.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close on next throw",
+      "catcher": "Node stdout in both backends",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-2.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close throw replaces original",
+      "catcher": "Node stdout in both backends",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-2.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "close skipped on outer continue",
+      "catcher": "Node stdout in both backends",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-2.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "snapshot-view",
+      "catcher": "Node stdout",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/iteration-mutants/snapshot-view.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "strong-weak-slot",
+      "catcher": "ASan SEGV",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/iteration-mutants/strong-weak-slot.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "allow-intrinsic-write",
+      "catcher": "intrinsic iterator refusal assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/iteration-mutants/allow-intrinsic-write.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "widen-mutable-element",
+      "catcher": "nested mutable slot refusal assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/iteration-mutants/widen-mutable-element.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "wrong snapshot reason",
+      "catcher": "exact NotYet snapshot assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/iteration-snapshot.go.txt.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "iteration-main",
+      "mutant": "element-access-old-stop",
+      "catcher": "indexed NodeArray acceptance assertion",
+      "historical_log": null,
+      "current_log": "review/compiler/loom-r-slice-4/element-access-old-stop.go.txt.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "drop-transitive",
+      "catcher": "TestProjectReferencesTransitive: transitive",
+      "historical_log": "loader-mutants/drop-transitive/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/drop-transitive/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "declarations-only",
+      "catcher": "TestProjectLoaderReferenceSources: TS6305",
+      "historical_log": "loader-mutants/declarations-only/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/declarations-only/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "allow-conflicts",
+      "catcher": "TestProjectReferencesConflictingOptions: want",
+      "historical_log": "loader-mutants/allow-conflicts/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/allow-conflicts/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "drop-reference-audit",
+      "catcher": "TestProjectReferencesAudit: admitted",
+      "historical_log": "loader-mutants/drop-reference-audit/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/drop-reference-audit/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "duplicate-roots",
+      "catcher": "TestProjectReferencesDiamond: duplicate",
+      "historical_log": "loader-mutants/duplicate-roots/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/duplicate-roots/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "physical-prelude",
+      "catcher": "TestProjectReferencesSharedPrelude: physical prelude console",
+      "historical_log": "loader-mutants/physical-prelude/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/physical-prelude/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "allow-cycle",
+      "catcher": "TestProjectReferencesCycle: circular",
+      "historical_log": "loader-mutants/allow-cycle/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/allow-cycle/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "entry-types-only",
+      "catcher": "TestProjectReferencesTypesUnion: ambient types union lost",
+      "historical_log": "loader-mutants/entry-types-only/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/entry-types-only/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "audit-entry-types-only",
+      "catcher": "TestProjectReferencesTypesUnion: audit lost ambient types union",
+      "historical_log": "loader-mutants/audit-entry-types-only/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/audit-entry-types-only/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "skip-union-declarations",
+      "catcher": "TestProjectReferencesTypesUnionDuplicateSkipped: want both checker duplicate declarations",
+      "historical_log": "loader-mutants/skip-union-declarations/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/skip-union-declarations/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "audit-skip-union-declarations",
+      "catcher": "TestProjectReferencesTypesUnionDuplicateSkipped: want ordinary duplicate declarations",
+      "historical_log": "loader-mutants/audit-skip-union-declarations/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/audit-skip-union-declarations/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "project-node-roots",
+      "catcher": "TestProjectLoaderNodeImportsKeepReferenceRoots: discarded referenced",
+      "historical_log": "loader-mutants/project-node-roots/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/project-node-roots/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "standalone-node-prelude",
+      "catcher": "TestProjectLoaderStandaloneNodeKeepsPrelude: lost prelude",
+      "historical_log": "loader-mutants/standalone-node-prelude/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/standalone-node-prelude/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "project-references-main",
+      "mutant": "ordinary-project-old-selection",
+      "catcher": "mixed file build assertion",
+      "historical_log": "loader-mutants/ordinary-project-old-selection/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/loader-mutants/ordinary-project-old-selection/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "skip-finally",
+      "catcher": "stdout differs",
+      "historical_log": "generator-mutants/skip-finally/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/generator-mutants/skip-finally/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "delegate-return",
+      "catcher": "stdout differs",
+      "historical_log": "generator-mutants/delegate-return/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/generator-mutants/delegate-return/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "defer-default",
+      "catcher": "stdout differs",
+      "historical_log": "generator-mutants/defer-default/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/generator-mutants/defer-default/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "first-next-argument",
+      "catcher": "stdout differs",
+      "historical_log": "generator-mutants/first-next-argument/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/generator-mutants/first-next-argument/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "forget-pattern-parameter",
+      "catcher": "want the retained whole parameter's cycle refusal",
+      "historical_log": "generator-mutants/forget-pattern-parameter/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/generator-mutants/forget-pattern-parameter/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "admit-cycle",
+      "catcher": "LeakSanitizer",
+      "historical_log": "generator-mutants/admit-cycle/test.log",
+      "current_log": "review/compiler/loom-r-slice-4/generator-mutants/admit-cycle/test.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "borrow local across suspension",
+      "catcher": "ASan heap-use-after-free",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-1.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "generators-main",
+      "mutant": "borrow parameter across suspension",
+      "catcher": "ASan heap-use-after-free",
+      "historical_log": "oracle-members-final.log",
+      "current_log": "review/compiler/loom-r-slice-4/internal-oracle-1.jsonl",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "freshness reconciliation",
+      "mutant": "field-pure-load",
+      "catcher": "TestIteratorFieldAccessorEscapesReceiver: receiver escape assertion",
+      "historical_log": "field-pure-load.log",
+      "current_log": "review/compiler/loom-r-slice-4/field-pure-load.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "freshness reconciliation",
+      "mutant": "method-pure-load",
+      "catcher": "TestIteratorMethodAccessorEscapesReceiver: receiver escape assertion",
+      "historical_log": "method-pure-load.log",
+      "current_log": "review/compiler/loom-r-slice-4/method-pure-load.log",
+      "caught_in_this_recut": true
+    },
+    {
+      "member": "reader audit reconciliation",
+      "mutant": "unowned oracle operand",
+      "catcher": "TestCallTargetReaders: unapproved call-target read",
+      "historical_log": "reader-audit.log",
+      "current_log": "review/compiler/loom-r-slice-4/reader-audit.log",
+      "caught_in_this_recut": true
+    }
+  ],
+  "observed_in_this_recut": true
+}

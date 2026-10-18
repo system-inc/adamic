@@ -1,0 +1,45 @@
+// Reduced from binder.ts:432 and types.ts:1589; mutation and ownership probes are authored.
+interface NodeArray<T> extends ReadonlyArray<T> {}
+interface DerivedNodes<T> extends NodeArray<T> {}
+function text(value: number): string { return 'node:' + String(value); }
+function visit<T>(nodes: DerivedNodes<T>, accept: (value: T) => void): void {
+    for (const node of nodes) { accept(node); }
+}
+const values: string[] = [text(1), text(2)];
+let nodes: DerivedNodes<string> = values;
+const held: (() => string)[] = [];
+let count = 0;
+for (let node of nodes) {
+    held.push(() => node);
+    console.log(node);
+    if (count === 0) {
+        values.push(text(3));
+        nodes = [text(9)];
+        count++;
+        continue;
+    }
+    if (count === 1) { values.pop(); values.push(text(4)); }
+    count++;
+}
+for (const get of held) { console.log(get()); }
+visit(nodes, value => console.log(value));
+function removeCurrent(view: NodeArray<string>, mutable: string[]): void {
+    for (const value of view) { mutable.pop(); console.log(value); break; }
+}
+removeCurrent([text(5)], []);
+const current: string[] = [text(6)];
+removeCurrent(current, current);
+let calls = 0;
+function empty(): NodeArray<string> { calls++; return []; }
+for (const value of empty()) { console.log(value); }
+console.log('calls:' + String(calls));
+function first(view: NodeArray<string>): string {
+    for (const value of view) { return value; }
+    return 'empty';
+}
+console.log(first([text(7)]));
+try {
+    for (const value of nodes) { throw new Error(value); }
+} catch (error) {
+    if (error instanceof Error) { console.log(error.message); }
+}

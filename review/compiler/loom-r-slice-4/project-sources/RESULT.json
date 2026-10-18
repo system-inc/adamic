@@ -1,0 +1,34 @@
+{
+  "observations": {
+    "two": {
+      "fresh": {
+        "entries": 1,
+        "loaded": true
+      },
+      "built": {
+        "entries": 1,
+        "loaded": true
+      },
+      "stock_output": "7\n",
+      "native_output": "7\n",
+      "javascript_output": "7\n",
+      "bad_source": "unused.ts:1:14: TS2322"
+    },
+    "chain": {
+      "fresh": {
+        "entries": 1,
+        "loaded": true
+      },
+      "built": {
+        "entries": 1,
+        "loaded": true
+      },
+      "stock_output": "7\n",
+      "native_output": "7\n",
+      "javascript_output": "7\n",
+      "bad_source": "unused.ts:1:14: TS2322"
+    }
+  },
+  "mutants_caught": [],
+  "logs": "/workspace/adamic/review/compiler/loom-r-slice-4/project-sources"
+}

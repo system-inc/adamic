@@ -1,0 +1,658 @@
+[
+  {
+    "path": "internal/lower/testdata/generic_body_relations/refused.a",
+    "status": "refused",
+    "reason": "generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "exit": 1,
+    "seconds": 0.12030606500000829,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/lower/testdata/generic_body_relations/refused.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/basic.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11712336099999732,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/basic.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/cancellation.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.1181263570000084,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/cancellation.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/captures.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11922988899999609,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/captures.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/checker.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11442171699999903,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/checker.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/close.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06423977099998979,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/close.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/completions.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11401031500000158,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/completions.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/default_error.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11468205100000262,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/default_error.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/defaults.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06683037600001285,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/defaults.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/delegate.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.21683208099999263,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/delegate.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/delegate_throw.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11703393000000517,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/delegate_throw.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/first_reference.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11635346900000343,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/first_reference.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/map_iterator.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11892236099998854,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/map_iterator.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/owned.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11500889399999892,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/owned.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/reentrant.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11751381699998831,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/reentrant.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generators/throw.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.068442490999999,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generators/throw.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generic_body_indexed.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06470316400000797,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generic_body_indexed.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/generic_body_read.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06612960900000076,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/generic_body_read.a.stderr.log"
+  },
+  {
+    "path": "internal/oracle/testdata/notyet/generator_cycle.a",
+    "status": "refused",
+    "reason": "cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator",
+    "exit": 1,
+    "seconds": 0.06602491200000316,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/internal/oracle/testdata/notyet/generator_cycle.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/01_identity.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06964131099999804,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/01_identity.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/02_optional_return.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07236290000000167,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/02_optional_return.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/03_callback_return.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06457781999999668,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/03_callback_return.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/04_function_value.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/generics/04_function_value.a:3:60: stage 0 can't lower a generic function as a value yet",
+    "exit": 1,
+    "seconds": 0.07061622200001239,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/04_function_value.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/05_nested_class.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07196400899999844,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/05_nested_class.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/06_polymorphic_recursion.a",
+    "status": "refused",
+    "reason": "a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type",
+    "exit": 1,
+    "seconds": 0.06454221100000268,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/06_polymorphic_recursion.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/07_generic_cast.a",
+    "status": "refused",
+    "reason": "a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "seconds": 0.06673120299998914,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/07_generic_cast.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/08_readonly_view.a",
+    "status": "refused",
+    "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "seconds": 0.06628043000000616,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/08_readonly_view.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/09_recursive_optional.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06471539199999654,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/09_recursive_optional.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/10_identifier_multimap.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06750870800000541,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/10_identifier_multimap.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/11_indexed_result.a",
+    "status": "refused",
+    "reason": "generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "exit": 1,
+    "seconds": 0.06876818300000309,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/11_indexed_result.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+    "status": "refused",
+    "reason": "generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "exit": 1,
+    "seconds": 0.11792768300000489,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/12_mixed_indexed_result.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/13_constrained_local.a",
+    "status": "refused",
+    "reason": "generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "exit": 1,
+    "seconds": 0.06517019599999685,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/13_constrained_local.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/14_optional_literal_union.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06778941599999655,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/14_optional_literal_union.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/generics/15_array_callback.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06724671900001056,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/generics/15_array_callback.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/body_throw.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06578926699999954,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/body_throw.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/break.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06483016399999997,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/break.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/cached_next.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.1184222979999987,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/cached_next.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/class.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06468219200000647,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/class.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07009186900000941,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/close_throw_body.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06403992700001027,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/close_throw_break.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/completion.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06487103700000318,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/completion.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/done_throw.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06409972600000913,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/done_throw.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06427829399999041,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/labeled_continue.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/method_getters.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06710312800001361,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/method_getters.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/next_throw.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06597984399999746,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/next_throw.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_callable_next.a",
+    "status": "refused",
+    "reason": "a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "seconds": 0.06528285499999242,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/non_callable_next.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_close.a",
+    "status": "refused",
+    "reason": "a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "seconds": 0.0667814690000057,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/non_object_close.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_iterator.a",
+    "status": "refused",
+    "reason": "a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "seconds": 0.06603107099999761,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/non_object_iterator.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_step.a",
+    "status": "refused",
+    "reason": "a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "seconds": 0.06477695499999925,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/non_object_step.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/object.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06784098299999641,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/object.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/return.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06581863700000667,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/return.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/value_throw.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07088897200000588,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration-dispatch/value_throw.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/accessor_binding.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/iteration/accessor_binding.a:24:10: stage 0 can't lower a for...of destructuring an object yet",
+    "exit": 1,
+    "seconds": 0.06509037499999692,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/accessor_binding.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/array_view_stress.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11768629000000885,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/array_view_stress.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/array_view_variance.a",
+    "status": "refused",
+    "reason": "a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "seconds": 0.06506954900000039,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/array_view_variance.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/array_view_weak.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06750955399999725,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/array_view_weak.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/collections.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06487237900000764,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/collections.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/delegated_generator.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.1346929440000082,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/delegated_generator.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/generator.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06932675299999858,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/generator.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+    "status": "refused",
+    "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+    "exit": 1,
+    "seconds": 0.06438162999999975,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/intrinsic_iterator_alias.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+    "status": "refused",
+    "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+    "exit": 1,
+    "seconds": 0.06401656600000649,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/intrinsic_iterator_prototype.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+    "status": "refused",
+    "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+    "exit": 1,
+    "seconds": 0.06469551200000012,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/intrinsic_iterator_write.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/iterable_view.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/iteration/iterable_view.a:4:25: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet",
+    "exit": 1,
+    "seconds": 0.06841032900000243,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/iterable_view.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/object_binding.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/iteration/object_binding.a:3:6: stage 0 can't lower a for...of destructuring an object yet",
+    "exit": 1,
+    "seconds": 0.06991566800000726,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/object_binding.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/object_binding_stress.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/iteration/object_binding_stress.a:42:10: stage 0 can't lower a for...of destructuring an object yet",
+    "exit": 1,
+    "seconds": 0.11569466499999237,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/object_binding_stress.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/object_iteration.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11861427099999844,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/object_iteration.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/strings.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.1211577919999911,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/strings.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/test262_array_views.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11801410399999668,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/test262_array_views.a.stderr.log"
+  },
+  {
+    "path": "stage3/fixtures/iteration/user_forwarding.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11416666200000236,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/fixtures/iteration/user_forwarding.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-loader/fixture/app/main.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07321349699999757,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-loader/fixture/app/main.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-loader/fixture/dependency/value.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11434681600000829,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-loader/fixture/dependency/value.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/chain/app/main-print.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.1189336549999922,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/chain/app/main-print.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/chain/app/main.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06516395200000602,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/chain/app/main.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/chain/leaf/base.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06724559200000613,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/chain/leaf/base.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/chain/leaf/unused.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07215931800000419,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/chain/leaf/unused.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/chain/middle/value.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06416032799999982,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/chain/middle/value.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/two/app/main.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.07656864499999472,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/two/app/main.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/two/dependency/value.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.11609740000000102,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/two/dependency/value.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/types/app/main.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06501161799999977,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/types/app/main.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/types/dependency/value.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06645040099999733,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/types/dependency/value.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/types/packages/dependency.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06783450300000027,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/types/packages/dependency.a.stderr.log"
+  },
+  {
+    "path": "stage3/project-references-source/fixture/types/packages/entry.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "seconds": 0.06418141799998978,
+    "diagnostics": "review/compiler/loom-r-slice-4-ac/diagnostics/stage3/project-references-source/fixture/types/packages/entry.a.stderr.log"
+  }
+]

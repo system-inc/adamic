@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:14:56.006880472Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-18T19:14:56.011652595Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused"}
+{"Time":"2026-10-18T19:14:56.011774318Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused","Output":"=== RUN   TestFX5NumberLiteralRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:14:56.01182831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused","Output":"=== PAUSE TestFX5NumberLiteralRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:14:56.011831464Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused"}
+{"Time":"2026-10-18T19:14:56.011838625Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused"}
+{"Time":"2026-10-18T19:14:56.011841339Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused","Output":"=== CONT  TestFX5NumberLiteralRefused\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:14:56.045148389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused","Output":"    fx5_literal_test.go:16: want narrow refusal at literal main.a:1:36 with fix, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-18T19:14:56.045223773Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused","Output":"--- FAIL: TestFX5NumberLiteralRefused (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:14:56.045232225Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFX5NumberLiteralRefused","Elapsed":0.03}
+{"Time":"2026-10-18T19:14:56.045260478Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:14:56.047126052Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.040s\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:14:56.047145772Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.04}

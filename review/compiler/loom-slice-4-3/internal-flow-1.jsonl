@@ -1,0 +1,40 @@
+{"Time":"2026-10-16T08:28:40.92722976Z","Action":"start","Package":"github.com/system-inc/adamic/internal/flow"}
+{"Time":"2026-10-16T08:28:40.939709883Z","Action":"run","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker"}
+{"Time":"2026-10-16T08:28:40.939800319Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"=== RUN   TestGeneratorChecker\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.939830855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"=== PAUSE TestGeneratorChecker\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.939833158Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker"}
+{"Time":"2026-10-16T08:28:40.939837004Z","Action":"run","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference"}
+{"Time":"2026-10-16T08:28:40.939839268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"=== RUN   TestGeneratorFirstReference\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.939841872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"=== PAUSE TestGeneratorFirstReference\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.939843574Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference"}
+{"Time":"2026-10-16T08:28:40.939845647Z","Action":"run","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions"}
+{"Time":"2026-10-16T08:28:40.939847149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"=== RUN   TestGeneratorCompletions\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.939849163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"=== PAUSE TestGeneratorCompletions\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.939850895Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions"}
+{"Time":"2026-10-16T08:28:40.939852558Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker"}
+{"Time":"2026-10-16T08:28:40.93985412Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"=== CONT  TestGeneratorChecker\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.942628871Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions"}
+{"Time":"2026-10-16T08:28:40.94264874Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"=== CONT  TestGeneratorCompletions\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:40.942656202Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference"}
+{"Time":"2026-10-16T08:28:40.942658065Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"=== CONT  TestGeneratorFirstReference\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:41.131968291Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"    generators_test.go:77: 29 functions: 3 phis, 29 values, 97 uses checked\n"}
+{"Time":"2026-10-16T08:28:41.133663729Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"    generators_test.go:67: 7 functions: 5 phis, 24 values, 39 uses checked\n"}
+{"Time":"2026-10-16T08:28:41.164680089Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"    generators_test.go:72: 10 functions: 1 phis, 10 values, 34 uses checked\n"}
+{"Time":"2026-10-16T08:28:41.245173886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"    generators_test.go:72: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges\n"}
+{"Time":"2026-10-16T08:28:41.304014098Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"    generators_test.go:77: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges\n"}
+{"Time":"2026-10-16T08:28:41.320333757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"    generators_test.go:67: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges\n"}
+{"Time":"2026-10-16T08:28:41.354800864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"    generators_test.go:72: 163 points walked, 184 events\n"}
+{"Time":"2026-10-16T08:28:41.461364366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"    generators_test.go:72: 66 variable-and-point pairs checked\n"}
+{"Time":"2026-10-16T08:28:41.461424096Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Output":"--- PASS: TestGeneratorFirstReference (0.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:41.500997352Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorFirstReference","Elapsed":0.52}
+{"Time":"2026-10-16T08:28:41.501071644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"    generators_test.go:67: 359 points walked, 374 events\n"}
+{"Time":"2026-10-16T08:28:41.501131043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"    generators_test.go:77: 318 points walked, 385 events\n"}
+{"Time":"2026-10-16T08:28:41.627995704Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"    generators_test.go:67: 206 variable-and-point pairs checked\n"}
+{"Time":"2026-10-16T08:28:41.628040842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Output":"--- PASS: TestGeneratorChecker (0.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:41.630195741Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorChecker","Elapsed":0.69}
+{"Time":"2026-10-16T08:28:41.630210053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"    generators_test.go:77: 304 variable-and-point pairs checked\n"}
+{"Time":"2026-10-16T08:28:41.630490965Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Output":"--- PASS: TestGeneratorCompletions (0.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:41.630522502Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Test":"TestGeneratorCompletions","Elapsed":0.69}
+{"Time":"2026-10-16T08:28:41.630525807Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:41.640704947Z","Action":"output","Package":"github.com/system-inc/adamic/internal/flow","Output":"ok  \tgithub.com/system-inc/adamic/internal/flow\t0.713s\n"}
+{"Time":"2026-10-16T08:28:41.640749154Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/flow","Elapsed":0.714}

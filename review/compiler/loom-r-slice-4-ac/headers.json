@@ -1,0 +1,146 @@
+[
+  {
+    "path": "internal/lower/testdata/generic_body_relations/refused.a",
+    "old_header": "",
+    "header": "// a-check: refused generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "body_sha256": "5c51f96405ed42405fa497c2c22a12ada380807a53b3697f57d83141e5d62579",
+    "before_sha256": "5c51f96405ed42405fa497c2c22a12ada380807a53b3697f57d83141e5d62579",
+    "after_sha256": "72d0377b79bf704200a73835dc5a188a4e21422a72c16a9e938a23de4052a3b2"
+  },
+  {
+    "path": "internal/oracle/testdata/notyet/generator_cycle.a",
+    "old_header": "// a-check: refused cycle-capable generator frame slot saved without weak",
+    "header": "// a-check: refused cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator",
+    "body_sha256": "9f8052ded26e7e7d244a0f8a26ffe97d4a01ae4b58ef02fdbfabc1a1ec4de46b",
+    "before_sha256": "cd1304f71b81152cfc0996d4b78deecf098bbda8121630833568648b04619011",
+    "after_sha256": "83d823cf3724ebbf459085463140e272625c2281f3ff93118c14546b24dd10c1"
+  },
+  {
+    "path": "stage3/fixtures/generics/06_polymorphic_recursion.a",
+    "old_header": "// a-check: refused polymorphic recursion",
+    "header": "// a-check: refused a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type",
+    "body_sha256": "18cac621986a6c9edfce1e743f91811f91f75506731de2e89ef424220534ffb2",
+    "before_sha256": "ea07da7422b81a142f0261be86441531e3704e3a5f5d2e1b41fb6176a1fd41eb",
+    "after_sha256": "1a00441a396c73d314d9b78076239bcd3f94ecf67ce33fd62d07dfa5ae2ef76b"
+  },
+  {
+    "path": "stage3/fixtures/generics/07_generic_cast.a",
+    "old_header": "// a-check: refused a cast the runtime can't check",
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "42d6814eb10752c0030070474693f2c848cf1dcfa450d9064a4480b242248b41",
+    "before_sha256": "557922d57d2182f7a0f0cc9ae3147c20164daf2c14f165fef63ea7d27d960575",
+    "after_sha256": "f5a6ad3217bfad913357875dad41fa8b90ca3c09421656c176c90590c43d4c80"
+  },
+  {
+    "path": "stage3/fixtures/generics/08_readonly_view.a",
+    "old_header": "// a-check: refused whose readonly field pos becomes writable",
+    "header": "// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "41f484aef444f8fbe414f561c43884c0637bb5e1bb37442e864b93af982a9e17",
+    "before_sha256": "8d7d1ac6afa568d7e5e1a7e5e0df43bffbf2fa5a47d9fcb7cde8336766dc2c8e",
+    "after_sha256": "fe1c20414b854cf7cd417a4eab78374ee6e11f3f8a09e295ff45a8cd27a511ed"
+  },
+  {
+    "path": "stage3/fixtures/generics/11_indexed_result.a",
+    "old_header": "",
+    "header": "// a-check: refused generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "body_sha256": "9eb68d3772b96f213ba8b399d8f9f8800f5dbaa74f19d73f0c686e46fbc85b7b",
+    "before_sha256": "9eb68d3772b96f213ba8b399d8f9f8800f5dbaa74f19d73f0c686e46fbc85b7b",
+    "after_sha256": "b32b4fef3baf96d9f3c23576d248c60a82d09f683dbd0bde12b6e89a90c9a7ae"
+  },
+  {
+    "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+    "old_header": "",
+    "header": "// a-check: refused generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "body_sha256": "752c9ecfd68492c3381b519753f07d7cecc7faea479ede52c8f4262be182c76f",
+    "before_sha256": "752c9ecfd68492c3381b519753f07d7cecc7faea479ede52c8f4262be182c76f",
+    "after_sha256": "3d2137bb382adacbfb428436021b92979b59e7691004e2e71d20308c5c12ad0a"
+  },
+  {
+    "path": "stage3/fixtures/generics/13_constrained_local.a",
+    "old_header": "",
+    "header": "// a-check: refused generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+    "body_sha256": "dfe015b1ea28869c3b31470c1a4438f8ca647feba13f3df6d319e781ba3fb019",
+    "before_sha256": "dfe015b1ea28869c3b31470c1a4438f8ca647feba13f3df6d319e781ba3fb019",
+    "after_sha256": "09ba88144344b1dfd94e470496f58a111988bee2191b3e5ff86afcee3ca02433"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_callable_next.a",
+    "old_header": "// a-check: refused adamic/no-unchecked-cast",
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "3d9a8513e6c01ed2c32c9fe3e069b512b9368e2d28082321c81baef71e6c7cf7",
+    "before_sha256": "899e89d9c3b84ba70cf35130e61c8681db1b8f616afd3f673306f8b66a6457df",
+    "after_sha256": "a16b4e94528e70032eb311dda34549b79168a19ba47e98abc548a5cee1cd11df"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_close.a",
+    "old_header": "// a-check: refused adamic/no-unchecked-cast",
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "2e9d2ac8aaa3735aebb8b247af32a973a34a90179fbca4dc40ac9ac0854a6a07",
+    "before_sha256": "010ae70c928946fd7e5c15676fb01ff4a137a0a3cfb8c552f786ca3d3dcd774e",
+    "after_sha256": "ba4c19d195c1db3cd6c1a2f0e552562aeaa571fe09b3048b97e0964a4f3c05eb"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_iterator.a",
+    "old_header": "// a-check: refused adamic/no-unchecked-cast",
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "63b3a4c0b825e38797eebbef41bc3ff019c8a9b1dddcb8b035b257bea0d953d7",
+    "before_sha256": "1e7379cf7ad833b30b26131c33c755bf28e911a24b0a035e9326c50f78394fb4",
+    "after_sha256": "1b0c952024f445433aa4ed85bcedfc2539e4cda5c37b01dd2db7bbd5dc86a954"
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_step.a",
+    "old_header": "// a-check: refused adamic/no-unchecked-cast",
+    "header": "// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "body_sha256": "42ccbb290a48271032aea477215194c1347c3af563408f329f93b033ca4589fc",
+    "before_sha256": "2a4b7f5f8e888bf5ae2afcb464280b4c11a314474085c3e997bd556da9613d4d",
+    "after_sha256": "93142e26d8519e641fc57a6c257af8d9058f9317ae801ca36fd237fdfad4ab94"
+  },
+  {
+    "path": "stage3/fixtures/iteration/array_view_variance.a",
+    "old_header": "// a-check: refused adamic/invariant-mutable",
+    "header": "// a-check: refused a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "body_sha256": "85866798feb10d281cdd8ca12413f02cd1ae97631c8b06fa1f0b4f3303a401a2",
+    "before_sha256": "d98c6c89af57e0333ce2267f8f5ba4026b036282eda046f54d53b8137ffdc63c",
+    "after_sha256": "fdb1650c18ed082559a64744aab24b5d14d880c61725c55830a00e80a87330e6"
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+    "old_header": "// a-check: refused adamic/intrinsic-iterator",
+    "header": "// a-check: refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+    "body_sha256": "ad3ced629f62b585726fe8a222a54095156ab31dcdee537b850a0df45b9229f8",
+    "before_sha256": "b2cc8b37a58eb58d1c98fb5e0775704b0f47be5f678ca7490717ca7dab6b5a32",
+    "after_sha256": "e14865adce1ff31170df1f1f4c9c03887cc581c03ee3f9b9347aa60cea848ba2"
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+    "old_header": "// a-check: refused adamic/intrinsic-iterator",
+    "header": "// a-check: refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+    "body_sha256": "f9e5cfba733f03cd7d54c352d0cec1fc8e72ca71a4c66702f27de95915a86cfc",
+    "before_sha256": "3581796c595077dd37a9e71c91c352b3444a90243a637a71e916ee87543c8cbd",
+    "after_sha256": "3b56a9f0d9770117f5759985de0a9389ea4ed4a8c19db78b837e7a0abb679b14"
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+    "old_header": "// a-check: refused adamic/intrinsic-iterator",
+    "header": "// a-check: refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+    "body_sha256": "073f0132bf5de84f7995378a193bb5fd5d4c5d096c8be55f50e1ba6a2ba381f8",
+    "before_sha256": "ece1531f0b6d8cc41cfe1e80cff802ab26b3ec298a24bd75119f46a1fbc864ad",
+    "after_sha256": "d2a653112f0279501bf618c98919bbd7688f059d1dc5d81e928c23ca2ce05e2e"
+  },
+  {
+    "path": "stage3/fixtures/iteration/delegated_generator.a",
+    "old_header": "// a-check: refused a generator function",
+    "header": "",
+    "body_sha256": "bab62e02c9675f6c385ad55062b5e321c15bbfd5bc240a02547422842a90ecfe",
+    "before_sha256": "5c91abf9257ce8949848a591c03450009021f5b7eec5331531b10f0faf384515",
+    "after_sha256": "bab62e02c9675f6c385ad55062b5e321c15bbfd5bc240a02547422842a90ecfe"
+  },
+  {
+    "path": "stage3/fixtures/iteration/generator.a",
+    "old_header": "// a-check: refused a generator function",
+    "header": "",
+    "body_sha256": "60d913c58b77e323f56eee997d0d5aabfa93b57bdbc66ef458ce08e8d9f1c7b1",
+    "before_sha256": "384b3527685c7bc3099944789b64c941ed9eff950354234ec5126994d9dbc7cc",
+    "after_sha256": "60d913c58b77e323f56eee997d0d5aabfa93b57bdbc66ef458ce08e8d9f1c7b1"
+  }
+]

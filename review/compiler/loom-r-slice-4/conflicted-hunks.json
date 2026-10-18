@@ -1,0 +1,27 @@
+[
+  {
+    "path": "cloud/fast-gate/compiler-dependencies.json",
+    "main": "    \"stage1/cohere/executable\": [\"internal/load\", \"internal/lower\", \"internal/native\", \"internal/javascript\", \"internal/ir\", \"internal/flow\", \"cmd/adamic\"],\n    \"stage3/lane\": [\"internal/load\", \"internal/lower\", \"internal/native\", \"internal/javascript\", \"internal/ir\", \"internal/flow\", \"cmd/adamic\"]\n",
+    "source": "    \"stage3/project-loader/probe\": [\"internal/load\"]\n"
+  },
+  {
+    "path": "internal/ir/call_targets_guard_test.go",
+    "main": "\t// leakcheck imports native and is otherwise listed only as a dependency of native's\n\t// external test variant. Name it directly so its ordinary import path has export data.\n\treturn buildcache.GoExports(t, \"./internal/native\", \"./internal/lower\", \"./internal/fresh\", \"./internal/flow\", \"./internal/leakcheck\")\n",
+    "source": "\treturn buildcache.GoExports(t, \"./internal/native\", \"./internal/lower\", \"./internal/fresh\", \"./internal/flow\", \"./internal/oracle\")\n"
+  },
+  {
+    "path": "internal/lower/exceptions.go",
+    "main": "\t\tcase ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:\n",
+    "source": "\t\tcase ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:\n"
+  },
+  {
+    "path": "internal/lower/exceptions.go",
+    "main": "\t\tcase ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:\n",
+    "source": "\t\tcase ir.IteratorMethod, ir.IteratorField, ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.MapForEach:\n"
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "main": "\tast.KindYieldExpression:   {\"yield (generators)\", \"build an array, or call a function per item\"},\n",
+    "source": "\tast.KindAwaitExpression:   {\"await\", \"0.1 has no async; it arrives with the concurrency model\"},\n"
+  }
+]
