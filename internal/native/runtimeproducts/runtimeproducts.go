@@ -66,6 +66,7 @@ type Variant struct {
 var Variants = []Variant{
 	{"sanitized", native.Options{Sanitize: true}, ""},
 	{"release", native.Options{}, ""},
+	{"shipped", native.Options{Release: true}, ""},
 	{"counted", native.Options{Count: true}, ""},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, "ADAMIC_ORACLE_WASI"},
 }

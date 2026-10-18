@@ -23,6 +23,8 @@ type commandRuntimeSpec struct {
 }
 
 var commandRuntimes = []commandRuntimeSpec{
+	{"shipped", native.Options{Release: true}, nil, "internal/oracle TestProduct_NativeRuntimesShipped0"},
+	{"counted", native.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
 	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, nil, "internal/oracle TestProduct_NativeRuntimesWASI0"},
 	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, nil, ""},
@@ -35,6 +37,10 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 	// Request selects the link ABI only. Flags and therefore the runtime key are
 	// identical to an ordinary WASI build, whose existing archive we reuse.
 	options.Request = false
+	// Release does not change these archives, so find their existing products.
+	if options.Count || options.Sanitize || options.ThreadSanitize || options.Target != "" {
+		options.Release = false
+	}
 	declared := slices.ContainsFunc(commandRuntimes, func(product commandRuntimeSpec) bool {
 		return product.options == options && slices.Equal(product.features, request.Features)
 	})
@@ -77,6 +83,14 @@ func commandRuntimeProduct(t *testing.T, name string) {
 	t.Fatalf("no command runtime product %s", name)
 }
 
+func TestProduct_CommandRuntimeShipped(t *testing.T) {
+	t.Parallel()
+	commandRuntimeProduct(t, "shipped")
+}
+func TestProduct_CommandRuntimeCounted(t *testing.T) {
+	t.Parallel()
+	commandRuntimeProduct(t, "counted")
+}
 func TestProduct_CommandRuntimeSanitized(t *testing.T) {
 	t.Parallel()
 	commandRuntimeProduct(t, "sanitized")
