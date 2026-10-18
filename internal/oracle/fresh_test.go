@@ -26,6 +26,9 @@ func TestFreshWriteProbesStayRefused(t *testing.T) {
 		t.Fatalf("found only %d probes", len(probes))
 	}
 	for _, probe := range probes {
+		if _, owned := freshClobberOutputs[filepath.Base(probe)]; owned {
+			continue // Each new witness has its own bounded top-level test.
+		}
 		t.Run(filepath.Base(probe), func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(probe)
