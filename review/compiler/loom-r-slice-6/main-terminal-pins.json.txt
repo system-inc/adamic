@@ -1,0 +1,67 @@
+[
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_047cb0d_n_element_plain.a",
+    "sha256": "1eb94d37614330494f21b0d61e405183d067c9de231941e780b7356f1816c25c",
+    "reason": "main terminal representation check"
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_047cb0d_n_element.a",
+    "sha256": "37e4e5c76731a999d9153d9435be8299a0486a45d2c173fe306486085a1d60a8",
+    "reason": "main terminal representation check"
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_047cb0d_n_element_method.a",
+    "sha256": "6f32b516bef7bd318bebb855eff6a8186e16f71a8d96acdd421831499006588a",
+    "reason": "main terminal representation check"
+  },
+  {
+    "path": "internal/oracle/testdata/async_coverage_reject_nested.a",
+    "sha256": "10fa813d2cb2ec049cf3b55944492e3a2db9e890a866486b9b3a5e3cdaea4262",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/namespaces_unknown_write_before.a",
+    "sha256": "32d4a539c31220adb40189c4a4e1cb0d0f4e4eff5228539f7567c72e03538a52",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/element_access_presence.a",
+    "sha256": "3056e90354f2749fb53b5fb5ea34c701b1bb4f524b8e677bf6f6005cf00f94f3",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/namespaces_unknown_void_before.a",
+    "sha256": "79a5b5970dfaf5e59ab89c34066973391d0725625fa61bc12c577b6fe2106d26",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/async_coverage_reject_eager.a",
+    "sha256": "bc4f5ce41f6731e5e3ffa96ed16047bf22c7314b3ee5119e4c989067a1a3f111",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/async_coverage_reject_empty.a",
+    "sha256": "7f68067134db38d0405c91ee6fcc620d5eccdce69d786efe76aeb3a64054e9ad",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/namespaces_unknown_enum_before.a",
+    "sha256": "32388d9f7258d18f4b557bf6ae69fffc4f20a17b8b5c124c7e8dd089666a0892",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/namespaces_unknown_before.a",
+    "sha256": "4f1be7b872b6d8c72ab38b60a6241ed370a09e77a02fb486b37e0603b657653a",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/async_throw.a",
+    "sha256": "6c3e00e7233b1131d43ca9e746748fc2b9f035daf6560a37555d03f81c8386fd",
+    "reason": "main terminal native check"
+  },
+  {
+    "path": "internal/oracle/testdata/namespaces_unknown_function_before.a",
+    "sha256": "78153a5b9e1f38ef774091542042ba449691052c55984e0959ac066e47394b3d",
+    "reason": "main terminal native check"
+  }
+]

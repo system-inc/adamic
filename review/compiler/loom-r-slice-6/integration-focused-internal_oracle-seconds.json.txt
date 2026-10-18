@@ -1,0 +1,44 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNodeFSRmForceUndefinedReproducer",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestEnumCleanupMutant",
+    "Elapsed": 3.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestParserNamespaceClassRegistrationMutant",
+    "Elapsed": 3.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestLibraryMethodAliasReadMutant",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestModuleNamespaceReadinessMutants/direct_early",
+    "Elapsed": 3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestModuleNamespaceReadinessMutants/early",
+    "Elapsed": 3.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestModuleNamespaceReadinessMutants",
+    "Elapsed": 0
+  }
+]

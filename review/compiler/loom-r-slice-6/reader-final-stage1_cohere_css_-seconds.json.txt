@@ -1,0 +1,2306 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCompositionMatchesGo",
+    "Elapsed": 15.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSThroughput",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestTheCanonicalRangeChecksCanFail",
+    "Elapsed": 18.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestClosedEmptyArrayUnionGap",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestClosedParserRegexGap",
+    "Elapsed": 4.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestClosedOptionalBooleanConditionGap",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterOptimizedMatchesGo_Default",
+    "Elapsed": 48.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterOptimizedMatchesGo_Narrow",
+    "Elapsed": 13.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSParserOptimizedMatchesNode",
+    "Elapsed": 16.76
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestClosedPrinterRegexGap",
+    "Elapsed": 0.9
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSProfileArtifacts",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSProfileSnapshotsAgree",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSGoOraclesKeyTheCompilersEnvGivesGo",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCompositionMatchesGo_Setup",
+    "Elapsed": 1.54
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_300",
+    "Elapsed": 19.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_298",
+    "Elapsed": 17.86
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_301",
+    "Elapsed": 19.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_299",
+    "Elapsed": 19.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_296",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_297",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_295",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_294",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_293",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_292",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_291",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_290",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_289",
+    "Elapsed": 0.55
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_288",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_267",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_287",
+    "Elapsed": 0.62
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_285",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_286",
+    "Elapsed": 0.51
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_283",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_284",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_282",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_281",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_280",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_279",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_278",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_277",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_276",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_275",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_271",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_274",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_273",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_272",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_266",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_268",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_269",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_270",
+    "Elapsed": 0.53
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_263",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_264",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_265",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_262",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_261",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_259",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_260",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_258",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_256",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_257",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_255",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_254",
+    "Elapsed": 0.55
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_252",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_253",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_251",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_250",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_249",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_248",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_247",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_246",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_245",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_244",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_243",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_242",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_241",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_240",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_239",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_238",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_237",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_236",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_235",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_234",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_232",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_233",
+    "Elapsed": 0.64
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_231",
+    "Elapsed": 0.57
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_230",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_228",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_229",
+    "Elapsed": 0.55
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_227",
+    "Elapsed": 0.58
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_226",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_177",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_225",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_224",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_223",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_220",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_222",
+    "Elapsed": 0.68
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_221",
+    "Elapsed": 0.64
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_219",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_217",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_218",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_216",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_215",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_214",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_213",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_212",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_211",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_210",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_209",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_208",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_207",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_206",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_205",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_204",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_202",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_203",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_201",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_199",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_200",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_197",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_198",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_196",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_195",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_194",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_193",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_192",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_190",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_191",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_189",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_187",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_188",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_186",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_185",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_184",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_183",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_182",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_181",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_178",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_180",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_179",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_175",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_174",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_176",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_173",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_044",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_172",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_171",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_170",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_168",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_169",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_167",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_166",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_111",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_165",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_164",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_163",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_162",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_161",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_160",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_158",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_159",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_156",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_157",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_155",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_154",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_153",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_152",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_151",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_149",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_150",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_148",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_147",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_146",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_145",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_144",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_143",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_141",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_140",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_142",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_138",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_137",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_139",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_136",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_134",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_135",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_132",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_133",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_131",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_130",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_129",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_128",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_127",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_124",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_125",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_126",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_123",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_122",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_121",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_119",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_120",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_118",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_117",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_116",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_114",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_115",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_113",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_112",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_110",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_109",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_108",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_107",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_106",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_105",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_060",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_104",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_103",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_102",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_101",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_099",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_100",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_098",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_095",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_096",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_097",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_094",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_092",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_093",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_091",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_090",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_089",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_088",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_087",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_086",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_085",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_081",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_084",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_082",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_083",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_079",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_077",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_078",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_080",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_076",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_073",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_074",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_075",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_072",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_071",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_070",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_069",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_068",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_067",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_066",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_065",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_064",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_063",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_062",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_061",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_059",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_058",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_057",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_055",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_056",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_054",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_053",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_052",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_051",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_050",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_049",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_048",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_047",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_046",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_045",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_022",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_043",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_042",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_041",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_039",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_038",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_040",
+    "Elapsed": 0.7
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_037",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_036",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_035",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_034",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_033",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_032",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_031",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_030",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_029",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_028",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_026",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_027",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_025",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_024",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_023",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_020",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_021",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_019",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_018",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_017",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_016",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_015",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_014",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_013",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_011",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_012",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_010",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_009",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_008",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_007",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_005",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_006",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_004",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_002",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_003",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_Setup",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_001",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoes_000",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserDarwinLeaks",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserClosingBraceMutantNative",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserClosingBraceMutantLowered",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserCommentMutantNative",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserCommentMutantLowered",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserCustomPropertyMutantNative",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserCustomPropertyMutantLowered",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserParserNative",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserParserLowered",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSGoOraclesRekeyCompiler",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSSetupFailuresNameTheFirst",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterChosenWitnessesAreTheSmallest",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSCompositionLowered",
+    "Elapsed": 1.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSCompositionNative",
+    "Elapsed": 2.14
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterAgreesWithGo_113",
+    "Elapsed": 40.1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterWidthMutant",
+    "Elapsed": 49.62
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterMutantThatDiffersNowhereFails",
+    "Elapsed": 52.73
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterMutantWitnessesRekey",
+    "Elapsed": 58.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterWidthMutantWitnesses",
+    "Elapsed": 42.12
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterByteSlicesMatchGo",
+    "Elapsed": 1.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterSemicolonMutantWitnesses",
+    "Elapsed": 28.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterPreflightCost",
+    "Elapsed": 9.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterPrefixCostMutant",
+    "Elapsed": 16.54
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterDarwinLeaks",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterIndentMutant",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterSemicolonMutant",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterSanitizedAndLowered",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSParserMutantThatDiffersNowhereFails",
+    "Elapsed": 1.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSParserMutantWitnessesRekey",
+    "Elapsed": 1.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserClosingBraceMutantWitnesses",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserCommentMutantWitnesses",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserCustomPropertyMutantWitnesses",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterIndentMutantWitnesses",
+    "Elapsed": 59.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterShardingCatchesDisagreement",
+    "Elapsed": 52.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestThePortParsesAsGoCohereDoesUnion",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserReleaseMutant",
+    "Elapsed": 2.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSParserSanitizedRunCatchesALeak",
+    "Elapsed": 2.72
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsCompositionGoOracle",
+    "Elapsed": 2.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserCorpus",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsCompositionCorpusOracle",
+    "Elapsed": 2.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsPrinterOracle",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsPrinterParserOracle",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_7",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_6",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_5",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_4",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_3",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_2",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_1",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSFindsParserPostCSSAnswers_0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSParserOptimizedNative",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestProduct_CSSPrinterOptimizedNative",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css",
+    "Test": "TestCSSPrinterPreflightCostMutant",
+    "Elapsed": 42.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_6",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_5",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_4",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_3",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_2",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_1",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSCompositionCorpusOracle",
+    "Elapsed": 10.54
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSCompositionGoOracle",
+    "Elapsed": 11.58
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_7",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserCorpus",
+    "Elapsed": 12.94
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSPrinterOracle",
+    "Elapsed": 13.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSPrinterParserOracle",
+    "Elapsed": 8.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserGoOracle",
+    "Elapsed": 8.06
+  }
+]

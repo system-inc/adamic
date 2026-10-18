@@ -56,15 +56,17 @@ func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Prog
 func lowersAndAgreesWithNodeNative(t *testing.T, name string) *ir.Program {
 	t.Helper()
 	entry := nativeAgreement(t, name)
-	return agreeSourceNative(t, entry.source, entry.planted(t))
+	return agreeSourceNative(t, entry, entry.planted(t))
 }
 
 // nativeAgreementProgram is a program a native agreement row builds: its source and,
 // for a row that plants a wrong native answer, the change it makes to the C, which
 // fails rather than plants when the C has no site for it.
 type nativeAgreementProgram struct {
-	source string
-	mutate func(code string) (string, error)
+	source     string
+	typescript bool
+	sanitize   bool
+	mutate     func(code string) (string, error)
 }
 
 // nativeAgreementPrograms are every program the native agreement rows build, named
@@ -73,16 +75,21 @@ type nativeAgreementProgram struct {
 // fetches, so a runner that reads products and never builds them
 // (ADAMIC_BUILD_CACHE=read) finds every binary. A program not here has no product.
 var nativeAgreementPrograms = map[string]nativeAgreementProgram{
-	"ArrayNarrowingOptionalNumber":  {source: "const items: (number | undefined)[] = [1, 2];\nif (items.every(value => value !== undefined)) console.log('total ' + items.reduce((a, b) => a + b, 0));\n"},
-	"ArrayNarrowingOptionalString":  {source: "const items: (string | undefined)[] = ['a', 'b'];\nif (items.every(value => value !== undefined)) console.log(items.join(''));\n"},
-	"ArrayNarrowingSomeNegated":     {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['a', 'b', 1];\nitems.pop();\nif (!items.some(isNumber)) {\n let text = '';\n for (const value of items) if (typeof value === 'string') text += value;\n console.log(text);\n}\n"},
-	"ArrayNarrowingFindLastIndex":   {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['x', 2, 4];\nconsole.log('index ' + items.findLastIndex(isNumber));\n"},
-	"ArrayNarrowingPreservedUnion":  {source: "function isScalar(value: string | number | boolean): value is string | number { return typeof value !== 'boolean'; }\nconst items: (string | number | boolean)[] = [1, 'b'];\nif (items.every(isScalar)) {\n for (const value of items) console.log(typeof value === 'number' ? 'number ' + value : value);\n}\n"},
-	"ArrayNarrowingBooleanCallback": {source: "const items: (string | number)[] = [1, 2, 'discard'];\nitems.pop();\nconsole.log(String(items.every((value): boolean => typeof value === 'number')));\n"},
-	"FX5MixedLiteral":               {source: "const items: (string | number)[] = [1, 'a'];\nconsole.log(`${typeof items[0]} ${items[0]}`);\nconsole.log(`${typeof items[1]} ${items[1]}`);\n"},
-	"RegExpUnicodeClassSource":      {source: "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
-	"RegExpSlashClassSource":        {source: "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
-	"RegExpEscapedSlashSource":      {source: "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"},
+	"Step21FreshNumberObservation":           {source: "function numeric(value: number | undefined): string { return value === undefined ? '<undefined>' : Number.isNaN(value) ? 'null' : `${value}`; } console.log(numeric(1)); console.log(numeric(undefined)); console.log(numeric(NaN));", typescript: true, sanitize: true},
+	"Step21NullishNarrowingAfterWritingCall": {source: "interface Box { v: string; } let first: Box | undefined = {v:'before'}; function writeFirst(): void { first={v:'after'}; } writeFirst(); if (first !== undefined) console.log(first.v); let second: Box | null = {v:'before'}; function writeSecond(): void { second={v:'after'}; } writeSecond(); if (null !== second) console.log(second.v); let third: Box | undefined = {v:'before'}; function writeThird(): void { third={v:'after'}; } writeThird(); if (third === undefined) console.log('missing'); else console.log(third.v);"},
+	"RegExpHugeRepeat":                       {source: "const matches = /a{18446744073709551616}/.test('a'); console.log(String(matches));"},
+	"Step21NonWritingCallControl":            {source: "// commandLineParser.ts:2297 unknown recovery, extended with a stale nominal narrowing.\nlet value: unknown = new TypeError(`initial${1}`);\nlet other: unknown;\nfunction change(): void { other = new Error(`replacement${2}`); }\ntry {\n    if (value instanceof TypeError) {\n        change();\n        console.log(value.name);\n    }\n}\ncatch { console.log('caught'); }\nfinally { console.log('finally'); }\n"},
+	"Step21NarrowAgainAfterWritingCall":      {source: "let value: unknown = new TypeError('first'); function change(): void { value = new Error('second'); } if (value instanceof TypeError) { change(); if (value instanceof TypeError) console.log(value.name); } console.log('after');"},
+	"ArrayNarrowingOptionalNumber":           {source: "const items: (number | undefined)[] = [1, 2];\nif (items.every(value => value !== undefined)) console.log('total ' + items.reduce((a, b) => a + b, 0));\n"},
+	"ArrayNarrowingOptionalString":           {source: "const items: (string | undefined)[] = ['a', 'b'];\nif (items.every(value => value !== undefined)) console.log(items.join(''));\n"},
+	"ArrayNarrowingSomeNegated":              {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['a', 'b', 1];\nitems.pop();\nif (!items.some(isNumber)) {\n let text = '';\n for (const value of items) if (typeof value === 'string') text += value;\n console.log(text);\n}\n"},
+	"ArrayNarrowingFindLastIndex":            {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['x', 2, 4];\nconsole.log('index ' + items.findLastIndex(isNumber));\n"},
+	"ArrayNarrowingPreservedUnion":           {source: "function isScalar(value: string | number | boolean): value is string | number { return typeof value !== 'boolean'; }\nconst items: (string | number | boolean)[] = [1, 'b'];\nif (items.every(isScalar)) {\n for (const value of items) console.log(typeof value === 'number' ? 'number ' + value : value);\n}\n"},
+	"ArrayNarrowingBooleanCallback":          {source: "const items: (string | number)[] = [1, 2, 'discard'];\nitems.pop();\nconsole.log(String(items.every((value): boolean => typeof value === 'number')));\n"},
+	"FX5MixedLiteral":                        {source: "const items: (string | number)[] = [1, 'a'];\nconsole.log(`${typeof items[0]} ${items[0]}`);\nconsole.log(`${typeof items[1]} ${items[1]}`);\n"},
+	"RegExpUnicodeClassSource":               {source: "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
+	"RegExpSlashClassSource":                 {source: "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
+	"RegExpEscapedSlashSource":               {source: "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"},
 	"TypedArrayFromArray": {source: `const values = new Uint8Array([1, 2]);
 console.log(values.length.toString());
 for (const value of values) { console.log(value.toString()); }
@@ -133,8 +140,8 @@ func (entry nativeAgreementProgram) planted(t agreementTesting) func(string) str
 func TestProduct_LowerAgreementNative(t *testing.T) {
 	t.Parallel()
 	for _, entry := range nativeAgreementPrograms {
-		program := lowerAgreementEntry(t, writeAgreementSource(t, entry.source))
-		if _, err := buildAgreementNative(agreementNativeCode(program, entry.planted(t))); err != nil {
+		program := lowerAgreementEntry(t, writeAgreementProgramSource(t, entry))
+		if _, err := buildAgreementNative(agreementNativeCode(program, entry.planted(t)), native.Options{Sanitize: entry.sanitize}); err != nil {
 			t.Fatalf("Native build: %v", err)
 		}
 	}
@@ -142,12 +149,12 @@ func TestProduct_LowerAgreementNative(t *testing.T) {
 
 // The mutation seam changes only C, after JavaScript agreement, so planted native
 // answers prove this leg independently of the JavaScript comparison.
-func agreeSourceNative(t agreementTesting, source string, mutate func(string) string) *ir.Program {
+func agreeSourceNative(t agreementTesting, entry nativeAgreementProgram, mutate func(string) string) *ir.Program {
 	t.Helper()
-	path := writeAgreementSource(t, source)
+	path := writeAgreementProgramSource(t, entry)
 	program := agreeEntry(t, path, lowerAgreementEntry(t, path), 0, nil, nil)
 	want := runAgreementNode(t, path)
-	got := runAgreementNative(t, agreementNativeCode(program, mutate))
+	got := runAgreementNative(t, agreementNativeCode(program, mutate), native.Options{Sanitize: entry.sanitize})
 	compareNativeAgreement(t, got, want)
 	return program
 }
@@ -165,8 +172,7 @@ func agreementNativeCode(program *ir.Program, mutate func(string) string) string
 // buildAgreementNative is the one recipe for a native agreement binary: the product
 // test builds it ahead and runAgreementNative fetches it, so the key can't drift
 // between them. It returns the product's directory, which holds the binary as native.
-func buildAgreementNative(code string) (string, error) {
-	options := native.Options{}
+func buildAgreementNative(code string, options native.Options) (string, error) {
 	flags := append(native.Flags(options), fmt.Sprintf("C=%x", sha256.Sum256([]byte(code))),
 		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	// The shared build-product cache hashes C contents, runtime and build code,
@@ -181,9 +187,9 @@ func buildAgreementNative(code string) (string, error) {
 	})
 }
 
-func runAgreementNative(t agreementTesting, code string) nodeObservation {
+func runAgreementNative(t agreementTesting, code string, options native.Options) nodeObservation {
 	t.Helper()
-	directory, err := buildAgreementNative(code)
+	directory, err := buildAgreementNative(code, options)
 	if err != nil {
 		t.Fatalf("Native build: %v", err)
 	}
@@ -223,6 +229,19 @@ func compareNativeAgreement(t agreementTesting, got, want nodeObservation) {
 func agreeSource(t agreementTesting, source string, exit int, mutate func(*ir.Program)) *ir.Program {
 	t.Helper()
 	return agreeEntry(t, writeAgreementSource(t, source), nil, exit, nil, mutate)
+}
+
+func writeAgreementProgramSource(t agreementTesting, entry nativeAgreementProgram) string {
+	t.Helper()
+	path := writeAgreementSource(t, entry.source)
+	if entry.typescript {
+		renamed := strings.TrimSuffix(path, ".a") + ".ts"
+		if err := os.Rename(path, renamed); err != nil {
+			t.Fatal(err)
+		}
+		path = renamed
+	}
+	return path
 }
 
 func writeAgreementSource(t agreementTesting, source string) string {
@@ -319,6 +338,10 @@ func compareAgreement(t agreementTesting, got, want nodeObservation) {
 	}
 	if got.code != want.code {
 		t.Fatalf("JavaScript backend exit = %d, source Node = %d", got.code, want.code)
+	}
+	// Step 21 language exceptions compare stdout and exit 1; engine stack rendering is excluded.
+	if got.code == 1 {
+		return
 	}
 	if got.code != 0 {
 		firstLine := func(value []byte) string { return strings.SplitN(string(value), "\n", 2)[0] }
@@ -425,7 +448,7 @@ func recordNativeAgreementFailure(t *testing.T, name string) string {
 				}
 			}
 		}()
-		agreeSourceNative(recorder, entry.source, entry.planted(t))
+		agreeSourceNative(recorder, entry, entry.planted(t))
 	}()
 	return recorder.message
 }

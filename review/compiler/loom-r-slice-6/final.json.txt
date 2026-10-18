@@ -1,0 +1,628 @@
+{
+  "rows": {
+    "internal/lower/testdata/step21_builtin_narrow_control.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4827,
+      "stdout_sha256": "182c1567a9eedae1cf2475eb7e40382fc80d6147ff80b313079db6fd550a34f6",
+      "seconds": 0.093666,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/inherited_fields_guard.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5856,
+      "stdout_sha256": "f9b57ffe92f722a5ca300f64928efc31741857fd3a453a286806a5ac7195d8d2",
+      "seconds": 0.069683,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/lowering_chain_tdz_catch.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4740,
+      "stdout_sha256": "7a836a3f39c2b2aa6dc3ea0de4d9a8ea68cd5657cd16c636ebc72f82011337da",
+      "seconds": 0.12018,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_57f2d04_with_frozen.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10156,
+      "stdout_sha256": "a3240a485c3163f5d5dcbff0e7c0b3862d5e1f5de52a5a60733a56103f641231",
+      "seconds": 0.043317,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_903f25b_try_assign.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4901,
+      "stdout_sha256": "9ccd41f69bde15a02f07b14e4e0a338113e74276bbf89f64589abf52ce4f6faf",
+      "seconds": 0.10208,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_9984394_lib_dispatch.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9101,
+      "stdout_sha256": "bf8466fe779d31d14cc314ac4cef4690723a801d24d021c9ad5c3712edccdf84",
+      "seconds": 0.076974,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_047cb0d_n_arrayindex.a": {
+      "status": "refused",
+      "reason": "a narrowed read of list after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_047cb0d_n_arrayindex.a:8:17: Adamic 0.1 refuses a narrowed read of list after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.055184,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of list after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_047cb0d_n_arrayindex.a:8:17: Adamic 0.1 refuses a narrowed read of list after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_047cb0d_n_try.a": {
+      "status": "refused",
+      "reason": "a narrowed read of chain after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_047cb0d_n_try.a:13:18: Adamic 0.1 refuses a narrowed read of chain after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.090412,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of chain after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_047cb0d_n_try.a:13:18: Adamic 0.1 refuses a narrowed read of chain after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_9984394_defined_in_try.a": {
+      "status": "refused",
+      "reason": "a narrowed read of current after clear() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_9984394_defined_in_try.a:15:19: Adamic 0.1 refuses a narrowed read of current after clear() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.101597,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of current after clear() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_9984394_defined_in_try.a:15:19: Adamic 0.1 refuses a narrowed read of current after clear() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_e4eec87_f2_union_narrow_call.a": {
+      "status": "refused",
+      "reason": "a narrowed read of shared after toNumber() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_e4eec87_f2_union_narrow_call.a:13:34: Adamic 0.1 refuses a narrowed read of shared after toNumber() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.047326,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of shared after toNumber() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_e4eec87_f2_union_narrow_call.a:13:34: Adamic 0.1 refuses a narrowed read of shared after toNumber() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_e4eec87_f2b_union_narrow_number.a": {
+      "status": "refused",
+      "reason": "a narrowed read of shared after toText() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_e4eec87_f2b_union_narrow_number.a:13:32: Adamic 0.1 refuses a narrowed read of shared after toText() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.088481,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of shared after toText() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/review/refused/fxspptb_e4eec87_f2b_union_narrow_number.a:13:32: Adamic 0.1 refuses a narrowed read of shared after toText() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_catch_callback.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6472,
+      "stdout_sha256": "6f947b88be7b2b5e5c2404efdc4a66a52daf963ce7abfe9a6f596c1612b73309",
+      "seconds": 0.100279,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_dynamic.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 32085,
+      "stdout_sha256": "91358cbd2baeeaf3d1e2c559f9b2b96bb3a10bc960b5146ce2ac0a6a32a2eba0",
+      "seconds": 0.112053,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_dynamic_uncaught.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1305,
+      "stdout_sha256": "58c4afb6cae0c157306c6d5b5e879406a800758380cb7ab463a6249cc5a1dfbe",
+      "seconds": 0.073188,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_error_subclasses.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 35636,
+      "stdout_sha256": "79d525967d8dd8ec35521647fd7b78aff6011eca05ad520dfe13f6d01b4d5b16",
+      "seconds": 0.120102,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_finally_callback.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 14018,
+      "stdout_sha256": "95864f9b1510578b7719cff2c5dd69818443980317fba534e3d1f8b123b4f52c",
+      "seconds": 0.066407,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_finally_completion.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6716,
+      "stdout_sha256": "764807c08e92a8805e198c6c1e4cc6bb02a13200a35293ba389a59ae680646a1",
+      "seconds": 0.074111,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_library_failures.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 28063,
+      "stdout_sha256": "baa2d663c4b358f500b11f32f5cbdf359b6d913c15f25d401bf3929b99fed0da",
+      "seconds": 0.097253,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_library_host.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 13917,
+      "stdout_sha256": "5cd4c648b7a5543620022cf3388b2c0c98c9c4dae34730c32008a331b953e031",
+      "seconds": 0.464325,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_library_types.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 26199,
+      "stdout_sha256": "12eacdd565c5b439614acb1e8d2c6d93f0b35f7a78c62b2a461fcb8488660214",
+      "seconds": 0.099876,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_liveness.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5911,
+      "stdout_sha256": "67e58ba47ca3291e286d2681249da593da6e22a54f1fb86b1a781d9d502c3b47",
+      "seconds": 0.082876,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_object_uncaught.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5745,
+      "stdout_sha256": "0e285d33c20110003b2e119c2c4959bfad8e481356ca4746c8552f4775d77355",
+      "seconds": 0.100754,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_refused/047cb0d_n_arrayindex.a": {
+      "status": "refused",
+      "reason": "a narrowed read of list after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/047cb0d_n_arrayindex.a:8:17: Adamic 0.1 refuses a narrowed read of list after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.11493,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of list after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/047cb0d_n_arrayindex.a:8:17: Adamic 0.1 refuses a narrowed read of list after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/builtin_narrow_terminal.a": {
+      "status": "refused",
+      "reason": "a narrowed read of value after change() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/builtin_narrow_terminal.a:8:21: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.098686,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of value after change() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/builtin_narrow_terminal.a:8:21: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/e4eec87_f2_union_narrow_call.a": {
+      "status": "refused",
+      "reason": "a narrowed read of shared after toNumber() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/e4eec87_f2_union_narrow_call.a:12:34: Adamic 0.1 refuses a narrowed read of shared after toNumber() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.083542,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of shared after toNumber() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/e4eec87_f2_union_narrow_call.a:12:34: Adamic 0.1 refuses a narrowed read of shared after toNumber() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/e4eec87_f2b_union_narrow_number.a": {
+      "status": "refused",
+      "reason": "a narrowed read of shared after toText() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/e4eec87_f2b_union_narrow_number.a:12:32: Adamic 0.1 refuses a narrowed read of shared after toText() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.054882,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of shared after toText() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/e4eec87_f2b_union_narrow_number.a:12:32: Adamic 0.1 refuses a narrowed read of shared after toText() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/narrowed_methods.a": {
+      "status": "refused",
+      "reason": "a narrowed read of box after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_methods.a:20:17: Adamic 0.1 refuses a narrowed read of box after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.09681,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of box after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_methods.a:20:17: Adamic 0.1 refuses a narrowed read of box after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/narrowed_numbers.a": {
+      "status": "refused",
+      "reason": "a narrowed read of count after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_numbers.a:12:17: Adamic 0.1 refuses a narrowed read of count after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.120747,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of count after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_numbers.a:12:17: Adamic 0.1 refuses a narrowed read of count after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/narrowed_reads.a": {
+      "status": "refused",
+      "reason": "a narrowed read of chain after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_reads.a:16:17: Adamic 0.1 refuses a narrowed read of chain after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.04779,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of chain after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_reads.a:16:17: Adamic 0.1 refuses a narrowed read of chain after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/narrowed_union_valid.a": {
+      "status": "refused",
+      "reason": "a narrowed read of shared after keep() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_union_valid.a:12:24: Adamic 0.1 refuses a narrowed read of shared after keep() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.066749,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of shared after keep() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_union_valid.a:12:24: Adamic 0.1 refuses a narrowed read of shared after keep() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/narrowed_writes.a": {
+      "status": "refused",
+      "reason": "a narrowed read of chain after drop() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_writes.a:16:2: Adamic 0.1 refuses a narrowed read of chain after drop() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.086422,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of chain after drop() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/narrowed_writes.a:16:2: Adamic 0.1 refuses a narrowed read of chain after drop() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/regexp_null_narrowed.a": {
+      "status": "refused",
+      "reason": "a narrowed read of result after lose() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/regexp_null_narrowed.a:4:47: Adamic 0.1 refuses a narrowed read of result after lose() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.064389,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of result after lose() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/regexp_null_narrowed.a:4:47: Adamic 0.1 refuses a narrowed read of result after lose() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_refused/step21_soundness_terminal.a": {
+      "status": "refused",
+      "reason": "a narrowed read of value after change() can write it; narrow again after the call",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/step21_soundness_terminal.a:7:63: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.0921,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused a narrowed read of value after change() can write it; narrow again after the call",
+        "first": "adamic: /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/step21_soundness_terminal.a:7:63: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call"
+      }
+    },
+    "internal/oracle/testdata/step21_region_payload.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4282,
+      "stdout_sha256": "301aac5116f9115b95d368080873e8a84fa8963dc060a76d2102775bd3a9e5fa",
+      "seconds": 0.074338,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_rethrow.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10367,
+      "stdout_sha256": "de15820aa1fa74b3dfb5e67ac9ef9d706645bb32fda5fb1ea164146e93890b4c",
+      "seconds": 0.082721,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/step21_saved_error.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 28653,
+      "stdout_sha256": "a92793138f0c7cbda40f0b6a3629a7df78339927f8cd70cc146737aa8392448a",
+      "seconds": 0.102737,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "review/compiler/chain-slice-6/proposals/any_value.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 735,
+      "stdout_sha256": "716dc40833cdc5da9108a33669b44a2bf4915966b34f21c7c967d30e8b1109ab",
+      "seconds": 0.059785,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "review/compiler/chain-slice-6/proposals/error_subclass.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7579,
+      "stdout_sha256": "b3ec617725d68dffa245638c7e22693f6b07ffad18a7df150971d6caf3d076af",
+      "seconds": 0.132102,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "review/compiler/chain-slice-6/proposals/library_failure.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2754,
+      "stdout_sha256": "16b0ba0ac7ec2b124c7fb0001575499e68ec9c380e94ec68b9542fa33e6e4d63",
+      "seconds": 0.120959,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "review/compiler/chain-slice-6/proposals/saved_error.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2815,
+      "stdout_sha256": "4f17710f5dab0a4fe9bc7a30e67a77dc0033c7745e71f74634fdf75ae2db2632",
+      "seconds": 0.122772,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "review/compiler/chain-slice-6/proposals/unknown_read.a": {
+      "status": "type error",
+      "reason": null,
+      "code": "TS18046",
+      "exit": 1,
+      "stderr": "review/compiler/chain-slice-6/proposals/unknown_read.a:3:74: error TS18046: 'error' is of type 'unknown'.\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.115159,
+      "predicate": {
+        "outcome": "type error",
+        "expected": "type error TS18046",
+        "first": "review/compiler/chain-slice-6/proposals/unknown_read.a:3:74: error TS18046: 'error' is of type 'unknown'."
+      }
+    }
+  },
+  "counts": {
+    "checked": 24,
+    "refused": 16,
+    "type error": 1
+  },
+  "exit": 0,
+  "failure": null,
+  "seconds": 4.0,
+  "gate_sha256": "c81d5f29ae6a06c5671fd8caf961828bc040c1f565df0c0f2cb660ce28a29317"
+}

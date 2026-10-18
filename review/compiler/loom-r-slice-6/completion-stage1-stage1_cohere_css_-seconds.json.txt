@@ -1,0 +1,86 @@
+[
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_7",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSCompositionGoOracle",
+    "Elapsed": 2.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSCompositionCorpusOracle",
+    "Elapsed": 2.72
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserCorpus",
+    "Elapsed": 28.92
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_4",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_6",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_5",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_2",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_3",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserPostCSSAnswers_1",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSPrinterParserOracle",
+    "Elapsed": 28.75
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSPrinterOracle",
+    "Elapsed": 28.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/css/oracles",
+    "Test": "TestProduct_CSSParserGoOracle",
+    "Elapsed": 36.29
+  }
+]

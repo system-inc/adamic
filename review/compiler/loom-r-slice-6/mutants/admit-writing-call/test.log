@@ -1,0 +1,8 @@
+=== RUN   TestStep21WritingCallRefusal
+=== PAUSE TestStep21WritingCallRefusal
+=== CONT  TestStep21WritingCallRefusal
+    narrowing_calls_test.go:23: writing-call refusal: got <nil>, want /tmp/adamic-gate/loom-r-slice-6/tree/internal/oracle/testdata/step21_refused/builtin_narrow_terminal.a:8:21: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call
+--- FAIL: TestStep21WritingCallRefusal (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.035s
+FAIL

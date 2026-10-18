@@ -1,0 +1,15 @@
+=== RUN   TestSplitTSGoRuntimeFeatures
+=== PAUSE TestSplitTSGoRuntimeFeatures
+=== CONT  TestSplitTSGoRuntimeFeatures
+    features_test.go:194: build go_build_./bridge/tsgo/archive_tsgo.a f19f444a0b57 hit 0.59
+    features_test.go:226: native: linking units: exit status 1
+        /usr/bin/ld: unit-0.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        /usr/bin/ld: unit-1.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        /usr/bin/ld: unit-2.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        /usr/bin/ld: unit-3.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention_closure_receivers'
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+--- FAIL: TestSplitTSGoRuntimeFeatures (8.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	8.267s
+FAIL

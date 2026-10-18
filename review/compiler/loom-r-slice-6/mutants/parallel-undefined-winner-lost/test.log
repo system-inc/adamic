@@ -1,0 +1,10 @@
+=== RUN   TestParallelUndefinedExceptionSanitized
+=== PAUSE TestParallelUndefinedExceptionSanitized
+=== CONT  TestParallelUndefinedExceptionSanitized
+    step21_parallel_test.go:18: harness threads=1 arguments=[undefined_exception] runs=1 elapsed=60.704001ms
+    step21_parallel_test.go:18: threads=4 attempt=1: signal: aborted
+        
+--- FAIL: TestParallelUndefinedExceptionSanitized (23.72s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	23.744s
+FAIL

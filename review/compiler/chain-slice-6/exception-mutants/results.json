@@ -1,0 +1,629 @@
+[
+  {
+    "name": "missing-exception-edge",
+    "exit": 1,
+    "catcher": "runtime error:",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/missing-exception-edge/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "assignment-kills-handler-value",
+    "exit": 1,
+    "catcher": "old text is dead",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/assignment-kills-handler-value/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21ThrowPathLiveness$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "throw-temporaries-leak",
+    "exit": 1,
+    "catcher": "leaks:",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/throw-temporaries-leak/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/exceptions[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "pending-finally-leak",
+    "exit": 1,
+    "catcher": "leaks:",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/pending-finally-leak/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "error-message-not-retained",
+    "exit": 1,
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/error-message-not-retained/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "range-error-is-error",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/range-error-is-error/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "wrong-range-message",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/wrong-range-message/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "type-error-is-error",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/type-error-is-error/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_types[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "hash-failure-is-panic",
+    "exit": 1,
+    "catcher": "exit codes differ",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/hash-failure-is-panic/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "host-type-error-is-error",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/host-type-error-is-error/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "soundness-check-is-catchable",
+    "exit": 1,
+    "catcher": "want the inserted check to fire",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/soundness-check-is-catchable/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_soundness_terminal[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "rethrow-wrapped",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/rethrow-wrapped/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "builtin-narrow-forgets-subtype",
+    "exit": 1,
+    "catcher": "want the inserted check to fire",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/builtin-narrow-forgets-subtype/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "saved-error-wrapped",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/saved-error-wrapped/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "backend-renders-stack",
+    "exit": 1,
+    "catcher": "uncaught renderer wrote stderr",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/backend-renders-stack/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "error-ancestry-missing",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/error-ancestry-missing/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "error-default-name-wrong",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/error-default-name-wrong/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "error-prefix-released-twice",
+    "exit": 1,
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/error-prefix-released-twice/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "error-fields-out-of-order",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/error-fields-out-of-order/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "implicit-string-conversion",
+    "exit": 1,
+    "catcher": "uncaught lifetime check: exit 70",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/implicit-string-conversion/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught/step21_object_uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "pending-undefined-lost",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/pending-undefined-lost/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "catch-assumes-error",
+    "exit": 1,
+    "catcher": "exit codes differ",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/catch-assumes-error/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "typeof-boolean-is-number",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/typeof-boolean-is-number/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "null-is-undefined",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/null-is-undefined/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "finally-releases-twice",
+    "exit": 1,
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/finally-releases-twice/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "region-payload-freed",
+    "exit": 1,
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/region-payload-freed/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_region_payload[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "uncaught-is-panic",
+    "exit": 1,
+    "catcher": "uncaught lifetime check: exit 70",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/uncaught-is-panic/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21Uncaught$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "changed-source-keeps-terminal-mode",
+    "exit": 1,
+    "catcher": "changed source borrowed terminal convention",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/changed-source-keeps-terminal-mode/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21TerminalOracleSourceHash$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "changed-dependency-keeps-terminal-mode",
+    "exit": 1,
+    "catcher": "changed dependency borrowed terminal convention",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/changed-dependency-keeps-terminal-mode/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21TerminalOracleDependencyHash$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "backend-drops-entry-source",
+    "exit": 1,
+    "catcher": "JavaScript backend: exit codes differ",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/backend-drops-entry-source/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "readiness-old-panic",
+    "exit": 1,
+    "catcher": "JavaScript language TDZ",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/readiness-old-panic/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21ReadinessIsCatchable$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "readiness-old-effects",
+    "exit": 1,
+    "catcher": "stdout differs",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/readiness-old-effects/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/lowering_chain_tdz_catch[.]a$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "name": "unknown-authorizes-assertion",
+    "exit": 1,
+    "catcher": "want Refused, got <nil>",
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/chain-slice-6/exception-mutants/unknown-authorizes-assertion/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestStep21UnknownAssertions$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ]
+  }
+]

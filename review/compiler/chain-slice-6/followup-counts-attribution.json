@@ -1,0 +1,121 @@
+{
+  "removed_rows": 11,
+  "changed_rows": 3,
+  "rows": [
+    {
+      "path": "internal/oracle/testdata/narrowed_reads.a",
+      "before": "| internal/oracle/testdata/narrowed_reads.a | 5 | 5 | 3 | 7 | 4 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/narrowed_writes.a",
+      "before": "| internal/oracle/testdata/narrowed_writes.a | 1 | 1 | 2 | 4 | 1 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/narrowed_methods.a",
+      "before": "| internal/oracle/testdata/narrowed_methods.a | 3 | 3 | 3 | 6 | 3 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/narrowed_numbers.a",
+      "before": "| internal/oracle/testdata/narrowed_numbers.a | 2 | 2 | 0 | 2 | 2 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/regexp_null_narrowed.a",
+      "before": "| internal/oracle/testdata/regexp_null_narrowed.a | 4 | 4 | 8 | 5 | 3 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+      "before": "| internal/oracle/testdata/047cb0d_n_arrayindex.a | 1 | 1 | 1 | 2 | 1 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/e4eec87_f2_union_narrow_call.a",
+      "before": "| internal/oracle/testdata/e4eec87_f2_union_narrow_call.a | 1 | 0 | 3 | 3 | 1 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a",
+      "before": "| internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a | 2 | 1 | 4 | 5 | 2 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/narrowed_union_valid.a",
+      "before": "| internal/oracle/testdata/narrowed_union_valid.a | 9 | 9 | 13 | 23 | 3 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_library_failures.a",
+      "before": "| internal/oracle/testdata/step21_library_failures.a | 35 | 35 | 56 | 82 | 4 | 0 |",
+      "after": "| internal/oracle/testdata/step21_library_failures.a | 35 | 35 | 54 | 80 | 4 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": "fresh instanceof observes the held union; eliminating the stale nominal read helper removes a retain/release pair per repeated observation",
+      "diff": "review/compiler/chain-slice-6/followup-counts-diffs/step21_library_failures.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_library_types.a",
+      "before": "| internal/oracle/testdata/step21_library_types.a | 22 | 22 | 36 | 51 | 9 | 0 |",
+      "after": "| internal/oracle/testdata/step21_library_types.a | 22 | 22 | 35 | 50 | 9 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": "fresh instanceof observes the held union; eliminating the stale nominal read helper removes a retain/release pair per repeated observation",
+      "diff": "review/compiler/chain-slice-6/followup-counts-diffs/step21_library_types.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_error_subclasses.a",
+      "before": "| internal/oracle/testdata/step21_error_subclasses.a | 16 | 16 | 37 | 45 | 5 | 0 |",
+      "after": "| internal/oracle/testdata/step21_error_subclasses.a | 16 | 16 | 36 | 44 | 5 | 0 |",
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": "fresh instanceof observes the held union; eliminating the stale nominal read helper removes a retain/release pair per repeated observation",
+      "diff": "review/compiler/chain-slice-6/followup-counts-diffs/step21_error_subclasses.patch"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_soundness_terminal.a",
+      "before": "| internal/oracle/testdata/step21_soundness_terminal.a | 3 | 2 | 3 | 5 | 3 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    },
+    {
+      "path": "internal/oracle/testdata/step21_builtin_narrow_terminal.a",
+      "before": "| internal/oracle/testdata/step21_builtin_narrow_terminal.a | 6 | 4 | 8 | 9 | 5 | 0 |",
+      "after": null,
+      "member": "exceptions-21-main",
+      "source": "205586a0 follow-up",
+      "reason": ".a writing-call narrowing refusal ruling; exact refusal tested instead of runtime count"
+    }
+  ]
+}

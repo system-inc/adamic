@@ -195,7 +195,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		variant := inputs
 		variant.Name = "lint-profile-" + kind
 		options := native.Options{Count: kind == "counted", Jobs: 1}
-		variant.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
+		variant.Flags = append(append([]string{}, inputs.Flags...), native.SourceFlags(string(source), options)...)
 		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 		variant.Flags = append(variant.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		if kind == "profiled" {
@@ -236,7 +236,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path). clang
 				// runs in this package's directory, which each unit's comp_dir named, so a builder's checkout path reached the
 				// bytes until the compilation directory was named too (#dhm3wav: Workshop's profiled 8 bytes off Adam's).
-				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
+				flags := append(native.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := toolchain.Command("clang", flags...)
@@ -348,4 +348,9 @@ func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
 	oracle := lintGoOracleProduct(t)
 	want, countedWant := compilationOracleOutputs(t, oracle, path)
 	return directory, products, path, want, countedWant
+}
+
+// The profile linker uses the emitted program's feature set and native's portable build.
+func compilationProfileBuild(source, output string, options native.Options) error {
+	return native.Build(source, output, options)
 }

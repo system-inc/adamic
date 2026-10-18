@@ -1,0 +1,37 @@
+{"Time":"2026-10-10T00:12:26.901278108Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-10T00:12:26.916460336Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal"}
+{"Time":"2026-10-10T00:12:26.916672121Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal","Output":"=== RUN   TestStep21WritingCallRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919102249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal","Output":"=== PAUSE TestStep21WritingCallRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919445166Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal"}
+{"Time":"2026-10-10T00:12:26.919496402Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl"}
+{"Time":"2026-10-10T00:12:26.91949954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl","Output":"=== RUN   TestStep21NonWritingCallControl\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919503007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl","Output":"=== PAUSE TestStep21NonWritingCallControl\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919505398Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl"}
+{"Time":"2026-10-10T00:12:26.919522624Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall"}
+{"Time":"2026-10-10T00:12:26.919528189Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall","Output":"=== RUN   TestStep21NarrowAgainAfterWritingCall\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.91953297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall","Output":"=== PAUSE TestStep21NarrowAgainAfterWritingCall\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919536151Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall"}
+{"Time":"2026-10-10T00:12:26.919546938Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal"}
+{"Time":"2026-10-10T00:12:26.919567358Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal","Output":"=== RUN   TestStep21TransitiveWritingCallRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919577917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal","Output":"=== PAUSE TestStep21TransitiveWritingCallRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919584546Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal"}
+{"Time":"2026-10-10T00:12:26.919588207Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal"}
+{"Time":"2026-10-10T00:12:26.919590878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal","Output":"=== CONT  TestStep21WritingCallRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919594009Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall"}
+{"Time":"2026-10-10T00:12:26.919596707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall","Output":"=== CONT  TestStep21NarrowAgainAfterWritingCall\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.919599609Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl"}
+{"Time":"2026-10-10T00:12:26.919634679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl","Output":"=== CONT  TestStep21NonWritingCallControl\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:26.921118642Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal"}
+{"Time":"2026-10-10T00:12:26.921209655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal","Output":"=== CONT  TestStep21TransitiveWritingCallRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:27.648574483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal","Output":"--- PASS: TestStep21WritingCallRefusal (0.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:27.677027915Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21WritingCallRefusal","Elapsed":0.73}
+{"Time":"2026-10-10T00:12:27.677540381Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall","Output":"    narrowing_calls_test.go:39: Lower refused acceptance row: /tmp/adamic-gate/TestStep21NarrowAgainAfterWritingCall3772210645/001/main.a:1:151: Adamic 0.1 refuses a narrowed read of value after change() can write it; narrow again after the call\n","OutputType":"error"}
+{"Time":"2026-10-10T00:12:27.677734904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall","Output":"--- FAIL: TestStep21NarrowAgainAfterWritingCall (0.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:27.680886892Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NarrowAgainAfterWritingCall","Elapsed":0.76}
+{"Time":"2026-10-10T00:12:27.680925829Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal","Output":"--- PASS: TestStep21TransitiveWritingCallRefusal (0.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:29.882112076Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21TransitiveWritingCallRefusal","Elapsed":0.76}
+{"Time":"2026-10-10T00:12:29.882454913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl","Output":"--- PASS: TestStep21NonWritingCallControl (2.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:29.882561839Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21NonWritingCallControl","Elapsed":2.96}
+{"Time":"2026-10-10T00:12:29.882566792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:29.885535851Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t2.982s\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:12:29.885645016Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.984}

@@ -32,7 +32,8 @@ internal/oracle/testdata/library_object_freeze_write.a
 internal/oracle/testdata/lint_runtime_search_calls.a
 internal/oracle/testdata/map_zero_keys.a
 internal/oracle/testdata/maybe_boolean_panic.a
-internal/oracle/testdata/narrowed_writes.a
+# Slice 6 keeps this witness in its exact compile-time refusal lane.
+TestStep21ExistingWritingCallRefusals internal/oracle/testdata/step21_refused/narrowed_writes.a
 internal/oracle/testdata/nbody_runtime_fields.a
 internal/oracle/testdata/normalize_form.a
 internal/oracle/testdata/number_parsing.a

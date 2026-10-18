@@ -130,10 +130,11 @@ func TestEnumCleanupMutant(t *testing.T) {
 			release = fmt.Sprintf("adamic_release(adamic_global_%d_Kind);", index)
 		}
 	}
-	if release == "" || strings.Count(code, release) != 1 {
-		t.Fatal("enum cleanup site not unique")
+	if release == "" || !strings.Contains(code, release) {
+		t.Fatal("enum cleanup site missing")
 	}
-	code = strings.Replace(code, release, "", 1)
+	// Normal return and exceptional unwind have mutually exclusive cleanup paths.
+	code = strings.ReplaceAll(code, release, "")
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)

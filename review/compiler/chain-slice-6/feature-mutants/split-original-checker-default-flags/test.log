@@ -1,0 +1,16 @@
+=== RUN   TestSplitTSGoAgreesUnit00
+=== RUN   TestSplitTSGoAgreesUnit00/cache_0
+    units_tsgo_test.go:90: native: linking units: exit status 1
+        /usr/bin/ld: /tmp/adamic-feature-set-link-cache/split-original-checker-default-flags/adamic/units/bf484b3b3c3c4d5453a2fe37d6f48d06e26a825262568988dee0026f624d7b61/unit.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        /usr/bin/ld: /tmp/adamic-feature-set-link-cache/split-original-checker-default-flags/adamic/units/e7a54c065d8e8a27072f0a543b063552b5bb6bc0844aececb5ea2a56ab26c037/unit.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        /usr/bin/ld: /tmp/adamic-feature-set-link-cache/split-original-checker-default-flags/adamic/units/be49e99e46f8afbe7ffd297379e99859a7484cdb3d8127c705f3d0adb201ab36/unit.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        /usr/bin/ld: /tmp/adamic-feature-set-link-cache/split-original-checker-default-flags/adamic/units/12eca60a8645bb21f47d755c561851cf599eea11a597b5535a4617a30433a5c5/unit.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        /usr/bin/ld: /tmp/adamic-feature-set-link-cache/split-original-checker-default-flags/adamic/units/60b8561af19c6b966b4a391db29306e362d49fd808cb82d4e5aaaa8c33e67f63/unit.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        /usr/bin/ld: /tmp/adamic-feature-set-link-cache/split-original-checker-default-flags/adamic/units/54b74cd69d97fdd1e2c78506b074542e66d16a326f156a83290961f475053682/unit.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): more undefined references to `adamic_runtime_features_closure_convention' follow
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+--- FAIL: TestSplitTSGoAgreesUnit00 (41.53s)
+    --- FAIL: TestSplitTSGoAgreesUnit00/cache_0 (8.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	41.559s
+FAIL

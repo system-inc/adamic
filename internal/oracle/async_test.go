@@ -206,7 +206,7 @@ func TestAsyncFixturesAgreeWithNode(t *testing.T) {
 					t.Fatal(diff)
 				}
 			}
-			if diff := disagreement(oracle, onJavaScriptBackend(t, program)); diff != "" {
+			if diff := disagreement(oracle, onJavaScriptBackend(t, program, path)); diff != "" {
 				t.Fatal(diff)
 			}
 		})

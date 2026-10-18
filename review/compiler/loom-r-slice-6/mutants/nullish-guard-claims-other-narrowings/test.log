@@ -1,0 +1,8 @@
+=== RUN   TestStep21NullishGuardDoesNotRestoreOtherNarrowings
+=== PAUSE TestStep21NullishGuardDoesNotRestoreOtherNarrowings
+=== CONT  TestStep21NullishGuardDoesNotRestoreOtherNarrowings
+    narrowing_nullish_test.go:21: nullish guard restored an unsupported narrowing: <nil>
+--- FAIL: TestStep21NullishGuardDoesNotRestoreOtherNarrowings (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.122s
+FAIL

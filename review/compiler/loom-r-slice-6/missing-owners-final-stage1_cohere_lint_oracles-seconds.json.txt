@@ -1,0 +1,56 @@
+[
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_jsx_parser",
+    "Elapsed": 11.12
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_LintGoOracle",
+    "Elapsed": 52.77
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_YepestaSetup",
+    "Elapsed": 52.77
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_SuggestionAlongsideGoOracle",
+    "Elapsed": 51.33
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_ProfileCompilationOracleOutputs",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_CompilerAgreementCheckerAllAnswer",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_jsx_membership",
+    "Elapsed": 19.1
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_RulesAgreeCapture",
+    "Elapsed": 92.9
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint/oracles",
+    "Test": "TestProduct_CompleteSuggestionGoOracle",
+    "Elapsed": 64.85
+  }
+]

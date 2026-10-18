@@ -1,0 +1,16 @@
+{"Time":"2026-10-18T22:29:20.231251476Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T22:29:20.237471905Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter"}
+{"Time":"2026-10-18T22:29:20.237559686Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"=== RUN   TestSpreadUndefinedThrowStopsBeforeNextGetter\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:29:20.237583171Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"=== PAUSE TestSpreadUndefinedThrowStopsBeforeNextGetter\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:29:20.237585234Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter"}
+{"Time":"2026-10-18T22:29:20.237587637Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter"}
+{"Time":"2026-10-18T22:29:20.2375892Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"=== CONT  TestSpreadUndefinedThrowStopsBeforeNextGetter\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:29:23.142317351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"    cache_test.go:297: /tmp/adamic-gate/TestSpreadUndefinedThrowStopsBeforeNextGetter154637043/001/spread.a:5:47: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\n","OutputType":"error"}
+{"Time":"2026-10-18T22:29:23.142964714Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"--- FAIL: TestSpreadUndefinedThrowStopsBeforeNextGetter (2.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:29:23.142980568Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Elapsed":2.9}
+{"Time":"2026-10-18T22:29:23.143046957Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:29:23.143051814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-18T22:29:23.143055159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=0\n"}
+{"Time":"2026-10-18T22:29:23.143061448Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-18T22:29:23.144333634Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t2.913s\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:29:23.14435117Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.9130000000000003}

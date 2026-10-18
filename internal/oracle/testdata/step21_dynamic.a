@@ -1,0 +1,46 @@
+// program.ts:2844 recovery/rethrow, generalized to every admitted payload tag.
+// commandLineParser.ts:2297 recovery narrowed from unknown by real observations.
+class Failure { readonly message: string; constructor(message: string) { this.message = message; } }
+function raise(mode: number): void {
+    if (mode === 0) throw undefined;
+    if (mode === 1) throw null;
+    if (mode === 2) throw mode + 10;
+    if (mode === 3) throw mode > 0;
+    if (mode === 4) throw `text${mode}`;
+    if (mode === 5) throw { name: 'Error', message: `fake${mode}` };
+    if (mode === 6) throw new Error(`error${mode}`);
+    if (mode === 7) throw (() => mode);
+    throw new Failure(`nominal${mode}`);
+}
+function read(mode: number): void {
+    const callback = (): void => raise(mode);
+    try { try { callback(); } catch (error) { throw error; } }
+    catch (error) {
+        if (error === undefined) console.log('undefined');
+        else if (error === null) console.log('null');
+        else if (typeof error === 'number') console.log(`number${error + 1}`);
+        else if (typeof error === 'boolean') console.log(`boolean${error}`);
+        else if (typeof error === 'string') console.log(error.toUpperCase());
+        else if (error instanceof Error) console.log(error.message);
+        else if (error instanceof Failure) console.log(error.message);
+        else console.log(typeof error);
+    }
+}
+for (let mode = 0; mode < 9; mode += 1) read(mode);
+// Replacement releases a runtime-built old payload on return, break and a new throw.
+function replace(mode: number): string {
+    try { throw `old${mode}`; }
+    finally { if (mode === 0) return `return${mode}`; throw `new${mode}`; }
+}
+console.log(replace(0));
+try { replace(1); } catch (error) { if (typeof error === 'string') console.log(error); }
+for (let mode = 0; mode < 1; mode += 1) {
+    try { throw `break${mode}`; } finally { console.log('break'); break; }
+}
+// A catch is still an unknown slot when assigned, and the next test sees the new tag.
+try { throw `initial${1}`; } catch (error) { error = 42; if (typeof error === 'number') console.log(`${error}`); }
+function nullable(flag: boolean): { readonly message: string } | null { return flag ? { message: `nullable${1}` } : null; }
+for (const flag of [false, true]) {
+    try { throw nullable(flag); }
+    catch (error) { console.log(`${error === null} ${typeof error}`); }
+}

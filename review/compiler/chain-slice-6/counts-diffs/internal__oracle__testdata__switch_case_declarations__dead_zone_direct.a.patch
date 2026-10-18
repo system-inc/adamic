@@ -1,0 +1,49 @@
+--- main/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
++++ slice/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+@@ -30,8 +30,13 @@
+ 					adamic_release(adamic_temporary_3);
+ 					adamic_local_2_value_ready = true;
+ 					if (!adamic_local_2_value_ready) {
+-						static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-						adamic_panic(message, sizeof message - 1);
++					static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++					adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++					adamic_exception_pending = true;
++					if (adamic_exception_pending) {
++						adamic_release(adamic_local_1_value);
++						return;
++					}
+ 					}
+ 					adamic_string * adamic_temporary_6;
+ 					if (adamic_local_1_value != NULL) {
+@@ -47,8 +52,13 @@
+ 				} else {
+ 					if (adamic_temporary_1 == (0x1p+00)) {
+ 						if (!adamic_local_2_value_ready) {
+-							static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-							adamic_panic(message, sizeof message - 1);
++						static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++						adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++						adamic_exception_pending = true;
++						if (adamic_exception_pending) {
++							adamic_release(adamic_local_1_value);
++							return;
++						}
+ 						}
+ 						adamic_string * adamic_temporary_8;
+ 						if (adamic_local_1_value != NULL) {
+@@ -74,8 +84,14 @@
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	adamic_function_0_show((0x0p+00));
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, &adamic_string_2);
+ 	adamic_function_0_show((0x1p+00));
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, &adamic_string_3);
+ 	return 0;
+ }

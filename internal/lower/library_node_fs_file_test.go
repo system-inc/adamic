@@ -16,7 +16,7 @@ func TestNodeFSFileOptionsBorrow(t *testing.T) {
 	} {
 		exit := 0
 		if strings.Contains(source, "before remove") {
-			exit = 70
+			exit = 1
 		}
 		lowersAndAgreesWithNodeExit(t, fsAgreementSource(t, source), exit)
 	}

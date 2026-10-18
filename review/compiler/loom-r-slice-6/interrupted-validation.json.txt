@@ -1,0 +1,4 @@
+{
+  "package": "stage1/cohere/lint/...",
+  "reason": "Stopped pre-fix stage1 sequence after identifying wider-number regression; retain all output. TestCompilerAndStage1AgreeCombinedSanitizerWitness exceeded 60 seconds and will be split, not rerun."
+}

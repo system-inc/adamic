@@ -1,0 +1,2 @@
+go vet ./cmd/adamic ./cmd/adamic-test262 ./internal/fuzz ./internal/ir ./internal/lower ./internal/native ./internal/oracle ./stage1/cohere/css ./stage1/cohere/graphql ./stage1/cohere/json ./stage1/cohere/lint ./stage1/cohere/markdownblocks ./stage1/typescript/scanner
+exit 0

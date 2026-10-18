@@ -8,7 +8,7 @@
 #include <string.h>
 #include <time.h>
 
-enum { numbers, strings, objects, captured_map, fresh, nested, exceptions, million, panic_work, nested_exception };
+enum { numbers, strings, objects, captured_map, fresh, nested, exceptions, million, panic_work, nested_exception, undefined_exception };
 static pthread_t caller;
 static bool single;
 static bool timed;
@@ -43,7 +43,7 @@ static adamic_value inner_throw(adamic_closure *self, adamic_value *arguments) {
 	(void)self;
 	if (arguments[1].number == 3) {
 		adamic_string *message = adamic_string_from_number(3);
-		adamic_thrown = adamic_error_new(message);
+		adamic_thrown = (adamic_heap *)adamic_error_new(message); adamic_exception_pending = true;
 		adamic_release(message);
 	}
 	return (adamic_value){.number = arguments[0].number};
@@ -88,12 +88,12 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 		adamic_release(iterator);
 		return (adamic_value){.number = (double)text->length + arguments[0].number};
 	}
-	if (mode == fresh || mode == exceptions) {
-		if (mode == exceptions && (index == 257 || index == 900)) {
+	if (mode == fresh || mode == exceptions || mode == undefined_exception) {
+		if ((mode == exceptions || mode == undefined_exception) && (index == 257 || index == 900)) {
 			// The higher index can throw first. Completion order must not choose the exception.
 			if (index == 257) { struct timespec delay = {0, 20000000}; nanosleep(&delay, NULL); }
 			adamic_string *message = adamic_string_from_number((double)index);
-			adamic_thrown = adamic_error_new(message);
+			adamic_thrown = mode == undefined_exception && index == 257 ? NULL : (adamic_heap *)adamic_error_new(message); adamic_exception_pending = true;
 			adamic_release(message);
 			// The callback result is owned even when an exception is pending.
 			return (adamic_value){.reference = adamic_object_new(&shape)};
@@ -111,7 +111,7 @@ static adamic_value work(adamic_closure *self, adamic_value *arguments) {
 		adamic_closure *callback = adamic_closure_new(mode == nested ? inner : inner_throw, 0);
 		adamic_array *results = adamic_parallel_map(items, callback, false);
 		adamic_release(callback); adamic_release(items);
-		if (adamic_thrown != NULL) { return (adamic_value){.number = 0}; }
+		if (adamic_exception_pending) { return (adamic_value){.number = 0}; }
 		double sum = 0;
 		for (size_t i = 0; i < results->length; i++) { sum += results->elements[i].number; }
 		adamic_release(results);
@@ -136,9 +136,9 @@ static adamic_string *long_text(bool bmp) {
 int main(int argc, char **argv) {
 	adamic_start(argc, argv);
 	if (argc < 2) { return 2; }
-	const char *modes[] = {"numbers", "strings", "objects", "map", "fresh", "nested", "exception", "million", "panic", "nested_exception"};
+	const char *modes[] = {"numbers", "strings", "objects", "map", "fresh", "nested", "exception", "million", "panic", "nested_exception", "undefined_exception"};
 	int mode = -1;
-	for (int i = 0; i < 10; i++) { if (strcmp(argv[1], modes[i]) == 0) { mode = i; } }
+	for (int i = 0; i < 11; i++) { if (strcmp(argv[1], modes[i]) == 0) { mode = i; } }
 	if (mode < 0) { return 2; }
 	if (mode == panic_work) {
 		static adamic_string preface = ADAMIC_STRING("before worker panic");
@@ -178,16 +178,20 @@ int main(int argc, char **argv) {
 	adamic_release(texts[0]); adamic_release(texts[1]);
 	struct timespec before, after;
 	clock_gettime(CLOCK_MONOTONIC, &before);
-	adamic_array *results = adamic_parallel_map(items, callback, mode == strings || mode == fresh || mode == exceptions);
+	adamic_array *results = adamic_parallel_map(items, callback, mode == strings || mode == fresh || mode == exceptions || mode == undefined_exception);
 	clock_gettime(CLOCK_MONOTONIC, &after);
 	if (single && adamic_parallel_workers() != 0) { abort(); }
-	if (mode == exceptions || mode == nested_exception) {
-		if (results != NULL || adamic_thrown == NULL) { abort(); }
-		adamic_string *message = adamic_thrown->slots[1].reference;
+	if (mode == undefined_exception) {
+		if (results != NULL || !adamic_exception_pending || adamic_thrown != NULL) { abort(); }
+		adamic_exception_pending = false;
+		puts("exception undefined");
+	} else if (mode == exceptions || mode == nested_exception) {
+		if (results != NULL || !adamic_exception_pending) { abort(); }
+		adamic_string *message = ((adamic_object *)adamic_thrown)->slots[1].reference;
 		const char *expected = mode == exceptions ? "257" : "3";
 		if (message->length != strlen(expected) || memcmp(message->bytes, expected, message->length) != 0) { abort(); }
 		printf("exception %s\n", expected);
-		adamic_release(adamic_thrown); adamic_thrown = NULL;
+		adamic_release(adamic_thrown); adamic_thrown = NULL; adamic_exception_pending = false;
 	} else {
 		if (results == NULL || results->length != count) { abort(); }
 		double sum = 0;

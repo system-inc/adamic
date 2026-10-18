@@ -1,0 +1,26 @@
+# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]
+internal/lower/import_cycle_ready_test.go:13:2: "github.com/microsoft/TypeScript/tsc/shim/ast" imported and not used
+internal/lower/import_cycle_ready_test.go:14:2: "github.com/microsoft/TypeScript/tsc/shim/checker" imported and not used
+internal/lower/import_cycle_ready_test.go:15:2: "github.com/microsoft/TypeScript/tsc/shim/compiler" imported and not used
+FAIL	github.com/system-inc/adamic/internal/lower [build failed]
+# github.com/system-inc/adamic/internal/native [github.com/system-inc/adamic/internal/native.test]
+internal/native/features_test.go:18:5: runtimeFeatures redeclared in this block
+	internal/native/library.go:108:5: other declaration of runtimeFeatures
+FAIL	github.com/system-inc/adamic/internal/native [build failed]
+# github.com/system-inc/adamic/internal/oracle [github.com/system-inc/adamic/internal/oracle.test]
+internal/oracle/oracle_test.go:573:33: undefined: strconv
+FAIL	github.com/system-inc/adamic/internal/oracle [build failed]
+# github.com/system-inc/adamic/internal/flow [github.com/system-inc/adamic/internal/flow.test]
+internal/flow/corpus_units_test.go:9524:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9528:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9532:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9536:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9540:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9544:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9548:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9552:2: undefined: checkStep21CorpusRefusal
+internal/flow/corpus_units_test.go:9556:2: undefined: checkStep21CorpusRefusal
+FAIL	github.com/system-inc/adamic/internal/flow [build failed]
+ok  	github.com/system-inc/adamic/internal/ir	0.004s [no tests to run]
+ok  	github.com/system-inc/adamic/internal/javascript	0.002s [no tests to run]
+FAIL

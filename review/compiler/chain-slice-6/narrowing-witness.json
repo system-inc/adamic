@@ -1,0 +1,13 @@
+{
+  "path": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts",
+  "sha256": "c6273c04f4e421e248443ab2c5b27196332d89409f2c54fb123b8a901054513b",
+  "classification": "agreement",
+  "ruling": "step 21 refined Oct 9 18:5x",
+  "supersedes": "the Oct 9 18:0x whole-TypeError check witness",
+  "node_and_both_backends": {
+    "exit": 0,
+    "stdout": "Error\nfinally\n",
+    "stderr": ""
+  },
+  "evidence": "use-checks/exceptions-final.jsonl; use-checks/uses.log"
+}

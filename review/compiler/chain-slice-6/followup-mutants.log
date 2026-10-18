@@ -1,0 +1,10 @@
+backend-renders-stack True
+backend-drops-line True
+native-renders-stack True
+native-drops-line True
+drop-write-set-test True
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/chain-slice-6/run-followup-mutants.py", line 15, in <module>
+    directory=out/name;directory.mkdir(exist_ok=True);path=root/relative; original=path.read_text();assert original.count(old)==1,(name,old)
+                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('admit-writing-call', 'if strings.HasSuffix(program.FileName(module), ".a") {')

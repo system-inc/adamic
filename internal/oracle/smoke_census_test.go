@@ -21,11 +21,15 @@ type smokeEntry struct{ lane, path string }
 
 // smokeLanes is each lane a smoke entry may name, with the keys its tests run.
 func smokeLanes() map[string][]string {
+	refusals := make([]string, len(step21WritingRefusals))
+	for index, row := range step21WritingRefusals {
+		refusals[index] = "internal/oracle/testdata/" + row.path
+	}
 	inputs := make([]string, len(inputFixtures))
 	for index, fixture := range inputFixtures {
 		inputs[index] = fixture.path
 	}
-	return map[string][]string{"TestNativeAgreesWithNode": fixturePaths(), "TestInputAgreesWithNode": inputs}
+	return map[string][]string{"TestNativeAgreesWithNode": fixturePaths(), "TestInputAgreesWithNode": inputs, "TestStep21ExistingWritingCallRefusals": refusals}
 }
 
 // parseSmokeList is the smoke list's entries, as run.py's smokeList reads them.

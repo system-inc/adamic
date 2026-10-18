@@ -1,0 +1,40 @@
+--- main/internal/oracle/testdata/node_buffer_digest_twice.a
++++ slice/internal/oracle/testdata/node_buffer_digest_twice.a
+@@ -19,16 +19,37 @@
+ 	adamic_ready_0 = true;
+ 	adamic_object * adamic_temporary_3 = adamic_retain(adamic_global_0_hash);
+ 	adamic_object * adamic_temporary_4 = adamic_node_hash_update(adamic_temporary_3, &adamic_string_0, 0);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_4);
++		adamic_release(adamic_temporary_3);
++		adamic_release(adamic_global_0_hash);
++		adamic_global_0_hash = NULL;
++		adamic_uncaught();
++	}
+ 	(void)adamic_temporary_4;
+ 	adamic_release(adamic_temporary_4);
+ 	adamic_release(adamic_temporary_3);
+ 	adamic_object * adamic_temporary_5 = adamic_retain(adamic_global_0_hash);
+ 	adamic_string * adamic_temporary_6 = adamic_node_hash_digest(adamic_temporary_5);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_6);
++		adamic_release(adamic_temporary_5);
++		adamic_release(adamic_global_0_hash);
++		adamic_global_0_hash = NULL;
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, adamic_temporary_6);
+ 	adamic_release(adamic_temporary_6);
+ 	adamic_release(adamic_temporary_5);
+ 	adamic_object * adamic_temporary_7 = adamic_retain(adamic_global_0_hash);
+ 	adamic_string * adamic_temporary_8 = adamic_node_hash_digest(adamic_temporary_7);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_8);
++		adamic_release(adamic_temporary_7);
++		adamic_release(adamic_global_0_hash);
++		adamic_global_0_hash = NULL;
++		adamic_uncaught();
++	}
+ 	adamic_write_line(adamic_stdout, adamic_temporary_8);
+ 	adamic_release(adamic_temporary_8);
+ 	adamic_release(adamic_temporary_7);

@@ -1,0 +1,11 @@
+=== RUN   TestStep21WritingCallTypeScriptAgreement
+=== PAUSE TestStep21WritingCallTypeScriptAgreement
+=== CONT  TestStep21WritingCallTypeScriptAgreement
+    step21_narrowing_witness_test.go:25: native .name agreement: exit codes differ
+--- FAIL: TestStep21WritingCallTypeScriptAgreement (3.01s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.024s
+FAIL

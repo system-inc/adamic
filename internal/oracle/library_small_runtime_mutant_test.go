@@ -38,6 +38,8 @@ func librarySmallRuntimeMutant(t *testing.T, fixture, rule string) {
 	if bytes.Count(runtime, []byte(mutation[0])) != 1 {
 		t.Fatal("mutation site moved")
 	}
+	expected := onNode(t, path)
+	replacementRuntimeControl(t, strings.ReplaceAll(string(runtime)+"\n"+native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant"), expected)
 	changed := strings.Replace(string(runtime), mutation[0], mutation[1], 1)
 	changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 	source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
@@ -49,7 +51,7 @@ func librarySmallRuntimeMutant(t *testing.T, fixture, rule string) {
 	if actual.exitCode != 0 || len(actual.stderr) != 0 {
 		t.Fatalf("mutant failed before Node comparison: %+v", actual)
 	}
-	if diff := disagreement(onNode(t, path), actual); diff != "stdout differs" {
+	if diff := disagreement(expected, actual); diff != "stdout differs" {
 		t.Fatalf("want Node stdout mismatch, got %q", diff)
 	}
 	t.Log("caught by source Node stdout comparison with sanitizers and leaks")

@@ -1,0 +1,2 @@
+// Failure recovery from utilities.ts:7810, replacing JSON.parse with a known library throw.
+try { console.log('x'.repeat(-1)); } catch { console.log('caught'); }

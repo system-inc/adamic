@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+    oracle_test.go:799: JavaScript backend: exit codes differ
+        node:    exit 70, stdout "🌍\n", stderr "adamic: panic: RangeError: Invalid code point 1.5\n"
+        backend: exit 1, stdout "🌍\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a (0.65s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.690s
+FAIL

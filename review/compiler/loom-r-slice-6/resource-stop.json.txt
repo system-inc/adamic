@@ -1,0 +1,8 @@
+{
+  "reason": "Stop heavy validation after cgroup memory exhaustion and compiler kills; no green claim for incomplete readers",
+  "memory_events": "low 0\nhigh 0\nmax 65430\noom 1711\noom_kill 65\noom_group_kill 0\n",
+  "memory_max": "17179869184\n",
+  "interrupted": "stage1/cohere/markdownblocks/...; scanner broad replay not reached",
+  "css_failed": "TestCSSPrinterPreflightCostMutant timeout",
+  "lint_full": "interrupted; existing combined sanitizer witness 66.26 seconds"
+}

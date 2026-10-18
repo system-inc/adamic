@@ -54,6 +54,13 @@
 `directory.c:ok_kind:1`
 `directory.c:other_type:1`
 `exceptions.c:adamic_thrown:1`
+# The pending bit follows the thrown payload in thread-local storage.
+`exceptions.c:adamic_exception_pending:1`
+# These names are immortal ADAMIC_STRING literals, as error_name is; string cache
+# writes exclude immortal literals, so neither a lock nor thread-local is required.
+`exceptions.c:range_error_name:1`
+`exceptions.c:type_error_name:1`
+`exceptions.c:reference_error_name:1`
 # empty_message is an immortal ADAMIC_STRING literal (references=0). Retain/release and share
 # leave it unchanged; string_index.c excludes immortal literals from units/index cache writes.
 # It has no mutable shared state and requires neither a lock nor thread-local storage.
@@ -252,3 +259,12 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+
+# Slice 6: the pending bit is thread-local in both declaration and definition.
+`adamic.h:adamic_exception_pending:1`
+# features.c defines only a const feature-set symbol and an immutable header relocation.
+`runtime-file:features.c`
+# Both are immortal ADAMIC_STRING literals; like error_name, retain/release and
+# string cache paths leave them unchanged, requiring neither a lock nor TLS.
+`node_crypto.c:message:1`
+`node_crypto.c:code:1`

@@ -1,0 +1,506 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestChildrenSeeOnlyWhatTheKeyNames",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestProgramCPUDeadline/saturated",
+    "Elapsed": 3.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestProgramCPUDeadline/spin",
+    "Elapsed": 1.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestProgramCPUDeadline",
+    "Elapsed": 3.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCacheBypassProcessDefaultHelper",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestOutputOverflowIsReported",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunProgramFractionalCPUBudget",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestProduct_Adamic",
+    "Elapsed": 2.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunnerRestArgumentFeatureSetAgrees",
+    "Elapsed": 5.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunnerLocationHelper",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRuntimeFeaturesMatchNode",
+    "Elapsed": 5.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunFilterAttemptLimit",
+    "Elapsed": 5.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestNodeHarnessIdentity",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunnerLocationIdentity",
+    "Elapsed": 3.12
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCacheBypass",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestWorkerLazyFallback",
+    "Elapsed": 2.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestEveryResultVariableIsKeyed",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCacheBypassProcessDefault",
+    "Elapsed": 3.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestEditCacheSeparation",
+    "Elapsed": 3.91
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestLoweringSourceEdit",
+    "Elapsed": 4.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCacheBypassPreservesIdentity",
+    "Elapsed": 2.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestContextEnvironment",
+    "Elapsed": 4.91
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCompilerCacheAcrossScratchDirectories",
+    "Elapsed": 3.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestContextIgnoresCheckoutLocation",
+    "Elapsed": 4.73
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCompilerCacheProgram",
+    "Elapsed": 2.63
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestOrderedProgress",
+    "Elapsed": 1.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptStrictEq",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCacheAtomicBytes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCacheKeyDimensions",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCrashPath",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyAdapt",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptThrowError",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptClassKeepsVars",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptCallbackParam",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptPositiveExponentVarToLet",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptSingletonArrayCallback",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestImportedInputsRunFresh",
+    "Elapsed": 2.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestUnavailableCacheStillRuns",
+    "Elapsed": 2.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestFrontmatterShapes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRewriteHarnessCalls",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCompilerHangHelper",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCompilerWorkerTimeout",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestMiniRunner",
+    "Elapsed": 1.78
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunCommandExactCaptureCapacity/stdout",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunCommandExactCaptureCapacity/stderr",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestRunCommandExactCaptureCapacity",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/plain",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/parameter_shadow",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/var_inside_a_string",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/switch_case",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/block_does_not_leak",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/block_leaks",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/used_after_the_loop",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/var_in_loop_body_not_captured",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/var_in_loop_body_captured",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/loop_variable_not_captured",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/loop_variable_captured",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/closure_above_the_declarator",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/initializer_reads_itself",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/read_before",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/redeclaration",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet/two_names",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestAdaptVarToLet",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus/both_pass.json",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus/negative_native_succeeded.json",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus/stdout_disagrees.json",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus/negative_observed.json",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus/native_sanitizer.json",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus/native_fails.json",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestVerdictCorpus",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus/feature_proxy.js",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestNormalizeReason",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus/plain.js",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus/negative_runtime.js",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus/negative_parse.js",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus/negative_early.js",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus/harness_include.js",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestClassifyCorpus",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestCompilerWorkerMatchesSubprocess",
+    "Elapsed": 2.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestParallelCachedMatchesSerial",
+    "Elapsed": 4.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "Test": "TestLargeCompilerOutputIsComplete",
+    "Elapsed": 6.77
+  }
+]

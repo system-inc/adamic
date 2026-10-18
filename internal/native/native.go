@@ -192,7 +192,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		return fmt.Errorf("native: %w", err)
 	}
 	runtimeArchive := filepath.Join("runtime", filepath.Base(library))
-	compileFlags := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime")
+	compileFlags := append(append(append(slices.Clone(append(flags, featureFlags(source)...)), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", "runtime")
 	// On macOS ld's debug map records every object it links that carries debug info (a sanitized build's do) by its path,
 	// and a compile and link in one call links main.c's object from clang's own temporary file, <TMPDIR>/main-<random>.o,
 	// random per build (Tests, from Compiler, Oct 12: a whole sanitized build's binary named it). There main.c is

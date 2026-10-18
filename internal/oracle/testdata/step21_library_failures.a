@@ -1,0 +1,21 @@
+// utilities.ts:7810 recovery, with deterministic represented library failures.
+// program.ts:2844 callback recovery; names and messages come from source Node.
+function repeat(count: number): void { console.log('x'.repeat(count)); }
+for (const count of [-1.5, Infinity, 2]) {
+    try { repeat(count); }
+    catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message} ${error instanceof RangeError}`); }
+}
+for (const digits of [-1, 101, 2]) {
+    try { console.log((1.25).toFixed(digits)); }
+    catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+}
+for (const form of ['wrong', 'NFC']) {
+    try { console.log(`text${1}`.normalize(form)); }
+    catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+}
+for (const size of [-1.5, 2]) {
+    try { console.log(`${new Uint8Array(size).length}`); }
+    catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+}
+try { new Uint8Array(1).set(new Uint8Array(2)); }
+catch (error) { if (error instanceof RangeError) console.log(`${error.name}: ${error.message}`); }

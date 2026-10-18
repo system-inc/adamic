@@ -1,0 +1,9 @@
+{"Time":"2026-10-10T00:38:36.950900222Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-10T00:38:36.965321068Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows"}
+{"Time":"2026-10-10T00:38:36.965425302Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"=== RUN   TestWASIRequestThrows\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:38:36.965521804Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"    request_test.go:154: set ADAMIC_ORACLE_WASI=1\n"}
+{"Time":"2026-10-10T00:38:36.965531989Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"--- SKIP: TestWASIRequestThrows (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:38:36.965535281Z","Action":"skip","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Elapsed":0}
+{"Time":"2026-10-10T00:38:36.965548555Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T00:38:36.965737483Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t0.014s\n"}
+{"Time":"2026-10-10T00:38:36.965776312Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.015}

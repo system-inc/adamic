@@ -1,0 +1,14 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+    "Test": "TestEveryTestIsParallelOrSaysWhy",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+    "Test": "TestEveryTestHasOneDescriptiveName",
+    "Elapsed": 0.38
+  }
+]

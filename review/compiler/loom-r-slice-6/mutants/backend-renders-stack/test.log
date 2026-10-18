@@ -1,0 +1,34 @@
+=== RUN   TestStep21Uncaught
+=== PAUSE TestStep21Uncaught
+=== CONT  TestStep21Uncaught
+=== RUN   TestStep21Uncaught/step21_dynamic_uncaught
+=== PAUSE TestStep21Uncaught/step21_dynamic_uncaught
+=== RUN   TestStep21Uncaught/step21_object_uncaught
+=== PAUSE TestStep21Uncaught/step21_object_uncaught
+=== RUN   TestStep21Uncaught/exceptions_uncaught
+=== PAUSE TestStep21Uncaught/exceptions_uncaught
+=== RUN   TestStep21Uncaught/closures_throw_uncaught
+=== PAUSE TestStep21Uncaught/closures_throw_uncaught
+=== CONT  TestStep21Uncaught/step21_dynamic_uncaught
+=== CONT  TestStep21Uncaught/exceptions_uncaught
+=== CONT  TestStep21Uncaught/step21_object_uncaught
+=== CONT  TestStep21Uncaught/closures_throw_uncaught
+=== NAME  TestStep21Uncaught/step21_dynamic_uncaught
+    step21_exceptions_test.go:205: JavaScript uncaught diagnostic: got "\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\nundefined\n(Use `node --trace-uncaught ...` to show where the exception was thrown)\n\nNode.js v24.19.0\n", want "Uncaught undefined\n"
+=== NAME  TestStep21Uncaught/exceptions_uncaught
+    step21_exceptions_test.go:205: JavaScript uncaught diagnostic: got "file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2211835867/003/program.mjs:96\n\t\tthrow new Error((local_0_label + \" failed\"));\n\t\t      ^\n\nError: the job failed\n    at function_0_inner (file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2211835867/003/program.mjs:96:9)\n    at function_1_outer (file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2211835867/003/program.mjs:104:10)\n    at file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2211835867/003/program.mjs:111:20\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///tmp/adamic-gate/loom-r-slice-6/tree/oracle/node.mjs:91:1\n\nNode.js v24.19.0\n", want "Uncaught Error: the job failed\n"
+=== NAME  TestStep21Uncaught/step21_object_uncaught
+    step21_exceptions_test.go:205: JavaScript uncaught diagnostic: got "\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n{ message: 'payload1' }\n\nNode.js v24.19.0\n", want "Uncaught object\n"
+=== NAME  TestStep21Uncaught/closures_throw_uncaught
+    step21_exceptions_test.go:205: JavaScript uncaught diagnostic: got "file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught3454911598/003/program.mjs:122\n\t\t\tthrow new Error((local_4_item + \" is too loud\"));\n\t\t\t      ^\n\nError: item3 is too loud\n    at AdamicClosure.function_2_closure [as code] (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught3454911598/003/program.mjs:122:10)\n    at adamicCall (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught3454911598/003/program.mjs:52:49)\n    at adamicMap (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught3454911598/003/program.mjs:63:15)\n    at function_1_shout (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught3454911598/003/program.mjs:112:10)\n    at file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught3454911598/003/program.mjs:130:13\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///tmp/adamic-gate/loom-r-slice-6/tree/oracle/node.mjs:91:1\n\nNode.js v24.19.0\n", want "Uncaught Error: item3 is too loud\n"
+--- FAIL: TestStep21Uncaught (0.00s)
+    --- FAIL: TestStep21Uncaught/step21_dynamic_uncaught (3.34s)
+    --- FAIL: TestStep21Uncaught/exceptions_uncaught (3.37s)
+    --- FAIL: TestStep21Uncaught/step21_object_uncaught (3.38s)
+    --- FAIL: TestStep21Uncaught/closures_throw_uncaught (3.39s)
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.399s
+FAIL

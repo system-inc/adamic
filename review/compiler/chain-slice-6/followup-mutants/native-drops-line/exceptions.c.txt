@@ -1,0 +1,91 @@
+// exceptions.c: throw, try, catch and finally, by cleanup paths (docs/memory.md, "Exceptions,
+// designed into counting"). The emitter does the unwinding; the runtime holds what's thrown.
+
+#include "adamic.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+adamic_heap *adamic_thrown;
+bool adamic_exception_pending;
+
+static const char *const error_names[] = {"name", "message"};
+static const bool error_references[] = {true, true};
+static const adamic_shape error_shape = {2, error_names, error_references, NULL};
+const adamic_class adamic_error_class = {NULL, 0, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
+const adamic_class adamic_host_error_class = {&adamic_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
+static adamic_string error_name = ADAMIC_STRING("Error");
+static adamic_string range_error_name = ADAMIC_STRING("RangeError");
+static adamic_string type_error_name = ADAMIC_STRING("TypeError");
+static adamic_string reference_error_name = ADAMIC_STRING("ReferenceError");
+const adamic_class adamic_reference_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
+const adamic_class adamic_range_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
+const adamic_class adamic_type_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
+const adamic_class adamic_host_type_error_class = {&adamic_type_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
+const adamic_class adamic_host_range_error_class = {&adamic_range_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
+
+adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind) {
+	adamic_object *error = adamic_object_new(&error_shape);
+	error->class = &adamic_error_class;
+	adamic_string *name = &error_name;
+	if (strcmp(kind, "RangeError") == 0) { error->class = &adamic_range_error_class; name = &range_error_name; }
+	if (strcmp(kind, "TypeError") == 0) { error->class = &adamic_type_error_class; name = &type_error_name; }
+	if (strcmp(kind, "ReferenceError") == 0) { error->class = &adamic_reference_error_class; name = &reference_error_name; }
+	error->slots[0].reference = adamic_retain(name);
+	error->slots[1].reference = adamic_retain(message);
+	return error;
+}
+
+adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code) {
+	static const char *const names[] = {"name", "message", "code"};
+	static const bool references[] = {true, true, true};
+	static const adamic_shape shape = {3, names, references, NULL};
+	adamic_object *error = adamic_object_new(&shape);
+	error->class = &adamic_host_error_class;
+	error->slots[0].reference = adamic_retain(&error_name);
+	error->slots[1].reference = adamic_retain(message);
+	error->slots[2].reference = adamic_retain(code);
+	return error;
+}
+
+adamic_object *adamic_error_new(adamic_string *message) { return adamic_error_new_kind(message,"Error"); }
+
+// Write borrowed string bytes without conversion or allocation. Match Node's UTF-8
+// encoding of lone surrogates and escape CR/LF to keep exactly one diagnostic line.
+static void uncaught_text(const adamic_string *text) {
+	for (size_t index = 0; index < text->length; index++) {
+		unsigned char byte = (unsigned char)text->bytes[index];
+		if (byte == '\r') { fputs("\\r", stderr); }
+		else if (byte == '\n') { fputs("\\n", stderr); }
+		else if (byte == 0xed && index + 2 < text->length && (unsigned char)text->bytes[index + 1] >= 0xa0) {
+			fwrite("\xef\xbf\xbd", 1, 3, stderr);
+			index += 2;
+		} else { fputc(byte, stderr); }
+	}
+}
+
+_Noreturn void adamic_uncaught(void) {
+	adamic_output_flush();
+	if (false) {
+	fputs("Uncaught ", stderr);
+	if (adamic_instanceof(adamic_thrown, &adamic_error_class) && !((const adamic_object *)adamic_thrown)->class->is_static) {
+		const adamic_object *error = (const adamic_object *)adamic_thrown;
+		adamic_slot_cache name_cache = {NULL, 0};
+		adamic_slot_cache message_cache = {NULL, 0};
+		uncaught_text(adamic_object_field(error, "name", &name_cache)->reference);
+		fputs(": ", stderr);
+		uncaught_text(adamic_object_field(error, "message", &message_cache)->reference);
+	} else if (adamic_thrown == &adamic_null) {
+		fputs("null", stderr);
+	} else {
+		uncaught_text(adamic_union_typeof(adamic_thrown, false));
+	}
+	fputc('\n', stderr);
+	}
+	fflush(stderr);
+	adamic_release(adamic_thrown);
+	adamic_thrown = NULL;
+	adamic_exception_pending = false;
+	exit(1);
+}

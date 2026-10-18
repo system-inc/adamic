@@ -1,0 +1,24 @@
+{
+  "branch": "compiler/chain-slice-6",
+  "main_parent": "98008bbba2881939e07a9d74031994102a3bbe36",
+  "production_fix": "f2576fec51a3486f955b23d5f9e129f3a2e4e940",
+  "prior_cleared": "66ad4a67301810183a3bc67e15733e6a7fb613c2",
+  "lane": "lane checks 7.3 s: gofmt and tools on 75 Go files, t.Parallel on 13 test packages; a-check 5 .a files; vet 13 packages",
+  "counts": {
+    "refresh_writes": 1,
+    "seconds": 82.651,
+    "removed_rows": 11,
+    "changed_rows": 3
+  },
+  "admission_delta": {
+    "corpus": 1293,
+    "agreements": 14,
+    "a_witnesses": 0,
+    "intentional_main_refusals": 15
+  },
+  "mutants": 6,
+  "runtime_followup_files": [
+    "internal/native/runtime/exceptions.c",
+    "internal/native/runtime/adamic.h"
+  ]
+}

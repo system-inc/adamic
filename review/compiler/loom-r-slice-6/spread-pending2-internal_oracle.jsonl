@@ -1,0 +1,19 @@
+{"Time":"2026-10-18T22:34:17.18655791Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T22:34:17.193517662Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter"}
+{"Time":"2026-10-18T22:34:17.193605363Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"=== RUN   TestSpreadUndefinedThrowStopsBeforeNextGetter\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:34:17.193626254Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"=== PAUSE TestSpreadUndefinedThrowStopsBeforeNextGetter\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:34:17.193628427Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter"}
+{"Time":"2026-10-18T22:34:17.1936305Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter"}
+{"Time":"2026-10-18T22:34:17.193632263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"=== CONT  TestSpreadUndefinedThrowStopsBeforeNextGetter\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:34:19.987731166Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"    step21_spread_pending_test.go:24: gate cache node miss\n"}
+{"Time":"2026-10-18T22:34:21.133127456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"    oracle_test.go:619: gate cache native miss\n"}
+{"Time":"2026-10-18T22:34:22.056385604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"    step21_spread_pending_test.go:33: gate cache node miss\n"}
+{"Time":"2026-10-18T22:34:22.094022782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"    oracle_test.go:633: gate cache native miss\n"}
+{"Time":"2026-10-18T22:34:22.281615018Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Output":"--- PASS: TestSpreadUndefinedThrowStopsBeforeNextGetter (5.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:34:22.281682308Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestSpreadUndefinedThrowStopsBeforeNextGetter","Elapsed":5.09}
+{"Time":"2026-10-18T22:34:22.281704662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:34:22.281708848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-18T22:34:22.281711392Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-18T22:34:22.281712894Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-18T22:34:22.283914599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t5.097s\n"}
+{"Time":"2026-10-18T22:34:22.283936932Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":5.097}

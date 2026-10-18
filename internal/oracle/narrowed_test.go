@@ -11,7 +11,7 @@ func init() {
 		"internal/oracle/testdata/047cb0d_n_typeof.a",
 		"internal/oracle/testdata/047cb0d_n_template.a",
 		"internal/oracle/testdata/047cb0d_n_optional.a",
-		"internal/oracle/testdata/047cb0d_n_arrayindex.a",
+		"internal/oracle/testdata/step21_refused/047cb0d_n_arrayindex.a",
 		"internal/oracle/testdata/047cb0d_n_paren.a",
 		"internal/oracle/testdata/047cb0d_n_conditional.a",
 	} {

@@ -1,0 +1,18 @@
+{"Time":"2026-10-10T02:32:59.456372592Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-10T02:32:59.477408249Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops"}
+{"Time":"2026-10-10T02:32:59.477562975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"=== RUN   TestStep21LiteralPropertyUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:32:59.477595308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"=== PAUSE TestStep21LiteralPropertyUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:32:59.477597947Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops"}
+{"Time":"2026-10-10T02:32:59.477600609Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops"}
+{"Time":"2026-10-10T02:32:59.477602415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"=== CONT  TestStep21LiteralPropertyUseStops\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:33:00.691825827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"    step21_narrowing_uses_test.go:241: JavaScript literal guard mutant caught: exit 0 stdout \"22\\n\"\n"}
+{"Time":"2026-10-10T02:33:00.691875543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"    step21_narrowing_uses_test.go:241: sanitized native literal guard mutant caught: exit 0 stdout \"22\\n\"\n"}
+{"Time":"2026-10-10T02:33:00.691879297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"    step21_narrowing_uses_test.go:241: release literal guard mutant caught: exit 0 stdout \"22\\n\"\n"}
+{"Time":"2026-10-10T02:33:00.693056071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Output":"--- PASS: TestStep21LiteralPropertyUseStops (1.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:33:00.694560744Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep21LiteralPropertyUseStops","Elapsed":1.22}
+{"Time":"2026-10-10T02:33:00.69468617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-10T02:33:00.694712078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-10T02:33:00.69471479Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=3\n"}
+{"Time":"2026-10-10T02:33:00.694717119Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-10T02:33:00.697143245Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.240s\n"}
+{"Time":"2026-10-10T02:33:00.697184671Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.241}

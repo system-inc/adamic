@@ -1,0 +1,185 @@
+--- main/internal/oracle/testdata/step21_catch_callback.a
++++ slice/internal/oracle/testdata/step21_catch_callback.a
+@@ -8,20 +8,24 @@
+ static adamic_string adamic_string_0 = ADAMIC_STRING("");
+ static adamic_string adamic_string_1 = ADAMIC_STRING("read");
+ static adamic_string adamic_string_2 = ADAMIC_STRING("text");
+-static adamic_string adamic_string_3 = ADAMIC_STRING("unexpected");
+-static adamic_string adamic_string_4 = ADAMIC_STRING("fallback");
++static adamic_string adamic_string_3 = ADAMIC_STRING("object");
++static adamic_string adamic_string_4 = ADAMIC_STRING("union member where the checker narrowed it away: a call since the narrowing put it back");
++static adamic_string adamic_string_5 = ADAMIC_STRING("unexpected");
++static adamic_string adamic_string_6 = ADAMIC_STRING("fallback");
+ 
+ static adamic_string * adamic_function_0_readFile(double adamic_local_0_index);
+ static adamic_string * adamic_function_1_read(adamic_closure * adamic_local_1_action);
+-static adamic_code_function adamic_function_2_closure;
++static adamic_object * adamic_function_2_narrowed_union_member(adamic_heap * adamic_local_3_argument);
++static adamic_code_function adamic_function_3_closure;
+ 
+ static adamic_string * adamic_function_0_readFile(double adamic_local_0_index) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (adamic_local_0_index == (0x1p+00)) {
+ 		adamic_string * adamic_temporary_1 = adamic_string_from_number(adamic_local_0_index);
+ 		adamic_string * adamic_temporary_2 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_1, adamic_temporary_1});
+-		adamic_object * adamic_temporary_3 = adamic_error_new(adamic_temporary_2);
+-		adamic_thrown = adamic_retain(adamic_temporary_3);
++		adamic_object * adamic_temporary_3 = adamic_error_new_kind(adamic_temporary_2, "Error");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_3)));
++		adamic_exception_pending = true;
+ 		adamic_release(adamic_temporary_3);
+ 		adamic_release(adamic_temporary_2);
+ 		adamic_release(adamic_temporary_1);
+@@ -39,7 +43,7 @@
+ 	ADAMIC_CHECK_STACK();
+ 	{
+ 		adamic_value adamic_temporary_8 = adamic_local_1_action->code(adamic_local_1_action, NULL);
+-		if (adamic_thrown != NULL) {
++		if (adamic_exception_pending) {
+ 			goto adamic_landing_7;
+ 		}
+ 		adamic_string * adamic_temporary_9 = (adamic_string *)adamic_temporary_8.reference;
+@@ -49,20 +53,24 @@
+ 	goto adamic_done_7;
+ 	adamic_landing_7:;
+ 	{
+-		adamic_object *adamic_temporary_11 = adamic_thrown;
++		adamic_heap *adamic_temporary_11 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_2_error = adamic_temporary_11;
+-		adamic_string * adamic_temporary_13;
+-		if (true) {
+-			adamic_string * adamic_temporary_12 = adamic_retain(((adamic_string *)(&adamic_local_2_error->slots[1])->reference));
+-			adamic_temporary_13 = adamic_retain(adamic_temporary_12);
+-			adamic_release(adamic_temporary_12);
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_2_error = ((adamic_heap *)adamic_temporary_11);
++		bool adamic_temporary_12 = adamic_instanceof(adamic_local_2_error, &adamic_error_class);
++		adamic_string * adamic_temporary_15;
++		if (adamic_temporary_12) {
++			adamic_object * adamic_temporary_13 = adamic_function_2_narrowed_union_member(adamic_local_2_error);
++			adamic_string * adamic_temporary_14 = adamic_retain(((adamic_string *)(&adamic_temporary_13->slots[1])->reference));
++			adamic_temporary_15 = adamic_retain(adamic_temporary_14);
++			adamic_release(adamic_temporary_14);
++			adamic_release(adamic_temporary_13);
+ 		} else {
+-			adamic_temporary_13 = adamic_retain(&adamic_string_3);
++			adamic_temporary_15 = adamic_retain(&adamic_string_5);
+ 		}
+-		adamic_string * adamic_temporary_14 = adamic_temporary_13;
++		adamic_string * adamic_temporary_16 = adamic_temporary_15;
+ 		adamic_release(adamic_local_2_error);
+-		return adamic_temporary_14;
++		return adamic_temporary_16;
+ 		adamic_release(adamic_local_2_error);
+ 	}
+ 	goto adamic_done_7;
+@@ -70,61 +78,73 @@
+ 	adamic_unreachable();
+ }
+ 
+-static adamic_value adamic_function_2_closure(adamic_closure *self, adamic_value *arguments) {
++static adamic_object * adamic_function_2_narrowed_union_member(adamic_heap * adamic_local_3_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_17 = adamic_instanceof(adamic_local_3_argument, &adamic_error_class);
++	if (!adamic_temporary_17) {
++		adamic_panic((&adamic_string_4)->bytes, (&adamic_string_4)->length);
++	}
++	adamic_object * adamic_temporary_18 = adamic_retain(((adamic_object *)adamic_local_3_argument));
++	return adamic_temporary_18;
++	adamic_unreachable();
++}
++
++static adamic_value adamic_function_3_closure(adamic_closure *self, adamic_value *arguments) {
+ 	ADAMIC_CHECK_STACK();
+ 	(void)self;
+ 	(void)arguments;
+-	double adamic_temporary_15 = self->cells[0]->value.number;
+-	adamic_string * adamic_temporary_16 = adamic_function_0_readFile(adamic_temporary_15);
+-	if (adamic_thrown != NULL) {
+-		adamic_release(adamic_temporary_16);
++	double adamic_temporary_19 = self->cells[0]->value.number;
++	adamic_string * adamic_temporary_20 = adamic_function_0_readFile(adamic_temporary_19);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_20);
+ 		return (adamic_value){.number = 0};
+ 	}
+-	adamic_string * adamic_temporary_17 = adamic_temporary_16;
+-	return (adamic_value){.reference = adamic_temporary_17};
++	adamic_string * adamic_temporary_21 = adamic_temporary_20;
++	return (adamic_value){.reference = adamic_temporary_21};
+ 	adamic_unreachable();
+ }
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	{
+-		adamic_array * adamic_temporary_18 = adamic_array_new(3, false);
+-		adamic_array_push(adamic_temporary_18, (adamic_value){.number = (0x0p+00)});
+-		adamic_array_push(adamic_temporary_18, (adamic_value){.number = (0x1p+00)});
+-		adamic_array_push(adamic_temporary_18, (adamic_value){.number = (0x1p+01)});
+-		adamic_array * adamic_temporary_19 = adamic_temporary_18;
+-		for (size_t adamic_temporary_20 = 0; adamic_temporary_20 < adamic_temporary_19->length; adamic_temporary_20++) {
++		adamic_array * adamic_temporary_22 = adamic_array_new(3, false);
++		adamic_array_push(adamic_temporary_22, (adamic_value){.number = (0x0p+00)});
++		adamic_array_push(adamic_temporary_22, (adamic_value){.number = (0x1p+00)});
++		adamic_array_push(adamic_temporary_22, (adamic_value){.number = (0x1p+01)});
++		adamic_array * adamic_temporary_23 = adamic_temporary_22;
++		for (size_t adamic_temporary_24 = 0; adamic_temporary_24 < adamic_temporary_23->length; adamic_temporary_24++) {
+ 			{
+-				adamic_cell *adamic_local_3_index_cell = adamic_cell_new((adamic_value){.number = adamic_temporary_19->elements[adamic_temporary_20].number}, false);
+-				adamic_closure * adamic_temporary_26 = adamic_closure_new(adamic_function_2_closure, 1);
+-				adamic_temporary_26->cells[0] = adamic_retain(adamic_local_3_index_cell);
+-				adamic_string * adamic_temporary_27 = adamic_function_1_read(adamic_temporary_26);
+-				adamic_write_line(adamic_stdout, adamic_temporary_27);
+-				adamic_release(adamic_temporary_27);
+-				adamic_release(adamic_temporary_26);
+-				adamic_release(adamic_local_3_index_cell);
++				adamic_cell *adamic_local_4_index_cell = adamic_cell_new((adamic_value){.number = adamic_temporary_23->elements[adamic_temporary_24].number}, false);
++				adamic_closure * adamic_temporary_30 = adamic_closure_new(adamic_function_3_closure, 1);
++				adamic_temporary_30->cells[0] = adamic_retain(adamic_local_4_index_cell);
++				adamic_string * adamic_temporary_31 = adamic_function_1_read(adamic_temporary_30);
++				adamic_write_line(adamic_stdout, adamic_temporary_31);
++				adamic_release(adamic_temporary_31);
++				adamic_release(adamic_temporary_30);
++				adamic_release(adamic_local_4_index_cell);
+ 			}
+ 		}
+-		adamic_release(adamic_temporary_19);
++		adamic_release(adamic_temporary_23);
+ 	}
+ 	{
+-		adamic_string * adamic_temporary_29 = adamic_function_0_readFile((0x1p+00));
+-		if (adamic_thrown != NULL) {
+-			adamic_release(adamic_temporary_29);
+-			goto adamic_landing_28;
++		adamic_string * adamic_temporary_33 = adamic_function_0_readFile((0x1p+00));
++		if (adamic_exception_pending) {
++			adamic_release(adamic_temporary_33);
++			goto adamic_landing_32;
+ 		}
+-		(void)adamic_temporary_29;
+-		adamic_release(adamic_temporary_29);
++		(void)adamic_temporary_33;
++		adamic_release(adamic_temporary_33);
+ 	}
+-	goto adamic_done_28;
+-	adamic_landing_28:;
++	goto adamic_done_32;
++	adamic_landing_32:;
+ 	{
+-		adamic_object *adamic_temporary_30 = adamic_thrown;
++		adamic_heap *adamic_temporary_34 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_release(adamic_temporary_30);
+-		adamic_write_line(adamic_stdout, &adamic_string_4);
++		adamic_exception_pending = false;
++		adamic_release(adamic_temporary_34);
++		adamic_write_line(adamic_stdout, &adamic_string_6);
+ 	}
+-	goto adamic_done_28;
+-	adamic_done_28:;
++	goto adamic_done_32;
++	adamic_done_32:;
+ 	return 0;
+ }

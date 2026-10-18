@@ -1,0 +1,57 @@
+--- main/internal/oracle/testdata/closures_throw_uncaught.a
++++ slice/internal/oracle/testdata/closures_throw_uncaught.a
+@@ -61,7 +61,7 @@
+ 				adamic_panic(message, sizeof message - 1);
+ 			}
+ 			adamic_value adamic_temporary_14 = adamic_temporary_10->code(adamic_temporary_10, (adamic_value[]){adamic_temporary_9->elements[adamic_temporary_13], {.number = (double)adamic_temporary_13}, {.reference = adamic_temporary_9}});
+-			if (adamic_thrown != NULL) {
++			if (adamic_exception_pending) {
+ 				adamic_release(adamic_temporary_11);
+ 				adamic_release(adamic_temporary_10);
+ 				goto adamic_rethrow_8;
+@@ -81,12 +81,14 @@
+ 	goto adamic_done_8;
+ 	adamic_rethrow_8:;
+ 	{
+-		adamic_object *adamic_temporary_16 = adamic_thrown;
++		adamic_heap *adamic_temporary_16 = adamic_thrown;
+ 		adamic_thrown = NULL;
++		adamic_exception_pending = false;
+ 		{
+ 			adamic_write_line(adamic_stdout, &adamic_string_4);
+ 		}
+ 		adamic_thrown = adamic_temporary_16;
++		adamic_exception_pending = true;
+ 		adamic_temporary_16 = NULL;
+ 		adamic_release(adamic_temporary_16);
+ 		return NULL;
+@@ -104,8 +106,9 @@
+ 	if (adamic_string_ends_with(adamic_local_4_item, &adamic_string_1)) {
+ 		{
+ 			adamic_string * adamic_temporary_17 = adamic_string_concat(2, (adamic_string *const[]){adamic_local_4_item, &adamic_string_3});
+-			adamic_object * adamic_temporary_18 = adamic_error_new(adamic_temporary_17);
+-			adamic_thrown = adamic_retain(adamic_temporary_18);
++			adamic_object * adamic_temporary_18 = adamic_error_new_kind(adamic_temporary_17, "Error");
++			adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_18)));
++			adamic_exception_pending = true;
+ 			adamic_release(adamic_temporary_18);
+ 			adamic_release(adamic_temporary_17);
+ 			adamic_release(adamic_local_4_item);
+@@ -124,7 +127,7 @@
+ 	adamic_write_line(adamic_stdout, &adamic_string_5);
+ 	adamic_array * adamic_temporary_21 = adamic_function_0_labels((0x1.8p+01));
+ 	adamic_array * adamic_temporary_22 = adamic_function_1_shout(adamic_temporary_21);
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_22);
+ 		adamic_release(adamic_temporary_21);
+ 		adamic_uncaught();
+@@ -136,7 +139,7 @@
+ 	adamic_release(adamic_temporary_21);
+ 	adamic_array * adamic_temporary_24 = adamic_function_0_labels((0x1.4p+02));
+ 	adamic_array * adamic_temporary_25 = adamic_function_1_shout(adamic_temporary_24);
+-	if (adamic_thrown != NULL) {
++	if (adamic_exception_pending) {
+ 		adamic_release(adamic_temporary_25);
+ 		adamic_release(adamic_temporary_24);
+ 		adamic_uncaught();

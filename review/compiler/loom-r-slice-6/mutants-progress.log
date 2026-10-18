@@ -1,0 +1,12 @@
+missing-exception-edge True 1 16.923 cache reclaimed 102241366
+assignment-kills-handler-value True 1 13.255 cache reclaimed 102241366
+throw-temporaries-leak True 1 10.881 cache reclaimed 49347492
+pending-finally-leak True 1 10.541 cache reclaimed 49347492
+error-message-not-retained True 1 25.133 cache reclaimed 49347492
+range-error-is-error True 1 15.773 cache reclaimed 102241352
+wrong-range-message True 1 15.559 cache reclaimed 102241350
+type-error-is-error True 1 15.361 cache reclaimed 102241366
+hash-failure-is-panic True 1 24.551 cache reclaimed 49347492
+host-type-error-is-error True 1 24.103 cache reclaimed 49347492
+soundness-check-is-catchable True 1 15.002 cache reclaimed 102241816
+error-ancestry-missing False 1 10.641 cache reclaimed 49347492

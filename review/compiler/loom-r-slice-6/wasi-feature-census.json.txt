@@ -1,0 +1,51 @@
+{
+  "plain": [
+    "internal/load/testdata/0.1/compile/01_hello.ts",
+    "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+    "internal/load/testdata/0.1/compile/03_shapes.ts",
+    "internal/load/testdata/0.1/compile/04_closures.ts",
+    "internal/load/testdata/0.1/compile/05_wordcount.ts",
+    "internal/load/testdata/0.1/compile/06_stack.ts",
+    "internal/load/testdata/0.1/compile/07_modules/main.ts",
+    "internal/load/testdata/0.1/compile/08_results.ts",
+    "internal/load/testdata/0.1/compile/09_tree.ts",
+    "internal/load/testdata/0.1/compile/10_unicode.ts",
+    "internal/oracle/testdata/strings.a",
+    "internal/oracle/testdata/numbers.a",
+    "internal/oracle/testdata/bitwise_sweep.a",
+    "internal/oracle/testdata/functions.a",
+    "internal/oracle/testdata/regions.a",
+    "internal/oracle/testdata/regions_throw.a",
+    "internal/oracle/testdata/weak_parent.a",
+    "internal/oracle/testdata/weak_narrowed.a",
+    "internal/oracle/testdata/reuse_weak_after_reuse.a",
+    "internal/oracle/testdata/reuse_weak_during_spread.a",
+    "internal/oracle/testdata/normalize.a",
+    "internal/oracle/testdata/maps_and_text.a",
+    "internal/oracle/testdata/stack_overflow.a",
+    "internal/oracle/testdata/stack_forever.a",
+    "internal/oracle/testdata/stack_tail_call.a",
+    "internal/oracle/testdata/panic.a",
+    "internal/oracle/testdata/json_stringify_numbers.a",
+    "internal/oracle/testdata/regexp_cycle_collections.a",
+    "internal/oracle/testdata/library_object_keys.a",
+    "internal/oracle/testdata/library_array_flat.a",
+    "internal/oracle/testdata/read_files.a",
+    "internal/native/wasm/io.a",
+    "internal/oracle/testdata/write_stdout_order.a",
+    "internal/oracle/testdata/write_stderr_order.a",
+    "internal/native/wasm/request.a"
+  ],
+  "ADAMIC_CLOSURE_CONVENTION": [
+    "internal/oracle/testdata/closures_throw.a"
+  ],
+  "ADAMIC_CLOSURE_RECEIVERS+ADAMIC_CLOSURE_CONVENTION": [
+    "internal/oracle/testdata/arguments_length_extended.a"
+  ],
+  "ADAMIC_REGEXP_REPLACE_CALLBACK+ADAMIC_CLOSURE_CONVENTION": [
+    "internal/oracle/testdata/closure_convention_regexp_count.a"
+  ],
+  "ADAMIC_CANONICAL_CLOSURES+ADAMIC_CLOSURE_CONVENTION": [
+    "internal/oracle/testdata/closure_convention_nested.a"
+  ]
+}

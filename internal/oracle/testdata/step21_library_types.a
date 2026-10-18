@@ -1,0 +1,13 @@
+// Generalizes utilities.ts:7810 recovery to represented TypeErrors.
+const frozen = { value: `old${1}` };
+Object.freeze(frozen);
+try { frozen.value = `new${2}`; }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message} ${error instanceof TypeError}`); }
+console.log(frozen.value);
+try { Object.assign(frozen, { value: `copy${3}` }); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+const pattern = /x/;
+try { console.log('x'.replaceAll(pattern, `replace${1}`)); }
+catch (error) { if (error instanceof TypeError) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${'x'.matchAll(pattern).next().done ?? false}`); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
