@@ -75,6 +75,20 @@ func runRuntimeStaticsProtectionMutant(t *testing.T, unit int) {
 				}
 				return
 			}
+			if mutant.name == "shape_types_registry" {
+				for _, unsafe := range []bool{false, true} {
+					name, changed := "guarded", mutant.old
+					if unsafe {
+						name, changed = "mutant", mutant.changed
+					}
+					t.Run(name, func(t *testing.T) {
+						library, root := staticsRaceLibrary(t, mutant.file, mutant.old, changed)
+						binary := staticsRaceFixture(t, root, library, "shape_types_contended")
+						staticsRaceRun(t, binary, unsafe)
+					})
+				}
+				return
+			}
 			library, root := staticsRaceLibrary(t, mutant.file, mutant.old, mutant.changed)
 			binary := staticsRaceFixture(t, root, library, mutant.fixture)
 			staticsRaceRun(t, binary, true)
@@ -267,7 +281,16 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&output_lock);", "/* mutant: no output unlock */"))
 			}
 			if mutantFile == "union.c" {
-				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&shape_types_lock);", "/* mutant: no registry unlock */"))
+				// Rendezvous after the acquire fast path, before the real lock.
+				// Both snapshots use the hook; only the mutant removes protection.
+				seam := "if (__atomic_load_n(&metadata->registered, __ATOMIC_ACQUIRE)) return;"
+				if strings.Count(string(source), seam) != 1 {
+					t.Fatal("missing shape registration race seam")
+				}
+				source = []byte(strings.Replace(string(source), seam, seam+"\n\textern void adamic_test_shape_types_register(void);\n\tadamic_test_shape_types_register();", 1))
+				if old != changed {
+					source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&shape_types_lock);", "/* mutant: no registry unlock */"))
+				}
 			}
 			if mutantFile == "weak.c" {
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&table_lock);", "/* mutant: no table unlock */"))
@@ -350,11 +373,69 @@ func staticsCompile(t *testing.T, tool string, arguments ...string) {
 	}
 }
 
+// Keep this contended witness beside its snapshot hooks. The file fixture still
+// independently covers the uninstrumented runtime and distinct-entry pushes.
+const staticsShapeTypesContended = `#include "harness.h"
+// First register 64 shared entries, then 64 fresh entries per worker.
+// The test snapshot rendezvous is after the acquire fast path, so every worker
+// reaches the lock with an unregistered entry even in the shared rounds.
+// This covers both concurrent list pushes and the registered double check.
+static const char *const names[] = {"x"};
+static const bool references[] = {false};
+static adamic_shape shapes[320];
+static const int types[] = {1};
+static adamic_shape_types metadata[320];
+static pthread_barrier_t registrations;
+static pthread_barrier_t fast_paths;
+void adamic_test_shape_types_register(void) { pthread_barrier_wait(&fast_paths); }
+static size_t next_worker;
+static _Thread_local size_t worker;
+static _Thread_local size_t visits;
+static void prepare(void) {
+ for (size_t index = 0; index < 320; index++) {
+  shapes[index] = (adamic_shape){1, names, references, NULL};
+  metadata[index] = (adamic_shape_types){&shapes[index], types, NULL, false};
+ }
+ if (pthread_barrier_init(&registrations, NULL, 4) != 0 || pthread_barrier_init(&fast_paths, NULL, 4) != 0) { abort(); }
+}
+static void cleanup(void) { pthread_barrier_destroy(&registrations); pthread_barrier_destroy(&fast_paths); }
+static double exercise(size_t index) {
+ if (visits == 0) {
+  worker = __atomic_fetch_add(&next_worker, 1, __ATOMIC_RELAXED);
+  if (worker >= 4) { abort(); }
+ }
+ size_t which = visits < 64 ? 256 + visits : visits < 128 ? (visits - 64) * 4 + worker : index % 320;
+ if (visits++ < 128) {
+  // This orders earlier rounds, never the new round's registry accesses.
+  pthread_barrier_wait(&registrations);
+ }
+ adamic_register_shape_types(&metadata[which]);
+ // Finish every fresh registration before steady reads can revisit its entry.
+ if (visits == 128) { pthread_barrier_wait(&registrations); }
+ adamic_object *object = adamic_object_new(&shapes[which]);
+ object->slots[0].number = (double)which;
+ adamic_heap *value = adamic_dynamic_property(&object->heap, "x");
+ // A registry missing this shape (a lost push) panics; one that links an entry to itself never returns.
+ if (value == NULL || value->kind != adamic_kind_number || ((adamic_number_box *)value)->number != (double)which) { abort(); }
+ adamic_release(value);
+ adamic_release(object);
+ return 1;
+}
+`
+
 func staticsRaceFixture(t *testing.T, root, library, fixture string) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), fixture)
 	source := "testdata/runtime-statics/" + fixture + ".c"
-	arguments := append(staticsRaceFlags(), "-I", root, source, "testdata/runtime-statics/tsgo_stub.c", "-Wl,--whole-archive", library, "-Wl,--no-whole-archive", "-lm", "-o", binary)
+	flags := staticsRaceFlags()
+	if fixture == "shape_types_contended" {
+		source = filepath.Join(t.TempDir(), "shape_types.c")
+		if err := os.WriteFile(source, []byte(staticsShapeTypesContended), 0600); err != nil {
+			t.Fatal(err)
+		}
+		flags = append(flags, "-I", "testdata/runtime-statics")
+	}
+	arguments := append(flags, "-I", root, source, "testdata/runtime-statics/tsgo_stub.c", "-Wl,--whole-archive", library, "-Wl,--no-whole-archive", "-lm", "-o", binary)
 	staticsCompile(t, "clang", arguments...)
 	return binary
 }
