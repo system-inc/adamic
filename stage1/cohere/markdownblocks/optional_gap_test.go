@@ -6,7 +6,7 @@ import (
 )
 
 // Optional declarations start as undefined on every backend, as Node decides.
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
+// Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestOptionalStringInitializationWitness(t *testing.T) {
 	parallelMarkdownMemory(t, 1)
 	path, err := filepath.Abs("gaps/6_uninitialized_optional_string.ts")
@@ -17,7 +17,8 @@ func TestOptionalStringInitializationWitness(t *testing.T) {
 	clean(t, "Node truth", source)
 	equal(t, "Node truth", source.stdout, []byte("missing\n"))
 	program := lowered(t, path)
-	answer, binary := natively(t, program)
+	binary := filepath.Join(gapSanitized(t, "gaps/6_uninitialized_optional_string.ts"), "port")
+	answer := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result run

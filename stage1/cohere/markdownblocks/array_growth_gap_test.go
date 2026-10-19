@@ -6,7 +6,7 @@ import (
 )
 
 // Explicit gap observation, not the oracle for the production map, which uses push.
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
+// Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestArrayGrowthWitness(t *testing.T) {
 	parallelMarkdownMemory(t, 1)
 	path, e := filepath.Abs("gaps/13_array_growth.ts")
@@ -17,7 +17,7 @@ func TestArrayGrowthWitness(t *testing.T) {
 	clean(t, "Node truth", source)
 	equal(t, "Node truth", source.stdout, []byte("1\n"))
 	program := lowered(t, path)
-	answer, _ := natively(t, program)
+	answer := sanitizedRun(t, filepath.Join(gapSanitized(t, "gaps/13_array_growth.ts"), "port"))
 	if answer.exitCode != 70 {
 		t.Fatalf("array growth gap changed: exit %d stderr %s", answer.exitCode, answer.stderr)
 	}
