@@ -1677,6 +1677,10 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 	return set, ""
 }
 
+// reachBackChecked runs as recordUnion's set of nameKey passes its reach-back check, before it's valued and written: a
+// test holds two recorders there, or changes a file the check read; alone it does nothing.
+var reachBackChecked = func(nameKey string) {}
+
 // recordUnion keys set on this tree, places the product by placing it under the key, and records the set first among
 // nameKey's, all under the read sets' lock. An earlier set that still values as it was recorded came from a build of
 // this same tree: its reads are ones this build could have made too (a build's reads can vary from run to run, and
@@ -1688,10 +1692,19 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 // native-false, which it valued through the answer it held from before native-false's new set, and every runner missed
 // both). A set that reads a product whose recorded sets reach nameKey, nameKey itself included, is refused the same way
 // before it's valued: once recorded, the two would be one component, and no lookup uses a set reading its own
-// product's component (readComponents), so only what no lookup would use is refused.
+// product's component (readComponents), so only what no lookup would use is refused. A set naming a product is checked
+// and written under the cache's graph lock (lockReadsGraph), so two recorded at once never each pass the check before
+// the other's write; one naming none adds no edge, since the union adds only entries nameKey's file already holds.
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
+	if slices.ContainsFunc(set.Entries, func(entry readEntry) bool { return entry.Kind == "product" || entry.Kind == productKeyKind }) {
+		unlock, err := lockReadsGraph(cache)
+		if err != nil {
+			return set, evaluated, product, err
+		}
+		defer unlock()
+	}
 	known := freshMemo(nameKey)
 	err := withReads(cache, nameKey, func(file *readsFile) error {
 		var kept []readSet
@@ -1707,6 +1720,7 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 				return fmt.Errorf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", entry.Path[:min(12, len(entry.Path))])
 			}
 		}
+		reachBackChecked(nameKey)
 		var err error
 		if evaluated, err = evaluate(root, cache, nameKey, set, 0, known); err != nil {
 			return err
