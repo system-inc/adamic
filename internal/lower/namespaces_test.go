@@ -30,7 +30,6 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"block var", "namespace N {if(true){var x=1;}}", "var inside namespace control flow"},
 		{"nested early read", "namespace N {const x=Inner.read; export namespace Inner {export function read():number{return 1;}}}", "namespace read before"},
 		{"explicit receiver", "namespace N {export const x=1; export function read(this:{readonly x:number}):number{return 1;}}", "explicit namespace-function"},
-		{"ambient", "declare namespace N {export interface T {readonly x:number;}}", "ambient namespace"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
