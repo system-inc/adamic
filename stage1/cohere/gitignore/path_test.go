@@ -55,10 +55,12 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 	if err := os.WriteFile(pathsFile, []byte(input.String()), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	sweep := func(t *testing.T, directory string) (run, run, run) {
+	sweep := func(t *testing.T, mutant pathMutant) (run, run, run) {
 		t.Helper()
+		directory := sweepDirectory(t, mutant.from, mutant.to)
 		program := lowered(t, filepath.Join(directory, "pathsweep.ts"))
-		nativeRun, sanitized := natively(t, program, pathsFile)
+		sanitized := filepath.Join(pathSweepSanitized(t, mutant), "port")
+		nativeRun := sanitizedRun(t, sanitized, pathsFile)
 		if leaked := leaks(t, program, sanitized, pathsFile); leaked != "" {
 			t.Errorf("leaks:\n%s", leaked)
 		}
@@ -67,8 +69,7 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 
 	t.Run("as Go's path package", func(t *testing.T) {
 		t.Parallel()
-		directory := sweepDirectory(t, "", "")
-		nodeRun, nativeRun, backendRun := sweep(t, directory)
+		nodeRun, nativeRun, backendRun := sweep(t, pathMutant{})
 		for _, side := range []struct {
 			name string
 			run  run
@@ -83,20 +84,10 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 		t.Logf("%d paths: clean, base and dir the same from Go's path package, path.ts natively, on Node and through the JavaScript backend", len(paths))
 	})
 
-	for _, mutant := range []struct{ name, from, to string }{
-		// Each takes one test out of isClean, so a path it no longer sees as unclean comes back as it is.
-		{"a run of slashes taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || (path.endsWith('/') && path !== '/')) {"},
-		{"a trailing slash taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || path.includes('//')) {"},
-		{"a trailing . taken for clean", "if (path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if (path.startsWith('./') || path.includes('/./')) {"},
-		{"a rooted path's .. taken for clean", "return !path.includes('/../') && !path.endsWith('/..');", "return !path.includes('/../');"},
-		{"a .. after a name taken for clean", "!rest.includes('/../') && !rest.endsWith('/..') && !rest.startsWith('../');", "!rest.endsWith('/..') && !rest.startsWith('../');"},
-		// dir cleaning from the last slash's position on, where Go cleans up to and with it.
-		{"dir keeping the last element's first unit", "return clean(path.slice(0, lastSlash));", "return clean(path.slice(0, lastSlash + 2));"},
-	} {
+	for _, mutant := range pathMutants {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
-			directory := sweepDirectory(t, mutant.from, mutant.to)
-			nodeRun, nativeRun, _ := sweep(t, directory)
+			nodeRun, nativeRun, _ := sweep(t, mutant)
 			for _, side := range []struct {
 				name string
 				run  run
@@ -114,6 +105,21 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 			}
 		})
 	}
+}
+
+// A pathMutant takes one place out of path.ts, the from text replaced by to; the zero one is path.ts itself.
+type pathMutant struct{ name, from, to string }
+
+// pathMutants are the mutants of path.ts TestPathAnswersAsGosPathPackage must catch.
+var pathMutants = []pathMutant{
+	// Each takes one test out of isClean, so a path it no longer sees as unclean comes back as it is.
+	{"a run of slashes taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || (path.endsWith('/') && path !== '/')) {"},
+	{"a trailing slash taken for clean", "if (path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if (path === '' || path.includes('//')) {"},
+	{"a trailing . taken for clean", "if (path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if (path.startsWith('./') || path.includes('/./')) {"},
+	{"a rooted path's .. taken for clean", "return !path.includes('/../') && !path.endsWith('/..');", "return !path.includes('/../');"},
+	{"a .. after a name taken for clean", "!rest.includes('/../') && !rest.endsWith('/..') && !rest.startsWith('../');", "!rest.endsWith('/..') && !rest.startsWith('../');"},
+	// dir cleaning from the last slash's position on, where Go cleans up to and with it.
+	{"dir keeping the last element's first unit", "return clean(path.slice(0, lastSlash));", "return clean(path.slice(0, lastSlash + 2));"},
 }
 
 // sweepDirectory copies path.ts and its driver into a directory of their own, with from replaced by to
