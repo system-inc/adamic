@@ -849,3 +849,64 @@ func TestUnitCacheOffCompilesUncached(t *testing.T) {
 		t.Fatal("with the cache on the build kept no unit in it")
 	}
 }
+
+// A mismatch proves the build's cache incomplete, not one unit's: with two units' cached objects planted wrong and the
+// cold check falling on one of them, every unit's object the build ends with is the one an uncached build compiles, the
+// hit nobody checked included (Node's M4). Mutant: only the checked unit replaced.
+func TestUnitCacheMismatchCompilesEveryUnitCold(t *testing.T) {
+	t.Parallel()
+	compiler := unitKeyCompiler(t)
+	environment := unitKeyEnvironment()
+	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	units := []compilationUnit{
+		{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"},
+		{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"},
+	}
+	root := t.TempDir()
+	cache := filepath.Join(root, "cache")
+	directory := filepath.Join(root, "units")
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	never := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
+	never.check = func(compilationUnit) bool { return false }
+	cached, err := compileUnits(units, common, unitKeyFlags, compiler, never, cache, directory, 2, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, object := range cached {
+		if err := os.WriteFile(object, []byte("planted\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
+	keying.check = func(unit compilationUnit) bool { return unit.name == "beta.c" }
+	built, err := compileUnits(units, common, unitKeyFlags, compiler, keying, cache, directory, 2, nil)
+	if err != nil {
+		t.Fatalf("a mismatched build failed: %v", err)
+	}
+	uncachedDirectory := filepath.Join(root, "uncached")
+	if err := os.MkdirAll(uncachedDirectory, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	uncached, err := compileUnits(units, common, unitKeyFlags, compiler, nil, cache, uncachedDirectory, 2, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for index, unit := range units {
+		got, err := os.ReadFile(built[index])
+		if err != nil {
+			t.Fatal(err)
+		}
+		want, err := os.ReadFile(uncached[index])
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(got) != string(want) {
+			t.Fatalf("after beta.c's check mismatched, %s's object (%s) isn't the uncached compile's", unit.name, built[index])
+		}
+	}
+	if _, off := unitCacheOff(cache); !off {
+		t.Fatal("the mismatch left no mark")
+	}
+}
