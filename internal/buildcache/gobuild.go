@@ -528,9 +528,10 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		listed = append(listed, "-overlay="+overlay.path)
 	}
 	asked := []string{"list", "-deps", "-json"}
-	if request.verb == "test -c" || request.verb == "list -export" || request.verb == "list -export direct" {
-		// The test variant of each package, so its _test.go files are keyed too. GoDirectExports keeps its packages' test
-		// variants and what they import, so its key reads them as GoExports' does.
+	if request.verb != "build" {
+		// The test variant of each package, so its _test.go files are keyed too: every verb but build reads them (a test
+		// binary, GoExports' and GoDirectExports' listings of test variants), and a new verb starts keyed complete, never
+		// narrow, until it's shown to read no test (Node's should on #mtvmz1w: "list -export direct" began without it).
 		asked = append(asked, "-test")
 	}
 	listing, err := run(append(append(asked, listed...), strings.Fields(request.pkg)...)...)
