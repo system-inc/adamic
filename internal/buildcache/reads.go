@@ -956,9 +956,16 @@ func walkComponents(cache, start string, components map[string]string) {
 // productEdges is every product any of nameKey's recorded sets reads, by name key, each once. A file that can't be read
 // gives none, since what it reads is unknown: the cycle check of a lookup under way (productFor) guards that part.
 func productEdges(cache, nameKey string) []string {
+	edges, _ := recordedEdges(cache, nameKey)
+	return edges
+}
+
+// recordedEdges is productEdges, or the error that read nameKey's file: one that isn't there, or is another version's,
+// reads as no sets and gives none (readsAt), and one that can't be read or doesn't decode is the error, never none.
+func recordedEdges(cache, nameKey string) ([]string, error) {
 	file, err := loadReads(cache, nameKey)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	var edges []string
 	seen := map[string]bool{}
@@ -970,28 +977,36 @@ func productEdges(cache, nameKey string) []string {
 			}
 		}
 	}
-	return edges
+	return edges, nil
 }
 
-// readsBackTo says whether from reaches nameKey through recorded sets, from itself included: a set of nameKey reading
-// from would put the two in one component, so no lookup would ever use it (readComponents), and recordUnion refuses it.
-func readsBackTo(cache, from, nameKey string) bool {
+// readsBackTo says how from reaches nameKey through recorded sets, from itself included, "" when it doesn't: a set of
+// nameKey reading from would put the two in one component, so no lookup would ever use it (readComponents), and
+// recordUnion refuses it. A reached file that can't be read or doesn't decode (recordedEdges' error) could hold the edge
+// that closes the ring, so it reads as reaching back, named: the check fails closed (Node's must on #egjbcre). Loom's
+// copy-in walks the cache's files the same way, case for case (its builder.readsBackTo): a file not there, or another
+// version's, gives no edges; one that can't be read, or is garbled, reaches back.
+func readsBackTo(cache, from, nameKey string) string {
 	seen := map[string]bool{from: true}
 	next := []string{from}
 	for len(next) > 0 {
 		at := next[len(next)-1]
 		next = next[:len(next)-1]
 		if at == nameKey {
-			return true
+			return "which reads it back through recorded sets, a cycle no key can value"
 		}
-		for _, edge := range productEdges(cache, at) {
+		edges, err := recordedEdges(cache, at)
+		if err != nil {
+			return fmt.Sprintf("which reaches product %s, whose read sets can't be read (%v), so it may read it back: refused as a cycle no key could value", at[:min(12, len(at))], err)
+		}
+		for _, edge := range edges {
 			if !seen[edge] {
 				seen[edge] = true
 				next = append(next, edge)
 			}
 		}
 	}
-	return false
+	return ""
 }
 
 // readBack is the first product set reads that is in nameKey's component (components), so reads nameKey back through
