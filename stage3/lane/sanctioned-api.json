@@ -947,6 +947,11 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"System\",\"exit\"]#0",
+      "before": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"VoidKeyword\"]]",
+      "after": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"TaggedTemplateExpression\",\"typeArguments\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeNode\"]]],[\"UndefinedKeyword\"]]]"
@@ -1119,7 +1124,8 @@
     "33": 0,
     "40": 28,
     "70": 1,
-    "75": 1
+    "75": 1,
+    "79": 1
   },
   "excluded_method_conversions": 10,
   "owners": [
@@ -2892,6 +2898,14 @@
       "line": 9674
     },
     {
+      "adaptation": "79",
+      "path": [
+        "System",
+        "exit"
+      ],
+      "line": 8489
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -2980,6 +2994,10 @@
     {
       "file": "stage3/adapt/33-indexed-reads-emit/proof/whole-files/visitorPublic/api-projection.json",
       "sha256": "d0239ddf0d43639e4a208a242562f2fe247beebec89495b0d6a9e3e3ed57bd91"
+    },
+    {
+      "file": "stage3/adapt/79-exit-code/proofs/api-owner.json",
+      "sha256": "37a765a6491e6232bdff3f17f9680d19daac0ba9370b00a94f4849034f831f55"
     }
   ],
   "baseline_diffs": [
@@ -4108,6 +4126,15 @@
     "         readonly allowTextChangesInNewFiles?: boolean;\n",
     "         readonly providePrefixAndSuffixTextForRename?: boolean;\n",
     "         readonly includePackageJsonAutoImports?: \"auto\" | \"on\" | \"off\";\n",
+    "@@ -8486,7 +8487,7 @@\n",
+    "         /** This must be cryptographically secure. Only implement this method using `crypto.createHash(\"sha256\")`. */\n",
+    "         createSHA256Hash?(data: string): string;\n",
+    "         getMemoryUsage?(): number;\n",
+    "-        exit(exitCode?: number): void;\n",
+    "+        exit(exitCode?: number): number | undefined;\n",
+    "         realpath?(path: string): string;\n",
+    "         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
+    "         clearTimeout?(timeoutId: any): void;\n",
     "@@ -8519,7 +8520,7 @@\n",
     "     function isIdentifierStart(ch: number, languageVersion: ScriptTarget | undefined): boolean;\n",
     "     function isIdentifierPart(ch: number, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant): boolean;\n",

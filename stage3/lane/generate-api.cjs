@@ -184,7 +184,17 @@ for (const site of hostSites.filter(record => record.public)) {
     propertyHosts++;
 }
 assert.equal(propertyHosts, 1);
-assert.equal(new Set(owners.map(owner => owner.line)).size, 221, 'sanctioned owner line sets overlap');
+const exitProofPath = 'adapt/79-exit-code/proofs/api-owner.json';
+const exitProof = proof(exitProofPath);
+assert.equal(exitProof.status, 'pass');
+assert.deepEqual(exitProof.path, ['System', 'exit']);
+const exitOwner = owned(exitProof, ts.isMethodSignature, '79');
+assert.equal(exitOwner.type.getText(source), exitProof.before);
+assert.equal(exitProof.before, 'void');
+assert.equal(exitProof.after, 'number | undefined');
+edits.push({ at: exitOwner.type.getStart(source), end: exitOwner.type.end, text: exitProof.after });
+proofPaths.push(exitProofPath);
+assert.equal(new Set(owners.map(owner => owner.line)).size, 222, 'sanctioned owner line sets overlap');
 let prerequisite = original;
 for (const edit of edits.sort((a, b) => b.at - a.at)) {
     prerequisite = prerequisite.slice(0, edit.at) + edit.text + prerequisite.slice(edit.end ?? edit.at);
@@ -205,7 +215,7 @@ for (const addition of optional.additions) {
 // Adaptation 75's own guard must remove exactly that member and reproduce the prerequisite.
 const additions = require('../adapt/75-optional-widening/api-additions.cjs')(prerequisite, expected);
 assert.deepEqual(additions, optional.additions);
-console.log(JSON.stringify({ source_commit: pin, original, expected, normalized_changes: require('./normalize-api.cjs').changes(original, expected), counts: { '20': 189, '30': 0, '32': publicHandoffs.length + propertyHosts, '33': 0, '40': 28, '70': 1, '75': 1 },
+console.log(JSON.stringify({ source_commit: pin, original, expected, normalized_changes: require('./normalize-api.cjs').changes(original, expected), counts: { '20': 189, '30': 0, '32': publicHandoffs.length + propertyHosts, '33': 0, '40': 28, '70': 1, '75': 1, '79': 1 },
     excluded_method_conversions: excludedMethods,
     owners: [...owners, ...additions.map(addition => ({ adaptation: '75', path: [addition.owner, addition.property], line: addition.line }))],
     proofs: proofPaths.map(file => ({ file: 'stage3/' + file,

@@ -1,0 +1,68 @@
+{
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 223,
+    "sanctioned_declarations": 223,
+    "added_lines": 195,
+    "removed_lines": 194
+  },
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 1,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "verdict": "PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 7.586
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 66.684
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=8",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 700.565
+    }
+  },
+  "execution": {
+    "commit": "23ff023b9ed986834d20404d43e2c363667edf9b",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 1167.759
+  }
+}

@@ -1,0 +1,97 @@
+--- a/src/compiler/executeCommandLine.ts
++++ b/src/compiler/executeCommandLine.ts
+@@ -757,7 +757,7 @@
+     system: System,
+     cb: ExecuteCommandLineCallbacks,
+     commandLineArgs: readonly string[],
+-): void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram> {
++): number | undefined | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram> {
+     if (isBuildCommand(commandLineArgs)) {
+         const { buildOptions, watchOptions, projects, errors } = parseBuildCommand(commandLineArgs);
+         if (buildOptions.generateCpuProfile && system.enableCPUProfiler) {
+--- a/src/compiler/sys.ts
++++ b/src/compiler/sys.ts
+@@ -1429,7 +1429,7 @@
+     /** This must be cryptographically secure. Only implement this method using `crypto.createHash("sha256")`. */
+     createSHA256Hash?(data: string): string;
+     getMemoryUsage?(): number;
+-    exit(exitCode?: number): void;
++    exit(exitCode?: number): number | undefined;
+     /** @internal */ enableCPUProfiler?(path: string, continuation: () => void): boolean;
+     /** @internal */ disableCPUProfiler?(continuation: () => void): boolean;
+     /** @internal */ cpuProfilingEnabled?(): boolean;
+@@ -1585,7 +1585,7 @@
+                 }
+                 return 0;
+             },
+-            exit(exitCode?: number): void {
++            exit(exitCode?: number): undefined {
+                 disableCPUProfiler(() => process.exit(exitCode));
+             },
+             enableCPUProfiler,
+--- a/src/harness/fakesHosts.ts
++++ b/src/harness/fakesHosts.ts
+@@ -128,7 +128,7 @@
+         return { files, directories };
+     }
+ 
+-    public exit(exitCode?: number): void {
++    public exit(exitCode?: number): number | undefined {
+         this.exitCode = exitCode;
+         throw processExitSentinel;
+     }
+--- a/src/harness/harnessLanguageService.ts
++++ b/src/harness/harnessLanguageService.ts
+@@ -560,7 +560,7 @@
+         return vfs.fourslashLibFolder + "/tsc.js";
+     }
+ 
+-    exit = ts.noop;
++    exit = (_exitCode?: number): number | undefined => undefined;
+ 
+     createDirectory(_directoryName: string): void {
+         return ts.notImplemented();
+--- a/src/testRunner/unittests/helpers/tscWatch.ts
++++ b/src/testRunner/unittests/helpers/tscWatch.ts
+@@ -75,7 +75,7 @@
+             baselineSourceMap,
+             baselineDependencies,
+             edits,
+-            watchOrSolution,
++            watchOrSolution: typeof watchOrSolution === "object" ? watchOrSolution : undefined,
+         });
+     });
+ }
+--- a/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts
++++ b/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts
+@@ -1280,7 +1280,7 @@
+     readonly resolvePath = (s: string): string => s;
+     readonly getExecutingFilePath = (): string => this.executingFilePath;
+     readonly getCurrentDirectory = (): string => this.currentDirectory;
+-    exit(exitCode?: number): void {
++    exit(exitCode?: number): number | undefined {
+         this.exitCode = exitCode;
+         throw new Error(exitMessage);
+     }
+--- a/src/testRunner/unittests/tscWatch/incremental.ts
++++ b/src/testRunner/unittests/tscWatch/incremental.ts
+@@ -74,7 +74,7 @@
+                 oldPrograms,
+                 sys,
+             });
+-            if (closer) closer.close();
++            if (typeof closer === "object") closer.close();
+         }
+     }
+ 
+--- a/src/testRunner/unittests/tsserver/session.ts
++++ b/src/testRunner/unittests/tsserver/session.ts
+@@ -38,7 +38,7 @@
+     readDirectory() {
+         return [];
+     },
+-    exit: ts.noop,
++    exit: (_exitCode?: number): number | undefined => undefined,
+     setTimeout() {
+         return 0;
+     },

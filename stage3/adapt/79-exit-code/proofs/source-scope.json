@@ -1,0 +1,125 @@
+{
+  "status": "pass",
+  "totalSourceFiles": 746,
+  "unchangedSourceFiles": 738,
+  "compilerFiles": [
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/sys.ts"
+  ],
+  "harnessRuntimeChanges": [
+    "src/harness/harnessLanguageService.ts",
+    "src/testRunner/unittests/helpers/tscWatch.ts",
+    "src/testRunner/unittests/tscWatch/incremental.ts",
+    "src/testRunner/unittests/tsserver/session.ts"
+  ],
+  "harnessAnnotationOnly": [
+    "src/harness/fakesHosts.ts",
+    "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"
+  ],
+  "outputChanges": [
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": true
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": true
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": true
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": true
+        }
+      ]
+    },
+    {
+      "file": "src/harness/fakesHosts.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": true
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": true
+        }
+      ]
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": false
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": false
+        }
+      ]
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tscWatch.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": false
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": false
+        }
+      ]
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": true
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": true
+        }
+      ]
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": false
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": false
+        }
+      ]
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "identical": [
+        {
+          "removeComments": false,
+          "byteIdentical": false
+        },
+        {
+          "removeComments": true,
+          "byteIdentical": false
+        }
+      ]
+    }
+  ]
+}

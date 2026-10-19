@@ -1,0 +1,45 @@
+{
+  "selectionGuard": "typeof watchOrSolution === \"object\" ? watchOrSolution : undefined",
+  "selectionMutantCaught": true,
+  "status": "pass",
+  "node": "v24.19.0",
+  "args": [
+    "--invalid-adamic-option"
+  ],
+  "exitArguments": [
+    1
+  ],
+  "returned": 1,
+  "oldGuard": "if (closer) closer.close();",
+  "oldFailure": "TypeError: closer.close is not a function",
+  "newGuard": "if (typeof closer === \"object\") closer.close();",
+  "numericAndUndefinedInputs": [
+    "0",
+    "1",
+    "2",
+    "4",
+    "undefined"
+  ],
+  "objectClosed": 1,
+  "stubs": [
+    "src/harness/harnessLanguageService.ts",
+    "src/testRunner/unittests/tsserver/session.ts"
+  ],
+  "stubMutants": [
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "mutation": "return _exitCode",
+      "caught": true
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "mutation": "return _exitCode",
+      "caught": true
+    }
+  ],
+  "mutant": {
+    "name": "restore-truthiness-close",
+    "caught": true,
+    "error": "TypeError: closer.close is not a function"
+  }
+}
