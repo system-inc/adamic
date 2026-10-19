@@ -1,0 +1,3 @@
+// a-check: refused an ambient namespace or module holding values
+declare namespace Missing { namespace Nested { const value: number; } }
+console.log(`${Missing.Nested.value}`);

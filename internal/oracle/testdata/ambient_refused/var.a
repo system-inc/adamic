@@ -1,0 +1,3 @@
+// a-check: refused an ambient value declaration
+declare var limit: number;
+console.log(`${limit + 1}`);
