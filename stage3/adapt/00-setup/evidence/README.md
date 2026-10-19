@@ -483,3 +483,82 @@ Each mutant apply has a 300-second limit and each unchanged census driver a
 Final header checks invoke the real compiler in place on both `.a` witnesses:
 both exit 1 with first code TS2375, matching their first-line headers. No header
 is stripped by the resolver witness scripts.
+
+## Wave 3: ordinary Adamic checker and Node typings
+
+Measurement only, based on wave-2 head
+`eceb12092c3dfebe81000bb792cbcbf8908744e1`, on branch
+`typescript/stage3-node-typing-gaps`. The complete comparison is
+[node-typing-2026-10-19.json](node-typing-2026-10-19.json).
+A freshly built ordinary `cmd/adamic` checks exactly the same **79 roots** with
+`adamic types`, through the production `load.Load` path used by the meter.
+All 79 input hashes are verified against the committed wave-2 census before
+checking. The completed wave-2 apply tree is reused without modifying sources
+or installing dependencies. The production options and original prelude are
+unchanged; no lowering or backend runs.
+
+| Original class | Reported, identical id and location | Absent | Changed |
+|---|---:|---:|---:|
+| sys.ts TS2591 Node names | 46 | 0 | 0 |
+| Other Node/V8 declarations and contextual fallout | 15 | 0 | 0 |
+| source-map-support | 1 | 0 | 0 |
+| Total | 62 | 0 | 0 |
+
+Identity uses the original census algorithm over file, line, UTF-16 column,
+code and full message. Each row retains its original id and diagnostic,
+matching Adamic diagnostics, status, named module/global/member or contextual
+owner, and dispatch reason. The two Node-touching files are `sys.ts` and
+`debug.ts`. Adamic reports **64 diagnostics** in those files: the 62 above,
+plus the already recorded `D8de3ca6cf20a` (`sys.ts:1281`, TS18046, unknown
+caught value) and `D159138edb6df` (`sys.ts:1617`, TS2322, ModuleImportResult
+callback contract). **Zero diagnostics in these files are new relative to
+the stock census**, including complete message identity. All 64 are listed;
+the JSON also retains the full ordinary checker log and all 289 program
+findings. The total 289 is the ordinary Adamic run with its original prelude,
+not a replacement for the stock 203 measurement with no prelude.
+
+Observation: the loader embeds published `@types/node` 25.3.3 and
+`undici-types` 7.18.2. `internal/load/node_library.go:usesNodeModules` enables
+that library for a static import/export whose specifier begins `node:`, or
+an explicit Node type-library request. `compilerOptions` sets `Types: []`.
+The adapted compiler uses lazy `require("fs")`, `require("path")`,
+`require("inspector")` and import-type expressions; those uses do not activate
+this hook. The production `load.go` rebuilds the program with the bundled
+Node root only after the hook returns true.
+
+A separate control adds one scratch root containing `import "node:fs";`.
+This is an **80-root control**, not the requested 79-root result. It removes
+all **61 Node/V8 rows**, including inspector callback and process.versions
+contextual fallout; only `source-map-support` remains. Inference supported by
+that control: these 61 are a **Node-library activation gap**, not declarations
+missing from the bundled published package. Each row names the affected
+module, global or member. Adaptation 65 owns the temporary host-view territory
+and deliberately retains runtime require calls; this wave changes neither
+65 nor the loader. The remaining row belongs to the optional third-party
+`source-map-support` host dependency, outside bundled Node declarations.
+No declaration or source repair is proposed.
+
+Reproduction (source the toolchain first; each output is a complete log):
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh > /tmp/node-typing-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+timeout 90 go build -o /tmp/node-typing-adamic ./cmd/adamic > /tmp/node-typing-build.log 2>&1
+timeout 420 python3 stage3/adapt/00-setup/evidence/measure-node-typing.py /tmp/node-typing-adamic /tmp/optional-wave2-final /tmp/node-typing-measure > /tmp/node-typing-measure.log 2>&1
+```
+
+The tree argument can be any completed apply tree whose 79 hashes match the
+accepted wave-2 evidence. Each checker subprocess has a 180-second timeout.
+The exact expanded command, exit status, binary hash, root hashes, complete
+logs and parsed diagnostics for both runs are committed in the JSON.
+Setup timing lines are retained there: Node 0.024s, Go 0.029s, submodules
+0.069s, markdown ready 0.082s (dependency validation 0.008s), clang 0.214s,
+shared cache 0.931s, build 15.689s, deferred test binaries 15.766s, warm cache
+15.767s, total **15.798s**, `nproc=5`, cgroup `400000 100000`.
+
+The measurement's checks passed. Two mutants are recorded: the actual extra
+Node import invalidates the all-62-present assertion (61 absent, one present),
+and deleting the first real checker finding from the parsed observations
+changes its row to absent, proving the comparison detects omitted evidence.
+No apply, API, runtime or resolver behavior changes in this measurement unit.
