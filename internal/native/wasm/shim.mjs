@@ -23,11 +23,12 @@ export function wasiShim({ stdout, stderr }) {
 			new DataView(memory.buffer).setUint32(written, total, true); return 0;
 		},
 		proc_exit(code) { throw new AdamicExit(code); },
-		// The host's own clocks in nanoseconds: realtime (0) from Date.now, monotonic (1) from performance.now.
+		// The host's own clocks in nanoseconds: realtime (0) from Date.now in exact integer math, monotonic (1)
+		// from performance.now, which times 1e6 stays under 2^53.
 		clock_time_get(id, precision, time) {
-			const milliseconds = id === 0 ? Date.now() : id === 1 ? performance.now() : undefined;
-			if (milliseconds === undefined) return 28;
-			new DataView(memory.buffer).setBigUint64(time, BigInt(Math.round(milliseconds * 1e6)), true); return 0;
+			if (id !== 0 && id !== 1) return 28;
+			const nanoseconds = id === 0 ? BigInt(Date.now()) * 1000000n : BigInt(Math.round(performance.now() * 1e6));
+			new DataView(memory.buffer).setBigUint64(time, nanoseconds, true); return 0;
 		},
 		fd_prestat_get: () => 8,
 		args_sizes_get: zeroSizes, environ_sizes_get: zeroSizes,
