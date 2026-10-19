@@ -15,16 +15,10 @@ func TestNodeProcessWASIAgreement(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	for _, one := range []struct{ name, refusal string }{
-		{"host", "process.platform requires a Node host platform"},
-		{"performance", ""}, {"performance_core", ""}, {"cleared_marks", ""}, {"missing_mark", ""}, {"tmpdir", ""},
-		{"os_namespace", "process.platform requires a Node host platform"},
-		{"terminal", "process.stdout.columns requires terminal size"},
-		{"blocking", "process.stdout._handle requires terminal flag control"},
-	} {
-		t.Run(one.name, func(t *testing.T) {
+	for _, name := range []string{"host", "performance", "performance_core", "cleared_marks", "missing_mark", "tmpdir", "os_namespace", "terminal", "blocking"} {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_"+one.name+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_"+name+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -32,18 +26,13 @@ func TestNodeProcessWASIAgreement(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			got := onWASI(t, native.C(program))
-			if one.name == "host" {
-				if got.exitCode != 70 || string(got.stderr) != wasiHostPlatformPanic {
-					t.Fatalf("want main's process.platform refusal: %+v", got)
-				}
-				return
+			got, reason := observeWASI(t, native.C(program))
+			// The blocking fixture has its own exact, asserted runtime refusal; it
+			// is not one of wasiRefusalReason's three filesystem refusals.
+			if want := wasiProcessRefusedFixtures[name]; want != "" && reason == "" && got.exitCode == 70 && len(got.stdout) == 0 && string(got.stderr) == "adamic: panic: wasm32-wasi: "+want+"\n" {
+				reason = want
 			}
-			if one.refusal != "" {
-				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "wasm32-wasi: "+one.refusal) {
-					t.Fatalf("want explicit refusal %q: %+v", one.refusal, got)
-				}
-				t.Log(one.refusal)
+			if assertWASIRefusal(t, name, reason, wasiProcessRefusedFixtures) {
 				return
 			}
 			truth := onNode(t, path)
