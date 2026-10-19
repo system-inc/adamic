@@ -1692,6 +1692,15 @@ reads internal/oracle internal/fresh/testdata/*
 reads internal/oracle cmd/adamic/testdata/*
 reads cmd/adamic internal/lower/testdata/*
 reads cmd/adamic internal/oracle/testdata/*
+# cmd/adamic's runtime-owner census (runtime_owners_test.go's runtimeBuilderPackagesIn, run by
+# TestCommandRuntimeArchivesHaveOneBuilder) walks the repository and parses every .go file it finds, test files
+# included, skipping only testdata, vendor, node_modules, .git, submodules and the root .gitignore's directory rules,
+# which it reads with .gitmodules; TestCommandRuntimeProductsWaitForOwners reads product-order.json. Undeclared, an edit
+# to another package's test file left its key standing and main green while it was red (#fbf3zhk, chg_77vp7gh7).
+reads cmd/adamic *.go
+reads cmd/adamic .gitignore
+reads cmd/adamic .gitmodules
+reads cmd/adamic cloud/fast-gate/product-order.json
 reads internal/native internal/load/testdata/*
 reads internal/corpusfiles cohere
 
