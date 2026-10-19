@@ -29,7 +29,7 @@ sticky.lastIndex = 0;
 console.log('ba'.replace(sticky, (match: string) => match.toUpperCase()));
 console.log(`${sticky.lastIndex}`);
 console.log('ab'.replace(/(a)(b)/, (match: string, ...groups: (string | number | undefined)[]) => `${match}:${groups.length}:${String(groups[0])}:${String(groups[1])}:${String(groups[2])}:${String(groups[3])}`));
-console.log('ab'.replace(/a/, () => {}));
+console.log('ab'.replace(/a/, (): undefined => {}));
 console.log('ab'.replace(/a/, () => undefined));
 console.log('ab'.replace(/a/, () => null));
 const both = /a/gy;

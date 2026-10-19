@@ -1,0 +1,8 @@
+// a-check: refused a void-returning function at the argument site seen as () => unknown
+function show(...callbacks: (() => unknown)[]): void {
+	for (const callback of callbacks) {
+		console.log(typeof callback());
+	}
+}
+const make: () => void = () => 42;
+show(make);
