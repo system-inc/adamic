@@ -164,6 +164,24 @@
     "retiring_task": "#brf7xmj"
   },
   {
+    "path": "internal/lower/records.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/records.go",
+    "kind": "rule",
+    "rule_id": "adamic/single-spread",
+    "counterpart": "cohere/internal/lint/rules/adamic/single_spread.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
     "path": "internal/lower/refusals.go",
     "kind": "rule",
     "rule_id": "@typescript-eslint/unbound-method",
