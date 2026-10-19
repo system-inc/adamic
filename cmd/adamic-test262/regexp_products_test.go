@@ -10,32 +10,36 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 )
 
-// Each runner shard fetches this recipe. The product unit owns compilation;
-// consumers only lower their program, link it and compare its observations.
+// Oracle owns these shared archives. The product units find them ahead;
+// runner shards only read them, lower their program and link it.
 func regExpRunnerRuntime(t testing.TB, options native.Options) (string, native.RuntimeRequest) {
 	t.Helper()
 	request, err := native.RuntimeRequestFor(options)
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := buildcache.Product(t, buildcache.Inputs{
-		Name:      "native-runtime",
-		Files:     []string{"internal/native/runtime", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"},
-		Flags:     request.Portable,
-		Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
-	}, func(directory string) error { return request.Build(directory, 4) })
+	if err := runtimeproducts.Declared(request); err != nil {
+		t.Fatal(err)
+	}
+	directory, err := buildcache.Get(runtimeproducts.Inputs(request), func(string) error {
+		return fmt.Errorf("RegExp runner runtime not built ahead for options %+v; run TestProduct_RegExpRunner tests first", options)
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
 	return directory, request
 }
 
 func TestProduct_RegExpRunnerNative(t *testing.T) {
 	t.Parallel()
-	regExpRunnerRuntime(t, native.Options{Sanitize: true})
+	runtimeproducts.Find(t, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized0")
 }
 func TestProduct_RegExpRunnerWASI(t *testing.T) {
 	t.Parallel()
-	regExpRunnerRuntime(t, native.Options{Target: "wasm32-wasi"})
+	runtimeproducts.Find(t, "wasm", 0, "internal/oracle TestProduct_NativeRuntimesWASI0")
 }
 
 func regExpCompilerEngine(t testing.TB, corpus string) *engine {
