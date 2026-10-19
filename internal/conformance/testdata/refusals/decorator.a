@@ -1,0 +1,11 @@
+// Spec: | Decorators |
+// Expect: refused a decorator
+function replace<Target>(target: Target, context: ClassDecoratorContext): Target {
+	console.log(context.kind);
+	return target;
+}
+@replace
+class Widget {
+	readonly size = 1;
+}
+console.log(`${new Widget().size}`);

@@ -1,0 +1,7 @@
+// Spec: Write `?? panic('why it cannot be missing')` instead
+// Expect: lowers
+import { panic } from 'adamic';
+
+const ages = new Map<string, number>([['Kirk', 42]]);
+const age = ages.get('Kirk') ?? panic('no age on record for Kirk');
+console.log(`next year Kirk is ${age + 1}`);
