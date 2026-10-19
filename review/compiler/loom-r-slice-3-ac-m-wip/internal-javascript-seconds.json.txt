@@ -1,0 +1,44 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/unknown",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionSelectsNumber",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/missing_adapter",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/missing_contract",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/literal_false",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/javascript",
+    "test": "TestViewMixedUnionUnknownAndUnavailable",
+    "seconds": 0.15,
+    "action": "pass"
+  }
+]

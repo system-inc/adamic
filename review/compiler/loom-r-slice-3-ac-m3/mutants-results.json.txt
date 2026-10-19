@@ -1,0 +1,296 @@
+[
+  {
+    "name": "check-optional-receiver",
+    "exit": 1,
+    "caught": true,
+    "seconds": 22.645731035998324,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/check-optional-receiver/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCall79$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "javascript-required-panic",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.097360396001022,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/javascript-required-panic/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "native-required-panic",
+    "exit": 1,
+    "caught": true,
+    "seconds": 15.325016324000899,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/native-required-panic/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "drop-flow-throw-edge",
+    "exit": 1,
+    "caught": true,
+    "seconds": 20.864008885000658,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/drop-flow-throw-edge/overlay.json.txt",
+      "./internal/flow",
+      "-run",
+      "^TestOptionalAfterCallFlowEdges$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "drop-required-propagation",
+    "exit": 1,
+    "caught": true,
+    "seconds": 21.595088434998615,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/drop-required-propagation/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallPropagation$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "merged-computed-read",
+    "exit": 1,
+    "caught": true,
+    "seconds": 21.508188953997887,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/merged-computed-read/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedFieldTypeScriptComputedChecked$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "merged-declaration",
+    "exit": 1,
+    "caught": true,
+    "seconds": 19.036588398001186,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/merged-declaration/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedFieldAdamicUnusedRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "merged-read",
+    "exit": 1,
+    "caught": true,
+    "seconds": 22.719853480000893,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/merged-read/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestMergedFieldTypeScriptMissingChecked$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "function-annotation",
+    "exit": 1,
+    "caught": true,
+    "seconds": 20.710313780000433,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/function-annotation/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestFunctionAdamicUnusedAnnotationRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "function-call",
+    "exit": 1,
+    "caught": true,
+    "seconds": 16.231118553998385,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/function-call/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestFunctionTypeScriptCallRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "function-length",
+    "exit": 1,
+    "caught": true,
+    "seconds": 22.712806317002105,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/function-length/overlay.json.txt",
+      "./internal/oracle",
+      "-run",
+      "^TestFunctionTypeScriptLengthAgreesWithNode$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "erase-earlier-throw",
+    "exit": 1,
+    "caught": true,
+    "seconds": 12.071890428000188,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/erase-earlier-throw/overlay.json.txt",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalAfterCallPreservesEarlierThrow$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "tsgo-absolute-main",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.303473021998798,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/tsgo-absolute-main/overlay.json.txt",
+      "./internal/native",
+      "-run",
+      "^TestTSGoCacheSanitized$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  },
+  {
+    "name": "tsgo-rewrite-runtime",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.819646796000598,
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m3/mutants/tsgo-rewrite-runtime/overlay.json.txt",
+      "./internal/native",
+      "-run",
+      "^TestTSGoCacheRelease$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ]
+  }
+]

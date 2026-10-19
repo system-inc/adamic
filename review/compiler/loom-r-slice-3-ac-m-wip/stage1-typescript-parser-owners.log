@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:31:57.068294758Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles"}
+{"Time":"2026-10-18T19:31:57.071587617Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle"}
+{"Time":"2026-10-18T19:31:57.071694225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle","Output":"=== RUN   TestProduct_ParserOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:57.071721195Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle","Output":"=== PAUSE TestProduct_ParserOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:57.07172416Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle"}
+{"Time":"2026-10-18T19:31:57.071730739Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle"}
+{"Time":"2026-10-18T19:31:57.071733013Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle","Output":"=== CONT  TestProduct_ParserOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:32:02.281901441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle","Output":"    owner_test.go:16: build typescript-parser-oracle_oracle-owner-v1 915fbdddbfd3 miss 5.21\n"}
+{"Time":"2026-10-18T19:32:02.282016803Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle","Output":"--- PASS: TestProduct_ParserOracle (5.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:32:02.282025085Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Test":"TestProduct_ParserOracle","Elapsed":5.21}
+{"Time":"2026-10-18T19:32:02.282045445Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:32:02.286482305Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser/oracles\t5.218s\n"}
+{"Time":"2026-10-18T19:32:02.286521132Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser/oracles","Elapsed":5.218}

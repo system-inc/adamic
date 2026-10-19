@@ -1,0 +1,452 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsComposeGo",
+    "action": "pass",
+    "seconds": 0.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistLowered",
+    "action": "pass",
+    "seconds": 3.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsWidthGo",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistMutant002",
+    "action": "pass",
+    "seconds": 8.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistMutant001",
+    "action": "pass",
+    "seconds": 7.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistMutant000",
+    "action": "pass",
+    "seconds": 7.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsUnistGo",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant003",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant002",
+    "action": "pass",
+    "seconds": 0.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant001",
+    "action": "pass",
+    "seconds": 0.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaMutant000",
+    "action": "pass",
+    "seconds": 0.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsSchemaGo",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLScalarMutant002",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLScalarMutant001",
+    "action": "pass",
+    "seconds": 2.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLScalarMutant000",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsScalarsGo",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsMutant002",
+    "action": "pass",
+    "seconds": 1.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsMutant001",
+    "action": "pass",
+    "seconds": 1.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsMutant000",
+    "action": "pass",
+    "seconds": 1.83
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsPropsGo",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceSanitized",
+    "action": "pass",
+    "seconds": 1.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceNative",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSpeedProbesNative",
+    "action": "pass",
+    "seconds": 0.88
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSpeedProbesLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsNative",
+    "action": "pass",
+    "seconds": 2.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLWidthNative",
+    "action": "pass",
+    "seconds": 5.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLWidthLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlScalarsNative",
+    "action": "pass",
+    "seconds": 4.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlScalarsLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaNative",
+    "action": "pass",
+    "seconds": 0.88
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsNative",
+    "action": "pass",
+    "seconds": 3.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTNative",
+    "action": "pass",
+    "seconds": 3.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistNative",
+    "action": "pass",
+    "seconds": 15.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant003Sources",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeNative",
+    "action": "pass",
+    "seconds": 13.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatNative",
+    "action": "pass",
+    "seconds": 26.77
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant004",
+    "action": "pass",
+    "seconds": 0.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant003",
+    "action": "pass",
+    "seconds": 0.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant002",
+    "action": "pass",
+    "seconds": 0.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant001",
+    "action": "pass",
+    "seconds": 0.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLLexerMutant000",
+    "action": "pass",
+    "seconds": 0.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsLexerGo",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant005Native",
+    "action": "pass",
+    "seconds": 21.72
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant005Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant005Sources",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant004Native",
+    "action": "pass",
+    "seconds": 21.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant004Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant004Sources",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant003Native",
+    "action": "pass",
+    "seconds": 21.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant003Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant000Sources",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant002Native",
+    "action": "pass",
+    "seconds": 21.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant002Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant002Sources",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant001Native",
+    "action": "pass",
+    "seconds": 20.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant001Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant001Sources",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant000Native",
+    "action": "pass",
+    "seconds": 20.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatterMutant000Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTMutant000",
+    "action": "pass",
+    "seconds": 1.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsFormatterMutantsOracle",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsFormatGo",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTMutant002",
+    "action": "pass",
+    "seconds": 1.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTMutant001",
+    "action": "pass",
+    "seconds": 1.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeMutant002",
+    "action": "pass",
+    "seconds": 5.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlFindsCSTGo",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeMutant001",
+    "action": "pass",
+    "seconds": 5.56
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeMutant000",
+    "action": "pass",
+    "seconds": 5.37
+  }
+]

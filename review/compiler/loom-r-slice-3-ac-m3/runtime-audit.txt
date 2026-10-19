@@ -1,0 +1,6 @@
+Original and re-cut runtime added/deleted lines match exactly. No extra runtime lines.
++	size_t source_length;
++	closure->source_length = 0;
++	if (value != NULL && value->kind == adamic_kind_closure && strcmp(name, "length") == 0) {
++		return adamic_box_number((double)((adamic_closure *)value)->source_length);
++	}

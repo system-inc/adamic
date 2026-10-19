@@ -1,0 +1,12 @@
+{"Time":"2026-10-13T08:39:04.760817391Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-13T08:39:04.802143187Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap"}
+{"Time":"2026-10-13T08:39:04.802259313Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap","Output":"=== RUN   TestClosedMultiplePushGap\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:39:04.802318833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap","Output":"=== PAUSE TestClosedMultiplePushGap\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:39:04.802323664Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap"}
+{"Time":"2026-10-13T08:39:04.803507964Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap"}
+{"Time":"2026-10-13T08:39:04.803526958Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap","Output":"=== CONT  TestClosedMultiplePushGap\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:39:08.40184068Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap","Output":"--- PASS: TestClosedMultiplePushGap (3.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:39:08.402021313Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestClosedMultiplePushGap","Elapsed":3.6}
+{"Time":"2026-10-13T08:39:08.402053392Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:39:08.426326578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t3.663s\n"}
+{"Time":"2026-10-13T08:39:08.426395193Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":3.666}

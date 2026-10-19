@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestCompilesHoldAJobserverTokenEach",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestAFailedCompileGivesItsTokenBack",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestAJobserverThatCantBeOpenedFailsTheCompile",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "test": "TestTheJobserverMovesNoKey",
+    "seconds": 0,
+    "action": "pass"
+  }
+]

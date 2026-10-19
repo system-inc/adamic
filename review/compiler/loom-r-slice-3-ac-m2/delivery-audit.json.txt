@@ -1,0 +1,41 @@
+{
+  "base": "638f45766812bc57b7b8a74c3dcd2c806d7a1993",
+  "source": "a4b12a2c463e05ee612c064caa5d8db1c8486cf8",
+  "functional_packages_passed": [
+    "internal-ir",
+    "internal-javascript",
+    "internal-lower",
+    "internal-flow",
+    "internal-oracle",
+    "stage1-cohere-cssstrings",
+    "stage1-cohere-json",
+    "stage1-cohere-markdownblocks",
+    "stage1-cohere-selector",
+    "stage1-cohere-yaml",
+    "stage1-typescript-parser",
+    "stage1-typescript-scanner",
+    "stage3-fixtures",
+    "internal-native-repaired"
+  ],
+  "guards_passed": true,
+  "production_mutants_caught": 14,
+  "header_mutants_caught": 2,
+  "assignment_input_mutants_caught": 6,
+  "programs_unchanged": 22,
+  "runtime_extra_lines": [],
+  "grain_blockers": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+      "test": "TestProduct_GrainMarkdownFormatter",
+      "action": "pass",
+      "seconds": 97.6
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+      "test": "TestProduct_MarkdownblocksTextFormatter",
+      "action": "pass",
+      "seconds": 130.04
+    }
+  ],
+  "loom_ready": false
+}

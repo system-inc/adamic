@@ -1,0 +1,25 @@
+const status = 'outer'.repeat(2);
+console.log(JSON.stringify({ status }) ?? 'missing');
+function report(status: string): string {
+ return JSON.stringify({ status }) ?? 'missing';
+}
+console.log(report('inner'.repeat(2)));
+{
+ const status = 'block'.repeat(2);
+ console.log(JSON.stringify({ status }) ?? 'missing');
+}
+console.log(JSON.stringify({ status: status }) ?? 'missing');
+let count = 1;
+function advance(): number {
+ count++;
+ return count;
+}
+console.log(JSON.stringify({ count, after: advance(), last: count }) ?? 'missing');
+const done = false;
+const absent: number | undefined = undefined;
+const words: readonly string[] = ['one', 'two'];
+console.log(JSON.stringify({ status, done, absent, words }) ?? 'missing');
+let optional: number | undefined = advance();
+if (optional !== undefined) {
+ console.log(JSON.stringify({ optional }) ?? 'missing');
+}

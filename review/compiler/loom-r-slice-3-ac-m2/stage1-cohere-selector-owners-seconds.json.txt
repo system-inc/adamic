@@ -1,0 +1,14 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector/oracles",
+    "test": "TestProduct_SelectorGoOracle",
+    "action": "pass",
+    "seconds": 4.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector/oracles",
+    "test": "TestProduct_SelectorGoAnswers",
+    "action": "pass",
+    "seconds": 4.12
+  }
+]

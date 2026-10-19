@@ -1,0 +1,710 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestPushSpreadGap",
+    "seconds": 1.36,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClosedOptionalFunctionValueGap",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "seconds": 0.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxScannerMutants/raw_attribute_value",
+    "seconds": 11.83,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxScannerMutants/JSX_name_payload",
+    "seconds": 11.98,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxScannerMutants",
+    "seconds": 44.22,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNative",
+    "seconds": 5.78,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestPerformance",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholePerformance",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCountCheckCatchesMutant",
+    "seconds": 11.62,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestYieldLookaheadAgrees",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsLower002",
+    "seconds": 1.99,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsLower001",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsNative000",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsLower000",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ParserFindsExpressionsOracle",
+    "seconds": 1.08,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsSource003",
+    "seconds": 0.01,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsSource002",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsSource001",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_015",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_014",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_013",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_012",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_011",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_010",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_009",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_008",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_007",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_006",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_005",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_004",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_003",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_002",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_001",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_000",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerShardsHoldEveryFileOnce",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_015",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_014",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_013",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_012",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_011",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_010",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_009",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_008",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_007",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_006",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_005",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_004",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_003",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_002",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_001",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_000",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_007",
+    "seconds": 16.32,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutantsUnion",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsNative001",
+    "seconds": 16.96,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestParserChildGuard_000",
+    "seconds": 18.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_001",
+    "seconds": 7.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_Setup",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_002",
+    "seconds": 8.22,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutantsRejectsSurvivor",
+    "seconds": 20.9,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_000",
+    "seconds": 6.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestObsoleteImportAttributesAgrees",
+    "seconds": 0.32,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeGeneratedAgrees",
+    "seconds": 0.43,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestEveryTypeNodeKindAgrees",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsLower_002",
+    "seconds": 0.24,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsLower_001",
+    "seconds": 0.22,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsNative_002",
+    "seconds": 0.58,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsNative_001",
+    "seconds": 0.41,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsLower_000",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsNative_000",
+    "seconds": 0.39,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsLower_Control",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_WholeMutantsNative_Control",
+    "seconds": 0.41,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_CountTreeNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxScannerNative_001",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxScannerNative_000",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ParserFindsOracle",
+    "seconds": 0.76,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_CompilerExpressionsLower",
+    "seconds": 0.9,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ParserPortRelease",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestNodeCountCheckCatchesMutant",
+    "seconds": 0.61,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_CompilerExpressionsNative",
+    "seconds": 1.88,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_NodeCountNative",
+    "seconds": 0.32,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_NodeCountLower",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ParserFindsNodeCountOracle",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeNodeCountAgrees_000",
+    "seconds": 0.96,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNode",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxNameBoundaryNative_001",
+    "seconds": 12.09,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxNameBoundaryNative_000",
+    "seconds": 12.8,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNameBoundaryRejections/private_name_accepted",
+    "seconds": 10.32,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNameBoundaryRejections/escaped_name_accepted",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNameBoundaryRejections",
+    "seconds": 11.54,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_008",
+    "seconds": 11.66,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_006",
+    "seconds": 12.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_005",
+    "seconds": 12.31,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_004",
+    "seconds": 12.6,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_003",
+    "seconds": 12.59,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutantsUnion",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_008",
+    "seconds": 1.02,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_007",
+    "seconds": 1.23,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_006",
+    "seconds": 0.97,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_005",
+    "seconds": 1,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_004",
+    "seconds": 0.97,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_003",
+    "seconds": 1.08,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_002",
+    "seconds": 13.94,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_002",
+    "seconds": 6.28,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_001",
+    "seconds": 13.54,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "seconds": 0.42,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_JsxMutantsNative_000",
+    "seconds": 13.32,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClassMethodInterfaceGap",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestStrongAstParentGap",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_001",
+    "seconds": 2.04,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestGeneratedExpressionsAgree",
+    "seconds": 1.05,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_000",
+    "seconds": 1.67,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsLower003",
+    "seconds": 1.6,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsNative002",
+    "seconds": 9.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestProduct_ExpressionsNative003",
+    "seconds": 11.19,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestExpressionsAgree",
+    "seconds": 12.05,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser/oracles",
+    "test": "TestProduct_ParserOracle",
+    "seconds": 0.96,
+    "action": "pass"
+  }
+]

@@ -1,0 +1,266 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements00",
+    "action": "pass",
+    "seconds": 21.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesNative_release",
+    "action": "pass",
+    "seconds": 29.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesShipped2",
+    "action": "pass",
+    "seconds": 19.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesShipped1",
+    "action": "pass",
+    "seconds": 10.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesShipped0",
+    "action": "pass",
+    "seconds": 8.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesWASI2",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesWASI1",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesWASI0",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesCounted2",
+    "action": "pass",
+    "seconds": 4.97
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesCounted1",
+    "action": "pass",
+    "seconds": 1.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesCounted0",
+    "action": "pass",
+    "seconds": 3.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesRelease2",
+    "action": "pass",
+    "seconds": 11.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesRelease1",
+    "action": "pass",
+    "seconds": 13.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesRelease0",
+    "action": "pass",
+    "seconds": 9.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesSanitized2",
+    "action": "pass",
+    "seconds": 19.79
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesSanitized1",
+    "action": "pass",
+    "seconds": 17.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_NativeRuntimesSanitized0",
+    "action": "pass",
+    "seconds": 13.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_ParallelTSanRuntime2",
+    "action": "pass",
+    "seconds": 12.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_ParallelTSanRuntime1",
+    "action": "pass",
+    "seconds": 12.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_ParallelTSanRuntime0",
+    "action": "pass",
+    "seconds": 11.56
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesDeterminism",
+    "action": "pass",
+    "seconds": 5.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesNative_tsan",
+    "action": "pass",
+    "seconds": 25.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesNative_asan_slabs",
+    "action": "pass",
+    "seconds": 32.91
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_Adamic",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesNative_asan",
+    "action": "pass",
+    "seconds": 20.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesSource",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesCounted_SharingMutant",
+    "action": "pass",
+    "seconds": 16.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_MovesCounted_Control",
+    "action": "pass",
+    "seconds": 16.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements14",
+    "action": "pass",
+    "seconds": 11.88
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_AdamicMapOrderMutant",
+    "action": "pass",
+    "seconds": 16.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements15",
+    "action": "pass",
+    "seconds": 11.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements13",
+    "action": "pass",
+    "seconds": 10.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements06",
+    "action": "pass",
+    "seconds": 12.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements10",
+    "action": "pass",
+    "seconds": 14.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements09",
+    "action": "pass",
+    "seconds": 14.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements08",
+    "action": "pass",
+    "seconds": 10.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements07",
+    "action": "pass",
+    "seconds": 11.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements03",
+    "action": "pass",
+    "seconds": 11.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements05",
+    "action": "pass",
+    "seconds": 10.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements04",
+    "action": "pass",
+    "seconds": 11.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements12",
+    "action": "pass",
+    "seconds": 14.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements02",
+    "action": "pass",
+    "seconds": 12.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements01",
+    "action": "pass",
+    "seconds": 11.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestProduct_CountMeasurements11",
+    "action": "pass",
+    "seconds": 13.48
+  }
+]

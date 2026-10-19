@@ -1,0 +1,86 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_DecodeASCIICorpus",
+    "action": "pass",
+    "seconds": 0.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_RegExpBytecodeNative",
+    "action": "pass",
+    "seconds": 0.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_StrictWASIRuntime",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_WASICompiler",
+    "action": "pass",
+    "seconds": 2.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_SplitTSGoBaseline",
+    "action": "pass",
+    "seconds": 32.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_SplitTSGoSource",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_TSGoArchive",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_PrimitiveMutants",
+    "action": "pass",
+    "seconds": 3.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_RemoteScanSanitized",
+    "action": "pass",
+    "seconds": 11.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_RecordMutants",
+    "action": "pass",
+    "seconds": 4.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_NormalizationProbe",
+    "action": "pass",
+    "seconds": 1.37
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_DecodeASCIIWASI",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_RemoteScanRelease",
+    "action": "pass",
+    "seconds": 10.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProduct_DecodeASCIINative",
+    "action": "pass",
+    "seconds": 3.25
+  }
+]

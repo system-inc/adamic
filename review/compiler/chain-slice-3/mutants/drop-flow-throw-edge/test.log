@@ -1,0 +1,8 @@
+=== RUN   TestOptionalAfterCallFlowEdges
+=== PAUSE TestOptionalAfterCallFlowEdges
+=== CONT  TestOptionalAfterCallFlowEdges
+    optional_after_call_test.go:29: catchable read lost its flow exception edge
+--- FAIL: TestOptionalAfterCallFlowEdges (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	0.042s
+FAIL

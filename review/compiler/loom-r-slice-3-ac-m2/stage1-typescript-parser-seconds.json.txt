@@ -1,0 +1,458 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestPushSpreadGap",
+    "action": "pass",
+    "seconds": 1.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClosedOptionalFunctionValueGap",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "action": "pass",
+    "seconds": 0.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxScannerMutants/raw_attribute_value",
+    "action": "pass",
+    "seconds": 0.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxScannerMutants/JSX_name_payload",
+    "action": "pass",
+    "seconds": 0.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxScannerMutants",
+    "action": "pass",
+    "seconds": 3.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNative",
+    "action": "pass",
+    "seconds": 0.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "action": "pass",
+    "seconds": 2.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestPerformance",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholePerformance",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCountCheckCatchesMutant",
+    "action": "pass",
+    "seconds": 0.88
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutantsUnion",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_002",
+    "action": "pass",
+    "seconds": 0.51
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_014",
+    "action": "pass",
+    "seconds": 1.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_008",
+    "action": "pass",
+    "seconds": 2.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_007",
+    "action": "pass",
+    "seconds": 2.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_006",
+    "action": "pass",
+    "seconds": 2.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestParserChildGuard_000",
+    "action": "pass",
+    "seconds": 3.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_005",
+    "action": "pass",
+    "seconds": 2.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_004",
+    "action": "pass",
+    "seconds": 2.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_003",
+    "action": "pass",
+    "seconds": 2.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_002",
+    "action": "pass",
+    "seconds": 2.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_001",
+    "action": "pass",
+    "seconds": 1.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "action": "pass",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClassMethodInterfaceGap",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestStrongAstParentGap",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxMutants_000",
+    "action": "pass",
+    "seconds": 2.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestGeneratedExpressionsAgree",
+    "action": "pass",
+    "seconds": 1.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_Setup",
+    "action": "pass",
+    "seconds": 2.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_001",
+    "action": "pass",
+    "seconds": 3.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_000",
+    "action": "pass",
+    "seconds": 2.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutantsUnion",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestExpressionsAgree",
+    "action": "pass",
+    "seconds": 5.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutantsRejectsSurvivor",
+    "action": "pass",
+    "seconds": 1.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_002",
+    "action": "pass",
+    "seconds": 1.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_001",
+    "action": "pass",
+    "seconds": 0.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeMutants_000",
+    "action": "pass",
+    "seconds": 0.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_006",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_013",
+    "action": "pass",
+    "seconds": 0.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_011",
+    "action": "pass",
+    "seconds": 1
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_009",
+    "action": "pass",
+    "seconds": 0.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_012",
+    "action": "pass",
+    "seconds": 2.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_008",
+    "action": "pass",
+    "seconds": 0.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_015",
+    "action": "pass",
+    "seconds": 10.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_007",
+    "action": "pass",
+    "seconds": 1.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestYieldLookaheadAgrees",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_010",
+    "action": "pass",
+    "seconds": 3.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_013",
+    "action": "pass",
+    "seconds": 1.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_014",
+    "action": "pass",
+    "seconds": 1.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_010",
+    "action": "pass",
+    "seconds": 2.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_006",
+    "action": "pass",
+    "seconds": 1.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_012",
+    "action": "pass",
+    "seconds": 1.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_011",
+    "action": "pass",
+    "seconds": 1.73
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_009",
+    "action": "pass",
+    "seconds": 1.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_008",
+    "action": "pass",
+    "seconds": 0.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_007",
+    "action": "pass",
+    "seconds": 1.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_003",
+    "action": "pass",
+    "seconds": 0.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_005",
+    "action": "pass",
+    "seconds": 1.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestObsoleteImportAttributesAgrees",
+    "action": "pass",
+    "seconds": 0.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_004",
+    "action": "pass",
+    "seconds": 2.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestEveryTypeNodeKindAgrees",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeGeneratedAgrees",
+    "action": "pass",
+    "seconds": 0.57
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestNodeCountCheckCatchesMutant",
+    "action": "pass",
+    "seconds": 0.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNode",
+    "action": "pass",
+    "seconds": 0.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_002",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeCompilerAgrees_015",
+    "action": "pass",
+    "seconds": 8.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_005",
+    "action": "pass",
+    "seconds": 0.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_003",
+    "action": "pass",
+    "seconds": 0.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestWholeNodeCountAgrees_000",
+    "action": "pass",
+    "seconds": 2.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNameBoundaryRejections/private_name_accepted",
+    "action": "pass",
+    "seconds": 1.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_004",
+    "action": "pass",
+    "seconds": 2.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerShardsHoldEveryFileOnce",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_000",
+    "action": "pass",
+    "seconds": 1.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNameBoundaryRejections/escaped_name_accepted",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestJsxNameBoundaryRejections",
+    "action": "pass",
+    "seconds": 3.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestCompilerExpressionsAgree_001",
+    "action": "pass",
+    "seconds": 2.18
+  }
+]

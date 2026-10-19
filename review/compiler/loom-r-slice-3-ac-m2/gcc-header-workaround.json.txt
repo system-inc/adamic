@@ -1,0 +1,14 @@
+{
+  "compiler": "/usr/bin/gcc",
+  "version": "Debian 14.2.0-19",
+  "missing": "sanitizer/allocator_interface.h",
+  "header": "/workspace/adamic-tools/llvm/lib/clang/20/include/sanitizer/allocator_interface.h",
+  "header_sha256": "94be5aa9568359b0a1e331836221d05713d6810c28c6ed688d2aea6f3861348d",
+  "wrapper": "#!/bin/sh\nif [ \"$1\" = \"--version\" ]; then\n /usr/bin/gcc --version\n printf '%s\\n' 'Adamic validation sanitizer allocator header SHA256 94be5aa9568359b0a1e331836221d05713d6810c28c6ed688d2aea6f3861348d'\n exit 0\nfi\nexec /usr/bin/gcc -isystem /workspace/scratch/slice3-gcc/include \"$@\"\n",
+  "abi_symbols": [
+    "__sanitizer_get_heap_size",
+    "__sanitizer_get_current_allocated_bytes"
+  ],
+  "sudo": "not installed",
+  "source_changes": []
+}

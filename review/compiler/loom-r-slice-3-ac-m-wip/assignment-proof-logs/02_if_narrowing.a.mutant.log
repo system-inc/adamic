@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/fixtures/assignment-proofs/check.py", line 49, in <module>
+    compare(run, record['node'], record['file'])
+  File "/workspace/adamic/stage3/fixtures/assignment-proofs/check.py", line 25, in compare
+    assert run.stdout == expected['stdout'].encode(), f'{name}: Node stdout byte comparison'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 02_if_narrowing.a: Node stdout byte comparison

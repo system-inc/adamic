@@ -1,0 +1,32 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersLower",
+    "action": "fail",
+    "seconds": 14.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersNative",
+    "action": "fail",
+    "seconds": 14.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersFresh",
+    "action": "pass",
+    "seconds": 20.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReadersFlow",
+    "action": "fail",
+    "seconds": 32.22
+  }
+]

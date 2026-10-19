@@ -1,0 +1,3 @@
+// a-check: refused the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number
+function take(value: Function): void {}
+console.log('ok');

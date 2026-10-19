@@ -1,0 +1,5324 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSizeClassesShareTheirChunks",
+    "action": "pass",
+    "seconds": 1.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCompilesHoldAJobserverTokenEach",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestAFailedCompileGivesItsTokenBack",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestAJobserverThatCantBeOpenedFailsTheCompile",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTheJobserverMovesNoKey",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLibraryMapSetIteratorResources/peak",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLibraryMapSetIteratorResources/count",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLibraryMapSetIteratorResources/speed",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLibraryMapSetIteratorResources",
+    "action": "pass",
+    "seconds": 0.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCacheConcurrentBuilders",
+    "action": "pass",
+    "seconds": 1.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeLongMeasurements",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordBenchmark",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestBuildIsTheSameFromAnyDirectory",
+    "action": "pass",
+    "seconds": 18.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsHostWorkers/guarded",
+    "action": "pass",
+    "seconds": 9.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsHostWorkers/exit_lock_mutant",
+    "action": "pass",
+    "seconds": 0.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsHostWorkers/raw_output_lock_mutant",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsHostWorkers",
+    "action": "pass",
+    "seconds": 10.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_0",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_15",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_2",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_1",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_3",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_12",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_14",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_24",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_26",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_27",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_29",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_30",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_34",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_64",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_15",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_2",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_1",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_3",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_12",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_14",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_24",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_26",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_27",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_29",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_30",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_34",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_64",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_guarded",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+    "action": "pass",
+    "seconds": 0.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/exit_flush_guarded/threads_4",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/exit_flush_guarded/threads_16",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/exit_flush_guarded",
+    "action": "pass",
+    "seconds": 0.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant/threads_4",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant/threads_16",
+    "action": "pass",
+    "seconds": 0.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant",
+    "action": "pass",
+    "seconds": 0.72
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsSignalAndExit",
+    "action": "pass",
+    "seconds": 3.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsStopWholeLines/drop_flush_false",
+    "action": "pass",
+    "seconds": 0.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsStopWholeLines/drop_flush_true",
+    "action": "pass",
+    "seconds": 0.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsStopWholeLines",
+    "action": "pass",
+    "seconds": 0.89
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASITargetFlags",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIRefusesUnsupportedOptions",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMeasureClangUnits",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestUnitsPreserveSharedState",
+    "action": "pass",
+    "seconds": 2.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestUnitSystemHeaderProvenance",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitTSGoAgreesUnit00/cache_0",
+    "action": "pass",
+    "seconds": 15.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitTSGoAgreesUnit00",
+    "action": "pass",
+    "seconds": 21.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitTSGoAgreesUnit01/cache_1",
+    "action": "pass",
+    "seconds": 12.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitTSGoAgreesUnit01",
+    "action": "pass",
+    "seconds": 12.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit00",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit01",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit02",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit03",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit04",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit05",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit06",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit07",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit08",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit09",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit10",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit11",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit12",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit13",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit14",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit15",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit16",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit17",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit18",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit19",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit20",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit21",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit22",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit23",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit24",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit25",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit26",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit27",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit28",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit29",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit30",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit31",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit32",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit33",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit34",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWASIUnit35",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNoReaderCallingConvention/closure_convention_plain.a",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashAllocatorsEachHaveOneTest",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_554",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_558",
+    "action": "pass",
+    "seconds": 0.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsAreListed",
+    "action": "pass",
+    "seconds": 1.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_561",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_594",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_598",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_601",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_859",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals/debug_944",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeDebugSiteRefusals",
+    "action": "pass",
+    "seconds": 2.65
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitBuildsNameNoPlaceOfTheirInputs",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard30",
+    "action": "pass",
+    "seconds": 3.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket30Of32",
+    "action": "pass",
+    "seconds": 1.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCheckerBuildsNameNoPlaceOfTheArchive",
+    "action": "pass",
+    "seconds": 7.73
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLoopCallCoverage",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLoopArrayHoldC",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestGlobalArgumentLending",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNbodyBorrowedLoopC",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLoopBorrowPlan",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringLengthLimit",
+    "action": "pass",
+    "seconds": 0.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestARuntimesPortablePartsAreTheSameThroughEitherLink",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashProbeBoundSlabs",
+    "action": "pass",
+    "seconds": 12.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestARuntimeIsTheSameOnAnyNumberOfWorkers",
+    "action": "pass",
+    "seconds": 0.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDependenciesReadClangsRules",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCacheConcurrentProcesses",
+    "action": "pass",
+    "seconds": 0.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCacheRebuildsChangedSources",
+    "action": "pass",
+    "seconds": 0.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestASuppliedRuntimeIsAskedOncePerKey",
+    "action": "pass",
+    "seconds": 4.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeKeyKeepsBoundaries",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeKeyIncludesEveryInput",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCEndsInNewline",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestJSONEncoderRecordView_001",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashProbeBoundMalloc",
+    "action": "pass",
+    "seconds": 17.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCacheKeepsCountFlags",
+    "action": "pass",
+    "seconds": 9.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestResidentSetUnits",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestIeee754MatchesNodeBitForBit",
+    "action": "pass",
+    "seconds": 5.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNativeCachesWriteNothingUnderHome",
+    "action": "pass",
+    "seconds": 18.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRemoteScanAlwaysMutantSanitized",
+    "action": "pass",
+    "seconds": 1.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRemoteScanNeverMutantSanitized",
+    "action": "pass",
+    "seconds": 1.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRemoteScanNeverMutant",
+    "action": "pass",
+    "seconds": 1.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRemoteScanAlwaysMutant",
+    "action": "pass",
+    "seconds": 1.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSerialSlabsSkipRemoteScansSanitized",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSerialSlabsSkipRemoteScans",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOptionalWriteMissingSlotRemainsChecked",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeFieldLayoutsAreIncluded",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegexProgramsKeepCheckedFieldReads",
+    "action": "pass",
+    "seconds": 0.73
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDevirtualizeBorrowDocClaim",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCallTargetsElementBorrowPlan",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestThrowElementBorrowPlan",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNbodyIndexedElementsBorrow",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestUniformFieldsMatchNode",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestToExponentialAndToPrecisionOutOfRangePanic",
+    "action": "pass",
+    "seconds": 1.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestExactReceiverRejectsAssignments",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDevirtualizedCalls",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit43",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit42",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit41",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit40",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit39",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit38",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit37",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit36",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit35",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit34",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit33",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit32",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit31",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit30",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit29",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit28",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit27",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit26",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit44",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestJSONEncoderRecordView_000",
+    "action": "pass",
+    "seconds": 15.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit25",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit24",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit23",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit22",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit21",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit20",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit19",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit18",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit17",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit16",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit15",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit14",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit13",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit12",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit11",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit10",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit09",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit08",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit07",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit06",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit05",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit04",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit03",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit02",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit01",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIWASIUnit00",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket29Of32",
+    "action": "pass",
+    "seconds": 2.82
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestFreedValuesAreCaughtWithSlabs",
+    "action": "pass",
+    "seconds": 15.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit44",
+    "action": "pass",
+    "seconds": 8.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestToExponentialAndToPrecisionMatchNode",
+    "action": "pass",
+    "seconds": 12.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit42",
+    "action": "pass",
+    "seconds": 6.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit43",
+    "action": "pass",
+    "seconds": 13.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit40",
+    "action": "pass",
+    "seconds": 6.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit39",
+    "action": "pass",
+    "seconds": 5.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit41",
+    "action": "pass",
+    "seconds": 11.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit38",
+    "action": "pass",
+    "seconds": 9.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit36",
+    "action": "pass",
+    "seconds": 4.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit37",
+    "action": "pass",
+    "seconds": 8.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit35",
+    "action": "pass",
+    "seconds": 4.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit33",
+    "action": "pass",
+    "seconds": 4.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit32",
+    "action": "pass",
+    "seconds": 5.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit34",
+    "action": "pass",
+    "seconds": 9.65
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit30",
+    "action": "pass",
+    "seconds": 5.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit31",
+    "action": "pass",
+    "seconds": 9.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit29",
+    "action": "pass",
+    "seconds": 5.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit26",
+    "action": "pass",
+    "seconds": 3.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit25",
+    "action": "pass",
+    "seconds": 4.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit28",
+    "action": "pass",
+    "seconds": 7.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit27",
+    "action": "pass",
+    "seconds": 8.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit24",
+    "action": "pass",
+    "seconds": 4.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit23",
+    "action": "pass",
+    "seconds": 5.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit20",
+    "action": "pass",
+    "seconds": 4.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit22",
+    "action": "pass",
+    "seconds": 8.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit21",
+    "action": "pass",
+    "seconds": 7.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit19",
+    "action": "pass",
+    "seconds": 4.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit18",
+    "action": "pass",
+    "seconds": 4.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit14",
+    "action": "pass",
+    "seconds": 4.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit15",
+    "action": "pass",
+    "seconds": 6.29
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit17",
+    "action": "pass",
+    "seconds": 8.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit16",
+    "action": "pass",
+    "seconds": 8.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit13",
+    "action": "pass",
+    "seconds": 3.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket28Of32",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit12",
+    "action": "pass",
+    "seconds": 4.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit09",
+    "action": "pass",
+    "seconds": 3.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit11",
+    "action": "pass",
+    "seconds": 7.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit08",
+    "action": "pass",
+    "seconds": 4.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit06",
+    "action": "pass",
+    "seconds": 4.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit10",
+    "action": "pass",
+    "seconds": 8.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit04",
+    "action": "pass",
+    "seconds": 5.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit03",
+    "action": "pass",
+    "seconds": 4.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit05",
+    "action": "pass",
+    "seconds": 8.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit02",
+    "action": "pass",
+    "seconds": 6.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit01",
+    "action": "pass",
+    "seconds": 4.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStaticNumberInitializerMutant",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStaticBooleanInitializerMutant",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestConstantPortabilityGCC",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestConstantPortabilityClang",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLongStringBytesMutant",
+    "action": "pass",
+    "seconds": 0.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionOwnerRuntimeSites",
+    "action": "pass",
+    "seconds": 0.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit00",
+    "action": "pass",
+    "seconds": 5.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParserHasNoUnusedOptionalMethodThunks",
+    "action": "pass",
+    "seconds": 3.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestInheritanceMemoryPlans",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseTablesMatchNodesUnicode",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingPointRangesTile",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingMatchesNodeContexts",
+    "action": "pass",
+    "seconds": 2.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionRuntimeDropCount",
+    "action": "pass",
+    "seconds": 9.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingMatchesNodePointsD0000To10FFFF",
+    "action": "pass",
+    "seconds": 4.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionDropCount",
+    "action": "pass",
+    "seconds": 8.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingMatchesNodePoints30000To5FFFF",
+    "action": "pass",
+    "seconds": 6.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingMatchesNodePoints90000ToCFFFF",
+    "action": "pass",
+    "seconds": 9.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLongUnicodeLiteralByteCoverage",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingMatchesNodePoints60000To8FFFF",
+    "action": "pass",
+    "seconds": 8.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLongUnicodePortabilityGCC",
+    "action": "fail",
+    "seconds": 1.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPassThroughsAreNotConsumers",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestBorrowChainTargets",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestBorrowChainDeclarations",
+    "action": "pass",
+    "seconds": 0.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestArithmeticIsNeverFused",
+    "action": "pass",
+    "seconds": 23.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCaseMappingMatchesNodePoints0To2FFFF",
+    "action": "pass",
+    "seconds": 4.97
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNoReaderCallingConvention",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket27Of32",
+    "action": "pass",
+    "seconds": 1.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestLongUnicodePortabilityClang",
+    "action": "pass",
+    "seconds": 5.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket26Of32",
+    "action": "pass",
+    "seconds": 2.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket25Of32",
+    "action": "pass",
+    "seconds": 3.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket24Of32",
+    "action": "pass",
+    "seconds": 1.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket23Of32",
+    "action": "pass",
+    "seconds": 1.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket22Of32",
+    "action": "pass",
+    "seconds": 1.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket21Of32",
+    "action": "pass",
+    "seconds": 2.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket20Of32",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket19Of32",
+    "action": "pass",
+    "seconds": 1.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestAsyncHostPromisesThread",
+    "action": "pass",
+    "seconds": 14.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket18Of32",
+    "action": "pass",
+    "seconds": 2.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket17Of32",
+    "action": "pass",
+    "seconds": 2.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket16Of32",
+    "action": "pass",
+    "seconds": 2.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket14Of32",
+    "action": "pass",
+    "seconds": 2.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket15Of32",
+    "action": "pass",
+    "seconds": 3.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket12Of32",
+    "action": "pass",
+    "seconds": 1.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket11Of32",
+    "action": "pass",
+    "seconds": 2.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket13Of32",
+    "action": "pass",
+    "seconds": 2.88
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket10Of32",
+    "action": "pass",
+    "seconds": 1.65
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket0Of32",
+    "action": "pass",
+    "seconds": 1.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket9Of32",
+    "action": "pass",
+    "seconds": 1.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket8Of32",
+    "action": "pass",
+    "seconds": 1.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket7Of32",
+    "action": "pass",
+    "seconds": 1.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket6Of32",
+    "action": "pass",
+    "seconds": 1.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket5Of32",
+    "action": "pass",
+    "seconds": 1.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket4Of32",
+    "action": "pass",
+    "seconds": 1.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket3Of32",
+    "action": "pass",
+    "seconds": 2.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket2Of32",
+    "action": "pass",
+    "seconds": 1.79
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket1Of32",
+    "action": "pass",
+    "seconds": 1.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordReadMutantsUnit02/own-read-checked-as-missing",
+    "action": "pass",
+    "seconds": 0.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordReadMutantsUnit02",
+    "action": "pass",
+    "seconds": 0.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordReadMutantsUnit01/missing-read-silent",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordReadMutantsUnit01",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordReadMutantsUnit00/prototype-membership-restored",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordReadMutantsUnit00",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpSearchNode",
+    "action": "pass",
+    "seconds": 0.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit05/own-slot-null-read",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit05",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit04/stored-key-freed",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit04",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit02/deleted-key-iterated",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit02",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit01/uint32-max-as-index",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit01",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit00/indices-in-insertion-order",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit00",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit03/overwrite-key-leaked",
+    "action": "pass",
+    "seconds": 0.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordMutantsUnit03",
+    "action": "pass",
+    "seconds": 0.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestAsyncHostPromisesAddress",
+    "action": "pass",
+    "seconds": 28.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpLintPatternsNode",
+    "action": "pass",
+    "seconds": 3.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/semantics",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/prototypes",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/reads",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProductCompilerBytesAreIndependentOfDirectory/short",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/references",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProductCompilerBytesAreIndependentOfDirectory/a-much-longer-build-directory",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestProductCompilerBytesAreIndependentOfDirectory",
+    "action": "pass",
+    "seconds": 0.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/iteration",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestToStringWithARadixOutOfRangePanics",
+    "action": "pass",
+    "seconds": 2.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestToStringWithARadixMatchesNode",
+    "action": "pass",
+    "seconds": 2.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "action": "pass",
+    "seconds": 0.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/asan/million",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/asan",
+    "action": "pass",
+    "seconds": 0.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNumbersParseExactlyAsJavaScriptDoes",
+    "action": "pass",
+    "seconds": 1.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/asan_slabs/million",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/asan_slabs",
+    "action": "pass",
+    "seconds": 0.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/numeric",
+    "action": "pass",
+    "seconds": 1.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/asan/nested_exception",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/asan",
+    "action": "pass",
+    "seconds": 0.37
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/count/million",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/count",
+    "action": "pass",
+    "seconds": 0.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/two-indices",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/release/million",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/release",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/asan_slabs/nested_exception",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/asan_slabs",
+    "action": "pass",
+    "seconds": 0.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/count/nested_exception",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/count",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/release/nested_exception",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/release",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/tsan/nested_exception",
+    "action": "pass",
+    "seconds": 0.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception/tsan",
+    "action": "pass",
+    "seconds": 6.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested_exception",
+    "action": "pass",
+    "seconds": 7.2
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/tsan/million",
+    "action": "pass",
+    "seconds": 1.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million/tsan",
+    "action": "pass",
+    "seconds": 7.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_million",
+    "action": "pass",
+    "seconds": 9.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/asan/exception",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/asan",
+    "action": "pass",
+    "seconds": 0.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/asan_slabs/exception",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/asan_slabs",
+    "action": "pass",
+    "seconds": 0.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/count/exception",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/count",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/release/exception",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/release",
+    "action": "pass",
+    "seconds": 0.37
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_fixture_shared_counter/fixture_shared_counter",
+    "action": "pass",
+    "seconds": 11.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_fixture_shared_counter",
+    "action": "pass",
+    "seconds": 11.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/asan/nested",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/asan",
+    "action": "pass",
+    "seconds": 2.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/tsan/exception",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception/tsan",
+    "action": "pass",
+    "seconds": 1.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_exception",
+    "action": "pass",
+    "seconds": 3.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/asan/map",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/asan",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/asan/fresh",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/asan",
+    "action": "pass",
+    "seconds": 1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/asan_slabs/nested",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/asan_slabs",
+    "action": "pass",
+    "seconds": 1.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/count/nested",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/count",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/asan_slabs/map",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/asan_slabs",
+    "action": "pass",
+    "seconds": 0.51
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/release/nested",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/release",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/asan_slabs/fresh",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/asan_slabs",
+    "action": "pass",
+    "seconds": 0.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/count/map",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/count",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/release/map",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/release",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/count/fresh",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/count",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/release/fresh",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/release",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/tsan/map",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map/tsan",
+    "action": "pass",
+    "seconds": 0.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_map",
+    "action": "pass",
+    "seconds": 1.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/tsan/nested",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested/tsan",
+    "action": "pass",
+    "seconds": 0.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_nested",
+    "action": "pass",
+    "seconds": 4.56
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/asan/objects",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/asan",
+    "action": "pass",
+    "seconds": 0.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/workload-1000000",
+    "action": "pass",
+    "seconds": 12.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/asan/strings",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/asan",
+    "action": "pass",
+    "seconds": 0.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/bench-1000",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/constructor",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/constructor",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/__defineGetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/tsan/fresh",
+    "action": "pass",
+    "seconds": 0.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh/tsan",
+    "action": "pass",
+    "seconds": 0.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_fresh",
+    "action": "pass",
+    "seconds": 3.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/__defineGetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/__defineSetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/__defineSetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/hasOwnProperty",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/hasOwnProperty",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/__lookupGetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/__lookupGetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/__lookupSetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/__lookupSetter__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/isPrototypeOf",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/isPrototypeOf",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/propertyIsEnumerable",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/propertyIsEnumerable",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/toString",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/toString",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/valueOf",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/valueOf",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/__proto__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/__proto__",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-get/toLocaleString",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/missing-has/toLocaleString",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode/proto-assignment",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRecordsAgainstNode",
+    "action": "pass",
+    "seconds": 16.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/asan_slabs/objects",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/asan_slabs",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/asan/numbers",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/asan",
+    "action": "pass",
+    "seconds": 0.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/asan_slabs/strings",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/asan_slabs",
+    "action": "pass",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/count/objects",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/count",
+    "action": "pass",
+    "seconds": 0.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/count/strings",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/count",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/asan_slabs/numbers",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/asan_slabs",
+    "action": "pass",
+    "seconds": 0.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/release/strings",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/release",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/release/objects",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/release",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/count/numbers",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/count",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/release/numbers",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/release",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/tsan/objects",
+    "action": "pass",
+    "seconds": 0.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects/tsan",
+    "action": "pass",
+    "seconds": 0.79
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_objects",
+    "action": "pass",
+    "seconds": 2.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/tsan/strings",
+    "action": "pass",
+    "seconds": 0.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings/tsan",
+    "action": "pass",
+    "seconds": 0.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_strings",
+    "action": "pass",
+    "seconds": 2.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/tsan/numbers",
+    "action": "pass",
+    "seconds": 0.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers/tsan",
+    "action": "pass",
+    "seconds": 0.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMap_numbers",
+    "action": "pass",
+    "seconds": 1.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_one_worker/one_worker",
+    "action": "pass",
+    "seconds": 8.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_one_worker",
+    "action": "pass",
+    "seconds": 8.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_eager_strings/eager_strings",
+    "action": "pass",
+    "seconds": 8.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_eager_strings",
+    "action": "pass",
+    "seconds": 8.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_oversized_slot/oversized_slot",
+    "action": "pass",
+    "seconds": 9.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_oversized_slot",
+    "action": "pass",
+    "seconds": 9.7
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_fixed_grain/fixed_grain",
+    "action": "pass",
+    "seconds": 10.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_fixed_grain",
+    "action": "pass",
+    "seconds": 10.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_reused_graph/reused_graph",
+    "action": "pass",
+    "seconds": 7.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_reused_graph",
+    "action": "pass",
+    "seconds": 7.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_result_order/result_order",
+    "action": "pass",
+    "seconds": 6.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_result_order",
+    "action": "pass",
+    "seconds": 6.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_field_cache/field_cache",
+    "action": "pass",
+    "seconds": 10.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_field_cache",
+    "action": "pass",
+    "seconds": 10.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_remote_free/remote_free",
+    "action": "pass",
+    "seconds": 13.51
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_remote_free",
+    "action": "pass",
+    "seconds": 13.51
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_plain_shared_count/plain_shared_count",
+    "action": "pass",
+    "seconds": 11.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_plain_shared_count",
+    "action": "pass",
+    "seconds": 11.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_lazy_cache/lazy_cache",
+    "action": "pass",
+    "seconds": 15.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_lazy_cache",
+    "action": "pass",
+    "seconds": 15.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_skip_items_share/skip_items_share",
+    "action": "pass",
+    "seconds": 10.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_skip_items_share",
+    "action": "pass",
+    "seconds": 10.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelLifecycle/asan",
+    "action": "pass",
+    "seconds": 0.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelLifecycle/asan_slabs",
+    "action": "pass",
+    "seconds": 0.29
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelLifecycle/count",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelLifecycle/release",
+    "action": "pass",
+    "seconds": 0.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelLifecycle/tsan",
+    "action": "pass",
+    "seconds": 0.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelLifecycle",
+    "action": "pass",
+    "seconds": 1.91
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelWorkerPanic/asan",
+    "action": "pass",
+    "seconds": 0.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelWorkerPanic/asan_slabs",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_ascii_character_write/ascii_character_write",
+    "action": "pass",
+    "seconds": 11.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_ascii_character_write",
+    "action": "pass",
+    "seconds": 11.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelWorkerPanic/count",
+    "action": "pass",
+    "seconds": 0.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelWorkerPanic/release",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelWorkerPanic/tsan",
+    "action": "pass",
+    "seconds": 1.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelWorkerPanic",
+    "action": "pass",
+    "seconds": 2.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMapCompilerABI",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestObjectMetadataCacheIsPerEmission",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeContextRangesTile",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMemory/asan",
+    "action": "pass",
+    "seconds": 2.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_view_owner_count/view_owner_count",
+    "action": "pass",
+    "seconds": 12.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_view_owner_count",
+    "action": "pass",
+    "seconds": 12.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMemory/asan_slabs",
+    "action": "pass",
+    "seconds": 1.82
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodeContexts259650To346199",
+    "action": "pass",
+    "seconds": 3.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMemory/count",
+    "action": "pass",
+    "seconds": 0.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMemory/release",
+    "action": "pass",
+    "seconds": 0.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_view_parent_units/view_parent_units",
+    "action": "pass",
+    "seconds": 10.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMutant_view_parent_units",
+    "action": "pass",
+    "seconds": 10.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodeContexts173100To259649",
+    "action": "pass",
+    "seconds": 6.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodeContexts86550To173099",
+    "action": "pass",
+    "seconds": 5.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodeContexts0To86549",
+    "action": "pass",
+    "seconds": 4.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMemory/tsan",
+    "action": "pass",
+    "seconds": 8.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelMemory",
+    "action": "pass",
+    "seconds": 14.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints13",
+    "action": "pass",
+    "seconds": 5.92
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints15",
+    "action": "pass",
+    "seconds": 4.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints16",
+    "action": "pass",
+    "seconds": 7.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints10",
+    "action": "pass",
+    "seconds": 4.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints11",
+    "action": "pass",
+    "seconds": 5.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints14",
+    "action": "pass",
+    "seconds": 9.64
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints12",
+    "action": "pass",
+    "seconds": 7.72
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints09",
+    "action": "pass",
+    "seconds": 3.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints08",
+    "action": "pass",
+    "seconds": 3.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints04",
+    "action": "pass",
+    "seconds": 3.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints06",
+    "action": "pass",
+    "seconds": 6.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints07",
+    "action": "pass",
+    "seconds": 6.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints05",
+    "action": "pass",
+    "seconds": 4.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints00",
+    "action": "pass",
+    "seconds": 5.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints02",
+    "action": "pass",
+    "seconds": 5.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints03",
+    "action": "pass",
+    "seconds": 6.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMaybeNumbersPackIntoOneDouble",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNodeBufferRuntimeWithoutDeclarations",
+    "action": "pass",
+    "seconds": 1.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashMutantsEachHaveOneTest",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeMatchesNodePoints01",
+    "action": "pass",
+    "seconds": 7.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMathAndToFixedMatchJavaScript",
+    "action": "pass",
+    "seconds": 1.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestDecodeASCIIUnit07",
+    "action": "pass",
+    "seconds": 9.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeMixedCountedCycleProbe",
+    "action": "pass",
+    "seconds": 0.79
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeNodeResearch/debug_shapes",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeNodeResearch/errors",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeNodeResearch/mixed_cycle",
+    "action": "pass",
+    "seconds": 0.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestPrototypeNodeResearch",
+    "action": "pass",
+    "seconds": 0.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashProbeCatchesMutantsZeroNormalization",
+    "action": "pass",
+    "seconds": 12.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashProbeCatchesMutantsNaNNormalization",
+    "action": "pass",
+    "seconds": 13.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNormalizeRandomMatchesNode",
+    "action": "pass",
+    "seconds": 19.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantEOL",
+    "action": "pass",
+    "seconds": 11.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantEnvironment",
+    "action": "pass",
+    "seconds": 13.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantCwd",
+    "action": "pass",
+    "seconds": 14.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantExecutableIdentity",
+    "action": "pass",
+    "seconds": 11.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantArgv",
+    "action": "pass",
+    "seconds": 10.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantDateNow",
+    "action": "pass",
+    "seconds": 10.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantMemoryUsage",
+    "action": "pass",
+    "seconds": 12.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantTimeOrigin",
+    "action": "pass",
+    "seconds": 11.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantPerformanceNow",
+    "action": "pass",
+    "seconds": 16.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantExitStatus",
+    "action": "pass",
+    "seconds": 12.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeIntentionalTeardown",
+    "action": "pass",
+    "seconds": 0.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/output",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/exit",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/status",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/clocks",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/memory",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/identity",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/cwd",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/environment",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease/sanitized=false/eol",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsRelease",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantExitHooks",
+    "action": "pass",
+    "seconds": 13.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/output",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/exit",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/status",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/clocks",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelCompilerSharedReferencesMatchNode",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/memory",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/identity",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/cwd",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/environment",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized/sanitized=true/eol",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestAsyncCompilerSuspensionsMatchNode",
+    "action": "pass",
+    "seconds": 0.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeContractsSanitized",
+    "action": "pass",
+    "seconds": 1.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTheWASIBuildsNameNoBareClang",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestWasiAsyncHostPromises",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestAWholeBuildNamesNoTemporaryObject",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false/0",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false/1",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false/2",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false/3",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false/4",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false/5",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/false",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true/0",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true/1",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true/2",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true/3",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true/4",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true/5",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable/true",
+    "action": "pass",
+    "seconds": 0.29
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestViewMixedUnionUnknownAndUnavailable",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitNamesAttributedDeclarations",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitTokensDoNotRewriteLiterals",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitAttributedBindingsAgreeWithNode/native",
+    "action": "pass",
+    "seconds": 0.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitAttributedBindingsAgreeWithNode/wasm32-wasi",
+    "action": "fail",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitAttributedBindingsAgreeWithNode",
+    "action": "fail",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestUnitCacheFlagsHoldSanitizer",
+    "action": "pass",
+    "seconds": 0.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTypedArrayRuntime/release",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTypedArrayRuntime/sanitized",
+    "action": "pass",
+    "seconds": 0.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTypedArrayRuntime",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoBuildSeesTheProgramsFeatures",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantExitFlush",
+    "action": "pass",
+    "seconds": 15.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestHostRuntimeMutantOutput",
+    "action": "pass",
+    "seconds": 11.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitSelfCompareAgreesWithNode",
+    "action": "pass",
+    "seconds": 9.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveProtocolGuards/terminal-invalid-hint",
+    "action": "pass",
+    "seconds": 0.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveProtocolGuards/preserve-pending-error",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveProtocolGuards",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/version-template",
+    "action": "pass",
+    "seconds": 0.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/version-add",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/declaration-array",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/valueOf-first",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/string-fallback",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/objects-throw",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/noncallable-skipped",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/absent-throw",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheShippedRelease",
+    "action": "pass",
+    "seconds": 8.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/call-throws",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/get-throws",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/lookup-after-mutation",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/undefined-result",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/version-template",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/null-result",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/version-add",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/boolean-result",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/declaration-array",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/negative-zero-result",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/valueOf-first",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/string-result",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/number-hint",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/string-fallback",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/function-results-throw",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/objects-throw",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/getter-mutates-next",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/noncallable-skipped",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order/second-get-throws",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/wrong-order",
+    "action": "pass",
+    "seconds": 1.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/absent-throw",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/call-throws",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/missing-TypeError",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/get-throws",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants/leaked-object-result",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitiveMutants",
+    "action": "pass",
+    "seconds": 1.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/lookup-after-mutation",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/undefined-result",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/null-result",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/boolean-result",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/negative-zero-result",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelStringViews/asan",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/string-result",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/number-hint",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/function-results-throw",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/getter-mutates-next",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-false/second-get-throws",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelStringViews/asan_slabs",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelStringViews/count",
+    "action": "pass",
+    "seconds": 0.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelStringViews/release",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelStringViews/tsan",
+    "action": "pass",
+    "seconds": 0.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelStringViews",
+    "action": "pass",
+    "seconds": 1.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStringViews",
+    "action": "pass",
+    "seconds": 0.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringUnitsAreJavaScriptLengths",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringsMatchJavaScript",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded/threads_4",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded/threads_16",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded",
+    "action": "pass",
+    "seconds": 1.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant/threads_4",
+    "action": "pass",
+    "seconds": 0.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheRelease",
+    "action": "pass",
+    "seconds": 9.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheSanitized",
+    "action": "pass",
+    "seconds": 15.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant/threads_16",
+    "action": "pass",
+    "seconds": 0.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant",
+    "action": "pass",
+    "seconds": 2.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings",
+    "action": "pass",
+    "seconds": 3.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09",
+    "action": "pass",
+    "seconds": 3.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry/guarded",
+    "action": "pass",
+    "seconds": 0.56
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit06/output_buffer",
+    "action": "pass",
+    "seconds": 0.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit06",
+    "action": "pass",
+    "seconds": 0.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded/threads_4",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded/threads_16",
+    "action": "pass",
+    "seconds": 0.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded",
+    "action": "pass",
+    "seconds": 1.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry/mutant",
+    "action": "pass",
+    "seconds": 0.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry",
+    "action": "pass",
+    "seconds": 1.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit07",
+    "action": "pass",
+    "seconds": 1.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit05/count_allocation",
+    "action": "pass",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit05",
+    "action": "pass",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringIndexCacheStatesMatchNode",
+    "action": "pass",
+    "seconds": 0.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringIndexPatternsEachHaveOneTest",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringViewAfterAppendMatchesNode",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant/threads_4",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant/threads_16",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant",
+    "action": "pass",
+    "seconds": 1.29
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes",
+    "action": "pass",
+    "seconds": 2.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08",
+    "action": "pass",
+    "seconds": 2.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringIndexMatchesNodeASCII",
+    "action": "pass",
+    "seconds": 2.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringIndexMatchesNodeBMP",
+    "action": "pass",
+    "seconds": 5.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringBuildingMatchesNode",
+    "action": "pass",
+    "seconds": 0.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedTopLevelCoverage",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedSplitCoverage/shard_union",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedSplitCoverage/decode_targets",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedSplitCoverage/WASI",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedSplitCoverage/split_cache",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedSplitCoverage/record_mutants",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRetainedSplitCoverage",
+    "action": "pass",
+    "seconds": 0.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestShardSelection",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitUnitCoverage/decode_prefixes",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitUnitCoverage/normalize_points",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSplitUnitCoverage",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringIndexMatchesNodeBMPLowHalves",
+    "action": "pass",
+    "seconds": 6.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelSlotPairs/asan",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelSlotPairs/asan_slabs",
+    "action": "pass",
+    "seconds": 0.57
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/version-template",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/version-add",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelSlotPairs/count",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/declaration-array",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/valueOf-first",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelSlotPairs/release",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/string-fallback",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/objects-throw",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/noncallable-skipped",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/absent-throw",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/call-throws",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/get-throws",
+    "action": "pass",
+    "seconds": 0.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/lookup-after-mutation",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/undefined-result",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/null-result",
+    "action": "pass",
+    "seconds": 0.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/boolean-result",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelSlotPairs/tsan",
+    "action": "pass",
+    "seconds": 1.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelSlotPairs",
+    "action": "pass",
+    "seconds": 2.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/negative-zero-result",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/string-result",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/number-hint",
+    "action": "pass",
+    "seconds": 0.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestStringIndexMatchesNodeMixed",
+    "action": "pass",
+    "seconds": 6.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/function-results-throw",
+    "action": "pass",
+    "seconds": 0.1
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/getter-mutates-next",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive/slabs-true/second-get-throws",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOrdinaryToPrimitive",
+    "action": "pass",
+    "seconds": 17.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelCachePublication_release",
+    "action": "pass",
+    "seconds": 6.59
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScalingGuardMutants/pointer_guard",
+    "action": "pass",
+    "seconds": 8.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestSlabQuarantineCatchesAStaleReadOfAReusedSlot",
+    "action": "pass",
+    "seconds": 12.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelCachePublication_tsan",
+    "action": "pass",
+    "seconds": 13.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelCachePublication_count",
+    "action": "pass",
+    "seconds": 8.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScaling/asan",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScaling/asan_slabs",
+    "action": "pass",
+    "seconds": 0.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScaling/count",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScaling/release",
+    "action": "pass",
+    "seconds": 0.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScaling/tsan",
+    "action": "pass",
+    "seconds": 1.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScaling",
+    "action": "pass",
+    "seconds": 2.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsStorageScanner",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit04/allocator_lists",
+    "action": "pass",
+    "seconds": 0.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit04",
+    "action": "pass",
+    "seconds": 0.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit03/weak_table_lock",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit03",
+    "action": "pass",
+    "seconds": 0.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit02/packed_field_cache",
+    "action": "pass",
+    "seconds": 0.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit02",
+    "action": "pass",
+    "seconds": 0.85
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit01/checker_profiling",
+    "action": "pass",
+    "seconds": 0.72
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit01",
+    "action": "pass",
+    "seconds": 0.72
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScalingGuardMutants/loser_free",
+    "action": "pass",
+    "seconds": 12.65
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelScalingGuardMutants",
+    "action": "pass",
+    "seconds": 21.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit11/shape_types",
+    "action": "pass",
+    "seconds": 0.38
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit11",
+    "action": "pass",
+    "seconds": 0.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit00/regex_budget",
+    "action": "pass",
+    "seconds": 0.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit00",
+    "action": "pass",
+    "seconds": 0.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit10/output",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit10",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit09/profiling",
+    "action": "pass",
+    "seconds": 0.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit09",
+    "action": "pass",
+    "seconds": 0.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit08/json",
+    "action": "pass",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit08",
+    "action": "pass",
+    "seconds": 0.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit07/field_cache",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit07",
+    "action": "pass",
+    "seconds": 0.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelCachePublication_asan_slabs",
+    "action": "pass",
+    "seconds": 13.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit05/map",
+    "action": "pass",
+    "seconds": 0.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit05",
+    "action": "pass",
+    "seconds": 0.57
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit04/numbers",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit04",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit06/heap_weak",
+    "action": "pass",
+    "seconds": 1.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit06",
+    "action": "pass",
+    "seconds": 1.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit02/string_supplementary",
+    "action": "pass",
+    "seconds": 0.89
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit02",
+    "action": "pass",
+    "seconds": 0.91
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit00/regex",
+    "action": "pass",
+    "seconds": 0.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit00",
+    "action": "pass",
+    "seconds": 0.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit01/string_bmp",
+    "action": "pass",
+    "seconds": 1.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit01",
+    "action": "pass",
+    "seconds": 1.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit03/normalization",
+    "action": "pass",
+    "seconds": 2.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsParallelUnit03",
+    "action": "pass",
+    "seconds": 2.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStringEquality",
+    "action": "pass",
+    "seconds": 0.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOwnershipInlining",
+    "action": "pass",
+    "seconds": 0.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestParallelCachePublication_asan",
+    "action": "pass",
+    "seconds": 12.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestReleaseArithmeticIsNeverFused",
+    "action": "pass",
+    "seconds": 4.54
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestReleaseFlagsReachLink",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNonShippingFlagsStayIdentical",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8WASMShard3",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8WASMShard2",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8WASMShard1",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8WASMShard0",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestReleaseFixtureKeepsArithmeticUnfused",
+    "action": "pass",
+    "seconds": 5.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestReleaseSplitFixtureAgreesWithNode",
+    "action": "pass",
+    "seconds": 5.89
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8NativeShard3",
+    "action": "pass",
+    "seconds": 0.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded/threads_4",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded/threads_16",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded",
+    "action": "pass",
+    "seconds": 1.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8NativeShard2",
+    "action": "pass",
+    "seconds": 0.91
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8NativeShard1",
+    "action": "pass",
+    "seconds": 0.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant/threads_4",
+    "action": "pass",
+    "seconds": 0.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant/threads_16",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant",
+    "action": "pass",
+    "seconds": 1.27
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs",
+    "action": "pass",
+    "seconds": 2.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10",
+    "action": "pass",
+    "seconds": 2.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpV8NativeShard0",
+    "action": "pass",
+    "seconds": 0.97
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard39",
+    "action": "pass",
+    "seconds": 2.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard38",
+    "action": "pass",
+    "seconds": 1.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard37",
+    "action": "pass",
+    "seconds": 1.39
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard35",
+    "action": "pass",
+    "seconds": 1.77
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard34",
+    "action": "pass",
+    "seconds": 2.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard36",
+    "action": "pass",
+    "seconds": 2.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard32",
+    "action": "pass",
+    "seconds": 1.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard31",
+    "action": "pass",
+    "seconds": 1.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard33",
+    "action": "pass",
+    "seconds": 2.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestReleaseSharedValueAndUnsafeMutant",
+    "action": "pass",
+    "seconds": 13.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard29",
+    "action": "pass",
+    "seconds": 1.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard13",
+    "action": "pass",
+    "seconds": 1.77
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard27",
+    "action": "pass",
+    "seconds": 1.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard28",
+    "action": "pass",
+    "seconds": 1.91
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard25",
+    "action": "pass",
+    "seconds": 1.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard26",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard24",
+    "action": "pass",
+    "seconds": 1.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard23",
+    "action": "pass",
+    "seconds": 1.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard22",
+    "action": "pass",
+    "seconds": 1.53
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard21",
+    "action": "pass",
+    "seconds": 1.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard20",
+    "action": "pass",
+    "seconds": 1.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard19",
+    "action": "pass",
+    "seconds": 2.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard18",
+    "action": "pass",
+    "seconds": 1.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard17",
+    "action": "pass",
+    "seconds": 1.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard16",
+    "action": "pass",
+    "seconds": 1.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard15",
+    "action": "pass",
+    "seconds": 1.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard14",
+    "action": "pass",
+    "seconds": 1.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard04",
+    "action": "pass",
+    "seconds": 1.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard12",
+    "action": "pass",
+    "seconds": 2.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard10",
+    "action": "pass",
+    "seconds": 1.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard11",
+    "action": "pass",
+    "seconds": 2.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard09",
+    "action": "pass",
+    "seconds": 1.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard07",
+    "action": "pass",
+    "seconds": 1.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard08",
+    "action": "pass",
+    "seconds": 2.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodePatternUnits",
+    "action": "pass",
+    "seconds": 0.37
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard06",
+    "action": "pass",
+    "seconds": 1.52
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard05",
+    "action": "pass",
+    "seconds": 2.04
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard03",
+    "action": "pass",
+    "seconds": 1.83
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard02",
+    "action": "pass",
+    "seconds": 1.77
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpNativeStepLimitBoundary",
+    "action": "pass",
+    "seconds": 0.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpIteratorResultShape",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpTest262BucketsEachHaveOneTest",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard01",
+    "action": "pass",
+    "seconds": 1.97
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOptionalMethodThunksMatchNode/sanitize=false",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeRandomNodeShard00",
+    "action": "pass",
+    "seconds": 1.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionWrongOrder/definition",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOptionalMethodThunksMatchNode/sanitize=true",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestOptionalMethodThunksMatchNode",
+    "action": "pass",
+    "seconds": 0.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionWrongOrder/function-pointer-cast",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionWrongOrder/void-pointer-cast",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionWrongOrder/call",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestClosureConventionWrongOrder",
+    "action": "pass",
+    "seconds": 0.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRegExpBytecodeTest262Bucket31Of32",
+    "action": "pass",
+    "seconds": 1.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestMapHashProbeCatchesMutantsOldHash",
+    "action": "pass",
+    "seconds": 15.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestQuarantineIsPerThreadUnderTSan/map",
+    "action": "pass",
+    "seconds": 8.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestQuarantineIsPerThreadUnderTSan/shared_ring_mutant",
+    "action": "pass",
+    "seconds": 10.6
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestQuarantineIsPerThreadUnderTSan/memory",
+    "action": "pass",
+    "seconds": 12.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestQuarantineIsPerThreadUnderTSan",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "test": "TestAnArchivesBuildIsJournaledAsRuntimeproducts",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "test": "TestTheLeanCensusFollowsTheBuildAndFailsClosed",
+    "action": "pass",
+    "seconds": 15.93
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "test": "TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+    "action": "pass",
+    "seconds": 15.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "test": "TestTheJobserverNeverReachesAnArchivesBytes",
+    "action": "pass",
+    "seconds": 16.05
+  }
+]

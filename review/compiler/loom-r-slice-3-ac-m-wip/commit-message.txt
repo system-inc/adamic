@@ -1,0 +1,11 @@
+Carry compiler slice 3 with measured a-check headers
+
+Apply 0a8d7ed8 as one change on the fixed dbdf977f base. Replace six refusal headers with their actual reasons and remove six redundant pass headers under the conservative clean-program rule. Preserve every program body byte and all pinned refusal positions.
+
+All 22 changed Adamic files pass the unchanged pinned predicate. Both header mutants are caught. Header-affected tests, readers and vet pass, and all 14 registered affected counts rows remain unchanged.
+
+Re-cut onto main 5a94465370ea0172e25aae8c13478e59e40c2bb4 (was f75b244b339ac7a0efca162dfc96805547763fe4 on dbdf977f)
+
+Assume the fetched main tip is the delivery base. Preserve main release linking while applying the source runtime cache. Align the carried proof runner with its clean-program header rule. Complete the latest requested recursive suites before pushing; keep unrelated main setup tests intact and report their cold-run failures. Deliver as WIP because the required full markdown run is not green; do not rerun its over-budget leaves.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
