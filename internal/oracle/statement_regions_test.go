@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"os"
 	"strconv"
 	"strings"
 	"testing"
@@ -10,16 +9,13 @@ import (
 // Updating the count golden must not hide loss of the statement-region optimization.
 func TestStatementRegionsAreUsed(t *testing.T) {
 	t.Parallel()
-	recorded, err := os.ReadFile(countsPath)
+	recorded, err := recordedCounts()
 	if err != nil {
 		t.Fatal(err)
 	}
 	rows := make(map[string][]string)
-	for _, line := range strings.Split(string(recorded), "\n") {
-		fields := strings.Split(line, "|")
-		if len(fields) == 9 {
-			rows[strings.TrimSpace(fields[1])] = fields
-		}
+	for key, row := range recorded {
+		rows[key] = strings.Split(row, "|")
 	}
 	for _, fixture := range []string{
 		"route_targets_virtual_fresh.a", // Virtual producers return fresh values consumed within a statement.
@@ -33,7 +29,7 @@ func TestStatementRegionsAreUsed(t *testing.T) {
 			path := "internal/oracle/testdata/" + fixture
 			fields, ok := rows[path]
 			if !ok {
-				t.Fatalf("%s missing from %s", path, countsPath)
+				t.Fatalf("%s missing from %s", path, countFile("runtime", path))
 			}
 			read := func(column int) int64 {
 				t.Helper()

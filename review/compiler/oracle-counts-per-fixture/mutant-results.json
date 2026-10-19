@@ -1,0 +1,85 @@
+[
+  {
+    "name": "missing-counts-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsFilesCensus$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "caught_by": [
+      "TestCountsFilesCensus"
+    ],
+    "required_diagnostic": "dedication.a.counts"
+  },
+  {
+    "name": "orphan-counts-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsFilesCensus$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "caught_by": [
+      "TestCountsFilesCensus"
+    ],
+    "required_diagnostic": "orphan counts file"
+  },
+  {
+    "name": "changed-count-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded_[0-9]+$/^dedication/dedication[.]a$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "caught_by": [
+      "TestCountsAreRecorded_003/dedication/dedication.a",
+      "TestCountsAreRecorded_003"
+    ],
+    "required_diagnostic": "the counts changed and testdata/counts/runtime/dedication/dedication.a.counts"
+  },
+  {
+    "name": "crlf-writer-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestPredicateCountsRegenerateDeterministically$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json",
+      "-overlay",
+      "/workspace/adamic/review/compiler/oracle-counts-per-fixture/crlf-writer-overlay.json"
+    ],
+    "exit": 1,
+    "caught_by": [
+      "TestPredicateCountsRegenerateDeterministically"
+    ],
+    "required_diagnostic": "regenerated counts differ"
+  }
+]
