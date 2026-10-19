@@ -2,6 +2,7 @@ package lower
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -206,6 +207,11 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 		}
 		return nil
 	}
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		if found := l.voidWidenedSignatures(source, target, kind, depth, seen); found != nil {
+			return found
+		}
+	}
 	if source.ObjectFlags()&checker.ObjectFlagsReference != 0 && target.ObjectFlags()&checker.ObjectFlagsReference != 0 && source.Target() != nil && source.Target() == target.Target() {
 		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
 		for index, inside := range sources {
@@ -221,8 +227,49 @@ func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map
 		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
 		to := l.checker.GetTypeOfPropertyOfType(target, property.Name)
 		if found := l.voidWidened(from, to, depth+1, seen); found != nil {
-			found.path = "." + property.Name + found.path
+			step := "." + property.Name
+			if strings.HasPrefix(property.Name, ast.InternalSymbolNamePrefix) {
+				// A well-known symbol's key is internal; name it as the source spells it.
+				step = l.checker.SymbolToString(property)
+			}
+			found.path = step + found.path
 			return found
+		}
+	}
+	return nil
+}
+
+// A function can hand out a void function from its return, or receive one through
+// a parameter the other view reads. Returns relate covariantly and parameters
+// contravariantly, and every target signature is checked against every source one.
+func (l *lowering) voidWidenedSignatures(source, target *checker.Type, kind checker.SignatureKind, depth int, seen map[[2]*checker.Type]bool) *voidWidening {
+	sources := l.checker.GetSignaturesOfType(source, kind)
+	targets := l.checker.GetSignaturesOfType(target, kind)
+	if len(sources) == 0 || len(targets) == 0 {
+		return nil
+	}
+	call := ""
+	if kind == checker.SignatureKindConstruct {
+		call = "new"
+	}
+	for _, to := range targets {
+		for _, from := range sources {
+			// Each instantiation of a generic interface clones its methods' type
+			// parameters, so Set's union<U> would build Set<T | U | U | ...> without
+			// end. The canonical signature restores the original unconstrained ones.
+			to, from := checker.Checker_getCanonicalSignature(l.checker, to), checker.Checker_getCanonicalSignature(l.checker, from)
+			if found := l.voidWidened(l.checker.GetReturnTypeOfSignature(from), l.checker.GetReturnTypeOfSignature(to), depth+1, seen); found != nil {
+				found.path = call + "()" + found.path
+				return found
+			}
+			// Positions past a rest parameter read its element type.
+			positions := max(len(from.Parameters()), len(to.Parameters()))
+			for position := range positions {
+				if found := l.voidWidened(l.checker.GetTypeAtPosition(to, position), l.checker.GetTypeAtPosition(from, position), depth+1, seen); found != nil {
+					found.path = call + "(" + strconv.Itoa(position) + ")" + found.path
+					return found
+				}
+			}
 		}
 	}
 	return nil
