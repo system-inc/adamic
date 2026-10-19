@@ -29,7 +29,7 @@ func buildLog(kind, name, key, outcome string, seconds time.Duration) {
 	}
 	// Every whitespace character in name becomes _, so an output path holding a tab or a newline can neither split the
 	// line nor write a second one.
-	line := fmt.Sprintf("%s %s %s %s %.3f\n", kind, strings.Join(strings.Fields(name), "_"), key[:min(12, len(key))], outcome, seconds.Seconds())
+	line := fmt.Sprintf("%s %s %s %s %.3f\n", kind, strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, seconds.Seconds())
 	if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
 		file.WriteString(line)
 		file.Close()

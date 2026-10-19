@@ -495,7 +495,7 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
 				return
 			}
-			buildLog("cCompile", "runtime/"+source, key, "miss", clang)
+			buildLog("cCompile", "runtime/"+source, key, "miss", 0)
 		})
 	}
 	compiles.Wait()
