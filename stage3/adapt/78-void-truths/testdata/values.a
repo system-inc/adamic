@@ -1,0 +1,17 @@
+function hostExit(code?: number): number | undefined {
+    return code;
+}
+function forwardExit(code?: number): number | undefined {
+    return hostExit(code);
+}
+let unreliable = false;
+let unmeasurable = false;
+function mark(onlyUnreliable: boolean): boolean {
+    return onlyUnreliable ? unreliable = true : unmeasurable = true;
+}
+const handler: (onlyUnreliable: boolean) => boolean = mark;
+function forwardMarker(onlyUnreliable: boolean): boolean {
+    return handler(onlyUnreliable);
+}
+console.log(`${forwardExit(0)} ${forwardExit(1)} ${forwardExit(2)} ${forwardExit(4)} ${forwardExit()}`);
+console.log(`${forwardMarker(true)} ${unreliable} ${forwardMarker(false)} ${unmeasurable}`);

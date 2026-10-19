@@ -1,0 +1,23 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {changes}=require('../../../lane/normalize-api.cjs');
+const [before,after,output]=process.argv.slice(2).map(x=>path.resolve(x));
+const file='built/local/typescript.d.ts',old=fs.readFileSync(path.join(before,file),'utf8'),current=fs.readFileSync(path.join(after,file),'utf8');
+const prior='exit(exitCode?: number): void;',truth='exit(exitCode?: number): number | undefined;';
+assert.equal(old.split(prior).length,2);assert.equal(current.split(truth).length,2);
+assert.equal(current.replace(truth,prior),old,'API contains another changed byte');
+const delta=changes(old,current);
+assert.equal(delta.length,1);assert.equal(delta[0].declaration,'member:["ts","System","exit"]#0');
+const sanction=JSON.parse(fs.readFileSync(path.join(__dirname,'sanctioned-api.json')));
+assert.deepEqual(sanction.normalized_changes.find(r=>r.declaration===delta[0].declaration),delta[0]);
+const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
+const js=fs.readdirSync(path.join(before,'built/local')).filter(f=>f.endsWith('.js')).sort().map(f=>{
+ const a=fs.readFileSync(path.join(before,'built/local',f)),b=fs.readFileSync(path.join(after,'built/local',f));
+ assert(a.equals(b),'built JavaScript differs: '+f);return {file:f,bytes:a.length,sha256:hash(a)};
+});
+const actualReference=fs.readFileSync(path.join(after,'tests/baselines/reference/api/typescript.d.ts'));
+assert(actualReference.equals(fs.readFileSync(path.join(before,'tests/baselines/reference/api/typescript.d.ts'))),'reference baseline changed');
+assert.notEqual(current.replace(truth,'exit(exitCode?: number): unknown;'),current,'API widening mutant did not change data');
+assert.notEqual(current.replace(truth,'exit(exitCode?: number): unknown;').replace(truth,prior),old,'API byte guard mutant survived');
+const result={status:'pass',publicChanges:delta,onlyChangedDeclaration:'System.exit',beforeSha256:hash(old),afterSha256:hash(current),referenceUnchanged:true,builtJavaScript:js,apiWideningMutantCaught:true};
+fs.writeFileSync(output,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({status:'pass',publicChanges:1,javascriptArtifacts:js.length}));

@@ -1,0 +1,60 @@
+{
+  "status": "pass",
+  "observations": [
+    {
+      "implementation": "nodeSystem.exit",
+      "deferred": false,
+      "completedResult": "never",
+      "codes": [
+        null,
+        0,
+        1,
+        2,
+        4,
+        97
+      ]
+    },
+    {
+      "implementation": "nodeSystem.exit",
+      "deferred": true,
+      "completedResult": "undefined",
+      "codes": [
+        null,
+        0,
+        1,
+        2,
+        4,
+        97
+      ]
+    },
+    {
+      "implementation": "src/harness/fakesHosts.ts",
+      "completedResult": "never"
+    },
+    {
+      "implementation": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "completedResult": "never"
+    },
+    {
+      "implementation": "src/testRunner/unittests/helpers/tsc.ts",
+      "completedResult": "number | undefined"
+    },
+    {
+      "implementation": "src/testRunner/unittests/tsc/cancellationToken.ts",
+      "completedResult": "number | undefined"
+    },
+    {
+      "implementation": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "completedResult": "number | undefined"
+    },
+    {
+      "implementation": "src/testRunner/unittests/tscWatch/listFilesOnly.ts",
+      "completedResult": "number | undefined"
+    },
+    {
+      "implementation": "noop (harness and tsserver host)",
+      "completedResult": "undefined"
+    }
+  ],
+  "scope": "Actual extracted implementations on Node; profiler continuation scheduling is supplied explicitly, not an actual inspector session."
+}

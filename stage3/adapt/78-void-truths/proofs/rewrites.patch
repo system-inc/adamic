@@ -1,0 +1,33 @@
+--- a/src/compiler/sys.ts
++++ b/src/compiler/sys.ts
+@@ -1432 +1432 @@
+-    exit(exitCode?: number): void;
++    exit(exitCode?: number): number | undefined;
+@@ -1588 +1588 @@
+-            exit(exitCode?: number): void {
++            exit(exitCode?: number): undefined {
+--- a/src/compiler/checker.ts
++++ b/src/compiler/checker.ts
+@@ -2127 +2127 @@
+-    var outofbandVarianceMarkerHandler: ((onlyUnreliable: boolean) => void) | undefined;
++    var outofbandVarianceMarkerHandler: ((onlyUnreliable: boolean) => boolean) | undefined;
+--- a/src/compiler/core.ts
++++ b/src/compiler/core.ts
+@@ -1794 +1794 @@
+-export function noop(_?: unknown): void {}
++export function noop(_?: unknown): undefined {}
+--- a/src/compiler/executeCommandLine.ts
++++ b/src/compiler/executeCommandLine.ts
+@@ -760 +760 @@
+-): void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram> {
++): number | undefined | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram> | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram> {
+--- a/src/harness/fakesHosts.ts
++++ b/src/harness/fakesHosts.ts
+@@ -131 +131 @@
+-    public exit(exitCode?: number): void {
++    public exit(exitCode?: number): number | undefined {
+--- a/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts
++++ b/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts
+@@ -1283 +1283 @@
+-    exit(exitCode?: number): void {
++    exit(exitCode?: number): number | undefined {

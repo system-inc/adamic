@@ -1,0 +1,582 @@
+{
+  "status": "pass",
+  "erasure_mutants": [
+    {
+      "file": "src/compiler/sys.ts",
+      "caught": true,
+      "mutation": "append runtime console.log"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "caught": true,
+      "mutation": "append runtime console.log"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "caught": true,
+      "mutation": "append runtime console.log"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "caught": true,
+      "mutation": "append runtime console.log"
+    },
+    {
+      "file": "src/harness/fakesHosts.ts",
+      "caught": true,
+      "mutation": "append runtime console.log"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "caught": true,
+      "mutation": "append runtime console.log"
+    }
+  ],
+  "typescript": "6.0.3",
+  "erasure": [
+    {
+      "file": "src/compiler/sys.ts",
+      "byteIdentical": true,
+      "results": [
+        {
+          "removeComments": false,
+          "bytes": 69517,
+          "sha256": "2c258e811347bbc204da31b584a672cf4a73d5560b933b8bc91210db9dd7c32b"
+        },
+        {
+          "removeComments": true,
+          "bytes": 57909,
+          "sha256": "3900c7648e91c6feffa676203a619f7b1e6d38d76bb41fe7fa6e914610d56c2d"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "byteIdentical": true,
+      "results": [
+        {
+          "removeComments": false,
+          "bytes": 2892419,
+          "sha256": "786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e"
+        },
+        {
+          "removeComments": true,
+          "bytes": 2354716,
+          "sha256": "3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "byteIdentical": true,
+      "results": [
+        {
+          "removeComments": false,
+          "bytes": 65103,
+          "sha256": "5dfe133e4cc0b9d06db5ec8a644a27988e6713901698b0413c75698597be860c"
+        },
+        {
+          "removeComments": true,
+          "bytes": 45990,
+          "sha256": "c770cebcc6e45911562f4c74543249ecbc2b336fe6cda6557099a2fbb1ba9848"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "byteIdentical": true,
+      "results": [
+        {
+          "removeComments": false,
+          "bytes": 47147,
+          "sha256": "45e6631bc3c998248367d5bf9073928b04847e7196fbf82f9bef58ad7e7cde1e"
+        },
+        {
+          "removeComments": true,
+          "bytes": 43792,
+          "sha256": "57da0f6c06f53ab5ca58faa0ae1f70a61fc6221197cc306fe8a6800c507b5a9a"
+        }
+      ]
+    },
+    {
+      "file": "src/harness/fakesHosts.ts",
+      "byteIdentical": true,
+      "results": [
+        {
+          "removeComments": false,
+          "bytes": 12712,
+          "sha256": "726567e4ea5657ae22a9788cb84c9f79fe1fb5644f7ac5fc35077580e1388229"
+        },
+        {
+          "removeComments": true,
+          "bytes": 11283,
+          "sha256": "86a96037b8e8b55bba958e291d062962fb0aa0fc452419ec993139bbff80938e"
+        }
+      ]
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "byteIdentical": true,
+      "results": [
+        {
+          "removeComments": false,
+          "bytes": 46236,
+          "sha256": "8097d8b3ee22762a1581660f434e203bb5761b81a800b295f0c1ac0d3b3b9e0b"
+        },
+        {
+          "removeComments": true,
+          "bytes": 44496,
+          "sha256": "02e92f94bfa84133580247615613e1adb116a160026bc2fd323f8d4425946eb4"
+        }
+      ]
+    }
+  ],
+  "idempotence": true,
+  "census": {
+    "before": 491,
+    "after": 470,
+    "removed": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 23401,
+        "column": 28,
+        "expression": "originalHandler!(onlyUnreliable)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 579,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 584,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 589,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 594,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 599,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 605,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 613,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 620,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 632,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 643,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 663,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 667,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 707,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 833,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 839,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 845,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 850,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 899,
+        "column": 12,
+        "expression": "sys.exit(exitStatus)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 938,
+        "column": 12,
+        "expression": "sys.exit(exitStatus)"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 965,
+        "column": 12,
+        "expression": "sys.exit(exitStatus)"
+      }
+    ],
+    "newSites": [],
+    "targets": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 23401,
+        "column": 28,
+        "expression": "originalHandler!(onlyUnreliable)",
+        "before": "void",
+        "after": "boolean"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 579,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 584,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 589,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 594,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 599,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 605,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 613,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 620,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 632,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 643,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 663,
+        "column": 24,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 667,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 707,
+        "column": 20,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 833,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 839,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 845,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.Success)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 850,
+        "column": 16,
+        "expression": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 899,
+        "column": 12,
+        "expression": "sys.exit(exitStatus)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 938,
+        "column": 12,
+        "expression": "sys.exit(exitStatus)",
+        "before": "void",
+        "after": "number | undefined"
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 965,
+        "column": 12,
+        "expression": "sys.exit(exitStatus)",
+        "before": "void",
+        "after": "number | undefined"
+      }
+    ],
+    "unionBefore": 16,
+    "unionAfter": 12
+  },
+  "mutants": [
+    {
+      "name": "drop-exit",
+      "caught": true,
+      "restored": [
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 579,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 584,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 589,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 594,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 599,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 605,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 613,
+          "column": 24
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 620,
+          "column": 24
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 632,
+          "column": 24
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 643,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 663,
+          "column": 24
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 667,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 707,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 833,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 839,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 845,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 850,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 899,
+          "column": 12
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 938,
+          "column": 12
+        },
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "line": 965,
+          "column": 12
+        }
+      ]
+    },
+    {
+      "name": "drop-marker",
+      "caught": true,
+      "restored": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 23401,
+          "column": 28
+        }
+      ]
+    },
+    {
+      "name": "new-void-read",
+      "caught": true,
+      "added": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54437,
+          "column": 34,
+          "expression": "adaptation78VoidMutant()"
+        }
+      ]
+    },
+    {
+      "name": "exit-any",
+      "caught": true,
+      "check": "exact checker return type"
+    },
+    {
+      "name": "exit-unknown",
+      "caught": true,
+      "check": "exact checker return type"
+    }
+  ],
+  "nodeWitness": "0 1 2 4 undefined\ntrue true true true\n"
+}

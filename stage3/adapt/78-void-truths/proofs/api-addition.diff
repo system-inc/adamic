@@ -1,0 +1,11 @@
+--- main-sanction/api/typescript.d.ts
++++ adapt78-sanction/api/typescript.d.ts
+@@ -8487,7 +8487,7 @@
+         /** This must be cryptographically secure. Only implement this method using `crypto.createHash("sha256")`. */
+         createSHA256Hash?(data: string): string;
+         getMemoryUsage?(): number;
+-        exit(exitCode?: number): void;
++        exit(exitCode?: number): number | undefined;
+         realpath?(path: string): string;
+         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;
+         clearTimeout?(timeoutId: any): void;

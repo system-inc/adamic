@@ -1,0 +1,96 @@
+{
+  "scope": "All .ts under src, including harness, server, testRunner and library declarations",
+  "typescript": "6.0.3",
+  "implementations": [
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 1344,
+      "kind": "FunctionDeclaration",
+      "text": "export function exit<TOuterState, TState, TResult>(machine: BinaryExpressionStateMachine<TOuterState, TState, TResult>, stackIndex: number, stateStack: BinaryExpressionState[], nodeStack: BinaryExpression[], userStateStack: TState[], resultHolder: { value: TResult; }, _outerState: TOuterState): number {\r\n        Debug.assertEqual(stateStack[stackIndex], exit);\r\n        stateStack[stackIndex] = nextState(machine, exit);\r\n        const result = machine.onExit(nodeStack[stackIndex]!, userStateStack[stackIndex]!);\r\n        if (stackIndex > 0) {\r\n            stackIndex--;\r\n            if (machine.foldState) {\r\n                const side = stateStack[stackIndex] === exit ? \"right\" : \"left\";\r\n                userStateStack[stackIndex] = machine.foldState(userStateStack[stackIndex]!, result, side);\r\n            }\r\n        }\r\n        else {\r\n            resultHolder.value = result;\r\n        }\r\n        return stackIndex;\r\n    }"
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "line": 47,
+      "kind": "FunctionDeclaration",
+      "text": "function exit() {\r\n        if (--enterCount === 0) {\r\n            mark(endMarkName);\r\n            measure(measureName, startMarkName, endMarkName);\r\n        }\r\n        else if (enterCount < 0) {\r\n            Debug.fail(\"enter/exit count does not match.\");\r\n        }\r\n    }"
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "line": 59,
+      "kind": "PropertyAssignment",
+      "text": "exit: noop"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1588,
+      "kind": "MethodDeclaration",
+      "text": "exit(exitCode?: number): void {\r\n                disableCPUProfiler(() => process.exit(exitCode));\r\n            }"
+    },
+    {
+      "file": "src/harness/fakesHosts.ts",
+      "line": 131,
+      "kind": "MethodDeclaration",
+      "text": "public exit(exitCode?: number): void {\r\n        this.exitCode = exitCode;\r\n        throw processExitSentinel;\r\n    }"
+    },
+    {
+      "file": "src/harness/harnessIO.ts",
+      "line": 139,
+      "kind": "PropertyAssignment",
+      "text": "exit: exitCode => ts.sys.exit(exitCode)"
+    },
+    {
+      "file": "src/harness/harnessLanguageService.ts",
+      "line": 563,
+      "kind": "PropertyDeclaration",
+      "text": "exit = ts.noop;"
+    },
+    {
+      "file": "src/server/session.ts",
+      "line": 3393,
+      "kind": "MethodDeclaration",
+      "text": "exit(): void {/*overridden*/}"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/tsc.ts",
+      "line": 55,
+      "kind": "BinaryExpression",
+      "text": "sys.exit = exitCode => sys.exitCode = exitCode"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "line": 1283,
+      "kind": "MethodDeclaration",
+      "text": "exit(exitCode?: number): void {\r\n        this.exitCode = exitCode;\r\n        throw new Error(exitMessage);\r\n    }"
+    },
+    {
+      "file": "src/testRunner/unittests/tsc/cancellationToken.ts",
+      "line": 57,
+      "kind": "BinaryExpression",
+      "text": "sys.exit = exitCode => sys.exitCode = exitCode"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+      "line": 52,
+      "kind": "BinaryExpression",
+      "text": "sys.exit = exitCode => sys.exitCode = exitCode"
+    },
+    {
+      "file": "src/testRunner/unittests/tscWatch/listFilesOnly.ts",
+      "line": 12,
+      "kind": "BinaryExpression",
+      "text": "sys.exit = exitCode => sys.exitCode = exitCode"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/session.ts",
+      "line": 41,
+      "kind": "PropertyAssignment",
+      "text": "exit: ts.noop"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 550,
+      "kind": "MethodDeclaration",
+      "text": "override exit() {\r\n            this.logger.info(\"Exiting...\");\r\n            this.projectService.closeLog();\r\n            tracing?.stopTracing();\r\n            process.exit(0);\r\n        }"
+    }
+  ]
+}

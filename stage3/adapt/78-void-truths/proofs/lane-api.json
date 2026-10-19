@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "scope": "API-only predicate after targeted API tests; not a full lane pass",
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 223,
+    "sanctioned_declarations": 223,
+    "added_lines": 195,
+    "removed_lines": 194
+  },
+  "unextended_manifest_mutant": [
+    "unsanctioned API declaration: member:[\"ts\",\"System\",\"exit\"]#0"
+  ]
+}

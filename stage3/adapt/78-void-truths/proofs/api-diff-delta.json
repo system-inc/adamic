@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "before_added": 194,
+  "before_removed": 193,
+  "after_added": 195,
+  "after_removed": 194,
+  "only_added_diff_lines": [
+    "-        exit(exitCode?: number): void;\n",
+    "+        exit(exitCode?: number): number | undefined;\n"
+  ],
+  "before_api_line": 8490,
+  "after_api_line": 8490
+}

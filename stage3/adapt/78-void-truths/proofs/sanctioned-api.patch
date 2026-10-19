@@ -1,0 +1,69 @@
+--- a/stage3/lane/sanctioned-api.json
++++ b/stage3/lane/sanctioned-api.json
+@@ -945,6 +945,11 @@
+       "declaration": "member:[\"ts\",\"SyntheticExpression\",\"tupleNameSource\"]#0",
+       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]]]]",
+       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"tupleNameSource\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"ParameterDeclaration\"]],[\"TypeReference\",[\"Identifier\",\"NamedTupleMember\"]],[\"UndefinedKeyword\"]]]"
++    },
++    {
++      "declaration": "member:[\"ts\",\"System\",\"exit\"]#0",
++      "before": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"VoidKeyword\"]]",
++      "after": "[\"MethodSignature\",[\"Identifier\",\"exit\"],[\"Parameter\",[\"Identifier\",\"exitCode\"],[\"QuestionToken\"],[\"NumberKeyword\"]],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]"
+     },
+     {
+       "declaration": "member:[\"ts\",\"TaggedTemplateExpression\",\"typeArguments\"]#0",
+@@ -1119,7 +1124,8 @@
+     "33": 0,
+     "40": 28,
+     "70": 1,
+-    "75": 1
++    "75": 1,
++    "78": 1
+   },
+   "excluded_method_conversions": 10,
+   "owners": [
+@@ -2898,6 +2904,14 @@
+         "extendedSourceFiles"
+       ],
+       "line": 5967
++    },
++    {
++      "adaptation": "78",
++      "path": [
++        "System",
++        "exit"
++      ],
++      "line": 8489
+     }
+   ],
+   "proofs": [
+@@ -4108,6 +4122,15 @@
+     "         readonly allowTextChangesInNewFiles?: boolean;\n",
+     "         readonly providePrefixAndSuffixTextForRename?: boolean;\n",
+     "         readonly includePackageJsonAutoImports?: \"auto\" | \"on\" | \"off\";\n",
++    "@@ -8486,7 +8487,7 @@\n",
++    "         /** This must be cryptographically secure. Only implement this method using `crypto.createHash(\"sha256\")`. */\n",
++    "         createSHA256Hash?(data: string): string;\n",
++    "         getMemoryUsage?(): number;\n",
++    "-        exit(exitCode?: number): void;\n",
++    "+        exit(exitCode?: number): number | undefined;\n",
++    "         realpath?(path: string): string;\n",
++    "         setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\n",
++    "         clearTimeout?(timeoutId: any): void;\n",
+     "@@ -8519,7 +8520,7 @@\n",
+     "     function isIdentifierStart(ch: number, languageVersion: ScriptTarget | undefined): boolean;\n",
+     "     function isIdentifierPart(ch: number, languageVersion: ScriptTarget | undefined, identifierVariant?: LanguageVariant): boolean;\n",
+@@ -4229,5 +4252,12 @@
+     "     }\n",
+     "     interface SolutionBuilderWithWatchHost<T extends BuilderProgram> extends SolutionBuilderHostBase<T>, WatchHost {\n",
+     "     }\n"
+-  ]
++  ],
++  "ruled_additions": {
++    "task": "#se1zcgr",
++    "removed": "exit(exitCode?: number): void;",
++    "added": "exit(exitCode?: number): number | undefined;",
++    "declaration": "System.exit",
++    "previous_declarations": 222
++  }
+ }
