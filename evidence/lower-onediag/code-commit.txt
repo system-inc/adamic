@@ -1,0 +1,49 @@
+commit b2998d92e877311d759e52a19eede2f33f256fb4
+Author:     kirkouimet <kirk@kirkouimet.com>
+AuthorDate: Sun Oct 18 23:57:21 2026 -0600
+Commit:     Kirk Ouimet <kirk@kirkouimet.com>
+CommitDate: Mon Oct 19 06:42:54 2026 +0000
+
+    load, lower: the prelude's Map and Set iterators end in IteratorReturnResult<undefined>, so Iterable<T> infers the element alone, and tsc's builder.ts:1246 checks (#onediag)
+    
+    The prelude merged next(): AdamicCollectionIteratorResult<T> into MapIterator and SetIterator, with an
+    anonymous done arm, { readonly done: true; readonly value: undefined }. Inferring T from Iterable<T>
+    matches the source union's arms to the target's IteratorYieldResult<T> | IteratorReturnResult<TReturn>
+    by symbol; an anonymous arm matches neither, so its undefined was inferred into IteratorYieldResult's
+    value and T took it. arrayFrom over tsc's Set<Path> gave r 'Path | undefined' at builder.ts:1246:69,
+    the one TS2345 that kept every file of tsc's closure from lowering, and Array.from(set),
+    new Set(map.keys()) and new Set(map.values()) all widened their element with undefined.
+    
+    The done arm is now the library's IteratorReturnResult<undefined>: done still required on both arms,
+    value undefined when done, and inference matches it to the iterator's return. As Adamic ruled, the gap
+    closes in the prelude, never per site in tsc.
+    
+    Lowering read every field a library interface declares as an inherited prototype member, so
+    step.done on a collection iterator's result was refused once its done arm came from the library
+    (library_map_set_next.a among them). IteratorReturnResult describes the plain object next returns, both
+    fields required and own, so iteratorResultField (prototype.go) lets done and value whose only library
+    roots are IteratorReturnResult's read as own fields, in property and element reads and in destructuring.
+    Only that interface: IteratorYieldResult's done is optional, and stays where it was.
+    
+    collections.a's new Set(scores.values()) was Set<number | undefined> and copied into maybe-number slots
+    (libraryOptionalNumbers); it is Set<number> now, one array fewer. Its counts row moves with it.
+    
+    Proofs:
+    - internal/load TestPreludeIteratorsInferTheirElement: tsc's arrayFrom over a branded Set<Path>, Array.from
+      and new Set over Map iterators, and a step narrowed by done. Mutant: the old anonymous done arm, caught
+      (TS18048 'r' is possibly 'undefined').
+    - internal/oracle library_map_set_iterator_inference.a, held to Node natively and through JavaScript:
+      copies made from Map and Set iterators, next() steps narrowed both ways, destructured steps, and a
+      program's own IteratorReturnResult union. Mutant: iteratorResultField always false, caught by this
+      fixture and by library_map_set_next.a (inherited library member done read as an own field).
+    
+    Co-Authored-By: Ahra <ahra@ahra.ai>
+
+3	1	internal/load/prelude.d.ts
+47	0	internal/load/prelude_iterator_test.go
+3	2	internal/lower/collections.go
+2	2	internal/lower/object.go
+22	0	internal/lower/prototype.go
+2	1	internal/oracle/counts.md
+11	0	internal/oracle/library_map_set_iterator_inference_test.go
+59	0	internal/oracle/testdata/library_map_set_iterator_inference.a
