@@ -26,11 +26,11 @@ export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
 # and the checkout path, inputs no key sees. Added to whatever GOFLAGS holds, once, however often this is sourced.
 case " \${GOFLAGS:-} " in *" -buildvcs=false -trimpath "*) ;; *) export GOFLAGS="\${GOFLAGS:+\$GOFLAGS }-buildvcs=false -trimpath" ;; esac
 ENV
-# Persist only a successful bootstrap; recheck opt-out and branch presence in later shells.
+# Persist only a successful bootstrap; recheck the opt-in and branch presence in later shells.
 # Credentials stay in the caller's environment: cloud setup never grants cache write trust.
 printf 'unset GOCACHEPROG\n' >> "$next"
 if [ "$gocacheprog" = on ]; then
-	printf 'if [ "${ADAMIC_GOCACHE_OFF:-0}" != 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
+	printf 'if [ "${ADAMIC_GOCACHE:-0}" = 1 ] && [ -d %q ] && [ -x %q ]; then\n\texport GOCACHEPROG=%q\nfi\n' \
 		"$repository/cmd/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" "$tools/bin/adamic-gocacheprog" >> "$next"
 fi
 if [ -n "$wasiDirectory" ]; then

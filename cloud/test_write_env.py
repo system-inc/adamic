@@ -53,6 +53,26 @@ class WriteEnvironment(unittest.TestCase):
         self.assertTrue(written.startswith('export PATH="' + str(self.tools / "bin") + ':'))
         self.assertIn("unset GOCACHEPROG", written)
 
+    def test_the_shared_cache_is_on_only_in_a_shell_that_opts_in(self):
+        # Nothing writes refs/gocache, so a shell with the cache on only asks the store for a 404 (#6dg2cwd).
+        repository = self.tools / "repository"
+        (repository / "cmd/adamic-gocacheprog").mkdir(parents=True)
+        program = self.tools / "bin/adamic-gocacheprog"
+        program.parent.mkdir()
+        program.write_text("#!/bin/sh\n")
+        program.chmod(0o755)
+        subprocess.run(["bash", str(WRITER), str(self.tools), "/tmp/adamic-gate", str(self.tools / "markdown-width"),
+                        str(repository), "on", ""], check=True)
+
+        def sourced(**opt_in):
+            environment = {key: value for key, value in os.environ.items() if not key.startswith(("GOCACHEPROG", "ADAMIC_GOCACHE"))}
+            return subprocess.run(["bash", "-c", f'source {self.tools / "env.sh"}; printf %s "${{GOCACHEPROG:-}}"'],
+                                  env=dict(environment, **opt_in), check=True, capture_output=True, text=True).stdout
+
+        self.assertEqual(sourced(), "")
+        self.assertEqual(sourced(ADAMIC_GOCACHE="0"), "")
+        self.assertEqual(sourced(ADAMIC_GOCACHE="1"), str(program))
+
     def test_the_file_is_replaced_whole(self):
         self.write()
         self.assertFalse((self.tools / "env.sh.writing").exists())

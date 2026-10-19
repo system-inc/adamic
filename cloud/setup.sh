@@ -187,10 +187,13 @@ fi
 
 # Bootstrap without the hook: the cache program cannot cache its own build. Older branches and
 # bootstrap failures still warm Go's local cache, so a shared-cache outage never blocks setup.
+# The shared cache is opt-in (ADAMIC_GOCACHE=1): nothing has written refs/gocache since the gate's publish path
+# went (08bc0930), so every go command in a shell with it on asked the store for a ref no one can hit, about
+# 94.5K 404s a day on Oct 14 (#6dg2cwd).
 unset GOCACHEPROG
 gocacheprog=off
-if [ "${ADAMIC_GOCACHE_OFF:-0}" = 1 ]; then
-	step "shared cache off (ADAMIC_GOCACHE_OFF=1)"
+if [ "${ADAMIC_GOCACHE:-0}" != 1 ]; then
+	step "shared cache off (opt in with ADAMIC_GOCACHE=1)"
 elif [ ! -d "$repository/cmd/adamic-gocacheprog" ]; then
 	step "shared cache off (cmd/adamic-gocacheprog absent)"
 elif (cd "$repository" && env -u GOCACHEPROG go build -o "$tools/bin/adamic-gocacheprog" ./cmd/adamic-gocacheprog) > "$run/gocacheprog.log" 2>&1; then
