@@ -47,13 +47,15 @@ source /workspace/adamic-tools/env.sh
 ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService' -count=1 -v -timeout 45m > /tmp/wasm-service-test.log 2>&1
 ```
 
-The oracle runs as four tests, so each fits Loom's 60 s per-test budget, and each builds
-what it needs: `TestWASIService` (release) and `TestWASIServiceCounted` serve the requests
+The oracle runs as four tests, each building what it needs, so the gate can hold each to
+its 60 s per-test budget: `TestWASIService` (release) and `TestWASIServiceCounted` serve the requests
 through the compiler's existing reactor ABI, `TestWASIServiceNativeAgrees` has the host
 generate the requests and Node's responses only (module `-`) and builds a temporary
 native `.a` command importing the same service with `adamic build --sanitize`. The
 native command reads the identical JSONL request file and its full stdout must match
-Node's response file, with ASan, UBSan and LeakSanitizer enabled. Each mutant is built
+Node's response file, with ASan, UBSan and LeakSanitizer enabled. That leg took 57.5 s on an
+idle Linux box (wasm legs 23 to 24 s, mutants 23 s), too close to the budget on a loaded gate box,
+so the gate skips it and it runs with `ADAMIC_WASI_SERVICE_NATIVE=1`. Each mutant is built
 from an isolated temporary `.a` source while the Node oracle keeps the original source.
 A mutant must compile successfully and fail its named runtime assertion
 (`TestWASIServiceMutants`). Every leg refuses a host report of fewer than 100,000 requests,
