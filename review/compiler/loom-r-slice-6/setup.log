@@ -1,0 +1,20 @@
+submodule cache: off
+v24.19.0
+setup: node ready (0.023s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.039s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.019s
+setup: markdown dependencies ready (0.090s)
+Cloning into '/tmp/adamic-gate/loom-r-slice-6/tree/cohere'...
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.245s)
+From https://github.com/system-inc/cohere
+ * branch            0183ccf8c57a775f874ca73be1adfc06e9ad1562 -> FETCH_HEAD
+Submodule path 'cohere': checked out '0183ccf8c57a775f874ca73be1adfc06e9ad1562'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/tmp/adamic-gate/loom-r-slice-6/tree/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (257.237s)
+setup: shared cache off (ADAMIC_GOCACHE_OFF=1) (257.239s)

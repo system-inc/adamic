@@ -1,0 +1,104 @@
+{
+  "renderer-final": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:49:41.279920503Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 5.587
+      }
+    ],
+    "failures": [],
+    "over_60s": [],
+    "max_leaf": {
+      "Time": "2026-10-19T00:49:39.418389238Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestUncaughtErrorNamedMessage",
+      "Elapsed": 3.72
+    },
+    "new_tests": [
+      {
+        "Time": "2026-10-19T00:49:39.030226219Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorSeparatorMutantJavaScript",
+        "Elapsed": 3.3
+      },
+      {
+        "Time": "2026-10-19T00:49:39.380399067Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorEmptyMessage",
+        "Elapsed": 3.68
+      },
+      {
+        "Time": "2026-10-19T00:49:39.418389238Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorNamedMessage",
+        "Elapsed": 3.72
+      },
+      {
+        "Time": "2026-10-19T00:49:39.506675473Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorSeparatorMutantNative",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-19T00:49:39.8077439Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorEmptyNameAndMessage",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-19T00:49:39.854818406Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorEmptyName",
+        "Elapsed": 0.47
+      },
+      {
+        "Time": "2026-10-19T00:49:39.987937309Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorMissingMessage",
+        "Elapsed": 0.48
+      }
+    ]
+  },
+  "flow-fresh-javascript-final": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:50:57.346860428Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/flow",
+        "Elapsed": 62.43
+      },
+      {
+        "Time": "2026-10-19T00:51:13.132612267Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fresh",
+        "Elapsed": 11.565
+      },
+      {
+        "Time": "2026-10-19T00:51:13.670413931Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/javascript",
+        "Elapsed": 0.136
+      }
+    ],
+    "failures": [],
+    "over_60s": [],
+    "max_leaf": {
+      "Time": "2026-10-19T00:50:52.82957701Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+      "Elapsed": 13.89
+    },
+    "new_tests": []
+  }
+}

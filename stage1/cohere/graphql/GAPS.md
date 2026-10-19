@@ -46,7 +46,13 @@ The reason the message gives is the runtime's own loops (`map`, `sort` and the r
 
 **Around it:** each list is its helper's loop, written where graphql-js calls the helper, and marked with the helper's name (`// optionalMany('(', parseVariableDefinition, ')')`). A dispatching method taking the item's kind in the function's place doesn't lower either, since it would call methods declared after it (gap 3 below, met again).
 
-## 2. Throwing an Error made in another function
+## 2. Throwing an Error made in another function: closed
+
+Step 21 preserves saved Error identity through calls and rethrow. The unchanged
+`gaps/2_error_made_elsewhere.ts` now prints `Unexpected token at 3.` on Node,
+native ASan/UBSan and the JavaScript backend, and passes LeakSanitizer.
+The message-returning workaround below is now optional; its removal remains
+with the GraphQL owner. The diagnostic below records the former stop.
 
 graphql-js's parser throws what `this.unexpected()` and `syntaxError()` return.
 

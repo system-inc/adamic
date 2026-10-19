@@ -1,0 +1,8 @@
+=== RUN   TestStep21NullishNarrowingAfterWritingCall
+=== PAUSE TestStep21NullishNarrowingAfterWritingCall
+=== CONT  TestStep21NullishNarrowingAfterWritingCall
+    narrowing_nullish_test.go:10: Lower refused acceptance row: /tmp/adamic-gate/TestStep21NullishNarrowingAfterWritingCall3436897730/001/main.a:1:175: Adamic 0.1 refuses a narrowed read of first after writeFirst() can write it; narrow again after the call
+--- FAIL: TestStep21NullishNarrowingAfterWritingCall (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.202s
+FAIL

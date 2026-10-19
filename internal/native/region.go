@@ -177,6 +177,9 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 			return expression.Local == parameter
 		case ir.Property:
 			return derived(expression.Object)
+		case ir.Box:
+			// Boxing preserves reachability. A thrown object must escape the statement arena.
+			return derived(expression.Value)
 		case ir.Narrow:
 			return derived(expression.Value)
 		case ir.Defined:

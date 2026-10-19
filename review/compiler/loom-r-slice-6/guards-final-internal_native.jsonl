@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T22:50:35.776403306Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T22:50:35.787837395Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-18T22:50:35.787914059Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== RUN   TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:35.787940619Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== PAUSE TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:35.787943022Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-18T22:50:35.787944725Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-18T22:50:35.787946337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== CONT  TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:36.234126709Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"--- PASS: TestRuntimeStaticsAreListed (0.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:36.234312726Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Elapsed":0.45}
+{"Time":"2026-10-18T22:50:36.234347878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:36.240109792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.462s\n"}
+{"Time":"2026-10-18T22:50:36.240163472Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.464}

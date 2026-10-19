@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Native",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-count=1",
+      "-json",
+      "-parallel=1",
+      "-timeout",
+      "90s",
+      "./internal/ir",
+      "-run",
+      "^TestProduct_CallTargetReaderArchivesNative$"
+    ],
+    "exit": 1,
+    "seconds": 14.808
+  }
+]

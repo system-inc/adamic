@@ -26,7 +26,7 @@ static adamic_primitive nothing(void) {
 }
 static void fail(const char *message) {
     adamic_string *string = text(message);
-    adamic_thrown = adamic_error_new(string);
+    adamic_thrown = (adamic_heap *)adamic_error_new(string); adamic_exception_pending = true;
     adamic_release(string);
 }
 static adamic_value unused_closure(adamic_closure *self, adamic_value *arguments) {
@@ -101,9 +101,10 @@ static void run(void) {
     if (mode == 20) { hint = (enum adamic_primitive_hint)99; }
     adamic_primitive result = adamic_ordinary_to_primitive(receiver, hint, get);
     adamic_release(receiver);
-    if (adamic_thrown != NULL) {
-        adamic_object *error = adamic_thrown;
-        adamic_thrown = NULL;
+    if (adamic_exception_pending) {
+        adamic_object *error = (adamic_object *)adamic_thrown;
+        if ((mode == 5 || mode == 7 || mode == 17) && !adamic_instanceof(error, &adamic_type_error_class)) { abort(); }
+        adamic_thrown = NULL; adamic_exception_pending = false;
         adamic_slot_cache name = {0}, message = {0};
         adamic_string *n = adamic_object_field(error, "name", &name)->reference;
         adamic_string *m = adamic_object_field(error, "message", &message)->reference;

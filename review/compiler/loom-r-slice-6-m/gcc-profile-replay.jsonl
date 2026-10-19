@@ -1,0 +1,13 @@
+{"Time":"2026-10-19T00:40:00.422735193Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-19T00:40:00.426938675Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-19T00:40:00.427025444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== RUN   TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:40:00.427050902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== PAUSE TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:40:00.427053926Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-19T00:40:00.427057031Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-19T00:40:00.427060015Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== CONT  TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:40:05.165586945Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"    c_portability_oracle_test.go:25: gcc: both backends match Node; ASan, UBSan and leak detection clean\n"}
+{"Time":"2026-10-19T00:40:05.165756216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"--- PASS: TestLongUnicodePortabilityGCC (4.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:40:05.165766151Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Elapsed":4.74}
+{"Time":"2026-10-19T00:40:05.165794193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:40:05.1665217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t4.743s\n"}
+{"Time":"2026-10-19T00:40:05.166541259Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":4.744}

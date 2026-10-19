@@ -1,0 +1,4694 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohereClassOrder_000",
+    "Elapsed": 11.7
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohereClassOrder_001",
+    "Elapsed": 4.12
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohereInventory",
+    "Elapsed": 10.95
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestCachedWidthMutantIsCaught",
+    "Elapsed": 15.63
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestCorpusPinBeforeSampling",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPinnedRepositoryCorpusNeverFetches",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPinnedRepositoryCorpusBloblessCloneNeverFetches",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestUpstreamNumericSeparatorsAgree",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2044",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2034",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2042",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_0209",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2043",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2039",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2040",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2037",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2041",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2035",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2014",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2013",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2036",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2038",
+    "Elapsed": 0.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2012",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2011",
+    "Elapsed": 0.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2009",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2010",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2007",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1758",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2005",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2006",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2008",
+    "Elapsed": 0.65
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2002",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2003",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2001",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2000",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2015",
+    "Elapsed": 3.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1997",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1999",
+    "Elapsed": 0.61
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1995",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1998",
+    "Elapsed": 0.53
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2004",
+    "Elapsed": 1.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1996",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1993",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1994",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1992",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1991",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1987",
+    "Elapsed": 0.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1990",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1988",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1986",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1985",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1984",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1989",
+    "Elapsed": 0.97
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1983",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1982",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1980",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1979",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1978",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1977",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1974",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1973",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1976",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1975",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1971",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1970",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1968",
+    "Elapsed": 0.08
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1967",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1969",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1965",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1972",
+    "Elapsed": 1.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1966",
+    "Elapsed": 1.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1963",
+    "Elapsed": 0.58
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1961",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1962",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1959",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1960",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1958",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1957",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1955",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1981",
+    "Elapsed": 4.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1954",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1953",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1956",
+    "Elapsed": 1.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1952",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1949",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1951",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1950",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1886",
+    "Elapsed": 0.66
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1947",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1946",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1948",
+    "Elapsed": 1.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1945",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1942",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1944",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1940",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1939",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1941",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1943",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1936",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1937",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1934",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1933",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1938",
+    "Elapsed": 2.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1931",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1930",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1932",
+    "Elapsed": 1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1964",
+    "Elapsed": 8.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1927",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1929",
+    "Elapsed": 1.55
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1928",
+    "Elapsed": 1.58
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1925",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1926",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2033",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1924",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1922",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2032",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1923",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1935",
+    "Elapsed": 4.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1920",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1921",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2031",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2030",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2028",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1917",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1919",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1916",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2029",
+    "Elapsed": 0.62
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1918",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2027",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2023",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2026",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2022",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1914",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2021",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2025",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2024",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2019",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2020",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1912",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2017",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1915",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1913",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1911",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1910",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2018",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_2016",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1906",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1905",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1908",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1904",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1902",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1903",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1909",
+    "Elapsed": 1.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1901",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1899",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1897",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1900",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1907",
+    "Elapsed": 1.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1898",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1895",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1896",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1894",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1891",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1893",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1890",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1892",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1883",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1884",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1889",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1757",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1882",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1881",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1887",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1888",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1878",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1877",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1879",
+    "Elapsed": 1.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1876",
+    "Elapsed": 0.65
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1885",
+    "Elapsed": 2.64
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1875",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1874",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1871",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1870",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1873",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1756",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1872",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1869",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1868",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1880",
+    "Elapsed": 2.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1866",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1755",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1754",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1867",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1864",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1753",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1865",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1752",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1863",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1862",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1750",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1861",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1748",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1747",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1749",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1860",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1859",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1746",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1751",
+    "Elapsed": 1.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1858",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1745",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1857",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1744",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1856",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1743",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1855",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1742",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1854",
+    "Elapsed": 0.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1853",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1741",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1852",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1740",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1851",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1850",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1738",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1737",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1736",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1739",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1628",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1735",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1849",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1848",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1734",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1847",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1732",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1733",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1846",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1845",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1731",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1844",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1843",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1842",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1730",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1841",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1729",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1728",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1726",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1840",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1725",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1839",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1727",
+    "Elapsed": 0.79
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1838",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1723",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1721",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1724",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1722",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1837",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1836",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1720",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1835",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1833",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1717",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1719",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1834",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1718",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1716",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1832",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1831",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1715",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1830",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1714",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1712",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1829",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1713",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1828",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1825",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1826",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1711",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1709",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1824",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1710",
+    "Elapsed": 0.82
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1823",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1708",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1827",
+    "Elapsed": 1.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1707",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1706",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1821",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1822",
+    "Elapsed": 0.55
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1820",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1819",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1705",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1704",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1816",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1818",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1817",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1703",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1702",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1701",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1815",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1699",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1814",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1700",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1812",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1813",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1810",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1698",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1627",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1808",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1696",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1809",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1697",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1695",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1806",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1807",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1805",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1694",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1804",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1693",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1803",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1692",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1801",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1691",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1690",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1802",
+    "Elapsed": 0.83
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1800",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1799",
+    "Elapsed": 0.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1811",
+    "Elapsed": 2.71
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1798",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1689",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1687",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1688",
+    "Elapsed": 0.76
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1796",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1686",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1685",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1795",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1797",
+    "Elapsed": 1.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1684",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1794",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1792",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1793",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1682",
+    "Elapsed": 0.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1681",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1680",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1791",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1790",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1679",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1626",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1678",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1676",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1677",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1789",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1675",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1788",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1674",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1787",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1673",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1672",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1786",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1785",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1683",
+    "Elapsed": 3.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1671",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1784",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1670",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1783",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1782",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1669",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1668",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1666",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1779",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1781",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1778",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1780",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1665",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1776",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1664",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1667",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1775",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1662",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1774",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1661",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1777",
+    "Elapsed": 1.13
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1773",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1660",
+    "Elapsed": 0.58
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1771",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1659",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1772",
+    "Elapsed": 0.63
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1770",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1769",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1658",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1768",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1767",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1663",
+    "Elapsed": 2.61
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1656",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1766",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1657",
+    "Elapsed": 0.82
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1765",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1655",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1653",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1654",
+    "Elapsed": 0.65
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1762",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1763",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1651",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1764",
+    "Elapsed": 1.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1650",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1652",
+    "Elapsed": 0.8
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1760",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1648",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1759",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1761",
+    "Elapsed": 1.1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1645",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1647",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1629",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1644",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1642",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1641",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1646",
+    "Elapsed": 1.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1640",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1625",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1639",
+    "Elapsed": 0.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1497",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1624",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1638",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1623",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1622",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1621",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1637",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1620",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1636",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1619",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1635",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1617",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1616",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1634",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1618",
+    "Elapsed": 0.66
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1633",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1615",
+    "Elapsed": 1.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1614",
+    "Elapsed": 0.7
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1632",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1631",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1613",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1630",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1612",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1611",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1610",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1500",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1649",
+    "Elapsed": 6.82
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1608",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1609",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1607",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1606",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1605",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1604",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1603",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1600",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1601",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1598",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1496",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1602",
+    "Elapsed": 0.62
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1599",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1495",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1494",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1368",
+    "Elapsed": 0.58
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1597",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1596",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1595",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1493",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1492",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1594",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1593",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1490",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1491",
+    "Elapsed": 1.12
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1592",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1489",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1591",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1488",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1590",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1486",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1487",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1485",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1588",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1589",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1484",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1483",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1482",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1587",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1481",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1586",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1585",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1480",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1584",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1479",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1583",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1582",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1581",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1478",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1580",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1477",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1579",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1578",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1577",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1476",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1576",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1475",
+    "Elapsed": 0.53
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1574",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1474",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1575",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1573",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1473",
+    "Elapsed": 0.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1571",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1643",
+    "Elapsed": 13.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1569",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1472",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1568",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1570",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1572",
+    "Elapsed": 1.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1470",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1471",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1566",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1469",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1468",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1565",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1564",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1567",
+    "Elapsed": 1.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1466",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1467",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1561",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1464",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1563",
+    "Elapsed": 0.85
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1562",
+    "Elapsed": 0.72
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1560",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1463",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1559",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1461",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1462",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1460",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1557",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1458",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1558",
+    "Elapsed": 0.63
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1459",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1556",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1555",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1554",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1457",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1456",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1552",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1455",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1553",
+    "Elapsed": 0.79
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1551",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1454",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1550",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1453",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1452",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1451",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1548",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1450",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1547",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1449",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1448",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1447",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1546",
+    "Elapsed": 1.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1465",
+    "Elapsed": 5.61
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1545",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1367",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1544",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1543",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1446",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1542",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1541",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1540",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1444",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1445",
+    "Elapsed": 1.1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1442",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1549",
+    "Elapsed": 4.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1441",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1443",
+    "Elapsed": 0.94
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1539",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1366",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1538",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1537",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1437",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1440",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1435",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1439",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1438",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1436",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1434",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1432",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1433",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1430",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1428",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1431",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1429",
+    "Elapsed": 0.63
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1426",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1423",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1425",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1424",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1420",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1422",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1418",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1421",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1416",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1427",
+    "Elapsed": 1.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1419",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1417",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1415",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1413",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1412",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1414",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1411",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1410",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1409",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1408",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1407",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1406",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1404",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1403",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1405",
+    "Elapsed": 0.53
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1402",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1401",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1397",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1400",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1399",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1395",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1393",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1394",
+    "Elapsed": 0.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1392",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1391",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1390",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1398",
+    "Elapsed": 1.67
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1389",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1387",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1388",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1365",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1385",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1386",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1382",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1384",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1383",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1380",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1381",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1379",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1536",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1535",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1378",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1377",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1533",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1534",
+    "Elapsed": 0.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1532",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1376",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1375",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1530",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1531",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1374",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1373",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1372",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1527",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1529",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1526",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1528",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1370",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1369",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1524",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1242",
+    "Elapsed": 0.72
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1525",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1523",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1522",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1521",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1520",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1519",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1518",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1517",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1516",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1515",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1514",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1511",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1513",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1512",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1363",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1364",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1510",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1509",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1362",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1508",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1507",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1361",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1360",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1506",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1359",
+    "Elapsed": 0.67
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1505",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1504",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1357",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1358",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1356",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1503",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1502",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1355",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1501",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1353",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1352",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1499",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1354",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1371",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1351",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1498",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1349",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1348",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1350",
+    "Elapsed": 1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1347",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1344",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1346",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1343",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1341",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1342",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1340",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1339",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1338",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1396",
+    "Elapsed": 11.08
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1336",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1337",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1236",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1335",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1334",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1333",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1235",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1234",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1232",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1233",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1332",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1231",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1331",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1229",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1230",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1330",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1329",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1228",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1328",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1227",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1327",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1225",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1325",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1326",
+    "Elapsed": 0.85
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1224",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1323",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1324",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1223",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1109",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1322",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1221",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1222",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1320",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1321",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1319",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1220",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1219",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1318",
+    "Elapsed": 0.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1218",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1317",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1316",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1217",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1314",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1313",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1315",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1108",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1312",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1216",
+    "Elapsed": 0.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1311",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1310",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1215",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1214",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1309",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1213",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1308",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1307",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1212",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1211",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestPortMatchesGoCohere_1305",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONPrinterMutant_2",
+    "Elapsed": 0.78
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONGoOracle",
+    "Elapsed": 0.79
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONUpstreamParityVerdict",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONPrinterMutant_1",
+    "Elapsed": 0.8
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONPrinterMutant_0",
+    "Elapsed": 0.8
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONAuditOracle",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONClassOrderAnswer",
+    "Elapsed": 0.41
+  }
+]

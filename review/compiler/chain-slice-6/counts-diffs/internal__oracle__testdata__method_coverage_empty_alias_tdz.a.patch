@@ -1,0 +1,27 @@
+--- main/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
++++ slice/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+@@ -17,8 +17,12 @@
+ static double adamic_function_0_read(void) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'parser' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'parser' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return 0.0;
++	}
+ 	}
+ 	adamic_closure * adamic_temporary_1 = adamic_retain(adamic_global_0_parser);
+ 	adamic_array * adamic_temporary_2 = adamic_array_new(0, false);
+@@ -52,6 +56,9 @@
+ 	adamic_start(argc, argv);
+ 	adamic_write_line(adamic_stdout, &adamic_string_0);
+ 	double adamic_temporary_8 = adamic_function_0_read();
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	adamic_string * adamic_temporary_9 = adamic_string_from_number(adamic_temporary_8);
+ 	adamic_string * adamic_temporary_10 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_9});
+ 	adamic_write_line(adamic_stdout, adamic_temporary_10);

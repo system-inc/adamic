@@ -1,0 +1,164 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdownEntitiesGenerator",
+    "Elapsed": 0.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownPrefixGo",
+    "Elapsed": 1.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownFrontMatterGo",
+    "Elapsed": 0.61
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownASTGo",
+    "Elapsed": 1.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksLeafLists",
+    "Elapsed": 3.14
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownChunksGo",
+    "Elapsed": 1.54
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksTextGenerator",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdown_mdast_go",
+    "Elapsed": 3.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksWhitespace_layout",
+    "Elapsed": 1.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksTable_document",
+    "Elapsed": 1.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksWhitespace_lists",
+    "Elapsed": 1.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksTable_list",
+    "Elapsed": 1.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksStructure_adamic_markdown_doclayout",
+    "Elapsed": 1.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksQuote_layout",
+    "Elapsed": 1.54
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksStructure_adamic_markdown_lists",
+    "Elapsed": 1.77
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksQuote_lists",
+    "Elapsed": 1.77
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdownWidthGenerator",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownblocksLeafDocLayout",
+    "Elapsed": 1.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownTextGo",
+    "Elapsed": 2.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdown_path_go",
+    "Elapsed": 2.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownMalformedEventsGo",
+    "Elapsed": 2.14
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_TokenizerEventsGo",
+    "Elapsed": 3.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_MarkdownIdentifierGo",
+    "Elapsed": 2.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdown_decode_go",
+    "Elapsed": 2.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdown_width_go",
+    "Elapsed": 1.58
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_GrainMarkdownWidthFullAnswers",
+    "Elapsed": 12.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles",
+    "Test": "TestProduct_TokenizerEventsAnswers",
+    "Elapsed": 10.68
+  }
+]

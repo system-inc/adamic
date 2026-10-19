@@ -1,0 +1,13 @@
+{"Time":"2026-10-19T00:05:42.66577557Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles"}
+{"Time":"2026-10-19T00:05:42.668591629Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle"}
+{"Time":"2026-10-19T00:05:42.668645199Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle","Output":"=== RUN   TestProduct_GraphQLGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:05:42.668666951Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle","Output":"=== PAUSE TestProduct_GraphQLGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:05:42.668669084Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle"}
+{"Time":"2026-10-19T00:05:42.668671187Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle"}
+{"Time":"2026-10-19T00:05:42.668672569Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle","Output":"=== CONT  TestProduct_GraphQLGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:05:43.210847211Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle","Output":"    products_test.go:15: build go_test_-c_cohere_./internal/format/graphql_graphql.test-oracle-owner-v1 018cfe6236dc hit 0.39\n"}
+{"Time":"2026-10-19T00:05:43.210917946Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle","Output":"--- PASS: TestProduct_GraphQLGoOracle (0.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:05:43.210920821Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Test":"TestProduct_GraphQLGoOracle","Elapsed":0.54}
+{"Time":"2026-10-19T00:05:43.21094075Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:05:43.214357603Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/graphql/oracles\t0.548s\n"}
+{"Time":"2026-10-19T00:05:43.214386135Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/graphql/oracles","Elapsed":0.549}

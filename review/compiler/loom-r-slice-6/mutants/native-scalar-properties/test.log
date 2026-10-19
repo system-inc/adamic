@@ -1,0 +1,22 @@
+=== RUN   TestNarrowedUnionMemberCheck
+=== PAUSE TestNarrowedUnionMemberCheck
+=== CONT  TestNarrowedUnionMemberCheck
+=== RUN   TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2_union_narrow_call.a
+=== PAUSE TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2_union_narrow_call.a
+=== RUN   TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2b_union_narrow_number.a
+=== CONT  TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2_union_narrow_call.a
+=== CONT  TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2b_union_narrow_number.a
+=== NAME  TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2_union_narrow_call.a
+    narrowed_union_test.go:49: native: stderr differs: exit 70, stdout "", stderr "adamic: panic: dynamic property read on an unsupported runtime value\n"
+=== NAME  TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2b_union_narrow_number.a
+    narrowed_union_test.go:74: unchecked member mutant caught: exit 0, stdout "after toText: 1\n", stderr ""
+--- FAIL: TestNarrowedUnionMemberCheck (0.00s)
+    --- FAIL: TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2_union_narrow_call.a (16.73s)
+    --- PASS: TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2b_union_narrow_number.a (16.92s)
+FAIL
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.931s
+FAIL

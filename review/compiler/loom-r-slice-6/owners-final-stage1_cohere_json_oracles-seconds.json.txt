@@ -1,0 +1,44 @@
+[
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONUpstreamParityVerdict",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONGoOracle",
+    "Elapsed": 1.08
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONPrinterMutant_2",
+    "Elapsed": 1.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONPrinterMutant_0",
+    "Elapsed": 1.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONPrinterMutant_1",
+    "Elapsed": 1.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONAuditOracle",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json/oracles",
+    "Test": "TestProduct_JSONClassOrderAnswer",
+    "Elapsed": 0.65
+  }
+]

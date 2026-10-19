@@ -1,0 +1,524 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestProduct_PrimitiveMutants",
+    "Elapsed": 4.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestParallelUndefinedExceptionCounted",
+    "Elapsed": 6.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/version-template",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/version-add",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/declaration-array",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/valueOf-first",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/string-fallback",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/objects-throw",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/noncallable-skipped",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/absent-throw",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/call-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/get-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/lookup-after-mutation",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/undefined-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/null-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/boolean-result",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/negative-zero-result",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/string-result",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/number-hint",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/function-results-throw",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/getter-mutates-next",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/second-get-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/wrong-order",
+    "Elapsed": 0.83
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/missing-TypeError",
+    "Elapsed": 0.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants/leaked-object-result",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveMutants",
+    "Elapsed": 0.97
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestSplitAttributedBindingsAgreeWithNode/native",
+    "Elapsed": 9.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRuntimeFeatureMismatchProgramFeature",
+    "Elapsed": 10.93
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveProtocolGuards/terminal-invalid-hint",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/version-template",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveProtocolGuards/preserve-pending-error",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitiveProtocolGuards",
+    "Elapsed": 7.76
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/version-add",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/declaration-array",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/valueOf-first",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/string-fallback",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/objects-throw",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/noncallable-skipped",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/absent-throw",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/call-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/get-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/lookup-after-mutation",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/undefined-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/null-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/boolean-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/negative-zero-result",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/string-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/number-hint",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/function-results-throw",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/getter-mutates-next",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-false/second-get-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestParallelUndefinedExceptionRaces",
+    "Elapsed": 6.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestParallelUndefinedExceptionSanitized",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedTopLevelCoverage",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedSplitCoverage/shard_union",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedSplitCoverage/decode_targets",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedSplitCoverage/WASI",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedSplitCoverage/split_cache",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedSplitCoverage/record_mutants",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRetainedSplitCoverage",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestSplitAttributedBindingsAgreeWithNode/wasm32-wasi",
+    "Elapsed": 8.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestSplitAttributedBindingsAgreeWithNode",
+    "Elapsed": 18.15
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRuntimeFeatureMismatchRuntimeFeature",
+    "Elapsed": 0.15
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/version-template",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/version-add",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/declaration-array",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/valueOf-first",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/string-fallback",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/objects-throw",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/noncallable-skipped",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/absent-throw",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/call-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/get-throws",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/lookup-after-mutation",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/undefined-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/null-result",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/boolean-result",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/negative-zero-result",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/string-result",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/number-hint",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/function-results-throw",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/getter-mutates-next",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive/slabs-true/second-get-throws",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestOrdinaryToPrimitive",
+    "Elapsed": 14.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestSplitTSGoRuntimeFeatures",
+    "Elapsed": 5.55
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRuntimeFeatureSetsWASI",
+    "Elapsed": 11.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestRuntimeFeatureSetsNative",
+    "Elapsed": 6.29
+  }
+]

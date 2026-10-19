@@ -1,0 +1,7 @@
+// Scope extension of program.ts:2854. Throwing never calls a conversion method.
+class Payload {
+    readonly message = `payload${1}`;
+    toString(): string { console.log('conversion called'); return this.message; }
+}
+console.log('before object');
+throw new Payload();

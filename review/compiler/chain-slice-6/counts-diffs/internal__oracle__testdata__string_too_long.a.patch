@@ -1,0 +1,74 @@
+--- main/internal/oracle/testdata/string_too_long.a
++++ slice/internal/oracle/testdata/string_too_long.a
+@@ -7,25 +7,60 @@
+ 
+ static adamic_string adamic_string_0 = ADAMIC_STRING("before");
+ static adamic_string adamic_string_1 = ADAMIC_STRING("ab");
++static adamic_string adamic_string_2 = ADAMIC_STRING("Invalid count value: ");
++static adamic_string adamic_string_3 = ADAMIC_STRING("Invalid string length");
+ 
+ static adamic_string * adamic_global_0_tooLong = &adamic_string_empty;
+ static bool adamic_ready_0 = false;
+ 
++static adamic_string * adamic_function_0_exception_repeat(adamic_string * adamic_local_1_argument, double adamic_local_2_argument);
++
++static adamic_string * adamic_function_0_exception_repeat(adamic_string * adamic_local_1_argument, double adamic_local_2_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_local_3_count = (isnan(adamic_local_2_argument) ? (0x0p+00) : trunc(adamic_local_2_argument));
++	if ((adamic_local_3_count < (0x0p+00)) || (!isfinite(adamic_local_3_count))) {
++		adamic_string * adamic_temporary_1 = adamic_string_from_number(adamic_local_2_argument);
++		adamic_string * adamic_temporary_2 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_2, adamic_temporary_1});
++		adamic_object * adamic_temporary_3 = adamic_error_new_kind(adamic_temporary_2, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_3)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_3);
++		adamic_release(adamic_temporary_2);
++		adamic_release(adamic_temporary_1);
++		return &adamic_string_empty;
++	}
++	if ((adamic_string_length(adamic_local_1_argument) * adamic_local_3_count) > (0x1.fffffe8p+28)) {
++		adamic_object * adamic_temporary_4 = adamic_error_new_kind(&adamic_string_3, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_4)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_4);
++		return &adamic_string_empty;
++	}
++	adamic_string * adamic_temporary_5 = adamic_string_repeat(adamic_local_1_argument, adamic_local_3_count);
++	adamic_string * adamic_temporary_6 = adamic_temporary_5;
++	return adamic_temporary_6;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	adamic_write_line(adamic_stdout, &adamic_string_0);
+-	adamic_string * adamic_temporary_1 = adamic_string_repeat(&adamic_string_1, adamic_power((0x1p+01), (0x1.cp+04)));
+-	adamic_string * adamic_temporary_2 = adamic_global_0_tooLong;
+-	adamic_global_0_tooLong = adamic_temporary_1;
+-	adamic_release(adamic_temporary_2);
++	adamic_string * adamic_temporary_7 = adamic_function_0_exception_repeat(&adamic_string_1, adamic_power((0x1p+01), (0x1.cp+04)));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_7);
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_8 = adamic_global_0_tooLong;
++	adamic_global_0_tooLong = adamic_temporary_7;
++	adamic_release(adamic_temporary_8);
+ 	adamic_ready_0 = true;
+-	adamic_string * adamic_temporary_3 = adamic_global_0_tooLong;
+-	double adamic_temporary_4 = adamic_string_length(adamic_temporary_3);
+-	adamic_string * adamic_temporary_5 = adamic_string_from_number(adamic_temporary_4);
+-	adamic_string * adamic_temporary_6 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_5});
+-	adamic_write_line(adamic_stdout, adamic_temporary_6);
+-	adamic_release(adamic_temporary_6);
+-	adamic_release(adamic_temporary_5);
++	adamic_string * adamic_temporary_9 = adamic_global_0_tooLong;
++	double adamic_temporary_10 = adamic_string_length(adamic_temporary_9);
++	adamic_string * adamic_temporary_11 = adamic_string_from_number(adamic_temporary_10);
++	adamic_string * adamic_temporary_12 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_11});
++	adamic_write_line(adamic_stdout, adamic_temporary_12);
++	adamic_release(adamic_temporary_12);
++	adamic_release(adamic_temporary_11);
+ 	adamic_release(adamic_global_0_tooLong);
+ 	adamic_global_0_tooLong = NULL;
+ 	return 0;

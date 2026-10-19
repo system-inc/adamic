@@ -57,7 +57,7 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 			adamic_object_field_types(object)[index] = adamic_object_field_types(owner)[adamic_slot_index(owner, found)];
 		} else {
 			object->slots[index] = adamic_accessor_get((adamic_object *)source, shape->names[index]);
-			if (adamic_thrown != NULL) {
+			if (adamic_exception_pending) {
 				adamic_release(object);
 				return NULL;
 			}

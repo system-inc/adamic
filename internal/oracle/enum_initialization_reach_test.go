@@ -83,10 +83,10 @@ func TestEnumInitializationUnknownPinned(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: ReferenceError: Cannot access 'Pending' before initialization\n"), exitCode: 70}
+			want := run{stdout: []byte("before\n"), stderr: []byte("Uncaught ReferenceError: Cannot access 'Pending' before initialization\n"), exitCode: 1}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if d := disagreement(want, got); d != "" {
+				if d := disagreement(want, got); d != "" || string(got.stderr) != string(want.stderr) {
 					t.Fatalf("%s: %+v", d, got)
 				}
 			}

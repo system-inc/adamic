@@ -1,0 +1,572 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/clang_flakes",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/clang_always_fails",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/silent_clang_death",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/compiler_crash",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/backend_compiler_crash",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/native_death",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/node_death",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/backend_death",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone/leak_runner_death",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFindingReproducesAlone",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestConfirmationWaitsForOtherPrograms",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestObserveConfirmsCompilerCrash",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExecuteCPUHelper",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExecuteRunsTheToolchainsNode",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestProduct_Adamic",
+    "Elapsed": 1.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelRunnerCatchesLyingRefusal",
+    "Elapsed": 2.98
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelRunnerCatchesWrongPath",
+    "Elapsed": 3.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesShrinkKeepsBoundary",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelRunnerCapturedLetRefused",
+    "Elapsed": 3.21
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelRunnerStringsAgree",
+    "Elapsed": 1.81
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelRunnerNumbersAgree",
+    "Elapsed": 2.72
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesCampaign_3",
+    "Elapsed": 7.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesCampaign_2",
+    "Elapsed": 12.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesCampaign_1",
+    "Elapsed": 9.92
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestJudgeReadsThePanicLine",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesRunnerCanFail",
+    "Elapsed": 12.61
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestSharedSliceCutsShare",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestShrinkKeepsOnlyWhatFails",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOctoberFeaturesAppear",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelFeatureCoverage",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOneSeedOneProgram",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestBytesSharedRejects63Bytes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesFeatureCoverage",
+    "Elapsed": 0.9
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOwnershipShapes",
+    "Elapsed": 0.87
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExactSignatureRejectsSuffix",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestReduceRejectsDifferentRefusal",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestSourceTreeCutsAtItems",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelLeakCheckCatchesMutant/control",
+    "Elapsed": 2.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelLeakCheckCatchesMutant/missing-results-release",
+    "Elapsed": 0.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestParallelLeakCheckCatchesMutant",
+    "Elapsed": 2.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/vocabulary",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-025-029",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-045-049",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-040-044",
+    "Elapsed": 0.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-035-039",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-030-034",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-010-014",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-020-024",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestMovesCampaign_0",
+    "Elapsed": 12.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-015-019",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-000-004",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower/seeds-005-009",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestOverridesShapesAndLower",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker/seeds-026-030",
+    "Elapsed": 0.35
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker/seeds-001-005",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker/seeds-016-020",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker/seeds-021-025",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker/seeds-011-015",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker/seeds-006-010",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRegexProgramsPassTheChecker",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-001-005",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-031-035",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-056-060",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-051-055",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-046-050",
+    "Elapsed": 0.63
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-041-045",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-016-020",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-036-040",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-026-030",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-021-025",
+    "Elapsed": 0.48
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-011-015",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/vocabulary",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower/seeds-006-010",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestGeneratedProgramsCheckAndLower",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-021-025",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-036-040",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-031-035",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-026-030",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-011-015",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-016-020",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-006-010",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFuzzerSharesRuntimeLibrary/library",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes/seeds-001-005",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestUndefinedNumbersShapes",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFuzzerSharesRuntimeLibrary/program",
+    "Elapsed": 0.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFuzzerSharesRuntimeLibrary",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestFuzzerFeatureMismatchStopsAtLink",
+    "Elapsed": 17.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExecuteCPULimit/SIGXCPU",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestReduceKeepsTheSignature/signature",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestRuntimeFeaturesMatchNode",
+    "Elapsed": 17.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExecuteCPULimit/saturated",
+    "Elapsed": 4.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExecuteCPULimit/infinite",
+    "Elapsed": 5.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestExecuteCPULimit",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestReduceKeepsTheSignature/reduction",
+    "Elapsed": 1.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/fuzz",
+    "Test": "TestReduceKeepsTheSignature",
+    "Elapsed": 0.17
+  }
+]

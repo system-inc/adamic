@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Native",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-count=1",
+      "-json",
+      "-parallel=1",
+      "-timeout",
+      "90s",
+      "./internal/ir",
+      "-run",
+      "^TestProduct_CallTargetReaderArchivesNative$"
+    ],
+    "exit": 0,
+    "seconds": 4.441
+  },
+  {
+    "name": "Lower",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-count=1",
+      "-json",
+      "-parallel=1",
+      "-timeout",
+      "90s",
+      "./internal/ir",
+      "-run",
+      "^TestProduct_CallTargetReaderArchivesLower$"
+    ],
+    "exit": 0,
+    "seconds": 4.203
+  },
+  {
+    "name": "Fresh",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-count=1",
+      "-json",
+      "-parallel=1",
+      "-timeout",
+      "90s",
+      "./internal/ir",
+      "-run",
+      "^TestProduct_CallTargetReaderArchivesFresh$"
+    ],
+    "exit": 0,
+    "seconds": 3.845
+  },
+  {
+    "name": "Flow",
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-count=1",
+      "-json",
+      "-parallel=1",
+      "-timeout",
+      "90s",
+      "./internal/ir",
+      "-run",
+      "^TestProduct_CallTargetReaderArchivesFlow$"
+    ],
+    "exit": 0,
+    "seconds": 3.787
+  }
+]

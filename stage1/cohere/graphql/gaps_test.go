@@ -23,7 +23,7 @@ var gaps = []struct {
 	stdout string
 }{
 	{path: "gaps/1_throwing_function_value.ts", stdout: "too long: bb\n"},
-	{path: "gaps/2_error_made_elsewhere.ts", notYet: "throwing an Error that isn't made where it's thrown or caught by the catch around it", stdout: "Unexpected token at 3.\n"},
+	{path: "gaps/2_error_made_elsewhere.ts", stdout: "Unexpected token at 3.\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
@@ -71,6 +71,10 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 					t.Fatalf("clang refuses this gap's C another way now: %v", buildErr)
 				}
 				return
+			}
+			backend := onJavaScriptBackend(t, lowered)
+			if backend.exitCode != 0 || len(backend.stderr) != 0 || string(backend.stdout) != gap.stdout {
+				t.Errorf("JavaScript backend: exit %d, stdout %q, stderr %q; Node prints %q", backend.exitCode, backend.stdout, backend.stderr, gap.stdout)
 			}
 			nativeRun, sanitized := natively(t, lowered)
 			if nativeRun.exitCode != 0 || string(nativeRun.stdout) != gap.stdout {

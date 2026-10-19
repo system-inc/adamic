@@ -1,0 +1,10 @@
+=== RUN   TestFreshWrites____oracle_testdata_step21_error_subclasses_a_0975ec294701
+=== PAUSE TestFreshWrites____oracle_testdata_step21_error_subclasses_a_0975ec294701
+=== CONT  TestFreshWrites____oracle_testdata_step21_error_subclasses_a_0975ec294701
+    corpus_units_test.go:6325: ../oracle/testdata/step21_error_subclasses.a: a write lowering didn't record, in function 4
+    corpus_units_test.go:6325: ../oracle/testdata/step21_error_subclasses.a: a write lowering didn't record, in function 17
+    corpus_units_test.go:6325: 7 writes, 7 proven not to close a cycle
+--- FAIL: TestFreshWrites____oracle_testdata_step21_error_subclasses_a_0975ec294701 (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fresh	0.042s
+FAIL

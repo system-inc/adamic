@@ -1,0 +1,920 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/047cb0d_n_arrayindex.a | 1 | 1 | 1 | 2 | 1 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/accessor_spread_throw_first.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/accessor_spread_throw_first.a | 23 | 23 | 19 | 26 | 11 | 0 |",
+    "after": "| internal/oracle/testdata/accessor_spread_throw_first.a | 23 | 23 | 20 | 27 | 11 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/accessor_spread_throw_last.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/accessor_spread_throw_last.a | 27 | 27 | 21 | 30 | 11 | 0 |",
+    "after": "| internal/oracle/testdata/accessor_spread_throw_last.a | 27 | 27 | 22 | 31 | 11 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/accessor_spread_throw_middle.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/accessor_spread_throw_middle.a | 25 | 25 | 20 | 28 | 11 | 0 |",
+    "after": "| internal/oracle/testdata/accessor_spread_throw_middle.a | 25 | 25 | 21 | 29 | 11 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/array_from_length.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/array_from_length.a | 5 | 3 | 3 | 7 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/array_from_length.a | 6 | 6 | 6 | 12 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_chain_coverage_finally.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/borrow_chain_coverage_finally.a | 13 | 13 | 9 | 13 | 6 | 0 |",
+    "after": "| internal/oracle/testdata/borrow_chain_coverage_finally.a | 13 | 13 | 12 | 16 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_element_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/borrow_element_throw.a | 38 | 38 | 30 | 50 | 8 | 0 |",
+    "after": "| internal/oracle/testdata/borrow_element_throw.a | 38 | 38 | 36 | 56 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_loop.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/borrow_loop.a | 128 | 126 | 110 | 181 | 14 | 2 |",
+    "after": "| internal/oracle/testdata/borrow_loop.a | 128 | 126 | 116 | 187 | 14 | 2 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/borrow_loop_calls.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/borrow_loop_calls.a | 263 | 261 | 176 | 342 | 25 | 2 |",
+    "after": "| internal/oracle/testdata/borrow_loop_calls.a | 263 | 261 | 179 | 345 | 25 | 2 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_as_interface.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_as_interface.a | 372 | 372 | 303 | 468 | 60 | 0 |",
+    "after": "| internal/oracle/testdata/class_as_interface.a | 372 | 372 | 304 | 469 | 60 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_features_accessors.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_features_accessors.a | 67 | 67 | 47 | 104 | 21 | 0 |",
+    "after": "| internal/oracle/testdata/class_features_accessors.a | 67 | 67 | 49 | 106 | 21 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_features_static.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_features_static.a | 110 | 110 | 55 | 162 | 28 | 0 |",
+    "after": "| internal/oracle/testdata/class_features_static.a | 110 | 110 | 58 | 165 | 28 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_features_static_private.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_features_static_private.a | 42 | 42 | 53 | 94 | 12 | 0 |",
+    "after": "| internal/oracle/testdata/class_features_static_private.a | 42 | 42 | 73 | 114 | 12 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_inheritance_conditional.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_inheritance_conditional.a | 164 | 164 | 146 | 249 | 35 | 0 |",
+    "after": "| internal/oracle/testdata/class_inheritance_conditional.a | 164 | 164 | 157 | 260 | 35 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_inheritance_exceptions.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_inheritance_exceptions.a | 29 | 29 | 19 | 39 | 8 | 0 |",
+    "after": "| internal/oracle/testdata/class_inheritance_exceptions.a | 29 | 29 | 23 | 43 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/class_instance_key_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 5 | 10 | 5 | 1 |",
+    "after": "| internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 7 | 12 | 5 | 1 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/closures_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/closures_throw.a | 418 | 418 | 1566 | 1801 | 142 | 0 |",
+    "after": "| internal/oracle/testdata/closures_throw.a | 418 | 418 | 1585 | 1820 | 142 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/closures_throw_uncaught.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/closures_throw_uncaught.a | 31 | 29 | 20 | 36 | 13 | 0 |",
+    "after": "| internal/oracle/testdata/closures_throw_uncaught.a | 31 | 31 | 20 | 37 | 13 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/concurrency/accepted/throw_middle.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/concurrency/accepted/throw_middle.a | 9 | 9 | 6 | 13 | 9 | 0 |",
+    "after": "| internal/oracle/testdata/concurrency/accepted/throw_middle.a | 9 | 9 | 7 | 14 | 9 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/dead_zone.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/dead_zone.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| internal/oracle/testdata/dead_zone.a | 1 | 1 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/debugger_fail.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/debugger_fail.a | 2 | 2 | 4 | 4 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/debugger_fail.a | 2 | 2 | 5 | 5 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/devirtualize.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/devirtualize.a | 43 | 39 | 22 | 62 | 10 | 4 |",
+    "after": "| internal/oracle/testdata/devirtualize.a | 43 | 39 | 24 | 64 | 10 | 4 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/e4eec87_f2_union_narrow_call.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/e4eec87_f2_union_narrow_call.a | 1 | 0 | 3 | 3 | 1 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a | 2 | 1 | 4 | 5 | 2 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/entries_record_alias.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/entries_record_alias.a | 65 | 65 | 89 | 118 | 28 | 0 |",
+    "after": "| internal/oracle/testdata/entries_record_alias.a | 65 | 65 | 90 | 119 | 28 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/exceptions.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/exceptions.a | 133 | 133 | 163 | 229 | 20 | 0 |",
+    "after": "| internal/oracle/testdata/exceptions.a | 133 | 133 | 186 | 252 | 20 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/exceptions_empty.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/exceptions_empty.a | 2 | 1 | 6 | 4 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/exceptions_empty.a | 2 | 2 | 8 | 8 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/exceptions_uncaught.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/exceptions_uncaught.a | 3 | 1 | 3 | 5 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/exceptions_uncaught.a | 3 | 3 | 3 | 6 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/fallthrough_exceptions.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/fallthrough_exceptions.a | 26 | 26 | 10 | 29 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/fallthrough_exceptions.a | 26 | 26 | 12 | 31 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/fill_length.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/fill_length.a | 2 | 2 | 0 | 2 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/fill_length.a | 3 | 3 | 3 | 5 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/finally_leaves.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/finally_leaves.a | 157 | 157 | 59 | 174 | 10 | 0 |",
+    "after": "| internal/oracle/testdata/finally_leaves.a | 157 | 157 | 64 | 179 | 10 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/fresh_writes.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/fresh_writes.a | 330 | 330 | 369 | 485 | 132 | 0 |",
+    "after": "| internal/oracle/testdata/fresh_writes.a | 330 | 330 | 370 | 486 | 132 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/generic_method_return.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/generic_method_return.a | 23 | 15 | 28 | 36 | 5 | 6 |",
+    "after": "| internal/oracle/testdata/generic_method_return.a | 23 | 17 | 30 | 39 | 5 | 6 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/getters_census_throwing_object.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/getters_census_throwing_object.a | 3 | 3 | 5 | 8 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/getters_census_throwing_object.a | 3 | 3 | 6 | 9 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/inherited_fields_guard.a",
+    "owner": "inherit-guards",
+    "before": null,
+    "after": "| internal/oracle/testdata/inherited_fields_guard.a | 2 | 2 | 1 | 4 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_flat_map.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_array_flat_map.a | 50 | 50 | 60 | 109 | 17 | 0 |",
+    "after": "| internal/oracle/testdata/library_array_flat_map.a | 50 | 50 | 61 | 110 | 17 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_spliced.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_array_spliced.a | 72 | 72 | 40 | 114 | 12 | 0 |",
+    "after": "| internal/oracle/testdata/library_array_spliced.a | 72 | 72 | 41 | 115 | 12 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_array_with.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_array_with.a | 68 | 68 | 43 | 109 | 10 | 0 |",
+    "after": "| internal/oracle/testdata/library_array_with.a | 68 | 68 | 64 | 130 | 10 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_function_expressions.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_function_expressions.a | 56 | 56 | 49 | 96 | 19 | 0 |",
+    "after": "| internal/oracle/testdata/library_function_expressions.a | 56 | 56 | 50 | 97 | 19 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_map_set_group_by.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_map_set_group_by.a | 115 | 115 | 117 | 201 | 36 | 0 |",
+    "after": "| internal/oracle/testdata/library_map_set_group_by.a | 115 | 115 | 118 | 202 | 36 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_method_values_dead_zone.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_method_values_dead_zone.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| internal/oracle/testdata/library_method_values_dead_zone.a | 1 | 1 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_object_freeze.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_object_freeze.a | 16 | 16 | 10 | 27 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/library_object_freeze.a | 16 | 16 | 10 | 28 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_object_freeze_alias.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_object_freeze_alias.a | 4 | 1 | 7 | 8 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/library_object_freeze_alias.a | 5 | 5 | 9 | 14 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_object_freeze_assign.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_object_freeze_assign.a | 4 | 2 | 6 | 8 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/library_object_freeze_assign.a | 10 | 10 | 10 | 18 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/library_object_freeze_write.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/library_object_freeze_write.a | 2 | 1 | 5 | 6 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/library_object_freeze_write.a | 3 | 3 | 7 | 11 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/long_literals.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/long_literals.a | 6117 | 6117 | 85 | 14610 | 8 | 0 |",
+    "after": "| internal/oracle/testdata/long_literals.a | 6117 | 6117 | 86 | 14611 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/lowering_chain_tdz_catch.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/lowering_chain_tdz_catch.a | 4 | 4 | 6 | 8 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_arrays.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_arrays.a | 995 | 995 | 932 | 1355 | 95 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_arrays.a | 995 | 995 | 933 | 1356 | 95 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_closures.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_closures.a | 816 | 816 | 1044 | 1277 | 87 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_closures.a | 816 | 816 | 1045 | 1278 | 87 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_fnexpr.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_fnexpr.a | 44 | 44 | 64 | 100 | 15 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_fnexpr.a | 44 | 44 | 65 | 101 | 15 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_keep.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_keep.a | 516 | 516 | 625 | 931 | 35 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_keep.a | 516 | 516 | 626 | 932 | 35 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_keys.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_keys.a | 391 | 391 | 363 | 674 | 25 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_keys.a | 391 | 391 | 364 | 675 | 25 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_closures.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_named_closures.a | 117 | 117 | 179 | 219 | 29 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_named_closures.a | 117 | 117 | 180 | 220 | 29 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_more.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_named_more.a | 395 | 395 | 569 | 819 | 36 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_named_more.a | 395 | 395 | 570 | 820 | 36 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_numbers.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_named_numbers.a | 117 | 117 | 73 | 177 | 12 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_named_numbers.a | 117 | 117 | 74 | 178 | 12 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_named_objects.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_named_objects.a | 165 | 165 | 207 | 278 | 31 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_named_objects.a | 165 | 165 | 208 | 279 | 31 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_numbers.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_numbers.a | 373 | 373 | 155 | 478 | 14 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_numbers.a | 373 | 373 | 156 | 479 | 14 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/map_foreach_objects.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/map_foreach_objects.a | 732 | 732 | 834 | 1076 | 63 | 0 |",
+    "after": "| internal/oracle/testdata/map_foreach_objects.a | 732 | 732 | 835 | 1077 | 63 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/method_coverage_empty_alias_tdz.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/method_coverage_empty_alias_tdz.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| internal/oracle/testdata/method_coverage_empty_alias_tdz.a | 1 | 1 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/method_coverage_format_failure.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/method_coverage_format_failure.a | 1 | 0 | 0 | 1 | 1 | 0 |",
+    "after": "| internal/oracle/testdata/method_coverage_format_failure.a | 2 | 2 | 4 | 6 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/method_coverage_string_repeat.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/method_coverage_string_repeat.a | 2 | 2 | 3 | 6 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/method_coverage_string_repeat.a | 2 | 2 | 5 | 8 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/module_namespace_reads/direct_early.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/module_namespace_reads/direct_early.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| internal/oracle/testdata/module_namespace_reads/direct_early.a | 1 | 1 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/module_namespace_reads/early.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/module_namespace_reads/early.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| internal/oracle/testdata/module_namespace_reads/early.a | 1 | 1 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/move_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/move_throw.a | 42 | 42 | 22 | 50 | 9 | 0 |",
+    "after": "| internal/oracle/testdata/move_throw.a | 42 | 42 | 24 | 52 | 9 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/named_function_values.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/named_function_values.a | 116 | 116 | 127 | 222 | 25 | 0 |",
+    "after": "| internal/oracle/testdata/named_function_values.a | 116 | 116 | 128 | 223 | 25 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_methods.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/narrowed_methods.a | 3 | 3 | 3 | 6 | 3 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_numbers.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/narrowed_numbers.a | 2 | 2 | 0 | 2 | 2 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_reads.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/narrowed_reads.a | 5 | 5 | 3 | 7 | 4 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_union_valid.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/narrowed_union_valid.a | 9 | 9 | 13 | 23 | 3 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/narrowed_writes.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/narrowed_writes.a | 1 | 1 | 2 | 4 | 1 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/nested_destructured_tdz.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/nested_destructured_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/nested_destructured_tdz.a | 3 | 3 | 3 | 3 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/nested_tdz.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/nested_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/nested_tdz.a | 3 | 3 | 3 | 3 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/nested_tdz_write.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/nested_tdz_write.a | 2 | 0 | 1 | 0 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/nested_tdz_write.a | 3 | 3 | 3 | 3 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_buffer_digest_twice.a | 4 | 2 | 4 | 6 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/node_buffer_digest_twice.a | 5 | 5 | 7 | 10 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_buffer_finalized.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_buffer_finalized.a | 4 | 2 | 4 | 6 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/node_buffer_finalized.a | 5 | 5 | 7 | 10 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_fs_file_close.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 13 | 30 | 7 | 0 |",
+    "after": "| internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 16 | 33 | 7 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_fs_file_mkdir.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 24 | 81 | 10 | 0 |",
+    "after": "| internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 29 | 86 | 10 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_fs_file_write_buffer.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 11 | 45 | 12 | 0 |",
+    "after": "| internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 15 | 49 | 12 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_fs_file_write_file.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 11 | 36 | 9 | 0 |",
+    "after": "| internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 13 | 38 | 9 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_fs_rm_options.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/node_fs_rm_options.a | 36 | 36 | 5 | 37 | 6 | 0 |",
+    "after": "| internal/oracle/testdata/node_fs_rm_options.a | 36 | 36 | 7 | 39 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/normalize_form.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/normalize_form.a | 3 | 2 | 0 | 3 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/normalize_form.a | 4 | 4 | 3 | 7 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/number_formats.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/number_formats.a | 225 | 225 | 55 | 262 | 18 | 0 |",
+    "after": "| internal/oracle/testdata/number_formats.a | 225 | 225 | 97 | 304 | 18 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/param_assigned_in_try.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/param_assigned_in_try.a | 46 | 46 | 29 | 64 | 12 | 0 |",
+    "after": "| internal/oracle/testdata/param_assigned_in_try.a | 46 | 46 | 31 | 66 | 12 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/precision_range.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/precision_range.a | 4 | 3 | 1 | 4 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/precision_range.a | 5 | 5 | 4 | 9 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/radix_range.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/radix_range.a | 3 | 3 | 0 | 3 | 1 | 0 |",
+    "after": "| internal/oracle/testdata/radix_range.a | 4 | 4 | 3 | 6 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regexp.a | 437 | 437 | 382 | 417 | 58 | 0 |",
+    "after": "| internal/oracle/testdata/regexp.a | 437 | 437 | 381 | 416 | 58 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_matchall_nonglobal.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regexp_matchall_nonglobal.a | 1 | 0 | 2 | 0 | 1 | 0 |",
+    "after": "| internal/oracle/testdata/regexp_matchall_nonglobal.a | 2 | 2 | 5 | 4 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "owner": "exceptions-21-main on main regexp fixture",
+    "before": "| internal/oracle/testdata/regexp_native_input_cache.a | 148 | 148 | 90 | 164 | 15 | 0 |",
+    "after": "| internal/oracle/testdata/regexp_native_input_cache.a | 148 | 148 | 86 | 160 | 15 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_null_narrowed.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regexp_null_narrowed.a | 4 | 4 | 8 | 5 | 3 | 0 |",
+    "after": null
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_replace.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regexp_replace.a | 625 | 625 | 206 | 336 | 113 | 0 |",
+    "after": "| internal/oracle/testdata/regexp_replace.a | 625 | 625 | 205 | 335 | 113 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_replace/throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 11 | 14 | 11 | 0 |",
+    "after": "| internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 12 | 15 | 11 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regexp_replaceall_nonglobal.a | 1 | 0 | 2 | 0 | 1 | 0 |",
+    "after": "| internal/oracle/testdata/regexp_replaceall_nonglobal.a | 2 | 2 | 5 | 4 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/regions_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/regions_throw.a | 124 | 95 | 9 | 99 | 31 | 29 |",
+    "after": "| internal/oracle/testdata/regions_throw.a | 124 | 95 | 15 | 105 | 31 | 29 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/reuse_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/reuse_throw.a | 26 | 26 | 24 | 41 | 8 | 0 |",
+    "after": "| internal/oracle/testdata/reuse_throw.a | 26 | 26 | 27 | 44 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/review/agree/fxspptb_57f2d04_with_frozen.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/review/agree/fxspptb_57f2d04_with_frozen.a | 6 | 6 | 2 | 10 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/review/agree/fxspptb_903f25b_try_assign.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/review/agree/fxspptb_903f25b_try_assign.a | 8 | 8 | 7 | 14 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/review/agree/fxspptb_9984394_lib_dispatch.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/review/agree/fxspptb_9984394_lib_dispatch.a | 4 | 4 | 8 | 11 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/route_targets_try_loop.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/route_targets_try_loop.a | 68 | 66 | 41 | 85 | 9 | 2 |",
+    "after": "| internal/oracle/testdata/route_targets_try_loop.a | 68 | 66 | 44 | 88 | 9 | 2 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/search_from_sweep.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/search_from_sweep.a | 133 | 133 | 33 | 154 | 10 | 0 |",
+    "after": "| internal/oracle/testdata/search_from_sweep.a | 133 | 133 | 34 | 155 | 10 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_arrays.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_arrays.a | 516 | 516 | 524 | 713 | 58 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_arrays.a | 516 | 516 | 525 | 714 | 58 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_closures.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_closures.a | 411 | 411 | 634 | 705 | 39 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_closures.a | 411 | 411 | 635 | 706 | 39 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_keep.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_keep.a | 290 | 290 | 385 | 520 | 18 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_keep.a | 290 | 290 | 386 | 521 | 18 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_keys.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_keys.a | 285 | 285 | 242 | 477 | 16 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_keys.a | 285 | 285 | 243 | 478 | 16 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_named_closures.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_named_closures.a | 95 | 95 | 155 | 187 | 28 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_named_closures.a | 95 | 95 | 156 | 188 | 28 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_named_more.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_named_more.a | 179 | 179 | 297 | 378 | 26 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_named_more.a | 179 | 179 | 298 | 379 | 26 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_named_objects.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_named_objects.a | 87 | 87 | 110 | 149 | 22 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_named_objects.a | 87 | 87 | 111 | 150 | 22 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_numbers.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_numbers.a | 214 | 214 | 140 | 317 | 11 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_numbers.a | 214 | 214 | 141 | 318 | 11 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/set_foreach_objects.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/set_foreach_objects.a | 368 | 368 | 515 | 586 | 30 | 0 |",
+    "after": "| internal/oracle/testdata/set_foreach_objects.a | 368 | 368 | 516 | 587 | 30 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/statements_small_stopped/structural_error.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/statements_small_stopped/structural_error.a | 2 | 2 | 5 | 5 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/statements_small_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 9 | 13 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 16 | 20 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_builtin_narrow_terminal.ts",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_builtin_narrow_terminal.ts | 6 | 6 | 10 | 13 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_catch_callback.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_catch_callback.a | 17 | 17 | 12 | 24 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_dynamic.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_dynamic.a | 65 | 65 | 49 | 100 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_dynamic_uncaught.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_dynamic_uncaught.a | 0 | 0 | 1 | 2 | 0 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_error_empty_message.a",
+    "owner": "uncaught Error rendering repair",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_error_empty_message.a | 1 | 1 | 4 | 4 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_error_empty_name.a",
+    "owner": "uncaught Error rendering repair",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_error_empty_name.a | 1 | 1 | 6 | 6 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_error_empty_name_and_message.a",
+    "owner": "uncaught Error rendering repair",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_error_empty_name_and_message.a | 1 | 1 | 6 | 6 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_error_missing_message.a",
+    "owner": "uncaught Error rendering repair",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_error_missing_message.a | 1 | 1 | 4 | 4 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_error_named_message.a",
+    "owner": "uncaught Error rendering repair",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_error_named_message.a | 1 | 1 | 6 | 6 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_error_subclasses.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_error_subclasses.a | 16 | 16 | 36 | 44 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_finally_callback.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_finally_callback.a | 19 | 19 | 18 | 34 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_finally_completion.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_finally_completion.a | 17 | 17 | 6 | 19 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_library_failures.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_library_failures.a | 35 | 35 | 54 | 80 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_library_host.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_library_host.a | 25 | 25 | 31 | 48 | 7 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_library_types.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_library_types.a | 22 | 22 | 35 | 50 | 9 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_liveness.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_liveness.a | 12 | 12 | 9 | 17 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_narrow_flags_use.ts",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_narrow_flags_use.ts | 13 | 13 | 9 | 21 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_narrow_length_use.ts",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_narrow_length_use.ts | 6 | 6 | 5 | 12 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_narrow_member_use.ts",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_narrow_member_use.ts | 6 | 4 | 11 | 12 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_narrow_parameter_use.ts",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_narrow_parameter_use.ts | 6 | 4 | 4 | 6 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_narrow_wider_parameter.ts",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_narrow_wider_parameter.ts | 6 | 6 | 10 | 13 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_object_uncaught.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_object_uncaught.a | 3 | 3 | 2 | 4 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_region_payload.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_region_payload.a | 3 | 3 | 3 | 5 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_rethrow.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_rethrow.a | 13 | 13 | 22 | 32 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/step21_saved_error.a",
+    "owner": "exceptions-21-main",
+    "before": null,
+    "after": "| internal/oracle/testdata/step21_saved_error.a | 20 | 20 | 37 | 47 | 7 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/string_too_long.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/string_too_long.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| internal/oracle/testdata/string_too_long.a | 1 | 1 | 3 | 3 | 1 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/string_views_throw.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/string_views_throw.a | 55 | 55 | 62 | 76 | 14 | 0 |",
+    "after": "| internal/oracle/testdata/string_views_throw.a | 55 | 55 | 65 | 79 | 14 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/switch_case_declarations/dead_zone.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone.a | 8 | 5 | 7 | 8 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone.a | 9 | 9 | 9 | 13 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 3 | 3 | 3 | 5 | 2 | 0 |",
+    "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 4 | 4 | 5 | 7 | 2 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 3 | 0 | 3 | 1 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 4 | 4 | 5 | 6 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/switch_case_declarations/dead_zone_write.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 5 | 1 | 3 | 2 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 6 | 6 | 5 | 7 | 5 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/taste_comma.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/taste_comma.a | 51 | 51 | 5 | 54 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/taste_comma.a | 51 | 51 | 6 | 55 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/taste_void.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/taste_void.a | 39 | 39 | 8 | 44 | 4 | 0 |",
+    "after": "| internal/oracle/testdata/taste_void.a | 39 | 39 | 9 | 45 | 4 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/typed_arrays_order.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/typed_arrays_order.a | 34 | 34 | 12 | 50 | 8 | 0 |",
+    "after": "| internal/oracle/testdata/typed_arrays_order.a | 34 | 34 | 12 | 51 | 8 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/typed_arrays_stats.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/typed_arrays_stats.a | 54 | 54 | 14 | 61 | 10 | 0 |",
+    "after": "| internal/oracle/testdata/typed_arrays_stats.a | 54 | 54 | 14 | 66 | 10 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/typed_arrays_views.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/typed_arrays_views.a | 83 | 83 | 40 | 111 | 13 | 0 |",
+    "after": "| internal/oracle/testdata/typed_arrays_views.a | 83 | 83 | 40 | 115 | 13 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/typed_arrays_workers_stats.a | 513 | 513 | 82 | 584 | 23 | 0 |",
+    "after": "| internal/oracle/testdata/typed_arrays_workers_stats.a | 513 | 513 | 82 | 600 | 23 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/unknown_narrowing.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 42 | 63 | 3 | 0 |",
+    "after": "| internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 43 | 64 | 3 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/user_iterators.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/user_iterators.a | 663 | 663 | 455 | 904 | 64 | 0 |",
+    "after": "| internal/oracle/testdata/user_iterators.a | 663 | 663 | 466 | 915 | 64 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/user_iterators_rest_tdz.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/user_iterators_rest_tdz.a | 5 | 0 | 5 | 3 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/user_iterators_rest_tdz.a | 6 | 6 | 7 | 10 | 6 | 0 |"
+  },
+  {
+    "fixture": "internal/oracle/testdata/walk.a",
+    "owner": "exceptions-21-main",
+    "before": "| internal/oracle/testdata/walk.a | 222 | 222 | 117 | 288 | 36 | 0 |",
+    "after": "| internal/oracle/testdata/walk.a | 222 | 222 | 131 | 302 | 36 | 0 |"
+  },
+  {
+    "fixture": "stage3/drivers/scanner/probes/cyclic-premature-value/main.a",
+    "owner": "exceptions-21-main",
+    "before": "| stage3/drivers/scanner/probes/cyclic-premature-value/main.a | 0 | 0 | 0 | 0 | 0 | 0 |",
+    "after": "| stage3/drivers/scanner/probes/cyclic-premature-value/main.a | 1 | 1 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "fixture": "stage3/fixtures/taste/24_proportional_conditions.a",
+    "owner": "exceptions-21-main",
+    "before": "| stage3/fixtures/taste/24_proportional_conditions.a | 43 | 43 | 89 | 131 | 14 | 0 |",
+    "after": "| stage3/fixtures/taste/24_proportional_conditions.a | 43 | 43 | 92 | 134 | 14 | 0 |"
+  }
+]

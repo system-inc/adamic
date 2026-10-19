@@ -1,0 +1,37 @@
+--- main/internal/oracle/testdata/module_namespace_reads/early.a
++++ slice/internal/oracle/testdata/module_namespace_reads/early.a
+@@ -15,6 +15,9 @@
+ static double adamic_function_0_helper(void) {
+ 	ADAMIC_CHECK_STACK();
+ 	double adamic_temporary_1 = adamic_function_1_read();
++	if (adamic_exception_pending) {
++		return 0.0;
++	}
+ 	double adamic_temporary_2 = adamic_temporary_1;
+ 	return adamic_temporary_2;
+ 	adamic_unreachable();
+@@ -23,8 +26,12 @@
+ static double adamic_function_1_read(void) {
+ 	ADAMIC_CHECK_STACK();
+ 	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'value' before initialization";
+-		adamic_panic(message, sizeof message - 1);
++	static adamic_string error_message = ADAMIC_STRING("Cannot access 'value' before initialization");
++	adamic_thrown = ((adamic_heap *)(adamic_error_new_kind(&error_message, "ReferenceError")));
++	adamic_exception_pending = true;
++	if (adamic_exception_pending) {
++		return 0.0;
++	}
+ 	}
+ 	double adamic_temporary_3 = adamic_global_0_value;
+ 	double adamic_temporary_4 = adamic_temporary_3;
+@@ -42,6 +49,9 @@
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	double adamic_temporary_6 = adamic_function_0_helper();
++	if (adamic_exception_pending) {
++		adamic_uncaught();
++	}
+ 	adamic_string * adamic_temporary_7 = adamic_string_from_number(adamic_temporary_6);
+ 	adamic_string * adamic_temporary_8 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_7});
+ 	adamic_write_line(adamic_stdout, adamic_temporary_8);

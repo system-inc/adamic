@@ -1,0 +1,22 @@
+{
+  "slice_runtime_files": [
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/class_inheritance.c",
+    "internal/native/runtime/exceptions.c",
+    "internal/native/runtime/features.c",
+    "internal/native/runtime/json_stringify.c",
+    "internal/native/runtime/node_crypto.c",
+    "internal/native/runtime/node_fs_file.c",
+    "internal/native/runtime/node_host.c",
+    "internal/native/runtime/object.c",
+    "internal/native/runtime/parallel.c",
+    "internal/native/runtime/regexp_replace.c",
+    "internal/native/runtime/sort.c",
+    "internal/native/runtime/sort_undefined.c",
+    "internal/native/runtime/union.c"
+  ],
+  "changed_from_source": [
+    "internal/native/runtime/exceptions.c"
+  ],
+  "main_regex_runtime_files_preserved": true
+}

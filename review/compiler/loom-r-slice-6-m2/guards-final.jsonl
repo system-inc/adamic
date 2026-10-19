@@ -1,0 +1,79 @@
+{"Time":"2026-10-19T00:52:21.026149976Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-19T00:52:21.029959415Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-19T00:52:21.03009008Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== RUN   TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.030126193Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== PAUSE TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.030129789Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-19T00:52:21.030133504Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy"}
+{"Time":"2026-10-19T00:52:21.030135958Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"=== RUN   TestEveryTestIsParallelOrSaysWhy\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.030138432Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"=== PAUSE TestEveryTestIsParallelOrSaysWhy\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.030140745Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy"}
+{"Time":"2026-10-19T00:52:21.030144761Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName"}
+{"Time":"2026-10-19T00:52:21.030147115Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"=== CONT  TestEveryTestHasOneDescriptiveName\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.030154636Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy"}
+{"Time":"2026-10-19T00:52:21.03015765Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"=== CONT  TestEveryTestIsParallelOrSaysWhy\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.393162618Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:46: checked 18748 top-level tests; 7 fail the parallel rule\n"}
+{"Time":"2026-10-19T00:52:21.393207275Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/native/normalize_benchmark_test.go\tTestNormalizeLongMeasurements\n"}
+{"Time":"2026-10-19T00:52:21.393214125Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/cache_test.go\tTestGateCacheUncached\n"}
+{"Time":"2026-10-19T00:52:21.393218371Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/enums_test.go\tTestEnumSemanticMutants\n"}
+{"Time":"2026-10-19T00:52:21.393221866Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/library_map_set_test.go\tTestLibraryMapSetMutants\n"}
+{"Time":"2026-10-19T00:52:21.39322443Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/namespaces_test.go\tTestNamespaceSemanticMutants\n"}
+{"Time":"2026-10-19T00:52:21.393231931Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/parameter_properties_test.go\tTestParameterPropertyMutants\n"}
+{"Time":"2026-10-19T00:52:21.393235126Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/wasi_test.go\tTestWASIOracleCatchesMutants\n"}
+{"Time":"2026-10-19T00:52:21.393237019Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:77: stale serial baseline entry (now passes or no longer exists): internal/oracle/wasi_test.go\tTestWASIRunnerCatchesMutants\n"}
+{"Time":"2026-10-19T00:52:21.39324449Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"    parallel_test.go:83: serial baseline contains 15 entries\n"}
+{"Time":"2026-10-19T00:52:21.393268015Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Output":"--- PASS: TestEveryTestIsParallelOrSaysWhy (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.39924958Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestIsParallelOrSaysWhy","Elapsed":0.36}
+{"Time":"2026-10-19T00:52:21.399297352Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"    names_test.go:77: census of 18748 top-level tests; 17 pinned offenders\n"}
+{"Time":"2026-10-19T00:52:21.39930292Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Output":"--- PASS: TestEveryTestHasOneDescriptiveName (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.399308919Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestEveryTestHasOneDescriptiveName","Elapsed":0.37}
+{"Time":"2026-10-19T00:52:21.399311533Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:21.400463651Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gate\t0.373s\n"}
+{"Time":"2026-10-19T00:52:21.400487457Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.374}
+{"Time":"2026-10-19T00:52:22.863755857Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-19T00:52:22.867940846Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-19T00:52:22.86803078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== RUN   TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:22.868039683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== PAUSE TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:22.868041476Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-19T00:52:22.868047084Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-19T00:52:22.868048757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== CONT  TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:22.868063789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"--- PASS: TestEveryMapAProgramHoldsIsSorted (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:22.868066423Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Elapsed":0}
+{"Time":"2026-10-19T00:52:22.86807085Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:22.868543082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t0.005s\n"}
+{"Time":"2026-10-19T00:52:22.868571434Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.005}
+{"Time":"2026-10-19T00:52:30.255049052Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-19T00:52:30.258885582Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms"}
+{"Time":"2026-10-19T00:52:30.258928456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms","Output":"=== RUN   TestNativeAgreementRowsNameRegisteredPrograms\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:30.258939132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms","Output":"=== PAUSE TestNativeAgreementRowsNameRegisteredPrograms\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:30.258941235Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms"}
+{"Time":"2026-10-19T00:52:30.25894458Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms"}
+{"Time":"2026-10-19T00:52:30.258946993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms","Output":"=== CONT  TestNativeAgreementRowsNameRegisteredPrograms\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:30.272316672Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms","Output":"--- PASS: TestNativeAgreementRowsNameRegisteredPrograms (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:30.272338695Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNativeAgreementRowsNameRegisteredPrograms","Elapsed":0.01}
+{"Time":"2026-10-19T00:52:30.272358434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:30.272625952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.018s\n"}
+{"Time":"2026-10-19T00:52:30.272638391Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.018}
+{"Time":"2026-10-19T00:52:31.656951308Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-19T00:52:31.662206553Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed"}
+{"Time":"2026-10-19T00:52:31.662248616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed","Output":"=== RUN   TestRuntimeSetsAreEachUsed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:31.662259001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed","Output":"=== PAUSE TestRuntimeSetsAreEachUsed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:31.662263758Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed"}
+{"Time":"2026-10-19T00:52:31.662267864Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed"}
+{"Time":"2026-10-19T00:52:31.662269907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed","Output":"=== CONT  TestRuntimeSetsAreEachUsed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:32.571514219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed","Output":"--- PASS: TestRuntimeSetsAreEachUsed (0.91s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:32.571552616Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRuntimeSetsAreEachUsed","Elapsed":0.91}
+{"Time":"2026-10-19T00:52:32.571558875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:32.574363571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.917s\n"}
+{"Time":"2026-10-19T00:52:32.574384873Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.917}
+{"Time":"2026-10-19T00:52:41.437331938Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-19T00:52:41.442112523Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-19T00:52:41.442146053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== RUN   TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:41.44215734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== PAUSE TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:41.442162027Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-19T00:52:41.44216422Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-19T00:52:41.442165752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== CONT  TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:41.592979393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"--- PASS: TestRuntimeStaticsAreListed (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:41.593123827Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Elapsed":0.15}
+{"Time":"2026-10-19T00:52:41.593131419Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:52:41.594252201Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.157s\n"}
+{"Time":"2026-10-19T00:52:41.594270428Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.157}

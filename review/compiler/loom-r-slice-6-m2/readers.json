@@ -1,0 +1,82 @@
+[
+  {
+    "part": "Native",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "100",
+      "go",
+      "test",
+      "-p",
+      "1",
+      "./internal/ir",
+      "-run",
+      "^(TestCallTargetExportInputsNative|TestCallTargetReadersNative)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "part": "Lower",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "100",
+      "go",
+      "test",
+      "-p",
+      "1",
+      "./internal/ir",
+      "-run",
+      "^(TestCallTargetExportInputsLower|TestCallTargetReadersLower)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "part": "Fresh",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "100",
+      "go",
+      "test",
+      "-p",
+      "1",
+      "./internal/ir",
+      "-run",
+      "^(TestCallTargetExportInputsFresh|TestCallTargetReadersFresh)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  },
+  {
+    "part": "Flow",
+    "exit": 0,
+    "command": [
+      "timeout",
+      "100",
+      "go",
+      "test",
+      "-p",
+      "1",
+      "./internal/ir",
+      "-run",
+      "^(TestCallTargetExportInputsFlow|TestCallTargetReadersFlow)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ]
+  }
+]

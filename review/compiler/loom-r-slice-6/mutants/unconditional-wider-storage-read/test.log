@@ -1,0 +1,8 @@
+=== RUN   TestStep21FreshNumberObservation
+=== PAUSE TestStep21FreshNumberObservation
+=== CONT  TestStep21FreshNumberObservation
+    narrowing_nullish_test.go:28: Lower refused acceptance row: /tmp/adamic-gate/TestStep21FreshNumberObservation109160934/001/main.ts:1:113: stage 0 can't lower a number | undefined argument to isNaN yet
+--- FAIL: TestStep21FreshNumberObservation (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.059s
+FAIL

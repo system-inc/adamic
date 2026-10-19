@@ -1,0 +1,392 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2_union_narrow_call.a",
+    "Elapsed": 3.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21NarrowedFlagsUseAgrees",
+    "Elapsed": 3.67
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21NarrowedParameterUseStops",
+    "Elapsed": 3.69
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21PrimitiveWritingCallRefusal",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21TerminalOracleDependencyHash",
+    "Elapsed": 0.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21NarrowedMemberUseStops",
+    "Elapsed": 3.83
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21TerminalOracleSourceHash",
+    "Elapsed": 0.15
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ReadinessIsCatchable",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21TypeScriptExtension",
+    "Elapsed": 0.6
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21NonWritingControlAgreement",
+    "Elapsed": 0.68
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ThrowPathLiveness",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21NullPropertyUseStops",
+    "Elapsed": 0.76
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNarrowedUnionObjectTagRefusal",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21WritingCallTypeScriptAgreement",
+    "Elapsed": 0.65
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21LiteralPropertyUseStops",
+    "Elapsed": 0.82
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21StoredPrimitiveLengthUseAgrees",
+    "Elapsed": 0.68
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNarrowedUnionMemberCheck/step21_refused/e4eec87_f2b_union_narrow_number.a",
+    "Elapsed": 0.69
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestNarrowedUnionMemberCheck",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/null",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21WiderParameterUseAgrees",
+    "Elapsed": 0.68
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/unicode",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/line-breaks",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/subclass",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/map",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/array",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/string",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/function",
+    "Elapsed": 0.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/boolean",
+    "Elapsed": 0.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/047cb0d_n_arrayindex.a",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/review/agree/step21_refused/fxspptb_047cb0d_n_try.a",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/review/agree/step21_refused/fxspptb_047cb0d_n_arrayindex.a",
+    "Elapsed": 0.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/review/agree/step21_refused/fxspptb_9984394_defined_in_try.a",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/review/agree/step21_refused/fxspptb_e4eec87_f2_union_narrow_call.a",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/review/agree/step21_refused/fxspptb_e4eec87_f2b_union_narrow_number.a",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/narrowed_numbers.a",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/narrowed_methods.a",
+    "Elapsed": 0.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/narrowed_reads.a",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/narrowed_union_valid.a",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/narrowed_writes.a",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/regexp_null_narrowed.a",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/e4eec87_f2b_union_narrow_number.a",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals/step21_refused/e4eec87_f2_union_narrow_call.a",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ExistingWritingCallRefusals",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent');",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent');",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`);",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ErrorBoundaries",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UnknownAssertions/{_readonly_message:_string_}",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UnknownAssertions/()_=>_string",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UnknownAssertions",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds/number",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21UncaughtKinds",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21FixtureMutants/liveness",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21FixtureMutants/finally_completion",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21FixtureMutants/catch_callback",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21FixtureMutants/rethrow",
+    "Elapsed": 0.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21Uncaught/step21_dynamic_uncaught",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21Uncaught/exceptions_uncaught",
+    "Elapsed": 0.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21FixtureMutants/finally_callback",
+    "Elapsed": 0.55
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21FixtureMutants",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21Uncaught/closures_throw_uncaught",
+    "Elapsed": 0.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ProposalOutcomes/unknown_read",
+    "Elapsed": 0.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21ProposalOutcomes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21Uncaught/step21_object_uncaught",
+    "Elapsed": 0.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Test": "TestStep21Uncaught",
+    "Elapsed": 0
+  }
+]

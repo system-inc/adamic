@@ -1,0 +1,60 @@
+[
+  {
+    "path": "internal/oracle/testdata/step21_narrow_member_use.ts",
+    "sha256": "ef5188d026c069dc8a5f781ae4c18f2a5a589a08db3326f82c56ce0f401db0e2",
+    "negative_witness_class": "step 21: unsound narrowing across a writing call",
+    "ruling": "#bqj5drt's step 21, refined by @system_adamic Oct 9 18:5x",
+    "violated_declaration": "internal/oracle/testdata/step21_narrow_member_use.ts:2",
+    "narrowing": "internal/oracle/testdata/step21_narrow_member_use.ts:5",
+    "consuming_use": "internal/oracle/testdata/step21_narrow_member_use.ts:7",
+    "node": {
+      "exit": 0,
+      "stdout": "undefined\ncontinued\n",
+      "stderr": ""
+    },
+    "sanitized_native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: stale narrowing use failed: value.detail expected number\n"
+    },
+    "release_native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: stale narrowing use failed: value.detail expected number\n"
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: stale narrowing use failed: value.detail expected number\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/step21_narrow_parameter_use.ts",
+    "sha256": "d9f55284b0b361af5566b34eb5064e2c5dcf4b9a41aa8f93607e806673650231",
+    "negative_witness_class": "step 21: unsound narrowing across a writing call",
+    "ruling": "#bqj5drt's step 21, refined by @system_adamic Oct 9 18:5x",
+    "violated_declaration": "internal/oracle/testdata/step21_narrow_parameter_use.ts:3",
+    "narrowing": "internal/oracle/testdata/step21_narrow_parameter_use.ts:4",
+    "consuming_use": "internal/oracle/testdata/step21_narrow_parameter_use.ts:6",
+    "node": {
+      "exit": 0,
+      "stdout": "Error\ncontinued\n",
+      "stderr": ""
+    },
+    "sanitized_native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    },
+    "release_native": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    },
+    "javascript": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    }
+  }
+]

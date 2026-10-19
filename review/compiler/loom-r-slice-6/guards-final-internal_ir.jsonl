@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T22:50:32.876722512Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-18T22:50:32.883505199Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-18T22:50:32.883569464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== RUN   TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:32.883592649Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== PAUSE TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:32.883594852Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-18T22:50:32.883596775Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-18T22:50:32.883598347Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== CONT  TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:32.883603735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"--- PASS: TestEveryMapAProgramHoldsIsSorted (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:32.883606339Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Elapsed":0}
+{"Time":"2026-10-18T22:50:32.883615683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:50:32.886712599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t0.010s\n"}
+{"Time":"2026-10-18T22:50:32.886739329Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.01}

@@ -1,0 +1,11 @@
+=== RUN   TestStep21NarrowedFlagsUseAgrees
+=== PAUSE TestStep21NarrowedFlagsUseAgrees
+=== CONT  TestStep21NarrowedFlagsUseAgrees
+    step21_narrowing_uses_test.go:85: sanitized native stored flags: exit codes differ
+--- FAIL: TestStep21NarrowedFlagsUseAgrees (4.00s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.012s
+FAIL

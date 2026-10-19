@@ -169,13 +169,13 @@ static adamic_json_result prepare(json_writer *w, adamic_value value, const adam
     return result;
 }
 static void write_field(json_writer *w, const adamic_object *object, const adamic_json_field *field, size_t slots, size_t depth, size_t *written) {
-    if (adamic_thrown != NULL) { return; }
+    if (adamic_exception_pending) { return; }
     if (field->schema == NULL || field->name == NULL || field->slot >= slots) { refuse("JSON object lacks complete field descriptors"); }
     bool owned;
     adamic_json_result result = prepare(w, object->slots[field->slot], field->schema, field->name, &owned);
-    if (adamic_thrown != NULL) { if (owned && reference_result(result.schema)) { adamic_release(result.value.reference); } return; }
+    if (adamic_exception_pending) { if (owned && reference_result(result.schema)) { adamic_release(result.value.reference); } return; }
     json_scalar s = scalar(result.value, result.schema, w->runtime);
-    if (adamic_thrown == NULL && s.kind != adamic_json_undefined && s.kind != adamic_json_function) {
+    if (!adamic_exception_pending && s.kind != adamic_json_undefined && s.kind != adamic_json_function) {
         if ((*written)++ != 0) { ascii(w, ","); }
         indent(w, depth + 1);
         quote(w, field->name);
@@ -186,7 +186,7 @@ static void write_field(json_writer *w, const adamic_object *object, const adami
 }
 static bool write_prepared_body(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth);
 static bool write_prepared(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth) {
-    if (adamic_thrown != NULL) { return false; }
+    if (adamic_exception_pending) { return false; }
     json_scalar s = scalar(value, schema, w->runtime);
     bool container = s.kind == adamic_json_array || s.kind == adamic_json_tuple || s.kind == adamic_json_object || s.kind == adamic_json_toJSON;
     json_ancestor current = {s.value.reference, w->ancestors};
@@ -201,7 +201,7 @@ static bool write_prepared(json_writer *w, adamic_value value, const adamic_json
     return present;
 }
 static bool write_prepared_body(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth) {
-	if (adamic_thrown != NULL) { return false; }
+	if (adamic_exception_pending) { return false; }
 	ADAMIC_CHECK_STACK();
 	json_scalar s = scalar(value, schema, w->runtime);
 	schema = s.schema;
@@ -232,8 +232,8 @@ static bool write_prepared_body(json_writer *w, adamic_value value, const adamic
             adamic_string *key = adamic_string_from_number((double)index);
             bool present = write_value(w, item.value, item.schema, depth + 1, key);
             adamic_release(key);
-            if (!present && adamic_thrown == NULL) { ascii(w, "null"); }
-            if (adamic_thrown != NULL) { return false; }
+            if (!present && !adamic_exception_pending) { ascii(w, "null"); }
+            if (adamic_exception_pending) { return false; }
 		}
 		if (count != 0) { indent(w, depth); }
 		ascii(w, "]");
@@ -270,12 +270,12 @@ static bool write_prepared_body(json_writer *w, adamic_value value, const adamic
 	}
 }
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth, const adamic_string *key) {
-    if (adamic_thrown != NULL) { return false; }
+    if (adamic_exception_pending) { return false; }
     bool owned;
     adamic_json_result result = prepare(w, value, schema, key, &owned);
     bool present = write_prepared(w, result.value, result.schema, depth);
     if (owned && reference_result(result.schema)) { adamic_release(result.value.reference); }
-    return present && adamic_thrown == NULL;
+    return present && !adamic_exception_pending;
 }
 static void keys(json_writer *w, adamic_value value, const adamic_json_schema *schema) {
 	if (schema == NULL || (schema->kind != adamic_json_array && schema->kind != adamic_json_tuple) || value.reference == NULL) { return; }

@@ -1,0 +1,9 @@
+Environment: source /tmp/adamic-gate/loom-r-slice-6/env.sh; GOMAXPROCS=4, cgroup quota four CPUs; clang 20.1.8.
+See raw JSONL for selectors, execution and timings.
+Guards: go test -p 1 ./cmd/adamic-gate ./internal/ir ./internal/lower ./internal/oracle -run ^(TestEveryTestHasOneDescriptiveName|TestEveryTestIsParallelOrSaysWhy|TestCallTargetReaders|TestEveryMapAProgramHoldsIsSorted|TestNativeAgreementRowsNameRegisteredPrograms|TestRuntimeSetsAreEachUsed)$ -count=1 -parallel=4 -timeout 90s -json
+The exact reader selector matches no split reader leaf; corrected separately.
+Counts: timeout 180 go test -p 1 ./internal/oracle -run TestCountsAreRecorded -count=1 -parallel=4 -timeout 150s -json -args -update-counts
+Native: timeout 780 go test -p 1 ./internal/native/... -count=1 -parallel=4 -timeout 12m -json
+Vet: timeout 120 go vet -p 1 <packages in vet-packages.json except build-tagged scanner>; timeout 90 go vet stage3/drivers/scanner/build-metrics.go. Initial scanner filename main.go was wrong, corrected build-metrics.go passes.
+Reader setup+guard: for PART in Native Lower Fresh Flow: timeout 100 go test -p 1 ./internal/ir -run ^(TestCallTargetExportInputsPART|TestCallTargetReadersPART)$ -count=1 -parallel=4 -timeout 90s -json. Flow replay: ADAMIC_BUILD_OUTPUT_DIR=/tmp/adamic-gate/loom-r-slice-6-m/flow-products, same command.
+GCC focused replay: PATH=/tmp/adamic-gate/loom-r-slice-6-m/gcc-tools:$PATH timeout 90 go test -p 1 ./internal/native -run ^TestLongUnicodePortabilityGCC$ -count=1 -parallel=4 -timeout 75s -json. Wrapper recorded in gcc-profile.sh.

@@ -1,0 +1,132 @@
+--- main/internal/oracle/testdata/method_coverage_string_repeat.a
++++ slice/internal/oracle/testdata/method_coverage_string_repeat.a
+@@ -6,6 +6,8 @@
+ #include <stdbool.h>
+ 
+ static adamic_string adamic_string_0 = ADAMIC_STRING("ab");
++static adamic_string adamic_string_1 = ADAMIC_STRING("Invalid count value: ");
++static adamic_string adamic_string_2 = ADAMIC_STRING("Invalid string length");
+ 
+ static adamic_closure * adamic_global_0_method = NULL;
+ static bool adamic_ready_0 = false;
+@@ -13,6 +15,8 @@
+ static adamic_code_function adamic_function_0_library_method_token;
+ static adamic_string * adamic_function_1_library_method_sequence(adamic_closure * adamic_local_1_argument, adamic_string * adamic_local_2_argument);
+ static adamic_string * adamic_function_2_library_method_sequence(adamic_closure * adamic_local_3_argument, adamic_string * adamic_local_4_argument);
++static adamic_string * adamic_function_3_exception_repeat(adamic_string * adamic_local_5_argument, double adamic_local_6_argument);
++static adamic_string * adamic_function_4_exception_repeat(adamic_string * adamic_local_8_argument, double adamic_local_9_argument);
+ 
+ static adamic_value adamic_function_0_library_method_token(adamic_closure *self, adamic_value *arguments) {
+ 	ADAMIC_CHECK_STACK();
+@@ -37,25 +41,95 @@
+ 	adamic_unreachable();
+ }
+ 
++static adamic_string * adamic_function_3_exception_repeat(adamic_string * adamic_local_5_argument, double adamic_local_6_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_local_7_count = (isnan(adamic_local_6_argument) ? (0x0p+00) : trunc(adamic_local_6_argument));
++	if ((adamic_local_7_count < (0x0p+00)) || (!isfinite(adamic_local_7_count))) {
++		adamic_string * adamic_temporary_4 = adamic_string_from_number(adamic_local_6_argument);
++		adamic_string * adamic_temporary_5 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_1, adamic_temporary_4});
++		adamic_object * adamic_temporary_6 = adamic_error_new_kind(adamic_temporary_5, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_6)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_6);
++		adamic_release(adamic_temporary_5);
++		adamic_release(adamic_temporary_4);
++		return &adamic_string_empty;
++	}
++	if ((adamic_string_length(adamic_local_5_argument) * adamic_local_7_count) > (0x1.fffffe8p+28)) {
++		adamic_object * adamic_temporary_7 = adamic_error_new_kind(&adamic_string_2, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_7)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_7);
++		return &adamic_string_empty;
++	}
++	adamic_string * adamic_temporary_8 = adamic_string_repeat(adamic_local_5_argument, adamic_local_7_count);
++	adamic_string * adamic_temporary_9 = adamic_temporary_8;
++	return adamic_temporary_9;
++	adamic_unreachable();
++}
++
++static adamic_string * adamic_function_4_exception_repeat(adamic_string * adamic_local_8_argument, double adamic_local_9_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_local_10_count = (isnan(adamic_local_9_argument) ? (0x0p+00) : trunc(adamic_local_9_argument));
++	if ((adamic_local_10_count < (0x0p+00)) || (!isfinite(adamic_local_10_count))) {
++		adamic_string * adamic_temporary_10 = adamic_string_from_number(adamic_local_9_argument);
++		adamic_string * adamic_temporary_11 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_1, adamic_temporary_10});
++		adamic_object * adamic_temporary_12 = adamic_error_new_kind(adamic_temporary_11, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_12)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_12);
++		adamic_release(adamic_temporary_11);
++		adamic_release(adamic_temporary_10);
++		return &adamic_string_empty;
++	}
++	if ((adamic_string_length(adamic_local_8_argument) * adamic_local_10_count) > (0x1.fffffe8p+28)) {
++		adamic_object * adamic_temporary_13 = adamic_error_new_kind(&adamic_string_2, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_13)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_13);
++		return &adamic_string_empty;
++	}
++	adamic_string * adamic_temporary_14 = adamic_string_repeat(adamic_local_8_argument, adamic_local_10_count);
++	adamic_string * adamic_temporary_15 = adamic_temporary_14;
++	return adamic_temporary_15;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_closure * adamic_temporary_4 = adamic_closure_new(adamic_function_0_library_method_token, 0);
+-	adamic_closure * adamic_temporary_5 = adamic_global_0_method;
+-	adamic_global_0_method = adamic_temporary_4;
+-	adamic_release(adamic_temporary_5);
++	adamic_closure * adamic_temporary_16 = adamic_closure_new(adamic_function_0_library_method_token, 0);
++	adamic_closure * adamic_temporary_17 = adamic_global_0_method;
++	adamic_global_0_method = adamic_temporary_16;
++	adamic_release(adamic_temporary_17);
+ 	adamic_ready_0 = true;
+-	adamic_closure * adamic_temporary_6 = adamic_global_0_method;
+-	adamic_string * adamic_temporary_7 = adamic_string_repeat(&adamic_string_0, (0x0p+00));
+-	adamic_string * adamic_temporary_8 = adamic_function_1_library_method_sequence(adamic_temporary_6, adamic_temporary_7);
+-	adamic_write_line(adamic_stdout, adamic_temporary_8);
+-	adamic_release(adamic_temporary_8);
+-	adamic_release(adamic_temporary_7);
+-	adamic_closure * adamic_temporary_9 = adamic_global_0_method;
+-	adamic_string * adamic_temporary_10 = adamic_string_repeat(&adamic_string_0, (0x1p+01));
+-	adamic_string * adamic_temporary_11 = adamic_function_2_library_method_sequence(adamic_temporary_9, adamic_temporary_10);
+-	adamic_write_line(adamic_stdout, adamic_temporary_11);
+-	adamic_release(adamic_temporary_11);
+-	adamic_release(adamic_temporary_10);
++	adamic_closure * adamic_temporary_18 = adamic_retain(adamic_global_0_method);
++	adamic_string * adamic_temporary_19 = adamic_function_3_exception_repeat(&adamic_string_0, (0x0p+00));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_19);
++		adamic_release(adamic_temporary_18);
++		adamic_release(adamic_global_0_method);
++		adamic_global_0_method = NULL;
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_20 = adamic_function_1_library_method_sequence(adamic_temporary_18, adamic_temporary_19);
++	adamic_write_line(adamic_stdout, adamic_temporary_20);
++	adamic_release(adamic_temporary_20);
++	adamic_release(adamic_temporary_19);
++	adamic_release(adamic_temporary_18);
++	adamic_closure * adamic_temporary_21 = adamic_retain(adamic_global_0_method);
++	adamic_string * adamic_temporary_22 = adamic_function_4_exception_repeat(&adamic_string_0, (0x1p+01));
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_22);
++		adamic_release(adamic_temporary_21);
++		adamic_release(adamic_global_0_method);
++		adamic_global_0_method = NULL;
++		adamic_uncaught();
++	}
++	adamic_string * adamic_temporary_23 = adamic_function_2_library_method_sequence(adamic_temporary_21, adamic_temporary_22);
++	adamic_write_line(adamic_stdout, adamic_temporary_23);
++	adamic_release(adamic_temporary_23);
++	adamic_release(adamic_temporary_22);
++	adamic_release(adamic_temporary_21);
+ 	adamic_release(adamic_global_0_method);
+ 	adamic_global_0_method = NULL;
+ 	return 0;

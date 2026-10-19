@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/exceptions.c
++++ b/internal/native/runtime/exceptions.c
+@@ -124,7 +124,7 @@
+ 		adamic_slot_cache name_cache = {0};
+ 		adamic_slot_cache message_cache = {0};
+ 		uncaught_text(adamic_object_field(error, "name", &name_cache)->reference);
+-		if (adamic_string_length(adamic_object_field(error, "name", &name_cache)->reference) != 0 && adamic_string_length(adamic_object_field(error, "message", &message_cache)->reference) != 0) { fputs(": ", stderr); }
++		fputs(": ", stderr);
+ 		uncaught_text(adamic_object_field(error, "message", &message_cache)->reference);
+ 	} else if (adamic_thrown == &adamic_null) {
+ 		fputs("null", stderr);

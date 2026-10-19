@@ -1,0 +1,1115 @@
+{
+  "package_results": [
+    {
+      "Time": "2026-10-19T00:38:08.801357123Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Elapsed": 327.399
+    },
+    {
+      "Time": "2026-10-19T00:38:17.918240986Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "Elapsed": 8.685
+    }
+  ],
+  "failures": [
+    {
+      "Time": "2026-10-19T00:37:40.805812004Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestLongUnicodePortabilityGCC",
+      "Elapsed": 0.8
+    }
+  ],
+  "passed_test_entries": 814,
+  "skipped_test_entries": 95,
+  "over_budget_leaves": [],
+  "maximum_leaf": {
+    "Time": "2026-10-19T00:38:08.792803941Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Test": "TestAsyncHostPromisesAddress",
+    "Elapsed": 17.89
+  },
+  "mutant_test_results": [
+    {
+      "Time": "2026-10-19T00:33:07.781754496Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsHostWorkers/exit_lock_mutant",
+      "Elapsed": 0.42
+    },
+    {
+      "Time": "2026-10-19T00:33:08.232359831Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsHostWorkers/raw_output_lock_mutant",
+      "Elapsed": 0.45
+    },
+    {
+      "Time": "2026-10-19T00:33:10.068454931Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+      "Elapsed": 0.41
+    },
+    {
+      "Time": "2026-10-19T00:33:10.860817617Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant/threads_4",
+      "Elapsed": 0.13
+    },
+    {
+      "Time": "2026-10-19T00:33:10.990134181Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant/threads_16",
+      "Elapsed": 0.13
+    },
+    {
+      "Time": "2026-10-19T00:33:10.990667985Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant",
+      "Elapsed": 0.58
+    },
+    {
+      "Time": "2026-10-19T00:34:10.409847557Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestProduct_PrimitiveMutants",
+      "Elapsed": 2.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.445216746Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/version-template",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.48132205Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/version-add",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.519505289Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/declaration-array",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.566189189Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/valueOf-first",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-19T00:34:10.604689965Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/string-fallback",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.650175074Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/objects-throw",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-19T00:34:10.691531557Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/noncallable-skipped",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.728846209Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/absent-throw",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.762301637Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/call-throws",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:10.79788214Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/get-throws",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.834122054Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/lookup-after-mutation",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.869864137Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/undefined-result",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:10.907087123Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/null-result",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:10.938238911Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/boolean-result",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:10.972494324Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/negative-zero-result",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:11.009147071Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/string-result",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:11.043140725Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/number-hint",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:11.08070631Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/function-results-throw",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:11.130112184Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/getter-mutates-next",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-19T00:34:11.164858237Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order/second-get-throws",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:11.16486721Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/wrong-order",
+      "Elapsed": 4.13
+    },
+    {
+      "Time": "2026-10-19T00:34:11.277861023Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/missing-TypeError",
+      "Elapsed": 0.11
+    },
+    {
+      "Time": "2026-10-19T00:34:11.306037951Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants/leaked-object-result",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:11.306049198Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestOrdinaryToPrimitiveMutants",
+      "Elapsed": 4.27
+    },
+    {
+      "Time": "2026-10-19T00:34:25.216353713Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRetainedSplitCoverage/record_mutants",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-19T00:34:31.519531041Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelScalingGuardMutants/pointer_guard",
+      "Elapsed": 4.7
+    },
+    {
+      "Time": "2026-10-19T00:34:39.729426056Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelScalingGuardMutants/loser_free",
+      "Elapsed": 8.21
+    },
+    {
+      "Time": "2026-10-19T00:34:39.72943528Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelScalingGuardMutants",
+      "Elapsed": 12.91
+    },
+    {
+      "Time": "2026-10-19T00:34:39.776287773Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded/threads_4",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:39.825766241Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded/threads_16",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:39.826241939Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded",
+      "Elapsed": 0.52
+    },
+    {
+      "Time": "2026-10-19T00:34:40.209717837Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded/threads_4",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:40.245771049Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded/threads_16",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:40.246314908Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded",
+      "Elapsed": 0.52
+    },
+    {
+      "Time": "2026-10-19T00:34:40.461777848Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant/threads_4",
+      "Elapsed": 0.15
+    },
+    {
+      "Time": "2026-10-19T00:34:40.622007275Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant/threads_16",
+      "Elapsed": 0.16
+    },
+    {
+      "Time": "2026-10-19T00:34:40.62289838Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant",
+      "Elapsed": 0.8
+    },
+    {
+      "Time": "2026-10-19T00:34:40.622907043Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs",
+      "Elapsed": 1.32
+    },
+    {
+      "Time": "2026-10-19T00:34:40.622913633Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit10",
+      "Elapsed": 1.32
+    },
+    {
+      "Time": "2026-10-19T00:34:40.871712203Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant/threads_4",
+      "Elapsed": 0.14
+    },
+    {
+      "Time": "2026-10-19T00:34:41.036258896Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant/threads_16",
+      "Elapsed": 0.16
+    },
+    {
+      "Time": "2026-10-19T00:34:41.036268029Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant",
+      "Elapsed": 0.79
+    },
+    {
+      "Time": "2026-10-19T00:34:41.036283252Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings",
+      "Elapsed": 1.31
+    },
+    {
+      "Time": "2026-10-19T00:34:41.036290283Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit09",
+      "Elapsed": 1.31
+    },
+    {
+      "Time": "2026-10-19T00:34:41.134711843Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded/threads_4",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:34:41.178512808Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded/threads_16",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-19T00:34:41.179321626Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded",
+      "Elapsed": 0.56
+    },
+    {
+      "Time": "2026-10-19T00:34:41.438540018Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry/guarded",
+      "Elapsed": 0.4
+    },
+    {
+      "Time": "2026-10-19T00:34:41.778170896Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant/threads_4",
+      "Elapsed": 0.16
+    },
+    {
+      "Time": "2026-10-19T00:34:41.943160548Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit06/output_buffer",
+      "Elapsed": 0.51
+    },
+    {
+      "Time": "2026-10-19T00:34:41.943170463Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit06",
+      "Elapsed": 0.51
+    },
+    {
+      "Time": "2026-10-19T00:34:41.947879927Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant/threads_16",
+      "Elapsed": 0.17
+    },
+    {
+      "Time": "2026-10-19T00:34:41.947903092Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant",
+      "Elapsed": 0.77
+    },
+    {
+      "Time": "2026-10-19T00:34:41.947909221Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes",
+      "Elapsed": 1.32
+    },
+    {
+      "Time": "2026-10-19T00:34:41.947914188Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit08",
+      "Elapsed": 1.32
+    },
+    {
+      "Time": "2026-10-19T00:34:41.965200498Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry/mutant",
+      "Elapsed": 0.53
+    },
+    {
+      "Time": "2026-10-19T00:34:41.965210242Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry",
+      "Elapsed": 0.93
+    },
+    {
+      "Time": "2026-10-19T00:34:41.96521578Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit07",
+      "Elapsed": 0.93
+    },
+    {
+      "Time": "2026-10-19T00:34:41.969726014Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit05/count_allocation",
+      "Elapsed": 0.45
+    },
+    {
+      "Time": "2026-10-19T00:34:41.969734556Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit05",
+      "Elapsed": 0.45
+    },
+    {
+      "Time": "2026-10-19T00:34:42.378525851Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit04/allocator_lists",
+      "Elapsed": 0.44
+    },
+    {
+      "Time": "2026-10-19T00:34:42.378536847Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit04",
+      "Elapsed": 0.44
+    },
+    {
+      "Time": "2026-10-19T00:34:42.397731666Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit03/weak_table_lock",
+      "Elapsed": 0.45
+    },
+    {
+      "Time": "2026-10-19T00:34:42.397745206Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit03",
+      "Elapsed": 0.45
+    },
+    {
+      "Time": "2026-10-19T00:34:42.423888729Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit01/checker_profiling",
+      "Elapsed": 0.46
+    },
+    {
+      "Time": "2026-10-19T00:34:42.423898383Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit01",
+      "Elapsed": 0.46
+    },
+    {
+      "Time": "2026-10-19T00:34:42.453521501Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit02/packed_field_cache",
+      "Elapsed": 0.49
+    },
+    {
+      "Time": "2026-10-19T00:34:42.453533449Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit02",
+      "Elapsed": 0.49
+    },
+    {
+      "Time": "2026-10-19T00:34:43.094474732Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit00/regex_budget",
+      "Elapsed": 0.72
+    },
+    {
+      "Time": "2026-10-19T00:34:43.094484226Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeStaticsProtectionMutantsUnit00",
+      "Elapsed": 0.72
+    },
+    {
+      "Time": "2026-10-19T00:34:52.109740534Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestReleaseSharedValueAndUnsafeMutant",
+      "Elapsed": 8.34
+    },
+    {
+      "Time": "2026-10-19T00:35:00.630600613Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordReadMutantsUnit00/prototype-membership-restored",
+      "Elapsed": 2.84
+    },
+    {
+      "Time": "2026-10-19T00:35:00.630614154Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordReadMutantsUnit00",
+      "Elapsed": 2.84
+    },
+    {
+      "Time": "2026-10-19T00:35:00.631760859Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordReadMutantsUnit01/missing-read-silent",
+      "Elapsed": 3.23
+    },
+    {
+      "Time": "2026-10-19T00:35:00.63176836Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordReadMutantsUnit01",
+      "Elapsed": 3.23
+    },
+    {
+      "Time": "2026-10-19T00:35:00.653845956Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit05/own-slot-null-read",
+      "Elapsed": 1.48
+    },
+    {
+      "Time": "2026-10-19T00:35:00.653857283Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit05",
+      "Elapsed": 1.48
+    },
+    {
+      "Time": "2026-10-19T00:35:00.660970202Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit04/stored-key-freed",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:35:00.660984664Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit04",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-19T00:35:00.661845184Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordReadMutantsUnit02/own-read-checked-as-missing",
+      "Elapsed": 3.3
+    },
+    {
+      "Time": "2026-10-19T00:35:00.661892174Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordReadMutantsUnit02",
+      "Elapsed": 3.3
+    },
+    {
+      "Time": "2026-10-19T00:35:00.704677849Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit02/deleted-key-iterated",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-19T00:35:00.704689236Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit02",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-19T00:35:00.707198398Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestProduct_RecordMutants",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-19T00:35:00.717858483Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit01/uint32-max-as-index",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-19T00:35:00.717913655Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit01",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-19T00:35:00.728949449Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit00/indices-in-insertion-order",
+      "Elapsed": 0.07
+    },
+    {
+      "Time": "2026-10-19T00:35:00.728986364Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit00",
+      "Elapsed": 0.07
+    },
+    {
+      "Time": "2026-10-19T00:35:00.842025904Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit03/overwrite-key-leaked",
+      "Elapsed": 0.21
+    },
+    {
+      "Time": "2026-10-19T00:35:00.842065242Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRecordMutantsUnit03",
+      "Elapsed": 0.21
+    },
+    {
+      "Time": "2026-10-19T00:35:02.632437812Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_fixture_shared_counter/fixture_shared_counter",
+      "Elapsed": 1.23
+    },
+    {
+      "Time": "2026-10-19T00:35:02.632447927Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_fixture_shared_counter",
+      "Elapsed": 1.23
+    },
+    {
+      "Time": "2026-10-19T00:35:10.774594997Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_one_worker/one_worker",
+      "Elapsed": 4.88
+    },
+    {
+      "Time": "2026-10-19T00:35:10.774604632Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_one_worker",
+      "Elapsed": 4.88
+    },
+    {
+      "Time": "2026-10-19T00:35:11.125738022Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_eager_strings/eager_strings",
+      "Elapsed": 4.84
+    },
+    {
+      "Time": "2026-10-19T00:35:11.125752083Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_eager_strings",
+      "Elapsed": 4.84
+    },
+    {
+      "Time": "2026-10-19T00:35:11.300750977Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_fixed_grain/fixed_grain",
+      "Elapsed": 4.85
+    },
+    {
+      "Time": "2026-10-19T00:35:11.30077321Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_fixed_grain",
+      "Elapsed": 4.85
+    },
+    {
+      "Time": "2026-10-19T00:35:13.117557416Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_oversized_slot/oversized_slot",
+      "Elapsed": 4.78
+    },
+    {
+      "Time": "2026-10-19T00:35:13.117565348Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_oversized_slot",
+      "Elapsed": 4.78
+    },
+    {
+      "Time": "2026-10-19T00:35:15.424330902Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_reused_graph/reused_graph",
+      "Elapsed": 4.65
+    },
+    {
+      "Time": "2026-10-19T00:35:15.424348077Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_reused_graph",
+      "Elapsed": 4.65
+    },
+    {
+      "Time": "2026-10-19T00:35:15.813069818Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_result_order/result_order",
+      "Elapsed": 4.69
+    },
+    {
+      "Time": "2026-10-19T00:35:15.813077429Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_result_order",
+      "Elapsed": 4.69
+    },
+    {
+      "Time": "2026-10-19T00:35:18.642457411Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_remote_free/remote_free",
+      "Elapsed": 7.34
+    },
+    {
+      "Time": "2026-10-19T00:35:18.642484271Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_remote_free",
+      "Elapsed": 7.34
+    },
+    {
+      "Time": "2026-10-19T00:35:18.879641518Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_field_cache/field_cache",
+      "Elapsed": 5.77
+    },
+    {
+      "Time": "2026-10-19T00:35:18.879653556Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_field_cache",
+      "Elapsed": 5.77
+    },
+    {
+      "Time": "2026-10-19T00:35:22.491414647Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_plain_shared_count/plain_shared_count",
+      "Elapsed": 7.07
+    },
+    {
+      "Time": "2026-10-19T00:35:22.491450951Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_plain_shared_count",
+      "Elapsed": 7.07
+    },
+    {
+      "Time": "2026-10-19T00:35:23.00982104Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_lazy_cache/lazy_cache",
+      "Elapsed": 7.2
+    },
+    {
+      "Time": "2026-10-19T00:35:23.009856242Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_lazy_cache",
+      "Elapsed": 7.2
+    },
+    {
+      "Time": "2026-10-19T00:35:24.878451731Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_skip_items_share/skip_items_share",
+      "Elapsed": 6.24
+    },
+    {
+      "Time": "2026-10-19T00:35:24.878461525Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_skip_items_share",
+      "Elapsed": 6.24
+    },
+    {
+      "Time": "2026-10-19T00:35:25.017189777Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_ascii_character_write/ascii_character_write",
+      "Elapsed": 6.14
+    },
+    {
+      "Time": "2026-10-19T00:35:25.017206201Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_ascii_character_write",
+      "Elapsed": 6.14
+    },
+    {
+      "Time": "2026-10-19T00:35:28.720873865Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_view_owner_count/view_owner_count",
+      "Elapsed": 6.23
+    },
+    {
+      "Time": "2026-10-19T00:35:28.72091124Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_view_owner_count",
+      "Elapsed": 6.23
+    },
+    {
+      "Time": "2026-10-19T00:35:29.261384596Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_view_parent_units/view_parent_units",
+      "Elapsed": 6.25
+    },
+    {
+      "Time": "2026-10-19T00:35:29.261396894Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestParallelMutant_view_parent_units",
+      "Elapsed": 6.25
+    },
+    {
+      "Time": "2026-10-19T00:35:44.265436558Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestMapHashMutantsEachHaveOneTest",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-19T00:35:53.08504434Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestMapHashProbeCatchesMutantsNaNNormalization",
+      "Elapsed": 8.68
+    },
+    {
+      "Time": "2026-10-19T00:35:53.086164345Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestMapHashProbeCatchesMutantsZeroNormalization",
+      "Elapsed": 8.05
+    },
+    {
+      "Time": "2026-10-19T00:35:55.732164732Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestMapHashProbeCatchesMutantsOldHash",
+      "Elapsed": 10.01
+    },
+    {
+      "Time": "2026-10-19T00:36:13.10108974Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantEnvironment",
+      "Elapsed": 8.2
+    },
+    {
+      "Time": "2026-10-19T00:36:13.102072782Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantEOL",
+      "Elapsed": 8.23
+    },
+    {
+      "Time": "2026-10-19T00:36:13.72880573Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantCwd",
+      "Elapsed": 7.7
+    },
+    {
+      "Time": "2026-10-19T00:36:13.921778161Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantExecutableIdentity",
+      "Elapsed": 7.74
+    },
+    {
+      "Time": "2026-10-19T00:36:20.938328158Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantArgv",
+      "Elapsed": 7.86
+    },
+    {
+      "Time": "2026-10-19T00:36:21.121305617Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantMemoryUsage",
+      "Elapsed": 8.02
+    },
+    {
+      "Time": "2026-10-19T00:36:21.572108466Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantDateNow",
+      "Elapsed": 7.84
+    },
+    {
+      "Time": "2026-10-19T00:36:21.777748221Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantTimeOrigin",
+      "Elapsed": 7.86
+    },
+    {
+      "Time": "2026-10-19T00:36:28.828026027Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantPerformanceNow",
+      "Elapsed": 7.89
+    },
+    {
+      "Time": "2026-10-19T00:36:29.030742924Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantExitStatus",
+      "Elapsed": 7.91
+    },
+    {
+      "Time": "2026-10-19T00:36:29.459597939Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantExitHooks",
+      "Elapsed": 7.89
+    },
+    {
+      "Time": "2026-10-19T00:36:29.562173387Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantExitFlush",
+      "Elapsed": 7.79
+    },
+    {
+      "Time": "2026-10-19T00:36:36.740726716Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestHostRuntimeMutantOutput",
+      "Elapsed": 7.91
+    },
+    {
+      "Time": "2026-10-19T00:36:53.108174109Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRemoteScanAlwaysMutant",
+      "Elapsed": 0.47
+    },
+    {
+      "Time": "2026-10-19T00:36:53.109167226Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRemoteScanNeverMutant",
+      "Elapsed": 6.31
+    },
+    {
+      "Time": "2026-10-19T00:36:56.239064574Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRemoteScanNeverMutantSanitized",
+      "Elapsed": 9.73
+    },
+    {
+      "Time": "2026-10-19T00:36:56.240099663Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRemoteScanAlwaysMutantSanitized",
+      "Elapsed": 9.47
+    },
+    {
+      "Time": "2026-10-19T00:37:01.684819908Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeFeatureMismatchRuntimeFeature",
+      "Elapsed": 4.82
+    },
+    {
+      "Time": "2026-10-19T00:37:01.737792921Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestRuntimeFeatureMismatchProgramFeature",
+      "Elapsed": 0.16
+    },
+    {
+      "Time": "2026-10-19T00:37:37.721890304Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestStaticBooleanInitializerMutant",
+      "Elapsed": 0.02
+    },
+    {
+      "Time": "2026-10-19T00:37:37.740434978Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestStaticNumberInitializerMutant",
+      "Elapsed": 0.02
+    },
+    {
+      "Time": "2026-10-19T00:37:38.017285724Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestLongStringBytesMutant",
+      "Elapsed": 0.28
+    },
+    {
+      "Time": "2026-10-19T00:38:01.220644348Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Test": "TestQuarantineIsPerThreadUnderTSan/shared_ring_mutant",
+      "Elapsed": 7.07
+    }
+  ]
+}

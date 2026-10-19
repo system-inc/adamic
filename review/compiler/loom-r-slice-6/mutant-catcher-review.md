@@ -1,0 +1,3 @@
+The first error-ancestry-missing replay exited 1, caught by LeakSanitizer (144 bytes in two objects), before the oracle reached its stdout comparison. Its original caught=false row and raw log are preserved because the recorded stdout marker was absent. A separate, leak-free literal-prefix witness tests nominal ancestry independently; its verification is recorded as error-ancestry-missing-independent. No old result is filtered or rewritten.
+
+The implicit-string-conversion replay exited 1 at the native stdout/exit assertion: source exit 1, native exit 70, with the owned panic "a union holding an object was written as a string". Its original caught=false marker result is preserved; the actual semantic failure is independently verified from its raw log.

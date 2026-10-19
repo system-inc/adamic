@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -45,7 +45,7 @@
+ 	let text = value === null ? 'null' : adamicTypeOf(value);
+ 	if (value instanceof Error) {
+ 		const name = value.name, message = value.message;
+-		text = name === '' ? message : message === '' ? name : name + ': ' + message;
++		text = name + ': ' + message;
+ 	}
+ 	const line = 'Uncaught ' + text;
+ 	adamicUncaughtWrite(2, line.replace(/\r/g, '\\r').replace(/\n/g, '\\n') + '\n');

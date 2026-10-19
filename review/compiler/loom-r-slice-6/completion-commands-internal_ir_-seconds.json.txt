@@ -1,0 +1,164 @@
+[
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetExportInputsNative",
+    "Elapsed": 15.27
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetExportInputsLower",
+    "Elapsed": 12.31
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetExportInputsFresh",
+    "Elapsed": 5.3
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetExportInputsFlow",
+    "Elapsed": 12.46
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestArgumentLayouts",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestClosureTargetsBoundOnlyProvenValues",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestDirectClosureTargetsUseEncodedIndex",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetsIncludeEveryDescendant",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestProduct_CallTargetReaderArchivesNative",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestUnknownClosurePreservesThrowingEffect",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestProduct_CallTargetReaderArchivesLower",
+    "Elapsed": 0.54
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestPrimitiveViewMembers",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallMayThrowUsesReachableTargets",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestObjectSpreadAccessorEffects",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestViewUnionDiscriminantOverlaps",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestEveryMapAProgramHoldsIsSorted",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestASortedMapIsNilWhereAPlainMapIs",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallbackAdapterTargets",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestClosureArgumentsCountTargets",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetReadersLower",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestProduct_CallTargetReaderArchivesFresh",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetReadersFlow",
+    "Elapsed": 0.86
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetReadersNative",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestProduct_CallTargetReaderArchivesFlow",
+    "Elapsed": 1.32
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/ir",
+    "Test": "TestCallTargetReadersFresh",
+    "Elapsed": 0.84
+  }
+]

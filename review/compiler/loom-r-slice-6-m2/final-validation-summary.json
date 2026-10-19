@@ -1,0 +1,263 @@
+{
+  "renderer-final": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:49:41.279920503Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 5.587
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:49:39.418389238Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestUncaughtErrorNamedMessage",
+      "Elapsed": 3.72
+    }
+  },
+  "renderer-restored": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:53:35.583461293Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 3.963
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:53:35.32985985Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestUncaughtErrorMissingMessage",
+      "Elapsed": 3.65
+    }
+  },
+  "flow-fresh-javascript-final": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:50:57.346860428Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/flow",
+        "Elapsed": 62.43
+      },
+      {
+        "Time": "2026-10-19T00:51:13.132612267Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fresh",
+        "Elapsed": 11.565
+      },
+      {
+        "Time": "2026-10-19T00:51:13.670413931Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/javascript",
+        "Elapsed": 0.136
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:50:52.82957701Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Test": "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+      "Elapsed": 13.89
+    }
+  },
+  "counts-final": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:52:20.585319681Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 65.32
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:51:42.98122673Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCountsAreRecorded_011/stage3/interface-downcasts/visitor.a",
+      "Elapsed": 6.35
+    }
+  },
+  "guards-final": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:52:21.400487457Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+        "Elapsed": 0.374
+      },
+      {
+        "Time": "2026-10-19T00:52:22.868571434Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 0.005
+      },
+      {
+        "Time": "2026-10-19T00:52:30.272638391Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 0.018
+      },
+      {
+        "Time": "2026-10-19T00:52:32.574384873Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 0.917
+      },
+      {
+        "Time": "2026-10-19T00:52:41.594270428Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Elapsed": 0.157
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:52:32.571552616Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestRuntimeSetsAreEachUsed",
+      "Elapsed": 0.91
+    }
+  },
+  "readers-Native": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:55:17.660045136Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 2.578
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:55:17.538350378Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestCallTargetExportInputsNative",
+      "Elapsed": 2.45
+    }
+  },
+  "readers-Lower": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:55:22.14459392Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 2.662
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:55:21.887073365Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestCallTargetExportInputsLower",
+      "Elapsed": 2.39
+    }
+  },
+  "readers-Fresh": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:55:27.496427375Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 2.873
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:55:27.44067473Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestCallTargetExportInputsFresh",
+      "Elapsed": 2.81
+    }
+  },
+  "readers-Flow": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:55:31.737454622Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 2.376
+      }
+    ],
+    "failures": [],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:55:31.669170865Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/ir",
+      "Test": "TestCallTargetExportInputsFlow",
+      "Elapsed": 2.3
+    }
+  },
+  "always-separator-native": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:53:19.268290655Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 3.545
+      }
+    ],
+    "failures": [
+      {
+        "Time": "2026-10-19T00:53:19.266754385Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorEmptyMessage",
+        "Elapsed": 3.53
+      }
+    ],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:53:19.266754385Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestUncaughtErrorEmptyMessage",
+      "Elapsed": 3.53
+    }
+  },
+  "always-separator-javascript": {
+    "packages": [
+      {
+        "Time": "2026-10-19T00:53:29.825085417Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 3.646
+      }
+    ],
+    "failures": [
+      {
+        "Time": "2026-10-19T00:53:29.823608971Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestUncaughtErrorEmptyName",
+        "Elapsed": 3.64
+      }
+    ],
+    "over_budget_leaves": [],
+    "maximum_leaf": {
+      "Time": "2026-10-19T00:53:29.823608971Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestUncaughtErrorEmptyName",
+      "Elapsed": 3.64
+    }
+  }
+}

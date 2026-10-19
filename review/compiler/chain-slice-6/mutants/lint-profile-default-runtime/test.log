@@ -1,0 +1,11 @@
+=== RUN   TestProfileRuntimeFeaturesMatchNode
+=== PAUSE TestProfileRuntimeFeaturesMatchNode
+=== CONT  TestProfileRuntimeFeaturesMatchNode
+    profile_runtime_features_test.go:36: profile clang: exit status 1
+        /usr/bin/ld: /tmp/adamic-gate/main-e31c8a.o:(.data.rel.ro.adamic_runtime_feature_reference+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+--- FAIL: TestProfileRuntimeFeaturesMatchNode (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.184s
+FAIL

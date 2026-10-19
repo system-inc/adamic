@@ -7,7 +7,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -65,24 +64,13 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	paths := corpusfiles.Repository(t, repository, []string{"internal/native/runtime"}, []string{"*.c", "*.h"})
-	units := []string{filepath.Join(directory, "main.c")}
-	for _, sourcePath := range paths {
-		name := filepath.Base(sourcePath)
-		data, err := os.ReadFile(sourcePath)
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := filepath.Join(directory, name)
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		if strings.HasSuffix(name, ".c") {
-			units = append(units, path)
-		}
+
+	library, err := native.RuntimeLibraryForSource("", source, native.Options{})
+	if err != nil {
+		t.Fatal(err)
 	}
-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
-	flags = append(flags, units...)
+	flags := append(native.SourceFlags(source, native.Options{}), "-g", "-I", filepath.Dir(library), "-o", filepath.Join(directory, "profiled"), filepath.Join(directory, "main.c"))
+	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	execute(t, "", "clang", flags...)
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)

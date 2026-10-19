@@ -1,0 +1,11 @@
+=== RUN   TestStep21NarrowedParameterUseStops
+=== PAUSE TestStep21NarrowedParameterUseStops
+=== CONT  TestStep21NarrowedParameterUseStops
+    step21_narrowing_uses_test.go:16: sanitized native per-use stop: exit codes differ; got exit 0 stdout "Error\ncontinued\n" stderr ""
+--- FAIL: TestStep21NarrowedParameterUseStops (3.34s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.348s
+FAIL

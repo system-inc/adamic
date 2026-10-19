@@ -1,0 +1,63 @@
+--- main/internal/oracle/testdata/regexp_matchall_nonglobal.a
++++ slice/internal/oracle/testdata/regexp_matchall_nonglobal.a
+@@ -7,6 +7,7 @@
+ 
+ static adamic_string adamic_string_0 = ADAMIC_STRING("a");
+ static adamic_string adamic_string_1 = ADAMIC_STRING("");
++static adamic_string adamic_string_2 = ADAMIC_STRING("String.prototype.matchAll called with a non-global RegExp argument");
+ 
+ static const adamic_regex_range adamic_regex_0_ranges_0[] = {{97,97},};
+ static const adamic_regex_instruction adamic_regex_0_code[] = {
+@@ -27,17 +28,42 @@
+ *position=at;*steps+=2;return true;
+ }
+ static const adamic_regex_program adamic_regex_0 = {adamic_regex_0_code,0,0,0,NULL,0,NULL,{UINT64_C(0),UINT64_C(8589934592)},true,adamic_regex_0_prefix,1,adamic_regex_0_fast,false,adamic_regex_0_ascii};
++static adamic_object * adamic_function_0_exception_regexp_global(adamic_string * adamic_local_0_argument, adamic_object * adamic_local_1_argument);
++
++static adamic_slot_cache adamic_cache_1;
++
++static adamic_object * adamic_function_0_exception_regexp_global(adamic_string * adamic_local_0_argument, adamic_object * adamic_local_1_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_2 = adamic_object_data_field(adamic_local_1_argument, "global", &adamic_cache_1)->boolean;
++	if (!adamic_temporary_2) {
++		adamic_object * adamic_temporary_3 = adamic_error_new_kind(&adamic_string_2, "TypeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_3)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_3);
++		return NULL;
++	}
++	adamic_object * adamic_temporary_4 = adamic_regex_match_all(adamic_local_0_argument, adamic_local_1_argument);
++	adamic_object * adamic_temporary_5 = adamic_temporary_4;
++	return adamic_temporary_5;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_object * adamic_temporary_1 = adamic_regex_new(&adamic_regex_0, &adamic_string_0, &adamic_string_1);
+-	adamic_object * adamic_temporary_2 = adamic_regex_match_all(&adamic_string_0, adamic_temporary_1);
+-	adamic_object * adamic_temporary_3 = adamic_regex_next(adamic_temporary_2);
+-	adamic_maybe_boolean adamic_temporary_4 = adamic_regex_done(adamic_temporary_3);
+-	adamic_string * adamic_temporary_5 = adamic_string_concat(1, (adamic_string *const[]){(!(adamic_temporary_4).present ? &adamic_string_undefined : (adamic_temporary_4).boolean ? &adamic_string_true : &adamic_string_false)});
+-	adamic_write_line(adamic_stdout, adamic_temporary_5);
+-	adamic_release(adamic_temporary_5);
+-	adamic_release(adamic_temporary_3);
+-	adamic_release(adamic_temporary_2);
+-	adamic_release(adamic_temporary_1);
++	adamic_object * adamic_temporary_6 = adamic_regex_new(&adamic_regex_0, &adamic_string_0, &adamic_string_1);
++	adamic_object * adamic_temporary_7 = adamic_function_0_exception_regexp_global(&adamic_string_0, adamic_temporary_6);
++	if (adamic_exception_pending) {
++		adamic_release(adamic_temporary_7);
++		adamic_release(adamic_temporary_6);
++		adamic_uncaught();
++	}
++	adamic_object * adamic_temporary_8 = adamic_regex_next(adamic_temporary_7);
++	adamic_maybe_boolean adamic_temporary_9 = adamic_regex_done(adamic_temporary_8);
++	adamic_string * adamic_temporary_10 = adamic_string_concat(1, (adamic_string *const[]){(!(adamic_temporary_9).present ? &adamic_string_undefined : (adamic_temporary_9).boolean ? &adamic_string_true : &adamic_string_false)});
++	adamic_write_line(adamic_stdout, adamic_temporary_10);
++	adamic_release(adamic_temporary_10);
++	adamic_release(adamic_temporary_8);
++	adamic_release(adamic_temporary_7);
++	adamic_release(adamic_temporary_6);
+ 	return 0;
+ }

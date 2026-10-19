@@ -1,0 +1,46 @@
+[
+  {
+    "mutant": "native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-p",
+      "1",
+      "./internal/oracle",
+      "-run",
+      "^TestUncaughtErrorEmptyMessage$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "native uncaught diagnostic"
+  },
+  {
+    "mutant": "javascript",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-p",
+      "1",
+      "./internal/oracle",
+      "-run",
+      "^TestUncaughtErrorEmptyName$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "JavaScript uncaught diagnostic"
+  }
+]

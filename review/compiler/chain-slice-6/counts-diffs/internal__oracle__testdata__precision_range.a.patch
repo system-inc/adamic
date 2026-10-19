@@ -1,0 +1,80 @@
+--- main/internal/oracle/testdata/precision_range.a
++++ slice/internal/oracle/testdata/precision_range.a
+@@ -5,34 +5,61 @@
+ #include <math.h>
+ #include <stdbool.h>
+ 
++static adamic_string adamic_string_0 = ADAMIC_STRING("toPrecision() argument must be between 1 and 100");
++
+ static adamic_array * adamic_global_0_figures = NULL;
+ static bool adamic_ready_0 = false;
+ 
++static adamic_string * adamic_function_0_exception_toPrecision(double adamic_local_2_argument, double adamic_local_3_argument);
++
++static adamic_string * adamic_function_0_exception_toPrecision(double adamic_local_2_argument, double adamic_local_3_argument) {
++	ADAMIC_CHECK_STACK();
++	double adamic_local_4_digits = (isnan(adamic_local_3_argument) ? (0x0p+00) : trunc(adamic_local_3_argument));
++	if (isfinite(adamic_local_2_argument) && ((adamic_local_4_digits < (0x1p+00)) || (adamic_local_4_digits > (0x1.9p+06)))) {
++		adamic_object * adamic_temporary_1 = adamic_error_new_kind(&adamic_string_0, "RangeError");
++		adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_1)));
++		adamic_exception_pending = true;
++		adamic_release(adamic_temporary_1);
++		return &adamic_string_empty;
++	}
++	adamic_string * adamic_temporary_2 = adamic_number_to_precision(adamic_local_2_argument, adamic_local_4_digits, true);
++	adamic_string * adamic_temporary_3 = adamic_temporary_2;
++	return adamic_temporary_3;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_array * adamic_temporary_1 = adamic_array_new(4, false);
+-	adamic_array_push(adamic_temporary_1, (adamic_value){.number = (0x1.8p+01)});
+-	adamic_array_push(adamic_temporary_1, (adamic_value){.number = (0x1p+01)});
+-	adamic_array_push(adamic_temporary_1, (adamic_value){.number = (0x1p+00)});
+-	adamic_array_push(adamic_temporary_1, (adamic_value){.number = (0x0p+00)});
+-	adamic_array * adamic_temporary_2 = adamic_global_0_figures;
+-	adamic_global_0_figures = adamic_temporary_1;
+-	adamic_release(adamic_temporary_2);
++	adamic_array * adamic_temporary_4 = adamic_array_new(4, false);
++	adamic_array_push(adamic_temporary_4, (adamic_value){.number = (0x1.8p+01)});
++	adamic_array_push(adamic_temporary_4, (adamic_value){.number = (0x1p+01)});
++	adamic_array_push(adamic_temporary_4, (adamic_value){.number = (0x1p+00)});
++	adamic_array_push(adamic_temporary_4, (adamic_value){.number = (0x0p+00)});
++	adamic_array * adamic_temporary_5 = adamic_global_0_figures;
++	adamic_global_0_figures = adamic_temporary_4;
++	adamic_release(adamic_temporary_5);
+ 	adamic_ready_0 = true;
+ 	{
+-		adamic_array * adamic_temporary_3 = adamic_retain(adamic_global_0_figures);
+-		adamic_array * adamic_temporary_4 = adamic_temporary_3;
+-		for (size_t adamic_temporary_5 = 0; adamic_temporary_5 < adamic_temporary_4->length; adamic_temporary_5++) {
++		adamic_array * adamic_temporary_6 = adamic_retain(adamic_global_0_figures);
++		adamic_array * adamic_temporary_7 = adamic_temporary_6;
++		for (size_t adamic_temporary_8 = 0; adamic_temporary_8 < adamic_temporary_7->length; adamic_temporary_8++) {
+ 			{
+-				double adamic_local_1_count = adamic_temporary_4->elements[adamic_temporary_5].number;
++				double adamic_local_1_count = adamic_temporary_7->elements[adamic_temporary_8].number;
+ 				{
+-					adamic_string * adamic_temporary_11 = adamic_number_to_precision(((0x1.921fb54442d18p+01) * (0x1.f4p+09)), adamic_local_1_count, true);
+-					adamic_write_line(adamic_stdout, adamic_temporary_11);
+-					adamic_release(adamic_temporary_11);
++					adamic_string * adamic_temporary_14 = adamic_function_0_exception_toPrecision(((0x1.921fb54442d18p+01) * (0x1.f4p+09)), adamic_local_1_count);
++					if (adamic_exception_pending) {
++						adamic_release(adamic_temporary_14);
++						adamic_release(adamic_temporary_7);
++						adamic_release(adamic_global_0_figures);
++						adamic_global_0_figures = NULL;
++						adamic_uncaught();
++					}
++					adamic_write_line(adamic_stdout, adamic_temporary_14);
++					adamic_release(adamic_temporary_14);
+ 				}
+ 			}
+ 		}
+-		adamic_release(adamic_temporary_4);
++		adamic_release(adamic_temporary_7);
+ 	}
+ 	adamic_release(adamic_global_0_figures);
+ 	adamic_global_0_figures = NULL;

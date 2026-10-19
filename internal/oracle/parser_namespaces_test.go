@@ -3,7 +3,6 @@ package oracle
 import (
 	"path/filepath"
 	"reflect"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -140,7 +139,7 @@ func TestParserNamespaceClassRegistrationMutant(t *testing.T) {
 	}
 	compiled, _ := natively(t, program)
 	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "ReferenceError: Cannot access 'DebugTypeMapper' before initialization") || disagreement(truth, got) == "" {
+		if got.exitCode != 1 || string(got.stderr) != "Uncaught ReferenceError: Cannot access 'DebugTypeMapper' before initialization\n" || disagreement(truth, got) == "" {
 			t.Fatalf("%s missing registration mutant survived: %+v", backend, got)
 		}
 		t.Logf("%s missing constructor registration stopped: %+v", backend, got)

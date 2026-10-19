@@ -1,0 +1,76 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/bundled"
+	"github.com/microsoft/TypeScript/tsc/shim/compiler"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+"github.com/microsoft/TypeScript/tsc/shim/locale"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+)
+
+func main() {
+	root := os.Args[1]
+	paths, err := filepath.Glob(filepath.Join(root, "src/compiler/*.ts"))
+	if err != nil {
+		panic(err)
+	}
+	cwd := tspath.RootedDirectoryPathFromAbsolute(root)
+	roots := []tspath.RootedFilePath{}
+	for _, p := range paths {
+		roots = append(roots, cwd.ResolveFile(p))
+	}
+	options := &core.CompilerOptions{Strict: core.TSTrue, StrictBindCallApply: core.TSFalse, UseUnknownInCatchVariables: core.TSFalse, SkipLibCheck: core.TSTrue, Target: core.ScriptTargetES2020, Module: core.ModuleKindNodeNext, ModuleResolution: core.ModuleResolutionKindNodeNext, Lib: []string{"lib.es2020.d.ts"}, Types: []string{"node"}, TypeRoots: []tspath.RootedDirectoryPath{tspath.RootedDirectoryPathFromAbsolute("/workspace/adamic/stage3/api/node_modules/@types"), tspath.RootedDirectoryPathFromAbsolute("/workspace/scratch/chain-slice-6-tsc/types")}}
+	fs := cachedvfs.From(bundled.WrapFS(osvfs.FS()))
+	config := tsoptions.NewParsedCommandLine(options, roots, nil, cwd, fs.CaseSensitivity())
+	host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: host, SingleThreaded: core.TSTrue})
+	files := []*ast.SourceFile{}
+	for _, f := range program.GetSourceFiles() {
+		if strings.HasPrefix(string(f.FileName()), filepath.Join(root, "src/compiler")+"/") {
+			files = append(files, f)
+		}
+	}
+	sort.Slice(files, func(i, j int) bool { return files[i].FileName() < files[j].FileName() })
+	c, release := program.GetTypeCheckerForFile(context.Background(), files[0])
+	defer release()
+	location := func(n *ast.Node) string {
+		f := ast.GetSourceFileOfNode(n)
+		line, col := scanner.GetLineAndCharacterOfPosition(f, scanner.GetTokenPosOfNode(n, f, false))
+		path, _ := filepath.Rel(root, string(f.FileName()))
+		return path + ":" + itoa(line+1) + ":" + itoa(col+1)
+	}
+	text := func(n *ast.Node) string {
+		f := ast.GetSourceFileOfNode(n)
+		return f.Text()[scanner.GetTokenPosOfNode(n, f, false):n.End()]
+	}
+	rows := []map[string]any{}
+	for _, site := range lower.WritingCallNarrowings(c, files) {
+		writes := []map[string]string{}
+		for _, n := range site.Writes {
+			writes = append(writes, map[string]string{"location": location(n), "source": text(n)})
+		}
+		use := site.Read
+        if use.Parent != nil && use.Parent.Kind == ast.KindPropertyAccessExpression && use.Parent.AsPropertyAccessExpression().Expression == use { use = use.Parent }
+        rows = append(rows, map[string]any{"use": text(use), "result_type": c.TypeToString(c.GetTypeAtLocation(use)), "read": location(site.Read), "variable": site.Variable, "declared": site.Declared, "narrowed": site.Narrowed, "call": location(site.Call), "call_source": text(site.Call), "proof": location(site.Narrowing), "proof_source": text(site.Narrowing), "writes": writes})
+	}
+	diagnostics := []string{}
+var english locale.Locale
+for _, d := range program.GetSemanticDiagnostics(context.Background(), nil) { diagnostics = append(diagnostics, d.Localize(english)) }
+ out := map[string]any{"diagnostics": diagnostics,"pin": "050880ce59e30b356b686bd3144efe24f875ebc8", "compiler_files": len(files), "sites": rows, "semantic_diagnostics": len(program.GetSemanticDiagnostics(context.Background(), nil))}
+	if err := json.NewEncoder(os.Stdout).Encode(out); err != nil {
+		panic(err)
+	}
+}
+func itoa(n int) string { b, _ := json.Marshal(n); return string(b) }

@@ -1,0 +1,32 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "Test": "TestAnArchivesBuildIsJournaledAsRuntimeproducts",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "Test": "TestProduct_LeanCensusExports",
+    "Elapsed": 0.81
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "Test": "TestTheLeanCensusFollowsTheBuildAndFailsClosed",
+    "Elapsed": 0.89
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "Test": "TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+    "Elapsed": 0.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+    "Test": "TestTheJobserverNeverReachesAnArchivesBytes",
+    "Elapsed": 8.29
+  }
+]

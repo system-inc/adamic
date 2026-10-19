@@ -1,0 +1,19 @@
+internal/native/runtime/exceptions.c:121:35: error: incompatible pointer to integer conversion initializing 'uint64_t' (aka 'unsigned long') with an expression of type 'void *' [-Wint-conversion]
+  121 |                 adamic_slot_cache name_cache = {NULL, 0};
+      |                                                 ^~~~
+/workspace/adamic-tools/llvm/lib/clang/20/include/__stddef_null.h:26:14: note: expanded from macro 'NULL'
+   26 | #define NULL ((void*)0)
+      |              ^~~~~~~~~~
+internal/native/runtime/exceptions.c:121:41: error: excess elements in struct initializer [-Werror,-Wexcess-initializers]
+  121 |                 adamic_slot_cache name_cache = {NULL, 0};
+      |                                                       ^
+internal/native/runtime/exceptions.c:122:38: error: incompatible pointer to integer conversion initializing 'uint64_t' (aka 'unsigned long') with an expression of type 'void *' [-Wint-conversion]
+  122 |                 adamic_slot_cache message_cache = {NULL, 0};
+      |                                                    ^~~~
+/workspace/adamic-tools/llvm/lib/clang/20/include/__stddef_null.h:26:14: note: expanded from macro 'NULL'
+   26 | #define NULL ((void*)0)
+      |              ^~~~~~~~~~
+internal/native/runtime/exceptions.c:122:44: error: excess elements in struct initializer [-Werror,-Wexcess-initializers]
+  122 |                 adamic_slot_cache message_cache = {NULL, 0};
+      |                                                          ^
+4 errors generated.

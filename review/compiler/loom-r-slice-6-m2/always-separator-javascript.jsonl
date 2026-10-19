@@ -1,0 +1,19 @@
+{"Time":"2026-10-19T00:53:26.179429391Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-19T00:53:26.186971499Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName"}
+{"Time":"2026-10-19T00:53:26.187063967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"=== RUN   TestUncaughtErrorEmptyName\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:53:26.187108212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"=== PAUSE TestUncaughtErrorEmptyName\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:53:26.187111587Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName"}
+{"Time":"2026-10-19T00:53:26.187116565Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName"}
+{"Time":"2026-10-19T00:53:26.18711979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"=== CONT  TestUncaughtErrorEmptyName\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:53:29.475319955Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"    step21_uncaught_error_text_test.go:57: gate cache node miss\n"}
+{"Time":"2026-10-19T00:53:29.703671751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"    oracle_test.go:619: gate cache native miss\n"}
+{"Time":"2026-10-19T00:53:29.778641799Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"    step21_uncaught_error_text_test.go:57: gate cache node miss\n"}
+{"Time":"2026-10-19T00:53:29.823158331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"    step21_uncaught_error_text_test.go:57: JavaScript uncaught diagnostic: got \"Uncaught : message\\n\", want \"Uncaught message\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-19T00:53:29.82360175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Output":"--- FAIL: TestUncaughtErrorEmptyName (3.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:53:29.823608971Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestUncaughtErrorEmptyName","Elapsed":3.64}
+{"Time":"2026-10-19T00:53:29.823630052Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:53:29.823636352Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-19T00:53:29.823638295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-19T00:53:29.823639667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-19T00:53:29.825070004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t3.645s\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:53:29.825085417Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":3.646}
