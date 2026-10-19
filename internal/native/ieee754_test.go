@@ -251,7 +251,7 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		// Audited by the fused twin: a difference it reproduces is listed, any other pending.
 		listed, pending := []string{}, []string{}
 		for index, question := range asked {
-			if native[index] == oracle[index] || !approximatedIEEE754(question) {
+			if native[index] == oracle[index] || bothNaN(native[index], oracle[index]) || !approximatedIEEE754(question) {
 				continue
 			}
 			line := question + "\t" + native[index] + "\t" + oracle[index] + "\n"
@@ -270,19 +270,16 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		if listed, audited := fusion.cases[asked[index]]; audited && fused != nil && fused[index] != listed.fused {
 			t.Errorf("%s: the fused twin gives %s, not the %s the ieee754 fusion list records for arm64 Node", asked[index], fused[index], listed.fused)
 		}
-		if fusion.handled(t, asked[index], native[index], oracle[index]) {
-			if native[index] != oracle[index] {
+		if bothNaN(native[index], oracle[index]) {
+			continue
+		}
+		if accounted, explained := fusion.handled(t, asked[index], native[index], oracle[index]); accounted {
+			if explained {
 				held++
 			}
 			continue
 		}
 		if native[index] == oracle[index] {
-			continue
-		}
-		// A program can't see a NaN's payload (0.1 has no typed arrays), so every NaN is the same NaN.
-		nativeBits, _ := strconv.ParseUint(native[index], 16, 64)
-		oracleBits, _ := strconv.ParseUint(oracle[index], 16, 64)
-		if math.IsNaN(math.Float64frombits(nativeBits)) && math.IsNaN(math.Float64frombits(oracleBits)) {
 			continue
 		}
 		operation, _, _ := strings.Cut(asked[index], " ")
@@ -297,4 +294,12 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		t.Errorf("%d of %d answers differ, by function: %v", total, lines, mismatches)
 	}
 	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches, %d on the fusion list where arm64 Node fused", lines, len(values), len(ieee754Unary), total, held)
+}
+
+// bothNaN says two answers' bits are both a NaN. A program can't see a NaN's payload (0.1 has no typed
+// arrays), so every NaN is the same NaN, whichever bits each side printed.
+func bothNaN(native, oracle string) bool {
+	nativeBits, _ := strconv.ParseUint(native, 16, 64)
+	oracleBits, _ := strconv.ParseUint(oracle, 16, 64)
+	return math.IsNaN(math.Float64frombits(nativeBits)) && math.IsNaN(math.Float64frombits(oracleBits))
 }
