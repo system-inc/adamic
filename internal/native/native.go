@@ -265,7 +265,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	}
 	// Where main.c was compiled first, this call only links; elsewhere one clang call compiles main.c and links it, which
 	// the log says as cBuild, so neither its compile nor its link is taken for the other.
-	kind := "cBuild"
+	kind := "cLink"
 	if program == "main.o" {
 		kind = "cLink"
 	}

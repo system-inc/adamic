@@ -352,7 +352,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it
 		// was found.
 		if found, ok := cachedFile(object); ok {
-			buildLog("cCompile", unit.name, key, "hit", clang)
+			buildLog("cCompile", unit.name, key, "miss", clang)
 			return found, nil
 		}
 	}
