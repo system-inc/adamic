@@ -1,0 +1,275 @@
+{
+  "root": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler",
+  "files_examined": 79,
+  "javascript_files_skipped": 0,
+  "files_reaching_lowering": 2,
+  "reasons": [
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2345",
+      "count": 87,
+      "files": [
+        "builder.ts",
+        "checker.ts",
+        "commandLineParser.ts",
+        "moduleNameResolver.ts",
+        "program.ts",
+        "resolutionCache.ts",
+        "sourcemap.ts",
+        "sys.ts",
+        "transformers/classFields.ts",
+        "transformers/declarations.ts",
+        "transformers/es2015.ts",
+        "transformers/esnext.ts",
+        "transformers/generators.ts",
+        "transformers/jsx.ts",
+        "transformers/module/esnextAnd2015.ts",
+        "tsbuildPublic.ts"
+      ],
+      "example": "builder.ts:1246:69"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS18048",
+      "count": 49,
+      "files": [
+        "checker.ts",
+        "resolutionCache.ts",
+        "transformers/classFields.ts",
+        "transformers/es2017.ts",
+        "transformers/esDecorators.ts",
+        "transformers/generators.ts",
+        "tsbuildPublic.ts"
+      ],
+      "example": "checker.ts:10022:86"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2591",
+      "count": 46,
+      "files": [
+        "sys.ts"
+      ],
+      "example": "sys.ts:1471:34"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2322",
+      "count": 31,
+      "files": [
+        "checker.ts",
+        "commandLineParser.ts",
+        "moduleNameResolver.ts",
+        "resolutionCache.ts",
+        "sys.ts",
+        "transformer.ts",
+        "transformers/es2017.ts",
+        "transformers/esDecorators.ts",
+        "transformers/generators.ts",
+        "tsbuildPublic.ts"
+      ],
+      "example": "checker.ts:15145:9"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2532",
+      "count": 15,
+      "files": [
+        "checker.ts",
+        "transformer.ts",
+        "transformers/classFields.ts",
+        "transformers/es2015.ts",
+        "transformers/es2017.ts",
+        "transformers/generators.ts",
+        "transformers/module/esnextAnd2015.ts"
+      ],
+      "example": "checker.ts:50153:121"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2379",
+      "count": 10,
+      "files": [
+        "checker.ts",
+        "resolutionCache.ts",
+        "watchPublic.ts"
+      ],
+      "example": "checker.ts:10941:33"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2339",
+      "count": 7,
+      "files": [
+        "debug.ts",
+        "sys.ts",
+        "transformers/generators.ts"
+      ],
+      "example": "debug.ts:200:19"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS18046",
+      "count": 6,
+      "files": [
+        "commandLineParser.ts",
+        "program.ts",
+        "sys.ts",
+        "transformers/jsx.ts"
+      ],
+      "example": "commandLineParser.ts:2301:91"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2304",
+      "count": 6,
+      "files": [
+        "sys.ts"
+      ],
+      "example": "sys.ts:1499:121"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2375",
+      "count": 6,
+      "files": [
+        "checker.ts",
+        "moduleNameResolver.ts",
+        "resolutionCache.ts",
+        "transformers/classFields.ts"
+      ],
+      "example": "checker.ts:6035:9"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2488",
+      "count": 6,
+      "files": [
+        "builder.ts",
+        "checker.ts",
+        "program.ts",
+        "transformers/jsx.ts"
+      ],
+      "example": "builder.ts:1258:65"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2769",
+      "count": 6,
+      "files": [
+        "builder.ts",
+        "checker.ts"
+      ],
+      "example": "builder.ts:2377:13"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2412",
+      "count": 4,
+      "files": [
+        "checker.ts",
+        "resolutionCache.ts",
+        "watchPublic.ts"
+      ],
+      "example": "checker.ts:17890:21"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2503",
+      "count": 2,
+      "files": [
+        "sys.ts"
+      ],
+      "example": "sys.ts:51:68"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2538",
+      "count": 2,
+      "files": [
+        "transformers/classFields.ts",
+        "transformers/esDecorators.ts"
+      ],
+      "example": "transformers/classFields.ts:2251:45"
+    },
+    {
+      "kind": "Refused",
+      "reason": "an index signature",
+      "count": 1,
+      "files": [
+        "corePublic.ts"
+      ],
+      "example": "corePublic.ts:14:5"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2307",
+      "count": 1,
+      "files": [
+        "sys.ts"
+      ],
+      "example": "sys.ts:1598:69"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2420",
+      "count": 1,
+      "files": [
+        "checker.ts"
+      ],
+      "example": "checker.ts:54329:7"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2556",
+      "count": 1,
+      "files": [
+        "checker.ts"
+      ],
+      "example": "checker.ts:22498:29"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2722",
+      "count": 1,
+      "files": [
+        "checker.ts"
+      ],
+      "example": "checker.ts:20595:32"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS2740",
+      "count": 1,
+      "files": [
+        "core.ts"
+      ],
+      "example": "core.ts:1637:11"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS7006",
+      "count": 1,
+      "files": [
+        "sys.ts"
+      ],
+      "example": "sys.ts:1697:54"
+    },
+    {
+      "kind": "type",
+      "reason": "TypeScript TS7031",
+      "count": 1,
+      "files": [
+        "sys.ts"
+      ],
+      "example": "sys.ts:1697:61"
+    }
+  ],
+  "adaptations": [
+    {
+      "rewrite": "present undefined in optional property declarations",
+      "diagnostics_removed": 31,
+      "declarations_changed": 47
+    }
+  ]
+}

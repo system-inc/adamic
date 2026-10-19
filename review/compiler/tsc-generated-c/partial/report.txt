@@ -1,0 +1,220 @@
+| File | Kind | TS bytes (closure) | C bytes | C lines | Units | Split units | Largest function (lines) | -O0 s | -O1 s | -O2 s | -O0 MB | -O1 MB | -O2 MB |
+|---|---|---:|---:|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|
+| hostErrors.ts | tsc | 447 | 3,001 | 69 | 1 | 3 | `adamic_function_0_errorCode` (25) | 0.01 | 0.02 | 0.02 | 49 | 53 | 53 |
+| stage1/cohere/cssstrings/main.ts | proxy | 4,480 | 24,541 | 448 | 1 | 3 | `adamic_function_0_printString` (124) | 0.03 | 0.10 | 0.11 | 58 | 66 | 67 |
+| stage1/cohere/cssnumbers/main.ts | proxy | 11,357 | 58,532 | 1,031 | 1 | 4 | `adamic_function_0_printString` (124) | 0.04 | 0.23 | 0.27 | 59 | 72 | 72 |
+| stage1/cohere/markdowninline/main.ts | proxy | 15,210 | 89,103 | 1,474 | 1 | 4 | `main` (373) | 0.03 | 0.23 | 0.25 | 60 | 70 | 71 |
+| stage1/cohere/mediaquery/main.ts | proxy | 28,668 | 160,550 | 2,655 | 1 | 4 | `adamic_function_11_parseMediaQuery` (562) | 0.05 | 0.31 | 0.41 | 61 | 77 | 78 |
+| stage1/cohere/lint/helpers/main.ts | proxy | 28,214 | 310,928 | 5,005 | 1 | 7 | `adamic_function_24_StrictOptions_matches` (857) | 0.09 | 0.74 | 0.69 | 64 | 78 | 77 |
+| stage1/cohere/selector/main.ts | proxy | 31,214 | 317,225 | 5,011 | 1 | 6 | `adamic_function_29_Parser_parse` (615) | 0.09 | 0.68 | 0.74 | 65 | 78 | 79 |
+
+c_bytes_by_ts_bytes: y = 3.856 * x^1.062 (+-0.087), log residual sd 0.324 (x1.38), n=7, x in [447, 31,214]
+c_lines_by_ts_lines: y = 7.714 * x^0.928 (+-0.123), log residual sd 0.474 (x1.61), n=7, x in [9, 856]
+clang-O0_seconds_by_c_bytes: y = 0.000287 * x^0.443 (+-0.056), log residual sd 0.227 (x1.25), n=7, x in [3,001, 317,225]
+clang-O0_seconds_by_ts_bytes: y = 0.0005783 * x^0.459 (+-0.085), log residual sd 0.318 (x1.37), n=7, x in [447, 31,214]
+clang-O0_rss_kb_by_c_bytes: y = 3.3e+04 * x^0.055 (+-0.004), log residual sd 0.017 (x1.02), n=7, x in [3,001, 317,225]
+clang-O1_seconds_by_c_bytes: y = 5.173e-05 * x^0.747 (+-0.041), log residual sd 0.164 (x1.18), n=7, x in [3,001, 317,225]
+clang-O1_seconds_by_ts_bytes: y = 0.0001489 * x^0.788 (+-0.088), log residual sd 0.330 (x1.39), n=7, x in [447, 31,214]
+clang-O1_rss_kb_by_c_bytes: y = 2.821e+04 * x^0.084 (+-0.007), log residual sd 0.028 (x1.03), n=7, x in [3,001, 317,225]
+clang-O2_seconds_by_c_bytes: y = 5.027e-05 * x^0.757 (+-0.036), log residual sd 0.145 (x1.16), n=7, x in [3,001, 317,225]
+clang-O2_seconds_by_ts_bytes: y = 0.000133 * x^0.810 (+-0.064), log residual sd 0.239 (x1.27), n=7, x in [447, 31,214]
+clang-O2_rss_kb_by_c_bytes: y = 2.841e+04 * x^0.084 (+-0.009), log residual sd 0.034 (x1.03), n=7, x in [3,001, 317,225]
+
+{
+ "tsc_ts_bytes": 9433689,
+ "tsc_ts_lines": 192592,
+ "largest_file": "checker.ts",
+ "largest_file_ts_bytes": 3154767,
+ "per_file_units": {
+  "c_bytes_fit": 82129464,
+  "clang-O0_seconds_fit": 7.0,
+  "clang-O0_peak_rss_kb_fit": 85051,
+  "clang-O1_seconds_fit": 94.2,
+  "clang-O1_peak_rss_kb_fit": 119627,
+  "clang-O2_seconds_fit": 110.9,
+  "clang-O2_peak_rss_kb_fit": 120594,
+  "c_bytes_low": 42987956,
+  "clang-O0_seconds_low": 3.7,
+  "clang-O0_peak_rss_kb_low": 82258,
+  "clang-O1_seconds_low": 48.7,
+  "clang-O1_peak_rss_kb_low": 113159,
+  "clang-O2_seconds_low": 68.8,
+  "clang-O2_peak_rss_kb_low": 112578,
+  "c_bytes_high": 156910204,
+  "clang-O0_seconds_high": 13.3,
+  "clang-O0_peak_rss_kb_high": 87939,
+  "clang-O1_seconds_high": 182.4,
+  "clang-O1_peak_rss_kb_high": 126466,
+  "clang-O2_seconds_high": 178.8,
+  "clang-O2_peak_rss_kb_high": 129182
+ },
+ "one_unit": {
+  "c_bytes_fit": 98879456,
+  "clang-O0_seconds_fit": 0.9,
+  "clang-O0_peak_rss_kb_fit": 90661,
+  "clang-O1_seconds_fit": 46.4,
+  "clang-O1_peak_rss_kb_fit": 131876,
+  "clang-O2_seconds_fit": 59.1,
+  "clang-O2_peak_rss_kb_fit": 132951,
+  "c_bytes_low": 51755186,
+  "clang-O0_seconds_low": 0.5,
+  "clang-O0_peak_rss_kb_low": 87683,
+  "clang-O1_seconds_low": 24.0,
+  "clang-O1_peak_rss_kb_low": 124745,
+  "clang-O2_seconds_low": 36.7,
+  "clang-O2_peak_rss_kb_low": 124114,
+  "c_bytes_high": 188911443,
+  "clang-O0_seconds_high": 1.7,
+  "clang-O0_peak_rss_kb_high": 93740,
+  "clang-O1_seconds_high": 89.8,
+  "clang-O1_peak_rss_kb_high": 139414,
+  "clang-O2_seconds_high": 95.3,
+  "clang-O2_peak_rss_kb_high": 142418
+ },
+ "extrapolation_factor_one_unit": 302.22621259691164,
+ "extrapolation_factor_largest_file": 101.06897545972961
+}
+
+{'file': 'hostErrors.ts', 'c_bytes': 3001, 'largest_function_lines': 25, '-O0_seconds_per_mb': 3.332, '-O0_rss_mb': 49.3, '-O1_seconds_per_mb': 6.664, '-O1_rss_mb': 52.6, '-O2_seconds_per_mb': 6.664, '-O2_rss_mb': 52.6}
+{'file': 'stage1/cohere/cssstrings/main.ts', 'c_bytes': 24541, 'largest_function_lines': 124, '-O0_seconds_per_mb': 1.222, '-O0_rss_mb': 57.8, '-O1_seconds_per_mb': 4.075, '-O1_rss_mb': 65.7, '-O2_seconds_per_mb': 4.482, '-O2_rss_mb': 66.8}
+{'file': 'stage1/cohere/cssnumbers/main.ts', 'c_bytes': 58532, 'largest_function_lines': 124, '-O0_seconds_per_mb': 0.683, '-O0_rss_mb': 58.8, '-O1_seconds_per_mb': 3.929, '-O1_rss_mb': 71.7, '-O2_seconds_per_mb': 4.613, '-O2_rss_mb': 72.4}
+{'file': 'stage1/cohere/markdowninline/main.ts', 'c_bytes': 89103, 'largest_function_lines': 373, '-O0_seconds_per_mb': 0.337, '-O0_rss_mb': 60.4, '-O1_seconds_per_mb': 2.581, '-O1_rss_mb': 70.3, '-O2_seconds_per_mb': 2.806, '-O2_rss_mb': 71.4}
+{'file': 'stage1/cohere/mediaquery/main.ts', 'c_bytes': 160550, 'largest_function_lines': 562, '-O0_seconds_per_mb': 0.311, '-O0_rss_mb': 61.2, '-O1_seconds_per_mb': 1.931, '-O1_rss_mb': 76.6, '-O2_seconds_per_mb': 2.554, '-O2_rss_mb': 77.8}
+{'file': 'stage1/cohere/lint/helpers/main.ts', 'c_bytes': 310928, 'largest_function_lines': 857, '-O0_seconds_per_mb': 0.289, '-O0_rss_mb': 64.3, '-O1_seconds_per_mb': 2.38, '-O1_rss_mb': 78.0, '-O2_seconds_per_mb': 2.219, '-O2_rss_mb': 77.1}
+{'file': 'stage1/cohere/selector/main.ts', 'c_bytes': 317225, 'largest_function_lines': 615, '-O0_seconds_per_mb': 0.284, '-O0_rss_mb': 64.8, '-O1_seconds_per_mb': 2.144, '-O1_rss_mb': 78.1, '-O2_seconds_per_mb': 2.333, '-O2_rss_mb': 79.0}
+{
+ "file": "stage1/cohere/selector/main.ts",
+ "wall_seconds": 0.78,
+ "phases": [
+  {
+   "phase": "ExecuteCompiler",
+   "seconds": 0.774
+  },
+  {
+   "phase": "Backend",
+   "seconds": 0.716
+  },
+  {
+   "phase": "CodeGenPasses",
+   "seconds": 0.404
+  },
+  {
+   "phase": "OptModule",
+   "seconds": 0.403
+  },
+  {
+   "phase": "OptFunction",
+   "seconds": 0.398
+  },
+  {
+   "phase": "RunPass",
+   "seconds": 0.397
+  },
+  {
+   "phase": "Optimizer",
+   "seconds": 0.311
+  },
+  {
+   "phase": "PassManager<Function>",
+   "seconds": 0.258
+  },
+  {
+   "phase": "ModuleInlinerWrapperPass",
+   "seconds": 0.232
+  },
+  {
+   "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+   "seconds": 0.231
+  },
+  {
+   "phase": "DevirtSCCRepeatedPass",
+   "seconds": 0.23
+  },
+  {
+   "phase": "PassManager<LazyCallGraph::SCC, CGSCCAnalysisManager, LazyCallGraph &, CGSCCUpdateResult &>",
+   "seconds": 0.229
+  }
+ ]
+}
+
+| File | In tsc's 77 | TS bytes | Lowers | First reason (adamic c) | Meter's first reason |
+|---|---|---:|---|---|---|
+| _namespaces/ts.moduleSpecifiers.ts | yes | 111 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| _namespaces/ts.performance.ts | yes | 101 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| _namespaces/ts.ts | yes | 3,288 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| binder.ts | yes | 195,198 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| builder.ts | yes | 117,298 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| builderPublic.ts | yes | 11,609 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| builderState.ts | yes | 26,209 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| builderStatePublic.ts | yes | 392 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| checker.ts | yes | 3,154,767 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| commandLineParser.ts | yes | 184,451 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| core.ts | yes | 92,892 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2740 (e.g. core.ts:1637:11) |
+| corePublic.ts | yes | 1,320 | no | adamic: corePublic.ts:14:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added | Refused: an index signature (e.g. corePublic.ts:14:5) |
+| debug.ts | yes | 57,783 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2339 (e.g. debug.ts:200:19) |
+| diagnosticInformationMap.generated.ts | no | 579,194 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| emitter.ts | yes | 274,710 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| executeCommandLine.ts | yes | 54,177 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| expressionToTypeNode.ts | yes | 70,354 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/baseNodeFactory.ts | yes | 2,682 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/emitHelpers.ts | yes | 69,204 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/emitNode.ts | yes | 12,800 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/nodeChildren.ts | yes | 2,252 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/nodeConverters.ts | yes | 7,275 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/nodeFactory.ts | yes | 336,646 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/nodeTests.ts | yes | 37,936 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/parenthesizerRules.ts | yes | 34,072 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/utilities.ts | yes | 76,635 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| factory/utilitiesPublic.ts | yes | 2,131 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| hostErrors.ts | no | 447 | yes |  | none of its own (reaches lowering only if its import closure is clean) |
+| moduleNameResolver.ts | yes | 183,618 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| moduleSpecifiers.ts | yes | 80,070 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| parser.ts | yes | 541,260 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| path.ts | yes | 44,181 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| performance.ts | yes | 6,161 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| performanceCore.ts | yes | 3,342 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| program.ts | yes | 271,357 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| programDiagnostics.ts | yes | 21,401 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| resolutionCache.ts | yes | 82,223 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| scanner.ts | yes | 219,486 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| semver.ts | yes | 18,012 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| sourcemap.ts | yes | 32,210 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| symbolWalker.ts | yes | 8,267 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| sys.ts | yes | 86,274 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| tracing.ts | yes | 15,679 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformer.ts | yes | 29,875 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2322 (e.g. checker.ts:15145:9) |
+| transformers/classFields.ts | yes | 156,676 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/classThis.ts | yes | 5,565 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/declarations.ts | yes | 99,818 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/declarations/diagnostics.ts | yes | 46,404 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/destructuring.ts | yes | 30,894 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/es2015.ts | yes | 231,849 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/es2016.ts | yes | 4,519 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/es2017.ts | yes | 50,191 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS18048 (e.g. checker.ts:10022:86) |
+| transformers/es2018.ts | yes | 69,990 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/es2019.ts | yes | 1,563 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/es2020.ts | yes | 13,128 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/es2021.ts | yes | 4,144 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/esDecorators.ts | yes | 127,380 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS18048 (e.g. checker.ts:10022:86) |
+| transformers/esnext.ts | yes | 32,645 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/generators.ts | yes | 124,156 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/jsx.ts | yes | 36,257 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/legacyDecorators.ts | yes | 36,740 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/module/esnextAnd2015.ts | yes | 18,686 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| transformers/module/impliedNodeFormatDependent.ts | yes | 3,750 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/module/module.ts | yes | 111,833 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/module/system.ts | yes | 85,511 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/namedEvaluation.ts | yes | 22,318 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/taggedTemplate.ts | yes | 5,489 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/ts.ts | yes | 116,761 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/typeSerializer.ts | yes | 28,972 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| transformers/utilities.ts | yes | 35,851 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| tsbuild.ts | yes | 5,332 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| tsbuildPublic.ts | yes | 114,671 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2345 (e.g. builder.ts:1246:69) |
+| types.ts | yes | 491,975 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| utilities.ts | yes | 515,367 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| utilitiesPublic.ts | yes | 104,648 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| visitorPublic.ts | yes | 88,114 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| watch.ts | yes | 45,948 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |
+| watchPublic.ts | yes | 61,201 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | type: TypeScript TS2379 (e.g. checker.ts:10941:33) |
+| watchUtilities.ts | yes | 35,634 | no | builder.ts:1246:69: error TS2345: Argument of type 'Path \| undefined' is not assignable to parameter of type 'string'. | none of its own (reaches lowering only if its import closure is clean) |

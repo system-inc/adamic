@@ -1,0 +1,1734 @@
+{
+ "adamic_commit": "dd5009aacdec4c871095e8d8068de2da8ac4992d",
+ "box": {
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "cores": 4,
+  "memory_kb": 16479424,
+  "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+  "flags": [
+   "-std=c11",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wcast-function-type-strict",
+   "-pedantic",
+   "-Wno-unused-variable",
+   "-Wno-unused-but-set-variable",
+   "-Wno-unused-function",
+   "-Wno-unused-parameter",
+   "-Wno-self-assign",
+   "-ffp-contract=off",
+   "-fno-optimize-sibling-calls",
+   "-pthread"
+  ],
+  "kernel": "6.18.44-fc-v139",
+  "load_at_end": [
+   "1.20",
+   "1.44",
+   "1.26"
+  ]
+ },
+ "rows": [
+  {
+   "file": "_namespaces/ts.moduleSpecifiers.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 111,
+   "own_ts_lines": 3,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.278,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "_namespaces/ts.performance.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 101,
+   "own_ts_lines": 3,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.46,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "_namespaces/ts.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 3288,
+   "own_ts_lines": 79,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.336,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "binder.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 195198,
+   "own_ts_lines": 3916,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.73,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "builder.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 117298,
+   "own_ts_lines": 2480,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.435,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "builderPublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 11609,
+   "own_ts_lines": 273,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.279,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "builderState.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 26209,
+   "own_ts_lines": 626,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.091,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "builderStatePublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 392,
+   "own_ts_lines": 17,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.268,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "checker.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 3154767,
+   "own_ts_lines": 54434,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.493,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "commandLineParser.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 184451,
+   "own_ts_lines": 4305,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.507,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "core.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 92892,
+   "own_ts_lines": 2598,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.81,
+   "meter_reason": "type: TypeScript TS2740 (e.g. core.ts:1637:11)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "corePublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 1320,
+   "own_ts_lines": 47,
+   "closure_files": 1,
+   "closure_ts_bytes": 1320,
+   "closure_ts_lines": 47,
+   "adamic_exit": 1,
+   "adamic_seconds": 0.05,
+   "meter_reason": "Refused: an index signature (e.g. corePublic.ts:14:5)",
+   "first_reason": "adamic: /tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/corePublic.ts:14:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+  },
+  {
+   "file": "debug.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 57783,
+   "own_ts_lines": 1254,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.547,
+   "meter_reason": "type: TypeScript TS2339 (e.g. debug.ts:200:19)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "diagnosticInformationMap.generated.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 579194,
+   "own_ts_lines": 2142,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.435,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "emitter.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 274710,
+   "own_ts_lines": 6378,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.717,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "executeCommandLine.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 54177,
+   "own_ts_lines": 1309,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.293,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "expressionToTypeNode.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 70354,
+   "own_ts_lines": 1330,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.371,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/baseNodeFactory.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 2682,
+   "own_ts_lines": 60,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.457,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/emitHelpers.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 69204,
+   "own_ts_lines": 1491,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.432,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/emitNode.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 12800,
+   "own_ts_lines": 381,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.21,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/nodeChildren.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 2252,
+   "own_ts_lines": 61,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.607,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/nodeConverters.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 7275,
+   "own_ts_lines": 193,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.313,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/nodeFactory.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 336646,
+   "own_ts_lines": 7542,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.419,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/nodeTests.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 37936,
+   "own_ts_lines": 1201,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.017,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/parenthesizerRules.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 34072,
+   "own_ts_lines": 706,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.353,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/utilities.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 76635,
+   "own_ts_lines": 1757,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.353,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "factory/utilitiesPublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 2131,
+   "own_ts_lines": 52,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.477,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "hostErrors.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 447,
+   "own_ts_lines": 9,
+   "closure_files": 1,
+   "closure_ts_bytes": 447,
+   "closure_ts_lines": 9,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.047,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "c_bytes": 3001,
+   "c_lines": 69,
+   "c_functions": 3,
+   "units": 1,
+   "split_units_if_opted_in": 3,
+   "largest_function": "adamic_function_0_errorCode",
+   "largest_function_lines": 25,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.01,
+     "user_seconds": 0.0,
+     "system_seconds": 0.01,
+     "max_rss_kb": 50504,
+     "object_bytes": 1264,
+     "load_before": [
+      "0.90",
+      "1.61",
+      "1.28"
+     ],
+     "load_after": [
+      "0.90",
+      "1.61",
+      "1.28"
+     ],
+     "samples_wall_seconds": [
+      0.02,
+      0.02,
+      0.01
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.02,
+     "user_seconds": 0.01,
+     "system_seconds": 0.0,
+     "max_rss_kb": 53860,
+     "object_bytes": 1224,
+     "load_before": [
+      "0.90",
+      "1.61",
+      "1.28"
+     ],
+     "load_after": [
+      "0.90",
+      "1.61",
+      "1.28"
+     ],
+     "samples_wall_seconds": [
+      0.02,
+      0.02,
+      0.02
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.02,
+     "user_seconds": 0.01,
+     "system_seconds": 0.01,
+     "max_rss_kb": 53840,
+     "object_bytes": 1224,
+     "load_before": [
+      "0.90",
+      "1.61",
+      "1.28"
+     ],
+     "load_after": [
+      "0.90",
+      "1.61",
+      "1.28"
+     ],
+     "samples_wall_seconds": [
+      0.02,
+      0.03,
+      0.02
+     ]
+    }
+   ]
+  },
+  {
+   "file": "moduleNameResolver.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 183618,
+   "own_ts_lines": 3428,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.399,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "moduleSpecifiers.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 80070,
+   "own_ts_lines": 1470,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.321,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "parser.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 541260,
+   "own_ts_lines": 10823,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.186,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "path.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 44181,
+   "own_ts_lines": 1115,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.319,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "performance.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 6161,
+   "own_ts_lines": 210,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.21,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "performanceCore.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 3342,
+   "own_ts_lines": 104,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.417,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "program.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 271357,
+   "own_ts_lines": 5201,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.428,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "programDiagnostics.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 21401,
+   "own_ts_lines": 427,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.316,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "resolutionCache.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 82223,
+   "own_ts_lines": 1716,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.267,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "scanner.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 219486,
+   "own_ts_lines": 4103,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.348,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "semver.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 18012,
+   "own_ts_lines": 453,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.752,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "sourcemap.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 32210,
+   "own_ts_lines": 823,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.529,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "symbolWalker.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 8267,
+   "own_ts_lines": 216,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.312,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "sys.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 86274,
+   "own_ts_lines": 1982,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.325,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "tracing.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 15679,
+   "own_ts_lines": 379,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 1.986,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformer.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 29875,
+   "own_ts_lines": 696,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.315,
+   "meter_reason": "type: TypeScript TS2322 (e.g. checker.ts:15145:9)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/classFields.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 156676,
+   "own_ts_lines": 3360,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.399,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/classThis.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 5565,
+   "own_ts_lines": 148,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.326,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/declarations.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 99818,
+   "own_ts_lines": 1977,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.565,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/declarations/diagnostics.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 46404,
+   "own_ts_lines": 812,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.479,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/destructuring.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 30894,
+   "own_ts_lines": 626,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.399,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2015.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 231849,
+   "own_ts_lines": 5065,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.505,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2016.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 4519,
+   "own_ts_lines": 122,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.24,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2017.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 50191,
+   "own_ts_lines": 1154,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.345,
+   "meter_reason": "type: TypeScript TS18048 (e.g. checker.ts:10022:86)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2018.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 69990,
+   "own_ts_lines": 1486,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.264,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2019.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 1563,
+   "own_ts_lines": 51,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.339,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2020.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 13128,
+   "own_ts_lines": 267,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.32,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/es2021.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 4144,
+   "own_ts_lines": 106,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.437,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/esDecorators.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 127380,
+   "own_ts_lines": 2533,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.427,
+   "meter_reason": "type: TypeScript TS18048 (e.g. checker.ts:10022:86)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/esnext.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 32645,
+   "own_ts_lines": 800,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.39,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/generators.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 124156,
+   "own_ts_lines": 3284,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.347,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/jsx.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 36257,
+   "own_ts_lines": 937,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.375,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/legacyDecorators.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 36740,
+   "own_ts_lines": 846,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.325,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/module/esnextAnd2015.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 18686,
+   "own_ts_lines": 439,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.219,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/module/impliedNodeFormatDependent.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 3750,
+   "own_ts_lines": 99,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.445,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/module/module.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 111833,
+   "own_ts_lines": 2504,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.5,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/module/system.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 85511,
+   "own_ts_lines": 2050,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.488,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/namedEvaluation.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 22318,
+   "own_ts_lines": 489,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.461,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/taggedTemplate.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 5489,
+   "own_ts_lines": 132,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.342,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/ts.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 116761,
+   "own_ts_lines": 2750,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.318,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/typeSerializer.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 28972,
+   "own_ts_lines": 633,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.416,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "transformers/utilities.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 35851,
+   "own_ts_lines": 886,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.432,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "/tmp/claude-0/-home-user-adamic/3077561f-af00-5f9f-824e-8383563f77c7/scratchpad/adapted/src/compiler/builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "tsbuild.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 5332,
+   "own_ts_lines": 183,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.272,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "tsbuildPublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 114671,
+   "own_ts_lines": 2493,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.392,
+   "meter_reason": "type: TypeScript TS2345 (e.g. builder.ts:1246:69)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "types.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 491975,
+   "own_ts_lines": 10681,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.277,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "utilities.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 515367,
+   "own_ts_lines": 12450,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.263,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "utilitiesPublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 104648,
+   "own_ts_lines": 2670,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.435,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "visitorPublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 88114,
+   "own_ts_lines": 1808,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.319,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "watch.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 45948,
+   "own_ts_lines": 999,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.396,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "watchPublic.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 61201,
+   "own_ts_lines": 1263,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.378,
+   "meter_reason": "type: TypeScript TS2379 (e.g. checker.ts:10941:33)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "watchUtilities.ts",
+   "kind": "tsc",
+   "own_ts_bytes": 35634,
+   "own_ts_lines": 847,
+   "closure_files": 79,
+   "closure_ts_bytes": 10013330,
+   "closure_ts_lines": 194743,
+   "adamic_exit": 1,
+   "adamic_seconds": 2.28,
+   "meter_reason": "none of its own (reaches lowering only if its import closure is clean)",
+   "first_reason": "builder.ts:1246:69: error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'."
+  },
+  {
+   "file": "stage1/cohere/cssstrings/main.ts",
+   "kind": "proxy",
+   "own_ts_bytes": 2017,
+   "own_ts_lines": 48,
+   "closure_files": 2,
+   "closure_ts_bytes": 4480,
+   "closure_ts_lines": 111,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.053,
+   "c_bytes": 24541,
+   "c_lines": 448,
+   "c_functions": 6,
+   "units": 1,
+   "split_units_if_opted_in": 3,
+   "largest_function": "adamic_function_0_printString",
+   "largest_function_lines": 124,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.03,
+     "user_seconds": 0.02,
+     "system_seconds": 0.0,
+     "max_rss_kb": 59208,
+     "object_bytes": 22576,
+     "load_before": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.03,
+      0.03,
+      0.03
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.1,
+     "user_seconds": 0.07,
+     "system_seconds": 0.03,
+     "max_rss_kb": 67316,
+     "object_bytes": 23552,
+     "load_before": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.1,
+      0.1,
+      0.1
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.11,
+     "user_seconds": 0.11,
+     "system_seconds": 0.0,
+     "max_rss_kb": 68364,
+     "object_bytes": 24056,
+     "load_before": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.12,
+      0.12,
+      0.11
+     ]
+    }
+   ]
+  },
+  {
+   "file": "stage1/cohere/cssnumbers/main.ts",
+   "kind": "proxy",
+   "own_ts_bytes": 2024,
+   "own_ts_lines": 48,
+   "closure_files": 3,
+   "closure_ts_bytes": 11357,
+   "closure_ts_lines": 316,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.062,
+   "c_bytes": 58532,
+   "c_lines": 1031,
+   "c_functions": 20,
+   "units": 1,
+   "split_units_if_opted_in": 4,
+   "largest_function": "adamic_function_0_printString",
+   "largest_function_lines": 124,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.04,
+     "user_seconds": 0.02,
+     "system_seconds": 0.01,
+     "max_rss_kb": 60192,
+     "object_bytes": 50752,
+     "load_before": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.05,
+      0.04,
+      0.04
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.23,
+     "user_seconds": 0.21,
+     "system_seconds": 0.01,
+     "max_rss_kb": 73456,
+     "object_bytes": 63432,
+     "load_before": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.23,
+      0.23,
+      0.25
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.27,
+     "user_seconds": 0.24,
+     "system_seconds": 0.02,
+     "max_rss_kb": 74120,
+     "object_bytes": 63512,
+     "load_before": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.24",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.32,
+      0.27,
+      0.28
+     ]
+    }
+   ]
+  },
+  {
+   "file": "stage1/cohere/markdowninline/main.ts",
+   "kind": "proxy",
+   "own_ts_bytes": 1966,
+   "own_ts_lines": 48,
+   "closure_files": 3,
+   "closure_ts_bytes": 15210,
+   "closure_ts_lines": 327,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.074,
+   "c_bytes": 89103,
+   "c_lines": 1474,
+   "c_functions": 20,
+   "units": 1,
+   "split_units_if_opted_in": 4,
+   "largest_function": "main",
+   "largest_function_lines": 373,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.03,
+     "user_seconds": 0.02,
+     "system_seconds": 0.0,
+     "max_rss_kb": 61880,
+     "object_bytes": 80528,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.03,
+      0.04,
+      0.04
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.23,
+     "user_seconds": 0.21,
+     "system_seconds": 0.01,
+     "max_rss_kb": 72000,
+     "object_bytes": 75992,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.23,
+      0.25,
+      0.23
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.25,
+     "user_seconds": 0.24,
+     "system_seconds": 0.01,
+     "max_rss_kb": 73116,
+     "object_bytes": 76200,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.25,
+      0.26,
+      0.27
+     ]
+    }
+   ]
+  },
+  {
+   "file": "stage1/cohere/lint/helpers/main.ts",
+   "kind": "proxy",
+   "own_ts_bytes": 2590,
+   "own_ts_lines": 35,
+   "closure_files": 5,
+   "closure_ts_bytes": 28214,
+   "closure_ts_lines": 450,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.123,
+   "c_bytes": 310928,
+   "c_lines": 5005,
+   "c_functions": 68,
+   "units": 1,
+   "split_units_if_opted_in": 7,
+   "largest_function": "adamic_function_24_StrictOptions_matches",
+   "largest_function_lines": 857,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.09,
+     "user_seconds": 0.08,
+     "system_seconds": 0.01,
+     "max_rss_kb": 65848,
+     "object_bytes": 178648,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.09
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.74,
+     "user_seconds": 0.71,
+     "system_seconds": 0.02,
+     "max_rss_kb": 79880,
+     "object_bytes": 214232,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.74
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.69,
+     "user_seconds": 0.66,
+     "system_seconds": 0.01,
+     "max_rss_kb": 78960,
+     "object_bytes": 207152,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.69
+     ]
+    }
+   ]
+  },
+  {
+   "file": "stage1/cohere/mediaquery/main.ts",
+   "kind": "proxy",
+   "own_ts_bytes": 4919,
+   "own_ts_lines": 158,
+   "closure_files": 5,
+   "closure_ts_bytes": 28668,
+   "closure_ts_lines": 758,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.141,
+   "c_bytes": 160550,
+   "c_lines": 2655,
+   "c_functions": 28,
+   "units": 1,
+   "split_units_if_opted_in": 4,
+   "largest_function": "adamic_function_11_parseMediaQuery",
+   "largest_function_lines": 562,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.05,
+     "user_seconds": 0.04,
+     "system_seconds": 0.0,
+     "max_rss_kb": 62656,
+     "object_bytes": 85240,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.07,
+      0.05,
+      0.05
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.31,
+     "user_seconds": 0.29,
+     "system_seconds": 0.01,
+     "max_rss_kb": 78444,
+     "object_bytes": 103680,
+     "load_before": [
+      "1.22",
+      "1.45",
+      "1.26"
+     ],
+     "load_after": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.42,
+      0.39,
+      0.31
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.41,
+     "user_seconds": 0.37,
+     "system_seconds": 0.03,
+     "max_rss_kb": 79620,
+     "object_bytes": 102096,
+     "load_before": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "load_after": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.41,
+      0.42,
+      0.42
+     ]
+    }
+   ]
+  },
+  {
+   "file": "stage1/cohere/selector/main.ts",
+   "kind": "proxy",
+   "own_ts_bytes": 2238,
+   "own_ts_lines": 73,
+   "closure_files": 5,
+   "closure_ts_bytes": 31214,
+   "closure_ts_lines": 856,
+   "adamic_exit": 0,
+   "adamic_seconds": 0.188,
+   "c_bytes": 317225,
+   "c_lines": 5011,
+   "c_functions": 55,
+   "units": 1,
+   "split_units_if_opted_in": 6,
+   "largest_function": "adamic_function_29_Parser_parse",
+   "largest_function_lines": 615,
+   "clang": [
+    {
+     "level": "-O0",
+     "exit": 0,
+     "wall_seconds": 0.09,
+     "user_seconds": 0.08,
+     "system_seconds": 0.0,
+     "max_rss_kb": 66372,
+     "object_bytes": 203024,
+     "load_before": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "load_after": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.09
+     ]
+    },
+    {
+     "level": "-O1",
+     "exit": 0,
+     "wall_seconds": 0.68,
+     "user_seconds": 0.66,
+     "system_seconds": 0.01,
+     "max_rss_kb": 80012,
+     "object_bytes": 224088,
+     "load_before": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "load_after": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.68
+     ]
+    },
+    {
+     "level": "-O2",
+     "exit": 0,
+     "wall_seconds": 0.74,
+     "user_seconds": 0.71,
+     "system_seconds": 0.02,
+     "max_rss_kb": 80892,
+     "object_bytes": 220968,
+     "load_before": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "load_after": [
+      "1.20",
+      "1.44",
+      "1.26"
+     ],
+     "samples_wall_seconds": [
+      0.74
+     ]
+    }
+   ]
+  }
+ ],
+ "time_trace": {
+  "file": "stage1/cohere/selector/main.ts",
+  "wall_seconds": 0.78,
+  "phases": [
+   {
+    "phase": "ExecuteCompiler",
+    "seconds": 0.774
+   },
+   {
+    "phase": "Backend",
+    "seconds": 0.716
+   },
+   {
+    "phase": "CodeGenPasses",
+    "seconds": 0.404
+   },
+   {
+    "phase": "OptModule",
+    "seconds": 0.403
+   },
+   {
+    "phase": "OptFunction",
+    "seconds": 0.398
+   },
+   {
+    "phase": "RunPass",
+    "seconds": 0.397
+   },
+   {
+    "phase": "Optimizer",
+    "seconds": 0.311
+   },
+   {
+    "phase": "PassManager<Function>",
+    "seconds": 0.258
+   },
+   {
+    "phase": "ModuleInlinerWrapperPass",
+    "seconds": 0.232
+   },
+   {
+    "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+    "seconds": 0.231
+   },
+   {
+    "phase": "DevirtSCCRepeatedPass",
+    "seconds": 0.23
+   },
+   {
+    "phase": "PassManager<LazyCallGraph::SCC, CGSCCAnalysisManager, LazyCallGraph &, CGSCCUpdateResult &>",
+    "seconds": 0.229
+   }
+  ]
+ }
+}
