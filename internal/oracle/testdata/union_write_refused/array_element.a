@@ -1,0 +1,7 @@
+// a-check: refused a write through a union of "text" into a slot that holds number in number[]
+function label(list: string[] | number[]): void {
+	list[0] = 'text';
+}
+const counts = [4, 5];
+label(counts);
+console.log(`${(counts[0] ?? 0) * 2}`);
