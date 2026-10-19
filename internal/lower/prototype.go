@@ -37,6 +37,9 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 		return false
 	}
 	for _, root := range l.checker.GetRootSymbols(symbol) {
+		if iteratorReturnField(root) {
+			continue
+		}
 		for _, declaration := range root.Declarations {
 			if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 				return true
@@ -44,6 +47,22 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 		}
 	}
 	return false
+}
+
+// IteratorReturnResult's done and value are data, not prototype members: a finished result carries
+// both as own fields, both required. The prelude's collection iterator results end in it, so that
+// inferring T from Iterable<T> pairs it with Iterator's return result instead of adding undefined to T.
+func iteratorReturnField(root *ast.Symbol) bool {
+	parent := root.Parent
+	if parent == nil || parent.Name != "IteratorReturnResult" || root.Name != "done" && root.Name != "value" {
+		return false
+	}
+	for _, declaration := range parent.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
+		}
+	}
+	return true
 }
 
 func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {

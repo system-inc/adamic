@@ -61,9 +61,11 @@ interface ReadonlySet<T> {
 
 // Built-in collection iterators always provide done, including false on a yielded result.
 // Requiring it here avoids an optional boolean slot while preserving the ECMAScript result union.
+// The done arm is lib's IteratorReturnResult, done required there too, so inferring T from
+// Iterable<T> matches it to Iterator's return result instead of adding its undefined to T.
 type AdamicCollectionIteratorResult<T> =
 	| { readonly done: false; readonly value: T }
-	| { readonly done: true; readonly value: undefined };
+	| IteratorReturnResult<undefined>;
 interface MapIterator<T> {
 	next(): AdamicCollectionIteratorResult<T>;
 }

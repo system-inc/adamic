@@ -1,0 +1,66 @@
+// Inferring T from Iterable<T> over a Set or Map reads a collection iterator's done result as its
+// return, not as a value, so T is the element type alone (tsc's builder.ts:1246, arrayFrom over a
+// Set<Path>). Stage 0 can't lower a branded string's value or for...of over a generic Iterable<T>
+// yet, so Path is a type parameter bounded by string, as narrow to inference as tsc's brand, and the
+// Iterable<T> functions below take tsc's arrayFrom signature with bodies stage 0 lowers.
+function mapSample<T, U>(iterator: Iterable<T>, map: (t: T) => U, sample: T): U {
+	return map(sample);
+}
+
+function sampleOf<T>(iterator: Iterable<T>, sample: T): T {
+	return sample;
+}
+
+function relativeToBuildInfo(path: string): string {
+	return './' + path;
+}
+
+function run<Path extends string>(rootFileNames: Set<Path>, sample: Path): void {
+	const root: string = mapSample(rootFileNames, (path) => relativeToBuildInfo(path), sample);
+	console.log(root);
+	const same: Path = sampleOf(rootFileNames, sample);
+	console.log(same.toUpperCase());
+	const upper: string = mapSample(rootFileNames.values(), (path) => path.toUpperCase(), sample);
+	console.log(upper);
+
+	const roots: string[] = [];
+	for (const path of rootFileNames) {
+		roots.push(relativeToBuildInfo(path));
+	}
+	console.log(roots.join(','));
+
+	const sizes = new Map<Path, number>();
+	for (const path of rootFileNames) {
+		sizes.set(path, path.length * 10);
+	}
+	for (const [path, size] of sizes) {
+		console.log(`${path}=${size + 1}`);
+	}
+	const key: Path = sampleOf(sizes.keys(), sample);
+	const size: number = sampleOf(sizes.values(), 8);
+	const sampleEntry: [Path, number] = [sample, 9];
+	const pair: string = mapSample(sizes.entries(), ([path, value]) => `${path}:${value}`, sampleEntry);
+	console.log(`${key} ${size} ${pair}`);
+
+	// Reading done and value by hand: the yield arm's value is the element, the return arm's undefined.
+	const values = rootFileNames.values();
+	let step = values.next();
+	while (!step.done) {
+		const path: Path = step.value;
+		console.log(`step ${path}`);
+		step = values.next();
+	}
+	const finished: boolean = step.done;
+	const after: undefined = step.value;
+	console.log(`${finished} ${after === undefined}`);
+	const entries = sizes.entries();
+	const first = entries.next();
+	if (first.done === false) {
+		const [path, value] = first.value;
+		console.log(`${path} ${value}`);
+	}
+	const empty = new Map<Path, number>().keys().next();
+	console.log(`${empty.done} ${empty.value === undefined}`);
+}
+
+run(new Set(['A.ts', 'B.ts', 'a.ts', 'b.ts'].map((name) => name.toLowerCase())), 'c.ts'.repeat(1));
