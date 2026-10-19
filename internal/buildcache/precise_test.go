@@ -17,6 +17,7 @@ import (
 	"runtime"
 	"slices"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -1311,6 +1312,57 @@ func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
 	walkComponents(r.cache, second, components)
 	if refused != 1 || components[first] == components[second] {
 		t.Fatalf("two recorded at once, each naming the other: %d refused (%v), one component %v", refused, refusals, components[first] == components[second])
+	}
+}
+
+// A reach that runs through a file the walk can't read or decode could hide the edge that closes a ring, so it's
+// refused as one, naming the file (Node's must on #egjbcre): reader's set reads upstream, whose set reads beyond, and
+// beyond's file is garbled or unreadable. Through a beyond that isn't there, or is another version's, the walk sees no
+// edge, so the set isn't refused as a cycle. Loom's copy-in walk names the same cases
+// (TestACopyInWhoseWalkCantReadAFileIsRefused). Mutant: a read error back to no edges (both refusals recorded).
+// Not parallel: newRig.
+func TestAReachThroughAFileThatWontReadIsRefused(t *testing.T) {
+	reader, upstream, beyond := fmt.Sprintf("%064x", 0xd0), fmt.Sprintf("%064x", 0xe0), fmt.Sprintf("%064x", 0xf0)
+	for _, test := range []struct {
+		name    string
+		beyond  string
+		mode    os.FileMode
+		refused bool
+	}{
+		{"garbled", `{"version":` + strconv.Quote(readsVersion) + `,"sets":[{"key":5}]}`, 0o644, true},
+		{"unreadable", `{"version":` + strconv.Quote(readsVersion) + `,"sets":[]}`, 0, true},
+		{"not there", "", 0, false},
+		{"another version's", `{"version":"reads v0","sets":[{"key":"k","entries":[{"kind":"product","path":"` + reader + `"}]}]}`, 0o644, false},
+	} {
+		r := newRig(t)
+		reaching, err := json.Marshal(readsFile{Version: readsVersion, Name: "upstream", Sets: []readSet{{Key: fmt.Sprintf("%064x", 1), Entries: []readEntry{{Kind: "product", Path: beyond}}}}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		write(t, r.cache, upstream+".reads", string(reaching))
+		if test.beyond != "" {
+			write(t, r.cache, beyond+".reads", test.beyond)
+			if err := os.Chmod(filepath.Join(r.cache, beyond+".reads"), test.mode); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if test.mode == 0 && test.beyond != "" && os.Getuid() == 0 {
+			t.Logf("%s: skipped, root reads a 0000 file", test.name)
+			continue
+		}
+		forgetHeldForLife()
+		set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}})}
+		_, _, _, err = recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
+			os.MkdirAll(filepath.Join(r.cache, key), 0o755)
+			return filepath.Join(r.cache, key)
+		})
+		refused := err != nil && strings.Contains(err.Error(), "can't be read") && strings.Contains(err.Error(), beyond[:12])
+		if refused != test.refused || !test.refused && err != nil && strings.Contains(err.Error(), "cycle") {
+			t.Errorf("%s: %v, want refused as a reach back %v", test.name, err, test.refused)
+		}
+		if file, _ := loadReads(r.cache, reader); test.refused && len(file.Sets) != 0 {
+			t.Errorf("%s: a refused set was recorded: %+v", test.name, file.Sets)
+		}
 	}
 }
 
