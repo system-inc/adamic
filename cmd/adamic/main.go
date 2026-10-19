@@ -27,7 +27,7 @@ const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts> [--explain-checks]
   adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]`
+  adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--export <name>]... [--abi-json <path>] [--explain-checks]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
