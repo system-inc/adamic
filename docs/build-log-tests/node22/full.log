@@ -1,0 +1,1536 @@
+--- FAIL: TestRegExpBytecodeRandomNodeShard33 (0.16s)
+    regexp_test.go:860: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard32 (0.12s)
+    regexp_test.go:855: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard31 (0.17s)
+    regexp_test.go:850: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard30 (0.24s)
+    regexp_test.go:845: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard29 (0.13s)
+    regexp_test.go:840: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard28 (0.13s)
+    regexp_test.go:835: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard27 (0.15s)
+    regexp_test.go:830: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard26 (0.12s)
+    regexp_test.go:825: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard25 (0.16s)
+    regexp_test.go:820: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard24 (0.10s)
+    regexp_test.go:815: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard23 (0.15s)
+    regexp_test.go:810: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard22 (0.12s)
+    regexp_test.go:805: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard21 (0.12s)
+    regexp_test.go:800: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard20 (0.13s)
+    regexp_test.go:795: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard19 (0.14s)
+    regexp_test.go:790: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard18 (0.10s)
+    regexp_test.go:785: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard17 (0.13s)
+    regexp_test.go:780: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard16 (0.14s)
+    regexp_test.go:775: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard15 (0.10s)
+    regexp_test.go:770: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard14 (0.13s)
+    regexp_test.go:765: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard13 (0.14s)
+    regexp_test.go:760: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard12 (0.10s)
+    regexp_test.go:755: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard11 (0.10s)
+    regexp_test.go:750: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard10 (0.11s)
+    regexp_test.go:745: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard09 (0.12s)
+    regexp_test.go:740: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard08 (0.08s)
+    regexp_test.go:735: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard07 (0.10s)
+    regexp_test.go:730: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard06 (0.14s)
+    regexp_test.go:725: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard05 (0.14s)
+    regexp_test.go:720: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard04 (0.09s)
+    regexp_test.go:715: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard03 (0.12s)
+    regexp_test.go:710: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard02 (0.10s)
+    regexp_test.go:705: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard01 (0.15s)
+    regexp_test.go:700: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard00 (0.15s)
+    regexp_test.go:695: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpSearchNode (0.04s)
+    regexp_search_test.go:109: Node: exit status 1 [eval]:1
+        const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));if(!process.version.startsWith('v24.'))throw Error('Node 24 required');for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};}process.stdout.write(JSON.stringify(cases));
+                                                                                                            ^
+        
+        Error: Node 24 required
+            at [eval]:1:107
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpLintPatternsNode (0.09s)
+    regexp_search_test.go:105: 102 benchmark patterns, 890 individual inputs
+    regexp_search_test.go:106: Node: exit status 1 [eval]:1
+        const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));if(!process.version.startsWith('v24.'))throw Error('Node 24 required');for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};}process.stdout.write(JSON.stringify(cases));
+                                                                                                            ^
+        
+        Error: Node 24 required
+            at [eval]:1:107
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpRegularEngineNode (0.04s)
+    regexp_regular_test.go:40: Node: exit status 1 [eval]:1
+        const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));if(!process.version.startsWith('v24.'))throw Error('Node 24 required');for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};}process.stdout.write(JSON.stringify(cases));
+                                                                                                            ^
+        
+        Error: Node 24 required
+            at [eval]:1:107
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpRuntimeCompilerMatchesNode (0.05s)
+    regexp_compile_matching_test.go:125: Node: exit status 1 [eval]:1
+        const c=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const x of c){const r=new RegExp(x.pattern,x.flags+'d');r.lastIndex=x.lastIndex;const m=r.exec(String.fromCharCode(...x.input));x.expected={captures:m?Array.from(m.indices,p=>p??null):null,lastIndex:r.lastIndex};}process.stdout.write(JSON.stringify(c));
+                                                                                           ^
+        
+        SyntaxError: Invalid regular expression: /(?<x>a)|(?<x>b)/d: Duplicate capture group name
+            at new RegExp (<anonymous>)
+            at [eval]:1:84
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpRuntimeParserWASI (0.35s)
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a)|(?<x>b)" "": <nil> / Invalid regular expression: /(?<x>a)|(?<x>b)/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a)|(?<x>b)" "g": <nil> / Invalid regular expression: /(?<x>a)|(?<x>b)/g: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>b)|(?<x>a)" "": <nil> / Invalid regular expression: /(?<x>b)|(?<x>a)/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?<x>a)|(?<x>b))\\k<x>" "": <nil> / Invalid regular expression: /(?:(?<x>a)|(?<x>b))\k<x>/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?:(?<x>a)|(?<x>b))\\k<x>){2}" "": <nil> / Invalid regular expression: /(?:(?:(?<x>a)|(?<x>b))\k<x>){2}/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "^(?:(?<a>x)|(?<a>y)|z)\\k<a>$" "": <nil> / Invalid regular expression: /^(?:(?<a>x)|(?<a>y)|z)\k<a>$/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "^(?:(?<a>x)|(?<a>y)|z){2}\\k<a>$" "": <nil> / Invalid regular expression: /^(?:(?<a>x)|(?<a>y)|z){2}\k<a>$/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>b)|(?<x>a)" "g": <nil> / Invalid regular expression: /(?<x>b)|(?<x>a)/g: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a)|(?<x>b)" "d": <nil> / Invalid regular expression: /(?<x>a)|(?<x>b)/d: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<y>a)(?<x>a)|(?<x>b)(?<y>b)" "": <nil> / Invalid regular expression: /(?<y>a)(?<x>a)|(?<x>b)(?<y>b)/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))" "": <nil> / Invalid regular expression: /(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?:(?<x>a)|(?<x>b)|c)\\k<x>){2}" "": <nil> / Invalid regular expression: /(?:(?:(?<x>a)|(?<x>b)|c)\k<x>){2}/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))" "d": <nil> / Invalid regular expression: /(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))/d: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?:(?<x>a)|(?<x>b)|c)\\k<x>){2}" "d": <nil> / Invalid regular expression: /(?:(?:(?<x>a)|(?<x>b)|c)\k<x>){2}/d: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-i:^a$)" "i": <nil> / Invalid regular expression: /(?m-i:^a$)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:a(?-i:b))c" "": <nil> / Invalid regular expression: /(?i:a(?-i:b))c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:^.$)" "": <nil> / Invalid regular expression: /(?s:^.$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:^.$)" "": <nil> / Invalid regular expression: /(?s-:^.$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a.(?s:b.b).c" "": <nil> / Invalid regular expression: /a.(?s:b.b).c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a.a|b.b|(?-s:c.c)|d.d|e.e" "s": <nil> / Invalid regular expression: /a.a|b.b|(?-s:c.c)|d.d|e.e/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a.a)|(?:b.b)|(?-s:c.c)|(?:d.d)|(e.e)" "s": <nil> / Invalid regular expression: /(a.a)|(?:b.b)|(?-s:c.c)|(?:d.d)|(e.e)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:Z\\B)" "u": <nil> / Invalid regular expression: /(?i:Z\B)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:Z\\B)" "u": <nil> / Invalid regular expression: /(?i-:Z\B)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:.es)" "i": <nil> / Invalid regular expression: /(?-i:.es)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:.es)" "is": <nil> / Invalid regular expression: /(?-i:.es)/is: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:es$)" "": <nil> / Invalid regular expression: /(?i:es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:es$)" "m": <nil> / Invalid regular expression: /(?i:es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:es$)" "": <nil> / Invalid regular expression: /(?i-:es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:es$)" "m": <nil> / Invalid regular expression: /(?i-:es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:es$)" "": <nil> / Invalid regular expression: /(?m:es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-:es$)" "": <nil> / Invalid regular expression: /(?m-:es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^a\\n(?m:^b$)\\nc$" "": <nil> / Invalid regular expression: /^a\n(?m:^b$)\nc$/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\W)" "ui": <nil> / Invalid regular expression: /(?-i:\W)/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:^.$)" "s": <nil> / Invalid regular expression: /(?-s:^.$)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a.(?-s:b.b).c" "s": <nil> / Invalid regular expression: /a.(?-s:b.b).c/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:.es)" "": <nil> / Invalid regular expression: /(?s:.es)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:.es)" "i": <nil> / Invalid regular expression: /(?s:.es)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:.es)" "": <nil> / Invalid regular expression: /(?s-:.es)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:.es)" "i": <nil> / Invalid regular expression: /(?s-:.es)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\w)" "": <nil> / Invalid regular expression: /(?i:\w)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\w)" "u": <nil> / Invalid regular expression: /(?i:\w)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\w)" "": <nil> / Invalid regular expression: /(?i-:\w)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\w)" "u": <nil> / Invalid regular expression: /(?i-:\w)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:)" "m": <nil> / Invalid regular expression: /(?-m:)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:es$)" "i": <nil> / Invalid regular expression: /(?m:es$)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-:es$)" "i": <nil> / Invalid regular expression: /(?m-:es$)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\W)" "u": <nil> / Invalid regular expression: /(?i:\W)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\W)" "u": <nil> / Invalid regular expression: /(?i-:\W)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:[ab])c" "i": <nil> / Invalid regular expression: /(?-i:[ab])c/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:[^ab])c" "i": <nil> / Invalid regular expression: /(?-i:[^ab])c/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\p{Lu})" "u": <nil> / Invalid regular expression: /(?i:\p{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\p{Lu})" "u": <nil> / Invalid regular expression: /(?i-:\p{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:(?s:^.$))" "s": <nil> / Invalid regular expression: /(?-s:(?s:^.$))/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:(?s-:^.$))" "s": <nil> / Invalid regular expression: /(?-s:(?s-:^.$))/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a)(?-i:\\1)" "i": <nil> / Invalid regular expression: /(a)(?-i:\1)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:a(?i:b))c" "i": <nil> / Invalid regular expression: /(?-i:a(?i:b))c/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:es(?m:$)|js$)" "m": <nil> / Invalid regular expression: /(?-m:es(?m:$)|js$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:es(?m-:$)|js$)" "m": <nil> / Invalid regular expression: /(?-m:es(?m-:$)|js$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\x61)b" "i": <nil> / Invalid regular expression: /(?-i:\x61)b/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\u0061)b" "i": <nil> / Invalid regular expression: /(?-i:\u0061)b/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\u{0061})b" "iu": <nil> / Invalid regular expression: /(?-i:\u{0061})b/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:fo)o" "i": <nil> / Invalid regular expression: /(?-i:fo)o/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "b(?-i:ar)" "i": <nil> / Invalid regular expression: /b(?-i:ar)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "b(?-i:a)z" "i": <nil> / Invalid regular expression: /b(?-i:a)z/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:)" "i": <nil> / Invalid regular expression: /(?-i:)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:^(?-i:a)$)" "i": <nil> / Invalid regular expression: /(?m:^(?-i:a)$)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\b)" "ui": <nil> / Invalid regular expression: /(?-i:\b)/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:)" "": <nil> / Invalid regular expression: /(?i:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:)" "": <nil> / Invalid regular expression: /(?i-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:.es$)" "s": <nil> / Invalid regular expression: /(?-s:.es$)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:.es$)" "sm": <nil> / Invalid regular expression: /(?-s:.es$)/ms: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:Z\\B)" "ui": <nil> / Invalid regular expression: /(?-i:Z\B)/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a|b|(?i:c)|d|e" "": <nil> / Invalid regular expression: /a|b|(?i:c)|d|e/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a)|(?:b)|(?i:c)|(?:d)|(e)" "": <nil> / Invalid regular expression: /(a)|(?:b)|(?i:c)|(?:d)|(e)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:es$)" "i": <nil> / Invalid regular expression: /(?-i:es$)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:es$)" "im": <nil> / Invalid regular expression: /(?-i:es$)/im: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\b)" "": <nil> / Invalid regular expression: /(?i:\b)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\b)" "u": <nil> / Invalid regular expression: /(?i:\b)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\b)" "": <nil> / Invalid regular expression: /(?i-:\b)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\b)" "u": <nil> / Invalid regular expression: /(?i-:\b)/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:a)b" "": <nil> / Invalid regular expression: /(?i:a)b/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "b(?i:a)" "": <nil> / Invalid regular expression: /b(?i:a)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a(?i:b)c" "": <nil> / Invalid regular expression: /a(?i:b)c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:es$)" "m": <nil> / Invalid regular expression: /(?-m:es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:es$)" "mi": <nil> / Invalid regular expression: /(?-m:es$)/im: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:aB)" "i": <nil> / Invalid regular expression: /(?i:aB)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:aB)" "": <nil> / Invalid regular expression: /(?-i:aB)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:.es$)" "": <nil> / Invalid regular expression: /(?s:.es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:.es$)" "m": <nil> / Invalid regular expression: /(?s:.es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:.es$)" "": <nil> / Invalid regular expression: /(?s-:.es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:.es$)" "m": <nil> / Invalid regular expression: /(?s-:.es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:es$)" "m": <nil> / Invalid regular expression: /(?m:es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^(?-m:es$)" "": <nil> / Invalid regular expression: /^(?-m:es$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a.a|b.b|(?s:c.c)|d.d|e.e" "": <nil> / Invalid regular expression: /a.a|b.b|(?s:c.c)|d.d|e.e/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a.a)|(?:b.b)|(?s:c.c)|(?:d.d)|(e.e)" "": <nil> / Invalid regular expression: /(a.a)|(?:b.b)|(?s:c.c)|(?:d.d)|(e.e)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\p{Lu})" "ui": <nil> / Invalid regular expression: /(?-i:\p{Lu})/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\P{Lu})" "ui": <nil> / Invalid regular expression: /(?-i:\P{Lu})/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a|(?-i:b|(?i:c)|d|(?-i:e)|f)|g|(?i:h)|k" "i": <nil> / Invalid regular expression: /a|(?-i:b|(?i:c)|d|(?-i:e)|f)|g|(?i:h)|k/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a|(?i:b|(?-i:c)|d|(?i:e)|f)|g|(?-i:h)|k" "": <nil> / Invalid regular expression: /a|(?i:b|(?-i:c)|d|(?i:e)|f)|g|(?-i:h)|k/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a.a|(?-s:b.b|(?s:c.c)|d.d|(?-s:e.e)|f.f)|g.g|(?s:h.h)|k.k" "s": <nil> / Invalid regular expression: /a.a|(?-s:b.b|(?s:c.c)|d.d|(?-s:e.e)|f.f)|g.g|(?s:h.h)|k.k/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a.a|(?s:b.b|(?-s:c.c)|d.d|(?s:e.e)|f.f)|g.g|(?-s:h.h)|k.k" "": <nil> / Invalid regular expression: /a.a|(?s:b.b|(?-s:c.c)|d.d|(?s:e.e)|f.f)|g.g|(?-s:h.h)|k.k/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:.es)" "": <nil> / Invalid regular expression: /(?i:.es)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:.es)" "s": <nil> / Invalid regular expression: /(?i:.es)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:.es)" "": <nil> / Invalid regular expression: /(?i-:.es)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:.es)" "s": <nil> / Invalid regular expression: /(?i-:.es)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^a$|(?-m:^b$|(?m:^c$)|^d$|(?-m:^e$)|^f$)|^g$|(?m:^h$)|^k$" "m": <nil> / Invalid regular expression: /^a$|(?-m:^b$|(?m:^c$)|^d$|(?-m:^e$)|^f$)|^g$|(?m:^h$)|^k$/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^a$|(?m:^b$|(?-m:^c$)|^d$|(?m:^e$)|^f$)|^g$|(?-m:^h$)|^k$" "": <nil> / Invalid regular expression: /^a$|(?m:^b$|(?-m:^c$)|^d$|(?m:^e$)|^f$)|^g$|(?-m:^h$)|^k$/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:)" "": <nil> / Invalid regular expression: /(?s:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:)" "": <nil> / Invalid regular expression: /(?s-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\P{Lu})" "u": <nil> / Invalid regular expression: /(?i:\P{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\P{Lu})" "u": <nil> / Invalid regular expression: /(?i-:\P{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:(?-s:^.$))" "": <nil> / Invalid regular expression: /(?s:(?-s:^.$))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-:(?-s:^.$))" "": <nil> / Invalid regular expression: /(?s-:(?-s:^.$))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:es.$)" "": <nil> / Invalid regular expression: /(?m:es.$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:es.$)" "s": <nil> / Invalid regular expression: /(?m:es.$)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-:es.$)" "": <nil> / Invalid regular expression: /(?m-:es.$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-:es.$)" "s": <nil> / Invalid regular expression: /(?m-:es.$)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:[ab])c" "": <nil> / Invalid regular expression: /(?i:[ab])c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:[ab])c" "": <nil> / Invalid regular expression: /(?i-:[ab])c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:[^ab])c" "": <nil> / Invalid regular expression: /(?i:[^ab])c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:[^ab])c" "": <nil> / Invalid regular expression: /(?i-:[^ab])c/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:)" "": <nil> / Invalid regular expression: /(?m:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-:)" "": <nil> / Invalid regular expression: /(?m-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:es$|(?-m:js$))" "": <nil> / Invalid regular expression: /(?m:es$|(?-m:js$))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-:es$|(?-m:js$))" "": <nil> / Invalid regular expression: /(?m-:es$|(?-m:js$))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a)(?i:\\1)" "": <nil> / Invalid regular expression: /(a)(?i:\1)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a)(?i-:\\1)" "": <nil> / Invalid regular expression: /(a)(?i-:\1)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^a$|^b$|(?-m:^c$)|^d$|^e$" "m": <nil> / Invalid regular expression: /^a$|^b$|(?-m:^c$)|^d$|^e$/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(^a$)|(?:^b$)|(?-m:^c$)|(?:^d$)|(^e$)" "m": <nil> / Invalid regular expression: /(^a$)|(?:^b$)|(?-m:^c$)|(?:^d$)|(^e$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:\\w)" "ui": <nil> / Invalid regular expression: /(?-i:\w)/iu: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:.es)" "s": <nil> / Invalid regular expression: /(?-s:.es)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:.es)" "si": <nil> / Invalid regular expression: /(?-s:.es)/is: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "a|b|(?-i:c)|d|e" "i": <nil> / Invalid regular expression: /a|b|(?-i:c)|d|e/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(a)|(?:b)|(?-i:c)|(?:d)|(e)" "i": <nil> / Invalid regular expression: /(a)|(?:b)|(?-i:c)|(?:d)|(e)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:es.$)" "m": <nil> / Invalid regular expression: /(?-m:es.$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:es.$)" "ms": <nil> / Invalid regular expression: /(?-m:es.$)/ms: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:^.$)" "s": <nil> / Invalid regular expression: /(?s:^.$)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:^.$)" "": <nil> / Invalid regular expression: /(?-s:^.$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^(?-m:es$)" "m": <nil> / Invalid regular expression: /^(?-m:es$)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:^es)$" "m": <nil> / Invalid regular expression: /(?-m:^es)$/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\x61)b" "": <nil> / Invalid regular expression: /(?i:\x61)b/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\u0061)b" "": <nil> / Invalid regular expression: /(?i:\u0061)b/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:\\u{0061})b" "u": <nil> / Invalid regular expression: /(?i:\u{0061})b/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\x61)b" "": <nil> / Invalid regular expression: /(?i-:\x61)b/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\u0061)b" "": <nil> / Invalid regular expression: /(?i-:\u0061)b/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-:\\u{0061})b" "u": <nil> / Invalid regular expression: /(?i-:\u{0061})b/u: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^a$|^b$|(?m:^c$)|^d$|^e$" "": <nil> / Invalid regular expression: /^a$|^b$|(?m:^c$)|^d$|^e$/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(^a$)|(?:^b$)|(?m:^c$)|(?:^d$)|(^e$)" "": <nil> / Invalid regular expression: /(^a$)|(?:^b$)|(?m:^c$)|(?:^d$)|(^e$)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-is:)" "is": <nil> / Invalid regular expression: /(?-is:)/is: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-im:)" "im": <nil> / Invalid regular expression: /(?-im:)/im: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:)" "s": <nil> / Invalid regular expression: /(?-s:)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-si:)" "si": <nil> / Invalid regular expression: /(?-si:)/is: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-sm:)" "sm": <nil> / Invalid regular expression: /(?-sm:)/ms: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-mi:)" "mi": <nil> / Invalid regular expression: /(?-mi:)/im: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-ms:)" "ms": <nil> / Invalid regular expression: /(?-ms:)/ms: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-ims:)" "ims": <nil> / Invalid regular expression: /(?-ims:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-ism:)" "ism": <nil> / Invalid regular expression: /(?-ism:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-sim:)" "sim": <nil> / Invalid regular expression: /(?-sim:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-smi:)" "smi": <nil> / Invalid regular expression: /(?-smi:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-mis:)" "mis": <nil> / Invalid regular expression: /(?-mis:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-msi:)" "msi": <nil> / Invalid regular expression: /(?-msi:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?is-:)" "": <nil> / Invalid regular expression: /(?is-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?im-:)" "": <nil> / Invalid regular expression: /(?im-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?si-:)" "": <nil> / Invalid regular expression: /(?si-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?sm-:)" "": <nil> / Invalid regular expression: /(?sm-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?mi-:)" "": <nil> / Invalid regular expression: /(?mi-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ms-:)" "": <nil> / Invalid regular expression: /(?ms-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ims-:)" "": <nil> / Invalid regular expression: /(?ims-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ism-:)" "": <nil> / Invalid regular expression: /(?ism-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?sim-:)" "": <nil> / Invalid regular expression: /(?sim-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?smi-:)" "": <nil> / Invalid regular expression: /(?smi-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?mis-:)" "": <nil> / Invalid regular expression: /(?mis-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?msi-:)" "": <nil> / Invalid regular expression: /(?msi-:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-s:)" "": <nil> / Invalid regular expression: /(?i-s:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-sm:)" "": <nil> / Invalid regular expression: /(?i-sm:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-m:)" "": <nil> / Invalid regular expression: /(?i-m:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-ms:)" "": <nil> / Invalid regular expression: /(?i-ms:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-i:)" "": <nil> / Invalid regular expression: /(?s-i:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-im:)" "": <nil> / Invalid regular expression: /(?s-im:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-m:)" "": <nil> / Invalid regular expression: /(?s-m:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s-mi:)" "": <nil> / Invalid regular expression: /(?s-mi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-i:)" "": <nil> / Invalid regular expression: /(?m-i:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-is:)" "": <nil> / Invalid regular expression: /(?m-is:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-s:)" "": <nil> / Invalid regular expression: /(?m-s:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m-si:)" "": <nil> / Invalid regular expression: /(?m-si:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?is-m:)" "": <nil> / Invalid regular expression: /(?is-m:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?im-s:)" "": <nil> / Invalid regular expression: /(?im-s:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?si-m:)" "": <nil> / Invalid regular expression: /(?si-m:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?sm-i:)" "": <nil> / Invalid regular expression: /(?sm-i:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?mi-s:)" "": <nil> / Invalid regular expression: /(?mi-s:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ms-i:)" "": <nil> / Invalid regular expression: /(?ms-i:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:(?-i:))" "": <nil> / Invalid regular expression: /(?-i:(?-i:))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:(?-s:))" "": <nil> / Invalid regular expression: /(?-s:(?-s:))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:(?-m:))" "": <nil> / Invalid regular expression: /(?-m:(?-m:))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:)" "i": <nil> / Invalid regular expression: /(?i:)/i: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:)" "s": <nil> / Invalid regular expression: /(?s:)/s: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:)" "m": <nil> / Invalid regular expression: /(?m:)/m: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ims:)" "ims": <nil> / Invalid regular expression: /(?ims:)/ims: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:(?i:))" "": <nil> / Invalid regular expression: /(?i:(?i:))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?s:(?s:))" "": <nil> / Invalid regular expression: /(?s:(?s:))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?m:(?m:))" "": <nil> / Invalid regular expression: /(?m:(?m:))/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:)" "": <nil> / Invalid regular expression: /(?-i:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-is:)" "": <nil> / Invalid regular expression: /(?-is:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-im:)" "": <nil> / Invalid regular expression: /(?-im:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-s:)" "": <nil> / Invalid regular expression: /(?-s:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-si:)" "": <nil> / Invalid regular expression: /(?-si:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-sm:)" "": <nil> / Invalid regular expression: /(?-sm:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-m:)" "": <nil> / Invalid regular expression: /(?-m:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-mi:)" "": <nil> / Invalid regular expression: /(?-mi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-ms:)" "": <nil> / Invalid regular expression: /(?-ms:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-ims:)" "": <nil> / Invalid regular expression: /(?-ims:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-ism:)" "": <nil> / Invalid regular expression: /(?-ism:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-smi:)" "": <nil> / Invalid regular expression: /(?-smi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-sim:)" "": <nil> / Invalid regular expression: /(?-sim:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-mis:)" "": <nil> / Invalid regular expression: /(?-mis:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-msi:)" "": <nil> / Invalid regular expression: /(?-msi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?is:)" "": <nil> / Invalid regular expression: /(?is:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?im:)" "": <nil> / Invalid regular expression: /(?im:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?si:)" "": <nil> / Invalid regular expression: /(?si:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?sm:)" "": <nil> / Invalid regular expression: /(?sm:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?mi:)" "": <nil> / Invalid regular expression: /(?mi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ms:)" "": <nil> / Invalid regular expression: /(?ms:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ims:)" "": <nil> / Invalid regular expression: /(?ims:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?ism:)" "": <nil> / Invalid regular expression: /(?ism:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?sim:)" "": <nil> / Invalid regular expression: /(?sim:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?smi:)" "": <nil> / Invalid regular expression: /(?smi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?mis:)" "": <nil> / Invalid regular expression: /(?mis:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?msi:)" "": <nil> / Invalid regular expression: /(?msi:)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{sc=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{sc=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{Script_Extensions=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\p{scx=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{Script_Extensions=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "^\\P{scx=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<a>x)|(?<a>y)" "": <nil> / Invalid regular expression: /(?<a>x)|(?<a>y)/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?:(?<a>x)|(?<a>y))" "": <nil> / Invalid regular expression: /(?:(?<a>x)|(?<a>y))/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?i:abc)" "": <nil> / Invalid regular expression: /(?i:abc)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?-i:abc)" "": <nil> / Invalid regular expression: /(?-i:abc)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?i-ms:abc)" "": <nil> / Invalid regular expression: /(?i-ms:abc)/: Invalid group
+    regexp_compile_parser_test.go:26: reference versus Node "(?<year>\\d{4})-\\d{2}|\\d{2}\\/(?<year>\\d{4})" "": <nil> / Invalid regular expression: /(?<year>\d{4})-\d{2}|\d{2}\/(?<year>\d{4})/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<a>x)\\k<a>|(?<a>y)" "": <nil> / Invalid regular expression: /(?<a>x)\k<a>|(?<a>y)/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<foo>)((?<bar>bar)bar)(?<baz>baz)|(foo(?<foo>foo))(?<baz>)" "": <nil> / Invalid regular expression: /(?<foo>)((?<bar>bar)bar)(?<baz>baz)|(foo(?<foo>foo))(?<baz>)/: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a)*|(?<x>a)" "v": <nil> / Invalid regular expression: /(?<x>a)*|(?<x>a)/v: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a)|(?<x>a)" "i": <nil> / Invalid regular expression: /(?<x>a)|(?<x>a)/i: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a){0}|(?<x>a)" "gimsy": <nil> / Invalid regular expression: /(?<x>a){0}|(?<x>a)/gimsy: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a){2,4}|(?<x>a)" "u": <nil> / Invalid regular expression: /(?<x>a){2,4}|(?<x>a)/u: Duplicate capture group name
+    regexp_compile_parser_test.go:26: reference versus Node "(?<x>a)|(?<x>a)" "i": <nil> / Invalid regular expression: /(?<x>a)|(?<x>a)/i: Duplicate capture group name
+    regexp_compile_parser_test.go:26: parser WASI proof requires WASI_SYSROOT
+--- FAIL: TestRegExpRuntimeCompilerMatchesNodeWASM (0.05s)
+    regexp_compile_matching_test.go:129: Node: exit status 1 [eval]:1
+        const c=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const x of c){const r=new RegExp(x.pattern,x.flags+'d');r.lastIndex=x.lastIndex;const m=r.exec(String.fromCharCode(...x.input));x.expected={captures:m?Array.from(m.indices,p=>p??null):null,lastIndex:r.lastIndex};}process.stdout.write(JSON.stringify(c));
+                                                                                           ^
+        
+        SyntaxError: Invalid regular expression: /(?<x>a)|(?<x>b)/d: Duplicate capture group name
+            at new RegExp (<anonymous>)
+            at [eval]:1:84
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpRuntimeV8WASI (0.35s)
+    regexp_compile_bytecode_test.go:271: WASI_SYSROOT required
+--- FAIL: TestRegExpRuntimeParserAcceptance (5.37s)
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a)|(?<x>b)" "": <nil> / Invalid regular expression: /(?<x>a)|(?<x>b)/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a)|(?<x>b)" "g": <nil> / Invalid regular expression: /(?<x>a)|(?<x>b)/g: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>b)|(?<x>a)" "": <nil> / Invalid regular expression: /(?<x>b)|(?<x>a)/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?<x>a)|(?<x>b))\\k<x>" "": <nil> / Invalid regular expression: /(?:(?<x>a)|(?<x>b))\k<x>/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?:(?<x>a)|(?<x>b))\\k<x>){2}" "": <nil> / Invalid regular expression: /(?:(?:(?<x>a)|(?<x>b))\k<x>){2}/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "^(?:(?<a>x)|(?<a>y)|z)\\k<a>$" "": <nil> / Invalid regular expression: /^(?:(?<a>x)|(?<a>y)|z)\k<a>$/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "^(?:(?<a>x)|(?<a>y)|z){2}\\k<a>$" "": <nil> / Invalid regular expression: /^(?:(?<a>x)|(?<a>y)|z){2}\k<a>$/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>b)|(?<x>a)" "g": <nil> / Invalid regular expression: /(?<x>b)|(?<x>a)/g: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a)|(?<x>b)" "d": <nil> / Invalid regular expression: /(?<x>a)|(?<x>b)/d: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<y>a)(?<x>a)|(?<x>b)(?<y>b)" "": <nil> / Invalid regular expression: /(?<y>a)(?<x>a)|(?<x>b)(?<y>b)/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))" "": <nil> / Invalid regular expression: /(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?:(?<x>a)|(?<x>b)|c)\\k<x>){2}" "": <nil> / Invalid regular expression: /(?:(?:(?<x>a)|(?<x>b)|c)\k<x>){2}/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))" "d": <nil> / Invalid regular expression: /(?:(?<x>a)|(?<y>a)(?<x>b))(?:(?<z>c)|(?<z>d))/d: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?:(?<x>a)|(?<x>b)|c)\\k<x>){2}" "d": <nil> / Invalid regular expression: /(?:(?:(?<x>a)|(?<x>b)|c)\k<x>){2}/d: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-i:^a$)" "i": <nil> / Invalid regular expression: /(?m-i:^a$)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:a(?-i:b))c" "": <nil> / Invalid regular expression: /(?i:a(?-i:b))c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:^.$)" "": <nil> / Invalid regular expression: /(?s:^.$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:^.$)" "": <nil> / Invalid regular expression: /(?s-:^.$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a.(?s:b.b).c" "": <nil> / Invalid regular expression: /a.(?s:b.b).c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a.a|b.b|(?-s:c.c)|d.d|e.e" "s": <nil> / Invalid regular expression: /a.a|b.b|(?-s:c.c)|d.d|e.e/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a.a)|(?:b.b)|(?-s:c.c)|(?:d.d)|(e.e)" "s": <nil> / Invalid regular expression: /(a.a)|(?:b.b)|(?-s:c.c)|(?:d.d)|(e.e)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:Z\\B)" "u": <nil> / Invalid regular expression: /(?i:Z\B)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:Z\\B)" "u": <nil> / Invalid regular expression: /(?i-:Z\B)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:.es)" "i": <nil> / Invalid regular expression: /(?-i:.es)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:.es)" "is": <nil> / Invalid regular expression: /(?-i:.es)/is: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:es$)" "": <nil> / Invalid regular expression: /(?i:es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:es$)" "m": <nil> / Invalid regular expression: /(?i:es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:es$)" "": <nil> / Invalid regular expression: /(?i-:es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:es$)" "m": <nil> / Invalid regular expression: /(?i-:es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:es$)" "": <nil> / Invalid regular expression: /(?m:es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-:es$)" "": <nil> / Invalid regular expression: /(?m-:es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^a\\n(?m:^b$)\\nc$" "": <nil> / Invalid regular expression: /^a\n(?m:^b$)\nc$/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\W)" "ui": <nil> / Invalid regular expression: /(?-i:\W)/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:^.$)" "s": <nil> / Invalid regular expression: /(?-s:^.$)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a.(?-s:b.b).c" "s": <nil> / Invalid regular expression: /a.(?-s:b.b).c/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:.es)" "": <nil> / Invalid regular expression: /(?s:.es)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:.es)" "i": <nil> / Invalid regular expression: /(?s:.es)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:.es)" "": <nil> / Invalid regular expression: /(?s-:.es)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:.es)" "i": <nil> / Invalid regular expression: /(?s-:.es)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\w)" "": <nil> / Invalid regular expression: /(?i:\w)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\w)" "u": <nil> / Invalid regular expression: /(?i:\w)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\w)" "": <nil> / Invalid regular expression: /(?i-:\w)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\w)" "u": <nil> / Invalid regular expression: /(?i-:\w)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:)" "m": <nil> / Invalid regular expression: /(?-m:)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:es$)" "i": <nil> / Invalid regular expression: /(?m:es$)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-:es$)" "i": <nil> / Invalid regular expression: /(?m-:es$)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\W)" "u": <nil> / Invalid regular expression: /(?i:\W)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\W)" "u": <nil> / Invalid regular expression: /(?i-:\W)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:[ab])c" "i": <nil> / Invalid regular expression: /(?-i:[ab])c/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:[^ab])c" "i": <nil> / Invalid regular expression: /(?-i:[^ab])c/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\p{Lu})" "u": <nil> / Invalid regular expression: /(?i:\p{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\p{Lu})" "u": <nil> / Invalid regular expression: /(?i-:\p{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:(?s:^.$))" "s": <nil> / Invalid regular expression: /(?-s:(?s:^.$))/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:(?s-:^.$))" "s": <nil> / Invalid regular expression: /(?-s:(?s-:^.$))/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a)(?-i:\\1)" "i": <nil> / Invalid regular expression: /(a)(?-i:\1)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:a(?i:b))c" "i": <nil> / Invalid regular expression: /(?-i:a(?i:b))c/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:es(?m:$)|js$)" "m": <nil> / Invalid regular expression: /(?-m:es(?m:$)|js$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:es(?m-:$)|js$)" "m": <nil> / Invalid regular expression: /(?-m:es(?m-:$)|js$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\x61)b" "i": <nil> / Invalid regular expression: /(?-i:\x61)b/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\u0061)b" "i": <nil> / Invalid regular expression: /(?-i:\u0061)b/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\u{0061})b" "iu": <nil> / Invalid regular expression: /(?-i:\u{0061})b/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:fo)o" "i": <nil> / Invalid regular expression: /(?-i:fo)o/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "b(?-i:ar)" "i": <nil> / Invalid regular expression: /b(?-i:ar)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "b(?-i:a)z" "i": <nil> / Invalid regular expression: /b(?-i:a)z/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:)" "i": <nil> / Invalid regular expression: /(?-i:)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:^(?-i:a)$)" "i": <nil> / Invalid regular expression: /(?m:^(?-i:a)$)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\b)" "ui": <nil> / Invalid regular expression: /(?-i:\b)/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:)" "": <nil> / Invalid regular expression: /(?i:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:)" "": <nil> / Invalid regular expression: /(?i-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:.es$)" "s": <nil> / Invalid regular expression: /(?-s:.es$)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:.es$)" "sm": <nil> / Invalid regular expression: /(?-s:.es$)/ms: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:Z\\B)" "ui": <nil> / Invalid regular expression: /(?-i:Z\B)/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a|b|(?i:c)|d|e" "": <nil> / Invalid regular expression: /a|b|(?i:c)|d|e/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a)|(?:b)|(?i:c)|(?:d)|(e)" "": <nil> / Invalid regular expression: /(a)|(?:b)|(?i:c)|(?:d)|(e)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:es$)" "i": <nil> / Invalid regular expression: /(?-i:es$)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:es$)" "im": <nil> / Invalid regular expression: /(?-i:es$)/im: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\b)" "": <nil> / Invalid regular expression: /(?i:\b)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\b)" "u": <nil> / Invalid regular expression: /(?i:\b)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\b)" "": <nil> / Invalid regular expression: /(?i-:\b)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\b)" "u": <nil> / Invalid regular expression: /(?i-:\b)/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:a)b" "": <nil> / Invalid regular expression: /(?i:a)b/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "b(?i:a)" "": <nil> / Invalid regular expression: /b(?i:a)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a(?i:b)c" "": <nil> / Invalid regular expression: /a(?i:b)c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:es$)" "m": <nil> / Invalid regular expression: /(?-m:es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:es$)" "mi": <nil> / Invalid regular expression: /(?-m:es$)/im: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:aB)" "i": <nil> / Invalid regular expression: /(?i:aB)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:aB)" "": <nil> / Invalid regular expression: /(?-i:aB)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:.es$)" "": <nil> / Invalid regular expression: /(?s:.es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:.es$)" "m": <nil> / Invalid regular expression: /(?s:.es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:.es$)" "": <nil> / Invalid regular expression: /(?s-:.es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:.es$)" "m": <nil> / Invalid regular expression: /(?s-:.es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:es$)" "m": <nil> / Invalid regular expression: /(?m:es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^(?-m:es$)" "": <nil> / Invalid regular expression: /^(?-m:es$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a.a|b.b|(?s:c.c)|d.d|e.e" "": <nil> / Invalid regular expression: /a.a|b.b|(?s:c.c)|d.d|e.e/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a.a)|(?:b.b)|(?s:c.c)|(?:d.d)|(e.e)" "": <nil> / Invalid regular expression: /(a.a)|(?:b.b)|(?s:c.c)|(?:d.d)|(e.e)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\p{Lu})" "ui": <nil> / Invalid regular expression: /(?-i:\p{Lu})/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\P{Lu})" "ui": <nil> / Invalid regular expression: /(?-i:\P{Lu})/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a|(?-i:b|(?i:c)|d|(?-i:e)|f)|g|(?i:h)|k" "i": <nil> / Invalid regular expression: /a|(?-i:b|(?i:c)|d|(?-i:e)|f)|g|(?i:h)|k/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a|(?i:b|(?-i:c)|d|(?i:e)|f)|g|(?-i:h)|k" "": <nil> / Invalid regular expression: /a|(?i:b|(?-i:c)|d|(?i:e)|f)|g|(?-i:h)|k/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a.a|(?-s:b.b|(?s:c.c)|d.d|(?-s:e.e)|f.f)|g.g|(?s:h.h)|k.k" "s": <nil> / Invalid regular expression: /a.a|(?-s:b.b|(?s:c.c)|d.d|(?-s:e.e)|f.f)|g.g|(?s:h.h)|k.k/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a.a|(?s:b.b|(?-s:c.c)|d.d|(?s:e.e)|f.f)|g.g|(?-s:h.h)|k.k" "": <nil> / Invalid regular expression: /a.a|(?s:b.b|(?-s:c.c)|d.d|(?s:e.e)|f.f)|g.g|(?-s:h.h)|k.k/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:.es)" "": <nil> / Invalid regular expression: /(?i:.es)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:.es)" "s": <nil> / Invalid regular expression: /(?i:.es)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:.es)" "": <nil> / Invalid regular expression: /(?i-:.es)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:.es)" "s": <nil> / Invalid regular expression: /(?i-:.es)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^a$|(?-m:^b$|(?m:^c$)|^d$|(?-m:^e$)|^f$)|^g$|(?m:^h$)|^k$" "m": <nil> / Invalid regular expression: /^a$|(?-m:^b$|(?m:^c$)|^d$|(?-m:^e$)|^f$)|^g$|(?m:^h$)|^k$/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^a$|(?m:^b$|(?-m:^c$)|^d$|(?m:^e$)|^f$)|^g$|(?-m:^h$)|^k$" "": <nil> / Invalid regular expression: /^a$|(?m:^b$|(?-m:^c$)|^d$|(?m:^e$)|^f$)|^g$|(?-m:^h$)|^k$/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:)" "": <nil> / Invalid regular expression: /(?s:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:)" "": <nil> / Invalid regular expression: /(?s-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\P{Lu})" "u": <nil> / Invalid regular expression: /(?i:\P{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\P{Lu})" "u": <nil> / Invalid regular expression: /(?i-:\P{Lu})/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:(?-s:^.$))" "": <nil> / Invalid regular expression: /(?s:(?-s:^.$))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-:(?-s:^.$))" "": <nil> / Invalid regular expression: /(?s-:(?-s:^.$))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:es.$)" "": <nil> / Invalid regular expression: /(?m:es.$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:es.$)" "s": <nil> / Invalid regular expression: /(?m:es.$)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-:es.$)" "": <nil> / Invalid regular expression: /(?m-:es.$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-:es.$)" "s": <nil> / Invalid regular expression: /(?m-:es.$)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:[ab])c" "": <nil> / Invalid regular expression: /(?i:[ab])c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:[ab])c" "": <nil> / Invalid regular expression: /(?i-:[ab])c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:[^ab])c" "": <nil> / Invalid regular expression: /(?i:[^ab])c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:[^ab])c" "": <nil> / Invalid regular expression: /(?i-:[^ab])c/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:)" "": <nil> / Invalid regular expression: /(?m:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-:)" "": <nil> / Invalid regular expression: /(?m-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:es$|(?-m:js$))" "": <nil> / Invalid regular expression: /(?m:es$|(?-m:js$))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-:es$|(?-m:js$))" "": <nil> / Invalid regular expression: /(?m-:es$|(?-m:js$))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a)(?i:\\1)" "": <nil> / Invalid regular expression: /(a)(?i:\1)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a)(?i-:\\1)" "": <nil> / Invalid regular expression: /(a)(?i-:\1)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^a$|^b$|(?-m:^c$)|^d$|^e$" "m": <nil> / Invalid regular expression: /^a$|^b$|(?-m:^c$)|^d$|^e$/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(^a$)|(?:^b$)|(?-m:^c$)|(?:^d$)|(^e$)" "m": <nil> / Invalid regular expression: /(^a$)|(?:^b$)|(?-m:^c$)|(?:^d$)|(^e$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:\\w)" "ui": <nil> / Invalid regular expression: /(?-i:\w)/iu: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:.es)" "s": <nil> / Invalid regular expression: /(?-s:.es)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:.es)" "si": <nil> / Invalid regular expression: /(?-s:.es)/is: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "a|b|(?-i:c)|d|e" "i": <nil> / Invalid regular expression: /a|b|(?-i:c)|d|e/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(a)|(?:b)|(?-i:c)|(?:d)|(e)" "i": <nil> / Invalid regular expression: /(a)|(?:b)|(?-i:c)|(?:d)|(e)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:es.$)" "m": <nil> / Invalid regular expression: /(?-m:es.$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:es.$)" "ms": <nil> / Invalid regular expression: /(?-m:es.$)/ms: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:^.$)" "s": <nil> / Invalid regular expression: /(?s:^.$)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:^.$)" "": <nil> / Invalid regular expression: /(?-s:^.$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^(?-m:es$)" "m": <nil> / Invalid regular expression: /^(?-m:es$)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:^es)$" "m": <nil> / Invalid regular expression: /(?-m:^es)$/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\x61)b" "": <nil> / Invalid regular expression: /(?i:\x61)b/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\u0061)b" "": <nil> / Invalid regular expression: /(?i:\u0061)b/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:\\u{0061})b" "u": <nil> / Invalid regular expression: /(?i:\u{0061})b/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\x61)b" "": <nil> / Invalid regular expression: /(?i-:\x61)b/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\u0061)b" "": <nil> / Invalid regular expression: /(?i-:\u0061)b/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-:\\u{0061})b" "u": <nil> / Invalid regular expression: /(?i-:\u{0061})b/u: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^a$|^b$|(?m:^c$)|^d$|^e$" "": <nil> / Invalid regular expression: /^a$|^b$|(?m:^c$)|^d$|^e$/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(^a$)|(?:^b$)|(?m:^c$)|(?:^d$)|(^e$)" "": <nil> / Invalid regular expression: /(^a$)|(?:^b$)|(?m:^c$)|(?:^d$)|(^e$)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-is:)" "is": <nil> / Invalid regular expression: /(?-is:)/is: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-im:)" "im": <nil> / Invalid regular expression: /(?-im:)/im: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:)" "s": <nil> / Invalid regular expression: /(?-s:)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-si:)" "si": <nil> / Invalid regular expression: /(?-si:)/is: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-sm:)" "sm": <nil> / Invalid regular expression: /(?-sm:)/ms: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-mi:)" "mi": <nil> / Invalid regular expression: /(?-mi:)/im: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-ms:)" "ms": <nil> / Invalid regular expression: /(?-ms:)/ms: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-ims:)" "ims": <nil> / Invalid regular expression: /(?-ims:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-ism:)" "ism": <nil> / Invalid regular expression: /(?-ism:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-sim:)" "sim": <nil> / Invalid regular expression: /(?-sim:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-smi:)" "smi": <nil> / Invalid regular expression: /(?-smi:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-mis:)" "mis": <nil> / Invalid regular expression: /(?-mis:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-msi:)" "msi": <nil> / Invalid regular expression: /(?-msi:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?is-:)" "": <nil> / Invalid regular expression: /(?is-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?im-:)" "": <nil> / Invalid regular expression: /(?im-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?si-:)" "": <nil> / Invalid regular expression: /(?si-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?sm-:)" "": <nil> / Invalid regular expression: /(?sm-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?mi-:)" "": <nil> / Invalid regular expression: /(?mi-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ms-:)" "": <nil> / Invalid regular expression: /(?ms-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ims-:)" "": <nil> / Invalid regular expression: /(?ims-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ism-:)" "": <nil> / Invalid regular expression: /(?ism-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?sim-:)" "": <nil> / Invalid regular expression: /(?sim-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?smi-:)" "": <nil> / Invalid regular expression: /(?smi-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?mis-:)" "": <nil> / Invalid regular expression: /(?mis-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?msi-:)" "": <nil> / Invalid regular expression: /(?msi-:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-s:)" "": <nil> / Invalid regular expression: /(?i-s:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-sm:)" "": <nil> / Invalid regular expression: /(?i-sm:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-m:)" "": <nil> / Invalid regular expression: /(?i-m:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-ms:)" "": <nil> / Invalid regular expression: /(?i-ms:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-i:)" "": <nil> / Invalid regular expression: /(?s-i:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-im:)" "": <nil> / Invalid regular expression: /(?s-im:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-m:)" "": <nil> / Invalid regular expression: /(?s-m:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s-mi:)" "": <nil> / Invalid regular expression: /(?s-mi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-i:)" "": <nil> / Invalid regular expression: /(?m-i:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-is:)" "": <nil> / Invalid regular expression: /(?m-is:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-s:)" "": <nil> / Invalid regular expression: /(?m-s:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m-si:)" "": <nil> / Invalid regular expression: /(?m-si:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?is-m:)" "": <nil> / Invalid regular expression: /(?is-m:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?im-s:)" "": <nil> / Invalid regular expression: /(?im-s:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?si-m:)" "": <nil> / Invalid regular expression: /(?si-m:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?sm-i:)" "": <nil> / Invalid regular expression: /(?sm-i:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?mi-s:)" "": <nil> / Invalid regular expression: /(?mi-s:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ms-i:)" "": <nil> / Invalid regular expression: /(?ms-i:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:(?-i:))" "": <nil> / Invalid regular expression: /(?-i:(?-i:))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:(?-s:))" "": <nil> / Invalid regular expression: /(?-s:(?-s:))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:(?-m:))" "": <nil> / Invalid regular expression: /(?-m:(?-m:))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:)" "i": <nil> / Invalid regular expression: /(?i:)/i: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:)" "s": <nil> / Invalid regular expression: /(?s:)/s: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:)" "m": <nil> / Invalid regular expression: /(?m:)/m: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ims:)" "ims": <nil> / Invalid regular expression: /(?ims:)/ims: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:(?i:))" "": <nil> / Invalid regular expression: /(?i:(?i:))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?s:(?s:))" "": <nil> / Invalid regular expression: /(?s:(?s:))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?m:(?m:))" "": <nil> / Invalid regular expression: /(?m:(?m:))/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:)" "": <nil> / Invalid regular expression: /(?-i:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-is:)" "": <nil> / Invalid regular expression: /(?-is:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-im:)" "": <nil> / Invalid regular expression: /(?-im:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-s:)" "": <nil> / Invalid regular expression: /(?-s:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-si:)" "": <nil> / Invalid regular expression: /(?-si:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-sm:)" "": <nil> / Invalid regular expression: /(?-sm:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-m:)" "": <nil> / Invalid regular expression: /(?-m:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-mi:)" "": <nil> / Invalid regular expression: /(?-mi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-ms:)" "": <nil> / Invalid regular expression: /(?-ms:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-ims:)" "": <nil> / Invalid regular expression: /(?-ims:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-ism:)" "": <nil> / Invalid regular expression: /(?-ism:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-smi:)" "": <nil> / Invalid regular expression: /(?-smi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-sim:)" "": <nil> / Invalid regular expression: /(?-sim:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-mis:)" "": <nil> / Invalid regular expression: /(?-mis:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-msi:)" "": <nil> / Invalid regular expression: /(?-msi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?is:)" "": <nil> / Invalid regular expression: /(?is:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?im:)" "": <nil> / Invalid regular expression: /(?im:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?si:)" "": <nil> / Invalid regular expression: /(?si:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?sm:)" "": <nil> / Invalid regular expression: /(?sm:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?mi:)" "": <nil> / Invalid regular expression: /(?mi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ms:)" "": <nil> / Invalid regular expression: /(?ms:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ims:)" "": <nil> / Invalid regular expression: /(?ims:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?ism:)" "": <nil> / Invalid regular expression: /(?ism:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?sim:)" "": <nil> / Invalid regular expression: /(?sim:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?smi:)" "": <nil> / Invalid regular expression: /(?smi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?mis:)" "": <nil> / Invalid regular expression: /(?mis:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?msi:)" "": <nil> / Invalid regular expression: /(?msi:)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Sidt}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Sidetic}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Sidetic}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Sidt}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Sidt}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Berf}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Beria_Erfe}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Beria_Erfe}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Berf}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Berf}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{Script=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{sc=Tayo}+$" "u": <nil> / Invalid regular expression: /^\p{sc=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{Script=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Tai_Yo}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tai_Yo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{sc=Tayo}+$" "u": <nil> / Invalid regular expression: /^\P{sc=Tayo}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{Script_Extensions=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{Script_Extensions=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\p{scx=Tols}+$" "u": <nil> / Invalid regular expression: /^\p{scx=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{Script_Extensions=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{Script_Extensions=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Tolong_Siki}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tolong_Siki}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "^\\P{scx=Tols}+$" "u": <nil> / Invalid regular expression: /^\P{scx=Tols}+$/u: Invalid property name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<a>x)|(?<a>y)" "": <nil> / Invalid regular expression: /(?<a>x)|(?<a>y)/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?:(?<a>x)|(?<a>y))" "": <nil> / Invalid regular expression: /(?:(?<a>x)|(?<a>y))/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?i:abc)" "": <nil> / Invalid regular expression: /(?i:abc)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?-i:abc)" "": <nil> / Invalid regular expression: /(?-i:abc)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?i-ms:abc)" "": <nil> / Invalid regular expression: /(?i-ms:abc)/: Invalid group
+    regexp_compile_parser_test.go:22: reference versus Node "(?<year>\\d{4})-\\d{2}|\\d{2}\\/(?<year>\\d{4})" "": <nil> / Invalid regular expression: /(?<year>\d{4})-\d{2}|\d{2}\/(?<year>\d{4})/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<a>x)\\k<a>|(?<a>y)" "": <nil> / Invalid regular expression: /(?<a>x)\k<a>|(?<a>y)/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<foo>)((?<bar>bar)bar)(?<baz>baz)|(foo(?<foo>foo))(?<baz>)" "": <nil> / Invalid regular expression: /(?<foo>)((?<bar>bar)bar)(?<baz>baz)|(foo(?<foo>foo))(?<baz>)/: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a)*|(?<x>a)" "v": <nil> / Invalid regular expression: /(?<x>a)*|(?<x>a)/v: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a)|(?<x>a)" "i": <nil> / Invalid regular expression: /(?<x>a)|(?<x>a)/i: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a){0}|(?<x>a)" "gimsy": <nil> / Invalid regular expression: /(?<x>a){0}|(?<x>a)/gimsy: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a){2,4}|(?<x>a)" "u": <nil> / Invalid regular expression: /(?<x>a){2,4}|(?<x>a)/u: Duplicate capture group name
+    regexp_compile_parser_test.go:22: reference versus Node "(?<x>a)|(?<x>a)" "i": <nil> / Invalid regular expression: /(?<x>a)|(?<x>a)/i: Duplicate capture group name
+    regexp_compile_parser_test.go:22: C versus Go: exit status 1
+        case 4662: status 1 reason Invalid regular expression: /(?i-i:a)/: Repeated flag in flag group expected Invalid regular expression: /(?i-i:a)/: Invalid group
+        case 4679: status 1 reason Invalid regular expression: /(?m-ims:a)/: Repeated flag in flag group expected Invalid regular expression: /(?m-ims:a)/: Invalid group
+        case 4680: status 1 reason Invalid regular expression: /(?s-s:a)/: Repeated flag in flag group expected Invalid regular expression: /(?s-s:a)/: Invalid group
+        case 4683: status 1 reason Invalid regular expression: /(?-imsi:a)/: Repeated flag in flag group expected Invalid regular expression: /(?-imsi:a)/: Invalid group
+        case 4715: status 1 reason Invalid regular expression: /(?imsi:a)/: Repeated flag in flag group expected Invalid regular expression: /(?imsi:a)/: Invalid group
+        case 4722: status 1 reason Invalid regular expression: /(?ii-:a)/: Repeated flag in flag group expected Invalid regular expression: /(?ii-:a)/: Invalid group
+        case 4762: status 1 reason Invalid regular expression: /(?ii:a)/: Repeated flag in flag group expected Invalid regular expression: /(?ii:a)/: Invalid group
+        case 4766: status 1 reason Invalid regular expression: /(?-:a)/: Invalid flag group expected Invalid regular expression: /(?-:a)/: Invalid group
+        case 4777: status 1 reason Invalid regular expression: /(?ims-m:a)/: Repeated flag in flag group expected Invalid regular expression: /(?ims-m:a)/: Invalid group
+        case 4798: status 1 reason Invalid regular expression: /(?m-m:a)/: Repeated flag in flag group expected Invalid regular expression: /(?m-m:a)/: Invalid group
+        case 4804: status 1 reason Invalid regular expression: /(?imsi-:a)/: Repeated flag in flag group expected Invalid regular expression: /(?imsi-:a)/: Invalid group
+        case 4807: status 1 reason Invalid regular expression: /(?-ii:a)/: Repeated flag in flag group expected Invalid regular expression: /(?-ii:a)/: Invalid group
+        case 4888: status 1 reason Invalid regular expression: /[\1]/u: Invalid decimal escape expected Invalid regular expression: /[\1]/u: Invalid class escape
+        case 4889: status 1 reason Invalid regular expression: /[\2]/u: Invalid decimal escape expected Invalid regular expression: /[\2]/u: Invalid class escape
+        case 4890: status 1 reason Invalid regular expression: /[\3]/u: Invalid decimal escape expected Invalid regular expression: /[\3]/u: Invalid class escape
+        case 4891: status 1 reason Invalid regular expression: /[\4]/u: Invalid decimal escape expected Invalid regular expression: /[\4]/u: Invalid class escape
+        case 4892: status 1 reason Invalid regular expression: /[\5]/u: Invalid decimal escape expected Invalid regular expression: /[\5]/u: Invalid class escape
+        case 4893: status 1 reason Invalid regular expression: /[\6]/u: Invalid decimal escape expected Invalid regular expression: /[\6]/u: Invalid class escape
+        case 4894: status 1 reason Invalid regular expression: /[\7]/u: Invalid decimal escape expected Invalid regular expression: /[\7]/u: Invalid class escape
+        case 4907: status 1 reason Invalid regular expression: /[\00]/u: Invalid decimal escape expected Invalid regular expression: /[\00]/u: Invalid class escape
+        case 4908: status 1 reason Invalid regular expression: /[\01]/u: Invalid decimal escape expected Invalid regular expression: /[\01]/u: Invalid class escape
+        case 4909: status 1 reason Invalid regular expression: /[\02]/u: Invalid decimal escape expected Invalid regular expression: /[\02]/u: Invalid class escape
+        case 4910: status 1 reason Invalid regular expression: /[\03]/u: Invalid decimal escape expected Invalid regular expression: /[\03]/u: Invalid class escape
+        case 4911: status 1 reason Invalid regular expression: /[\04]/u: Invalid decimal escape expected Invalid regular expression: /[\04]/u: Invalid class escape
+        case 4912: status 1 reason Invalid regular expression: /[\05]/u: Invalid decimal escape expected Invalid regular expression: /[\05]/u: Invalid class escape
+        case 4913: status 1 reason Invalid regular expression: /[\06]/u: Invalid decimal escape expected Invalid regular expression: /[\06]/u: Invalid class escape
+        case 4914: status 1 reason Invalid regular expression: /[\07]/u: Invalid decimal escape expected Invalid regular expression: /[\07]/u: Invalid class escape
+        case 4915: status 1 reason Invalid regular expression: /[\08]/u: Invalid decimal escape expected Invalid regular expression: /[\08]/u: Invalid class escape
+        case 4916: status 1 reason Invalid regular expression: /[\09]/u: Invalid decimal escape expected Invalid regular expression: /[\09]/u: Invalid class escape
+        case 6369: status 1 reason Invalid regular expression: /(\k<bar>)\k<absent>(?<foo>foo)|(?<bar>)((?<foo>)|(bar(?<bar>bar)))/: Invalid named capture referenced expected Invalid regular expression: /(\k<bar>)\k<absent>(?<foo>foo)|(?<bar>)((?<foo>)|(bar(?<bar>bar)))/: Duplicate capture group name
+--- FAIL: TestRegExpRuntimeBytecodeWASI (0.34s)
+    regexp_compile_bytecode_test.go:23: WASI_SYSROOT required
+--- FAIL: TestRegExpV8NativeShard3 (0.05s)
+    regexp_v8_test.go:134: Node: exit status 1
+        [eval]:1
+        if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));
+                                               ^
+        
+        Error: Node 24 required
+            at [eval]:1:46
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpV8NativeShard2 (0.05s)
+    regexp_v8_test.go:129: Node: exit status 1
+        [eval]:1
+        if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));
+                                               ^
+        
+        Error: Node 24 required
+            at [eval]:1:46
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpV8NativeShard1 (0.06s)
+    regexp_v8_test.go:124: Node: exit status 1
+        [eval]:1
+        if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));
+                                               ^
+        
+        Error: Node 24 required
+            at [eval]:1:46
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpV8NativeShard0 (0.05s)
+    regexp_v8_test.go:119: Node: exit status 1
+        [eval]:1
+        if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));
+                                               ^
+        
+        Error: Node 24 required
+            at [eval]:1:46
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard39 (0.16s)
+    regexp_test.go:890: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard38 (0.15s)
+    regexp_test.go:885: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard37 (0.15s)
+    regexp_test.go:880: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard36 (0.17s)
+    regexp_test.go:875: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard35 (0.14s)
+    regexp_test.go:870: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestRegExpBytecodeRandomNodeShard34 (0.13s)
+    regexp_test.go:865: Node oracle: exit status 1\n[eval]:3
+        if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+                                                ^
+        
+        Error: Node 24 required
+            at [eval]:3:47
+            at runScriptInThisContext (node:internal/vm:209:10)
+            at node:internal/process/execution:446:12
+            at [eval]-wrapper:6:24
+            at runScriptInContext (node:internal/process/execution:444:60)
+            at evalFunction (node:internal/process/execution:279:30)
+            at evalTypeScript (node:internal/process/execution:291:3)
+            at node:internal/main/eval_string:74:3
+        
+        Node.js v22.22.0
+--- FAIL: TestNormalizeMatchesNodePoints01 (3.55s)
+    normalize_test.go:280: build normalization-probe 9138ae6daa9c hit 0.01
+    normalize_test.go:280: native "10efa f090bbba f090bbba f090bbba f090bbba c3a1f090bbba 61f090bbbacc81 c3a1f090bbba 61f090bbbacc81 f090bbbacca3cc81 f090bbbacca3cc81 f090bbbacca3cc81 f090bbbacca3cc81 e18480f090bbba e18480f090bbba e18480f090bbba e18480f090bbba eab080f090bbba e18480e185a1f090bbba eab080f090bbba e18480e185a1f090bbba"
+        Node   "10efa f090bbba f090bbba f090bbba f090bbba 61f090bbbacc81 61f090bbbacc81 61f090bbbacc81 61f090bbbacc81 f090bbbacca3cc81 f090bbbacca3cc81 f090bbbacca3cc81 f090bbbacca3cc81 e18480f090bbba e18480f090bbba e18480f090bbba e18480f090bbba eab080f090bbba e18480e185a1f090bbba eab080f090bbba e18480e185a1f090bbba"
+    normalize_test.go:280: native "10efb f090bbbb f090bbbb f090bbbb f090bbbb c3a1f090bbbb 61f090bbbbcc81 c3a1f090bbbb 61f090bbbbcc81 f090bbbbcca3cc81 f090bbbbcca3cc81 f090bbbbcca3cc81 f090bbbbcca3cc81 e18480f090bbbb e18480f090bbbb e18480f090bbbb e18480f090bbbb eab080f090bbbb e18480e185a1f090bbbb eab080f090bbbb e18480e185a1f090bbbb"
+        Node   "10efb f090bbbb f090bbbb f090bbbb f090bbbb 61f090bbbbcc81 61f090bbbbcc81 61f090bbbbcc81 61f090bbbbcc81 f090bbbbcca3cc81 f090bbbbcca3cc81 f090bbbbcca3cc81 f090bbbbcca3cc81 e18480f090bbbb e18480f090bbbb e18480f090bbbb e18480f090bbbb eab080f090bbbb e18480e185a1f090bbbb eab080f090bbbb e18480e185a1f090bbbb"
+    normalize_test.go:280: native "1e6e3 f09e9ba3 f09e9ba3 f09e9ba3 f09e9ba3 61f09e9ba3cc81 61f09e9ba3cc81 61f09e9ba3cc81 61f09e9ba3cc81 cca3f09e9ba3cc81 cca3f09e9ba3cc81 cca3f09e9ba3cc81 cca3f09e9ba3cc81 e18480f09e9ba3 e18480f09e9ba3 e18480f09e9ba3 e18480f09e9ba3 eab080f09e9ba3 e18480e185a1f09e9ba3 eab080f09e9ba3 e18480e185a1f09e9ba3"
+        Node   "1e6e3 f09e9ba3 f09e9ba3 f09e9ba3 f09e9ba3 61f09e9ba3cc81 61f09e9ba3cc81 61f09e9ba3cc81 61f09e9ba3cc81 f09e9ba3cca3cc81 f09e9ba3cca3cc81 f09e9ba3cca3cc81 f09e9ba3cca3cc81 e18480f09e9ba3 e18480f09e9ba3 e18480f09e9ba3 e18480f09e9ba3 eab080f09e9ba3 e18480e185a1f09e9ba3 eab080f09e9ba3 e18480e185a1f09e9ba3"
+    normalize_test.go:280: native "1e6e6 f09e9ba6 f09e9ba6 f09e9ba6 f09e9ba6 61f09e9ba6cc81 61f09e9ba6cc81 61f09e9ba6cc81 61f09e9ba6cc81 cca3f09e9ba6cc81 cca3f09e9ba6cc81 cca3f09e9ba6cc81 cca3f09e9ba6cc81 e18480f09e9ba6 e18480f09e9ba6 e18480f09e9ba6 e18480f09e9ba6 eab080f09e9ba6 e18480e185a1f09e9ba6 eab080f09e9ba6 e18480e185a1f09e9ba6"
+        Node   "1e6e6 f09e9ba6 f09e9ba6 f09e9ba6 f09e9ba6 61f09e9ba6cc81 61f09e9ba6cc81 61f09e9ba6cc81 61f09e9ba6cc81 f09e9ba6cca3cc81 f09e9ba6cca3cc81 f09e9ba6cca3cc81 f09e9ba6cca3cc81 e18480f09e9ba6 e18480f09e9ba6 e18480f09e9ba6 e18480f09e9ba6 eab080f09e9ba6 e18480e185a1f09e9ba6 eab080f09e9ba6 e18480e185a1f09e9ba6"
+    normalize_test.go:280: native "1e6ee f09e9bae f09e9bae f09e9bae f09e9bae 61f09e9baecc81 61f09e9baecc81 61f09e9baecc81 61f09e9baecc81 cca3f09e9baecc81 cca3f09e9baecc81 cca3f09e9baecc81 cca3f09e9baecc81 e18480f09e9bae e18480f09e9bae e18480f09e9bae e18480f09e9bae eab080f09e9bae e18480e185a1f09e9bae eab080f09e9bae e18480e185a1f09e9bae"
+        Node   "1e6ee f09e9bae f09e9bae f09e9bae f09e9bae 61f09e9baecc81 61f09e9baecc81 61f09e9baecc81 61f09e9baecc81 f09e9baecca3cc81 f09e9baecca3cc81 f09e9baecca3cc81 f09e9baecca3cc81 e18480f09e9bae e18480f09e9bae e18480f09e9bae e18480f09e9bae eab080f09e9bae e18480e185a1f09e9bae eab080f09e9bae e18480e185a1f09e9bae"
+    normalize_test.go:280: native "1e6ef f09e9baf f09e9baf f09e9baf f09e9baf 61f09e9bafcc81 61f09e9bafcc81 61f09e9bafcc81 61f09e9bafcc81 cca3f09e9bafcc81 cca3f09e9bafcc81 cca3f09e9bafcc81 cca3f09e9bafcc81 e18480f09e9baf e18480f09e9baf e18480f09e9baf e18480f09e9baf eab080f09e9baf e18480e185a1f09e9baf eab080f09e9baf e18480e185a1f09e9baf"
+        Node   "1e6ef f09e9baf f09e9baf f09e9baf f09e9baf 61f09e9bafcc81 61f09e9bafcc81 61f09e9bafcc81 61f09e9bafcc81 f09e9bafcca3cc81 f09e9bafcca3cc81 f09e9bafcca3cc81 f09e9bafcca3cc81 e18480f09e9baf e18480f09e9baf e18480f09e9baf e18480f09e9baf eab080f09e9baf e18480e185a1f09e9baf eab080f09e9baf e18480e185a1f09e9baf"
+    normalize_test.go:280: native "1e6f5 f09e9bb5 f09e9bb5 f09e9bb5 f09e9bb5 61f09e9bb5cc81 61f09e9bb5cc81 61f09e9bb5cc81 61f09e9bb5cc81 cca3f09e9bb5cc81 cca3f09e9bb5cc81 cca3f09e9bb5cc81 cca3f09e9bb5cc81 e18480f09e9bb5 e18480f09e9bb5 e18480f09e9bb5 e18480f09e9bb5 eab080f09e9bb5 e18480e185a1f09e9bb5 eab080f09e9bb5 e18480e185a1f09e9bb5"
+        Node   "1e6f5 f09e9bb5 f09e9bb5 f09e9bb5 f09e9bb5 61f09e9bb5cc81 61f09e9bb5cc81 61f09e9bb5cc81 61f09e9bb5cc81 f09e9bb5cca3cc81 f09e9bb5cca3cc81 f09e9bb5cca3cc81 f09e9bb5cca3cc81 e18480f09e9bb5 e18480f09e9bb5 e18480f09e9bb5 e18480f09e9bb5 eab080f09e9bb5 e18480e185a1f09e9bb5 eab080f09e9bb5 e18480e185a1f09e9bb5"
+    normalize_test.go:280: 7 of 65536 lines differ
+    normalize_test.go:280: 65536 lines, 7 mismatches
+    split_units_test.go:179: unit elapsed 3.535s
+--- FAIL: TestMathAndToFixedMatchJavaScript (1.05s)
+    math_test.go:140: pow 40201604189374bc c03028f5c28f5c29: native "2.3358449403599265e-15", Node "2.335844940359927e-15"
+    math_test.go:140: pow 40ab9c0000000000 4024000000000000: native "3.0385434551497147e+35", Node "3.0385434551497143e+35"
+    math_test.go:140: pow 3fd4ebedfa43fe5d c002cccccccccccd: native "13.839644567796233", Node "13.839644567796231"
+    math_test.go:140: pow 3f95b573eab367a1 4024000000000000: native "1.8338280412598823e-17", Node "1.833828041259882e-17"
+    math_test.go:140: pow 40068f5c28f5c28f 4008000000000000: native "22.425767999999998", Node "22.425767999999994"
+    math_test.go:140: pow c045b9999999999a c024000000000000: native "4.169674869327525e-17", Node "4.169674869327524e-17"
+    math_test.go:140: pow c0049374bc6a7efa 4024000000000000: native "12668.046315498652", Node "12668.046315498654"
+    math_test.go:140: pow 3fed18fc504816f0 4008000000000000: native "0.751833327357", Node "0.7518333273569999"
+    math_test.go:140: pow 4058eae147ae147b c004000000000000: native "0.000010082978806612806", Node "0.000010082978806612807"
+    math_test.go:140: pow 4085926666666666 c0307851eb851eb8: native "1.74199227713106e-47", Node "1.7419922771310601e-47"
+    math_test.go:145: 298 of 69132 answers differ
+    math_test.go:147: 69132 answers, 298 mismatches
+--- FAIL: TestNormalizeMatchesNodePoints00 (4.63s)
+    normalize_test.go:275: build normalization-probe 9138ae6daa9c hit 0.01
+    normalize_test.go:275: native "1acf e1ab8f e1ab8f e1ab8f e1ab8f 61e1ab8fcc81 61e1ab8fcc81 61e1ab8fcc81 61e1ab8fcc81 cca3e1ab8fcc81 cca3e1ab8fcc81 cca3e1ab8fcc81 cca3e1ab8fcc81 e18480e1ab8f e18480e1ab8f e18480e1ab8f e18480e1ab8f eab080e1ab8f e18480e185a1e1ab8f eab080e1ab8f e18480e185a1e1ab8f"
+        Node   "1acf e1ab8f e1ab8f e1ab8f e1ab8f 61e1ab8fcc81 61e1ab8fcc81 61e1ab8fcc81 61e1ab8fcc81 e1ab8fcca3cc81 e1ab8fcca3cc81 e1ab8fcca3cc81 e1ab8fcca3cc81 e18480e1ab8f e18480e1ab8f e18480e1ab8f e18480e1ab8f eab080e1ab8f e18480e185a1e1ab8f eab080e1ab8f e18480e185a1e1ab8f"
+    normalize_test.go:275: native "1ad0 e1ab90 e1ab90 e1ab90 e1ab90 61e1ab90cc81 61e1ab90cc81 61e1ab90cc81 61e1ab90cc81 cca3e1ab90cc81 cca3e1ab90cc81 cca3e1ab90cc81 cca3e1ab90cc81 e18480e1ab90 e18480e1ab90 e18480e1ab90 e18480e1ab90 eab080e1ab90 e18480e185a1e1ab90 eab080e1ab90 e18480e185a1e1ab90"
+        Node   "1ad0 e1ab90 e1ab90 e1ab90 e1ab90 61e1ab90cc81 61e1ab90cc81 61e1ab90cc81 61e1ab90cc81 e1ab90cca3cc81 e1ab90cca3cc81 e1ab90cca3cc81 e1ab90cca3cc81 e18480e1ab90 e18480e1ab90 e18480e1ab90 e18480e1ab90 eab080e1ab90 e18480e185a1e1ab90 eab080e1ab90 e18480e185a1e1ab90"
+    normalize_test.go:275: native "1ad1 e1ab91 e1ab91 e1ab91 e1ab91 61e1ab91cc81 61e1ab91cc81 61e1ab91cc81 61e1ab91cc81 cca3e1ab91cc81 cca3e1ab91cc81 cca3e1ab91cc81 cca3e1ab91cc81 e18480e1ab91 e18480e1ab91 e18480e1ab91 e18480e1ab91 eab080e1ab91 e18480e185a1e1ab91 eab080e1ab91 e18480e185a1e1ab91"
+        Node   "1ad1 e1ab91 e1ab91 e1ab91 e1ab91 61e1ab91cc81 61e1ab91cc81 61e1ab91cc81 61e1ab91cc81 e1ab91cca3cc81 e1ab91cca3cc81 e1ab91cca3cc81 e1ab91cca3cc81 e18480e1ab91 e18480e1ab91 e18480e1ab91 e18480e1ab91 eab080e1ab91 e18480e185a1e1ab91 eab080e1ab91 e18480e185a1e1ab91"
+    normalize_test.go:275: native "1ad2 e1ab92 e1ab92 e1ab92 e1ab92 61e1ab92cc81 61e1ab92cc81 61e1ab92cc81 61e1ab92cc81 cca3e1ab92cc81 cca3e1ab92cc81 cca3e1ab92cc81 cca3e1ab92cc81 e18480e1ab92 e18480e1ab92 e18480e1ab92 e18480e1ab92 eab080e1ab92 e18480e185a1e1ab92 eab080e1ab92 e18480e185a1e1ab92"
+        Node   "1ad2 e1ab92 e1ab92 e1ab92 e1ab92 61e1ab92cc81 61e1ab92cc81 61e1ab92cc81 61e1ab92cc81 e1ab92cca3cc81 e1ab92cca3cc81 e1ab92cca3cc81 e1ab92cca3cc81 e18480e1ab92 e18480e1ab92 e18480e1ab92 e18480e1ab92 eab080e1ab92 e18480e185a1e1ab92 eab080e1ab92 e18480e185a1e1ab92"
+    normalize_test.go:275: native "1ad3 e1ab93 e1ab93 e1ab93 e1ab93 61e1ab93cc81 61e1ab93cc81 61e1ab93cc81 61e1ab93cc81 cca3e1ab93cc81 cca3e1ab93cc81 cca3e1ab93cc81 cca3e1ab93cc81 e18480e1ab93 e18480e1ab93 e18480e1ab93 e18480e1ab93 eab080e1ab93 e18480e185a1e1ab93 eab080e1ab93 e18480e185a1e1ab93"
+        Node   "1ad3 e1ab93 e1ab93 e1ab93 e1ab93 61e1ab93cc81 61e1ab93cc81 61e1ab93cc81 61e1ab93cc81 e1ab93cca3cc81 e1ab93cca3cc81 e1ab93cca3cc81 e1ab93cca3cc81 e18480e1ab93 e18480e1ab93 e18480e1ab93 e18480e1ab93 eab080e1ab93 e18480e185a1e1ab93 eab080e1ab93 e18480e185a1e1ab93"
+    normalize_test.go:275: native "1ad4 e1ab94 e1ab94 e1ab94 e1ab94 61e1ab94cc81 61e1ab94cc81 61e1ab94cc81 61e1ab94cc81 cca3e1ab94cc81 cca3e1ab94cc81 cca3e1ab94cc81 cca3e1ab94cc81 e18480e1ab94 e18480e1ab94 e18480e1ab94 e18480e1ab94 eab080e1ab94 e18480e185a1e1ab94 eab080e1ab94 e18480e185a1e1ab94"
+        Node   "1ad4 e1ab94 e1ab94 e1ab94 e1ab94 61e1ab94cc81 61e1ab94cc81 61e1ab94cc81 61e1ab94cc81 e1ab94cca3cc81 e1ab94cca3cc81 e1ab94cca3cc81 e1ab94cca3cc81 e18480e1ab94 e18480e1ab94 e18480e1ab94 e18480e1ab94 eab080e1ab94 e18480e185a1e1ab94 eab080e1ab94 e18480e185a1e1ab94"
+    normalize_test.go:275: native "1ad5 e1ab95 e1ab95 e1ab95 e1ab95 61e1ab95cc81 61e1ab95cc81 61e1ab95cc81 61e1ab95cc81 cca3e1ab95cc81 cca3e1ab95cc81 cca3e1ab95cc81 cca3e1ab95cc81 e18480e1ab95 e18480e1ab95 e18480e1ab95 e18480e1ab95 eab080e1ab95 e18480e185a1e1ab95 eab080e1ab95 e18480e185a1e1ab95"
+        Node   "1ad5 e1ab95 e1ab95 e1ab95 e1ab95 61e1ab95cc81 61e1ab95cc81 61e1ab95cc81 61e1ab95cc81 e1ab95cca3cc81 e1ab95cca3cc81 e1ab95cca3cc81 e1ab95cca3cc81 e18480e1ab95 e18480e1ab95 e18480e1ab95 e18480e1ab95 eab080e1ab95 e18480e185a1e1ab95 eab080e1ab95 e18480e185a1e1ab95"
+    normalize_test.go:275: native "1ad6 e1ab96 e1ab96 e1ab96 e1ab96 61e1ab96cc81 61e1ab96cc81 61e1ab96cc81 61e1ab96cc81 cca3e1ab96cc81 cca3e1ab96cc81 cca3e1ab96cc81 cca3e1ab96cc81 e18480e1ab96 e18480e1ab96 e18480e1ab96 e18480e1ab96 eab080e1ab96 e18480e185a1e1ab96 eab080e1ab96 e18480e185a1e1ab96"
+        Node   "1ad6 e1ab96 e1ab96 e1ab96 e1ab96 61e1ab96cc81 61e1ab96cc81 61e1ab96cc81 61e1ab96cc81 e1ab96cca3cc81 e1ab96cca3cc81 e1ab96cca3cc81 e1ab96cca3cc81 e18480e1ab96 e18480e1ab96 e18480e1ab96 e18480e1ab96 eab080e1ab96 e18480e185a1e1ab96 eab080e1ab96 e18480e185a1e1ab96"
+    normalize_test.go:275: native "1ad7 e1ab97 e1ab97 e1ab97 e1ab97 61e1ab97cc81 61e1ab97cc81 61e1ab97cc81 61e1ab97cc81 cca3e1ab97cc81 cca3e1ab97cc81 cca3e1ab97cc81 cca3e1ab97cc81 e18480e1ab97 e18480e1ab97 e18480e1ab97 e18480e1ab97 eab080e1ab97 e18480e185a1e1ab97 eab080e1ab97 e18480e185a1e1ab97"
+        Node   "1ad7 e1ab97 e1ab97 e1ab97 e1ab97 61e1ab97cc81 61e1ab97cc81 61e1ab97cc81 61e1ab97cc81 e1ab97cca3cc81 e1ab97cca3cc81 e1ab97cca3cc81 e1ab97cca3cc81 e18480e1ab97 e18480e1ab97 e18480e1ab97 e18480e1ab97 eab080e1ab97 e18480e185a1e1ab97 eab080e1ab97 e18480e185a1e1ab97"
+    normalize_test.go:275: native "1ad8 e1ab98 e1ab98 e1ab98 e1ab98 61e1ab98cc81 61e1ab98cc81 61e1ab98cc81 61e1ab98cc81 cca3e1ab98cc81 cca3e1ab98cc81 cca3e1ab98cc81 cca3e1ab98cc81 e18480e1ab98 e18480e1ab98 e18480e1ab98 e18480e1ab98 eab080e1ab98 e18480e185a1e1ab98 eab080e1ab98 e18480e185a1e1ab98"
+        Node   "1ad8 e1ab98 e1ab98 e1ab98 e1ab98 61e1ab98cc81 61e1ab98cc81 61e1ab98cc81 61e1ab98cc81 e1ab98cca3cc81 e1ab98cca3cc81 e1ab98cca3cc81 e1ab98cca3cc81 e18480e1ab98 e18480e1ab98 e18480e1ab98 e18480e1ab98 eab080e1ab98 e18480e185a1e1ab98 eab080e1ab98 e18480e185a1e1ab98"
+    normalize_test.go:275: native "1ad9 e1ab99 e1ab99 e1ab99 e1ab99 61e1ab99cc81 61e1ab99cc81 61e1ab99cc81 61e1ab99cc81 cca3e1ab99cc81 cca3e1ab99cc81 cca3e1ab99cc81 cca3e1ab99cc81 e18480e1ab99 e18480e1ab99 e18480e1ab99 e18480e1ab99 eab080e1ab99 e18480e185a1e1ab99 eab080e1ab99 e18480e185a1e1ab99"
+        Node   "1ad9 e1ab99 e1ab99 e1ab99 e1ab99 61e1ab99cc81 61e1ab99cc81 61e1ab99cc81 61e1ab99cc81 e1ab99cca3cc81 e1ab99cca3cc81 e1ab99cca3cc81 e1ab99cca3cc81 e18480e1ab99 e18480e1ab99 e18480e1ab99 e18480e1ab99 eab080e1ab99 e18480e185a1e1ab99 eab080e1ab99 e18480e185a1e1ab99"
+    normalize_test.go:275: native "1ada e1ab9a e1ab9a e1ab9a e1ab9a 61e1ab9acc81 61e1ab9acc81 61e1ab9acc81 61e1ab9acc81 cca3e1ab9acc81 cca3e1ab9acc81 cca3e1ab9acc81 cca3e1ab9acc81 e18480e1ab9a e18480e1ab9a e18480e1ab9a e18480e1ab9a eab080e1ab9a e18480e185a1e1ab9a eab080e1ab9a e18480e185a1e1ab9a"
+        Node   "1ada e1ab9a e1ab9a e1ab9a e1ab9a 61e1ab9acc81 61e1ab9acc81 61e1ab9acc81 61e1ab9acc81 e1ab9acca3cc81 e1ab9acca3cc81 e1ab9acca3cc81 e1ab9acca3cc81 e18480e1ab9a e18480e1ab9a e18480e1ab9a e18480e1ab9a eab080e1ab9a e18480e185a1e1ab9a eab080e1ab9a e18480e185a1e1ab9a"
+    normalize_test.go:275: 28 of 65536 lines differ
+    normalize_test.go:275: 65536 lines, 28 mismatches
+    split_units_test.go:179: unit elapsed 4.617s
+--- FAIL: TestSplitAttributedBindingsAgreeWithNode (1.08s)
+    --- FAIL: TestSplitAttributedBindingsAgreeWithNode/wasm32-wasi (0.00s)
+        units_test.go:244: native: wasm32-wasi requires WASI_SYSROOT
+--- FAIL: TestCaseMappingMatchesNodePoints0To2FFFF (4.54s)
+    case_test.go:238: native "295 ca95 ca95 7879ca957a77 5859ca955a57 ca95cf83 61ca95cf83 61cf82ca95 61cf82ca9561"
+        Node   "295 ca95 ca95 7879ca957a77 5859ca955a57 ca95cf82 61ca95cf82 61cf83ca95 61cf83ca9561"
+    case_test.go:238: native "1acf e1ab8f e1ab8f 7879e1ab8f7a77 5859e1ab8f5a57 e1ab8fcf83 61e1ab8fcf82 61cf82e1ab8f 61cf83e1ab8f61"
+        Node   "1acf e1ab8f e1ab8f 7879e1ab8f7a77 5859e1ab8f5a57 e1ab8fcf83 61e1ab8fcf83 61cf82e1ab8f 61cf82e1ab8f61"
+    case_test.go:238: native "1ad0 e1ab90 e1ab90 7879e1ab907a77 5859e1ab905a57 e1ab90cf83 61e1ab90cf82 61cf82e1ab90 61cf83e1ab9061"
+        Node   "1ad0 e1ab90 e1ab90 7879e1ab907a77 5859e1ab905a57 e1ab90cf83 61e1ab90cf83 61cf82e1ab90 61cf82e1ab9061"
+    case_test.go:238: native "1ad1 e1ab91 e1ab91 7879e1ab917a77 5859e1ab915a57 e1ab91cf83 61e1ab91cf82 61cf82e1ab91 61cf83e1ab9161"
+        Node   "1ad1 e1ab91 e1ab91 7879e1ab917a77 5859e1ab915a57 e1ab91cf83 61e1ab91cf83 61cf82e1ab91 61cf82e1ab9161"
+    case_test.go:238: native "1ad2 e1ab92 e1ab92 7879e1ab927a77 5859e1ab925a57 e1ab92cf83 61e1ab92cf82 61cf82e1ab92 61cf83e1ab9261"
+        Node   "1ad2 e1ab92 e1ab92 7879e1ab927a77 5859e1ab925a57 e1ab92cf83 61e1ab92cf83 61cf82e1ab92 61cf82e1ab9261"
+    case_test.go:238: native "1ad3 e1ab93 e1ab93 7879e1ab937a77 5859e1ab935a57 e1ab93cf83 61e1ab93cf82 61cf82e1ab93 61cf83e1ab9361"
+        Node   "1ad3 e1ab93 e1ab93 7879e1ab937a77 5859e1ab935a57 e1ab93cf83 61e1ab93cf83 61cf82e1ab93 61cf82e1ab9361"
+    case_test.go:238: native "1ad4 e1ab94 e1ab94 7879e1ab947a77 5859e1ab945a57 e1ab94cf83 61e1ab94cf82 61cf82e1ab94 61cf83e1ab9461"
+        Node   "1ad4 e1ab94 e1ab94 7879e1ab947a77 5859e1ab945a57 e1ab94cf83 61e1ab94cf83 61cf82e1ab94 61cf82e1ab9461"
+    case_test.go:238: native "1ad5 e1ab95 e1ab95 7879e1ab957a77 5859e1ab955a57 e1ab95cf83 61e1ab95cf82 61cf82e1ab95 61cf83e1ab9561"
+        Node   "1ad5 e1ab95 e1ab95 7879e1ab957a77 5859e1ab955a57 e1ab95cf83 61e1ab95cf83 61cf82e1ab95 61cf82e1ab9561"
+    case_test.go:238: native "1ad6 e1ab96 e1ab96 7879e1ab967a77 5859e1ab965a57 e1ab96cf83 61e1ab96cf82 61cf82e1ab96 61cf83e1ab9661"
+        Node   "1ad6 e1ab96 e1ab96 7879e1ab967a77 5859e1ab965a57 e1ab96cf83 61e1ab96cf83 61cf82e1ab96 61cf82e1ab9661"
+    case_test.go:238: native "1ad7 e1ab97 e1ab97 7879e1ab977a77 5859e1ab975a57 e1ab97cf83 61e1ab97cf82 61cf82e1ab97 61cf83e1ab9761"
+        Node   "1ad7 e1ab97 e1ab97 7879e1ab977a77 5859e1ab975a57 e1ab97cf83 61e1ab97cf83 61cf82e1ab97 61cf82e1ab9761"
+    case_test.go:238: native "1ad8 e1ab98 e1ab98 7879e1ab987a77 5859e1ab985a57 e1ab98cf83 61e1ab98cf82 61cf82e1ab98 61cf83e1ab9861"
+        Node   "1ad8 e1ab98 e1ab98 7879e1ab987a77 5859e1ab985a57 e1ab98cf83 61e1ab98cf83 61cf82e1ab98 61cf82e1ab9861"
+    case_test.go:238: native "1ad9 e1ab99 e1ab99 7879e1ab997a77 5859e1ab995a57 e1ab99cf83 61e1ab99cf82 61cf82e1ab99 61cf83e1ab9961"
+        Node   "1ad9 e1ab99 e1ab99 7879e1ab997a77 5859e1ab995a57 e1ab99cf83 61e1ab99cf83 61cf82e1ab99 61cf82e1ab9961"
+    case_test.go:238: 102 of 196608 lines differ
+    case_test.go:238: 196608 lines, 102 mismatches
+--- FAIL: TestCaseTablesMatchNodesUnicode (0.03s)
+    case_test.go:394: case_tables.h is Unicode 17.0.0 and Node is Unicode 16.0: update case_generate.go and run go generate
+    case_test.go:394: normalize_tables.h is Unicode 17.0.0 and Node is Unicode 16.0: update normalize_generate.go and run go generate
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	721.278s
+FAIL

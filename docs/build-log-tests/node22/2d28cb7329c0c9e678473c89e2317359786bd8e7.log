@@ -1,0 +1,23 @@
+=== RUN   TestARuntimeIsTheSameOnAnyNumberOfWorkers
+=== PAUSE TestARuntimeIsTheSameOnAnyNumberOfWorkers
+=== RUN   TestRuntimeArchiveLogsItsCompilesAndItsHit
+    runtime_build_log_test.go:124: "cArchive runtime.a e795a0269666 miss 0.000", want the archive hit under e795a0269666
+--- FAIL: TestRuntimeArchiveLogsItsCompilesAndItsHit (0.26s)
+=== RUN   TestOneUnitBuildLogsItsClang
+    runtime_build_log_test.go:188: logged cBuild program, and the binary is the same bytes without the log
+--- PASS: TestOneUnitBuildLogsItsClang (1.44s)
+=== RUN   TestSplitBuildLogsEachUnitAndTheLink
+    units_build_log_test.go:123: logged-miss: "cCompile state.c 5a664ceb89c9 miss 0.000" says clang took no time
+--- FAIL: TestSplitBuildLogsEachUnitAndTheLink (0.61s)
+=== RUN   TestBuildLogKeepsANameOnOneLine
+--- PASS: TestBuildLogKeepsANameOnOneLine (0.00s)
+=== RUN   TestUnitsPreserveSharedState
+--- PASS: TestUnitsPreserveSharedState (1.83s)
+=== RUN   TestUnitSystemHeaderProvenance
+    units_test.go:188: system-header extension accepted; changed header observed cached and uncached; user-header extension rejected
+--- PASS: TestUnitSystemHeaderProvenance (0.32s)
+=== CONT  TestARuntimeIsTheSameOnAnyNumberOfWorkers
+--- PASS: TestARuntimeIsTheSameOnAnyNumberOfWorkers (0.24s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	4.720s
+FAIL

@@ -1,0 +1,22 @@
+=== RUN   TestARuntimeIsTheSameOnAnyNumberOfWorkers
+=== PAUSE TestARuntimeIsTheSameOnAnyNumberOfWorkers
+=== RUN   TestRuntimeArchiveLogsItsCompilesAndItsHit
+    runtime_build_log_test.go:134: 4 units and ar logged as misses under the archive's key, the cache's archive as a hit, one archive's bytes
+--- PASS: TestRuntimeArchiveLogsItsCompilesAndItsHit (0.20s)
+=== RUN   TestOneUnitBuildLogsItsClang
+    runtime_build_log_test.go:188: logged cBuild program, and the binary is the same bytes without the log
+--- PASS: TestOneUnitBuildLogsItsClang (1.25s)
+=== RUN   TestSplitBuildLogsEachUnitAndTheLink
+    units_build_log_test.go:132: 3 units: off, miss and hit each logged once a unit with one link, and five binaries the same bytes
+--- PASS: TestSplitBuildLogsEachUnitAndTheLink (0.88s)
+=== RUN   TestBuildLogKeepsANameOnOneLine
+--- PASS: TestBuildLogKeepsANameOnOneLine (0.00s)
+=== RUN   TestUnitsPreserveSharedState
+--- PASS: TestUnitsPreserveSharedState (1.61s)
+=== RUN   TestUnitSystemHeaderProvenance
+    units_test.go:188: system-header extension accepted; changed header observed cached and uncached; user-header extension rejected
+--- PASS: TestUnitSystemHeaderProvenance (0.30s)
+=== CONT  TestARuntimeIsTheSameOnAnyNumberOfWorkers
+--- PASS: TestARuntimeIsTheSameOnAnyNumberOfWorkers (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	4.480s

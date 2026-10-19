@@ -1,0 +1,24 @@
+=== RUN   TestARuntimeIsTheSameOnAnyNumberOfWorkers
+=== PAUSE TestARuntimeIsTheSameOnAnyNumberOfWorkers
+=== RUN   TestRuntimeArchiveLogsItsCompilesAndItsHit
+    runtime_build_log_test.go:92: "cCompile runtime/unit1.c 0123456789ab miss 0.000", want a miss under the archive's key with its seconds
+--- FAIL: TestRuntimeArchiveLogsItsCompilesAndItsHit (0.09s)
+=== RUN   TestOneUnitBuildLogsItsClang
+    runtime_build_log_test.go:186: logged ["cLink program"], want cBuild program
+--- FAIL: TestOneUnitBuildLogsItsClang (1.25s)
+=== RUN   TestSplitBuildLogsEachUnitAndTheLink
+    units_build_log_test.go:125: logged-hit: "cCompile functions_0000.c 9369fa21a67d miss 0.018", want a keyed hit
+--- FAIL: TestSplitBuildLogsEachUnitAndTheLink (0.66s)
+=== RUN   TestBuildLogKeepsANameOnOneLine
+    units_build_log_test.go:148: wrote "cLink a_b\tc\ncCompile_forged_0123456789ab_hit_9.000 - off 1.000\n", want "cLink a_b_c_cCompile_forged_0123456789ab_hit_9.000 - off 1.000\n"
+--- FAIL: TestBuildLogKeepsANameOnOneLine (0.00s)
+=== RUN   TestUnitsPreserveSharedState
+--- PASS: TestUnitsPreserveSharedState (1.76s)
+=== RUN   TestUnitSystemHeaderProvenance
+    units_test.go:188: system-header extension accepted; changed header observed cached and uncached; user-header extension rejected
+--- PASS: TestUnitSystemHeaderProvenance (0.32s)
+=== CONT  TestARuntimeIsTheSameOnAnyNumberOfWorkers
+--- PASS: TestARuntimeIsTheSameOnAnyNumberOfWorkers (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	4.347s
+FAIL
