@@ -1,0 +1,34 @@
+{
+  "baselineCount": 491,
+  "mutantCount": 492,
+  "added": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "line": 6,
+      "column": 25,
+      "sourceLine": "const __voidReadValue = __voidReadProbe();",
+      "expression": "__voidReadProbe()",
+      "callee": "__voidReadProbe",
+      "syntaxKind": "CallExpression",
+      "parentKind": "VariableDeclaration",
+      "form": "variable initializer",
+      "type": "void",
+      "start": 172,
+      "end": 189,
+      "judgment": {
+        "kind": "unclassified",
+        "reason": "No checked byte-identical adaptation or proof of impossibility is established for this site. See runtime observations and the resolved declaration."
+      },
+      "resolvedDeclaration": {
+        "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "line": 5,
+        "text": "function __voidReadProbe(): void {}"
+      }
+    }
+  ],
+  "lost": [],
+  "expectedLine": 6,
+  "unionCountUnchanged": true,
+  "sourceAddition": "\nfunction __voidReadProbe(): void {}\nconst __voidReadValue = __voidReadProbe();\n",
+  "restored": true
+}

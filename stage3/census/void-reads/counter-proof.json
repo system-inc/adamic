@@ -1,0 +1,29 @@
+{
+  "baseline": {
+    "hits": 8,
+    "valueKinds": [
+      "boolean",
+      "null",
+      "number",
+      "object",
+      "string",
+      "undefined"
+    ],
+    "accepted": true
+  },
+  "mutant": {
+    "hits": 0,
+    "valueKinds": [
+      "boolean",
+      "null",
+      "number",
+      "object",
+      "string",
+      "undefined"
+    ],
+    "accepted": false
+  },
+  "mutantCaught": true,
+  "mutation": "Remove record.hits++ from the observer.",
+  "returnIdentityPreserved": true
+}
