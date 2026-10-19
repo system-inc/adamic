@@ -22,6 +22,11 @@ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  closure->receiver = false;
 #endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+	// The made function's result says otherwise where it's a reference: MakeClosure's emission, and
+	// the runtime's own closures that return one (map_set.c).
+	closure->discard = adamic_discard_none;
+#endif
 	closure->count = count;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	closure->canonical_owner = NULL;

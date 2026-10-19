@@ -118,6 +118,10 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 	state->slots[3].number = value;
 	state->slots[4].boolean = set;
 	adamic_closure *next = adamic_closure_new(collection_next, 1);
+#ifdef ADAMIC_CLOSURE_DISCARDS
+	// Its IteratorResult comes back owned.
+	next->discard = adamic_discard_reference;
+#endif
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
 	adamic_object *object = adamic_object_new(&iterator_shape);
 	object->slots[0].reference = next;

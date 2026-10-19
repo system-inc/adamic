@@ -169,6 +169,14 @@ typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *ar
 typedef adamic_code_function *adamic_code;
 typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 typedef adamic_counted_code_function *adamic_counted_code;
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// adamic_discard is what a call with no use for a closure's result does with it, fixed by the made
+// function's result type alone: a counted reference is released, and any other word holds nothing.
+enum adamic_discard {
+	adamic_discard_none,
+	adamic_discard_reference,
+};
+#endif
 struct adamic_closure {
 	adamic_heap heap;
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -180,6 +188,9 @@ struct adamic_closure {
 #endif
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  bool receiver;
+#endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+ uint8_t discard; // an adamic_discard
 #endif
 	size_t count;
 #ifdef ADAMIC_CANONICAL_CLOSURES
@@ -215,6 +226,17 @@ static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure,
  received[0].reference = receiver;
  for (size_t i = 0; i < packed_size; i++) { received[i + 1] = arguments[i]; }
  return adamic_closure_call(closure, received, argument_count + 1);
+}
+#endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// adamic_closure_discard lets go of what a void call through closure gave back, where the function
+// it holds can't be known at the call: a () => void slot may hold () => make(), whose reference comes
+// back owned, or () => 42, whose word is no reference, so the closure says which. An immortal closure
+// (count 0) is a library identity, a bare adamic_heap with no field to read, which lowering lets no
+// call reach; it holds nothing to let go either way.
+static inline void adamic_closure_discard(adamic_closure *closure, adamic_value result) {
+ if (adamic_reference_count(&closure->heap) == 0) { return; }
+ if (closure->discard == adamic_discard_reference) { adamic_release(result.reference); }
 }
 #endif
 

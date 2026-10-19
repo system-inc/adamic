@@ -1,5 +1,10 @@
 package ir
 
+import (
+	"reflect"
+	"slices"
+)
+
 // CallTargets answers which functions a call can run. A direct call has exactly
 // its Function as target. A virtual call (Virtual != 0) has every implementation
 // that can run, including overrides in every instantiated subclass, recorded by
@@ -82,6 +87,108 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 		}
 	}
 	return FunctionTargets{Unknown: true}
+}
+
+// Discard is what a void call does with the result it gives back, which it releases and never
+// reads: a () => void slot may hold () => make(), whose result comes back owned, or () => 42, whose
+// word is no reference. Every type's adamic_value member is fixed by the type alone, so a function's
+// Returns says which.
+type Discard int
+
+const (
+	// DiscardNothing is a result with no reference to let go: every target returns void, a number,
+	// a boolean or a maybe of one.
+	DiscardNothing Discard = iota
+	// DiscardReference is a counted reference every target returns, owned, released at the site.
+	DiscardReference
+	// DiscardFlagged is a call whose targets are Unknown, or bounded and disagree: the closure called
+	// says, in the discard field it's made with (ADAMIC_CLOSURE_DISCARDS).
+	DiscardFlagged
+	// DiscardMixed is bounded targets that disagree. A closure's call reads its flag instead; a
+	// class's method has none, so lowering says not yet to a method arm that disagrees.
+	DiscardMixed
+)
+
+// ReturnsDiscard is what a void call that can run any of functions releases of its result.
+func (p *Program) ReturnsDiscard(functions []int) Discard {
+	discard := DiscardNothing
+	for index, function := range functions {
+		returned := DiscardNothing
+		if p.Functions[function].Returns.IsReference() {
+			returned = DiscardReference
+		}
+		if index > 0 && returned != discard {
+			return DiscardMixed
+		}
+		discard = returned
+	}
+	return discard
+}
+
+// ClosureDiscard is what a void call through a function value (a CallClosure, or forEach's callback)
+// releases of the closure's result: by its targets' Returns where ClosureTargets bounds them and they
+// agree, and by the closure's own flag where they're Unknown or disagree, since every closure carries
+// its own answer.
+func (p *Program) ClosureDiscard(call Expression) Discard {
+	targets := p.ClosureTargets(call)
+	if targets.Unknown {
+		return DiscardFlagged
+	}
+	if discard := p.ReturnsDiscard(targets.Functions); discard != DiscardMixed {
+		return discard
+	}
+	return DiscardFlagged
+}
+
+// MethodDiscard is what a void call through an interface (Property's Method) releases of a result
+// its object's class's method gave, the arm a call takes when the object has no field of the name.
+// MethodTargets is keyed by a class's method slot, which a call through an interface doesn't have,
+// so the methods it can find are bounded by name, by every method table that holds one
+// (MethodsNamed). Any other call has no such arm.
+func (p *Program) MethodDiscard(call CallClosure) Discard {
+	property, isProperty := call.Closure.(Property)
+	if !isProperty || !property.Method {
+		return DiscardNothing
+	}
+	return p.ReturnsDiscard(p.MethodsNamed(property.Name))
+}
+
+// methodTables caches MethodsNamed's walk, keyed to the program's size as argumentFacts is.
+type methodTables struct {
+	functions int
+	named     map[string][]int
+}
+
+// MethodsNamed is every function a method table holds under the name, in function order: the
+// methods of the objects class constructors make (ObjectLiteral's Methods), a class's static side's
+// among them, which is all a call through an interface finds a method in.
+func (p *Program) MethodsNamed(name string) []int {
+	if tables := p.methodTables; tables != nil && tables.functions == len(p.Functions) {
+		return tables.named[name]
+	}
+	tables := &methodTables{functions: len(p.Functions), named: map[string][]int{}}
+	held := map[Method]bool{}
+	visit := func(node any) {
+		literal, isLiteral := node.(ObjectLiteral)
+		if !isLiteral {
+			return
+		}
+		for _, method := range literal.Methods {
+			if !held[method] {
+				held[method] = true
+				tables.named[method.Name] = append(tables.named[method.Name], method.Function)
+			}
+		}
+	}
+	spreadStorageWalk(reflect.ValueOf(p.Main), visit)
+	for _, function := range p.Functions {
+		spreadStorageWalk(reflect.ValueOf(function.Body), visit)
+	}
+	for _, methods := range tables.named {
+		slices.Sort(methods)
+	}
+	p.methodTables = tables
+	return tables.named[name]
 }
 
 // ClosureMayThrow treats Unknown as anything in the program, including methods
