@@ -528,8 +528,9 @@ func (request goRequest) keyInputs(root string, overlay overlayKey) (Inputs, err
 		listed = append(listed, "-overlay="+overlay.path)
 	}
 	asked := []string{"list", "-deps", "-json"}
-	if request.verb == "test -c" || request.verb == "list -export" {
-		// The test variant of each package, so its _test.go files are keyed too.
+	if request.verb == "test -c" || request.verb == "list -export" || request.verb == "list -export direct" {
+		// The test variant of each package, so its _test.go files are keyed too. GoDirectExports keeps its packages' test
+		// variants and what they import, so its key reads them as GoExports' does.
 		asked = append(asked, "-test")
 	}
 	listing, err := run(append(append(asked, listed...), strings.Fields(request.pkg)...)...)
