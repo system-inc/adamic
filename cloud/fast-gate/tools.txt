@@ -4,6 +4,7 @@
 # again elsewhere; the gate's tools step is red on a change that runs a literal command named nowhere
 # here, so this list stays true. Optional tools (a test probes for them and skips) say "optional".
 go	all	command -v go
+gofmt	all	command -v gofmt
 git	all	command -v git
 sh	all	command -v sh
 /bin/sh	all	test -x /bin/sh
