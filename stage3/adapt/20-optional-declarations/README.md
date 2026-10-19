@@ -1,7 +1,11 @@
 # 20: truthful optional declarations
 
+The current wave-2 result is 401 declaration owners. Its scope, exclusions and
+proofs are recorded in the [wave-2 section](#optional-contract-wave-2-2026-10-19);
+earlier sections retain their historical measurements.
+
 This adaptation widens an owned optional declaration from `p?: T` to
-`p?: (T) | undefined` when a TS2412, TS2375 or TS2379 finding supplies evidence
+`p?: (T) | undefined` when checker evidence supplies proof
 that the implementation deliberately stores undefined. The question mark,
 assignments, object keys and every runtime expression remain. A present undefined
 key has different `in`, `hasOwn`, enumeration and spread behavior from an absent
@@ -30,10 +34,11 @@ The evidence-to-owner ledger is `resolved_findings`. `initially_declined` retain
 seed exclusions even if another legitimate write to a shared owner removes the
 finding incidentally. `declined` lists remaining optional-code findings and reasons.
 
-The fixed checker options are strict, exactOptionalPropertyTypes,
-noUncheckedIndexedAccess, noImplicitReturns, noFallthroughCasesInSwitch,
-erasableSyntaxOnly and verbatimModuleSyntax; ES2024, ESNext modules, Bundler
-resolution, force module detection, ES2024 library and no implicit type packages.
+The resolver uses strict, exactOptionalPropertyTypes, noUncheckedIndexedAccess
+and verbatimModuleSyntax; ES2024, ESNext modules, Bundler resolution, force
+module detection, ES2024 library and no implicit type packages.
+`erasableSyntaxOnly` is false. The house-style flags `noImplicitReturns` and
+`noFallthroughCasesInSwitch` are unset, matching the semantic checker census.
 The stock resolver is tooling for rejected source. The census's Adamic checker
 remains the measurement authority, including its sounder regex declarations.
 
@@ -645,3 +650,77 @@ actual appended runtime expression. The revert also makes the witness fail.
 [Full commands, saved observations and every mutant](../00-setup/evidence/README.md#optional-contract-wave-1-repair-proofs)
 are retained with the census evidence. No runtime expression, site assignment,
 object key, method syntax, checker option or public API line was repaired.
+
+
+### Optional-contract wave 2, 2026-10-19
+
+Wave 2 starts at the pushed wave-1 header fix, `8b7b0554`. That commit changes
+only the first line of `testdata/nullable-return.a` to its measured
+`// a-check: type error TS2375`; the original witness passes with the comment.
+
+The [30-row disposition ledger](../00-setup/evidence/optional-contracts-wave2/groups.json)
+covers every remaining internal property row from the wave-1 split. It records
+24 repaired rows and six declines. All two public-property rows and all 29
+method rows remain unchanged, including the method found only in the catch
+option control. The main census is **233 -> 203**: 24 scoped IDs and six cascade
+IDs disappear, with no new diagnostic or related-information chain. The
+no-exact-optional control remains at 166.
+
+The original resolver reaches its fixed point first. `resolve-internal.cjs`
+then resolves structural data relations from nullable argument/assignment
+contexts and TS2322/TS2345 chains. It follows required data fields through
+concrete generic results and selects a unique union arm only through an existing
+literal discriminant. It also inspects incompatible contextual object literals
+whose own optional-property error is masked by another member. This is how the
+two builder rows are resolved at adaptation 20, before later adaptations remove
+the masking indexed-read errors. There is no source-site or owner allowlist.
+
+A generic declaration may use its instantiated comparison type only when its
+declared value is an object for every type argument, such as an array or a
+callable. Bare `T`, unknown, indexed-access and unresolved conditional value
+contracts retain the original exclusions. The four scoped generic-owner rows
+are arrays or callables; the bare-T witness remains rejected.
+
+Additional selections must be existing owned optional properties, never methods
+or required fields. The installed stock TypeScript declaration build identifies
+public slots, and the actual final declaration build independently verifies their
+exclusion. New public selections are forbidden after the original fixed point.
+
+A partial internal edit is also deferred if the same construction has an
+incompatible public optional slot. A provisional run exposed three new message
+chains at public `CompilerOptions.project`, resolution `packageId`, and inherited
+`isExternalLibraryImport`. The final resolver mechanically records these blockers
+in `internal_deferred_owners` and keeps the original diagnostic chains. Thus
+`CompilerOptions.build`, `ResolvedModuleFull.originalPath` and
+`ResolvedTypeReferenceDirective.originalPath` remain unchanged in this wave.
+Their construction keys and expressions are preserved.
+
+The other three declines are the unproven `namedMemberDeclarations?.[i]` read,
+the arbitrary-specialization reset of `resolution.files`, and the watcher view
+which combines a required field with an optional field. None is a resolver gap
+that sanctions an optional-owner union.
+
+Adaptation 20 now selects **401 owners**, up from 376. All 25 additional owners
+are internal, and each is named in `resolved_findings`. The completed-tree diff
+changes eight TypeScript files. `check-wave2.cjs` compares every changed file's
+full stock `transpileModule` output byte for byte and rejects an appended runtime
+expression in each. The actual public declaration output is byte-identical;
+stage3/lane accepts exactly 222 sanctioned declarations.
+
+`check-internal.cjs` covers nullable assignments, nested initializers, concrete
+nested generic results, generic arrays/callables and masked constructions. Its
+negative controls retain bare-T, public slots and their blocked internal peers,
+optional methods, indexed reads, generic receivers and required views. Both
+witnesses preserve Node own-key behavior and emitted bytes. The final body of
+`testdata/internal-resolution.a` is checked in place by the real Adamic compiler
+and starts with its measured TS2375 header.
+
+`run-wave2-mutants.py` independently reverts each group path. It runs the focused
+witnesses, a fresh full apply and the unchanged six-run census, restoring the
+resolver after every apply. The declined nested-initializer census stays
+unchanged. Its witness also remains covered by the shared construction scan;
+no kill or production-row repair is claimed for that declined group. A separate public-blocker
+mutant proves the no-new-chain check rejects the three exposed public errors.
+[Exact observations and commands](../00-setup/evidence/README.md#optional-contract-wave-2)
+are retained with the census evidence. No other adaptation or internal compiler
+file is changed.
