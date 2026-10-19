@@ -590,3 +590,58 @@ the checked build and snapshot proof were rerun successfully. Package checks
 from the unchanged census/meter/loader tooling passed (9.711s and 3.646s);
 this unit changes only source-adaptation tooling. The full native Adamic gate,
 future adaptations and unproven C/R invariants are outside this unit. No PR.
+
+
+### Optional-contract wave 1, 2026-10-19
+
+The [62-row split](../00-setup/evidence/optional-contracts-2026-10-19.json)
+was committed before this repair, in `e1c0cb0d`. It preserves every census ID,
+owner form, actual built API membership and the unchanged adapter's decline
+entries. There are 29 optional-method rows (22 public, seven internal); all
+remain methods. No method-to-property conversion is sanctioned.
+
+The selected gap is a returned object contextually typed as a single object
+unioned with undefined. `getPropertiesOfType` on that union returned no slots.
+The resolver now selects its single object arm for an object literal directly
+in a return statement, then applies the existing ownership, optionality,
+non-undefined-value compatibility, generic and method exclusions. Other unions,
+argument contexts and assignment contexts retain their previous behavior.
+
+At adaptation 20, this adds three internal property owners, all in `src/compiler/types.ts`:
+
+| Owner | Adaptation 20 line | Evidence sites |
+|---|---:|---|
+| `SymbolVisibilityResult.aliasesToMakeVisible` | 5807 | checker.ts:6035 |
+| `SymbolAccessibilityResult.errorModuleName` | 5814 | checker.ts:5964 |
+| `AllDecorators.parameters` | 5828 | transformers/utilities.ts:689,749,773 |
+
+The latter two owners share the same resolver gap but their five total resolver
+findings include only one member of the final 62-row census. Later adaptations
+already add the other two unions and discharge those four findings. The final
+full-apply diff is only the `aliasesToMakeVisible` union. All three owners are absent from
+the actual emitted public API. There are **376** edited declarations, up from
+373, and five new `resolved_findings` rows. Only `types.ts` differs between the
+completed apply trees. Its stock `transpileModule` output is byte-identical,
+139,659 bytes, SHA-256
+`4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3`.
+
+The main census is **234 -> 233**, and the filtered-prelude census is
+**235 -> 234**. Every one of the six driver runs removes exactly
+`D4012d5810140`, checker.ts:6035:9 TS2375, with no new or changed diagnostic
+chains. The real resolver-revert full apply restores the original diagnostic
+sets and original source hashes. The complete public declaration output is
+byte-identical before and after; stage3/lane's actual `api_check` accepts all
+**222** sanctioned declarations (194 added and 193 removed diff lines), with
+no additional API change. All 23 apply tests pass.
+
+The focused witness is `testdata/nullable-return.a`; its runner creates the
+stock TypeScript input only in scratch. It proves the one eligible property,
+method deferral, generic deferral, multi-arm union deferral, nullable-argument
+deferral, byte-identical JavaScript and Node's present-undefined own-key
+behavior. `check-wave1.cjs` compares every changed source file and requires each
+new internal owner in `resolved_findings`. Both byte comparators reject an
+actual appended runtime expression. The revert also makes the witness fail.
+
+[Full commands, saved observations and every mutant](../00-setup/evidence/README.md#optional-contract-wave-1-repair-proofs)
+are retained with the census evidence. No runtime expression, site assignment,
+object key, method syntax, checker option or public API line was repaired.

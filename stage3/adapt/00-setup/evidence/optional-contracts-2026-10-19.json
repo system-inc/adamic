@@ -1136,7 +1136,24 @@
           "containerKind": "interface",
           "publicApi": false,
           "publicApiLines": [],
-          "containerAppearsInPublicApi": false
+          "containerAppearsInPublicApi": false,
+          "role": "implemented interface slot"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54330,
+          "kind": "PropertyDeclaration",
+          "path": [
+            "SymbolTrackerImpl",
+            "moduleResolverHost"
+          ],
+          "text": "moduleResolverHost: ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; } | undefined = undefined;",
+          "declarationForm": "class field",
+          "containerKind": "class",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false,
+          "role": "implementing class field; already explicitly admits undefined"
         }
       ],
       "reasonGroup": "unsupported-code",

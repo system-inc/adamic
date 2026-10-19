@@ -1,0 +1,24 @@
+interface ReturnStorage { value?: number; }
+function makeStorage(value: number | undefined): ReturnStorage | undefined {
+    return { value };
+}
+interface MethodStorage { callback?(): number; }
+function makeMethod(callback: (() => number) | undefined): MethodStorage | undefined {
+    return { callback };
+}
+interface GenericStorage<T> { value?: T; }
+function makeGeneric<T>(value: T | undefined): GenericStorage<T> | undefined {
+    return { value };
+}
+interface LeftStorage { kind: "left"; left?: number; }
+interface RightStorage { kind: "right"; right?: number; }
+function makeUnion(value: number | undefined): LeftStorage | RightStorage | undefined {
+    return { kind: "left", left: value };
+}
+interface ArgumentStorage { value?: number; }
+declare function acceptStorage(value?: ArgumentStorage): void;
+function argumentStorage(value: number | undefined): void {
+    acceptStorage({ value });
+}
+const stored = makeStorage(undefined);
+console.log(JSON.stringify([Object.keys(stored!), Object.hasOwn(stored!, "value"), stored!.value]));
