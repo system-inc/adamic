@@ -25,6 +25,7 @@ var compilerSites = map[string]string{
 	"internal/fuzz/confirm_test.go:TestFindingReproducesAlone":                                        "names clang as a fixture failure stage; compiles nothing",
 	"internal/fuzz/confirm_test.go:flakyCheckout":                                                     "writes fixture tools that simulate failed executions; compiles nothing",
 	"bench/run.go:describeMachine":                                                                    "prints clang's version for a benchmark's header; compiles nothing",
+	"cmd/adamic-admission-delta/main.go:run":                                                          "checks clang resolves before any native observation, so a missing toolchain is a void, not a red; compiles nothing",
 	"cmd/adamic-gate/main.go:buildFlags":                                                              "records clang's version in a gate's machine line; compiles nothing",
 	"stage1/cohere/cssnumbers/shards_test.go:numbersClangToolchain":                                   "checks clang runs before naming it in a key; compiles nothing",
 	"stage1/cohere/cssstrings/shards_test.go:stringsClangToolchain":                                   "checks clang runs before naming it in a key; compiles nothing",
