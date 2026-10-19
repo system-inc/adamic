@@ -50,7 +50,8 @@ func printerAnswers(t *testing.T, cases, mode string) string {
 func TestClosedPrinterRegexGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/6_printer_regex_tree.ts")
 	program := lowered(t, path)
-	nativeRun, binary := natively(t, program)
+	binary := filepath.Join(programSanitized(t, "gaps/6_printer_regex_tree.ts"), "port")
+	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result run
