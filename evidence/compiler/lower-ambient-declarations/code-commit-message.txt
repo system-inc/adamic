@@ -1,0 +1,7 @@
+Refuse ambient program declarations and reference directives.
+
+Program modules must define their values instead of asking the checker to trust
+missing runtime bindings. Keep type-only declarations legal and pin each refusal
+against source Node, with a mutant proving the checks can fail.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

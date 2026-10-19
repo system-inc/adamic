@@ -1,0 +1,332 @@
+[
+  {
+    "path": "internal/oracle/testdata/ambient_refused/class.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/class.a:2:1: stage 0 can't lower a declare class without a runtime definition yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/class.a:2:1: Adamic 0.1 refuses an ambient class declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/const.a",
+    "main": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/const.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/enum.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/enum.a:2:24: stage 0 can't lower a computed enum member; use a constant number or string initializer yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/enum.a:2:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/function.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/function.a:2:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/function.a:2:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/global.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/global.a:2:1: stage 0 can't lower an ambient namespace or external module; use named file imports yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/global.a:2:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/let.a",
+    "main": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/let.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/let_copy.ts",
+    "main": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/let_copy.ts:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/module.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/module.a:2:1: stage 0 can't lower an ambient namespace or external module; use named file imports yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/module.a:2:1: Adamic 0.1 refuses a module augmentation or ambient external module; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/namespace.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/namespace.a:2:1: stage 0 can't lower an ambient namespace or external module; use named file imports yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/namespace.a:2:1: Adamic 0.1 refuses an ambient namespace or module holding values; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/reference_lib.a",
+    "main": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_lib.a:2:21: Adamic 0.1 refuses a triple-slash reference lib directive; remove the directive and import a module that defines its values; use Adamic's library or generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/reference_path.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_path.a:3:16: stage 0 can't lower reading referencedLimit yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_path.a:2:22: Adamic 0.1 refuses a triple-slash reference path directive; remove the directive and import a module that defines its values; use Adamic's library or generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/reference_types.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_types.a:3:16: stage 0 can't lower reading referencedLimit yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_types.a:2:23: Adamic 0.1 refuses a triple-slash reference types directive; remove the directive and import a module that defines its values; use Adamic's library or generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/ambient_refused/var.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/var.a:2:9: Adamic 0.1 refuses var; use const or let\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/var.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/adapt/65-temporary-node-builtins/evidence/previous-process-host-types.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/65-temporary-node-builtins/evidence/previous-process-host-types.a:9:14: stage 0 can't lower node:process.Process.nextTick yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/65-temporary-node-builtins/evidence/previous-process-host-types.a:5:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/adapt/71-writable-views/language-questions/generic-storage.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/71-writable-views/language-questions/generic-storage.a:12:14: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/71-writable-views/language-questions/generic-storage.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/adapt/71-writable-views/language-questions/node-flags.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/71-writable-views/language-questions/node-flags.a:9:6: Adamic 0.1 refuses a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/71-writable-views/language-questions/node-flags.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/adapt/71-writable-views/language-questions/text-range.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/71-writable-views/language-questions/text-range.a:12:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/71-writable-views/language-questions/text-range.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/adapt/75-optional-widening/coverage/reduced-union.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/75-optional-widening/coverage/reduced-union.a:3:31: Adamic 0.1 refuses optional property id in { id?: number; } absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/adapt/75-optional-widening/coverage/reduced-union.a:2:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/parser/native-process-next-tick-read.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a:7:52: stage 0 can't lower node:process.Process.nextTick yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a:6:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/002_conditionalEqualityTestingNullability/conditionalEqualityTestingNullability.ts",
+    "main": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/002_conditionalEqualityTestingNullability/conditionalEqualityTestingNullability.ts:12:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3/ambientEnumElementInitializer3.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3/ambientEnumElementInitializer3.ts:2:1: stage 0 can't lower an ambient enum without a runtime definition yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/005_ambientEnumElementInitializer3/ambientEnumElementInitializer3.ts:2:1: Adamic 0.1 refuses an ambient enum declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/010_nestedTypeVariableInfersLiteral/nestedTypeVariableInfersLiteral.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/010_nestedTypeVariableInfersLiteral/nestedTypeVariableInfersLiteral.ts:13:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/010_nestedTypeVariableInfersLiteral/nestedTypeVariableInfersLiteral.ts:3:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/016_yieldStarContextualType/yieldStarContextualType.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/016_yieldStarContextualType/yieldStarContextualType.ts:6:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/016_yieldStarContextualType/yieldStarContextualType.ts:4:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts:17:1: Adamic 0.1 refuses an async generator function; use synchronous iteration; async generators need a separate ownership and cancellation ruling\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts:13:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata/templateLiteralsAndDecoratorMetadata.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata/templateLiteralsAndDecoratorMetadata.ts:6:3: Adamic 0.1 refuses a decorator; write the behavior where it applies; 0.1 doesn't rewrite classes at runtime\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/032_templateLiteralsAndDecoratorMetadata/templateLiteralsAndDecoratorMetadata.ts:4:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2/narrowByClauseExpressionInSwitchTrue2.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2/narrowByClauseExpressionInSwitchTrue2.ts:12:9: stage 0 can't lower an Identifier as a statement yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2/narrowByClauseExpressionInSwitchTrue2.ts:7:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/045_discriminantUsingEvaluatableTemplateExpression/discriminantUsingEvaluatableTemplateExpression.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/045_discriminantUsingEvaluatableTemplateExpression/discriminantUsingEvaluatableTemplateExpression.ts:10:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/045_discriminantUsingEvaluatableTemplateExpression/discriminantUsingEvaluatableTemplateExpression.ts:10:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/uniqueSymbolAssignmentOnGlobalAugmentationSuceeds.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/uniqueSymbolAssignmentOnGlobalAugmentationSuceeds.ts:5:1: stage 0 can't lower an ambient namespace or external module; use named file imports yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/uniqueSymbolAssignmentOnGlobalAugmentationSuceeds.ts:5:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/drivers/tsc/corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5/contextualTypeBasedOnIntersectionWithAnyInTheMix5.ts",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5/contextualTypeBasedOnIntersectionWithAnyInTheMix5.ts:45:18: stage 0 can't lower a function returning any yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/tsc/corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5/contextualTypeBasedOnIntersectionWithAnyInTheMix5.ts:37:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  },
+  {
+    "path": "stage3/fixtures/host/22_createHash_fallback.a",
+    "main": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet\n"
+    },
+    "new": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:23:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values\n"
+    }
+  }
+]

@@ -1,0 +1,5 @@
+{"path": "internal/oracle/testdata/ambient_refused/global.a", "main": {"exit": 1, "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/global.a:2:1: stage 0 can't lower an ambient namespace or external module; use named file imports yet\n"}}
+{"path": "internal/oracle/testdata/ambient_refused/module.a", "main": {"exit": 1, "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/module.a:2:1: stage 0 can't lower an ambient namespace or external module; use named file imports yet\n"}}
+{"path": "internal/oracle/testdata/ambient_refused/reference_lib.a", "main": {"exit": 0, "stderr": ""}}
+{"path": "internal/oracle/testdata/ambient_refused/reference_path.a", "main": {"exit": 1, "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_path.a:3:16: stage 0 can't lower reading referencedLimit yet\n"}}
+{"path": "internal/oracle/testdata/ambient_refused/reference_types.a", "main": {"exit": 1, "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/ambient_refused/reference_types.a:3:16: stage 0 can't lower reading referencedLimit yet\n"}}

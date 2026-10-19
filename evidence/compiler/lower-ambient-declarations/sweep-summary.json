@@ -1,0 +1,25 @@
+{
+  "programs": 3694,
+  "new_refusal_first_stops": 30,
+  "preexisting_new_refusals": 17,
+  "new_acceptances": 0,
+  "accepted_to_refused": [
+    "internal/oracle/testdata/ambient_refused/const.a",
+    "internal/oracle/testdata/ambient_refused/let.a",
+    "internal/oracle/testdata/ambient_refused/let_copy.ts",
+    "internal/oracle/testdata/ambient_refused/reference_lib.a",
+    "stage3/drivers/tsc/corpus/002_conditionalEqualityTestingNullability/conditionalEqualityTestingNullability.ts"
+  ],
+  "unchanged_panic_first_stops": [
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a",
+    "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a"
+  ],
+  "timeouts": 0
+}
