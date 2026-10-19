@@ -14,6 +14,7 @@ import (
 
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
