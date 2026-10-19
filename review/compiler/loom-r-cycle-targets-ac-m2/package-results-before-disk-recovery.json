@@ -1,0 +1,60 @@
+[
+  {
+    "package": "internal/fuzz",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "log": "final-package-00.log",
+    "exit": 0,
+    "wall_seconds": 94.947,
+    "packages": [
+      {
+        "Time": "2026-10-19T01:34:45.48565362Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fuzz",
+        "Elapsed": 81.826
+      }
+    ],
+    "test_events": 95,
+    "max_leaf_seconds": 33.84,
+    "over_budget": []
+  },
+  {
+    "package": "internal/ir",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/ir",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "log": "final-package-01.log",
+    "exit": 1,
+    "wall_seconds": 13.76,
+    "packages": [
+      {
+        "Time": "2026-10-19T01:34:59.266320328Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 8.738
+      }
+    ],
+    "test_events": 32,
+    "max_leaf_seconds": 4.18,
+    "over_budget": []
+  }
+]

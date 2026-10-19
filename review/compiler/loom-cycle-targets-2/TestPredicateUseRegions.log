@@ -1,0 +1,73 @@
+=== RUN   TestPredicateUseRegions
+=== PAUSE TestPredicateUseRegions
+=== CONT  TestPredicateUseRegions
+=== RUN   TestPredicateUseRegions/unused
+=== PAUSE TestPredicateUseRegions/unused
+=== RUN   TestPredicateUseRegions/true
+=== PAUSE TestPredicateUseRegions/true
+=== RUN   TestPredicateUseRegions/false
+=== PAUSE TestPredicateUseRegions/false
+=== RUN   TestPredicateUseRegions/both
+=== PAUSE TestPredicateUseRegions/both
+=== RUN   TestPredicateUseRegions/return_continuation
+=== PAUSE TestPredicateUseRegions/return_continuation
+=== RUN   TestPredicateUseRegions/throw_continuation
+=== PAUSE TestPredicateUseRegions/throw_continuation
+=== RUN   TestPredicateUseRegions/false_continuation
+=== PAUSE TestPredicateUseRegions/false_continuation
+=== RUN   TestPredicateUseRegions/const_result_alias
+=== PAUSE TestPredicateUseRegions/const_result_alias
+=== RUN   TestPredicateUseRegions/compound_result_alias
+=== PAUSE TestPredicateUseRegions/compound_result_alias
+=== RUN   TestPredicateUseRegions/short_circuit
+=== PAUSE TestPredicateUseRegions/short_circuit
+=== RUN   TestPredicateUseRegions/closure_read
+=== PAUSE TestPredicateUseRegions/closure_read
+=== RUN   TestPredicateUseRegions/indexed_spelling
+=== PAUSE TestPredicateUseRegions/indexed_spelling
+=== RUN   TestPredicateUseRegions/indexed_argument
+=== PAUSE TestPredicateUseRegions/indexed_argument
+=== RUN   TestPredicateUseRegions/computed_index
+=== PAUSE TestPredicateUseRegions/computed_index
+=== RUN   TestPredicateUseRegions/loop_read
+=== PAUSE TestPredicateUseRegions/loop_read
+=== RUN   TestPredicateUseRegions/later_read
+=== PAUSE TestPredicateUseRegions/later_read
+=== RUN   TestPredicateUseRegions/replacement
+=== PAUSE TestPredicateUseRegions/replacement
+=== CONT  TestPredicateUseRegions/unused
+=== CONT  TestPredicateUseRegions/short_circuit
+=== CONT  TestPredicateUseRegions/computed_index
+=== CONT  TestPredicateUseRegions/throw_continuation
+=== CONT  TestPredicateUseRegions/replacement
+=== CONT  TestPredicateUseRegions/later_read
+=== CONT  TestPredicateUseRegions/return_continuation
+=== CONT  TestPredicateUseRegions/loop_read
+=== CONT  TestPredicateUseRegions/both
+=== CONT  TestPredicateUseRegions/false
+=== CONT  TestPredicateUseRegions/const_result_alias
+=== CONT  TestPredicateUseRegions/true
+=== CONT  TestPredicateUseRegions/compound_result_alias
+=== CONT  TestPredicateUseRegions/false_continuation
+=== CONT  TestPredicateUseRegions/indexed_spelling
+=== CONT  TestPredicateUseRegions/indexed_argument
+=== CONT  TestPredicateUseRegions/closure_read
+--- PASS: TestPredicateUseRegions (0.00s)
+    --- PASS: TestPredicateUseRegions/unused (0.09s)
+    --- PASS: TestPredicateUseRegions/short_circuit (0.09s)
+    --- PASS: TestPredicateUseRegions/throw_continuation (0.11s)
+    --- PASS: TestPredicateUseRegions/computed_index (0.12s)
+    --- PASS: TestPredicateUseRegions/replacement (0.07s)
+    --- PASS: TestPredicateUseRegions/later_read (0.08s)
+    --- PASS: TestPredicateUseRegions/return_continuation (0.06s)
+    --- PASS: TestPredicateUseRegions/loop_read (0.09s)
+    --- PASS: TestPredicateUseRegions/both (0.06s)
+    --- PASS: TestPredicateUseRegions/false (0.05s)
+    --- PASS: TestPredicateUseRegions/const_result_alias (0.09s)
+    --- PASS: TestPredicateUseRegions/true (0.05s)
+    --- PASS: TestPredicateUseRegions/compound_result_alias (0.07s)
+    --- PASS: TestPredicateUseRegions/false_continuation (0.06s)
+    --- PASS: TestPredicateUseRegions/indexed_spelling (0.05s)
+    --- PASS: TestPredicateUseRegions/closure_read (0.04s)
+    --- PASS: TestPredicateUseRegions/indexed_argument (0.06s)
+PASS

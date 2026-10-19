@@ -1,0 +1,11 @@
+--- internal/lower/locals.go
++++ internal/lower/locals.go
+@@ -158,7 +158,7 @@
+ 	if l.result.Locals[local].Type == ir.Array {
+ 		element := l.checker.GetElementTypeOfArrayType(l.concrete(proven))
+ 		if element != nil {
+-			l.result.Locals[local].ArrayElement, _ = l.representation(element)
++			l.result.Locals[local].ArrayElement = 0
+ 		}
+ 	}
+ 	if l.instance != nil {

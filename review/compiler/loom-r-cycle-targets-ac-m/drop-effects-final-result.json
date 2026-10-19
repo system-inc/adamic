@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m/drop-effects-final-overlay.json",
+    "./internal/ir",
+    "-run",
+    "^TestClosureTargetsPreserveEffectsProducers$",
+    "-count=1",
+    "-parallel=4",
+    "-json",
+    "-timeout=90s"
+  ],
+  "exit": 1,
+  "caught": true,
+  "production_files_mutated": false
+}

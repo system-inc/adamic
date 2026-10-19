@@ -1,0 +1,8 @@
+=== RUN   TestClosureTargetsIgnoreNonCallableArrayInputs
+=== PAUSE TestClosureTargetsIgnoreNonCallableArrayInputs
+=== CONT  TestClosureTargetsIgnoreNonCallableArrayInputs
+    call_targets_test.go:171: non-callable element 1 contaminated closure slots: {Functions:[2] Unknown:true}
+--- FAIL: TestClosureTargetsIgnoreNonCallableArrayInputs (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.007s
+FAIL

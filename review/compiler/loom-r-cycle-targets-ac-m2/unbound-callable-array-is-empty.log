@@ -1,0 +1,8 @@
+=== RUN   TestClosureTargetsKeepCallableArrayInputsUnknown
+=== PAUSE TestClosureTargetsKeepCallableArrayInputsUnknown
+=== CONT  TestClosureTargetsKeepCallableArrayInputsUnknown
+    call_targets_test.go:181: callable or unproved element 0 lost unknown input: {Functions:[] Unknown:false}
+--- FAIL: TestClosureTargetsKeepCallableArrayInputsUnknown (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.038s
+FAIL

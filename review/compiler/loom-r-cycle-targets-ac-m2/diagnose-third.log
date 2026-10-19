@@ -1,0 +1,10 @@
+=== RUN   TestGeneratedProgramsCheckAndLower
+=== PAUSE TestGeneratedProgramsCheckAndLower
+=== CONT  TestGeneratedProgramsCheckAndLower
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-001-005
+--- PASS: TestGeneratedProgramsCheckAndLower (0.00s)
+    --- PASS: TestGeneratedProgramsCheckAndLower/seeds-001-005 (0.47s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fuzz	0.476s

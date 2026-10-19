@@ -1,0 +1,68 @@
+[
+  {
+    "test": "TestClosureArraysWithUnrelatedProducersAgreeWithNode",
+    "seconds": 21.23,
+    "status": "pass",
+    "log": "final-package-00.log"
+  },
+  {
+    "test": "TestClosureTargetsFollowParametersReturnsAndMapValues",
+    "seconds": 0,
+    "status": "pass",
+    "log": "final-package-01.log"
+  },
+  {
+    "test": "TestClosureTargetsKnownCallerDoesNotHideUnknownCaller",
+    "seconds": 0,
+    "status": "pass",
+    "log": "final-package-01.log"
+  },
+  {
+    "test": "TestClosureTargetsPreserveEffectsProducers",
+    "seconds": 0,
+    "status": "pass",
+    "log": "final-package-01.log"
+  },
+  {
+    "test": "TestClosureTargetsIgnoreNonCallableArrayInputs",
+    "seconds": 0,
+    "status": "pass",
+    "log": "final-package-01.log"
+  },
+  {
+    "test": "TestClosureTargetsKeepCallableArrayInputsUnknown",
+    "seconds": 0,
+    "status": "pass",
+    "log": "final-package-01.log"
+  },
+  {
+    "test": "TestNamespaceAmbientCwdInitialization",
+    "seconds": 0.93,
+    "status": "pass",
+    "log": "final-package-02.log"
+  },
+  {
+    "test": "TestClosureCycleDirect",
+    "seconds": 0.4,
+    "status": "pass",
+    "log": "final-package-07.log"
+  },
+  {
+    "test": "TestClosureCycleJoined",
+    "seconds": 0.2,
+    "status": "pass",
+    "log": "final-package-07.log"
+  },
+  {
+    "test": "TestClosureCycleMap",
+    "seconds": 0.33,
+    "status": "pass",
+    "log": "final-package-07.log"
+  },
+  {
+    "test": "TestClosureCycleAmbientCwd",
+    "seconds": 1.97,
+    "status": "pass",
+    "log": "final-package-07.log"
+  }
+]

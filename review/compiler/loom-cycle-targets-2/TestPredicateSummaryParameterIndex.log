@@ -1,0 +1,11 @@
+=== RUN   TestPredicateSummaryParameterIndex
+=== PAUSE TestPredicateSummaryParameterIndex
+=== CONT  TestPredicateSummaryParameterIndex
+=== RUN   TestPredicateSummaryParameterIndex/p05_helper_second_parameter
+=== RUN   TestPredicateSummaryParameterIndex/p06_helper_second_parameter_undefined
+=== RUN   TestPredicateSummaryParameterIndex/p13_filter_wrong_parameter_helper
+--- PASS: TestPredicateSummaryParameterIndex (0.27s)
+    --- PASS: TestPredicateSummaryParameterIndex/p05_helper_second_parameter (0.07s)
+    --- PASS: TestPredicateSummaryParameterIndex/p06_helper_second_parameter_undefined (0.17s)
+    --- PASS: TestPredicateSummaryParameterIndex/p13_filter_wrong_parameter_helper (0.04s)
+PASS

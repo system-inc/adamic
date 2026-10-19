@@ -1,0 +1,10 @@
+internal/fuzz/cycle_targets_test.go
+internal/ir/call_targets.go
+internal/ir/call_targets_test.go
+internal/ir/ir.go
+internal/lower/callback_widening.go
+internal/lower/cycles.go
+internal/lower/locals.go
+internal/lower/namespaces_ambient_test.go
+internal/oracle/cycle_closure_targets_test.go
+internal/oracle/getters_census_test.go

@@ -1,0 +1,564 @@
+import { parallelMap } from 'adamic';
+interface Holder {
+	value: number;
+	name: string;
+	list: number[];
+}
+class BaseCounter {
+	count = 0;
+	label = 'b';
+	bump(amount: number): number {
+		this.label = (('🌍b'.slice(1, 1) + holder.name.slice(2)).trimStart()).slice(0, 40);
+		numbers.set(0, (holder.list[this.count] ?? 5));
+		return this.count + amount;
+	}
+	describe(): string {
+		return this.label;
+	}
+}
+class ChildCounter extends BaseCounter {
+	extra = 1;
+	override bump(amount: number): number {
+		const carried = super.bump(amount);
+		holder.value %= (holder.list.splice((holder.value % carried), 1)[0] ?? 1);
+		if (numbers.size < 8) {
+			numbers.set((table.get(`k${Math.abs(Math.trunc(1e21)) % 4}`) ?? 1), holder.list.length);
+		}
+		holder.value -= ((this.count & carried) % holder.name.lastIndexOf(this.label));
+		return carried + this.extra;
+	}
+	override describe(): string {
+		return super.describe() + '!';
+	}
+}
+const holder: Holder = { value: -0.0001, name: 'İ', list: [3, 1e21] };
+const counter = new ChildCounter();
+const plainCounter = new BaseCounter();
+const asBase: BaseCounter = counter;
+let text1: string = (' pad ').slice(0, 40);
+const numbers2: number[] = [1, 0.1, -1];
+const numbers3: number[] = [1, 10, 3];
+const numbers4: number[] = [0.1, 2.25, 1.5];
+const table = new Map<string, number>();
+const numbers = new Map<number, number>();
+const flags = new Set<number>();
+const finder = /a/g;
+const pending: (() => number)[] = [];
+interface Link {
+	value: number;
+	label: string;
+	readonly next: Link | undefined;
+}
+let chain: Link | undefined = { value: 3, label: 'ß', next: undefined };
+function head(): Link | undefined {
+	return chain;
+}
+let captured = -0.0001;
+const capture = (step: number): number => {
+	captured += step;
+	return captured;
+};
+function makeTally(start: number): (step: number) => number {
+	let total = start;
+	return (step) => {
+		total = total * 2 + step;
+		return total;
+	};
+}
+const tally5 = makeTally(7);
+function effect6(parameter7: number[]): boolean {
+	{
+		const found = /a/g.exec(('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').slice(0, 40));
+		if (found !== null) {
+			console.log(`${found.index}:${found[0] ?? ''}`);
+		} else {
+			console.log('none');
+		}
+	}
+	return false;
+}
+function effect8(parameter9: number, parameter10: number[], parameter11: string = ('3.5').slice(0, 40)): number {
+	holder.value++;
+	console.log(('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa').slice(0, 40).replace(/(a)/g, '-'));
+	return counter.describe().indexOf(holder.name);
+}
+function effect12(parameter13: number, parameter14: number[], parameter15: boolean = false): string {
+	for (let index16 = 0; index16 < 1; index16++) {
+		console.log(asBase.describe());
+	}
+	{
+		let guard17 = 0;
+		for (const key18 of table.keys()) {
+			guard17++;
+			if (guard17 > 12) {
+				break;
+			}
+			effect6(Array.from({ length: 1 }, (_, index19) => parameter13));
+			if (effect6(Array.from({ length: 3 }, (_, index20) => 255))) {
+				return (text1.slice(7)).slice(0, 40);
+			}
+			counter.label += `${captured}`;
+		}
+	}
+	console.log(((numbers3.length).toFixed(1)).slice(0, 40).replace(/a/g, '$&$`'));
+	return ((head()?.label ?? '🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍🌍')).slice(0, 40);
+}
+function effect21(parameter22: string): number {
+	for (const item23 of numbers4) {
+		plainCounter.count %= holder.value;
+	}
+	return capture(counter.count);
+}
+const maybeZero: number = 0;
+let maybeHeldUndefined: number | undefined = undefined;
+let maybeHeldNaN: number | undefined = NaN;
+let maybeHeldNumber: number | undefined = 5;
+const maybeAll: (number | undefined)[] = [];
+function maybeDirect(value?: number): number | undefined {
+	return value;
+}
+function maybeUnion(value: number | undefined): number | undefined {
+	return value;
+}
+function maybeDefault(value: number = 0): number {
+	return value;
+}
+function maybeDefaultUnion(value: number | undefined = NaN): number | undefined {
+	return value;
+}
+function maybeLater(first: number | undefined, second: number = first ?? 0): number {
+	return second;
+}
+interface MaybeCarrier {
+	carry(value: number | undefined): number | undefined;
+	pick(value?: number): number | undefined;
+}
+class MaybeLeft implements MaybeCarrier {
+	carry(value: number | undefined): number | undefined {
+		return value;
+	}
+	pick(value?: number): number | undefined {
+		return value;
+	}
+}
+class MaybeRight implements MaybeCarrier {
+	held: number | undefined = undefined;
+	carry(value: number | undefined): number | undefined {
+		this.held = value;
+		return this.held;
+	}
+	pick(value?: number): number | undefined {
+		this.held = value;
+		return this.held;
+	}
+}
+const maybeLeft = new MaybeLeft();
+const maybeRight = new MaybeRight();
+function maybeCarrier(which: number): MaybeCarrier {
+	if (which % 2 === 0) {
+		return maybeLeft;
+	}
+	return maybeRight;
+}
+interface MaybeSole {
+	carry(value: number | undefined): number | undefined;
+	pick(value?: number): number | undefined;
+}
+class MaybeOnly implements MaybeSole {
+	carry(value: number | undefined): number | undefined {
+		return value;
+	}
+	pick(value?: number): number | undefined {
+		return value;
+	}
+}
+const maybeSole: MaybeSole = new MaybeOnly();
+class MaybeSlot {
+	slot: number | undefined;
+	fixed: number;
+	constructor(value?: number, fixed: number = NaN) {
+		this.slot = value;
+		this.fixed = fixed;
+	}
+	carry(value: number | undefined): number | undefined {
+		return value;
+	}
+	pick(value?: number): number | undefined {
+		return value;
+	}
+	later(value: number = -3): number {
+		return value;
+	}
+}
+const maybeBox = new MaybeSlot(undefined);
+interface MaybeRecord {
+	slot?: number;
+}
+function maybeRecord(value: number | undefined): number | undefined {
+	const record: MaybeRecord = value === undefined ? {} : { slot: value };
+	return record.slot;
+}
+function maybePair(first: number | undefined, second: number | undefined): (number | undefined)[] {
+	return [first, second];
+}
+const maybeArrow = (value: number | undefined): number | undefined => value;
+function maybeCellPair(): (value: number | undefined) => number | undefined {
+	let kept: number | undefined = undefined;
+	return (value: number | undefined): number | undefined => {
+		kept = value;
+		return kept;
+	};
+}
+const maybeCell = maybeCellPair();
+function maybeKey(value: number | undefined): number {
+	if (value === undefined) {
+		return 0;
+	}
+	if (Number.isNaN(value)) {
+		return -2000;
+	}
+	return Math.max(-1000, Math.min(1000, value));
+}
+const maybeValue24: number | undefined = maybePair(-0, 2).find((value: number | undefined, index: number): boolean => index === 0);
+console.log(`maybeValue24 number>find ${maybeValue24 === undefined} ${typeof maybeValue24} ${maybeValue24} ${maybeValue24 !== maybeValue24}`);
+maybeAll.push(maybeValue24);
+const maybeValue25: number | undefined = maybePair(Array.from({ length: 1 }, (value: number | undefined): number | undefined => value)[0], 2).sort((left: number | undefined, right: number | undefined): number => maybeKey(left) - maybeKey(right))[1];
+console.log(`maybeValue25 hole>sort ${maybeValue25 === undefined} ${typeof maybeValue25} ${maybeValue25} ${maybeValue25 !== maybeValue25}`);
+maybeAll.push(maybeValue25);
+maybeHeldUndefined = maybeValue25;
+const maybeValue26: number | undefined = maybeRecord(0);
+console.log(`maybeValue26 number>record ${maybeValue26 === undefined} ${typeof maybeValue26} ${maybeValue26} ${maybeValue26 !== maybeValue26}`);
+maybeAll.push(maybeValue26);
+const maybeValue27: number | undefined = maybeBox.later();
+console.log(`maybeValue27 omitted>methodDefault ${maybeValue27 === undefined} ${typeof maybeValue27} ${maybeValue27} ${maybeValue27 !== maybeValue27}`);
+maybeAll.push(maybeValue27);
+const maybeValue28: number | undefined = maybeCell(maybeArrow(maybePair(2, undefined).reduce((previous: number | undefined, value: number | undefined): number | undefined => value, 2)));
+console.log(`maybeValue28 undefined>reduce>closure>cell ${maybeValue28 === undefined} ${typeof maybeValue28} ${maybeValue28} ${maybeValue28 !== maybeValue28}`);
+maybeAll.push(maybeValue28);
+const maybeValue29: number | undefined = maybePair(2, 2).reduce((previous: number | undefined, value: number | undefined): number | undefined => previous, maybeRecord(0));
+console.log(`maybeValue29 number>record>reduceInitial ${maybeValue29 === undefined} ${typeof maybeValue29} ${maybeValue29} ${maybeValue29 !== maybeValue29}`);
+maybeAll.push(maybeValue29);
+const maybeValue30: number | undefined = maybeSole.carry(Array.from({ length: 1 }, (value: number | undefined): number | undefined => value)[0]);
+console.log(`maybeValue30 hole>sole ${maybeValue30 === undefined} ${typeof maybeValue30} ${maybeValue30} ${maybeValue30 !== maybeValue30}`);
+maybeAll.push(maybeValue30);
+const maybeValue31: number | undefined = maybePair(maybeDirect(maybeBox.later()), 2).sort((left: number | undefined, right: number | undefined): number => maybeKey(left) - maybeKey(right))[1];
+console.log(`maybeValue31 omitted>methodDefault>direct>sort ${maybeValue31 === undefined} ${typeof maybeValue31} ${maybeValue31} ${maybeValue31 !== maybeValue31}`);
+maybeAll.push(maybeValue31);
+[maybeValue31].forEach((value: number | undefined): void => {
+	console.log(`maybeValue31 omitted>methodDefault>direct>sort>forEach ${value === undefined} ${typeof value} ${value}`);
+});
+const maybeValue32: number | undefined = maybeLater(maybeLater(maybeBox.later(maybeHeldUndefined)));
+console.log(`maybeValue32 held>methodDefault>later>later ${maybeValue32 === undefined} ${typeof maybeValue32} ${maybeValue32} ${maybeValue32 !== maybeValue32}`);
+maybeAll.push(maybeValue32);
+maybeHeldUndefined = maybeValue32;
+for (const each of maybeAll) {
+	console.log(`kept ${each === undefined} ${typeof each} ${each}`);
+}
+console.log(`held ${maybeHeldUndefined} ${maybeHeldNaN} ${maybeHeldNumber} ${maybeBox.slot} ${maybeRight.held}`);
+interface OverrideBox { v: string; }
+interface OverrideWorker { run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox ; }
+let overrideGlobal: OverrideBox = { v: `global${4}` };
+let overrideNarrowed: OverrideBox | undefined = { v: `narrowed${0}` };
+const overrideArray: OverrideBox[] = [];
+const overrideMap = new Map<string, OverrideBox>();
+const overrideClosures: (() => string)[] = [];
+class OverrideBase implements OverrideWorker {
+	saved: OverrideBox = { v: `field${7}` };
+	run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox {
+		return { v: `${box.v}:${items.length}` };
+	}
+}
+class OverrideChild extends OverrideBase {
+	run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox {
+		overrideArray.push(box);
+		return { v: `${box.v}:${items.length}` };
+	}
+	throughSuper(): void {
+		const items: OverrideBox[] = [{ v: `super${2}` }];
+		const borrowed = items[0] ?? { v: `fallback${5}` };
+		console.log(super.run(borrowed, items, () => {}).v);
+		console.log(borrowed.v);
+	}
+}
+class OverrideReader implements OverrideWorker {
+	run(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox {
+		return { v: `${box.v}:${items.length}` };
+	}
+}
+function overrideViaBase(worker: OverrideBase): void {
+	const items: OverrideBox[] = [{ v: `first${4}` }, { v: `second${8}` }];
+	const borrowed = items[0] ?? { v: `fallback${8}` };
+	const callback = (): void => {
+	};
+	if (overrideNarrowed !== undefined) {
+		try {
+			const result = worker.run(borrowed, items, callback);
+			console.log(result.v);
+		} catch (error) {
+			console.log('override caught');
+		}
+	}
+	console.log(borrowed.v);
+}
+function overrideViaInterface(worker: OverrideWorker): void {
+	const items: OverrideBox[] = [{ v: `first${4}` }, { v: `second${8}` }];
+	const borrowed = items[0] ?? { v: `fallback${8}` };
+	const callback = (): void => {
+	};
+	if (overrideNarrowed !== undefined) {
+		try {
+			const result = worker.run(borrowed, items, callback);
+			console.log(result.v);
+		} catch (error) {
+			console.log('override caught');
+		}
+	}
+	console.log(borrowed.v);
+}
+const overrideChild = new OverrideChild();
+overrideViaBase(new OverrideBase());
+overrideViaBase(overrideChild);
+console.log(overrideChild.saved.v);
+console.log(overrideGlobal.v);
+for (const [key, kept] of overrideMap) {
+	console.log(`${key}:${kept.v}`);
+}
+overrideViaInterface(new OverrideReader());
+overrideViaInterface(overrideChild);
+overrideChild.throughSuper();
+console.log(overrideChild.saved.v);
+console.log(overrideGlobal.v);
+for (const kept of overrideArray) {
+	console.log(kept.v);
+}
+for (const [key, kept] of overrideMap) {
+	console.log(`${key}:${kept.v}`);
+}
+for (const later of overrideClosures) {
+	console.log(later());
+}
+interface OwnBox {
+	v: string;
+}
+class OwnWorker {
+	run(items: OwnBox[]): number {
+		return items.length;
+	}
+}
+class OwnMapper extends OwnWorker {
+	run(items: OwnBox[]): number {
+		const out = items.map((box) => ({ v: `${box.v}x` }));
+		return out.length;
+	}
+}
+function ownGo(ownWorker: OwnWorker): string {
+	const items: OwnBox[] = [{ v: `a${4}` }, { v: `b${3}` }, { v: `c${5}` }];
+	const first = items[0] ?? { v: `z${6}` };
+	const count = ownWorker.run(items);
+	return `${first.v} ${count}`;
+}
+console.log(ownGo(new OwnWorker()));
+console.log(ownGo(new OwnMapper()));
+interface OwnFamilyBox {
+	v: string;
+}
+let ownFamilyText = `t${4}`;
+function ownFamilySet(): number {
+	ownFamilyText = `u${6}`;
+	return ownFamilyText.length;
+}
+function ownFamilyMix(text: string, n: number): string {
+	return `${text}${n}`;
+}
+console.log(ownFamilyMix(ownFamilyText, ownFamilySet()));
+let ownFamilyOptional: OwnFamilyBox | undefined = { v: `f${7}` };
+function ownFamilyReset(): number {
+	ownFamilyOptional = { v: `g${5}` };
+	return 0;
+}
+ownFamilyReset();
+if (ownFamilyOptional !== undefined) {
+	console.log(ownFamilyOptional.v);
+}
+function ownFamilyMap(): string {
+	const items: OwnFamilyBox[] = [{ v: `a${6}` }, { v: `b${0}` }];
+	const first = items[0] ?? { v: `z${0}` };
+	const out = items.map((box) => ({ v: `${box.v}!` }));
+	return `${first.v} ${out.length}`;
+}
+console.log(ownFamilyMap());
+interface OwnFamilyTree {
+	tag: string;
+	keep(): string;
+}
+interface OwnFamilyPlain {
+	tag: string;
+}
+const ownFamilyKept: OwnFamilyTree[] = [];
+class OwnFamilyReal implements OwnFamilyTree {
+	tag: string;
+	constructor() {
+		this.tag = `f${6}`;
+	}
+	keep(): string {
+		ownFamilyKept.push(this);
+		return `k${7}`;
+	}
+}
+const ownFamilyTree: OwnFamilyTree = new OwnFamilyReal();
+ownFamilyKept.push(ownFamilyTree);
+const ownFamilyMade: OwnFamilyPlain = { ...ownFamilyTree, tag: ownFamilyTree.keep() };
+const ownFamilyEach = ownFamilyKept[0] ?? new OwnFamilyReal();
+console.log(`${ownFamilyEach.tag} ${ownFamilyEach instanceof OwnFamilyReal} ${ownFamilyMade.tag}`);
+class OwnFamilyHeld {
+	label: string;
+	constructor(count: number) {
+		this.label = `held${count}`;
+	}
+}
+let ownFamilySaved: OwnFamilyHeld = new OwnFamilyHeld(0);
+function ownFamilyKeep(counter: OwnFamilyHeld): number {
+	ownFamilySaved = counter;
+	return counter.label.length;
+}
+console.log(`${ownFamilyKeep(new OwnFamilyHeld(8))}`);
+console.log(ownFamilySaved.label);
+function share33(): void {
+	const source34: string = 'a'.repeat(128);
+	const kept35: string = source34.slice(0, 96);
+	let piece36: string = source34.slice(16, 112);
+	console.log(`${piece36.length} ${piece36.charCodeAt(32)} ${piece36.indexOf('a', 8)}`);
+	console.log(`${kept35.length} ${kept35.charCodeAt(0)} ${kept35.indexOf('a', 0)}`);
+	console.log(`${source34.length} ${source34.charCodeAt(32)} ${source34.indexOf('a', 8)}`);
+	piece36 += 'x';
+	for (let round37 = 0; round37 < 4; round37++) {
+		piece36 += `${round37 % 10}`;
+	}
+	console.log(`${piece36.length} ${piece36.charCodeAt(32)} ${piece36.indexOf('a', 8)}`);
+	console.log(`${piece36.length} ${piece36.charCodeAt(piece36.length - 1)}`);
+	console.log(source34);
+	console.log(kept35);
+	console.log(piece36);
+}
+share33();
+{
+	// parallel-shape: nested-call
+	const prepared39: number[] = [];
+	for (let index38 = 0; index38 < 341; index38++) {
+		prepared39.push((index38 * 5) % 90);
+	}
+	const items40: readonly number[] = prepared39;
+	const result41 = parallelMap(items40, (item, index38): number => {
+		const children: readonly number[] = [item, index38 % 50, 1, 2, 3];
+		const inner = parallelMap(children, (child, childIndex) => child + childIndex + index38);
+		let sum42 = 0;
+		for (const value43 of inner) {
+			sum42 += value43;
+		}
+		return sum42;
+	});
+	let folded45 = 0;
+	for (let place44 = 0; place44 < result41.length; place44++) {
+		const value46 = result41[place44] ?? 0;
+		folded45 = (folded45 + (place44 + 1) * ((Math.abs(Math.trunc(value46)) % 997) + 1)) % 1000003;
+	}
+	console.log(`${result41.length}:${folded45}:${result41.at(0) ?? 0}:${result41.at(-1) ?? 0}`);
+	console.log(result41.slice(0, 5).join('|'));
+}
+console.log(`${((plainCounter.label < 'é') ? (['a'][counter.extra] ?? 'a') : 'éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé'.toUpperCase())}|${/a/.test(plainCounter.label.replaceAll(',', `${(counter.extra | plainCounter.count)}`))}`);
+{
+	let round47 = 0;
+	while (round47 < 1) {
+		round47++;
+		{
+			let cell48: number = (head()?.next?.next?.value ?? 2.25);
+			if (pending.length < 8) {
+				pending.push(() => {
+					counter.count %= cell48;
+					return holder.list.filter((item51): boolean => true).reduce((sum49, item50) => (head()?.value ?? 2), 1);
+				});
+			}
+		}
+		console.log((('c'.repeat(256)).slice(32, 224)).slice(16, 176));
+	}
+}
+counter.count **= 2;
+{
+	let guard52 = 0;
+	for (const value53 of table.values()) {
+		guard52++;
+		if (guard52 > 12) {
+			break;
+		}
+		text1 += 'ǅ';
+		console.log(('éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé').slice(12, 84));
+		{
+			finder.lastIndex = Math.abs(Math.trunc(asBase.bump((plainCounter.count - plainCounter.count)))) % 4;
+			const found = finder.exec((asBase.describe()).slice(0, 40));
+			console.log(`${finder.lastIndex} ${found === null ? -1 : found.index}`);
+		}
+	}
+}
+{
+	finder.lastIndex = Math.abs(Math.trunc(plainCounter.count)) % 4;
+	const found = finder.exec(((holder.value).toPrecision(8)).slice(0, 40));
+	console.log(`${finder.lastIndex} ${found === null ? -1 : found.index}`);
+}
+let number54: number = effect21(text1);
+effect6(Array.from({ length: 0 }, (_, index55) => -1));
+{
+	let round56 = 0;
+	while (round56 < 1) {
+		round56++;
+		if (counter.label.startsWith((['a'][counter.count] ?? ' pad '))) {
+			let flag57: boolean = false;
+			{
+				let round58 = 0;
+				while (round58 < 1) {
+					round58++;
+					const numbers59: number[] = numbers2;
+				}
+			}
+		} else {
+		}
+		chain = chain?.next;
+	}
+}
+console.log(`${holder.value}`);
+console.log(holder.name);
+console.log(holder.list.join(','));
+console.log(`${counter.count}`);
+console.log(counter.label);
+console.log(`${counter.extra}`);
+console.log(`${plainCounter.count}`);
+console.log(plainCounter.label);
+console.log(text1);
+console.log(numbers2.join(','));
+console.log(numbers3.join(','));
+console.log(numbers4.join(','));
+console.log(`${table.size}`);
+console.log(`${numbers.size}`);
+console.log(`${flags.size}`);
+console.log(`${captured}`);
+console.log(`${number54}`);
+console.log(`${pending.length} ${pending.reduce((sum60, run61) => sum60 + run61(), 0)}`);
+{
+	let walk: Link | undefined = chain;
+	let steps = 0;
+	while (walk !== undefined && steps < 40) {
+		console.log(`${walk.value} ${walk.label}`);
+		walk = walk.next;
+		steps++;
+	}
+}
+console.log(`${asBase.bump(1)} ${counter.bump(1)} ${plainCounter.bump(1)} ${counter.describe()} ${asBase.describe()} ${counter instanceof BaseCounter} ${counter instanceof ChildCounter} ${plainCounter instanceof ChildCounter}`);
+for (const [key, value] of numbers) {
+	console.log(`${key !== key} ${1 / key}=${value}`);
+}
+for (const key of flags) {
+	console.log(`${key !== key} ${1 / key}`);
+}
+console.log(`${numbers.has(NaN)} ${numbers.get(NaN) ?? -1} ${numbers.get(-0) ?? -1} ${numbers.get(0) ?? -1} ${flags.has(NaN)} ${flags.has(-0)} ${flags.has(0)} ${flags.size}`);
+for (const [key, value] of table) {
+	console.log(`${key}=${value}`);
+}

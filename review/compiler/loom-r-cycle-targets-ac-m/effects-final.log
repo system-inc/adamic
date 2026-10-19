@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T22:25:25.218529841Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-18T22:25:25.224041083Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers"}
+{"Time":"2026-10-18T22:25:25.224143628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"=== RUN   TestClosureTargetsPreserveEffectsProducers\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:25:25.224189287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"=== PAUSE TestClosureTargetsPreserveEffectsProducers\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:25:25.22419181Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers"}
+{"Time":"2026-10-18T22:25:25.224193934Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers"}
+{"Time":"2026-10-18T22:25:25.224195826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"=== CONT  TestClosureTargetsPreserveEffectsProducers\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:25:25.224202076Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"--- PASS: TestClosureTargetsPreserveEffectsProducers (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:25:25.224205421Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Elapsed":0}
+{"Time":"2026-10-18T22:25:25.224215847Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:25:25.224459854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t0.006s\n"}
+{"Time":"2026-10-18T22:25:25.224495989Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.006}

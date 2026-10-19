@@ -1,0 +1,33 @@
+=== RUN   TestGeneratedProgramsCheckAndLower
+=== PAUSE TestGeneratedProgramsCheckAndLower
+=== CONT  TestGeneratedProgramsCheckAndLower
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-001-005
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-001-005
+FOREIGN ARRAY ir.ParallelMap
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.RegExpCall
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:items Type:5 Global:false NamespaceState:false NamespaceVar:false Function:80 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+FOREIGN ARRAY ir.ParallelMap
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.ParallelMap
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:parameter10 Type:5 Global:false NamespaceState:false NamespaceVar:false Function:3 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:parameter14 Type:5 Global:false NamespaceState:false NamespaceVar:false Function:4 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:items Type:5 Global:false NamespaceState:false NamespaceVar:false Function:79 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+    fuzz_test.go:88: seed 3: stage 0 didn't lower it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-0053973662235/001/program.a:46:7: Adamic 0.1 refuses (() => number)[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-0053973662235/001/program.a:476:5 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<() => number>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly () => number[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+FOREIGN ARRAY ir.ParallelMap
+FOREIGN ARRAY ir.RegExpCall
+FOREIGN ARRAY ir.RegExpCall
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:parameter8 Type:5 Global:false NamespaceState:false NamespaceVar:false Function:3 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:items Type:5 Global:false NamespaceState:false NamespaceVar:false Function:70 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+UNPRODUCED ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:items Type:5 Global:false NamespaceState:false NamespaceVar:false Function:76 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false}
+    fuzz_test.go:88: seed 4: stage 0 didn't lower it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-0053973662235/001/program.a:39:7: Adamic 0.1 refuses (() => number)[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-0053973662235/001/program.a:488:2 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<() => number>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly () => number[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- FAIL: TestGeneratedProgramsCheckAndLower (0.00s)
+    --- FAIL: TestGeneratedProgramsCheckAndLower/seeds-001-005 (0.55s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fuzz	0.556s
+FAIL

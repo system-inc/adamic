@@ -1,0 +1,65 @@
+=== RUN   TestDefaultTaggedInterfaceAdmission
+=== PAUSE TestDefaultTaggedInterfaceAdmission
+=== CONT  TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/missing_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/broad_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== PAUSE TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== PAUSE TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== PAUSE TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== PAUSE TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== PAUSE TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== PAUSE TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== PAUSE TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== PAUSE TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== PAUSE TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+=== PAUSE TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target
+=== CONT  TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== CONT  TestDefaultTaggedInterfaceAdmission/spread
+=== CONT  TestDefaultTaggedInterfaceAdmission/optional_target_read
+=== CONT  TestDefaultTaggedInterfaceAdmission/staged_class
+=== CONT  TestDefaultTaggedInterfaceAdmission/forged_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/generic
+=== CONT  TestDefaultTaggedInterfaceAdmission/alias_write
+=== CONT  TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== CONT  TestDefaultTaggedInterfaceAdmission/different_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== CONT  TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== CONT  TestDefaultTaggedInterfaceAdmission/broad_tag
+=== CONT  TestDefaultTaggedInterfaceAdmission/missing_payload
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.00s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.22s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target_read (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.07s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.44s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.11s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.56s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.64s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.12s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.33s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.42s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.17s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.11s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.46s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.08s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.34s)
+PASS

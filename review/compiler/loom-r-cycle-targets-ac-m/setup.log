@@ -1,0 +1,15 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+setup: go ready (0.024s)
+v24.19.0
+setup: node ready (0.027s)
+setup: submodules ready (0.068s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.013s
+setup: markdown dependencies ready (0.078s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.192s)
+setup: shared cache off (ADAMIC_GOCACHE_OFF=1) (0.193s)
+# github.com/system-inc/adamic/internal/ir
+internal/ir/call_targets.go:72:1: syntax error: unexpected <<, expected }
+internal/ir/call_targets.go:82:29: syntax error: unexpected ), expected name
+internal/ir/call_targets.go:85:2: syntax error: non-declaration statement outside function body

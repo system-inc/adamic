@@ -1,0 +1,109 @@
+=== RUN   TestAViewThatCantWriteIsNotRefused
+=== PAUSE TestAViewThatCantWriteIsNotRefused
+=== CONT  TestAViewThatCantWriteIsNotRefused
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+--- PASS: TestAViewThatCantWriteIsNotRefused (0.00s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.35s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.41s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.42s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.44s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.15s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.32s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.37s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.38s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.29s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.37s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.45s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.43s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.47s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.34s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.43s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.45s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.28s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.07s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.08s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.34s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.44s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.46s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.28s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.28s)
+PASS

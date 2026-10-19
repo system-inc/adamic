@@ -79,6 +79,12 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 	for position, of := range supplied {
 		local := len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: of, Function: index})
+		// map/visits supply element,index,array; reduce supplies accumulator,
+		// element,index,array. Preserve the array's actual element ABI even
+		// when the source callback accepts a wider parameter.
+		if of == ir.Array && position == len(supplied)-1 && (len(supplied) == 3 || len(supplied) == 4) {
+			l.result.Locals[local].ArrayElement = supplied[position-2]
+		}
 		function.Parameters = append(function.Parameters, local)
 		arguments = append(arguments, fitCallbackArgument(ir.Read{Local: local, Of: of}, takes[position], nullable[position]))
 	}

@@ -1,0 +1,2 @@
+{"name": "mutants", "command": "timeout 600 python3 /workspace/adamic/review/compiler/loom-r-cycle-targets/run-mutants.py", "exit": 0, "seconds": 103.765}
+{"name": "admission-mutant", "command": "timeout 180 python3 /workspace/adamic/review/compiler/loom-r-cycle-targets/run-admission-mutant.py", "exit": 0, "seconds": 29.487}

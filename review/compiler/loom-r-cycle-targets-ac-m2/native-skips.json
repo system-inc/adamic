@@ -1,0 +1,864 @@
+[
+  {
+    "test": "TestNormalizeLongMeasurements",
+    "output": [
+      "=== RUN   TestNormalizeLongMeasurements",
+      "normalize_benchmark_test.go:20: set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements",
+      "--- SKIP: TestNormalizeLongMeasurements (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRecordBenchmark",
+    "output": [
+      "=== RUN   TestRecordBenchmark",
+      "record_test.go:413: set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons",
+      "--- SKIP: TestRecordBenchmark (0.00s)"
+    ]
+  },
+  {
+    "test": "TestMeasureClangUnits",
+    "output": [
+      "=== RUN   TestMeasureClangUnits",
+      "units_measure_test.go:21: set ADAMIC_CLANG_MEASURE to emitted C evidence directory",
+      "--- SKIP: TestMeasureClangUnits (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit00",
+    "output": [
+      "=== RUN   TestWASIUnit00",
+      "wasm_test.go:363: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit00 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit01",
+    "output": [
+      "=== RUN   TestWASIUnit01",
+      "wasm_test.go:368: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit01 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit02",
+    "output": [
+      "=== RUN   TestWASIUnit02",
+      "wasm_test.go:373: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit02 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit03",
+    "output": [
+      "=== RUN   TestWASIUnit03",
+      "wasm_test.go:378: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit03 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit04",
+    "output": [
+      "=== RUN   TestWASIUnit04",
+      "wasm_test.go:383: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit04 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit05",
+    "output": [
+      "=== RUN   TestWASIUnit05",
+      "wasm_test.go:388: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit05 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit06",
+    "output": [
+      "=== RUN   TestWASIUnit06",
+      "wasm_test.go:393: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit06 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit07",
+    "output": [
+      "=== RUN   TestWASIUnit07",
+      "wasm_test.go:398: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit07 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit08",
+    "output": [
+      "=== RUN   TestWASIUnit08",
+      "wasm_test.go:403: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit08 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit09",
+    "output": [
+      "=== RUN   TestWASIUnit09",
+      "wasm_test.go:408: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit09 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit10",
+    "output": [
+      "=== RUN   TestWASIUnit10",
+      "wasm_test.go:413: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit10 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit11",
+    "output": [
+      "=== RUN   TestWASIUnit11",
+      "wasm_test.go:418: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit11 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit12",
+    "output": [
+      "=== RUN   TestWASIUnit12",
+      "wasm_test.go:423: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit12 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit13",
+    "output": [
+      "=== RUN   TestWASIUnit13",
+      "wasm_test.go:428: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit13 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit14",
+    "output": [
+      "=== RUN   TestWASIUnit14",
+      "wasm_test.go:433: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit14 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit15",
+    "output": [
+      "=== RUN   TestWASIUnit15",
+      "wasm_test.go:438: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit15 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit16",
+    "output": [
+      "=== RUN   TestWASIUnit16",
+      "wasm_test.go:443: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit16 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit17",
+    "output": [
+      "=== RUN   TestWASIUnit17",
+      "wasm_test.go:448: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit17 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit18",
+    "output": [
+      "=== RUN   TestWASIUnit18",
+      "wasm_test.go:453: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit18 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit19",
+    "output": [
+      "=== RUN   TestWASIUnit19",
+      "wasm_test.go:458: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit19 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit20",
+    "output": [
+      "=== RUN   TestWASIUnit20",
+      "wasm_test.go:463: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit20 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit21",
+    "output": [
+      "=== RUN   TestWASIUnit21",
+      "wasm_test.go:468: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit21 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit22",
+    "output": [
+      "=== RUN   TestWASIUnit22",
+      "wasm_test.go:473: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit22 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit23",
+    "output": [
+      "=== RUN   TestWASIUnit23",
+      "wasm_test.go:478: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit23 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit24",
+    "output": [
+      "=== RUN   TestWASIUnit24",
+      "wasm_test.go:483: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit24 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit25",
+    "output": [
+      "=== RUN   TestWASIUnit25",
+      "wasm_test.go:488: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit25 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit26",
+    "output": [
+      "=== RUN   TestWASIUnit26",
+      "wasm_test.go:493: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit26 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit27",
+    "output": [
+      "=== RUN   TestWASIUnit27",
+      "wasm_test.go:498: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit27 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit28",
+    "output": [
+      "=== RUN   TestWASIUnit28",
+      "wasm_test.go:503: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit28 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit29",
+    "output": [
+      "=== RUN   TestWASIUnit29",
+      "wasm_test.go:508: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit29 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit30",
+    "output": [
+      "=== RUN   TestWASIUnit30",
+      "wasm_test.go:513: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit30 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit31",
+    "output": [
+      "=== RUN   TestWASIUnit31",
+      "wasm_test.go:518: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit31 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit32",
+    "output": [
+      "=== RUN   TestWASIUnit32",
+      "wasm_test.go:523: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit32 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit33",
+    "output": [
+      "=== RUN   TestWASIUnit33",
+      "wasm_test.go:528: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit33 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit34",
+    "output": [
+      "=== RUN   TestWASIUnit34",
+      "wasm_test.go:533: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit34 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWASIUnit35",
+    "output": [
+      "=== RUN   TestWASIUnit35",
+      "wasm_test.go:538: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with the WASI SDK's clang beside it and Node 24 on PATH",
+      "--- SKIP: TestWASIUnit35 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestProduct_StrictWASIRuntime",
+    "output": [
+      "=== RUN   TestProduct_StrictWASIRuntime",
+      "=== PAUSE TestProduct_StrictWASIRuntime",
+      "=== CONT  TestProduct_StrictWASIRuntime",
+      "wasm_test.go:353: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestProduct_StrictWASIRuntime (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRegExpSearchWASM",
+    "output": [
+      "=== RUN   TestRegExpSearchWASM",
+      "=== PAUSE TestRegExpSearchWASM",
+      "=== CONT  TestRegExpSearchWASM",
+      "regexp_search_test.go:110: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestRegExpSearchWASM (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRegExpRegularEngineWASM",
+    "output": [
+      "=== RUN   TestRegExpRegularEngineWASM",
+      "=== PAUSE TestRegExpRegularEngineWASM",
+      "=== CONT  TestRegExpRegularEngineWASM",
+      "regexp_regular_test.go:42: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestRegExpRegularEngineWASM (0.00s)"
+    ]
+  },
+  {
+    "test": "TestJSONEncoderRecordView_001",
+    "output": [
+      "=== RUN   TestJSONEncoderRecordView_001",
+      "=== PAUSE TestJSONEncoderRecordView_001",
+      "=== CONT  TestJSONEncoderRecordView_001",
+      "json_encoder_record_test.go:73: set ADAMIC_ORACLE_WASI=1",
+      "--- SKIP: TestJSONEncoderRecordView_001 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit44",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit44",
+      "=== PAUSE TestDecodeASCIIWASIUnit44",
+      "=== CONT  TestDecodeASCIIWASIUnit44",
+      "decode_ascii_test.go:505: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit44 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit43",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit43",
+      "=== PAUSE TestDecodeASCIIWASIUnit43",
+      "=== CONT  TestDecodeASCIIWASIUnit43",
+      "decode_ascii_test.go:500: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit43 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit42",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit42",
+      "=== PAUSE TestDecodeASCIIWASIUnit42",
+      "=== CONT  TestDecodeASCIIWASIUnit42",
+      "decode_ascii_test.go:495: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit42 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit41",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit41",
+      "=== PAUSE TestDecodeASCIIWASIUnit41",
+      "=== CONT  TestDecodeASCIIWASIUnit41",
+      "decode_ascii_test.go:490: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit41 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit40",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit40",
+      "=== PAUSE TestDecodeASCIIWASIUnit40",
+      "=== CONT  TestDecodeASCIIWASIUnit40",
+      "decode_ascii_test.go:485: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit40 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit39",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit39",
+      "=== PAUSE TestDecodeASCIIWASIUnit39",
+      "=== CONT  TestDecodeASCIIWASIUnit39",
+      "decode_ascii_test.go:480: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit39 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit38",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit38",
+      "=== PAUSE TestDecodeASCIIWASIUnit38",
+      "=== CONT  TestDecodeASCIIWASIUnit38",
+      "decode_ascii_test.go:475: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit38 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit37",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit37",
+      "=== PAUSE TestDecodeASCIIWASIUnit37",
+      "=== CONT  TestDecodeASCIIWASIUnit37",
+      "decode_ascii_test.go:470: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit37 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit36",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit36",
+      "=== PAUSE TestDecodeASCIIWASIUnit36",
+      "=== CONT  TestDecodeASCIIWASIUnit36",
+      "decode_ascii_test.go:465: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit36 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit35",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit35",
+      "=== PAUSE TestDecodeASCIIWASIUnit35",
+      "=== CONT  TestDecodeASCIIWASIUnit35",
+      "decode_ascii_test.go:460: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit35 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit34",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit34",
+      "=== PAUSE TestDecodeASCIIWASIUnit34",
+      "=== CONT  TestDecodeASCIIWASIUnit34",
+      "decode_ascii_test.go:455: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit34 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit33",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit33",
+      "=== PAUSE TestDecodeASCIIWASIUnit33",
+      "=== CONT  TestDecodeASCIIWASIUnit33",
+      "decode_ascii_test.go:450: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit33 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit32",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit32",
+      "=== PAUSE TestDecodeASCIIWASIUnit32",
+      "=== CONT  TestDecodeASCIIWASIUnit32",
+      "decode_ascii_test.go:445: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit32 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit31",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit31",
+      "=== PAUSE TestDecodeASCIIWASIUnit31",
+      "=== CONT  TestDecodeASCIIWASIUnit31",
+      "decode_ascii_test.go:440: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit31 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit30",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit30",
+      "=== PAUSE TestDecodeASCIIWASIUnit30",
+      "=== CONT  TestDecodeASCIIWASIUnit30",
+      "decode_ascii_test.go:435: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit30 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit29",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit29",
+      "=== PAUSE TestDecodeASCIIWASIUnit29",
+      "=== CONT  TestDecodeASCIIWASIUnit29",
+      "decode_ascii_test.go:430: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit29 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit28",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit28",
+      "=== PAUSE TestDecodeASCIIWASIUnit28",
+      "=== CONT  TestDecodeASCIIWASIUnit28",
+      "decode_ascii_test.go:425: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit28 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit27",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit27",
+      "=== PAUSE TestDecodeASCIIWASIUnit27",
+      "=== CONT  TestDecodeASCIIWASIUnit27",
+      "decode_ascii_test.go:420: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit27 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit26",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit26",
+      "=== PAUSE TestDecodeASCIIWASIUnit26",
+      "=== CONT  TestDecodeASCIIWASIUnit26",
+      "decode_ascii_test.go:415: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit26 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit25",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit25",
+      "=== PAUSE TestDecodeASCIIWASIUnit25",
+      "=== CONT  TestDecodeASCIIWASIUnit25",
+      "decode_ascii_test.go:410: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit25 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit24",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit24",
+      "=== PAUSE TestDecodeASCIIWASIUnit24",
+      "=== CONT  TestDecodeASCIIWASIUnit24",
+      "decode_ascii_test.go:405: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit24 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit23",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit23",
+      "=== PAUSE TestDecodeASCIIWASIUnit23",
+      "=== CONT  TestDecodeASCIIWASIUnit23",
+      "decode_ascii_test.go:400: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit23 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit22",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit22",
+      "=== PAUSE TestDecodeASCIIWASIUnit22",
+      "=== CONT  TestDecodeASCIIWASIUnit22",
+      "decode_ascii_test.go:395: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit22 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit21",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit21",
+      "=== PAUSE TestDecodeASCIIWASIUnit21",
+      "=== CONT  TestDecodeASCIIWASIUnit21",
+      "decode_ascii_test.go:390: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit21 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit20",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit20",
+      "=== PAUSE TestDecodeASCIIWASIUnit20",
+      "=== CONT  TestDecodeASCIIWASIUnit20",
+      "decode_ascii_test.go:385: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit20 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit19",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit19",
+      "=== PAUSE TestDecodeASCIIWASIUnit19",
+      "=== CONT  TestDecodeASCIIWASIUnit19",
+      "decode_ascii_test.go:380: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit19 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit18",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit18",
+      "=== PAUSE TestDecodeASCIIWASIUnit18",
+      "=== CONT  TestDecodeASCIIWASIUnit18",
+      "decode_ascii_test.go:375: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit18 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit17",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit17",
+      "=== PAUSE TestDecodeASCIIWASIUnit17",
+      "=== CONT  TestDecodeASCIIWASIUnit17",
+      "decode_ascii_test.go:370: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit17 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit16",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit16",
+      "=== PAUSE TestDecodeASCIIWASIUnit16",
+      "=== CONT  TestDecodeASCIIWASIUnit16",
+      "decode_ascii_test.go:365: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit16 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit15",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit15",
+      "=== PAUSE TestDecodeASCIIWASIUnit15",
+      "=== CONT  TestDecodeASCIIWASIUnit15",
+      "decode_ascii_test.go:360: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit15 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit14",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit14",
+      "=== PAUSE TestDecodeASCIIWASIUnit14",
+      "=== CONT  TestDecodeASCIIWASIUnit14",
+      "decode_ascii_test.go:355: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit14 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit13",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit13",
+      "=== PAUSE TestDecodeASCIIWASIUnit13",
+      "=== CONT  TestDecodeASCIIWASIUnit13",
+      "decode_ascii_test.go:350: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit13 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit12",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit12",
+      "=== PAUSE TestDecodeASCIIWASIUnit12",
+      "=== CONT  TestDecodeASCIIWASIUnit12",
+      "decode_ascii_test.go:345: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit12 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit11",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit11",
+      "=== PAUSE TestDecodeASCIIWASIUnit11",
+      "=== CONT  TestDecodeASCIIWASIUnit11",
+      "decode_ascii_test.go:340: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit11 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit10",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit10",
+      "=== PAUSE TestDecodeASCIIWASIUnit10",
+      "=== CONT  TestDecodeASCIIWASIUnit10",
+      "decode_ascii_test.go:335: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit10 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit09",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit09",
+      "=== PAUSE TestDecodeASCIIWASIUnit09",
+      "=== CONT  TestDecodeASCIIWASIUnit09",
+      "decode_ascii_test.go:330: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit09 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit08",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit08",
+      "=== PAUSE TestDecodeASCIIWASIUnit08",
+      "=== CONT  TestDecodeASCIIWASIUnit08",
+      "decode_ascii_test.go:325: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit08 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit07",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit07",
+      "=== PAUSE TestDecodeASCIIWASIUnit07",
+      "=== CONT  TestDecodeASCIIWASIUnit07",
+      "decode_ascii_test.go:320: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit07 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit06",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit06",
+      "=== PAUSE TestDecodeASCIIWASIUnit06",
+      "=== CONT  TestDecodeASCIIWASIUnit06",
+      "decode_ascii_test.go:315: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit06 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit05",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit05",
+      "=== PAUSE TestDecodeASCIIWASIUnit05",
+      "=== CONT  TestDecodeASCIIWASIUnit05",
+      "decode_ascii_test.go:310: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit05 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit04",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit04",
+      "=== PAUSE TestDecodeASCIIWASIUnit04",
+      "=== CONT  TestDecodeASCIIWASIUnit04",
+      "decode_ascii_test.go:305: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit04 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit03",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit03",
+      "=== PAUSE TestDecodeASCIIWASIUnit03",
+      "=== CONT  TestDecodeASCIIWASIUnit03",
+      "decode_ascii_test.go:300: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit03 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit02",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit02",
+      "=== PAUSE TestDecodeASCIIWASIUnit02",
+      "=== CONT  TestDecodeASCIIWASIUnit02",
+      "decode_ascii_test.go:295: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit02 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit01",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit01",
+      "=== PAUSE TestDecodeASCIIWASIUnit01",
+      "=== CONT  TestDecodeASCIIWASIUnit01",
+      "decode_ascii_test.go:290: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit01 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestDecodeASCIIWASIUnit00",
+    "output": [
+      "=== RUN   TestDecodeASCIIWASIUnit00",
+      "=== PAUSE TestDecodeASCIIWASIUnit00",
+      "=== CONT  TestDecodeASCIIWASIUnit00",
+      "decode_ascii_test.go:285: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestDecodeASCIIWASIUnit00 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRegExpV8WASMShard3",
+    "output": [
+      "=== RUN   TestRegExpV8WASMShard3",
+      "=== PAUSE TestRegExpV8WASMShard3",
+      "=== CONT  TestRegExpV8WASMShard3",
+      "regexp_v8_test.go:154: set ADAMIC_ORACLE_WASI=1 to run wasm32 regex witnesses",
+      "--- SKIP: TestRegExpV8WASMShard3 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRegExpV8WASMShard2",
+    "output": [
+      "=== RUN   TestRegExpV8WASMShard2",
+      "=== PAUSE TestRegExpV8WASMShard2",
+      "=== CONT  TestRegExpV8WASMShard2",
+      "regexp_v8_test.go:149: set ADAMIC_ORACLE_WASI=1 to run wasm32 regex witnesses",
+      "--- SKIP: TestRegExpV8WASMShard2 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRegExpV8WASMShard1",
+    "output": [
+      "=== RUN   TestRegExpV8WASMShard1",
+      "=== PAUSE TestRegExpV8WASMShard1",
+      "=== CONT  TestRegExpV8WASMShard1",
+      "regexp_v8_test.go:144: set ADAMIC_ORACLE_WASI=1 to run wasm32 regex witnesses",
+      "--- SKIP: TestRegExpV8WASMShard1 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestRegExpV8WASMShard0",
+    "output": [
+      "=== RUN   TestRegExpV8WASMShard0",
+      "=== PAUSE TestRegExpV8WASMShard0",
+      "=== CONT  TestRegExpV8WASMShard0",
+      "regexp_v8_test.go:139: set ADAMIC_ORACLE_WASI=1 to run wasm32 regex witnesses",
+      "--- SKIP: TestRegExpV8WASMShard0 (0.00s)"
+    ]
+  },
+  {
+    "test": "TestWasiAsyncHostPromises",
+    "output": [
+      "=== RUN   TestWasiAsyncHostPromises",
+      "=== PAUSE TestWasiAsyncHostPromises",
+      "=== CONT  TestWasiAsyncHostPromises",
+      "wasi_async_test.go:16: WASI integration requires ADAMIC_TEST_WASI=1 and WASI_SYSROOT",
+      "--- SKIP: TestWasiAsyncHostPromises (0.00s)"
+    ]
+  },
+  {
+    "test": "TestProduct_DecodeASCIIWASI",
+    "output": [
+      "=== RUN   TestProduct_DecodeASCIIWASI",
+      "=== PAUSE TestProduct_DecodeASCIIWASI",
+      "=== CONT  TestProduct_DecodeASCIIWASI",
+      "decode_ascii_cache_test.go:203: set ADAMIC_TEST_WASI=1",
+      "--- SKIP: TestProduct_DecodeASCIIWASI (0.00s)"
+    ]
+  }
+]

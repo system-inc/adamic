@@ -1,0 +1,24 @@
+Add a-check headers to closure cycle refusal fixtures
+
+Apply bc53e520360047509abc8ec6de963ac785cda8ef on the pinned
+dbdf977f5b base. Annotate all three added Adamic programs with
+their measured refusal reasons and preserve every body byte.
+Move the map test's expected write from line 14 to line 15.
+
+Assumption: stable diagnostic reason clauses are the header
+expectations, independent of source paths and line positions.
+Historical diagnostic captures retain their original positions.
+
+The exact pinned a-check predicate catches removed-header and
+wrong-reason mutants. All six implementation mutants are caught.
+Counts and production compiler/runtime sources are unchanged from bc53e520.
+
+Re-cut onto main 67733635b0252eb9d3bb3645c72262c7b18361e1 (was b1d42ea391 on dbdf977f)
+
+Assumption: preserve Effects result identity in the shared producer solver, including statement-side callback bindings.
+
+Re-cut onto main 5565a7cafb0ee8d538f8a5ece2304d5aa4254145, with precise non-callable array producers and the admitted cwd header removed
+
+Assumption: only immediate function-valued array elements join the function-slot pool. Preserve checked source and intrinsic adapter element representations; unknown, callable and union inputs remain conservative. Regex array results and scalar parallelMap results cannot supply functions. Existing fuzz expectations remain unchanged. The newly admitted cwd witness must not retain its old refusal header; its body and emitted C are unchanged.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

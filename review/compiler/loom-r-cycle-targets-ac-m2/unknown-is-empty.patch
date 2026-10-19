@@ -1,0 +1,53 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -121,7 +121,7 @@
+ 	facts := p.closureFlow()
+ 	targets := facts.value(value)
+ 	if len(targets.Functions) == 0 {
+-		targets.Unknown = true
++		targets.Unknown = false
+ 	}
+ 	return targets
+ }
+@@ -603,7 +603,7 @@
+ 				f.foreignFields = true
+ 				f.maps.Unknown = true
+ 				targets := f.contents["array"]
+-				targets.Unknown = true
++				targets.Unknown = false
+ 				f.contents["array"] = targets
+ 			}
+ 		}
+@@ -617,12 +617,12 @@
+ 					break
+ 				}
+ 				targets := f.contents["array"]
+-				targets.Unknown = true
++				targets.Unknown = false
+ 				f.contents["array"] = targets
+ 			case ArrayLiteral, ArrayPush, ArrayFill, ArraySplice, ArraySlice, ArrayConcat, ArrayReverse, ArraySort, ArrayMap, ArrayFrom, ArrayVisit, MapKeys, MapValues, MapEntries, SetValues, Read, Call, CallClosure, Defined, Coalesce, Conditional, ProgramArguments, CodePoints, StringCall, ObjectKeys, Undefined, Unwrap, Narrow, Box, WeakTarget, ArrayIndex, Property:
+ 			default:
+ 				targets := f.contents["array"]
+-				targets.Unknown = true
++				targets.Unknown = false
+ 				f.contents["array"] = targets
+ 			}
+ 		}
+@@ -634,7 +634,7 @@
+ 	for local := range f.locals {
+ 		if !f.produced[local] && p.Locals[local].Type == Array && closureArrayInput(p.Locals[local]) {
+ 			targets := f.contents["array"]
+-			targets.Unknown = true
++			targets.Unknown = false
+ 			f.contents["array"] = targets
+ 		}
+ 	}
+@@ -672,7 +672,7 @@
+ 					}
+ 					if p.Locals[local].Type == Array && closureArrayInput(p.Locals[local]) {
+ 						targets := f.contents["array"]
+-						targets.Unknown = true
++						targets.Unknown = false
+ 						f.contents["array"] = targets
+ 					}
+ 				}

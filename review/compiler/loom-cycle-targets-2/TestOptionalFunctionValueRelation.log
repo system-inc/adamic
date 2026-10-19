@@ -1,0 +1,13 @@
+=== RUN   TestOptionalFunctionValueRelation
+=== PAUSE TestOptionalFunctionValueRelation
+=== CONT  TestOptionalFunctionValueRelation
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== PAUSE TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== RUN   TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== PAUSE TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+=== CONT  TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run()));
+--- PASS: TestOptionalFunctionValueRelation (0.00s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run:_(x:_number):_number_=>_x_+_1_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.06s)
+    --- PASS: TestOptionalFunctionValueRelation/const_narrow_=_{_run(x:_number):_number_{_return_x_+_1;_}_};_const_wider:_{_run(x?:_number):_number_}_=_narrow;_console.log(String(wider.run())); (0.06s)
+PASS

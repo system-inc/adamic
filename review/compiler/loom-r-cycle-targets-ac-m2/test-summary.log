@@ -1,0 +1,15 @@
+parent-fuzz-focused.log [('pass', 12.842)] maxleaf 3.97 failed [] over 0
+source-fuzz-focused.log [('fail', 3.287)] maxleaf 0.95 failed ['TestGeneratedProgramsCheckAndLower', 'TestUndefinedNumbersShapes'] over 0
+parent-fuzz-full.log [('pass', 70.442)] maxleaf 45.65 failed [] over 0
+source-fuzz-full.log [('fail', 37.949)] maxleaf 16.67 failed ['TestOwnershipShapes', 'TestOverridesShapesAndLower', 'TestUndefinedNumbersShapes', 'TestGeneratedProgramsCheckAndLower'] over 0
+final-package-00.log [('pass', 81.826)] maxleaf 33.84 failed [] over 0
+counts-update-shards.log [('pass', 154.846)] maxleaf 18.89 failed [] over 0
+guards.log [('pass', 0.076), ('pass', 1.354), ('pass', 2.374), ('pass', 2.8970000000000002)] maxleaf 2.86 failed [] over 0
+header-reader-checks.log [('pass', 1.8199999999999998), ('pass', 2.628), ('pass', 2.8040000000000003), ('pass', 10.984)] maxleaf 10.96 failed [] over 0
+final-package-01.log [('pass', 5.449)] maxleaf 4.7 failed [] over 0
+final-package-02.log [('pass', 49.836)] maxleaf 6.6 failed [] over 0
+final-package-03.log [('pass', 336.889)] maxleaf 19.38 failed [] over 0
+final-package-04.log [('pass', 0.15)] maxleaf 0.06 failed [] over 0
+final-package-05.log [('pass', 71.538)] maxleaf 17.74 failed [] over 0
+final-package-06.log [('pass', 12.632)] maxleaf 3.35 failed [] over 0
+final-package-07.log [('pass', 497.622)] maxleaf 27.26 failed [] over 0

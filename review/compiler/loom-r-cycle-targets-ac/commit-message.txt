@@ -1,0 +1,14 @@
+Add a-check headers to closure cycle refusal fixtures
+
+Apply bc53e520360047509abc8ec6de963ac785cda8ef on the pinned
+dbdf977f5b base. Annotate all three added Adamic programs with
+their measured refusal reasons and preserve every body byte.
+Move the map test's expected write from line 14 to line 15.
+
+Assumption: stable diagnostic reason clauses are the header
+expectations, independent of source paths and line positions.
+Historical diagnostic captures retain their original positions.
+
+The exact pinned a-check predicate catches removed-header and
+wrong-reason mutants. All six implementation mutants are caught.
+Counts and production compiler/runtime sources are unchanged from bc53e520.

@@ -1,0 +1,33 @@
+=== RUN   TestInheritanceRefusesFalseNominalViews
+=== PAUSE TestInheritanceRefusesFalseNominalViews
+=== CONT  TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceRefusesFalseNominalViews/weak_structural
+=== PAUSE TestInheritanceRefusesFalseNominalViews/weak_structural
+=== RUN   TestInheritanceRefusesFalseNominalViews/source_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/source_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/target_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/target_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/nested_array
+=== PAUSE TestInheritanceRefusesFalseNominalViews/nested_array
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== RUN   TestInheritanceRefusesFalseNominalViews/structural_object
+=== PAUSE TestInheritanceRefusesFalseNominalViews/structural_object
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestInheritanceRefusesFalseNominalViews/weak_structural
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestInheritanceRefusesFalseNominalViews/nested_array
+=== CONT  TestInheritanceRefusesFalseNominalViews/structural_object
+=== CONT  TestInheritanceRefusesFalseNominalViews/target_union
+=== CONT  TestInheritanceRefusesFalseNominalViews/source_union
+--- PASS: TestInheritanceRefusesFalseNominalViews (0.00s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/nested_array (0.08s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_override (0.08s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/weak_structural (0.10s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_class (0.12s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/target_union (0.07s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/structural_object (0.09s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/source_union (0.06s)
+PASS

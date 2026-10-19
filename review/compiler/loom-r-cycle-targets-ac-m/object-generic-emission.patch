@@ -1,0 +1,25 @@
+--- main/internal/oracle/testdata/callback_widening/object-generic.a
++++ recut/internal/oracle/testdata/callback_widening/object-generic.a
+@@ -24,20 +24,18 @@
+ 	adamic_array * adamic_temporary_1 = adamic_array_new(0, true);
+ 	adamic_array * adamic_local_2_result = adamic_temporary_1;
+ 	{
+-		adamic_array * adamic_temporary_2 = adamic_retain(adamic_local_0_items);
++		adamic_array * adamic_temporary_2 = adamic_local_0_items;
+ 		for (size_t adamic_temporary_3 = 0; adamic_temporary_3 < adamic_temporary_2->length; adamic_temporary_3++) {
+ 			{
+-				adamic_object * adamic_local_3_item = adamic_retain((adamic_object *)adamic_temporary_2->elements[adamic_temporary_3].reference);
++				adamic_object * adamic_local_3_item = (adamic_object *)adamic_temporary_2->elements[adamic_temporary_3].reference;
+ 				adamic_value adamic_temporary_9 = adamic_local_1_callback->code(adamic_local_1_callback, (adamic_value[]){{.reference = ((adamic_heap *)(adamic_local_3_item))}});
+ 				adamic_string * adamic_temporary_10 = (adamic_string *)adamic_temporary_9.reference;
+ 				adamic_array_push(adamic_local_2_result, (adamic_value){.reference = adamic_retain(adamic_temporary_10)});
+ 				double adamic_temporary_11 = (double)adamic_local_2_result->length;
+ 				(void)adamic_temporary_11;
+ 				adamic_release(adamic_temporary_10);
+-				adamic_release(adamic_local_3_item);
+ 			}
+ 		}
+-		adamic_release(adamic_temporary_2);
+ 	}
+ 	adamic_array * adamic_temporary_12 = adamic_retain(adamic_local_2_result);
+ 	adamic_release(adamic_local_2_result);

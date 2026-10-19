@@ -1,0 +1,23 @@
+[
+  {
+    "path": "internal/oracle/testdata/cycle_closure_targets_refused/direct.a",
+    "status": "refused",
+    "header": "// a-check: refused 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/direct.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n",
+    "body_sha256": "518c54d69b8cbf7287f890450da07d91f0b9a164a61a234864550aabceb51867"
+  },
+  {
+    "path": "internal/oracle/testdata/cycle_closure_targets_refused/joined.a",
+    "status": "refused",
+    "header": "// a-check: refused 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/joined.a:13:5: Adamic 0.1 refuses 'memo', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n",
+    "body_sha256": "ba5ed4875521db76e6564af50bdf2b55e69b7a95c6bdf6cf9e547b2595fadfdf"
+  },
+  {
+    "path": "internal/oracle/testdata/cycle_closure_targets_refused/map.a",
+    "status": "refused",
+    "header": "// a-check: refused Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/map.a:13:7: Adamic 0.1 refuses Map<number, () => number>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at /workspace/adamic/internal/oracle/testdata/cycle_closure_targets_refused/map.a:15:1 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here, where make is called from the top level); declare the values weak, Map<number, Weak<() => number>> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)\n",
+    "body_sha256": "d5909b8185a6341042e46b72621a19f9c4327ca2058dd8d61a47d2015c20419d"
+  }
+]

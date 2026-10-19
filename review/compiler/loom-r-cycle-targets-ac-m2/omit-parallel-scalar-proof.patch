@@ -1,0 +1,11 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -613,7 +613,7 @@
+ 				// Regex array results contain strings and scalar metadata, never functions.
+ 			case ParallelMap:
+ 				// Only a scalar result proves this producer cannot hide a function.
+-				if value.Result == Number || value.Result == Boolean || value.Result == String || value.Result == MaybeNumber || value.Result == MaybeBoolean {
++				if false && (value.Result == Number || value.Result == Boolean || value.Result == String || value.Result == MaybeNumber || value.Result == MaybeBoolean) {
+ 					break
+ 				}
+ 				targets := f.contents["array"]

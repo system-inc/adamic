@@ -1,0 +1,37 @@
+=== RUN   TestCheckedCastProofAndElision
+=== PAUSE TestCheckedCastProofAndElision
+=== CONT  TestCheckedCastProofAndElision
+=== RUN   TestCheckedCastProofAndElision/enum_member
+=== PAUSE TestCheckedCastProofAndElision/enum_member
+=== RUN   TestCheckedCastProofAndElision/invariant_mutable_payload
+=== PAUSE TestCheckedCastProofAndElision/invariant_mutable_payload
+=== RUN   TestCheckedCastProofAndElision/sub-union
+=== PAUSE TestCheckedCastProofAndElision/sub-union
+=== RUN   TestCheckedCastProofAndElision/class_downcast
+=== PAUSE TestCheckedCastProofAndElision/class_downcast
+=== RUN   TestCheckedCastProofAndElision/empty_subclass
+=== PAUSE TestCheckedCastProofAndElision/empty_subclass
+=== RUN   TestCheckedCastProofAndElision/generic_ancestry
+=== PAUSE TestCheckedCastProofAndElision/generic_ancestry
+=== RUN   TestCheckedCastProofAndElision/class_upcast
+=== PAUSE TestCheckedCastProofAndElision/class_upcast
+=== RUN   TestCheckedCastProofAndElision/flow_narrowing
+=== PAUSE TestCheckedCastProofAndElision/flow_narrowing
+=== CONT  TestCheckedCastProofAndElision/enum_member
+=== CONT  TestCheckedCastProofAndElision/empty_subclass
+=== CONT  TestCheckedCastProofAndElision/flow_narrowing
+=== CONT  TestCheckedCastProofAndElision/class_upcast
+=== CONT  TestCheckedCastProofAndElision/class_downcast
+=== CONT  TestCheckedCastProofAndElision/sub-union
+=== CONT  TestCheckedCastProofAndElision/invariant_mutable_payload
+=== CONT  TestCheckedCastProofAndElision/generic_ancestry
+--- PASS: TestCheckedCastProofAndElision (0.00s)
+    --- PASS: TestCheckedCastProofAndElision/enum_member (0.11s)
+    --- PASS: TestCheckedCastProofAndElision/class_upcast (0.11s)
+    --- PASS: TestCheckedCastProofAndElision/empty_subclass (0.11s)
+    --- PASS: TestCheckedCastProofAndElision/flow_narrowing (0.15s)
+    --- PASS: TestCheckedCastProofAndElision/sub-union (0.09s)
+    --- PASS: TestCheckedCastProofAndElision/class_downcast (0.09s)
+    --- PASS: TestCheckedCastProofAndElision/invariant_mutable_payload (0.09s)
+    --- PASS: TestCheckedCastProofAndElision/generic_ancestry (0.07s)
+PASS

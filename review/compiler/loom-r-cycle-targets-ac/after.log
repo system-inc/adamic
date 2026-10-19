@@ -1,0 +1,4 @@
+after exit 0 {'refused': 3}
+removed-header exit 1 {'refused': 1}
+wrong-reason exit 1 {'refused': 1}
+final exit 0 {'refused': 3}

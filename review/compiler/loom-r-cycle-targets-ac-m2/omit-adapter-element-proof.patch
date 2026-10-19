@@ -1,0 +1,11 @@
+--- internal/lower/callback_widening.go
++++ internal/lower/callback_widening.go
+@@ -83,7 +83,7 @@
+ 		// element,index,array. Preserve the array's actual element ABI even
+ 		// when the source callback accepts a wider parameter.
+ 		if of == ir.Array && position == len(supplied)-1 && (len(supplied) == 3 || len(supplied) == 4) {
+-			l.result.Locals[local].ArrayElement = supplied[position-2]
++			l.result.Locals[local].ArrayElement = 0
+ 		}
+ 		function.Parameters = append(function.Parameters, local)
+ 		arguments = append(arguments, fitCallbackArgument(ir.Read{Local: local, Of: of}, takes[position], nullable[position]))

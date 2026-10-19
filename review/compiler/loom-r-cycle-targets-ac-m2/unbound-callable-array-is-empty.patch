@@ -1,0 +1,10 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -692,5 +692,5 @@
+ // Only the direct elements join the function-slot pool; nested objects and
+ // collections retain their own field/element edges in the cycle finder.
+ func closureArrayInput(local Local) bool {
+-	return local.ArrayElement == 0 || local.ArrayElement == Closure || local.ArrayElement == Union
+-}
++	return false
++}

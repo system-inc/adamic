@@ -1,0 +1,17 @@
+=== RUN   TestDebugNamespaceMergedCapabilities
+=== PAUSE TestDebugNamespaceMergedCapabilities
+=== CONT  TestDebugNamespaceMergedCapabilities
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_log.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_log.a
+=== RUN   TestDebugNamespaceMergedCapabilities/class_merge.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/class_merge.a
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_class.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_log.a
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestDebugNamespaceMergedCapabilities/class_merge.a
+--- PASS: TestDebugNamespaceMergedCapabilities (0.00s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/class_merge.a (0.09s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_class.a (0.27s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_log.a (0.29s)
+PASS

@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T22:30:47.64836095Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-18T22:30:47.663237778Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers"}
+{"Time":"2026-10-18T22:30:47.663402656Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"=== RUN   TestClosureTargetsPreserveEffectsProducers\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:30:47.663427303Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"=== PAUSE TestClosureTargetsPreserveEffectsProducers\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:30:47.663429627Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers"}
+{"Time":"2026-10-18T22:30:47.663584821Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers"}
+{"Time":"2026-10-18T22:30:47.663590029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"=== CONT  TestClosureTargetsPreserveEffectsProducers\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:30:47.663593474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"    call_targets_test.go:145: effects lost adapter identity: {Functions:[] Unknown:true}\n","OutputType":"error"}
+{"Time":"2026-10-18T22:30:47.663694877Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Output":"--- FAIL: TestClosureTargetsPreserveEffectsProducers (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:30:47.663698903Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestClosureTargetsPreserveEffectsProducers","Elapsed":0}
+{"Time":"2026-10-18T22:30:47.663709198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:30:47.664823943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\tgithub.com/system-inc/adamic/internal/ir\t0.011s\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:30:47.664851104Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.017}

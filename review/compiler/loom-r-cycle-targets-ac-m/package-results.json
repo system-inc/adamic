@@ -1,0 +1,31 @@
+[
+  {
+    "package": "internal/ir",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/ir",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "log": "package-00.log",
+    "exit": 1,
+    "wall_seconds": 34.367,
+    "packages": [
+      {
+        "Time": "2026-10-18T22:19:59.769167909Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 32.502
+      }
+    ],
+    "test_events": 30,
+    "max_leaf_seconds": 19.08,
+    "over_budget": []
+  }
+]

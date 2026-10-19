@@ -1,0 +1,3 @@
+internal/fuzz/testdata/cycle_targets_arrays.a:15:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+internal/fuzz/testdata/cycle_targets_arrays.a:16:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+exit status 1

@@ -1,0 +1,256 @@
+[
+  {
+    "mutant": "omit-boundary-inputs",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-boundary-inputs-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsKnownCallerDoesNotHideUnknownCaller$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsKnownCallerDoesNotHideUnknownCaller$",
+    "assertion": "known caller hid unbounded caller",
+    "caught": true
+  },
+  {
+    "mutant": "unknown-is-empty",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/unknown-is-empty-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsBoundOnlyProvenValues$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsBoundOnlyProvenValues$",
+    "assertion": "bounded without proof",
+    "caught": true
+  },
+  {
+    "mutant": "omit-captures",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-captures-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestClosureCycleDirect$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureCycleDirect$",
+    "assertion": "want cycle refusal",
+    "caught": true
+  },
+  {
+    "mutant": "drop-return-target",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/drop-return-target-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsFollowParametersReturnsAndMapValues$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsFollowParametersReturnsAndMapValues$",
+    "assertion": "want both returned targets",
+    "caught": true
+  },
+  {
+    "mutant": "omit-map-captures",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-map-captures-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestClosureCycleMap$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureCycleMap$",
+    "assertion": "want cycle refusal",
+    "caught": true
+  },
+  {
+    "mutant": "unbound-callable-array-is-empty",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/unbound-callable-array-is-empty-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsKeepCallableArrayInputsUnknown$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsKeepCallableArrayInputsUnknown$",
+    "assertion": "lost unknown input",
+    "caught": true
+  },
+  {
+    "mutant": "omit-array-element-proof",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-array-element-proof-overlay.json",
+      "./internal/fuzz",
+      "-run",
+      "^TestGeneratedProgramsCheckAndLower$/^seeds-001-005$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestGeneratedProgramsCheckAndLower$/^seeds-001-005$",
+    "assertion": "stage 0 didn't lower it",
+    "caught": true
+  },
+  {
+    "mutant": "omit-adapter-element-proof",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-adapter-element-proof-overlay.json",
+      "./internal/fuzz",
+      "-run",
+      "^TestGeneratedProgramsCheckAndLower$/^seeds-031-035$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestGeneratedProgramsCheckAndLower$/^seeds-031-035$",
+    "assertion": "stage 0 didn't lower it",
+    "caught": true
+  },
+  {
+    "mutant": "omit-scalar-operation-proof",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-scalar-operation-proof-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsIgnoreNonCallableArrayInputs$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsIgnoreNonCallableArrayInputs$",
+    "assertion": "contaminated closure slots",
+    "caught": true
+  },
+  {
+    "mutant": "omit-effects-result",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-effects-result-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsPreserveEffectsProducers$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsPreserveEffectsProducers$",
+    "assertion": "effects lost adapter identity",
+    "caught": true
+  },
+  {
+    "mutant": "type-matched-captures",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/type-matched-captures-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestClosureCycleAmbientCwd$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureCycleAmbientCwd$",
+    "assertion": "adamic/cycle-capable",
+    "caught": true,
+    "additional_catcher": "TestNamespaceAmbientCwdInitialization",
+    "both_catchers_log": "type-matched-captures-both.log"
+  },
+  {
+    "mutant": "omit-parallel-scalar-proof",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-cycle-targets-ac-m2/omit-parallel-scalar-proof-overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestClosureTargetsIgnoreNonCallableArrayInputs$",
+      "-count=1",
+      "-parallel=1",
+      "-timeout=120s",
+      "-v"
+    ],
+    "exit": 1,
+    "catcher": "^TestClosureTargetsIgnoreNonCallableArrayInputs$",
+    "assertion": "contaminated closure slots",
+    "caught": true
+  }
+]

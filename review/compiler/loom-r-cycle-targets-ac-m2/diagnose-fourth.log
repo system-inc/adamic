@@ -1,0 +1,12 @@
+=== RUN   TestGeneratedProgramsCheckAndLower
+=== PAUSE TestGeneratedProgramsCheckAndLower
+=== CONT  TestGeneratedProgramsCheckAndLower
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-031-035
+    fuzz_test.go:88: seed 31: stage 0 didn't lower it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-031-0353153812665/001/program.a:42:7: Adamic 0.1 refuses (() => number)[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-031-0353153812665/001/program.a:522:3 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<() => number>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly () => number[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- FAIL: TestGeneratedProgramsCheckAndLower (0.00s)
+    --- FAIL: TestGeneratedProgramsCheckAndLower/seeds-031-035 (0.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fuzz	0.268s
+FAIL

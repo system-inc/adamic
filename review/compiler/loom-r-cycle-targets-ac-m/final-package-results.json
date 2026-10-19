@@ -1,0 +1,89 @@
+[
+  {
+    "package": "internal/ir",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/ir",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "log": "final-package-00.log",
+    "exit": 0,
+    "wall_seconds": 24.452,
+    "packages": [
+      {
+        "Time": "2026-10-18T22:23:58.360618103Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Elapsed": 22.656
+      }
+    ],
+    "test_events": 30,
+    "max_leaf_seconds": 15.82,
+    "over_budget": []
+  },
+  {
+    "package": "internal/lower",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/lower",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "log": "final-package-01.log",
+    "exit": 0,
+    "wall_seconds": 52.387,
+    "packages": [
+      {
+        "Time": "2026-10-18T22:24:50.48951524Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Elapsed": 50.264
+      }
+    ],
+    "test_events": 1472,
+    "max_leaf_seconds": 8.62,
+    "over_budget": []
+  },
+  {
+    "package": "internal/native",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/native",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "log": "final-package-02.log",
+    "exit": 1,
+    "wall_seconds": 305.084,
+    "packages": [
+      {
+        "Time": "2026-10-18T22:29:55.729731384Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Elapsed": 302.742
+      }
+    ],
+    "test_events": 856,
+    "max_leaf_seconds": 20.43,
+    "over_budget": []
+  }
+]

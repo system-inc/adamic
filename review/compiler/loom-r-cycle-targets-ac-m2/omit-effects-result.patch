@@ -1,0 +1,14 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -188,11 +188,6 @@
+ 			return FunctionTargets{Functions: []int{target - 1}}
+ 		}
+ 		return f.locals[value.Local]
+-	case Effects:
+-		// Effects preserve their result's identity, including intrinsic adapters
+-		// that bind a callback before returning a known closure. The solver
+-		// still visits their statements to collect the callback producers.
+-		return f.value(value.Result)
+ 	case Defined:
+ 		return f.value(value.Value)
+ 	case Unwrap:

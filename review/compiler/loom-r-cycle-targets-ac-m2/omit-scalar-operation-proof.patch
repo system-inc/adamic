@@ -1,0 +1,10 @@
+--- internal/ir/call_targets.go
++++ internal/ir/call_targets.go
+@@ -610,6 +610,7 @@
+ 		if expression.Type() == Array {
+ 			switch value := expression.(type) {
+ 			case RegExpCall:
++ targets := f.contents["array"]; targets.Unknown = true; f.contents["array"] = targets
+ 				// Regex array results contain strings and scalar metadata, never functions.
+ 			case ParallelMap:
+ 				// Only a scalar result proves this producer cannot hide a function.

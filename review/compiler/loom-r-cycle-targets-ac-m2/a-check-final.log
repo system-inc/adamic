@@ -1,0 +1,1 @@
+PASS actual Gate.aCheck 6 files: ['checked', 'refused', 'refused', 'refused', 'checked', 'checked'] ; the three source refusal fixtures and the cleaned cwd body are byte-identical; both header mutants caught; restored predicate passes

@@ -1,0 +1,17 @@
+{
+  "verdict": "agreed",
+  "exit_codes": {
+    "node": 0,
+    "native": 0,
+    "backend": 0
+  },
+  "stdout_sha256": "4cb7d7a81ac18e5afb9b296fac614f476acf6c1744557b073018ba7189df5232",
+  "stdout_lines": 80,
+  "sanitized_native": true,
+  "removed_disposable_binaries_and_duplicate_source": [
+    "review/compiler/loom-r-cycle-targets-ac-m2/seed3-run/checkout/adamic",
+    "review/compiler/loom-r-cycle-targets-ac-m2/seed3-run/programs/try/program",
+    "review/compiler/loom-r-cycle-targets-ac-m2/seed3-run/programs/try/program.a",
+    "review/compiler/loom-r-cycle-targets-ac-m2/seed3-run/programs/try/program-tsan"
+  ]
+}

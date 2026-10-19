@@ -1,0 +1,20 @@
+import { parallelMap } from 'adamic';
+const pending: (() => number)[] = [];
+function add(value: number): void {
+    pending.push(() => value);
+}
+function unused(items: number[]): number { return items.length; }
+class Reader {
+    run(items: { v: string }[]): number { return items.length; }
+}
+const reader = new Reader();
+const matched = 'x'.match(/x/g);
+const items: readonly number[] = [1, 2];
+const mapped = parallelMap(items, (value) => value + 1);
+const widened = [1, 2].map((value: number | undefined): number => value ?? 0);
+add(7);
+const callback = pending[0];
+console.log(`${callback === undefined ? 0 : callback()}`);
+console.log(`${matched === null ? 0 : matched.length}`);
+console.log(mapped.join(','));
+console.log(widened.join(','));

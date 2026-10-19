@@ -1,0 +1,8 @@
+=== RUN   TestClosureTargetsPreserveEffectsProducers
+=== PAUSE TestClosureTargetsPreserveEffectsProducers
+=== CONT  TestClosureTargetsPreserveEffectsProducers
+    call_targets_test.go:145: effects lost adapter identity: {Functions:[] Unknown:true}
+--- FAIL: TestClosureTargetsPreserveEffectsProducers (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	0.007s
+FAIL

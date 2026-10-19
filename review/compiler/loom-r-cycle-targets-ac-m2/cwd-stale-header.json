@@ -1,0 +1,15 @@
+{
+  "result": {
+    "a_check": {
+      "stage3/namespace-init-sys/cwd.a": {
+        "outcome": "checked",
+        "expected": "refused 'callback', a variable a function value captures and can be reached from what it holds",
+        "first": ""
+      }
+    }
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\nstage3/namespace-init-sys/cwd.a: checked, expected refused 'callback', a variable a function value captures and can be reached from what it holds ()"
+}

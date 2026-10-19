@@ -1,0 +1,13 @@
+=== RUN   TestGeneratedProgramsCheckAndLower
+=== PAUSE TestGeneratedProgramsCheckAndLower
+=== CONT  TestGeneratedProgramsCheckAndLower
+=== RUN   TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== PAUSE TestGeneratedProgramsCheckAndLower/seeds-031-035
+=== CONT  TestGeneratedProgramsCheckAndLower/seeds-031-035
+BOUNDARY ARRAY {Uninitialized:false InitializerExpression: Hoisted:false Name:argument Type:5 ArrayElement:0 Global:false NamespaceState:false NamespaceVar:false Function:63 Captured:false Preallocated:false EnvironmentCell:false NestedFunction:0 Ready:0 ExpressionAssigned:false Borrowed:false ConstantClosure:0 Counter:false} FUNCTION {CheckedUnionNarrow:false Name:array_callback_adapter MethodName: Parameters:[157 158 159] ArgumentsCount:0 ReadsArguments:false ForwardsArguments:0 Receiver:false OptionalParameters:map[] RestElement:0 Returns:4 Body:[{Value:{Direct:0 Closure:{Local:156 Of:8 Checked:false Readiness:} Arguments:[{Value:{Local:157 Of:1 Checked:false Readiness:} Of:7} {Local:158 Of:1 Checked:false Readiness:} {Local:159 Of:5 Checked:false Readiness:}] Spread:[] FunctionType:3966 Returns:4}}] Closure:true Environment:[156] NestedParent:0 ForwardedNestedParent:0 FrameEnvironment:[] NestedFrame:false FrameIdentity:0 ReferenceParents:[] MayThrow:false}
+    fuzz_test.go:88: seed 31: stage 0 didn't lower it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-031-0351321844540/001/program.a:42:7: Adamic 0.1 refuses (() => number)[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-031-0351321844540/001/program.a:522:3 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<() => number>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly () => number[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+--- FAIL: TestGeneratedProgramsCheckAndLower (0.00s)
+    --- FAIL: TestGeneratedProgramsCheckAndLower/seeds-031-035 (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fuzz	0.262s
+FAIL

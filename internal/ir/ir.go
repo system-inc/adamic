@@ -10,6 +10,7 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	closureTargets    *closureFacts
 	ViewOrigins       []Expression
 	ViewContracts     []ViewContract
 	ViewContractTypes SortedMap[int, ViewContractID]
@@ -261,6 +262,10 @@ type Local struct {
 	Hoisted               bool
 	Name                  string
 	Type                  Type
+
+	// ArrayElement preserves a checked array element representation for unbound inputs.
+	// Zero is unknown; non-callable elements cannot supply pooled function slots.
+	ArrayElement Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
