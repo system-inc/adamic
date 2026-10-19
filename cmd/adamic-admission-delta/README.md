@@ -4,7 +4,8 @@ This developer gate compiles the **head corpus** with base and head compilers.
 It runs every selected newly accepted program on source Node, the JavaScript
 backend through `oracle/node.mjs`, and a native release build. Stdout bytes and
 exit codes must agree. New refusals are informational. Compiler failures with
-unrecognized diagnostics, crashes, and timeouts fail the gate.
+unrecognized diagnostics and crashes fail the gate. Timeouts and a missing native
+toolchain make the run void (below).
 
 ```sh
 python3 cloud/admission-corpus/manifest.py --sha HEAD > /tmp/manifest.json
@@ -50,8 +51,10 @@ group on timeout. The JSON records both limits and each command wall time.
 program. Classification and compiler preparation are outside this runtime
 budget. All newly admitted diff programs run first, followed by all witness programs,
 even if their reservation exceeds the budget.
-Remaining paths are sorted then shuffled using a SHA-256-derived seed from head.
-Zero budget selects all programs. `sampling_seed`, `sampling_size`, `omitted`,
+Remaining paths are sorted then shuffled using head's SHA-256 as the seed, or
+`--seed <hex>` (at least 8 bytes) in its place, so one unit key always samples
+the same programs whatever head is. Zero budget selects all programs.
+`sampling_seed` (the seed used, as hex), `seed_given`, `sampling_size`, `omitted`,
 `budget_seconds`, and actual `budget_used_seconds` describe the selection.
 
 `--corpus-filter diff` runs the entire revision diff alone. A comma-separated
@@ -63,10 +66,27 @@ JSON records `corpus_filter`, `shard`, and `complete_corpus`. Filtered and
 multi-shard runs report `partial` when otherwise passing, preventing a
 measurement unit from masquerading as a complete gate.
 
-`verdict` is `pass`, `partial`, `sampled`, or `fail`. `sampled` exits zero but explicitly
-means the entire admission delta has not been proven. A mismatch or compiler
-error exits nonzero. Unrun observations and `agree` are null; `sampled` is false
+`verdict` is `pass`, `partial`, `sampled`, `void`, or `fail`. `sampled` exits zero but explicitly
+means the entire admission delta has not been proven. A mismatch or an
+unrecognized compiler error or crash exits 1. A run that proved nothing about the
+change is `void`: a compile timeout, a runtime command's timeout (Node, either
+backend's compile, or either backend's run) on a program that didn't agree, or no
+clang where the native build resolves it (`internal/toolchain`'s `Path`), checked
+before anything runs. It exits 3 with `"void": true` and `void_reason`, and each
+program it names carries its own `void_reason`, so the judge reruns it instead of
+charging the change. A red beside a void is still a red: it exits 1, records the
+void's reason, and keeps `"void": false`.
+Unrun observations and `agree` are null; `sampled` is false
 on an unrun program. `admitted: 0` is explicit for equal admission sets.
+
+`inputs.txt` names the repository paths whose change can move a candidate's
+admission set, one per line, sorted: the lowering companion's Go import closure.
+`admission-lower` calls cmd/adamic's `compile`, which loads and lowers and stops,
+so the list is cmd/adamic, every in-repository package internal/load and
+internal/lower link on Linux and macOS, each module file pinning one, and go.work.
+The C emitter and the JavaScript backend move runtime outcomes, never the
+admission set, and are not on it. `TestInputsAreWhatTheLoweringCompanionLinks`
+fails when a linked package is under no entry or an entry is not needed.
 
 Tests use tiny fake compiler executables to test command contracts independently
 of the compiler. `TestProduct_AdmissionCompiler` builds the revision fixture's
