@@ -3,6 +3,7 @@
 #define _POSIX_C_SOURCE 200809L
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
+#include "node_cwd_wasi.h"
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -155,6 +156,9 @@ static void host_directory_error(int error, const char *operation, const adamic_
 }
 
 adamic_string *adamic_fs_file_host_cwd(void) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_node_wasi_cwd();
+#endif
     if (!cleanup_registered) { atexit(finish_directory); cleanup_registered = true; }
     if (current_directory != NULL) { return adamic_retain(current_directory); }
     size_t capacity = 256;
@@ -190,6 +194,9 @@ static char *environment_text(const adamic_string *text) {
 }
 
 double adamic_fs_file_host_chdir(const adamic_string *directory) {
+#ifdef ADAMIC_TARGET_WASI
+    adamic_node_wasi_cwd();
+#endif
     char *path = environment_text(directory);
     if (chdir(path) == 0) {
         free(path);
