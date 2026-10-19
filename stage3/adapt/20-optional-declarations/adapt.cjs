@@ -145,7 +145,16 @@ for (;;) {
                 if (ts.isVariableDeclaration(n)) expression = n.initializer;
                 if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.EqualsToken) expression = n.right;
                 if (!expression || !ts.isExpressionNode(expression)) continue;
-                const target = checker.getContextualType(expression);
+                let target = checker.getContextualType(expression);
+                // A returned object cannot be the undefined arm of its contextual
+                // union. Resolve its single object arm before looking up slots.
+                // Other unions and argument/assignment contexts stay separate.
+                if (target?.isUnion() && target.types.length === 2 &&
+                    ts.isReturnStatement(n) && ts.isObjectLiteralExpression(expression) &&
+                    target.types.some(undefinedPart)) {
+                    const present = target.types.find(type => !undefinedPart(type));
+                    if (present.flags & ts.TypeFlags.Object) target = present;
+                }
                 if (!target || (target.flags & forbidden)) continue;
                 const properties = checker.getPropertiesOfType(target);
                 if (!properties.length) continue;
