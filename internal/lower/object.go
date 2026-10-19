@@ -1286,7 +1286,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		return ir.ArraySlice{Array: array, Arguments: arguments}, true, nil
 	}
 	if name == "push" {
-		if len(arguments) != 1 {
+		if len(arguments) != 1 && element != ir.Number {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
 		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
