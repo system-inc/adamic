@@ -419,10 +419,10 @@ func (e *emitter) discarding(discard ir.Discard) bool {
 func (e *emitter) discard(discard ir.Discard, closure, result string) string {
 	switch discard {
 	case ir.DiscardReference:
-		return fmt.Sprintf("adamic_release(%s.reference);", result)
+		return fmt.Sprintf("(void)%s;", result)
 	case ir.DiscardFlagged:
 		if e.closureDiscards {
-			return fmt.Sprintf("adamic_closure_discard(%s, %s);", closure, result)
+			return fmt.Sprintf("(void)%s;", result)
 		}
 	case ir.DiscardMixed:
 		// Lowering says not yet to such a call (voidDiscards): it never reaches the emitter.
