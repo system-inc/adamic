@@ -390,15 +390,15 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		}
 	}
 	if node.Kind == ast.KindEnumDeclaration {
+		if ambientDeclaration(node) {
+			return nil
+		}
 		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock {
 			return l.notYet(node, "an enum inside a function or block; declare it at module scope")
 		}
 		symbol := l.symbol(node.Name())
 		if symbol != nil && len(symbol.Declarations) != 1 {
 			return l.notYet(node, "merged enum declarations; put the members in one declaration")
-		}
-		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
-			return l.notYet(node, "an ambient enum without a runtime definition")
 		}
 		// Signed masks, including 1 << 31, are ordinary numeric enum constants.
 		_, err := l.enumFields(node)

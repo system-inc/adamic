@@ -53,6 +53,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	// After the directives and pragmas, which name a line the checker already honors.
+	if err := l.referenceRefusal(module); err != nil {
+		return err
+	}
 	if err := l.parallelPreflight(module); err != nil {
 		return err
 	}
@@ -164,6 +168,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if err := l.namespaceRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.ambientRefusal(node); err != nil {
 			found = err
 			return true
 		}

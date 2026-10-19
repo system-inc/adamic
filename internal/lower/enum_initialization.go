@@ -9,7 +9,7 @@ import (
 func (l *lowering) enumInitialization(modules []*ast.SourceFile) error {
 	for _, module := range modules {
 		for _, statement := range namespaceDeclarations(module.Statements.Nodes) {
-			if statement.Kind == ast.KindEnumDeclaration {
+			if statement.Kind == ast.KindEnumDeclaration && !ambientDeclaration(statement) {
 				if _, err := l.enumFields(statement); err != nil {
 					return err
 				}
