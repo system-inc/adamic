@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/tracked"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -54,33 +55,41 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := []string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}
-	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if (extension == ".go" && !strings.HasSuffix(path, "_test.go")) || ((directory == "stage1/cohere/markdownblocks" || directory == "stage1/cohere/markdowninline") && extension == ".ts") {
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, relative)
-			}
-			return nil
-		})
+	files := append([]string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}, listLayoutSources(t, root, false)...)
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+}
+
+// listLayoutSourceRoots are the directories whose sources key the list layout's products, each with the repository
+// that tracks it (cohere is a submodule, its own repository) and its root inside that repository.
+var listLayoutSourceRoots = []struct{ repository, root string }{
+	{".", "stage1/cohere/markdownblocks"}, {".", "stage1/cohere/markdowninline"}, {".", "internal/native"}, {"cohere", ""},
+}
+
+// listLayoutSources is the compiler and port sources that key the list layout's products, repository-relative: every
+// tracked .go file under listLayoutSourceRoots (tests too when withTests), and the .ts files of markdownblocks and
+// markdowninline. The listing is git's, run as key-time work (buildcache.Keying), never a walk of the checkout: walked
+// under the trace, every directory under cohere and the ports entered the product's read set, untracked ones too, and
+// a listing the tree's checkout and the key check's assembled source valued differently moved the key, so Adam's key
+// check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19; tsprinter's corpus had the same shape, #0rx19ha).
+func listLayoutSources(t *testing.T, root string, withTests bool) []string {
+	t.Helper()
+	var sources []string
+	for _, source := range listLayoutSourceRoots {
+		var paths []string
+		var err error
+		buildcache.Keying(func() { paths, err = tracked.PathsUnder(filepath.Join(root, source.repository), source.root) })
 		if err != nil {
 			t.Fatal(err)
 		}
+		ports := source.root == "stage1/cohere/markdownblocks" || source.root == "stage1/cohere/markdowninline"
+		for _, path := range paths {
+			goSource := strings.HasSuffix(path, ".go") && (withTests || !strings.HasSuffix(path, "_test.go"))
+			if goSource || (ports && strings.HasSuffix(path, ".ts")) {
+				sources = append(sources, filepath.ToSlash(filepath.Join(source.repository, path)))
+			}
+		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return sources
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -333,39 +342,13 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		}
 		return binary
 	}
-	var workers sync.WaitGroup
-	defer workers.Wait()
-	goListTask := startFixtureTask(&workers, func() (string, error) { return buildGo("adamic_markdown_lists", "testdata/list_go.go", true), nil })
-	goLayoutTask := startFixtureTask(&workers, func() (string, error) {
-		return buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false), nil
-	})
-	files := []string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}
-	// Hash compiler and port source, excluding unrelated evidence and TypeScript's fixture tree.
-	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if extension == ".go" || ((directory == "stage1/cohere/markdownblocks" || directory == "stage1/cohere/markdowninline") && extension == ".ts") {
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, relative)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	// Every build here runs one after another, never two at once: each product's traced window holds the whole
+	// process's reads, so a build running beside it puts its reads into that product's set. markdown-list-layout-lowered
+	// and -canary-lowered, built at once, each recorded a set reading the other, a cycle a runner's lookup met and
+	// memoized as a miss: Adam's key check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19).
+	p.goList = buildGo("adamic_markdown_lists", "testdata/list_go.go", true)
+	p.goLayout = buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false)
+	files := append([]string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}, listLayoutSources(t, root, true)...)
 	nativeFiles := []string{"internal/native/runtime"}
 	entries, err := os.ReadDir(filepath.Join(root, "internal/native"))
 	if err != nil {
@@ -394,8 +377,9 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 			t.Fatal(err)
 		}
 		sum := sha256.Sum256(source)
-		// v2: built by native.Build, so a v1 binary, which named its build directory, isn't one this reads.
-		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v2", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+		// v3: built alone (#kfjqsnh), so a v2 set, which may hold a build that ran beside it, isn't one this reads; v2 was
+		// native.Build's, whose binary names no build directory, unlike v1's.
+		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v3", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
 			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 				return err
 			}
@@ -413,16 +397,14 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	if err != nil {
 		t.Fatal(err)
 	}
-	baselineTask := startFixtureTask(&workers, func() (listLayoutProducts, error) {
-		emitted := emit(main, "markdown-list-layout-lowered")
-		data, err := os.ReadFile(filepath.Join(emitted, "program.mjs"))
-		if err != nil {
-			return listLayoutProducts{}, err
-		}
-		sanitizedTask := startFixtureTask(&workers, func() (string, error) { return buildNative(emitted, "markdown-list-layout-sanitized", true), nil })
-		release := buildNative(emitted, "markdown-list-layout-release", false)
-		return listLayoutProducts{javascript: data, sanitized: sanitizedTask.await(t), release: release}, nil
-	})
+	emitted := emit(main, "markdown-list-layout-lowered-v2")
+	script, err := os.ReadFile(filepath.Join(emitted, "program.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p.javascript = script
+	p.sanitized = buildNative(emitted, "markdown-list-layout-sanitized", true)
+	p.release = buildNative(emitted, "markdown-list-layout-release", false)
 	mutations := []struct{ from, to string }{{"frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"}, {"'[x] '", "'[X] '"}, {"999999999", "999999998"}}
 	for i, mutation := range mutations {
 		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", i))
@@ -465,7 +447,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		p.mutants = append(p.mutants, mutantMain)
 		if i == 0 { // Cache keys name the stable mutation rather than its temporary path.
 			// The mutant is a deterministic transformation of the hashed repository files.
-			product := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-lowered", Files: files, Flags: []string{mutation.from, mutation.to}, Toolchain: []string{runtime.Version()}}, func(directory string) error {
+			product := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-lowered-v2", Files: files, Flags: []string{mutation.from, mutation.to}, Toolchain: []string{runtime.Version()}}, func(directory string) error {
 				program, err := loweredResult(mutantMain)
 				if err != nil {
 					return err
@@ -483,8 +465,8 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 					flags[index] = "-O0"
 				}
 			}
-			// v2: built by native.BuildFlags, which names no build directory, so a v1 binary, which did, isn't one this reads.
-			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v2", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+			// v3: built alone (#kfjqsnh); v2 was native.BuildFlags', which names no build directory, unlike v1's.
+			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v3", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
 				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 					return err
 				}
@@ -496,9 +478,6 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 			p.canary = filepath.Join(built, "binary")
 		}
 	}
-	baseline := baselineTask.await(t)
-	p.javascript, p.sanitized, p.release = baseline.javascript, baseline.sanitized, baseline.release
-	p.goList, p.goLayout = goListTask.await(t), goLayoutTask.await(t)
 	return p
 }
 
