@@ -1,0 +1,4 @@
+// a-check: refused a void value at a return site whose function returns unknown
+async function empty(): Promise<void> { return; }
+async function forwarding(): Promise<unknown> { return await empty(); }
+console.log(typeof await forwarding());

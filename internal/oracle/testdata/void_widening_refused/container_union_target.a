@@ -1,0 +1,5 @@
+// a-check: refused a void-returning function at the initializer site through .run seen as () => number
+const make: () => void = () => 42;
+const holder: { readonly run: () => void } = { run: make };
+const wide: { readonly run: () => void } | { readonly run: () => number } = holder;
+console.log(typeof wide.run());

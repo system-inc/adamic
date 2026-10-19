@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site through <1> seen as () => unknown
+const make: () => void = () => 42;
+const holder: Promise<() => void> = Promise.resolve(make);
+const wide: Promise<() => unknown> = holder;
+const first = await wide;
+console.log(typeof first());

@@ -1,0 +1,7 @@
+// a-check: refused a void-returning function at the initializer site through [] seen as () => unknown
+// A void-typed function in an array of functions returning unknown.
+const make: () => void = () => 42;
+const tasks: (() => unknown)[] = [make];
+for (const task of tasks) {
+	console.log(typeof task());
+}

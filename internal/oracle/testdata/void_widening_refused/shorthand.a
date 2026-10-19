@@ -1,0 +1,4 @@
+// a-check: refused a void-returning function at the initializer site through .make seen as () => unknown
+const make: () => void = () => 42;
+const task: { readonly make: () => unknown } = { make };
+console.log(typeof task.make());
