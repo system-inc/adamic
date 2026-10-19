@@ -15,6 +15,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -164,17 +165,27 @@ func agreementNativeCode(program *ir.Program, mutate func(string) string) string
 	return code
 }
 
+// agreementNativeBuilds lets one native agreement product build at a time. Each build's
+// traced window holds the whole process's reads, so parallel rows building at once each
+// recorded the others' reads as their own: a ring of 14 products whose sets read each
+// other, which Loom refuses to record and rebuilds in every tree (#kfjqsnh). The rows
+// still check in parallel; only the builds they wait on are serial.
+var agreementNativeBuilds sync.Mutex
+
 // buildAgreementNative is the one recipe for a native agreement binary: the product
 // test builds it ahead and runAgreementNative fetches it, so the key can't drift
 // between them. It returns the product's directory, which holds the binary as native.
 func buildAgreementNative(code string) (string, error) {
+	agreementNativeBuilds.Lock()
+	defer agreementNativeBuilds.Unlock()
 	options := native.Options{}
 	flags := append(native.Flags(options), fmt.Sprintf("C=%x", sha256.Sum256([]byte(code))),
 		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	// The shared build-product cache hashes C contents, runtime and build code,
 	// native flags and toolchain. A hit runs the binary without invoking clang.
 	return buildcache.Get(buildcache.Inputs{
-		Name:      "lower agreement native",
+		// v2: the sets recorded beside another build's window name that build's reads (#kfjqsnh).
+		Name:      "lower agreement native v2",
 		Files:     []string{"internal/native"},
 		Flags:     flags,
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
