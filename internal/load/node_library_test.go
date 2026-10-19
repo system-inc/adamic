@@ -1,11 +1,16 @@
 package load
 
 import (
+	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 	"testing/fstest"
+	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 func nodeSource(t *testing.T, source string) (*Program, error) {
@@ -95,5 +100,98 @@ func TestNodeLibraryKeepsOfficialConsoleSignatures(t *testing.T) {
 	t.Parallel()
 	if _, err := nodeSource(t, `import type {Stats} from 'node:fs'; console.log(true); console.log(undefined); console.log('a','b');`); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestNodeLibraryLazyRequire(t *testing.T) {
+	t.Parallel()
+	program, err := Load([]string{"testdata/node_activation/require.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !program.fs.nodeTypes {
+		t.Fatal("builtin require did not rebuild with the Node root")
+	}
+}
+
+func TestNodeLibraryImportTypes(t *testing.T) {
+	t.Parallel()
+	// Exercise type-only activation independently of require, then the combined program.
+	source := `type Inspector = typeof import("inspector"); type Stats = import("fs").Stats; type Prefixed = import("node:fs").Stats;`
+	program, err := nodeSource(t, source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !program.fs.nodeTypes {
+		t.Fatal("import types did not rebuild with the Node root")
+	}
+	if _, err := Load([]string{"testdata/node_activation/require.a", "testdata/node_activation/import_type.a"}); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestNodeLibraryActivationStaysNarrow(t *testing.T) {
+	t.Parallel()
+	program, err := Load([]string{"testdata/node_activation/plain.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertNoNode := func(program *Program) {
+		t.Helper()
+		if program.fs.nodeTypes {
+			t.Fatal("rebuilt a non-Node program with the Node root")
+		}
+		for _, file := range program.compiler.GetSourceFiles() {
+			if IsNodeLibrary(file) {
+				t.Fatalf("non-Node program loaded %s", file.FileName())
+			}
+		}
+	}
+	assertNoNode(program)
+	program, err = nodeSource(t, `declare function require(name: string): unknown; const user = require("some-user-package"); const relative = require("./fs"); const unknownNode = require("node:not-a-builtin"); const thirdParty = require("undici-types"); const dynamic = require("f" + "s"); const host = {require}; host.require("fs");`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertNoNode(program)
+}
+
+func TestNodeLibraryBuiltinSpecifiers(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"fs", "node:fs", "path", "node:path", "inspector", "fs/promises", "node:test"} {
+		program, err := nodeSource(t, `function lazy() { return require("`+name+`"); }`)
+		if err != nil {
+			t.Fatalf("%s: %v", name, err)
+		}
+		if !program.fs.nodeTypes {
+			t.Fatalf("%s did not activate Node", name)
+		}
+	}
+}
+
+func TestProduct_NodeLibraryRequireMutant(t *testing.T) {
+	t.Parallel()
+	nodeLibraryRequireMutant(t)
+}
+
+func nodeLibraryRequireMutant(t testing.TB) string {
+	t.Helper()
+	return buildcache.GoTestMutated(t, "", "node-library-require.test", "./internal/load", nil, []buildcache.Mutation{{
+		File:   "internal/load/node_library.go",
+		Before: "case ast.KindCallExpression:",
+		After:  "case ast.KindUnknown:",
+	}})
+}
+
+func TestNodeLibraryRequireMutant(t *testing.T) {
+	t.Parallel()
+	// Run the declared product with its require branch disabled. The independent
+	// checker fixture must fail with TS2591.
+	binary := nodeLibraryRequireMutant(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary, "-test.run=^TestNodeLibraryLazyRequire$", "-test.count=1", "-test.timeout=30s", "-test.v")
+	output, err := command.CombinedOutput()
+	if ctx.Err() != nil || err == nil || !strings.Contains(string(output), "TS2591") || !strings.Contains(string(output), "FAIL: TestNodeLibraryLazyRequire") {
+		t.Fatalf("require mutant must fail the real checker with TS2591: %v\n%s", err, output)
 	}
 }

@@ -1,0 +1,6 @@
+type Inspector = typeof import("inspector");
+type Stats = import("fs").Stats;
+declare const inspector: Inspector;
+const session = new inspector.Session();
+declare const stats: Stats;
+const size: number = stats.size;
