@@ -9,7 +9,27 @@ import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'n
 // fails the same way, forever, at full speed: two orphaned processes once ran for half an hour so.
 let panicking = false;
 
+// Explicit exit stops source execution at once, but the host event loop must remain alive
+// until both streams have written everything already queued. Only generated code calls
+// this helper: raw source Node keeps its own process.exit behavior for the oracle.
+const exitSignal = Symbol('Adamic exit');
+let exiting = false;
+
+export function processExiting() { return exiting; }
+
+export function processExit(code) {
+	// Validate before committing to exit, so an invalid code remains catchable.
+	process.exitCode = code;
+	const status = process.exitCode ?? 0;
+	exiting = true;
+	const drained = [process.stdout, process.stderr].map((stream) =>
+		new Promise((resolve) => stream.write('', resolve)));
+	Promise.all(drained).then(() => process.exit(status));
+	throw exitSignal;
+}
+
 process.on('uncaughtException', (error) => {
+	if (error === exitSignal) { return; }
 	if (panicking) {
 		process.exit(70);
 	}
@@ -22,7 +42,8 @@ process.on('uncaughtException', (error) => {
 for (const stream of [process.stdout, process.stderr]) {
 	// Node exposes this on pipe and terminal handles; regular files already write synchronously.
 	stream._handle?.setBlocking(true);
-	stream.on('error', () => process.exit(70));
+	// An explicit exit owns its status; still let the other stream drain.
+	stream.on('error', () => { if (!exiting) process.exit(70); });
 }
 
 export function panic(message) {

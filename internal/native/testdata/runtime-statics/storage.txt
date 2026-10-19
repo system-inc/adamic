@@ -327,3 +327,9 @@
 `runtime-file:node_process.c`
 `runtime-file:node_process.h`
 `runtime-file:process.c`
+
+# Exit status belongs to the synchronous process host; validation metadata is immutable.
+`process.c:prefix:1`
+`process.c:range_prefix:1`
+`process.c:range_name:1`
+`process.c:range_code:1`
