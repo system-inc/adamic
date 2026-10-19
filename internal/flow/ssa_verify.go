@@ -30,7 +30,9 @@
 // agree with it and both be wrong.
 //
 // Lifted from cohere's ssa_verify.go (high_level_intermediate_representation at 715ba94). Adamic:
-// the one change is that no definition here is a context store, so every one is recorded.
+// no definition here is a context store, so every one is recorded; and a definition by an
+// instruction that may throw is placed at the top of the block it goes on to, since the edge to
+// its handler leaves before the definition is made.
 package flow
 
 import "fmt"
@@ -103,12 +105,21 @@ func VerifySSA(function *Function) []SSAViolation {
 		for _, phi := range block.Phis {
 			recordDefinition(phi.Place.Identifier, block.Id, -1)
 		}
+		throws, endsInThrow := block.Terminal.(*MayThrow)
 		for position, instructionId := range block.Instructions {
 			instruction := function.Instructions[instructionId]
 			EachInstructionPlace(instruction, func(place Place, role PlaceRole) {
-				if role == PlaceRoleDefine {
-					recordDefinition(place.Identifier, block.Id, position)
+				if role != PlaceRoleDefine {
+					return
 				}
+				// A throwing instruction's definition is made only if it doesn't throw, so it holds
+				// from the top of the block control goes on to, never on the edge to the handler. A
+				// handler use naming it is a value the throw never made, and this is where it shows.
+				if endsInThrow && position == len(block.Instructions)-1 {
+					recordDefinition(place.Identifier, throws.Next, -1)
+					return
+				}
+				recordDefinition(place.Identifier, block.Id, position)
 			})
 		}
 		EachTerminalPlace(block.Terminal, func(place Place, role PlaceRole) {
