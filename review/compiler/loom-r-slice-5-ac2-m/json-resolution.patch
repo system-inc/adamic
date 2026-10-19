@@ -1,0 +1,33 @@
+diff --git a/internal/native/runtime/json_stringify.c b/internal/native/runtime/json_stringify.c
+index f1b292a7..f959de6e 100644
+--- a/internal/native/runtime/json_stringify.c
++++ b/internal/native/runtime/json_stringify.c
+@@ -171,6 +171,9 @@ static adamic_json_result prepare(json_writer *w, adamic_value value, const adam
+ static void write_field(json_writer *w, const adamic_object *object, const adamic_json_field *field, size_t slots, size_t depth, size_t *written) {
+     if (adamic_thrown != NULL) { return; }
+     if (field->schema == NULL || field->name == NULL || field->slot >= slots) { refuse("JSON object lacks complete field descriptors"); }
++    // Borrowed record views have no shape or construction metadata.
++    // Reserved and unset shaped slots are omitted before reading their storage.
++    if (object->shape != NULL && (!adamic_object_present(object, field->slot) || !adamic_object_initialized(object)[field->slot])) { return; }
+     bool owned;
+     adamic_json_result result = prepare(w, object->slots[field->slot], field->schema, field->name, &owned);
+     if (adamic_thrown != NULL) { if (owned && reference_result(result.schema)) { adamic_release(result.value.reference); } return; }
+@@ -257,7 +260,17 @@ static bool write_prepared_body(json_writer *w, adamic_value value, const adamic
+ 				}
+ 			}
+ 		} else {
+-			for (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }
++			if (object->shape == NULL || object->write_order == NULL) {
++				for (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }
++			} else {
++				size_t *order = adamic_object_ordered(object);
++				for (size_t position = 0; position < object->shape->count; position++) {
++					for (size_t index = 0; index < schema->count; index++) {
++						if (schema->fields[index].slot == order[position]) { write_field(w, object, &schema->fields[index], slots, depth, &written); break; }
++					}
++				}
++				free(order);
++			}
+ 		}
+ 		if (written != 0) { indent(w, depth); }
+ 		ascii(w, "}");

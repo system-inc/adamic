@@ -16,6 +16,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	target := ast.SkipParentheses(binary.Left)
+	if l.uninitializedInitializer(binary.Right) && !ast.IsIdentifier(target) && target.Kind != ast.KindPropertyAccessExpression {
+		return nil, l.notYet(target, "a placeholder reset without a represented variable or field slot")
+	}
 	if isCompound && l.enumNeverIdentity(target, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
@@ -34,6 +37,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	// array[index] += value never reaches here: the element may be missing, so the checker refuses it
 	// (noUncheckedIndexedAccess).
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		if body, handled, err := l.constructionIndexWrite(target, binary.Right); handled {
+			return body, err
+		}
 		if body, handled, err := l.typedArrayWrite(target, binary.Right); handled {
 			return body, err
 		}
@@ -59,12 +65,19 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		// Its type is unknown, so anything could be written to it, and it holds only undefined.
 		return nil, l.notYet(target, "assigning to a parameter that only ever receives undefined")
 	}
+	if !isCompound && l.uninitializedInitializer(binary.Right) {
+		l.result.Locals[local].Uninitialized = true
+		return []ir.Statement{ir.Assign{Local: local, Value: l.placeholderInitialValue(binary.Right, l.result.Locals[local].Type), Checked: l.checked(local), Uninitialized: true}}, nil
+	}
 	value, err := l.expression(binary.Right)
 	if err != nil {
 		return nil, err
 	}
 	if isCompound {
 		current := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		if origin := l.result.Locals[local].Placeholder; origin != "" {
+			current = l.placeholderRead(target, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local), Unset: true}, origin)
+		}
 		if operator == ast.KindPlusToken {
 			current, value = l.spelled(target, current), l.spelled(binary.Right, value)
 		}

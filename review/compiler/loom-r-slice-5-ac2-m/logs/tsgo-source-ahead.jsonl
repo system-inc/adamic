@@ -1,0 +1,22 @@
+{"Time":"2026-10-18T19:44:03.537283817Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T19:44:03.588482985Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive"}
+{"Time":"2026-10-18T19:44:03.588577246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive","Output":"=== RUN   TestProduct_TSGoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:03.58865275Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive","Output":"=== PAUSE TestProduct_TSGoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:03.588655714Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive"}
+{"Time":"2026-10-18T19:44:03.588674062Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource"}
+{"Time":"2026-10-18T19:44:03.588676886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource","Output":"=== RUN   TestProduct_SplitTSGoSource\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:03.588691788Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource","Output":"=== PAUSE TestProduct_SplitTSGoSource\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:03.588693641Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource"}
+{"Time":"2026-10-18T19:44:03.588710116Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive"}
+{"Time":"2026-10-18T19:44:03.58871274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive","Output":"=== CONT  TestProduct_TSGoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:03.595256117Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource"}
+{"Time":"2026-10-18T19:44:03.59527806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource","Output":"=== CONT  TestProduct_SplitTSGoSource\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:05.657437972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive","Output":"    units_tsgo_test.go:32: build go_build_./bridge/tsgo/archive_tsgo.a f19f444a0b57 hit 1.44\n"}
+{"Time":"2026-10-18T19:44:05.657510881Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive","Output":"--- PASS: TestProduct_TSGoArchive (2.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:15.409177387Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_TSGoArchive","Elapsed":2.07}
+{"Time":"2026-10-18T19:44:15.409287943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource","Output":"    units_tsgo_test.go:109: build split-tsgo-source 9f4888740ba7 miss 11.16\n"}
+{"Time":"2026-10-18T19:44:15.4190583Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource","Output":"--- PASS: TestProduct_SplitTSGoSource (11.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:15.419080894Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestProduct_SplitTSGoSource","Elapsed":11.82}
+{"Time":"2026-10-18T19:44:15.419085922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:44:15.436648613Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t11.890s\n"}
+{"Time":"2026-10-18T19:44:15.436729765Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":11.899000000000001}

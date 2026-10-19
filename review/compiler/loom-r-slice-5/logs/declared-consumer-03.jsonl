@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:26:22.465896064Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog"}
+{"Time":"2026-10-18T00:26:22.468133644Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache"}
+{"Time":"2026-10-18T00:26:22.468179493Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache","Output":"=== RUN   TestSharedCache\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:22.46819759Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache","Output":"=== PAUSE TestSharedCache\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:22.468199653Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache"}
+{"Time":"2026-10-18T00:26:22.468202448Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache"}
+{"Time":"2026-10-18T00:26:22.468205332Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache","Output":"=== CONT  TestSharedCache\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:22.474614999Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache","Output":"--- PASS: TestSharedCache (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:22.474644724Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Test":"TestSharedCache","Elapsed":0.01}
+{"Time":"2026-10-18T00:26:22.474660197Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:26:22.474802982Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gocacheprog\t0.009s\n"}
+{"Time":"2026-10-18T00:26:22.474819126Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gocacheprog","Elapsed":0.009}

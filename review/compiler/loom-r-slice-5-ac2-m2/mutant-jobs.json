@@ -1,0 +1,17 @@
+[
+  {
+    "name": "stale-reader",
+    "package": "./internal/fresh",
+    "test": "^TestFreshCorpusUnitsCoverEveryProgram$"
+  },
+  {
+    "name": "missing-tsgo-product",
+    "package": "./internal/native",
+    "test": "^TestSplitTSGoAgreesUnit00$"
+  },
+  {
+    "name": "borrowed-record-guard",
+    "package": "./internal/native",
+    "test": "^TestJSONEncoderRecordView_000$"
+  }
+]

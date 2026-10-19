@@ -21,7 +21,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", false, false})
+		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", name == "nodearray", false})
 	}
 }
 
@@ -40,7 +40,22 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 			if truth.exitCode != 0 || string(truth.stdout) != "witness\n" || len(truth.stderr) != 0 {
 				t.Fatalf("Node: %#v", truth)
 			}
-			_, err = lowered(t, path)
+			program, err := lowered(t, path)
+			if name == "nodearray" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				sanitized, binary := nativelyUncached(t, program)
+				for mode, result := range map[string]run{"JavaScript": onJavaScriptBackend(t, program), "native sanitized": sanitized, "native release": releasedUncached(t, program)} {
+					if difference := disagreement(truth, result); difference != "" {
+						t.Fatalf("%s: %s", mode, difference)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
 			if name == "string_dictionary" {
 				var refusal *lower.Refused
 				if !errors.As(err, &refusal) || refusal.What != "an index signature" {

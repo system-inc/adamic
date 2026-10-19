@@ -1,0 +1,69 @@
+{
+  "base": "ca0d1e1500d5ac663b62e196b0b68e3b4f7047be",
+  "source": "9947f26139e9a1fbbbff2d29949b0d9490b35a0b",
+  "conflicts": [
+    {
+      "path": "internal/fresh/corpus_units_test.go",
+      "hunks": 13,
+      "resolution": "Use main entire generated corpus and current numeric indices, then migrate only 13 relocated paths and both canonical name references per path. Keep all 859 main readers, including 31 absent in the old source tree. Source names at obsolete indices would overwrite unrelated new-expression and buffer readers."
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "hunks": 2,
+      "resolution": "Keep main a77cc07a descriptor validation, typed union/array metadata providers, keyed toJSON callbacks, thrown handling, owned result cleanup, cycle checks, borrowed record view bounds and slots parameter. Add absent/uninitialized omission after descriptor bounds checks, only for shaped objects. Add construction write-order enumeration using main writer signature; unshaped record views retain descriptor order."
+    }
+  ],
+  "counts": "Restore main table before the full official updater, never merge it. Full update measured original 62 keys; one later focused updater invocation adds the main NodeArray witness after its newly accepted registration.",
+  "runtime_extra_lines": [
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "    // Borrowed record views have no shape or construction metadata."
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "    // Reserved and unset shaped slots are omitted before reading their storage."
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "    if (object->shape != NULL && (!adamic_object_present(object, field->slot) || !adamic_object_initialized(object)[field->slot])) { return; }"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "-",
+      "line": "\t\t\tfor (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "\t\t\tif (object->shape == NULL || object->write_order == NULL) {"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "\t\t\t\tfor (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], slots, depth, &written); }"
+    },
+    {
+      "path": "internal/native/runtime/json_stringify.c",
+      "sign": "+",
+      "line": "\t\t\t\t\t\tif (schema->fields[index].slot == order[position]) { write_field(w, object, &schema->fields[index], slots, depth, &written); break; }"
+    }
+  ],
+  "main_extensions": [
+    "Register construction.c in the storage audit, no mutable file-scope storage.",
+    "Add construction.c and library_object.c to regex witness archive transitive dependencies.",
+    "Adapt array-extras mutant to main write_value key argument (NULL), preserving semantic Node disagreement.",
+    "Enforce TSGo baseline build only in its existing TestProduct_ preparation unit.",
+    "Split only moves asan compilation into program units with four jobs and a new explicit recipe flag.",
+    "Canonicalize Split/Jobs out of runtime archive requests and preserve the emitter two known external parallel-map prototypes in split headers.",
+    "Promote existing NodeArray boundary reader to backend agreement and register its count row.",
+    "Retain non_null review seed body with explicit checked-use intended outcome pin."
+  ],
+  "assumptions": [
+    "Newest fetched main ca0d1e15, newer than both requested 5179838b and slice 4 base.",
+    "The source placeholder-use contract #9wc5q5j supersedes the old compile-time non-null refusal; keep its deliberate checked-use exit 70 rather than weakening the compiler. Pin this difference through main review framework and retain actual Node outcome separately.",
+    "Product preparation must be a separate test unit; behavior units cannot fill the expensive TSGo baseline. Existing split compilation is the conservative response to the moves cold build exceeding 60 seconds."
+  ]
+}

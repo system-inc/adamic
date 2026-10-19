@@ -1,0 +1,13 @@
+Carry compiler slice and repair relocated freshness readers
+
+Base is pinned to dbdf977f5b. Register only the moved possible and refusal control families for freshness, preserving all 13 readers and their corpus slots. Keep flow exclusion unchanged.
+
+Re-cut onto main ca0d1e1500d5ac663b62e196b0b68e3b4f7047be (was 9947f26139e9a1fbbbff2d29949b0d9490b35a0b on dbdf977f)
+
+Assume the source placeholder-use contract supersedes the historical compile-time review refusal. Preserve its explicit checked-use outcome and keep product preparation separate from behavior units.
+
+Re-cut onto main a22f4251067a5f53a00d07fc64b54a2ac72d340b
+
+Assume main stack-test shards and runtime link inputs remain authoritative; add the source named-panic contract and construction helpers without removing them.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

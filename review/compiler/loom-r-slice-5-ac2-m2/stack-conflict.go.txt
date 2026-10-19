@@ -1,0 +1,176 @@
+package oracle
+
+import (
+	"bytes"
+	"fmt"
+	"path/filepath"
+	"runtime"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
+)
+
+func TestStackLongArguments(t *testing.T) {
+	t.Parallel()
+	stackProbe(t, 0, longStackArguments(120000, 3), nil, false)
+}
+func TestStackArgumentsAlone(t *testing.T) {
+	t.Parallel()
+	stackProbe(t, 0, longStackArguments(120000, 3), nil, true)
+}
+func TestStackLongEnvironment(t *testing.T) {
+	t.Parallel()
+	stackProbe(t, 0, nil, []string{"ADAMIC_LONG_1=" + strings.Repeat("x", 120000), "ADAMIC_LONG_2=" + strings.Repeat("x", 120000), "ADAMIC_LONG_3=" + strings.Repeat("x", 120000)}, false)
+}
+func TestStackLimit1024(t *testing.T) { t.Parallel(); stackProbe(t, 1024, nil, nil, false) }
+func TestStackLimit512(t *testing.T)  { t.Parallel(); stackProbe(t, 512, nil, nil, false) }
+func TestStackLimit256(t *testing.T) {
+	t.Parallel()
+	stackProbe(t, 256, longStackArguments(100000, 1), nil, false)
+}
+func TestStackLimit1024LongArguments(t *testing.T) {
+	t.Parallel()
+	size, count := 136000, 3
+	// Linux limits each string to 128 KiB and all strings to a quarter of the stack.
+	if runtime.GOOS == "linux" {
+		size, count = 100000, 2
+	}
+	stackProbe(t, 1024, longStackArguments(size, count), nil, false)
+}
+func TestStackLimit2048LongArguments(t *testing.T) {
+	t.Parallel()
+	size, count := 307000, 3
+	if runtime.GOOS == "linux" {
+		size, count = 120000, 4
+	}
+	stackProbe(t, 2048, longStackArguments(size, count), nil, false)
+}
+func longStackArguments(size, count int) []string {
+	arguments := make([]string, count)
+	for index := range arguments {
+		arguments[index] = strings.Repeat("x", size)
+	}
+	return arguments
+}
+
+<<<<<<< HEAD
+// Each limit and argument layout is a separate Loom unit, including setup.
+func stackProbe(t *testing.T, limit int, arguments, environment []string, alone bool) {
+	t.Helper()
+	path, sanitizedBinary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	plain := filepath.Join(t.TempDir(), "plain")
+	if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
+		t.Fatal(err)
+	}
+	ran := func(name string, prefix ...string) run {
+		t.Helper()
+		resolved, err := toolchain.Path(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		args := append(append([]string{}, prefix...), arguments...)
+		if limit > 0 {
+			args = append([]string{"-c", fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, limit), resolved}, args...)
+			resolved = "/bin/sh"
+		}
+		command := bounded(t, resolved, args...)
+		command.Env = append(command.Env, environment...)
+		command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=0")
+		if alone {
+			command.Env = []string{}
+		}
+		var stdout, stderr bytes.Buffer
+		command.Stdout, command.Stderr = &stdout, &stderr
+		if err := command.Run(); err != nil && command.ProcessState == nil {
+			t.Fatal(err)
+		}
+		result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+		rememberRun(t, result)
+		return result
+	}
+	want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70}
+	if limit == 0 || limit >= 1024 {
+		nodeArguments := []string{"--disable-warning=ExperimentalWarning"}
+		// V8's default recursion budget exceeds the usable stack after long argv at 1 MiB.
+		// Depth may differ; both backends must still report the same RangeError panic.
+		if limit == 1024 && len(arguments) > 0 {
+			nodeArguments = append(nodeArguments, "--stack-size=256")
+		}
+		nodeArguments = append(nodeArguments, repository+"/oracle/node.mjs", path)
+		node := ran("node", nodeArguments...)
+		if difference := disagreement(want, node); difference != "" {
+			t.Fatalf("Node: %s: exit %d stderr %q", difference, node.exitCode, node.stderr)
+		}
+	}
+	for _, binary := range []string{sanitizedBinary, plain} {
+		got := ran(binary)
+		if difference := disagreement(want, got); difference != "" {
+			t.Errorf("%s: %s: exit %d stderr %.300q", filepath.Base(binary), difference, got.exitCode, got.stderr)
+		}
+=======
+// A small stack still gets a limit (stack.c). At 1 MiB Node runs out of stack and panics, and native
+// must too; below that Node itself crashes, so what's held there is docs/0.1.md's own rule, that
+// running out of stack is a panic and never a bare crash. At 256 KiB a quarter of the stack is less
+// than the 128 KiB Linux still allows arguments, so a 100 KB one is passed there. Each runs under sh's
+// ulimit, sanitized and as adamic build builds it.
+func TestSmallStacksStillPanic(t *testing.T) {
+	t.Parallel()
+	for _, setting := range []struct {
+		kibibytes int
+		arguments []string
+	}{
+		{1024, nil},
+		{512, nil},
+		{256, []string{strings.Repeat("x", 100_000)}},
+	} {
+		kibibytes := setting.kibibytes
+		t.Run(strconv.Itoa(kibibytes)+" KiB", func(t *testing.T) {
+			t.Parallel()
+			cacheProbe(t, "internal/oracle/testdata/stack_over.a", nil, "", func() {
+
+				path, binary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
+				plain := filepath.Join(t.TempDir(), "plain")
+				program, err := lowered(t, path)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
+					t.Fatal(err)
+				}
+				limited := func(name string, arguments ...string) run {
+					t.Helper()
+					// sh execs what it's given: a bare name is the program toolchain.Path finds, as bounded runs
+					// one, never whichever sh would find on PATH.
+					resolved, err := toolchain.Path(name)
+					if err != nil {
+						t.Fatal(err)
+					}
+					script := fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, kibibytes)
+					arguments = append(append([]string{"-c", script, resolved}, arguments...), setting.arguments...)
+					return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", arguments...)
+				}
+				want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in sum\n"), exitCode: 70}
+				if kibibytes >= 1024 {
+					node := limited("node", "--disable-warning=ExperimentalWarning", repository+"/oracle/node.mjs", path)
+					if difference := disagreement(want, node); difference != "" {
+						t.Fatalf("want Node to run out of stack and panic at %d KiB: exit %d, stderr %q", kibibytes, node.exitCode, node.stderr)
+					}
+				}
+				for _, built := range []string{binary, plain} {
+					native := limited(built)
+					if difference := disagreement(want, native); difference != "" {
+						t.Errorf("%s at %d KiB: %s: exit %d, stdout %q, stderr %.300q", filepath.Base(built), kibibytes, difference, native.exitCode, native.stdout, native.stderr)
+					}
+				}
+
+			})
+		})
+>>>>>>> 2939a32d (Carry compiler slice and repair relocated freshness readers)
+	}
+}

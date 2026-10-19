@@ -1,0 +1,14 @@
+[
+  {
+    "label": "build sanitized native",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "sanitized native",
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: placeholder 'value' is unset at argument via value\n"
+  }
+]

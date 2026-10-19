@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T00:11:53.50602471Z","Action":"start","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii"}
+{"Time":"2026-10-18T00:11:53.509938424Z","Action":"run","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Test":"TestRuntimeFeaturesMatchNode"}
+{"Time":"2026-10-18T00:11:53.509987217Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Test":"TestRuntimeFeaturesMatchNode","Output":"=== RUN   TestRuntimeFeaturesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:58.946067365Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Test":"TestRuntimeFeaturesMatchNode","Output":"    runtime_features_test.go:49: Node/native output: \"1 11 25\\ntrue\\n3 5\\n\"\n"}
+{"Time":"2026-10-18T00:11:58.946178002Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Test":"TestRuntimeFeaturesMatchNode","Output":"--- PASS: TestRuntimeFeaturesMatchNode (5.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:58.9461838Z","Action":"pass","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Test":"TestRuntimeFeaturesMatchNode","Elapsed":5.44}
+{"Time":"2026-10-18T00:11:58.946204081Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:11:58.947756494Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Output":"ok  \tgithub.com/system-inc/adamic/cloud/reports/decode-ascii\t5.441s\n"}
+{"Time":"2026-10-18T00:11:58.947807892Z","Action":"pass","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Elapsed":5.442}

@@ -1,0 +1,22 @@
+{"Time":"2026-10-18T00:10:34.674109269Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:10:34.687229385Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode"}
+{"Time":"2026-10-18T00:10:34.687301344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"=== RUN   TestAsyncCompilerSuspensionsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:34.687331279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"=== PAUSE TestAsyncCompilerSuspensionsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:34.687333732Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode"}
+{"Time":"2026-10-18T00:10:34.687336356Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode"}
+{"Time":"2026-10-18T00:10:34.687338469Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"=== RUN   TestParallelCompilerSharedReferencesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:34.687342696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"=== PAUSE TestParallelCompilerSharedReferencesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:34.687344859Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode"}
+{"Time":"2026-10-18T00:10:34.687347042Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode"}
+{"Time":"2026-10-18T00:10:34.687348695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"=== CONT  TestAsyncCompilerSuspensionsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:34.68735207Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode"}
+{"Time":"2026-10-18T00:10:34.687353792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"=== CONT  TestParallelCompilerSharedReferencesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:37.685663482Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"    async_test.go:23: source Node, JavaScript, ASan/UBSan native and leak check agree\n"}
+{"Time":"2026-10-18T00:10:37.6859081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"--- PASS: TestAsyncCompilerSuspensionsMatchNode (3.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:37.851677716Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Elapsed":3}
+{"Time":"2026-10-18T00:10:37.851772659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"    async_test.go:37: source Node, JavaScript, ASan/UBSan native and leak check agree\n"}
+{"Time":"2026-10-18T00:10:37.85203295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"--- PASS: TestParallelCompilerSharedReferencesMatchNode (3.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:37.852043957Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Elapsed":3.16}
+{"Time":"2026-10-18T00:10:37.852109335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:10:37.858211826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t3.180s\n"}
+{"Time":"2026-10-18T00:10:37.858242061Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":3.184}

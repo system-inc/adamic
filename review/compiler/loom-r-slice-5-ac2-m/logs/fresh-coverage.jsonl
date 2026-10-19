@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T19:31:18.38582506Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-18T19:31:18.397433466Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram"}
+{"Time":"2026-10-18T19:31:18.39751627Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"=== RUN   TestFreshCorpusUnitsCoverEveryProgram\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:18.397547227Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"=== PAUSE TestFreshCorpusUnitsCoverEveryProgram\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:18.397549891Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram"}
+{"Time":"2026-10-18T19:31:18.397555309Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram"}
+{"Time":"2026-10-18T19:31:18.397558794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"=== CONT  TestFreshCorpusUnitsCoverEveryProgram\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:18.400246825Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"    corpus_coverage_test.go:63: 883 programs, 859 selectable write-proof units\n"}
+{"Time":"2026-10-18T19:31:18.400297161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Output":"--- PASS: TestFreshCorpusUnitsCoverEveryProgram (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:18.400301578Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFreshCorpusUnitsCoverEveryProgram","Elapsed":0}
+{"Time":"2026-10-18T19:31:18.400314577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T19:31:18.400471323Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.014s\n"}
+{"Time":"2026-10-18T19:31:18.400492495Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.015}

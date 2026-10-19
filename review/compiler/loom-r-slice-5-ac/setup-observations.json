@@ -1,0 +1,26 @@
+{
+  "timing_lines": [
+    "setup: go ready (0.068s)",
+    "setup: submodules ready (0.071s)",
+    "setup: node ready (0.078s)",
+    "setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.012s",
+    "setup: markdown dependencies ready (0.207s)",
+    "setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.457s)",
+    "setup: shared cache off (ADAMIC_GOCACHE_OFF=1) (0.459s)",
+    "setup: go build ready (17.055s)",
+    "setup: test binaries deferred (use --warm-tests) (17.238s)",
+    "setup: build cache warm (17.239s)",
+    "setup: build-flags commit=dbdf977f5b8b0979d414ebe6f20e7aadd312e309 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=off load-before=0.00 0.00 0.00 1/136 922 load-after=0.80 0.18 0.06 1/141 1396",
+    "setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (17.263s)",
+    "setup: source /workspace/adamic-tools/env.sh",
+    "setup: logs /tmp/adamic-gate/setup.KhxjxK"
+  ],
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "toolchain": {
+    "go": "1.27.1",
+    "node": "24.19.0",
+    "clang": "20.1.8"
+  },
+  "recovery": "Initial source application stopped with No space left on device before setup could start. Removed only disposable /home/agent/.cache/adamic-build/local (about 11 GB), then restored the exact 505835b7 tree into index/worktree. restoration.txt is empty, proving equality before headers. Repaired setup completed successfully."
+}

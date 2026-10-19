@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-run",
+      "^(TestArgumentsLengthWrongSlotMutant|TestAsyncFixturesAgreeWithNode|TestCensusSmallStoppedSourceOnNode|TestCheckedCastFailureContract|TestCheckedCastMutants|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjectPrimitiveSource|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewV2MovedStage3Results|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2RepresentationMutants|TestGateCacheToolchains)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "log": "logs/batch-internal_oracle-0.jsonl",
+    "tests": [
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestAsyncFixturesAgreeWithNode",
+      "TestCensusSmallStoppedSourceOnNode",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjects",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewV2MovedStage3Results",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2RepresentationMutants",
+      "TestGateCacheToolchains"
+    ]
+  }
+]

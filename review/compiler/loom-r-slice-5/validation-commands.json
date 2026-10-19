@@ -1,0 +1,2057 @@
+[
+  {
+    "command": [
+      "bash",
+      "cloud/setup.sh"
+    ],
+    "environment": {
+      "GOPROXY": "https://proxy.golang.org|direct",
+      "ADAMIC_GOCACHE_OFF": "1",
+      "GOMAXPROCS": "4"
+    },
+    "result": "repaired setup exits 0; see setup-observations.json"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "./internal/lower",
+      "./internal/oracle",
+      "./cmd/adamic-gate",
+      "-run",
+      "^(TestEveryMapAProgramHoldsIsSorted|TestRuntimeSetsAreEachUsed|TestNativeAgreementRowsNameRegisteredPrograms|TestEveryTestIsParallelOrSaysWhy)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": "exit 0",
+    "log": "logs/guards.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "180s",
+      "-args",
+      "-update-counts"
+    ],
+    "result": "exit 0; 144.102s",
+    "log": "logs/counts-update.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./cmd/adamic",
+      "./internal/flow",
+      "./internal/fresh",
+      "./internal/ir",
+      "./internal/javascript",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/oracle"
+    ],
+    "result": "exit 0, no diagnostics"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/native"
+    ],
+    "result": "exit 0, no diagnostics after new test"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "./cmd/adamic-gate",
+      "-run",
+      "^(TestCallTargetReaders|TestEveryTestIsParallelOrSaysWhy)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": "exit 0",
+    "log": "logs/final-readers-policy.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "./internal/oracle",
+      "-run",
+      "^(TestAsyncCompilerSuspensionsMatchNode|TestParallelCompilerSharedReferencesMatchNode|TestParserConstructionBackend.*|TestRuntimeSetsAreEachUsed|TestParserAheadCountsNodeArrayFields)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": "exit 0",
+    "log": "logs/post-sharing-regressions.jsonl"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestParserNodeArrayMetadataSharing$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": "exit 0; 1.21s",
+    "log": "logs/metadata-sharing-fixed.jsonl"
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserFactoryCompletionBeforeReturn|TestParserFactoryCompletionAlias|TestParserFactoryCompletionBothBranches|TestParserFactoryCompletionOneBranch)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserFactoryCompletionBeforeEscape|TestParserFactoryCompletionWrongPayloadAssertion|TestParserFactoryCompletionEarlyReturn|TestParserFactoryCompletionLoopMayNotRun)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserFactoryCompletionCaptured|TestParserFactoryCompletionShortCircuit|TestParserFactoryReadBeforeCompletion|TestParserNodeArrayLayout)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestParserNodeArrayPresence|TestParserNodeArraySchemaFailsClosed|TestAdamicNullishAssertionsAreRefused|TestPlaceholderTypedBoundaryAssignmentResult)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryReturnAssignment|TestPlaceholderTypedBoundaryAliasReset|TestPlaceholderTypedBoundaryArgument|TestPlaceholderTypedBoundarySavedCopy)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryProperty|TestPlaceholderTypedBoundaryCall|TestPlaceholderTypedBoundaryReturn|TestPlaceholderTypedBoundaryTypedLocal)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryOrdinaryField|TestPlaceholderTypedBoundaryArrayElement|TestPlaceholderTypedBoundaryOptionalArrayElement|TestPlaceholderTypedBoundaryElementWrite)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundaryOptionalReceiver|TestPlaceholderTypedBoundaryOptionalParameterLaterTUse|TestPlaceholderTypedBoundaryPresence|TestPlaceholderTypedBoundaryDominatingWrite)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestPlaceholderTypedBoundarySavedAfterWrite|TestPlaceholderTypedBoundaryPlaceholderFieldCopy|TestPlaceholderWeakSlotStaysNotYet|TestReadinessElisionRequiresDominatingAssignment)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestParserConstructionBackendOwnKeyOrder|TestParserConstructionBackendNodeArrayKeys|TestParserConstructionBackendNodeArrayJson|TestParserConstructionBackendNodeArrayLength)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestParserConstructionRuntimeMutantSynthesizedKey|TestParserConstructionRuntimeMutantDeclarationOrder|TestParserConstructionRuntimeMutantArrayExtrasInJSON)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRuledWeakBackendOutcomes|TestUnlistedBackendSourceJavaScriptAgreement|TestUnlistedBackendSourceNativeAgreement|TestTerminalStackStopJavaScript)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestTerminalStackStopNative|TestTerminalStackStopMarkedJavaScript|TestNonOverflowRangeErrorCatch|TestImpossibleNonNullFixturesAreRefused)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPossibleNonNullAdamicAssertionsAreRefused|TestLiteralDefaultPlaceholderAgreesWithNode|TestMigratedNonNullFixturesRemainCovered|TestNonNullLiteralUnionInitializers)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNonNullAdamicRefusal|TestParserAheadCountsFactoriesAlreadyComplete|TestParserAheadCountsFactoriesComplete|TestParserAheadCountsFactoriesEscaped)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNonNullAdamicRefusal|TestParserAheadCountsFactoriesAlreadyComplete|TestParserAheadCountsFactoriesComplete|TestParserAheadCountsFactoriesEscaped)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserAheadCountsRulingsFactoryUnset|TestParserAheadCountsRulingsFactoryUse|TestParserAheadCountsRulingsOwnKeyOrder|TestParserAheadCountsRulingsNodeArrayKeys)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserAheadCountsRulingsNodeArrayJson|TestParserAheadCountsRulingsNodeArrayLength|TestParserAheadCountsRulingsNodeArrayUnset|TestParserAheadCountsRulingsNullPlaceholderPending)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserAheadCountsNodeArrayFields|TestParserAheadFactoryBoundariesComplete|TestParserAheadFactoryBoundariesEscaped|TestParserAheadFactoryCompleteControl)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserAheadNodeArraySourceFields|TestParserAheadNodeArraySourcePresence|TestParserConstructionSourceFactoryUnset|TestParserConstructionSourceOwnKeyOrder)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserConstructionSourceNodeArrayKeys|TestParserConstructionSourceNodeArrayJson|TestParserConstructionSourceNodeArrayLength|TestParserConstructionSourceNodeArrayUnset)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserConstructionUnsetUse|TestParserConstructionNullPlaceholderDelivered|TestParserProgramRegionLifetime|TestParserSpeculationSourcesNamedLookahead)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationSourcesNamedTryparse|TestParserSpeculationSourcesArrowTryparse|TestParserSpeculationSourcesTruthinessRewind|TestParserSpeculationMisfit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationRewindMutant|TestParserStackLegal|TestParserStackPathological|TestParserStackTinyLimit)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserStackGuardMutant|TestParserStackGuardCost|TestPlaceholderUseCheckBeforeUse|TestPlaceholderUseCheckSavedLeak)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderUseCheckNullBeforeUse|TestPlaceholderUseCheckNullSavedLeak|TestPlaceholderUseCheckAssignmentResult|TestPlaceholderUseCheckReturnAssignment)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderUseCheckAliasReset|TestPlaceholderNonliteralAssertionStillChecks|TestPlaceholderFlowMutantBeforeUse|TestPlaceholderFlowMutantSavedLeak)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderFlowMutantNullBeforeUse|TestPlaceholderFlowMutantNullSavedLeak|TestPlaceholderFlowMutantAssignmentResult|TestPlaceholderFlowMutantReturnAssignment)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestPlaceholderFlowMutantAliasReset|TestPlaceholderNullTagMutant|TestPlaceholderSpreadReadinessMutant|TestReadinessMutantReplaceUnsetCheckWithZero)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestReadinessMutantEraseWithoutProof|TestReadinessMutantInitializeToZero|TestReadinessMutantMissCapturedRead|TestReadinessMutantMissExceptionPath)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestReadinessMutantReplaceMissingAssertionWithEmpty|TestReadinessMutantWeakGenericMessage|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNonliteralInitializerCannotSkipCheck|TestRequiredViewFieldPrimitiveNumber|TestRequiredViewFieldPrimitiveBoolean|TestRequiredViewFieldPrimitiveString)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRequiredViewFieldPrimitiveWrongString|TestRequiredViewFieldPrimitiveMissing|TestRequiredViewFieldPrimitiveUninitialized|TestRequiredViewFieldPrimitiveWrongType)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestRequiredViewFieldOperandOnce|TestNarrowedFieldUsesSharedReadinessIdentifier|TestNarrowedFieldUsesSharedReadinessIdentifierUninitialized|TestNarrowedFieldUsesSharedReadinessNumber)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestNarrowedFieldUsesSharedReadinessNumberUninitialized|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViewsDefaultStaged|TestDefaultTaggedSourceViewsDefaultBoxedString)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestDefaultTaggedSourceViewsDefaultBoxedWrite|TestDefaultTaggedSourceViewsDefaultDestructure|TestDefaultTaggedSourceViewsDefaultWrongType|TestDefaultTaggedSourceViewsDefaultWrongBoolean)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestDefaultTaggedSourceViewsDefaultLiteral|TestDefaultTaggedSourceViewsDefaultReadBeforeSet|TestParserPlaceholderProductsUseDisplayedPaths|TestParserFactoryProductsUseDisplayedPaths)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestParserSpeculationProductsUseDisplayedPaths)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "focused-results.json",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^(TestPlaceholderExplainChecksOutputC|TestPlaceholderExplainChecksOutputJavaScript|TestPlaceholderExplainChecksOutputBuild)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(4ddd17f_weak_single_narrowed\\.a|backend_stop_catches\\.a|d96d304_try_stack\\.a|e4eec87_u01_undefined_field_widened\\.a|placeholder_nonnull_alias_reset\\.a|placeholder_nonnull_assignment_result\\.a|placeholder_nonnull_before_use\\.a|placeholder_nonnull_field\\.a)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(placeholder_nonnull_local\\.a|placeholder_nonnull_null_before_use\\.a|placeholder_nonnull_null_coalesce\\.a|placeholder_nonnull_null_copy\\.a|placeholder_nonnull_null_equality\\.a|placeholder_nonnull_null_json\\.a|placeholder_nonnull_null_loose\\.a|placeholder_nonnull_null_optional\\.a)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(placeholder_nonnull_null_saved_leak\\.a|placeholder_nonnull_null_truthiness\\.a|placeholder_nonnull_null_typeof\\.a|placeholder_nonnull_observe\\.a|placeholder_nonnull_return_assignment\\.a|placeholder_nonnull_saved_leak\\.a|placeholder_nonnull_scanner\\.a|non_null_initialized\\.ts)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(non_null_uninitialized\\.ts|non_null_uninitialized_field\\.ts|non_null_uninitialized_capture\\.ts|non_null_uninitialized_exception\\.ts|non_null_uninitialized_loop\\.ts|non_null_uninitialized_default\\.ts|non_null_uninitialized_const\\.ts|non_null_weak\\.ts)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(non_null_definite\\.ts|non_null_definite_local\\.ts|non_null_definite_field\\.ts|non_null_static_initialized\\.ts|non_null_static_uninitialized\\.ts|non_null_uninitialized_optional\\.ts|non_null_uninitialized_spread\\.ts|non_null_literal_return\\.ts)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(non_null_literal_assignment\\.ts|non_null_literal_statement\\.ts|non_null_uninitialized_iteration\\.ts|non_null_uninitialized_catch\\.ts|non_null_uninitialized_interface\\.ts|non_null_uninitialized_append\\.ts|non_null_uninitialized_map_entry\\.ts|non_null_lazy_initialized\\.ts)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^internal$/^oracle$/^testdata$/^(non_null_lazy_read\\.ts|non_null_lazy_field\\.ts|non_null_lazy_static\\.ts|non_null_lazy_default\\.ts)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "fixture-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/^stage3$/^parser\\-next$/^stack$/^(benchmark\\.a|legal\\.a|pathological\\.a)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowCorpusRemainder$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestFlowProgram____oracle_testdata_non_null_(initialized|static_initialized)_ts_",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestFreshCorpusRemainder$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^TestViewMixedUnionSelectsNumber$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^(TestAsyncCompilerSuspensionsMatchNode|TestParallelCompilerSharedReferencesMatchNode)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestParallelSlotPairs$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestSlice5Witness",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestSmallStacksStillPanic|TestLongArgumentsLeaveTheStackItsLimit|TestCheckedNonNullAdamicRefusal)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^(TestTSGoRequiresLink)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^(TestRuntimeFeaturesMatchNode)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^(TestAdaptSingletonArrayCallback)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^(TestCheckKeyTellsTheCompilerFromTscWhole)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^(TestFindingReproducesAlone)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^(TestReportedLeakIsRejected)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^(TestOriginalCycleLedger)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/runtimeproducts",
+      "-run",
+      "^(TestTheRuntimeBuildReachesOnlyItsDeclaredFiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^(TestCompositionMatchesGo_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbers_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbers_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbers_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestCSSStrings_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^(TestAcceptanceMutants_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/formatfiles",
+      "-run",
+      "^(TestThePortParsesAsGoCohereDoes_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^(TestThePortAnswersAsGoCohereAndGitDo_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql/printer",
+      "-run",
+      "^(TestPrinterAsGoCohere_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestPortMatchesGoCohereClassOrder_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^(TestDecodedOptionsAndMutant_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers",
+      "-run",
+      "^(TestMessageRefusalsMatchGo)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^(TestCommentMutants_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^(TestShapeFixtures_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestTokenizerEvents_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/mediaquery",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/suppression",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "extra-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^(TestExpressionsAgainstGoAndPrettier_000)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/plain-placeholder-map.json",
+      "./internal/ir",
+      "-run",
+      "^TestEveryMapAProgramHoldsIsSorted$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/placeholder-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserPlaceholderProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/factory-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserFactoryProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/speculation-physical-path.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationProductsUseDisplayedPaths$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/branch-union.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/omit-escape-missing.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/erase-earlier-read.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/trust-assertion.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactory(Completion.*|ReadBeforeCompletion)$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-pos.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-end.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-hasTrailingComma.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/slot-transformFlags.json",
+      "./internal/lower",
+      "-run",
+      "^TestParserNodeArrayLayout$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/drop-unset-use.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserConstructionUnsetUse$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/drop-speculation-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserSpeculationMisfit$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/disable-tiny-stack.json",
+      "./internal/oracle",
+      "-run",
+      "^TestParserStackTinyLimit$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/drop-flow-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseCheckSavedLeak$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/retain-alias-proof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestPlaceholderUseCheckAliasReset$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/nullish-receiver-twice.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_loose[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/json-ordinary-assertion.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_json[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/admit-weak-slot.json",
+      "./internal/lower",
+      "-run",
+      "^TestPlaceholderWeakSlotStaysNotYet$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/omit-refusal-state.json",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalWideningSpreadOverwrite$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/drop-native-nullish-tags.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/placeholder_nonnull_null_copy[.]a$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-timeout=90s",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-5/drop-javascript-union-tag.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDefaultTaggedSourceViewsDefaultBoxedWrite$",
+      "-count=1",
+      "-v"
+    ],
+    "result": 1
+  },
+  {
+    "source": "all-mutants-results.json",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/skip-metadata-sharing.json",
+      "./internal/native",
+      "-run",
+      "^TestParserNodeArrayMetadataSharing$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/boundedrun",
+      "-run",
+      "^(TestDeadlineKillsGrandchild)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-admission-delta",
+      "-run",
+      "^(TestNewAdmissionMismatch)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/compilercensus",
+      "-run",
+      "^(TestEveryCCompilerRunsThroughNative)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gocacheprog",
+      "-run",
+      "^(TestSharedCache)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/productidentity",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/traced",
+      "-run",
+      "^(TestSettleParsesOnlyAskedCalls)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/goplan",
+      "-run",
+      "^$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/tracked",
+      "-run",
+      "^(TestAdversarialEntries)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./internal/toolchain",
+      "-run",
+      "^(TestAToolIsFoundUnderTheToolsDirectoryAndOnlyThereInASandbox)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/executable",
+      "-run",
+      "^(TestWriteLeavesNoWritableDescriptorForSiblingForksToExec)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 0
+  },
+  {
+    "source": "declared-consumer-results.json",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^(TestApplyPython)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "result": 1
+  },
+  {
+    "source": "interior-metadata-mutant-results.json",
+    "mutant": "retain-interior-metadata",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-5/retain-interior-metadata.json",
+      "./internal/native",
+      "-run",
+      "^TestParserNodeArrayMetadataSharing$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "seconds": 16.384606753999833,
+    "catcher": "TestParserNodeArrayMetadataSharing: interior metadata retained"
+  }
+]

@@ -1,0 +1,2486 @@
+[
+  {
+    "package": "./bench/regex",
+    "tests": [],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.115,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./bridge/tsgo",
+    "tests": [
+      "TestTSGoRequiresLink"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^(TestTSGoRequiresLink)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.744,
+    "results": [
+      {
+        "test": "TestTSGoRequiresLink",
+        "action": "pass",
+        "seconds": 0.03
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "tests": [
+      "TestRuntimeFeaturesMatchNode"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^(TestRuntimeFeaturesMatchNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 9.205,
+    "results": [
+      {
+        "test": "TestRuntimeFeaturesMatchNode",
+        "action": "pass",
+        "seconds": 4.57
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "tests": [
+      "TestClassification",
+      "TestDiffCoverage",
+      "TestShardPartitionKeepsDiff"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-admission-delta",
+      "-run",
+      "^(TestClassification|TestDiffCoverage|TestShardPartitionKeepsDiff)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.365,
+    "results": [
+      {
+        "test": "TestShardPartitionKeepsDiff",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestClassification",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestDiffCoverage",
+        "action": "pass",
+        "seconds": 0.05
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "tests": [
+      "TestNoToken"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gocacheprog",
+      "-run",
+      "^(TestNoToken)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.315,
+    "results": [
+      {
+        "test": "TestNoToken",
+        "action": "pass",
+        "seconds": 0.01
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "tests": [
+      "TestOptionalPositionCountsUTF16Surrogates"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.426,
+    "results": [
+      {
+        "test": "TestOptionalPositionCountsUTF16Surrogates",
+        "action": "pass",
+        "seconds": 0.01
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "tests": [
+      "TestAdaptSingletonArrayCallback"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^(TestAdaptSingletonArrayCallback)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.038,
+    "results": [
+      {
+        "test": "TestAdaptSingletonArrayCallback",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/boundedrun",
+    "tests": [
+      "TestDeadlineKillsGrandchild"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/boundedrun",
+      "-run",
+      "^(TestDeadlineKillsGrandchild)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.516,
+    "results": [
+      {
+        "test": "TestDeadlineKillsGrandchild",
+        "action": "pass",
+        "seconds": 0.33
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "tests": [],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/productidentity",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.115,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "tests": [
+      "TestSettleParsesOnlyAskedCalls"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/traced",
+      "-run",
+      "^(TestSettleParsesOnlyAskedCalls)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.316,
+    "results": [
+      {
+        "test": "TestSettleParsesOnlyAskedCalls",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "tests": [],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/goplan",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.064,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/compilercensus",
+    "tests": [
+      "TestEveryCCompilerRunsThroughNative",
+      "TestDependenciesFollowTheMarkers",
+      "TestDependenciesCoverTheDeclaredMap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/compilercensus",
+      "-run",
+      "^(TestEveryCCompilerRunsThroughNative|TestDependenciesFollowTheMarkers|TestDependenciesCoverTheDeclaredMap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.972,
+    "results": [
+      {
+        "test": "TestDependenciesFollowTheMarkers",
+        "action": "pass",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestEveryCCompilerRunsThroughNative",
+        "action": "pass",
+        "seconds": 0.4
+      },
+      {
+        "test": "TestDependenciesCoverTheDeclaredMap",
+        "action": "pass",
+        "seconds": 0.64
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "tests": [
+      "TestCheckKeyTellsTheCompilerFromTscWhole"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^(TestCheckKeyTellsTheCompilerFromTscWhole)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.523,
+    "results": [
+      {
+        "test": "TestCheckKeyTellsTheCompilerFromTscWhole",
+        "action": "pass",
+        "seconds": 0.01
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/fuzz",
+    "tests": [
+      "TestGeneratedProgramsCheckAndLower"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^(TestGeneratedProgramsCheckAndLower)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.844,
+    "results": [
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-016-020",
+        "action": "pass",
+        "seconds": 0.45
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-031-035",
+        "action": "pass",
+        "seconds": 0.51
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-026-030",
+        "action": "pass",
+        "seconds": 0.59
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-001-005",
+        "action": "pass",
+        "seconds": 0.67
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-051-055",
+        "action": "pass",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-021-025",
+        "action": "pass",
+        "seconds": 0.64
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-056-060",
+        "action": "pass",
+        "seconds": 0.71
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-011-015",
+        "action": "pass",
+        "seconds": 0.5
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-046-050",
+        "action": "pass",
+        "seconds": 0.44
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-036-040",
+        "action": "pass",
+        "seconds": 0.49
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-006-010",
+        "action": "pass",
+        "seconds": 0.61
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower/seeds-041-045",
+        "action": "pass",
+        "seconds": 0.71
+      },
+      {
+        "test": "TestGeneratedProgramsCheckAndLower",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/leakcheck",
+    "tests": [
+      "TestReportedLeakIsRejected",
+      "TestCountedBalance"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^(TestReportedLeakIsRejected|TestCountedBalance)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.215,
+    "results": [
+      {
+        "test": "TestReportedLeakIsRejected",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestCountedBalance",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "tests": [
+      "TestOriginalCycleLedger"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^(TestOriginalCycleLedger)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.776,
+    "results": [
+      {
+        "test": "TestOriginalCycleLedger",
+        "action": "skip",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "tests": [],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/native/runtimeproducts",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.368,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/toolchain",
+    "tests": [
+      "TestAToolsCompilersAreClangUnlessTheCallerNamesOne"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/toolchain",
+      "-run",
+      "^(TestAToolsCompilersAreClangUnlessTheCallerNamesOne)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.165,
+    "results": [
+      {
+        "test": "TestAToolsCompilersAreClangUnlessTheCallerNamesOne",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/tracked",
+    "tests": [
+      "TestChangedNamesEveryDifference"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/tracked",
+      "-run",
+      "^(TestChangedNamesEveryDifference)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.466,
+    "results": [
+      {
+        "test": "TestChangedNamesEveryDifference",
+        "action": "pass",
+        "seconds": 0.15
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestClosedEmptyArrayUnionGap",
+      "TestClosedParserRegexGap",
+      "TestClosedOptionalBooleanConditionGap",
+      "TestClosedPrinterRegexGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes|TestClosedEmptyArrayUnionGap|TestClosedParserRegexGap|TestClosedOptionalBooleanConditionGap|TestClosedPrinterRegexGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 10.561,
+    "results": [
+      {
+        "test": "TestClosedEmptyArrayUnionGap",
+        "action": "pass",
+        "seconds": 1.19
+      },
+      {
+        "test": "TestClosedParserRegexGap",
+        "action": "pass",
+        "seconds": 3.03
+      },
+      {
+        "test": "TestClosedOptionalBooleanConditionGap",
+        "action": "pass",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestClosedPrinterRegexGap",
+        "action": "pass",
+        "seconds": 0.9
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_array_shift.ts",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts",
+        "action": "pass",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0.18
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "tests": [
+      "TestCSSNumbersAnswerProductsRekey"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbersAnswerProductsRekey)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.944,
+    "results": [
+      {
+        "test": "TestCSSNumbersAnswerProductsRekey",
+        "action": "pass",
+        "seconds": 0.27
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "tests": [
+      "TestMultiPushGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestMultiPushGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.992,
+    "results": [
+      {
+        "test": "TestMultiPushGap",
+        "action": "pass",
+        "seconds": 0.09
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "tests": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestRawInputGap",
+      "TestParserRecoveryGap",
+      "TestInterfaceTypeMethodGap",
+      "TestRecoveryLibraryGaps",
+      "TestPinnedNumericGaps",
+      "TestTypeMemberLibraryGap",
+      "TestCookedSurrogateLibraryGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^(TestPostfixValueGap|TestMethodReplacementGap|TestRawInputGap|TestParserRecoveryGap|TestInterfaceTypeMethodGap|TestRecoveryLibraryGaps|TestPinnedNumericGaps|TestTypeMemberLibraryGap|TestCookedSurrogateLibraryGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 27.977,
+    "results": [
+      {
+        "test": "TestRawInputGap",
+        "action": "pass",
+        "seconds": 2.46
+      },
+      {
+        "test": "TestParserRecoveryGap",
+        "action": "pass",
+        "seconds": 20.02
+      },
+      {
+        "test": "TestInterfaceTypeMethodGap",
+        "action": "pass",
+        "seconds": 0.44
+      },
+      {
+        "test": "TestRecoveryLibraryGaps",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "test": "TestTypeMemberLibraryGap",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "test": "TestCookedSurrogateLibraryGap",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "test": "TestPinnedNumericGaps",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "test": "TestPostfixValueGap",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestMethodReplacementGap",
+        "action": "pass",
+        "seconds": 0.09
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "tests": [
+      "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/executable",
+      "-run",
+      "^(TestWriteLeavesNoWritableDescriptorForSiblingForksToExec)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.72,
+    "results": [
+      {
+        "test": "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec",
+        "action": "pass",
+        "seconds": 0.54
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "tests": [
+      "TestExtAgreesWithGo"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/formatfiles",
+      "-run",
+      "^(TestExtAgreesWithGo)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.892,
+    "results": [
+      {
+        "test": "TestExtAgreesWithGo/bare_dot_i",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/single_dot",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/double_dot",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/no_dot",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/trailing_dot",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/last_of_multiple_dots",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/absolute_nested_dotfile",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/absolute_root_dotfile",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/root",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/empty",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/relative_nested_dotfile",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/dot_before_separator",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/nested_trailing_dot",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/bare_Unicode_dotfile",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/Unicode_extension",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/dot_at_zero_without_slash",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo/escaped_extension",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExtAgreesWithGo",
+        "action": "pass",
+        "seconds": 0.14
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.298,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_from_char_code.ts",
+        "action": "pass",
+        "seconds": 1.14
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_array_from.ts",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_function_value.ts",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_method.ts",
+        "action": "pass",
+        "seconds": 1.19
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/9_return_panic.ts",
+        "action": "pass",
+        "seconds": 0.33
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/7_maybe_number_compared.ts",
+        "action": "pass",
+        "seconds": 0.31
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/8_tuple_value.ts",
+        "action": "pass",
+        "seconds": 0.33
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_boolean_element.ts",
+        "action": "pass",
+        "seconds": 0.32
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_bitwise.ts",
+        "action": "pass",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_later_function.ts",
+        "action": "pass",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.738,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_error_made_elsewhere.ts",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_throwing_function_value.ts",
+        "action": "pass",
+        "seconds": 1.09
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "tests": [
+      "TestPrinterConstructorGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql/printer",
+      "-run",
+      "^(TestPrinterConstructorGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.634,
+    "results": [
+      {
+        "test": "TestPrinterConstructorGap",
+        "action": "pass",
+        "seconds": 0.1
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "tests": [
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestDocumentedStageZeroGaps|TestClosedEmptyFallbackGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.252,
+    "results": [
+      {
+        "test": "TestDocumentedStageZeroGaps/multiplePush.ts",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestDocumentedStageZeroGaps/repeatInTry.ts",
+        "action": "pass",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestDocumentedStageZeroGaps",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestClosedEmptyFallbackGap",
+        "action": "pass",
+        "seconds": 1.14
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "tests": [
+      "TestClosedComparatorGaps",
+      "TestNestedConstructorGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^(TestClosedComparatorGaps|TestNestedConstructorGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.509,
+    "results": [
+      {
+        "test": "TestNestedConstructorGap",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestClosedComparatorGaps/2_optional_index.ts",
+        "action": "pass",
+        "seconds": 1.26
+      },
+      {
+        "test": "TestClosedComparatorGaps/3_numeric_or.ts",
+        "action": "pass",
+        "seconds": 1.26
+      },
+      {
+        "test": "TestClosedComparatorGaps/4_last_index_position.ts",
+        "action": "pass",
+        "seconds": 1.29
+      },
+      {
+        "test": "TestClosedComparatorGaps",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "tests": [
+      "TestKnownGapsAreExplicit"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers",
+      "-run",
+      "^(TestKnownGapsAreExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.546,
+    "results": [
+      {
+        "test": "TestKnownGapsAreExplicit",
+        "action": "pass",
+        "seconds": 2.87
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "tests": [
+      "TestJsxParserGapIsExplicit"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^(TestJsxParserGapIsExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 19.894,
+    "results": [
+      {
+        "test": "TestJsxParserGapIsExplicit",
+        "action": "pass",
+        "seconds": 15.23
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "tests": [
+      "TestDynamicPatternGap",
+      "TestOptionDialectGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^(TestDynamicPatternGap|TestOptionDialectGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.848,
+    "results": [
+      {
+        "test": "TestDynamicPatternGap",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestOptionDialectGap",
+        "action": "pass",
+        "seconds": 0.43
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "tests": [
+      "TestNoUnderscoreDangleProfileBuildsSanitized",
+      "TestNoUnderscoreDangleProfileBuildsRelease",
+      "TestNoUnderscoreDangleProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^(TestNoUnderscoreDangleProfileBuildsSanitized|TestNoUnderscoreDangleProfileBuildsRelease|TestNoUnderscoreDangleProfileEmitsJavaScript)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 29.523,
+    "results": [
+      {
+        "test": "TestNoUnderscoreDangleProfileBuildsSanitized",
+        "action": "pass",
+        "seconds": 15.94
+      },
+      {
+        "test": "TestNoUnderscoreDangleProfileBuildsRelease",
+        "action": "pass",
+        "seconds": 8.26
+      },
+      {
+        "test": "TestNoUnderscoreDangleProfileEmitsJavaScript",
+        "action": "pass",
+        "seconds": 0.75
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestNoUnsafeNegationProfileBuildsSanitized",
+      "TestNoUnsafeNegationProfileBuildsRelease",
+      "TestNoUnsafeNegationProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^(TestNoUnsafeNegationProfileBuildsSanitized|TestNoUnsafeNegationProfileBuildsRelease|TestNoUnsafeNegationProfileEmitsJavaScript)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 29.767,
+    "results": [
+      {
+        "test": "TestNoUnsafeNegationProfileBuildsSanitized",
+        "action": "pass",
+        "seconds": 15.98
+      },
+      {
+        "test": "TestNoUnsafeNegationProfileBuildsRelease",
+        "action": "pass",
+        "seconds": 8.62
+      },
+      {
+        "test": "TestNoUnsafeNegationProfileEmitsJavaScript",
+        "action": "pass",
+        "seconds": 0.75
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestNoUnsafeOptionalChainingProfileBuildsSanitized",
+      "TestNoUnsafeOptionalChainingProfileBuildsRelease",
+      "TestNoUnsafeOptionalChainingProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^(TestNoUnsafeOptionalChainingProfileBuildsSanitized|TestNoUnsafeOptionalChainingProfileBuildsRelease|TestNoUnsafeOptionalChainingProfileEmitsJavaScript)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 30.896,
+    "results": [
+      {
+        "test": "TestNoUnsafeOptionalChainingProfileBuildsSanitized",
+        "action": "pass",
+        "seconds": 16.55
+      },
+      {
+        "test": "TestNoUnsafeOptionalChainingProfileBuildsRelease",
+        "action": "pass",
+        "seconds": 8.63
+      },
+      {
+        "test": "TestNoUnsafeOptionalChainingProfileEmitsJavaScript",
+        "action": "pass",
+        "seconds": 0.73
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestTypeScriptNoThisAliasProfileBuildsSanitized",
+      "TestTypeScriptNoThisAliasProfileBuildsRelease",
+      "TestTypeScriptNoThisAliasProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^(TestTypeScriptNoThisAliasProfileBuildsSanitized|TestTypeScriptNoThisAliasProfileBuildsRelease|TestTypeScriptNoThisAliasProfileEmitsJavaScript)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 29.565,
+    "results": [
+      {
+        "test": "TestTypeScriptNoThisAliasProfileBuildsSanitized",
+        "action": "pass",
+        "seconds": 15.89
+      },
+      {
+        "test": "TestTypeScriptNoThisAliasProfileBuildsRelease",
+        "action": "pass",
+        "seconds": 8.54
+      },
+      {
+        "test": "TestTypeScriptNoThisAliasProfileEmitsJavaScript",
+        "action": "pass",
+        "seconds": 0.73
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestArrayGrowthWitness)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.499,
+    "results": [
+      {
+        "test": "TestArrayGrowthWitness",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.952,
+    "results": [
+      {
+        "test": "TestDelimiterExpressionMatchesNode",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/mediaquery",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.094,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_chaining_array.ts",
+        "action": "pass",
+        "seconds": 1.11
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_return.ts",
+        "action": "pass",
+        "seconds": 1.11
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined.ts",
+        "action": "pass",
+        "seconds": 1.11
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_local_children_array.ts",
+        "action": "pass",
+        "seconds": 1.13
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_generic_parameter.ts",
+        "action": "pass",
+        "seconds": 0.26
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_mutable_child_array.ts",
+        "action": "pass",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.899,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.852,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_block_arrow_returning_class.ts",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_call_through_optional_chain.ts",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/suppression",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.838,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+        "action": "pass",
+        "seconds": 1.18
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+        "action": "pass",
+        "seconds": 1.18
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "tests": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestCompilerGaps|TestClosedPrefixUpdateValueGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.049,
+    "results": [
+      {
+        "test": "TestClassInterfaceMethodGap",
+        "action": "pass",
+        "seconds": 1.33
+      },
+      {
+        "test": "TestClosedOptionalBooleanFunctionGap",
+        "action": "pass",
+        "seconds": 0.29
+      },
+      {
+        "test": "TestClosedPrefixUpdateValueGap",
+        "action": "pass",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestCompilerGaps/defaultSort",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestCompilerGaps",
+        "action": "pass",
+        "seconds": 0.09
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "tests": [
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^(TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.887,
+    "results": [
+      {
+        "test": "TestSixShardUnionRejectsLossAndDuplication",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestSixBuildCallbackUsesProductDirectory",
+        "action": "pass",
+        "seconds": 0.01
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.003,
+    "results": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+        "action": "pass",
+        "seconds": 1.16
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+        "action": "pass",
+        "seconds": 1.17
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "tests": [
+      "TestLexerGaps",
+      "TestClosedStringPresenceGap",
+      "TestClosedLexerGaps",
+      "TestClosedValuePresenceGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^(TestLexerGaps|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.354,
+    "results": [
+      {
+        "test": "TestLexerGaps/multiplePush.ts",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestLexerGaps",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestClosedStringPresenceGap",
+        "action": "pass",
+        "seconds": 2.86
+      },
+      {
+        "test": "TestClosedLexerGaps/assignmentValue.ts",
+        "action": "pass",
+        "seconds": 2.86
+      },
+      {
+        "test": "TestClosedValuePresenceGap",
+        "action": "pass",
+        "seconds": 2.86
+      },
+      {
+        "test": "TestClosedLexerGaps/dynamicCase.ts",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestClosedLexerGaps/negativeCase.ts",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestClosedLexerGaps/stringFallback.ts",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestClosedLexerGaps/valueConjunction.ts",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestClosedLexerGaps/prefixIncrement.ts",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestClosedLexerGaps/emptyAlternative.ts",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestClosedLexerGaps",
+        "action": "pass",
+        "seconds": 3.5
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "tests": [
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^(TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.208,
+    "results": [
+      {
+        "test": "TestClosedOptionalFunctionValueGap",
+        "action": "pass",
+        "seconds": 1.25
+      },
+      {
+        "test": "TestClosedConditionalEmptyArrayGap",
+        "action": "pass",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestPushSpreadGap",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestClassMethodInterfaceGap",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestStrongAstParentGap",
+        "action": "pass",
+        "seconds": 0.12
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "tests": [
+      "TestGapStandsWhereGapsMdSays",
+      "TestBigintGapStandsWhereGapsMdSays"
+    ],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/scanner",
+      "-run",
+      "^(TestGapStandsWhereGapsMdSays|TestBigintGapStandsWhereGapsMdSays)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.735,
+    "results": [
+      {
+        "test": "TestGapStandsWhereGapsMdSays",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestBigintGapStandsWhereGapsMdSays",
+        "action": "pass",
+        "seconds": 0.12
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage3/census/tool",
+    "tests": [],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage3/census/tool",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.115,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "tests": [],
+    "removed_previous_tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage3/drivers/parser/probe",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.166,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./stage3/lane",
+    "tests": [
+      "TestShardsMatchManifest"
+    ],
+    "removed_previous_tests": [],
+    "coverage_note": "Focused Go manifest reader only; the source report records Python wrapper deadline limitations, so no repeated broad Python run.",
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^(TestShardsMatchManifest)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.367,
+    "results": [
+      {
+        "test": "TestShardsMatchManifest",
+        "action": "pass",
+        "seconds": 0.03
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "package": "./stage3/ledger/checker-259",
+    "tests": [],
+    "coverage_note": "No previous focused selection; compile-only",
+    "command": [
+      "go",
+      "test",
+      "./stage3/ledger/checker-259",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.116,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./stage3/ledger/checker-259/rerun-2026-10-08",
+    "tests": [],
+    "coverage_note": "No previous focused selection; compile-only",
+    "command": [
+      "go",
+      "test",
+      "./stage3/ledger/checker-259/rerun-2026-10-08",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.115,
+    "results": [],
+    "over_60s": []
+  },
+  {
+    "package": "./internal/load",
+    "tests": [
+      "TestStarExportCollisionNamesBothModules",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicOptionsAreOn",
+      "TestEveryFileIsAModule",
+      "TestAdamicFilesImportEachOther",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestALoadedProgramNamesItsFilesAsDisplayed",
+      "TestEmbeddedNodeTypesIntegrity",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestNodeLibraryIgnoresCallerPackage",
+      "TestNodeLibraryOutsideCheckout",
+      "TestNodeLibraryDamagedBundleError",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestTypeScriptIsThePinnedCommit",
+      "TestRegExpCaptureTypes"
+    ],
+    "coverage_note": "Complete current load reader suite; slice 4 tested this as a touched package.",
+    "command": [
+      "go",
+      "test",
+      "./internal/load",
+      "-run",
+      "^(TestStarExportCollisionNamesBothModules|TestDeclarationsCarryTheirProvenTypes|TestATypeErrorFailsTheLoad|TestAdamicOptionsAreOn|TestEveryFileIsAModule|TestAdamicFilesImportEachOther|TestThePreludeDeclaresConsoleAndPanic|TestLoadRefusesWhatIsNotAdamic|TestTheProgramsInTheSpecLoad|TestOverlayPrecedesDiskForAdamicAliases|TestHouseStyleOptionsDoNotRejectValidControlFlow|TestALoadedProgramNamesItsFilesAsDisplayed|TestEmbeddedNodeTypesIntegrity|TestNodeLibraryUsesPinnedDeclarations|TestNodeLibraryIgnoresCallerPackage|TestNodeLibraryOutsideCheckout|TestNodeLibraryDamagedBundleError|TestNodeLibraryKeepsOfficialConsoleSignatures|TestTypeScriptIsThePinnedCommit|TestRegExpCaptureTypes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.651,
+    "results": [
+      {
+        "test": "TestNodeLibraryIgnoresCallerPackage",
+        "action": "pass",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestNodeLibraryOutsideCheckout",
+        "action": "pass",
+        "seconds": 0.22
+      },
+      {
+        "test": "TestNodeLibraryDamagedBundleError",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestTypeScriptIsThePinnedCommit",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestEmbeddedNodeTypesIntegrity",
+        "action": "pass",
+        "seconds": 0.02
+      },
+      {
+        "test": "TestStarExportCollisionNamesBothModules",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestAdamicFilesImportEachOther",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestThePreludeDeclaresConsoleAndPanic",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestEveryFileIsAModule",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestATypeErrorFailsTheLoad",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestDeclarationsCarryTheirProvenTypes",
+        "action": "pass",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestALoadedProgramNamesItsFilesAsDisplayed",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestRegExpCaptureTypes/'ab'.split(/(a)|(z)/).map(value_=>_value.toUpperCase())",
+        "action": "pass",
+        "seconds": 0.02
+      },
+      {
+        "test": "TestOverlayPrecedesDiskForAdamicAliases/.ts",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+        "action": "pass",
+        "seconds": 0.45
+      },
+      {
+        "test": "TestOverlayPrecedesDiskForAdamicAliases/.a",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestOverlayPrecedesDiskForAdamicAliases",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRegExpCaptureTypes//(a)|(z)/.exec('ab')?.map(value_=>_value.toUpperCase())",
+        "action": "pass",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestRegExpCaptureTypes//(?<x>a)/.exec('a')?.groups?.x.toUpperCase()",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestLoadRefusesWhatIsNotAdamic/a_JavaScript_file",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRegExpCaptureTypes/'ab'.match(/(a)|(z)/)?.map(value_=>_value.toUpperCase())",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRegExpCaptureTypes",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/01_hello.ts",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/refuse/05_covariance.ts",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/refuse/04_type_guard.ts",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/refuse/03_non_null.ts",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/refuse/02_cast.ts",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/refuse/01_any.ts",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/09_tree.ts",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/10_unicode.ts",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/08_results.ts",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/07_modules",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/05_wordcount.ts",
+        "action": "pass",
+        "seconds": 0.02
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/06_stack.ts",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/03_shapes.ts",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestLoadRefusesWhatIsNotAdamic/an_.a_file_shadowed_by_an_.a.ts",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestLoadRefusesWhatIsNotAdamic/a_missing_file",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestLoadRefusesWhatIsNotAdamic",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/04_closures.ts",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad/compile/02_fizzbuzz.ts",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestTheProgramsInTheSpecLoad",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestAdamicOptionsAreOn/noUncheckedIndexedAccess",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestAdamicOptionsAreOn/lib_is_es2024,_not_the_DOM",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestAdamicOptionsAreOn/exactOptionalPropertyTypes",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestAdamicOptionsAreOn",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestHouseStyleOptionsDoNotRejectValidControlFlow/function_choose(value:_number):_number_{_let_result=0;_switch(value)_{_case_1:_result+=1;_default:_result+=2;_}_return_result;_}",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestHouseStyleOptionsDoNotRejectValidControlFlow/function_sign(value:_number)_{_if_(value_>_0)_{_return_1;_}_}",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestNodeLibraryUsesPinnedDeclarations",
+        "action": "pass",
+        "seconds": 0.75
+      }
+    ],
+    "over_60s": []
+  }
+]

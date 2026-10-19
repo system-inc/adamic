@@ -1,0 +1,32 @@
+{
+  "gate_sha": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": {
+    "internal/oracle/testdata/non_null_refused/non_null_possible_read.a": {
+      "status": "refused",
+      "reason": "the non-null assertion !",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:4:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.03382299600002625
+    }
+  },
+  "predicate": {
+    "internal/oracle/testdata/non_null_refused/non_null_possible_read.a": {
+      "outcome": "refused",
+      "expected": "refused deliberately wrong slice5 header reason",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:4:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/non_null_refused/non_null_possible_read.a: refused, expected refused deliberately wrong slice5 header reason (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/non_null_possible_read.a:4:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and)",
+  "seconds": {
+    "a-check": 0.1
+  },
+  "counts": {
+    "refused": 1
+  }
+}

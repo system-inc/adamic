@@ -1,0 +1,182 @@
+[
+  {
+    "name": "counts",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "600s",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 1,
+    "seconds": 5.949823620998359
+  },
+  {
+    "name": "headers",
+    "cmd": [
+      "python3",
+      "/workspace/adamic/review/compiler/loom-r-slice-5-ac2-m2/check-headers.py",
+      "final"
+    ],
+    "exit": 0,
+    "seconds": 3.8355896400025813
+  },
+  {
+    "name": "prepare-cli",
+    "cmd": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestProduct_CommandRuntime$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 4.743763005000801
+  },
+  {
+    "name": "cmd-adamic",
+    "cmd": [
+      "go",
+      "test",
+      "./cmd/adamic/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.4959306310011
+  },
+  {
+    "name": "internal-flow",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 144.96223246700174
+  },
+  {
+    "name": "internal-fresh",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/fresh/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 17.294772429002478
+  },
+  {
+    "name": "internal-ir",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 32.64325862700207
+  },
+  {
+    "name": "internal-javascript",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/javascript/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 0.5763748719982686
+  },
+  {
+    "name": "internal-lower",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 44.0536959739984
+  },
+  {
+    "name": "internal-native",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 283.42493557099806
+  },
+  {
+    "name": "internal-oracle",
+    "cmd": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 457.92560319399854
+  },
+  {
+    "name": "stage3-fixtures",
+    "cmd": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "1200s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 54.46608401300182
+  }
+]
