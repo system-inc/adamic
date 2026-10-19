@@ -2896,6 +2896,35 @@ class CompilerDependenciesFlag(unittest.TestCase):
             self.assertIn("compiler_consumers_undeclared_on_base: tool/launch/launch.go (tool/launch is a declared launcher, refused at line 6", said.getvalue())
 
 
+class CensusLayers(unittest.TestCase):
+    """A tree's map only adds to the gate tools' (#82j3fc7, Node's ruling, Cohere's yes): a tree entry "p": [] keeps
+    the tools' compiler inputs for p, and a tree's driver with no dependencies keeps the tools' driver's, so a change
+    can never take a consumer off the compiler by its own map. Mutants: a later layer replacing a package's inputs; a
+    driver replaced whole."""
+
+    def test_a_trees_layer_never_takes_from_the_tools(self):
+        with tempfile.TemporaryDirectory() as root:
+            tree, tools = os.path.join(root, "tree"), os.path.join(root, "tools")
+            for directory in (os.path.join(tree, "tool/a"), os.path.join(tree, "cloud/fast-gate"), os.path.join(tools, "cloud/fast-gate")):
+                os.makedirs(directory)
+            with open(os.path.join(tree, "tool/a/a.go"), "w") as handle:
+                handle.write("package a\n")
+            driver = "stage3/drivers/x"
+            with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
+                json.dump({"version": 1, "packages": {"tool/a": ["internal/load"]},
+                           "drivers": {driver: {"dependencies": ["internal/load"], "coverage": "tools"}}}, handle)
+            with open(os.path.join(tree, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
+                json.dump({"version": 1, "packages": {"tool/a": []}, "drivers": {driver: {"dependencies": [], "coverage": "tree"}}}, handle)
+            realRun(["git", "init", "-q", tree], check=True)
+            realRun(["git", "-C", tree, "add", "."], check=True)
+            gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=tree, tools=tools), result={},
+                                         git=lambda directory, *arguments: realRun(["git", "-C", directory] + list(arguments), capture_output=True, text=True, check=True).stdout.strip())
+            dependencies = run.Gate.compilerDependencies(gate, {"tool/a", "internal/load"}, [])
+            self.assertIn("internal/load", dependencies["tool/a"])
+            self.assertEqual(gate.compilerDrivers[driver]["dependencies"], ["internal/load"])
+            self.assertEqual(gate.compilerDrivers[driver]["coverage"], "tree")
+
+
 class CensusLaunchers(unittest.TestCase):
     """A launcher declaration (#9qqvs57, system_adamic's ruling of Oct 14) lets a package that launches processes, and
     never the compiler, through the census honestly: it names what it runs and why. It never covers a file that

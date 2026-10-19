@@ -1692,8 +1692,18 @@ class Gate:
             for field in ("packages", "drivers", "launchers"):
                 if isinstance(layer.get(field), dict):
                     for package, value in layer[field].items():
-                        if field == "packages" and package in declarations["packages"] and isinstance(value, list):
-                            value = list(dict.fromkeys(declarations["packages"][package] + value))
+                        held = declarations.get(field, {}).get(package)
+                        # A later layer only adds to a package's compiler inputs, never takes from them (#82j3fc7): a
+                        # tree's "p": [] keeps the tools' inputs for p, and a driver's dependencies union the same way.
+                        # A launcher declaration is replaced as given, since it only narrows, and the census refuses one
+                        # that lies; a union of its runs would loosen what it claims.
+                        if field == "packages" and isinstance(held, list) and isinstance(value, list):
+                            value = list(dict.fromkeys(held + value))
+                        elif field == "drivers" and isinstance(held, dict) and isinstance(value, dict):
+                            dependencies = [held.get("dependencies"), value.get("dependencies")]
+                            value = {**held, **value}
+                            if all(isinstance(inputs, list) for inputs in dependencies):
+                                value["dependencies"] = list(dict.fromkeys(dependencies[0] + dependencies[1]))
                         declarations.setdefault(field, {})[package] = value
             root.append(os.path.join(source, path))
         packages = declarations["packages"]
