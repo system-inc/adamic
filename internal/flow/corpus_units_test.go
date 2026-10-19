@@ -727,6 +727,7 @@ var flowCorpusPaths = []string{
 	"../oracle/testdata/string_build_join.a",
 	"../oracle/testdata/string_build_padding.a",
 	"../oracle/testdata/string_build_repeat.a",
+	"../oracle/testdata/string_destructuring.a",
 	"../oracle/testdata/string_index.a",
 	"../oracle/testdata/string_limits.a",
 	"../oracle/testdata/string_positions.a",
@@ -1586,6 +1587,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_string_build_join_a_b51a006d7e49,
 		TestFlowProgram____oracle_testdata_string_build_padding_a_aa6a1e4e6ce1,
 		TestFlowProgram____oracle_testdata_string_build_repeat_a_70a4f3c0e637,
+		TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0,
 		TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac,
 		TestFlowProgram____oracle_testdata_string_limits_a_42770ef14a44,
 		TestFlowProgram____oracle_testdata_string_positions_a_72a5cf673e93,
@@ -2443,6 +2445,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_string_build_join_a_b51a006d7e49,
 		TestFlowProgram____oracle_testdata_string_build_padding_a_aa6a1e4e6ce1,
 		TestFlowProgram____oracle_testdata_string_build_repeat_a_70a4f3c0e637,
+		TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0,
 		TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac,
 		TestFlowProgram____oracle_testdata_string_limits_a_42770ef14a44,
 		TestFlowProgram____oracle_testdata_string_positions_a_72a5cf673e93,
@@ -3300,6 +3303,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_string_build_join_a_b51a006d7e49,
 		TestFlowProgram____oracle_testdata_string_build_padding_a_aa6a1e4e6ce1,
 		TestFlowProgram____oracle_testdata_string_build_repeat_a_70a4f3c0e637,
+		TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0,
 		TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac,
 		TestFlowProgram____oracle_testdata_string_limits_a_42770ef14a44,
 		TestFlowProgram____oracle_testdata_string_positions_a_72a5cf673e93,
@@ -4157,6 +4161,7 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_string_build_join_a_b51a006d7e49,
 		TestFlowProgram____oracle_testdata_string_build_padding_a_aa6a1e4e6ce1,
 		TestFlowProgram____oracle_testdata_string_build_repeat_a_70a4f3c0e637,
+		TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0,
 		TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac,
 		TestFlowProgram____oracle_testdata_string_limits_a_42770ef14a44,
 		TestFlowProgram____oracle_testdata_string_positions_a_72a5cf673e93,
@@ -8630,812 +8635,818 @@ func TestFlowProgram____oracle_testdata_string_build_repeat_a_70a4f3c0e637(t *te
 	checkAllFlowProgram(t, flowCorpusPaths[722])
 }
 
-func TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[723])
 }
 
-func TestFlowProgram____oracle_testdata_string_limits_a_42770ef14a44(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[724])
 }
 
-func TestFlowProgram____oracle_testdata_string_positions_a_72a5cf673e93(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_limits_a_42770ef14a44(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[725])
 }
 
-func TestFlowProgram____oracle_testdata_string_too_long_a_97bc6a7682ad(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_positions_a_72a5cf673e93(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[726])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_calls_a_701b47255107(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_too_long_a_97bc6a7682ad(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[727])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_characters_a_09248968f63b(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_calls_a_701b47255107(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[728])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_holders_a_ea447c367ed5(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_characters_a_09248968f63b(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[729])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_lifetime_a_9681bee1607a(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_holders_a_ea447c367ed5(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[730])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_loops_a_7f7c2e980f94(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_lifetime_a_9681bee1607a(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[731])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_methods_a_aef97f4e430b(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_loops_a_7f7c2e980f94(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[732])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_policy_a_6fccd9703ae4(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_methods_a_aef97f4e430b(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[733])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_surrogates_a_612f419818ee(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_policy_a_6fccd9703ae4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[734])
 }
 
-func TestFlowProgram____oracle_testdata_string_views_throw_a_44087e068f41(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_surrogates_a_612f419818ee(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[735])
 }
 
-func TestFlowProgram____oracle_testdata_strings_a_233ff93a99b4(t *testing.T) {
+func TestFlowProgram____oracle_testdata_string_views_throw_a_44087e068f41(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[736])
 }
 
-func TestFlowProgram____oracle_testdata_strings_more_a_79fb961a7af4(t *testing.T) {
+func TestFlowProgram____oracle_testdata_strings_a_233ff93a99b4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[737])
 }
 
-func TestFlowProgram____oracle_testdata_structural_statics_generic_a_f09d5b885c18(t *testing.T) {
+func TestFlowProgram____oracle_testdata_strings_more_a_79fb961a7af4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[738])
 }
 
-func TestFlowProgram____oracle_testdata_structural_statics_inherited_a_91eabcb97d79(t *testing.T) {
+func TestFlowProgram____oracle_testdata_structural_statics_generic_a_f09d5b885c18(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[739])
 }
 
-func TestFlowProgram____oracle_testdata_structural_statics_instance_a_89f9b61fbc64(t *testing.T) {
+func TestFlowProgram____oracle_testdata_structural_statics_inherited_a_91eabcb97d79(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[740])
 }
 
-func TestFlowProgram____oracle_testdata_structural_statics_mixed_a_bba3c31fe54f(t *testing.T) {
+func TestFlowProgram____oracle_testdata_structural_statics_instance_a_89f9b61fbc64(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[741])
 }
 
-func TestFlowProgram____oracle_testdata_structural_statics_optional_a_16aa66ef69e3(t *testing.T) {
+func TestFlowProgram____oracle_testdata_structural_statics_mixed_a_bba3c31fe54f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[742])
 }
 
-func TestFlowProgram____oracle_testdata_structural_statics_static_a_4d59cce78ca9(t *testing.T) {
+func TestFlowProgram____oracle_testdata_structural_statics_optional_a_16aa66ef69e3(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[743])
 }
 
-func TestFlowProgram____oracle_testdata_switch_empty_neighbors_a_dbff2f5aa404(t *testing.T) {
+func TestFlowProgram____oracle_testdata_structural_statics_static_a_4d59cce78ca9(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[744])
 }
 
-func TestFlowProgram____oracle_testdata_syntax_module_declarations_a_a91b8713ed55(t *testing.T) {
+func TestFlowProgram____oracle_testdata_switch_empty_neighbors_a_dbff2f5aa404(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[745])
 }
 
-func TestFlowProgram____oracle_testdata_syntax_substr_a_7070d8ab2cb7(t *testing.T) {
+func TestFlowProgram____oracle_testdata_syntax_module_declarations_a_a91b8713ed55(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[746])
 }
 
-func TestFlowProgram____oracle_testdata_taste_comma_a_6b7eea899f33(t *testing.T) {
+func TestFlowProgram____oracle_testdata_syntax_substr_a_7070d8ab2cb7(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[747])
 }
 
-func TestFlowProgram____oracle_testdata_taste_labels_a_32a4808e11e8(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_comma_a_6b7eea899f33(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[748])
 }
 
-func TestFlowProgram____oracle_testdata_taste_logical_assignment_a_beb871943f17(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_labels_a_32a4808e11e8(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[749])
 }
 
-func TestFlowProgram____oracle_testdata_taste_optional_join_a_1fdbcaa7461c(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_logical_assignment_a_beb871943f17(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[750])
 }
 
-func TestFlowProgram____oracle_testdata_taste_stage3_representations_a_26b3f5707966(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_optional_join_a_1fdbcaa7461c(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[751])
 }
 
-func TestFlowProgram____oracle_testdata_taste_truthiness_a_52ea73a24411(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_stage3_representations_a_26b3f5707966(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[752])
 }
 
-func TestFlowProgram____oracle_testdata_taste_void_a_e94c912b0fa0(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_truthiness_a_52ea73a24411(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[753])
 }
 
-func TestFlowProgram____oracle_testdata_template_nullish_a_cad3ce92293c(t *testing.T) {
+func TestFlowProgram____oracle_testdata_taste_void_a_e94c912b0fa0(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[754])
 }
 
-func TestFlowProgram____oracle_testdata_throw_global_move_a_442463129ad2(t *testing.T) {
+func TestFlowProgram____oracle_testdata_template_nullish_a_cad3ce92293c(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[755])
 }
 
-func TestFlowProgram____oracle_testdata_throw_in_writes_a_2d21396fb7ad(t *testing.T) {
+func TestFlowProgram____oracle_testdata_throw_global_move_a_442463129ad2(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[756])
 }
 
-func TestFlowProgram____oracle_testdata_throw_keeps_old_value_a_2b16f5decd05(t *testing.T) {
+func TestFlowProgram____oracle_testdata_throw_in_writes_a_2d21396fb7ad(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[757])
 }
 
-func TestFlowProgram____oracle_testdata_throw_keeps_old_value_variants_a_75bc8d7ff710(t *testing.T) {
+func TestFlowProgram____oracle_testdata_throw_keeps_old_value_a_2b16f5decd05(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkAllFlowProgram(t, flowCorpusPaths[758])
 }
 
+func TestFlowProgram____oracle_testdata_throw_keeps_old_value_variants_a_75bc8d7ff710(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[759])
+}
+
 func TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkSingleAssignmentProgram(t, flowCorpusPaths[759])
+	checkSingleAssignmentProgram(t, flowCorpusPaths[760])
 }
 
 func TestFlowProgram____oracle_testdata_trig_reduction_a_4f6ac2d2fc3c(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[760])
+	checkAllFlowProgram(t, flowCorpusPaths[761])
 }
 
 func TestFlowProgram____oracle_testdata_try_assignments_a_fa66f2a15b65(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[761])
+	checkAllFlowProgram(t, flowCorpusPaths[762])
 }
 
 func TestFlowProgram____oracle_testdata_tuple_values_a_1a7b35830fd0(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[762])
+	checkAllFlowProgram(t, flowCorpusPaths[763])
 }
 
 func TestFlowProgram____oracle_testdata_tuples_kept_a_eb9368961b9a(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[763])
+	checkAllFlowProgram(t, flowCorpusPaths[764])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_float64array_a_d4c1eaf64ecc(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[764])
+	checkAllFlowProgram(t, flowCorpusPaths[765])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_int32array_a_669a5c290186(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[765])
+	checkAllFlowProgram(t, flowCorpusPaths[766])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_order_a_e4ab2c6efb74(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[766])
+	checkAllFlowProgram(t, flowCorpusPaths[767])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_primes_a_db708dbaeb88(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[767])
+	checkAllFlowProgram(t, flowCorpusPaths[768])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_stats_a_6b830b9fa28a(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[768])
+	checkAllFlowProgram(t, flowCorpusPaths[769])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_stop_a_1044e793bcc9(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[769])
+	checkAllFlowProgram(t, flowCorpusPaths[770])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_uint8array_a_4cd127390046(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[770])
+	checkAllFlowProgram(t, flowCorpusPaths[771])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_views_a_6b5268740c48(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[771])
+	checkAllFlowProgram(t, flowCorpusPaths[772])
 }
 
 func TestFlowProgram____oracle_testdata_typed_arrays_workers_stats_a_4dbde1ee8cf8(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[772])
+	checkAllFlowProgram(t, flowCorpusPaths[773])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_dispatch_a_079ca2fbcd3d(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[773])
+	checkAllFlowProgram(t, flowCorpusPaths[774])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_null_a_0a0384a027c9(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[774])
+	checkAllFlowProgram(t, flowCorpusPaths[775])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_null_compare_a_4e1203dd84c5(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[775])
+	checkAllFlowProgram(t, flowCorpusPaths[776])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_null_roll_a_15f3027a2705(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[776])
+	checkAllFlowProgram(t, flowCorpusPaths[777])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_null_slots_a_665eb623bccd(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[777])
+	checkAllFlowProgram(t, flowCorpusPaths[778])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_null_switch_a_3a3d35b58909(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[778])
+	checkAllFlowProgram(t, flowCorpusPaths[779])
 }
 
 func TestFlowProgram____oracle_testdata_typeof_string_literal_a_b83d8b5a72ba(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[779])
+	checkAllFlowProgram(t, flowCorpusPaths[780])
 }
 
 func TestFlowProgram____oracle_testdata_undefined_elements_a_9c2402fdf62e(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[780])
+	checkAllFlowProgram(t, flowCorpusPaths[781])
 }
 
 func TestFlowProgram____oracle_testdata_undefined_keys_a_2b04b182db29(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[781])
+	checkAllFlowProgram(t, flowCorpusPaths[782])
 }
 
 func TestFlowProgram____oracle_testdata_undefined_references_a_52fd1317866e(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[782])
+	checkAllFlowProgram(t, flowCorpusPaths[783])
 }
 
 func TestFlowProgram____oracle_testdata_undefined_strings_a_c4d196b67efd(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[783])
+	checkAllFlowProgram(t, flowCorpusPaths[784])
 }
 
 func TestFlowProgram____oracle_testdata_unions_a_6b2449b70737(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[784])
+	checkAllFlowProgram(t, flowCorpusPaths[785])
 }
 
 func TestFlowProgram____oracle_testdata_unknown_narrowing_a_c08645578b93(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[785])
+	checkAllFlowProgram(t, flowCorpusPaths[786])
 }
 
 func TestFlowProgram____oracle_testdata_unknown_narrowing_host_a_e5af072b53a5(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[786])
+	checkAllFlowProgram(t, flowCorpusPaths[787])
 }
 
 func TestFlowProgram____oracle_testdata_unused_parameters_a_6be8eb25fedd(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[787])
+	checkAllFlowProgram(t, flowCorpusPaths[788])
 }
 
 func TestFlowProgram____oracle_testdata_updates_a_201eb96d42d9(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[788])
+	checkAllFlowProgram(t, flowCorpusPaths[789])
 }
 
 func TestFlowProgram____oracle_testdata_user_iterators_a_c4fa97d41bf3(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[789])
+	checkAllFlowProgram(t, flowCorpusPaths[790])
 }
 
 func TestFlowProgram____oracle_testdata_user_iterators_rest_tdz_a_802b89df8a09(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[790])
+	checkAllFlowProgram(t, flowCorpusPaths[791])
 }
 
 func TestFlowProgram____oracle_testdata_utf8_sweep_a_08861559554a(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[791])
+	checkAllFlowProgram(t, flowCorpusPaths[792])
 }
 
 func TestFlowProgram____oracle_testdata_utf8_view_a_91b9e1d3108f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[792])
+	checkAllFlowProgram(t, flowCorpusPaths[793])
 }
 
 func TestFlowProgram____oracle_testdata_utf8_view_fails_a_f022be275d0a(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[793])
+	checkAllFlowProgram(t, flowCorpusPaths[794])
 }
 
 func TestFlowProgram____oracle_testdata_visits_a_d4c097845f4f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[794])
+	checkAllFlowProgram(t, flowCorpusPaths[795])
 }
 
 func TestFlowProgram____oracle_testdata_walk_a_71c3d6a56150(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[795])
+	checkAllFlowProgram(t, flowCorpusPaths[796])
 }
 
 func TestFlowProgram____oracle_testdata_weak_narrowed_a_a50a92663174(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[796])
+	checkAllFlowProgram(t, flowCorpusPaths[797])
 }
 
 func TestFlowProgram____oracle_testdata_weak_parent_a_1d7a247ab5a4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[797])
+	checkAllFlowProgram(t, flowCorpusPaths[798])
 }
 
 func TestFlowProgram____oracle_testdata_write_after_shrink_a_9635c2b57836(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[798])
+	checkAllFlowProgram(t, flowCorpusPaths[799])
 }
 
 func TestFlowProgram____oracle_testdata_write_files_a_4c0ee970226c(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[799])
+	checkAllFlowProgram(t, flowCorpusPaths[800])
 }
 
 func TestFlowProgram____oracle_testdata_write_stderr_order_a_b59a33edcfb6(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[800])
+	checkAllFlowProgram(t, flowCorpusPaths[801])
 }
 
 func TestFlowProgram____oracle_testdata_write_stdout_order_a_2a1720251e0d(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[801])
+	checkAllFlowProgram(t, flowCorpusPaths[802])
 }
 
 func TestFlowProgram____oracle_testdata_writes_a_109e66cc6533(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[802])
+	checkAllFlowProgram(t, flowCorpusPaths[803])
 }
 
 func TestFlowProgram____oracle_testdata_writes_in_try_a_5e1358003bdb(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[803])
+	checkAllFlowProgram(t, flowCorpusPaths[804])
 }
 
 func TestFlowProgram____oracle_testdata_writes_past_end_a_ed0c7a882f8b(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[804])
+	checkAllFlowProgram(t, flowCorpusPaths[805])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_ts_d28c02c598da(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[805])
+	checkAllFlowProgram(t, flowCorpusPaths[806])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_array_ts_efdaeebd5913(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[806])
+	checkAllFlowProgram(t, flowCorpusPaths[807])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_boolean_ts_51fd5319cb0f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[807])
+	checkAllFlowProgram(t, flowCorpusPaths[808])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_capture_ts_0bc0fd9f4872(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[808])
+	checkAllFlowProgram(t, flowCorpusPaths[809])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_catch_ts_2a20506e826d(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[809])
+	checkAllFlowProgram(t, flowCorpusPaths[810])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_checked_initializer_ts_4eb3a02707b0(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[810])
+	checkAllFlowProgram(t, flowCorpusPaths[811])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_checked_let_initializer_ts_491ff347487b(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[811])
+	checkAllFlowProgram(t, flowCorpusPaths[812])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_checked_narrowed_ts_b5fbef427643(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[812])
+	checkAllFlowProgram(t, flowCorpusPaths[813])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_checked_null_ts_0e1c461275c9(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[813])
+	checkAllFlowProgram(t, flowCorpusPaths[814])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_checked_present_ts_77634aa8e6f9(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[814])
+	checkAllFlowProgram(t, flowCorpusPaths[815])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_checked_undefined_ts_34ce3d88a626(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[815])
+	checkAllFlowProgram(t, flowCorpusPaths[816])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_definite_ts_8396b2ba15ab(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[816])
+	checkAllFlowProgram(t, flowCorpusPaths[817])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_definite_field_ts_9cfe393a8d8c(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[817])
+	checkAllFlowProgram(t, flowCorpusPaths[818])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_definite_local_ts_2b47e16ea466(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[818])
+	checkAllFlowProgram(t, flowCorpusPaths[819])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_field_ts_d7d652822af0(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[819])
+	checkAllFlowProgram(t, flowCorpusPaths[820])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_initialized_ts_0dfc5a24d005(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[820])
+	checkAllFlowProgram(t, flowCorpusPaths[821])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_lazy_default_ts_5cc8c8b128bc(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[821])
+	checkAllFlowProgram(t, flowCorpusPaths[822])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_lazy_field_ts_903248d96cc3(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[822])
+	checkAllFlowProgram(t, flowCorpusPaths[823])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_lazy_initialized_ts_37a13c130284(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[823])
+	checkAllFlowProgram(t, flowCorpusPaths[824])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_lazy_read_ts_c9f165daddf1(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[824])
+	checkAllFlowProgram(t, flowCorpusPaths[825])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_lazy_static_ts_8e9207d88e5e(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[825])
+	checkAllFlowProgram(t, flowCorpusPaths[826])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_literal_assignment_ts_4015fc0486ad(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[826])
+	checkAllFlowProgram(t, flowCorpusPaths[827])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_literal_return_ts_c58b14288810(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[827])
+	checkAllFlowProgram(t, flowCorpusPaths[828])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_literal_statement_ts_cb927f6793f4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[828])
+	checkAllFlowProgram(t, flowCorpusPaths[829])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_map_ts_4c325cb156f2(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[829])
+	checkAllFlowProgram(t, flowCorpusPaths[830])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_null_ts_7eb2359339cf(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[830])
+	checkAllFlowProgram(t, flowCorpusPaths[831])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_refuse_null_ts_e22671123dc1(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[831])
+	checkAllFlowProgram(t, flowCorpusPaths[832])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_refuse_undefined_ts_4f691a66e107(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[832])
+	checkAllFlowProgram(t, flowCorpusPaths[833])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_static_initialized_ts_64c2ebbe9cd4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[833])
+	checkAllFlowProgram(t, flowCorpusPaths[834])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_static_uninitialized_ts_cf725e2083f4(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[834])
+	checkAllFlowProgram(t, flowCorpusPaths[835])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_ts_5864633649c5(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[835])
+	checkAllFlowProgram(t, flowCorpusPaths[836])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_append_ts_19e95e31e871(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[836])
+	checkAllFlowProgram(t, flowCorpusPaths[837])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_capture_ts_eeb4b6d2915f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[837])
+	checkAllFlowProgram(t, flowCorpusPaths[838])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_catch_ts_1c1a7d9d4fc2(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[838])
+	checkAllFlowProgram(t, flowCorpusPaths[839])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_const_ts_68ade247fc61(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[839])
+	checkAllFlowProgram(t, flowCorpusPaths[840])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_default_ts_9d3e998eb10b(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[840])
+	checkAllFlowProgram(t, flowCorpusPaths[841])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_exception_ts_28f201c9eb91(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[841])
+	checkAllFlowProgram(t, flowCorpusPaths[842])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_field_ts_7aa0f0ee18de(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[842])
+	checkAllFlowProgram(t, flowCorpusPaths[843])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_interface_ts_0cd05da0ea1d(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[843])
+	checkAllFlowProgram(t, flowCorpusPaths[844])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_iteration_ts_6b8e2ada8a9c(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[844])
+	checkAllFlowProgram(t, flowCorpusPaths[845])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_loop_ts_ca10ab8f0c80(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[845])
+	checkAllFlowProgram(t, flowCorpusPaths[846])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_map_entry_ts_946528a76f59(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[846])
+	checkAllFlowProgram(t, flowCorpusPaths[847])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_optional_ts_3e6a3edf730d(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[847])
+	checkAllFlowProgram(t, flowCorpusPaths[848])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_uninitialized_spread_ts_1f31e8912619(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[848])
+	checkAllFlowProgram(t, flowCorpusPaths[849])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_union_ts_dcd2a53f0696(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[849])
+	checkAllFlowProgram(t, flowCorpusPaths[850])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_weak_ts_1afeecf58acb(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[850])
+	checkAllFlowProgram(t, flowCorpusPaths[851])
 }
 
 func TestFlowProgram____oracle_testdata_non_null_weak_freed_ts_faf8b11b3fd2(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[851])
+	checkAllFlowProgram(t, flowCorpusPaths[852])
 }
 
 func TestFlowProgram____oracle_testdata_modules_main_a_ba3df876e9c3(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[852])
+	checkAllFlowProgram(t, flowCorpusPaths[853])
 }
 
 func TestFlowProgram_testdata_joins_a_091c4a59e83f(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[853])
+	checkAllFlowProgram(t, flowCorpusPaths[854])
 }
 
 func TestFlowProgram_testdata_mutations_a_fe30ed94ac7e(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkAllFlowProgram(t, flowCorpusPaths[854])
+	checkAllFlowProgram(t, flowCorpusPaths[855])
 }
 
 func TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkMutationRangesProgram(t, flowCorpusPaths[759])
+	checkMutationRangesProgram(t, flowCorpusPaths[760])
 }
 
 func TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkGraphPathsProgram(t, flowCorpusPaths[759])
+	checkGraphPathsProgram(t, flowCorpusPaths[760])
 }
 
 func TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
-	checkLivenessProgram(t, flowCorpusPaths[759])
+	checkLivenessProgram(t, flowCorpusPaths[760])
 }

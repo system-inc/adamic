@@ -5786,6 +5786,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac",
     "program": "internal/oracle/testdata/string_index.a",
     "path": "../oracle/testdata/string_index.a",
@@ -12622,6 +12630,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "flow",
@@ -19466,6 +19482,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_string_index_a_bb369e888bac",
     "program": "internal/oracle/testdata/string_index.a",
     "path": "../oracle/testdata/string_index.a",
@@ -26302,6 +26326,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "flow",
@@ -33558,6 +33590,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "fresh",

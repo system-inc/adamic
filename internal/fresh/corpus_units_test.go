@@ -779,6 +779,7 @@ var freshCorpusPaths = []string{
 	"../oracle/testdata/string_build_join.a",
 	"../oracle/testdata/string_build_padding.a",
 	"../oracle/testdata/string_build_repeat.a",
+	"../oracle/testdata/string_destructuring.a",
 	"../oracle/testdata/string_index.a",
 	"../oracle/testdata/string_limits.a",
 	"../oracle/testdata/string_positions.a",
@@ -1644,6 +1645,7 @@ var freshCorpusTests = [][]func(*testing.T){
 		TestFreshWrites____oracle_testdata_string_build_join_a_b51a006d7e49,
 		TestFreshWrites____oracle_testdata_string_build_padding_a_aa6a1e4e6ce1,
 		TestFreshWrites____oracle_testdata_string_build_repeat_a_70a4f3c0e637,
+		TestFreshWrites____oracle_testdata_string_destructuring_a_1c84487cced0,
 		TestFreshWrites____oracle_testdata_string_index_a_bb369e888bac,
 		TestFreshWrites____oracle_testdata_string_limits_a_42770ef14a44,
 		TestFreshWrites____oracle_testdata_string_positions_a_72a5cf673e93,
@@ -6383,518 +6385,524 @@ func TestFreshWrites____oracle_testdata_string_build_repeat_a_70a4f3c0e637(t *te
 	checkFreshProgram(t, freshCorpusPaths[774])
 }
 
-func TestFreshWrites____oracle_testdata_string_index_a_bb369e888bac(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_destructuring_a_1c84487cced0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[775])
 }
 
-func TestFreshWrites____oracle_testdata_string_limits_a_42770ef14a44(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_index_a_bb369e888bac(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[776])
 }
 
-func TestFreshWrites____oracle_testdata_string_positions_a_72a5cf673e93(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_limits_a_42770ef14a44(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[777])
 }
 
-func TestFreshWrites____oracle_testdata_string_too_long_a_97bc6a7682ad(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_positions_a_72a5cf673e93(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[778])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_calls_a_701b47255107(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_too_long_a_97bc6a7682ad(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[779])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_characters_a_09248968f63b(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_calls_a_701b47255107(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[780])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_holders_a_ea447c367ed5(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_characters_a_09248968f63b(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[781])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_lifetime_a_9681bee1607a(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_holders_a_ea447c367ed5(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[782])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_loops_a_7f7c2e980f94(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_lifetime_a_9681bee1607a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[783])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_methods_a_aef97f4e430b(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_loops_a_7f7c2e980f94(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[784])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_policy_a_6fccd9703ae4(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_methods_a_aef97f4e430b(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[785])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_surrogates_a_612f419818ee(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_policy_a_6fccd9703ae4(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[786])
 }
 
-func TestFreshWrites____oracle_testdata_string_views_throw_a_44087e068f41(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_surrogates_a_612f419818ee(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[787])
 }
 
-func TestFreshWrites____oracle_testdata_strings_a_233ff93a99b4(t *testing.T) {
+func TestFreshWrites____oracle_testdata_string_views_throw_a_44087e068f41(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[788])
 }
 
-func TestFreshWrites____oracle_testdata_strings_more_a_79fb961a7af4(t *testing.T) {
+func TestFreshWrites____oracle_testdata_strings_a_233ff93a99b4(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[789])
 }
 
-func TestFreshWrites____oracle_testdata_structural_statics_generic_a_f09d5b885c18(t *testing.T) {
+func TestFreshWrites____oracle_testdata_strings_more_a_79fb961a7af4(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[790])
 }
 
-func TestFreshWrites____oracle_testdata_structural_statics_inherited_a_91eabcb97d79(t *testing.T) {
+func TestFreshWrites____oracle_testdata_structural_statics_generic_a_f09d5b885c18(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[791])
 }
 
-func TestFreshWrites____oracle_testdata_structural_statics_instance_a_89f9b61fbc64(t *testing.T) {
+func TestFreshWrites____oracle_testdata_structural_statics_inherited_a_91eabcb97d79(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[792])
 }
 
-func TestFreshWrites____oracle_testdata_structural_statics_mixed_a_bba3c31fe54f(t *testing.T) {
+func TestFreshWrites____oracle_testdata_structural_statics_instance_a_89f9b61fbc64(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[793])
 }
 
-func TestFreshWrites____oracle_testdata_structural_statics_optional_a_16aa66ef69e3(t *testing.T) {
+func TestFreshWrites____oracle_testdata_structural_statics_mixed_a_bba3c31fe54f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[794])
 }
 
-func TestFreshWrites____oracle_testdata_structural_statics_static_a_4d59cce78ca9(t *testing.T) {
+func TestFreshWrites____oracle_testdata_structural_statics_optional_a_16aa66ef69e3(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[795])
 }
 
-func TestFreshWrites____oracle_testdata_switch_empty_neighbors_a_dbff2f5aa404(t *testing.T) {
+func TestFreshWrites____oracle_testdata_structural_statics_static_a_4d59cce78ca9(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[796])
 }
 
-func TestFreshWrites____oracle_testdata_syntax_module_declarations_a_a91b8713ed55(t *testing.T) {
+func TestFreshWrites____oracle_testdata_switch_empty_neighbors_a_dbff2f5aa404(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[797])
 }
 
-func TestFreshWrites____oracle_testdata_syntax_substr_a_7070d8ab2cb7(t *testing.T) {
+func TestFreshWrites____oracle_testdata_syntax_module_declarations_a_a91b8713ed55(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[798])
 }
 
-func TestFreshWrites____oracle_testdata_taste_comma_a_6b7eea899f33(t *testing.T) {
+func TestFreshWrites____oracle_testdata_syntax_substr_a_7070d8ab2cb7(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[799])
 }
 
-func TestFreshWrites____oracle_testdata_taste_labels_a_32a4808e11e8(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_comma_a_6b7eea899f33(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[800])
 }
 
-func TestFreshWrites____oracle_testdata_taste_logical_assignment_a_beb871943f17(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_labels_a_32a4808e11e8(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[801])
 }
 
-func TestFreshWrites____oracle_testdata_taste_optional_join_a_1fdbcaa7461c(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_logical_assignment_a_beb871943f17(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[802])
 }
 
-func TestFreshWrites____oracle_testdata_taste_stage3_representations_a_26b3f5707966(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_optional_join_a_1fdbcaa7461c(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[803])
 }
 
-func TestFreshWrites____oracle_testdata_taste_truthiness_a_52ea73a24411(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_stage3_representations_a_26b3f5707966(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[804])
 }
 
-func TestFreshWrites____oracle_testdata_taste_void_a_e94c912b0fa0(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_truthiness_a_52ea73a24411(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[805])
 }
 
-func TestFreshWrites____oracle_testdata_template_nullish_a_cad3ce92293c(t *testing.T) {
+func TestFreshWrites____oracle_testdata_taste_void_a_e94c912b0fa0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[806])
 }
 
-func TestFreshWrites____oracle_testdata_throw_global_move_a_442463129ad2(t *testing.T) {
+func TestFreshWrites____oracle_testdata_template_nullish_a_cad3ce92293c(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[807])
 }
 
-func TestFreshWrites____oracle_testdata_throw_in_writes_a_2d21396fb7ad(t *testing.T) {
+func TestFreshWrites____oracle_testdata_throw_global_move_a_442463129ad2(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[808])
 }
 
-func TestFreshWrites____oracle_testdata_throw_keeps_old_value_a_2b16f5decd05(t *testing.T) {
+func TestFreshWrites____oracle_testdata_throw_in_writes_a_2d21396fb7ad(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[809])
 }
 
-func TestFreshWrites____oracle_testdata_throw_keeps_old_value_variants_a_75bc8d7ff710(t *testing.T) {
+func TestFreshWrites____oracle_testdata_throw_keeps_old_value_a_2b16f5decd05(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[810])
 }
 
-func TestFreshWrites____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
+func TestFreshWrites____oracle_testdata_throw_keeps_old_value_variants_a_75bc8d7ff710(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[811])
 }
 
-func TestFreshWrites____oracle_testdata_trig_reduction_a_4f6ac2d2fc3c(t *testing.T) {
+func TestFreshWrites____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[812])
 }
 
-func TestFreshWrites____oracle_testdata_try_assignments_a_fa66f2a15b65(t *testing.T) {
+func TestFreshWrites____oracle_testdata_trig_reduction_a_4f6ac2d2fc3c(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[813])
 }
 
-func TestFreshWrites____oracle_testdata_tuple_values_a_1a7b35830fd0(t *testing.T) {
+func TestFreshWrites____oracle_testdata_try_assignments_a_fa66f2a15b65(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[814])
 }
 
-func TestFreshWrites____oracle_testdata_tuples_kept_a_eb9368961b9a(t *testing.T) {
+func TestFreshWrites____oracle_testdata_tuple_values_a_1a7b35830fd0(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[815])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_float64array_a_d4c1eaf64ecc(t *testing.T) {
+func TestFreshWrites____oracle_testdata_tuples_kept_a_eb9368961b9a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[816])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_int32array_a_669a5c290186(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_float64array_a_d4c1eaf64ecc(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[817])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_order_a_e4ab2c6efb74(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_int32array_a_669a5c290186(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[818])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_primes_a_db708dbaeb88(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_order_a_e4ab2c6efb74(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[819])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_primes_large_a_1e0825d84199(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_primes_a_db708dbaeb88(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[820])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_stats_a_6b830b9fa28a(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_primes_large_a_1e0825d84199(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[821])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_stop_a_1044e793bcc9(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_stats_a_6b830b9fa28a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[822])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_uint8array_a_4cd127390046(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_stop_a_1044e793bcc9(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[823])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_views_a_6b5268740c48(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_uint8array_a_4cd127390046(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[824])
 }
 
-func TestFreshWrites____oracle_testdata_typed_arrays_workers_stats_a_4dbde1ee8cf8(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_views_a_6b5268740c48(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[825])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_dispatch_a_079ca2fbcd3d(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typed_arrays_workers_stats_a_4dbde1ee8cf8(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[826])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_null_a_0a0384a027c9(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_dispatch_a_079ca2fbcd3d(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[827])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_null_compare_a_4e1203dd84c5(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_null_a_0a0384a027c9(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[828])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_null_roll_a_15f3027a2705(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_null_compare_a_4e1203dd84c5(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[829])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_null_slots_a_665eb623bccd(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_null_roll_a_15f3027a2705(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[830])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_null_switch_a_3a3d35b58909(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_null_slots_a_665eb623bccd(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[831])
 }
 
-func TestFreshWrites____oracle_testdata_typeof_string_literal_a_b83d8b5a72ba(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_null_switch_a_3a3d35b58909(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[832])
 }
 
-func TestFreshWrites____oracle_testdata_undefined_elements_a_9c2402fdf62e(t *testing.T) {
+func TestFreshWrites____oracle_testdata_typeof_string_literal_a_b83d8b5a72ba(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[833])
 }
 
-func TestFreshWrites____oracle_testdata_undefined_keys_a_2b04b182db29(t *testing.T) {
+func TestFreshWrites____oracle_testdata_undefined_elements_a_9c2402fdf62e(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[834])
 }
 
-func TestFreshWrites____oracle_testdata_undefined_references_a_52fd1317866e(t *testing.T) {
+func TestFreshWrites____oracle_testdata_undefined_keys_a_2b04b182db29(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[835])
 }
 
-func TestFreshWrites____oracle_testdata_undefined_strings_a_c4d196b67efd(t *testing.T) {
+func TestFreshWrites____oracle_testdata_undefined_references_a_52fd1317866e(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[836])
 }
 
-func TestFreshWrites____oracle_testdata_unions_a_6b2449b70737(t *testing.T) {
+func TestFreshWrites____oracle_testdata_undefined_strings_a_c4d196b67efd(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[837])
 }
 
-func TestFreshWrites____oracle_testdata_unknown_narrowing_a_c08645578b93(t *testing.T) {
+func TestFreshWrites____oracle_testdata_unions_a_6b2449b70737(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[838])
 }
 
-func TestFreshWrites____oracle_testdata_unknown_narrowing_host_a_e5af072b53a5(t *testing.T) {
+func TestFreshWrites____oracle_testdata_unknown_narrowing_a_c08645578b93(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[839])
 }
 
-func TestFreshWrites____oracle_testdata_unused_parameters_a_6be8eb25fedd(t *testing.T) {
+func TestFreshWrites____oracle_testdata_unknown_narrowing_host_a_e5af072b53a5(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[840])
 }
 
-func TestFreshWrites____oracle_testdata_updates_a_201eb96d42d9(t *testing.T) {
+func TestFreshWrites____oracle_testdata_unused_parameters_a_6be8eb25fedd(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[841])
 }
 
-func TestFreshWrites____oracle_testdata_user_iterators_a_c4fa97d41bf3(t *testing.T) {
+func TestFreshWrites____oracle_testdata_updates_a_201eb96d42d9(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[842])
 }
 
-func TestFreshWrites____oracle_testdata_user_iterators_rest_tdz_a_802b89df8a09(t *testing.T) {
+func TestFreshWrites____oracle_testdata_user_iterators_a_c4fa97d41bf3(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[843])
 }
 
-func TestFreshWrites____oracle_testdata_utf8_sweep_a_08861559554a(t *testing.T) {
+func TestFreshWrites____oracle_testdata_user_iterators_rest_tdz_a_802b89df8a09(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[844])
 }
 
-func TestFreshWrites____oracle_testdata_utf8_view_a_91b9e1d3108f(t *testing.T) {
+func TestFreshWrites____oracle_testdata_utf8_sweep_a_08861559554a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[845])
 }
 
-func TestFreshWrites____oracle_testdata_utf8_view_fails_a_f022be275d0a(t *testing.T) {
+func TestFreshWrites____oracle_testdata_utf8_view_a_91b9e1d3108f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[846])
 }
 
-func TestFreshWrites____oracle_testdata_visits_a_d4c097845f4f(t *testing.T) {
+func TestFreshWrites____oracle_testdata_utf8_view_fails_a_f022be275d0a(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[847])
 }
 
-func TestFreshWrites____oracle_testdata_walk_a_71c3d6a56150(t *testing.T) {
+func TestFreshWrites____oracle_testdata_visits_a_d4c097845f4f(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[848])
 }
 
-func TestFreshWrites____oracle_testdata_weak_narrowed_a_a50a92663174(t *testing.T) {
+func TestFreshWrites____oracle_testdata_walk_a_71c3d6a56150(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[849])
 }
 
-func TestFreshWrites____oracle_testdata_weak_parent_a_1d7a247ab5a4(t *testing.T) {
+func TestFreshWrites____oracle_testdata_weak_narrowed_a_a50a92663174(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[850])
 }
 
-func TestFreshWrites____oracle_testdata_write_after_shrink_a_9635c2b57836(t *testing.T) {
+func TestFreshWrites____oracle_testdata_weak_parent_a_1d7a247ab5a4(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[851])
 }
 
-func TestFreshWrites____oracle_testdata_write_files_a_4c0ee970226c(t *testing.T) {
+func TestFreshWrites____oracle_testdata_write_after_shrink_a_9635c2b57836(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[852])
 }
 
-func TestFreshWrites____oracle_testdata_write_stderr_order_a_b59a33edcfb6(t *testing.T) {
+func TestFreshWrites____oracle_testdata_write_files_a_4c0ee970226c(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[853])
 }
 
-func TestFreshWrites____oracle_testdata_write_stdout_order_a_2a1720251e0d(t *testing.T) {
+func TestFreshWrites____oracle_testdata_write_stderr_order_a_b59a33edcfb6(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[854])
 }
 
-func TestFreshWrites____oracle_testdata_writes_a_109e66cc6533(t *testing.T) {
+func TestFreshWrites____oracle_testdata_write_stdout_order_a_2a1720251e0d(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[855])
 }
 
-func TestFreshWrites____oracle_testdata_writes_in_try_a_5e1358003bdb(t *testing.T) {
+func TestFreshWrites____oracle_testdata_writes_a_109e66cc6533(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[856])
 }
 
-func TestFreshWrites____oracle_testdata_writes_past_end_a_ed0c7a882f8b(t *testing.T) {
+func TestFreshWrites____oracle_testdata_writes_in_try_a_5e1358003bdb(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[857])
 }
 
-func TestFreshWrites____oracle_testdata_modules_main_a_ba3df876e9c3(t *testing.T) {
+func TestFreshWrites____oracle_testdata_writes_past_end_a_ed0c7a882f8b(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[858])
 }
 
-func TestFreshWrites____flow_testdata_joins_a_9385adb647b7(t *testing.T) {
+func TestFreshWrites____oracle_testdata_modules_main_a_ba3df876e9c3(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[859])
 }
 
-func TestFreshWrites____flow_testdata_mutations_a_5514557d1b47(t *testing.T) {
+func TestFreshWrites____flow_testdata_joins_a_9385adb647b7(t *testing.T) {
 	t.Parallel()
 	beginFreshUnit(t)
 	checkFreshProgram(t, freshCorpusPaths[860])
+}
+
+func TestFreshWrites____flow_testdata_mutations_a_5514557d1b47(t *testing.T) {
+	t.Parallel()
+	beginFreshUnit(t)
+	checkFreshProgram(t, freshCorpusPaths[861])
 }
