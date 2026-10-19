@@ -64,10 +64,13 @@ func checkMutationRangesProgram(t *testing.T, path string) {
 
 // valuesBefore is, for every instruction, the value each variable holds just before it, found by a
 // forward walk over the constructed graph: within a block, the last definition; on entry, the block's
-// phi, or what its walked predecessors agree on (a disagreement would have needed a phi).
+// phi, or what its walked predecessors agree on (a disagreement would have needed a phi). A
+// predecessor that throws to the block hands it what held before its last instruction, which a
+// throw never let define anything.
 func valuesBefore(graph *Function) map[InstructionId]map[DeclarationId]IdentifierId {
 	result := map[InstructionId]map[DeclarationId]IdentifierId{}
 	exits := map[BlockId]map[DeclarationId]IdentifierId{}
+	thrown := map[BlockId]map[DeclarationId]IdentifierId{}
 	for _, block := range graph.Blocks {
 		current := map[DeclarationId]IdentifierId{}
 		if block.Id == graph.Entry {
@@ -76,7 +79,13 @@ func valuesBefore(graph *Function) map[InstructionId]map[DeclarationId]Identifie
 			}
 		}
 		for _, predecessor := range block.Predecessors {
-			for variable, value := range exits[predecessor] {
+			from := exits[predecessor]
+			if walked, _ := graph.Block(predecessor); walked != nil {
+				if throws, ok := walked.Terminal.(*MayThrow); ok && throws.Handler == block.Id {
+					from = thrown[predecessor]
+				}
+			}
+			for variable, value := range from {
 				current[variable] = value
 			}
 		}
@@ -89,6 +98,9 @@ func valuesBefore(graph *Function) map[InstructionId]map[DeclarationId]Identifie
 				before[variable] = value
 			}
 			result[id] = before
+			if _, throws := block.Terminal.(*MayThrow); throws && id == block.Instructions[len(block.Instructions)-1] {
+				thrown[block.Id] = before
+			}
 			for _, define := range graph.Instructions[id].Defines {
 				current[graph.Identifiers[define.Identifier].Declaration] = define.Identifier
 			}
