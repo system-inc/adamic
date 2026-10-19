@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/tracked"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -54,33 +55,41 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files := []string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}
-	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if (extension == ".go" && !strings.HasSuffix(path, "_test.go")) || ((directory == "stage1/cohere/markdownblocks" || directory == "stage1/cohere/markdowninline") && extension == ".ts") {
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, relative)
-			}
-			return nil
-		})
+	files := append([]string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}, listLayoutSources(t, root, false)...)
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+}
+
+// listLayoutSourceRoots are the directories whose sources key the list layout's products, each with the repository
+// that tracks it (cohere is a submodule, its own repository) and its root inside that repository.
+var listLayoutSourceRoots = []struct{ repository, root string }{
+	{".", "stage1/cohere/markdownblocks"}, {".", "stage1/cohere/markdowninline"}, {".", "internal/native"}, {"cohere", ""},
+}
+
+// listLayoutSources is the compiler and port sources that key the list layout's products, repository-relative: every
+// tracked .go file under listLayoutSourceRoots (tests too when withTests), and the .ts files of markdownblocks and
+// markdowninline. The listing is git's, run as key-time work (buildcache.Keying), never a walk of the checkout: walked
+// under the trace, every directory under cohere and the ports entered the product's read set, untracked ones too, and
+// a listing the tree's checkout and the key check's assembled source valued differently moved the key, so Adam's key
+// check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19; tsprinter's corpus had the same shape, #0rx19ha).
+func listLayoutSources(t *testing.T, root string, withTests bool) []string {
+	t.Helper()
+	var sources []string
+	for _, source := range listLayoutSourceRoots {
+		var paths []string
+		var err error
+		buildcache.Keying(func() { paths, err = tracked.PathsUnder(filepath.Join(root, source.repository), source.root) })
 		if err != nil {
 			t.Fatal(err)
 		}
+		ports := source.root == "stage1/cohere/markdownblocks" || source.root == "stage1/cohere/markdowninline"
+		for _, path := range paths {
+			goSource := strings.HasSuffix(path, ".go") && (withTests || !strings.HasSuffix(path, "_test.go"))
+			if goSource || (ports && strings.HasSuffix(path, ".ts")) {
+				sources = append(sources, filepath.ToSlash(filepath.Join(source.repository, path)))
+			}
+		}
 	}
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v3", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return sources
 }
 
 func buildListLayoutSetup(t *testing.T) {
@@ -339,33 +348,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	goLayoutTask := startFixtureTask(&workers, func() (string, error) {
 		return buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false), nil
 	})
-	files := []string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}
-	// Hash compiler and port source, excluding unrelated evidence and TypeScript's fixture tree.
-	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline", "internal/native", "cohere"} {
-		err := filepath.WalkDir(filepath.Join(root, directory), func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() {
-				if entry.Name() == ".git" || entry.Name() == "node_modules" {
-					return filepath.SkipDir
-				}
-				return nil
-			}
-			extension := filepath.Ext(path)
-			if extension == ".go" || ((directory == "stage1/cohere/markdownblocks" || directory == "stage1/cohere/markdowninline") && extension == ".ts") {
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
-				}
-				files = append(files, relative)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	files := append([]string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}, listLayoutSources(t, root, true)...)
 	nativeFiles := []string{"internal/native/runtime"}
 	entries, err := os.ReadDir(filepath.Join(root, "internal/native"))
 	if err != nil {
