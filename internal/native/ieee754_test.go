@@ -2,10 +2,12 @@ package native
 
 import (
 	"fmt"
+	"maps"
 	"math"
 	"math/rand/v2"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -113,7 +115,9 @@ func ieee754BranchPoints(t *testing.T, random *rand.Rand) []float64 {
 		}
 	}
 	values := []float64{}
-	for word := range words {
+	// In order: each word draws its low words from the seeded stream, so a map's order would make
+	// every run ask a different sweep.
+	for _, word := range slices.Sorted(maps.Keys(words)) {
 		// The comparisons are against a high word, mostly with the sign masked off, so it means the
 		// same as a magnitude; a few (log1p's 0xBFD2BEC4) keep the sign in it.
 		for _, high := range []uint32{word - 1, word, word + 1} {
