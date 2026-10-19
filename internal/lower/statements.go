@@ -120,6 +120,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	if err := l.weakArrayCallback(expression); err != nil {
 		return nil, err
 	}
+	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	expression = ast.SkipParentheses(expression)
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
