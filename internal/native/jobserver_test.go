@@ -159,13 +159,18 @@ func TestNativeReadsNoJobserverVariable(t *testing.T) {
 const childVariable = "ADAMIC_NATIVE_JOBSERVER_CHILD"
 
 // inChild runs this test binary again for the one test named, with environment added, and returns its output. A run
-// that fails, or runs past bound, fails t, naming it.
+// that fails, or runs past bound, fails t, naming it. The child runs with no jobserver variable: this binary imports
+// internal/ccjobserver through leakcheck, and a FIFO the unit names would set the child's jobserver before its test
+// does.
 func inChild(t *testing.T, test string, bound time.Duration, environment ...string) string {
 	t.Helper()
 	runContext, cancel := context.WithTimeout(context.Background(), bound)
 	defer cancel()
 	command := exec.CommandContext(runContext, os.Args[0], "-test.run", "^"+test+"$", "-test.count=1", "-test.v")
-	command.Env = append(append(os.Environ(), childVariable+"=1"), environment...)
+	// The name spelled in two pieces, as TestNativeReadsNoJobserverVariable spells it.
+	variable := "ADAMIC_CC_" + "JOBSERVER"
+	inherited := slices.DeleteFunc(os.Environ(), func(entry string) bool { return strings.HasPrefix(entry, variable+"=") })
+	command.Env = append(append(inherited, childVariable+"=1"), environment...)
 	output, err := command.CombinedOutput()
 	if runContext.Err() != nil {
 		t.Fatalf("%s ran past %s, waiting on a token it shouldn't need:\n%s", test, bound, output)
