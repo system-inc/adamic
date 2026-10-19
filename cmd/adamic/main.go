@@ -38,7 +38,6 @@ func main() {
 // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
 // be compiled, 2 for a usage error, 4 when the compiler itself panicked.
 func run(arguments []string) (code int) {
-	defer reportCompilerBug(&code, os.Stderr)
 	// Explanation goes to stderr so C/JavaScript output remains usable.
 	explain := false
 	filtered := make([]string, 0, len(arguments))
