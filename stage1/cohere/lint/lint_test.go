@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 	"io/fs"
 	"os"
@@ -473,7 +474,7 @@ if (result.error || result.status !== 0 || stderr.length !== 0) {
   process.stdout.write(Buffer.from(merged, 'latin1'));
 }
 `
-	if err := os.WriteFile(launcher, []byte(source), 0755); err != nil {
+	if err := executable.Write(launcher, []byte(source)); err != nil {
 		t.Fatal(err)
 	}
 	return launcher, directory

@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 
 	"github.com/system-inc/adamic/stage1/cohere/lint/shards"
@@ -692,7 +693,7 @@ func TestShardsRunEmptyShardsPrintNothing(t *testing.T) {
 	count := max(2, testShardsAgreeCount(0))
 	planted := filepath.Join(t.TempDir(), "planted")
 	script := fmt.Sprintf("#!/bin/sh\ncase \"$*\" in *\"--shard 0/\"*) ;; *) printf x ;; esac\nexec '%s' \"$@\"\n", products.Binary)
-	if err := os.WriteFile(planted, []byte(script), 0755); err != nil {
+	if err := executable.Write(planted, []byte(script)); err != nil {
 		t.Fatal(err)
 	}
 	for _, countOnly := range []bool{false, true} {
