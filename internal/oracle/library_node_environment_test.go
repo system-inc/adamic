@@ -37,19 +37,26 @@ func processEnvironmentBackends(t *testing.T, fixture string, environment []stri
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	got := processEnvironmentRun(t, environment, binary)
-	if difference := disagreement(expected, got); difference != "" {
-		t.Fatalf("native: %s; got stdout=%q stderr=%q exit=%d", difference, got.stdout, got.stderr, got.exitCode)
+	for _, mode := range []struct {
+		name    string
+		options native.Options
+	}{
+		{"native", native.Options{}}, {"ASan", native.Options{Sanitize: true}},
+	} {
+		binary := filepath.Join(t.TempDir(), mode.name)
+		if err := native.Build(native.C(program), binary, mode.options); err != nil {
+			t.Fatal(err)
+		}
+		got := processEnvironmentRun(t, environment, binary)
+		if difference := disagreement(expected, got); difference != "" {
+			t.Fatalf("%s: %s; got stdout=%q stderr=%q exit=%d", mode.name, difference, got.stdout, got.stderr, got.exitCode)
+		}
 	}
 	js := filepath.Join(t.TempDir(), "program.mjs")
 	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
 		t.Fatal(err)
 	}
-	got = processEnvironmentRun(t, environment, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), js)
+	got := processEnvironmentRun(t, environment, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), js)
 	if difference := disagreement(expected, got); difference != "" {
 		t.Fatalf("JavaScript: %s; got stdout=%q stderr=%q exit=%d", difference, got.stdout, got.stderr, got.exitCode)
 	}
@@ -116,4 +123,42 @@ func TestProcessEnvironmentNULFixtureMatchesNode(t *testing.T) {
 			processEnvironmentBackends(t, "nul.a", one.environment, truth)
 		})
 	}
+}
+
+func processEnvironmentMutationAgreement(t *testing.T, fixture, want string) {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join("testdata/process_env", fixture))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := processEnvironmentRun(t, nil, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != want {
+		t.Fatalf("Node mutation witness changed: %+v", truth)
+	}
+	processEnvironmentBackends(t, fixture, nil, truth)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "counted")
+	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := processEnvironmentRun(t, nil, binary)
+	if got.exitCode != truth.exitCode || !bytes.Equal(got.stdout, truth.stdout) || countsLine.FindSubmatch(got.stderr) == nil {
+		t.Fatalf("counted mutation disagrees: %+v", got)
+	}
+}
+
+func TestProcessEnvironmentAdmittedUsesMatchNode(t *testing.T) {
+	t.Parallel()
+	processEnvironmentMutationAgreement(t, "mutations.a", "first\n\nhéllo 世界 🌍\ntrue\nmissing\ntrue\nown environment string\ntrue\n")
+}
+func TestProcessEnvironmentMutationValuesMatchNode(t *testing.T) {
+	t.Parallel()
+	processEnvironmentMutationAgreement(t, "mutation_values.a", "a\na\ntrue\nmissing\n")
+}
+func TestProcessEnvironmentSpecialNamesMatchNode(t *testing.T) {
+	t.Parallel()
+	processEnvironmentMutationAgreement(t, "mutation_special_names.a", "1\nmissing\nmissing\ntrue\nmissing\nmissing\n1\nx\nx\ntrue\nmissing\nmissing\n3\na\na\ntrue\nmissing\nmissing\n1\nmissing\nmissing\ntrue\nmissing\nmissing\n")
 }

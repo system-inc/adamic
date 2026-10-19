@@ -136,6 +136,21 @@ adamic_string *adamic_host_environment(const adamic_string *name) {
 	return value == NULL ? NULL : adamic_decode_utf8((const unsigned char *)value, strlen(value));
 }
 
+void adamic_host_environment_set(const adamic_string *name, const adamic_string *value) {
+    char *key = host_text(name), *text = host_text(value);
+    // Node ignores invalid names (empty or containing '=') rather than throwing.
+    (void)setenv(key, text, 1);
+    free(text);
+    free(key);
+}
+
+bool adamic_host_environment_delete(const adamic_string *name) {
+    char *key = host_text(name);
+    (void)unsetenv(key);
+    free(key);
+    return true;
+}
+
 adamic_string *adamic_host_realpath(const adamic_string *path) {
 	if (memchr(path->bytes, 0, path->length) != NULL) { errno = EINVAL; return NULL; }
 	char *bytes = host_text(path);
