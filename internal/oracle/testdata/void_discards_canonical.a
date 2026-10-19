@@ -1,0 +1,36 @@
+// Nested functions read as values are canonical closures, one per function and frame, made once
+// and found again in the frame's cache. Each is given its discard where it's made, so a void call
+// through one lets go of an object's result and leaves a number's alone.
+
+interface Box {
+	readonly label: string;
+}
+
+function twice(action: () => void): void {
+	action();
+	action();
+}
+
+function outer(name: string): string {
+	let made = 0;
+	let last = "";
+	function make(): Box {
+		made += 1;
+		last = `${name}${made}`;
+		return { label: last };
+	}
+	function count(): number {
+		made += 10;
+		return made;
+	}
+	function pick(object: boolean): () => void {
+		return object ? make : count;
+	}
+	twice(pick(true));
+	twice(pick(false));
+	twice(pick(true));
+	return `${made} ${last}`;
+}
+
+console.log(outer("x"));
+console.log(outer(`y${1}`));
