@@ -1682,20 +1682,27 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 // this same tree: its reads are ones this build could have made too (a build's reads can vary from run to run, and
 // two settlements can race), so the set recorded and keyed is their union, and the earlier set gives way to it. The
 // union is lean only when every set in it is: a lean set folded with a whole one keys by the whole recipe's reads too.
+// Each set is valued afresh, as a runner values it, with nameKey's own lookup under way (freshMemo): a set that reaches
+// nameKey again through the products it reads is one no runner can value, and it's refused as a cycle, never recorded
+// (#p80h8e6, #kfjqsnh: Eve's ab8e96b0's manifest recorded native-false reading native-true, then native-true reading
+// native-false, which it valued through the answer it held from before native-false's new set, and every runner missed
+// both). A product read whose newest set names nameKey is valued by an older set that doesn't, as a runner's lookup
+// values it, so only what a runner can't value is refused.
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
+	known := freshMemo(nameKey)
 	err := withReads(cache, nameKey, func(file *readsFile) error {
 		var kept []readSet
 		for _, other := range file.Sets {
-			if before, err := evaluate(root, cache, nameKey, other, 0, nil); err == nil && len(differing(other, before)) == 0 {
+			if before, err := evaluate(root, cache, nameKey, other, 0, known); err == nil && len(differing(other, before)) == 0 {
 				set.Entries, set.Lean = sortedEntries(set.Entries, other.Entries), set.Lean && other.Lean
 				continue
 			}
 			kept = append(kept, other)
 		}
 		var err error
-		if evaluated, err = evaluate(root, cache, nameKey, set, 0, nil); err != nil {
+		if evaluated, err = evaluate(root, cache, nameKey, set, 0, known); err != nil {
 			return err
 		}
 		for index := range set.Entries {
