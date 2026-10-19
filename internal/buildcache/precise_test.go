@@ -1192,10 +1192,11 @@ func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
 // A set that would read its own product back is refused, never recorded, since no runner can value it (#p80h8e6,
 // #kfjqsnh: Eve's ab8e96b0's manifest found native-false and native-true, each built by its own test, and recorded each
 // reading the other; every runner missed both). Here native-true's set reads native-false, whose newest set reads
-// native-true: recordUnion refuses it as a cycle and keeps native-true's file as it was. With an older set of
-// native-false that doesn't read native-true and holds a product, native-false values by that set, as a runner's lookup
-// does, so native-true's set is recorded and a runner finds its product. Mutant: recordUnion valuing with its own name
-// key unmarked, today's write (the cycle is recorded).
+// native-true: recordUnion refuses it and keeps native-true's file as it was. With an older set of native-false that
+// doesn't read native-true and holds a product, native-false values by that set, but its newest still reads
+// native-true, so once recorded the two files would read each other, one component, and no lookup would use the set
+// (readComponents): it's refused the same way, and a runner finds native-true by its own test's set. A set reading its
+// own product is refused too. Mutant: the record-time walk dropped (the variant with an older set is recorded).
 // Not parallel: newRig.
 func TestASetThatWouldReadItselfBackIsRefused(t *testing.T) {
 	for _, olderUpstream := range []bool{false, true} {
@@ -1227,29 +1228,178 @@ func TestASetThatWouldReadItselfBackIsRefused(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: nativeFalse}})}
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(key string) string {
-			os.MkdirAll(filepath.Join(r.cache, key), 0o755)
-			return filepath.Join(r.cache, key)
-		})
-		after, _ := loadReads(r.cache, nativeTrue)
-		if !olderUpstream {
+		for _, read := range []string{nativeFalse, nativeTrue} {
+			set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: read}})}
+			_, evaluated, _, err := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(key string) string {
+				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
+				return filepath.Join(r.cache, key)
+			})
 			if err == nil || !strings.Contains(err.Error(), "cycle") {
-				t.Fatalf("native-true reading native-false, which reads it back: recorded %s, %v", evaluated.key, err)
+				t.Fatalf("older upstream %v: native-true reading %s, which reads it back: recorded %s, %v", olderUpstream, read[62:], evaluated.key, err)
 			}
+			after, _ := loadReads(r.cache, nativeTrue)
 			if len(after.Sets) != len(before.Sets) || after.Sets[0].Key != before.Sets[0].Key {
-				t.Fatalf("a refused set changed native-true's file: %d sets, newest %s", len(after.Sets), after.Sets[0].Key)
+				t.Fatalf("older upstream %v: a refused set changed native-true's file: %d sets, newest %s", olderUpstream, len(after.Sets), after.Sets[0].Key)
 			}
-			continue
-		}
-		if err != nil || after.Sets[0].Key != evaluated.key {
-			t.Fatalf("native-false has an older set that doesn't read native-true: %v, newest %s", err, after.Sets[0].Key)
 		}
 		// A runner is a fresh process: nothing this one held answers for it.
-		if found, err := productFor(r.root, r.cache, nativeTrue, 0, productMemo{freshLookups: &productLookup{done: true}}); err != nil || found.key != evaluated.key {
-			t.Fatalf("a runner looking up native-true found %+v, %v; it was recorded as %s", found, err, evaluated.key)
+		if found, err := productFor(r.root, r.cache, nativeTrue, 0, productMemo{freshLookups: &productLookup{done: true}}); err != nil || found.key != before.Sets[0].Key {
+			t.Fatalf("older upstream %v: a runner looking up native-true found %+v, %v; its own test's set is %s", olderUpstream, found, err, before.Sets[0].Key)
 		}
 	}
+}
+
+// A product's answer is the same whatever its pass looked up first (#kfjqsnh), the one it gives looked up alone, since
+// whether a recorded set may be used is a property of the recorded files alone (readComponents). 0ac52080's
+// markdown-list-layout-lowered and its canary each recorded a set reading the other: lowered's newest reads the
+// canary, the canary's newest reads lowered, and each has an older plain set, the canary's no longer matching the tree.
+// The two are one component, so neither set reading the other is ever used: lowered is found by its plain set, the
+// canary misses, and shared-v3, which reads both, misses with it. A miss falls back to its declared key and rebuilds,
+// so the rule fails closed. In the variant, the canary's plain set matches, so the canary is found by it and shared-v3
+// is found too. Every order of the three lookups in one pass gives each its answer looked up alone. Mutant: the rule
+// turned off, so a set in its own product's component is used (the plain case: the canary is found alone by its set
+// reading lowered).
+// Not parallel: newRig.
+func TestAProductsAnswerIsTheSameInAnyOrder(t *testing.T) {
+	for _, olderCanaryMatches := range []bool{false, true} {
+		r := newRig(t)
+		lowered, canary, shared := fmt.Sprintf("%064x", 0x10), fmt.Sprintf("%064x", 0x20), fmt.Sprintf("%064x", 0x30)
+		// record keeps set under nameKey, keyed as it values now in a pass of its own, and its product, holding content,
+		// when content isn't "" and the set values at all: shared-v3's doesn't when the canary misses, and it's kept unkeyed.
+		record := func(nameKey, content string, entries ...readEntry) string {
+			t.Helper()
+			forgetHeldForLife()
+			set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
+			evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+			set.Key = evaluated.key
+			if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
+				t.Fatal(err)
+			}
+			if content != "" && err == nil {
+				write(t, filepath.Join(r.cache, evaluated.key), "out", content)
+			}
+			return evaluated.key
+		}
+		plainLowered := record(lowered, "lowered")
+		// The canary's older set: with no product here it no longer matches, as 0ac52080's didn't.
+		olderCanary := ""
+		if olderCanaryMatches {
+			olderCanary = "another canary"
+		}
+		plainCanary := record(canary, olderCanary, readEntry{Kind: "content", Path: "notes.txt"})
+		record(canary, "canary", readEntry{Kind: "product", Path: lowered})
+		record(lowered, "lowered reading the canary", readEntry{Kind: "product", Path: canary})
+		sharedKey := record(shared, "shared", readEntry{Kind: "product", Path: lowered}, readEntry{Kind: "product", Path: canary})
+		expected := map[string]string{lowered: plainLowered, canary: "", shared: ""}
+		if olderCanaryMatches {
+			expected[canary], expected[shared] = plainCanary, sharedKey
+		}
+		alone := map[string]string{}
+		for _, nameKey := range []string{lowered, canary, shared} {
+			forgetHeldForLife()
+			looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
+			if err != nil || looked.key != expected[nameKey] {
+				t.Fatalf("older canary matching %v: %s alone gave %q (%s), %v; the rule gives %q", olderCanaryMatches, nameKey[60:], looked.key, looked.why, err, expected[nameKey])
+			}
+			alone[nameKey] = looked.key
+		}
+		for _, order := range [][]string{
+			{lowered, canary, shared}, {lowered, shared, canary}, {canary, lowered, shared},
+			{canary, shared, lowered}, {shared, lowered, canary}, {shared, canary, lowered},
+		} {
+			forgetHeldForLife()
+			known := productMemo{}
+			for _, nameKey := range order {
+				looked, err := productFor(r.root, r.cache, nameKey, 0, known)
+				if err != nil || looked.key != alone[nameKey] {
+					t.Errorf("older canary matching %v, order %s: %s gave %q (%s), %v; alone it gives %q", olderCanaryMatches, orderNames(order), nameKey[60:], looked.key, looked.why, err, alone[nameKey])
+				}
+			}
+		}
+	}
+}
+
+// A ring of three products, each with a set reading the next and a plain set, is one component however long the way
+// back is: no set reading the next is ever used, so each is found by its plain set, and a fourth reading the ring is
+// found through it, in every order of the four lookups in one pass as looked up alone. A set reading its own product
+// is a component of one, and never used either. Mutant: only a pair reading each other cut (the ring's sets are used).
+// Not parallel: newRig.
+func TestARingOfProductsIsOneComponent(t *testing.T) {
+	r := newRig(t)
+	ring := []string{fmt.Sprintf("%064x", 0x40), fmt.Sprintf("%064x", 0x50), fmt.Sprintf("%064x", 0x60)}
+	reader, itself := fmt.Sprintf("%064x", 0x70), fmt.Sprintf("%064x", 0x80)
+	// record keeps set under nameKey, keyed as it values now in a pass of its own, with its product holding content.
+	record := func(nameKey, content string, entries ...readEntry) string {
+		t.Helper()
+		forgetHeldForLife()
+		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
+		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		set.Key = evaluated.key
+		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
+			t.Fatal(err)
+		}
+		write(t, filepath.Join(r.cache, evaluated.key), "out", content)
+		return evaluated.key
+	}
+	expected := map[string]string{}
+	for _, nameKey := range ring {
+		expected[nameKey] = record(nameKey, "plain "+nameKey[60:])
+	}
+	for index, nameKey := range ring {
+		record(nameKey, "reading the next "+nameKey[60:], readEntry{Kind: "product", Path: ring[(index+1)%len(ring)]})
+	}
+	expected[reader] = record(reader, "reader", readEntry{Kind: "product", Path: ring[0]})
+	expected[itself] = record(itself, "plain itself")
+	if err := recordReads(r.cache, itself, "itself", readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: itself}})}); err != nil {
+		t.Fatal(err)
+	}
+	all := append(slices.Clone(ring), reader)
+	alone := map[string]string{}
+	for _, nameKey := range append(slices.Clone(all), itself) {
+		forgetHeldForLife()
+		looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
+		if err != nil || looked.key != expected[nameKey] {
+			t.Fatalf("%s alone gave %q (%s), %v; the rule gives %q", nameKey[60:], looked.key, looked.why, err, expected[nameKey])
+		}
+		alone[nameKey] = looked.key
+	}
+	var orders [][]string
+	var permute func(order, rest []string)
+	permute = func(order, rest []string) {
+		if len(rest) == 0 {
+			orders = append(orders, order)
+			return
+		}
+		for index := range rest {
+			permute(append(slices.Clone(order), rest[index]), append(slices.Clone(rest[:index]), rest[index+1:]...))
+		}
+	}
+	permute(nil, all)
+	if len(orders) != 24 {
+		t.Fatalf("%d orders of four lookups", len(orders))
+	}
+	for _, order := range orders {
+		forgetHeldForLife()
+		known := productMemo{}
+		for _, nameKey := range order {
+			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
+			if err != nil || looked.key != alone[nameKey] {
+				t.Errorf("order %s: %s gave %q (%s), %v; alone it gives %q", orderNames(order), nameKey[60:], looked.key, looked.why, err, alone[nameKey])
+			}
+		}
+	}
+}
+
+// orderNames is an order of name keys by their last four digits, for a failure's message.
+func orderNames(order []string) string {
+	names := []string{}
+	for _, nameKey := range order {
+		names = append(names, nameKey[60:])
+	}
+	return strings.Join(names, ", ")
 }
 
 // A product many others read is valued once per pass: 12 layers of 3 products, each reading the 3 below, is 3^12
