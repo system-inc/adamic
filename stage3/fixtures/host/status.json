@@ -327,8 +327,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/18_exit_0.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -344,8 +344,8 @@
       "exit": 1
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/19_exit_1.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -361,8 +361,8 @@
       "exit": 2
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/20_exit_2.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {

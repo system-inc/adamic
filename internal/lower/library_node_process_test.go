@@ -35,9 +35,9 @@ func TestNodeProcessPerformanceAliasABI(t *testing.T) {
 	}
 }
 
-func TestNodeProcessDeferredExitStaysLoud(t *testing.T) {
+func TestNodeProcessDeferredSchedulingStaysLoud(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{"process.exit(0);", "process.exitCode=1;", "process.nextTick(()=>{});", "setTimeout(()=>{},0);"} {
+	for _, source := range []string{"process.nextTick(()=>{});", "setTimeout(()=>{},0);"} {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()
 			if _, err := lowerSource(t, "import 'node:process'; "+source); err == nil {
