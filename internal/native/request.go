@@ -23,6 +23,19 @@ func WASI(program *ir.Program, handler int) (string, error) {
 }
 
 func (e *emitter) requestABI(handler int) string {
+	if handler == len(e.program.Functions) {
+		return `
+__attribute__((constructor)) static void adamic_module_start(void) {
+ (void)main(0, NULL);
+ adamic_output_flush();
+}
+#ifdef ADAMIC_COUNT
+#include "count.h"
+__attribute__((export_name("adamic_live"))) size_t adamic_live(void) { return adamic_counted.live; }
+__attribute__((export_name("adamic_regions"))) size_t adamic_regions(void) { return adamic_counted.regions; }
+#endif
+`
+	}
 	// Reuse consumes object and array parameters, never strings. The decoded string stays
 	// owned here; the ordinary string parameter convention retains when reassignment needs it.
 	var builder strings.Builder
