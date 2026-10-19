@@ -1,0 +1,16 @@
+import { basename } from 'node:path';
+const paths = ['', '.', '..', '/', '//', '///', 'foo', 'foo/', '/foo', '/foo/', '//foo///', 'a/b', 'a/b/', 'a//b//', 'a/../b', 'a/../../', 'file.js', '/file.js///', '.hidden', '.js', '/.js', 'file.tar.gz', 'x\\y', 'héllo/中.txt', 'a/🌍', '🌍/', '\uD83C', '\uDF0D', 'a\0b', '/a\0b/'];
+const suffixes = ['', '.', '..', '.js', '.JS', '.txt', '.tar.gz', '/', '//', 'foo', 'foo/', 'o', '/foo', 'b', 'b/', '🌍', '\uD83C', '\uDF0D', '\0b', '/'];
+for (const path of paths) {
+    const plain = basename(path);
+    const explicit = basename(path, undefined);
+    console.log(`${plain.length} [${plain}] ${plain === explicit}`);
+    for (const suffix of suffixes) {
+        const name = basename(path, suffix);
+        console.log(`${name.length} [${name}]`);
+    }
+}
+let optional: string | undefined;
+console.log(basename('/a.txt/', optional));
+optional = '.txt';
+console.log(basename('/a.txt/', optional));
