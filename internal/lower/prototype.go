@@ -46,6 +46,28 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 	return false
 }
 
+// iteratorResultField reports whether done or value is read off an iterator result whose only
+// library roots are IteratorReturnResult's: the plain object next returns, both fields required and
+// own, never a prototype member. The prelude's Map and Set iterators return one as their done arm,
+// so inference reads that arm as the iterator's return rather than its value.
+func (l *lowering) iteratorResultField(symbol *ast.Symbol) bool {
+	if symbol == nil || (symbol.Name != "done" && symbol.Name != "value") {
+		return false
+	}
+	for _, root := range l.checker.GetRootSymbols(symbol) {
+		for _, declaration := range root.Declarations {
+			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+				continue
+			}
+			owner := declaration.Parent
+			if owner == nil || owner.Kind != ast.KindInterfaceDeclaration || owner.Name().Text() != "IteratorReturnResult" {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
 	if symbol == nil {
 		return false
