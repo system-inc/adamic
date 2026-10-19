@@ -81,7 +81,10 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 			if mutate != nil {
 				mutate(fixture.path, program)
 			}
-			actual := onWASI(t, native.C(program))
+			actual, reason := observeWASI(t, native.C(program))
+			if assertWASIRefusal(t, fixture.path, reason, wasiRefusedFixtures) {
+				return
+			}
 			if err := wasiFixtureDifference(t.Name(), expected, actual); err != nil {
 				t.Error(err)
 			}
@@ -89,17 +92,28 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 	}
 }
 
-func onWASI(t *testing.T, source string) run {
+func observeWASI(t *testing.T, source string) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
+	if reason := buildWASI(t, source, binary); reason != "" {
+		return run{}, reason
 	}
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	return actual, wasiRefusalReason(actual)
 }
 
-func TestWASIOracleCatchesMutants(t *testing.T) {
-	t.Parallel()
+// Callers without a named refusal must execute; no host regression becomes a skip.
+func onWASI(t *testing.T, source string) run {
+	t.Helper()
+	actual, reason := observeWASI(t, source)
+	if reason != "" {
+		t.Fatalf("unlisted wasm32 refusal: %s", reason)
+	}
+	return actual
+}
+
+func wasiOracleCatchesMutant(t *testing.T, exit bool) {
+	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -111,15 +125,22 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	expected := onNode(t, path)
-	program.Strings[0] += "!"
-	if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "stdout differs" {
-		t.Fatalf("byte mutant: got %q", difference)
-	}
-	if difference := disagreement(expected, onWASI(t, "int main(void) { return 23; }\n")); difference != "exit codes differ" {
-		t.Fatalf("exit mutant: got %q", difference)
+	// A WASI oracle mutant needs a fresh Node witness, not native runtime cache identity.
+	expected := onNodeWith(t, inputRun{}, path)
+	if exit {
+		if difference := disagreement(expected, onWASI(t, "int main(void) { return 23; }\n")); difference != "exit codes differ" {
+			t.Fatalf("exit mutant: got %q", difference)
+		}
+	} else {
+		program.Strings[0] += "!"
+		if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "stdout differs" {
+			t.Fatalf("byte mutant: got %q", difference)
+		}
 	}
 }
+
+func TestWASIOracleCatchesMutants_000(t *testing.T) { t.Parallel(); wasiOracleCatchesMutant(t, false) }
+func TestWASIOracleCatchesMutants_001(t *testing.T) { t.Parallel(); wasiOracleCatchesMutant(t, true) }
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
