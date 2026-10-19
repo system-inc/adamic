@@ -16,15 +16,17 @@ import (
 )
 
 func init() {
-	// The host fixture joins the common input runners in link 6, together with
-	// their exact WASI refusal handling. Its native witnesses remain here.
-	for _, name := range []string{"performance", "performance_core"} {
+	for _, name := range []string{"host", "performance", "performance_core"} {
+		var arguments []string
+		if name == "host" {
+			arguments = []string{"plain", "", "with space", "héllo 🌍", "--prof", "bad\xff"}
+		}
 		inputFixtures = append(inputFixtures, struct {
 			path       string
 			arguments  []string
 			unreadable bool
 			writes     bool
-		}{"internal/oracle/testdata/node_process_" + name + ".a", nil, false, false})
+		}{"internal/oracle/testdata/node_process_" + name + ".a", arguments, false, false})
 	}
 }
 
