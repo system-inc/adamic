@@ -13,7 +13,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -23,7 +22,6 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 // repository is the repository's root, from this package's directory.
@@ -343,54 +341,4 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 		t.Fatal(err)
 	}
 	return onNode(t, path, arguments...)
-}
-
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
-}
-
-// leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
-// an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
-// checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return string(report.stdout)
-	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
-	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
 }
