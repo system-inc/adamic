@@ -7,7 +7,7 @@ page is a bug.
 ## Usage
 
 The binary prints this, and only this, for every usage error. `TestDocumentedUsageIsTheCommands`
-(`cmd/adamic/cli_doc_test.go`) fails when this block and `usage` (`cmd/adamic/main.go:26-30`) differ,
+(`cmd/adamic/cli_doc_test.go`) fails when this block and `usage` (`cmd/adamic/main.go:28-32`) differ,
 and when `build` parses a flag the block doesn't name.
 
 ```text
@@ -19,31 +19,31 @@ usage:
 ```
 
 There is no `--help`, `--version`, `run`, `test` or `fix`. Anything the switch doesn't match,
-`--help` included, prints the usage and exits 2 (`cmd/adamic/main.go:99-100`).
+`--help` included, prints the usage and exits 2 (`cmd/adamic/main.go:102-103`).
 
 ## Commands
 
 Every command first loads the program through typescript-go in process. A checker error prints each
 diagnostic to stderr and exits 1; any other load error prints `adamic: <error>` and exits 1
-(`cmd/adamic/main.go:104-118`). Paths in diagnostics are shortened to be relative to the working
-directory (`cmd/adamic/main.go:141-153`). `.a` and `.ts` are both accepted (`docs/0.1.md:766`).
+(`cmd/adamic/main.go:116-130`). Paths in diagnostics are shortened to be relative to the working
+directory (`cmd/adamic/main.go:153-165`). `.a` and `.ts` are both accepted (`docs/0.1.md:766`).
 
 | Command | Does | Writes | Code |
 | --- | --- | --- | --- |
-| `types <file>...` | checks one or more files and prints every declaration's proven type as `file:line:column: kind name: type` | stdout | `cmd/adamic/main.go:63-71` |
-| `c <file>` | checks, lowers and prints the program as C11 | stdout | `cmd/adamic/main.go:72-82` |
-| `js <file>` | checks, lowers and prints the program as JavaScript | stdout | `cmd/adamic/main.go:83-93` |
-| `build <file> -o <out>` | checks, lowers, emits C and compiles it with the runtime to a binary at `<out>` | `<out>` | `cmd/adamic/main.go:94-97`, `cmd/adamic/tsgo.go:15-97` |
+| `types <file>...` | checks one or more files and prints every declaration's proven type as `file:line:column: kind name: type` | stdout | `cmd/adamic/main.go:66-74` |
+| `c <file>` | checks, lowers and prints the program as C11 | stdout | `cmd/adamic/main.go:75-85` |
+| `js <file>` | checks, lowers and prints the program as JavaScript | stdout | `cmd/adamic/main.go:86-96` |
+| `build <file> -o <out>` | checks, lowers, emits C and compiles it with the runtime to a binary at `<out>` | `<out>` | `cmd/adamic/main.go:97-100`, `cmd/adamic/tsgo.go:15-97` |
 
-`c` and `js` take exactly one file (`cmd/adamic/main.go:72,83`); `types` takes one or more
-(`cmd/adamic/main.go:63`). A program that uses the tsgo checker library can't be printed:
+`c` and `js` take exactly one file (`cmd/adamic/main.go:75,86`); `types` takes one or more
+(`cmd/adamic/main.go:66`). A program that uses the tsgo checker library can't be printed:
 `c` says `adamic: tsgo requires a native build with --tsgo <archive>` and `js` says
 `adamic: tsgo is an external native checker library; JavaScript is not supported`, both exit 1
-(`cmd/adamic/main.go:77-80,88-91`).
+(`cmd/adamic/main.go:80-83,91-94`).
 
 ### Where `build`'s arguments go
 
-The switch is positional (`cmd/adamic/main.go:94-97`): the source is the argument right after
+The switch is positional (`cmd/adamic/main.go:97-100`): the source is the argument right after
 `build`, or right after `build --target <t>`, and `-o <out>` comes immediately after the source.
 The flags after `-o <out>` may come in any order (`cmd/adamic/tsgo.go:19-45`). So
 `build --target wasm32-wasi a.a -o a.wasm` and `build a.a -o a.wasm --target wasm32-wasi` both work
@@ -51,7 +51,7 @@ The flags after `-o <out>` may come in any order (`cmd/adamic/tsgo.go:19-45`). S
 usage error.
 
 `--explain-checks` is lifted out of the arguments wherever it appears, before the switch
-(`cmd/adamic/main.go:40-61`). With `c` or `js` it goes to `renderWithChecks`
+(`cmd/adamic/main.go:43-64`). With `c` or `js` it goes to `renderWithChecks`
 (`cmd/adamic/checks.go:14-34`); with `build` it is moved to the end; with `types` or nothing it is a
 usage error.
 
@@ -59,7 +59,7 @@ usage error.
 
 | Flag | Applies to | Effect | Code |
 | --- | --- | --- | --- |
-| `-o <out>` | `build`, required | the binary's path | `cmd/adamic/main.go:94-97` |
+| `-o <out>` | `build`, required | the binary's path | `cmd/adamic/main.go:97-100` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:21-27` |
 | `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:30-31`, `internal/native/native.go:124-125`, `internal/native/runtime/count.c:18-34` |
 | `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:32-33`, `internal/native/native.go:139-140` |
@@ -85,19 +85,21 @@ Repeating `--count`, `--sanitize` or `--explain-checks` is harmless.
 
 | Code | Means | Returned at |
 | --- | --- | --- |
-| 0 | the command did what it says | `cmd/adamic/main.go:70,81,92`, `cmd/adamic/tsgo.go:96` |
-| 1 | the program doesn't check, is refused (`Refused`) or not yet compiled (`NotYet`), a target refuses an option, a tool is missing, or clang failed | `cmd/adamic/main.go:112,115,136`, `cmd/adamic/tsgo.go:48,52,73,94`, `cmd/adamic/request.go:25,30,40,46` |
-| 2 | usage error | `cmd/adamic/main.go:56-57,99-100`, `cmd/adamic/tsgo.go:24-25,37-38,42-43` |
+| 0 | the command did what it says | `cmd/adamic/main.go:74,85,96`, `cmd/adamic/tsgo.go:96` |
+| 1 | the program doesn't check, is refused (`Refused`) or not yet compiled (`NotYet`), a target refuses an option, a tool is missing, or clang failed | `cmd/adamic/main.go:124,127,148`, `cmd/adamic/tsgo.go:48,52,73,94`, `cmd/adamic/request.go:25,30,40,46` |
+| 2 | usage error | `cmd/adamic/main.go:59-60,102-103`, `cmd/adamic/tsgo.go:24-25,37-38,42-43` |
+| 4 | the compiler itself panicked on `run`'s goroutine: stderr gets `adamic: compiler bug: <value>` and the stack. A panic on another goroutine, such as `internal/native`'s compiles (`internal/native/library.go:479`, `internal/native/units.go:472`) or typescript-go's own, still ends the process with Go's 2 (#4mwb9et) | `cmd/adamic/main.go:41,106-114` |
 
 Exit 1 covers both "your program" and "your machine": a script can't tell a refusal from a missing
-clang without reading stderr. And nothing recovers a Go panic inside the compiler (no `recover()` in
-`cmd/adamic`, `internal/load`, `internal/lower` or `internal/native`), so a compiler crash exits with
-Go's status 2, the same as a usage error.
+clang without reading stderr. Compiler has ruled the split (#z1ba56x): 1 the program, 2 usage
+including an option the target refuses, 3 the machine, 4 a compiler bug; only 4 is in the code yet.
 
 `TestUsageExitStatus` pins 2 and the exact usage text (`cmd/adamic/command_guards_test.go:13-19`);
 `TestBuildWASISanitizeTarget{Before,After}Source` pin a target refusal at 1 with its text, on a file
 that loads (`cmd/adamic/command_guards_test.go:21-44`); `TestBuildTargetParsing` pins three malformed
-`--target`s at 2 (`cmd/adamic/target_test.go:10-21`).
+`--target`s at 2 (`cmd/adamic/target_test.go:10-21`); `TestCompilerBugExitsFour` and
+`TestRunRecoversCompilerBugs` pin 4, its text, and that `run` defers the recovery
+(`cmd/adamic/compiler_bug_test.go`).
 
 ### A program it built
 
@@ -209,7 +211,7 @@ native Go branches on architecture. `cloud/setup.sh` provisions Linux x86_64 and
 ## Where other docs disagree
 
 - `docs/wasm.md:5-6` says the branch changes neither `native.go` nor the driver; the driver has
-  taken `--target wasm32-wasi` since (`cmd/adamic/main.go:94`).
+  taken `--target wasm32-wasi` since (`cmd/adamic/main.go:97`).
 - `docs/wasm.md:47-48` runs `go test ./internal/native -run '^TestWASI$'`, which matches no test and
   passes having run nothing; the tests are `TestWASIUnit00` to `35` (`internal/native/wasm_test.go:362-537`).
 - `docs/wasm.md:38-46` installs WASI SDK 27 by hand; `cloud/setup.sh --wasi-sdk` does it and
@@ -225,10 +227,10 @@ native Go branches on architecture. `cloud/setup.sh` provisions Linux x86_64 and
 
 ## Open gaps
 
-- A compiler panic exits 2, the same as a usage error (#wjz8bc3).
 - Exit 1 is both a refused program and a missing or failing toolchain (#z1ba56x).
 - No `--help` that exits 0 and no `--version` (#a733mfq).
 - Nothing checks the host clang's version, and wasm32 falls back to `PATH` clang silently (#h2vm51c).
+- A panic on another goroutine than `run`'s still exits 2 (#4mwb9et).
 - `build`'s source and `-o` are positional (#21m2dv3).
 - `adamic js` output runs only under the oracle's loader (#qq5dkee).
 - Toolchain downloads carry no checksum, and there is no release of `adamic` (#xx66xas).
