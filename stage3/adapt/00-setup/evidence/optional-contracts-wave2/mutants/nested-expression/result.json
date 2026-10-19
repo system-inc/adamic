@@ -1,0 +1,61 @@
+{
+  "group": "nested-expression",
+  "status": "unchanged: scoped group declined; witness also reached by construction scan",
+  "witnesses": [
+    {
+      "witness": "check-internal.cjs",
+      "exit": 0
+    },
+    {
+      "witness": "check-nullable-return.cjs",
+      "exit": 0
+    }
+  ],
+  "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "mutant_helper_sha256": "2f080d203254e78547c9f4efe32a691d93515d376c0cccfcc16f2c81c74a65b6",
+  "runs": [
+    {
+      "run": "stock-no-prelude",
+      "count": 203,
+      "returned_ids": [],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-filtered-prelude",
+      "count": 204,
+      "returned_ids": [],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-no-prelude",
+      "count": 203,
+      "returned_ids": [],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-filtered-prelude",
+      "count": 204,
+      "returned_ids": [],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-no-unchecked-control",
+      "count": 104,
+      "returned_ids": [],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-original-prelude-mutant",
+      "count": 288,
+      "returned_ids": [],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    }
+  ],
+  "group_ids_returned": []
+}

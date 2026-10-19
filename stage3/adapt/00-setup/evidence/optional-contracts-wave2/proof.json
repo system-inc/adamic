@@ -1,0 +1,1903 @@
+{
+  "schema": "adamic-optional-contracts-wave2-proof-v1",
+  "wave1HeaderFix": {
+    "commit": "8b7b0554d086fcc9444eb6d3a7e934cc351f1dc5",
+    "onlyFile": "stage3/adapt/20-optional-declarations/testdata/nullable-return.a",
+    "header": "// a-check: type error TS2375",
+    "bodySha256": "1cc496eaa15920e638ed970a8fcc7eaf56fb5c07a1e86d9a9cb6c4fa9ff5cc33",
+    "bodyUnchanged": true,
+    "realCheckerExit": 1,
+    "firstCode": "TS2375",
+    "originalWitnessPassed": true
+  },
+  "base": "8b7b0554d086fcc9444eb6d3a7e934cc351f1dc5",
+  "resolverSha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "summary": {
+    "internal_rows": 30,
+    "repaired": 24,
+    "declined": 6,
+    "primary_before": 233,
+    "primary_after": 203,
+    "added_diagnostics": 0
+  },
+  "erasure": {
+    "status": "pass",
+    "typescript": "6.0.3",
+    "beforeOwners": 376,
+    "afterOwners": 401,
+    "newOwners": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 8006,
+        "column": 13,
+        "name": "questionToken",
+        "owner_path": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "SignatureToSignatureDeclarationOptions",
+          "questionToken"
+        ],
+        "before": "QuestionToken"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 10055,
+        "column": 5,
+        "name": "moduleResolverHost",
+        "owner_path": [
+          "SymbolTracker",
+          "moduleResolverHost"
+        ],
+        "before": "ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 8004,
+        "column": 13,
+        "name": "modifiers",
+        "owner_path": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "SignatureToSignatureDeclarationOptions",
+          "modifiers"
+        ],
+        "before": "readonly Modifier[]"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 7090,
+        "column": 62,
+        "name": "debugInfo",
+        "owner_path": [
+          "TypeMapper",
+          "debugInfo"
+        ],
+        "before": "() => string"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 21338,
+        "column": 215,
+        "name": "errors",
+        "owner_path": [
+          "createTypeChecker",
+          "checkTypeAssignableTo",
+          "errorOutputObject",
+          "errors"
+        ],
+        "before": "Diagnostic[]"
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 43496,
+        "column": 93,
+        "name": "value",
+        "owner_path": [
+          "createTypeChecker",
+          "getPromisedTypeOfPromise",
+          "thisTypeForErrorOut",
+          "value"
+        ],
+        "before": "Type"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 1720,
+        "column": 5,
+        "name": "prefix",
+        "owner_path": [
+          "AutoGenerateInfo",
+          "prefix"
+        ],
+        "before": "string | GeneratedNamePart"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 1721,
+        "column": 5,
+        "name": "suffix",
+        "owner_path": [
+          "AutoGenerateInfo",
+          "suffix"
+        ],
+        "before": "string"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 8065,
+        "column": 21,
+        "name": "peerDependencies",
+        "owner_path": [
+          "PackageId",
+          "peerDependencies"
+        ],
+        "before": "string"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 8120,
+        "column": 22,
+        "name": "resolutionDiagnostics",
+        "owner_path": [
+          "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+          "resolutionDiagnostics"
+        ],
+        "before": "Diagnostic[]"
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 168,
+        "column": 5,
+        "name": "originalPath",
+        "owner_path": [
+          "Resolved",
+          "originalPath"
+        ],
+        "before": "string | true"
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 850,
+        "column": 9,
+        "name": "reusedNames",
+        "owner_path": [
+          "createResolutionCache",
+          "ResolveNamesWithLocalCacheInput",
+          "reusedNames"
+        ],
+        "before": "readonly Entry[]"
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 235,
+        "column": 5,
+        "name": "nonRecursive",
+        "owner_path": [
+          "DirectoryWatchesOfFailedLookup",
+          "nonRecursive"
+        ],
+        "before": "boolean"
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 301,
+        "column": 5,
+        "name": "className",
+        "owner_path": [
+          "PrivateEnvironmentData",
+          "className"
+        ],
+        "before": "Identifier"
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 306,
+        "column": 5,
+        "name": "weakSetName",
+        "owner_path": [
+          "PrivateEnvironmentData",
+          "weakSetName"
+        ],
+        "before": "Identifier"
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 272,
+        "column": 5,
+        "name": "setterName",
+        "owner_path": [
+          "PrivateIdentifierAccessorInfo",
+          "setterName"
+        ],
+        "before": "Identifier"
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 268,
+        "column": 5,
+        "name": "getterName",
+        "owner_path": [
+          "PrivateIdentifierAccessorInfo",
+          "getterName"
+        ],
+        "before": "Identifier"
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 266,
+        "column": 5,
+        "name": "savedPendingExpressions",
+        "owner_path": [
+          "ClassLexicalEnvironmentStackEntry",
+          "savedPendingExpressions"
+        ],
+        "before": "Expression[]"
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 285,
+        "column": 5,
+        "name": "savedPendingExpressions",
+        "owner_path": [
+          "OtherLexicalEnvironmentStackEntry",
+          "savedPendingExpressions"
+        ],
+        "before": "Expression[]"
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 906,
+        "column": 5,
+        "name": "createProgram",
+        "owner_path": [
+          "CreateWatchCompilerHostInput",
+          "createProgram"
+        ],
+        "before": "CreateProgram<T>"
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "line": 8097,
+        "column": 5,
+        "name": "alternateResult",
+        "owner_path": [
+          "ResolvedModuleWithFailedLookupLocations",
+          "alternateResult"
+        ],
+        "before": "string"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 176,
+        "column": 5,
+        "name": "outSignature",
+        "owner_path": [
+          "ReusableBuilderProgramState",
+          "outSignature"
+        ],
+        "before": "EmitSignature"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 182,
+        "column": 5,
+        "name": "hasErrors",
+        "owner_path": [
+          "ReusableBuilderProgramState",
+          "hasErrors"
+        ],
+        "before": "boolean"
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 172,
+        "column": 5,
+        "name": "emitSignatures",
+        "owner_path": [
+          "ReusableBuilderProgramState",
+          "emitSignatures"
+        ],
+        "before": "Map<Path, EmitSignature>"
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 172,
+        "column": 5,
+        "name": "alternateResult",
+        "owner_path": [
+          "ResolutionWithFailedLookupLocations",
+          "alternateResult"
+        ],
+        "before": "string"
+      }
+    ],
+    "resolved_findings": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 7837,
+        "column": 133,
+        "code": 2379,
+        "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'questionToken' are incompatible.\n    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.\n      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.",
+        "source": "{ name: propertyName, questionToken: optionalToken }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/checker.ts",
+            "line": 8006,
+            "column": 13,
+            "name": "questionToken"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 8082,
+        "column": 62,
+        "code": 2379,
+        "message": "Argument of type '{ reportCyclicStructureError(): void; reportInaccessibleThisError(): void; reportInaccessibleUniqueSymbolError(): void; reportLikelyUnsafeImportRequiredError(specifier: string, symbolName: string | undefined): void; ... 8 more ...; popErrorFallbackNode?: () => void; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'moduleResolverHost' are incompatible.\n    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.",
+        "source": "{\r\n                ...oldTracker.inner,\r\n                reportCyclicStructureError() {\r\n                    markError(() => oldTracker.reportCyclicStructureError());\r\n                },\r\n                reportInaccessibleThisError() {\r\n                    markError(() => oldTracker.reportInaccessibleThisError());\r\n                },\r\n                reportInaccessibleUniqueSymbolError() {\r\n                    markError(() => oldTracker.reportInaccessibleUniqueSymbolError());\r\n                },\r\n                reportLikelyUnsafeImportRequiredError(specifier, symbolName) {\r\n                    markError(() => oldTracker.reportLikelyUnsafeImportRequiredError(specifier, symbolName));\r\n                },\r\n                reportNonSerializableProperty(name) {\r\n                    markError(() => oldTracker.reportNonSerializableProperty(name));\r\n                },\r\n                reportPrivateInBaseOfClassExpression(propertyName) {\r\n                    markError(() => oldTracker.reportPrivateInBaseOfClassExpression(propertyName));\r\n                },\r\n                trackSymbol(sym, decl, meaning) {\r\n                    (trackedSymbols ??= []).push([sym, decl, meaning]);\r\n                    return false;\r\n                },\r\n                moduleResolverHost: context.tracker.moduleResolverHost,\r\n            }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 10055,
+            "column": 5,
+            "name": "moduleResolverHost"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 10941,
+        "column": 33,
+        "code": 2379,
+        "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; modifiers: Modifier[] | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'modifiers' are incompatible.\n    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.\n      Type 'undefined' is not assignable to type 'readonly Modifier[]'.",
+        "source": "{\r\n                                    name,\r\n                                    questionToken: p.flags & SymbolFlags.Optional ? factory.createToken(SyntaxKind.QuestionToken) : undefined,\r\n                                    modifiers: flag ? factory.createModifiersFromModifierFlags(flag) : undefined,\r\n                                }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/checker.ts",
+            "line": 8004,
+            "column": 13,
+            "name": "modifiers"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 10941,
+        "column": 33,
+        "code": 2379,
+        "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; modifiers: Modifier[] | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'modifiers' are incompatible.\n    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.\n      Type 'undefined' is not assignable to type 'readonly Modifier[]'.",
+        "source": "{\r\n                                    name,\r\n                                    questionToken: p.flags & SymbolFlags.Optional ? factory.createToken(SyntaxKind.QuestionToken) : undefined,\r\n                                    modifiers: flag ? factory.createModifiersFromModifierFlags(flag) : undefined,\r\n                                }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/checker.ts",
+            "line": 8006,
+            "column": 13,
+            "name": "questionToken"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 20618,
+        "column": 50,
+        "code": 2345,
+        "message": "Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.\n  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'debugInfo' are incompatible.\n      Type '(() => string) | undefined' is not assignable to type '() => string'.\n        Type 'undefined' is not assignable to type '() => string'.",
+        "source": "{ kind: TypeMapKind.Function, func, debugInfo: Debug.isDebugging ? debugInfo : undefined }",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 7090,
+            "column": 62,
+            "name": "debugInfo"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 21434,
+        "column": 98,
+        "code": 2379,
+        "message": "Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errors' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+        "source": "resultObj",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/checker.ts",
+            "line": 21338,
+            "column": 215,
+            "name": "errors"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 43740,
+        "column": 86,
+        "code": 2379,
+        "message": "Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'value' are incompatible.\n    Type 'Type | undefined' is not assignable to type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+        "source": "thisTypeForErrorOut",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/checker.ts",
+            "line": 43496,
+            "column": 93,
+            "name": "value"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 46159,
+        "column": 176,
+        "code": 2345,
+        "message": "Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.\n  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'errors' are incompatible.\n      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n        Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+        "source": "errorOutputContainer",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/checker.ts",
+            "line": 21338,
+            "column": 215,
+            "name": "errors"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1315,
+        "column": 41,
+        "code": 2379,
+        "message": "Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+        "source": "{\r\n            flags: autoGenerateFlags,\r\n            id: nextAutoGenerateId,\r\n            prefix,\r\n            suffix,\r\n        }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 1720,
+            "column": 5,
+            "name": "prefix"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1315,
+        "column": 41,
+        "code": 2379,
+        "message": "Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+        "source": "{\r\n            flags: autoGenerateFlags,\r\n            id: nextAutoGenerateId,\r\n            prefix,\r\n            suffix,\r\n        }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 1721,
+            "column": 5,
+            "name": "suffix"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1403,
+        "column": 41,
+        "code": 2379,
+        "message": "Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+        "source": "{\r\n            flags: autoGenerateFlags,\r\n            id: nextAutoGenerateId,\r\n            prefix,\r\n            suffix,\r\n        }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 1720,
+            "column": 5,
+            "name": "prefix"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1403,
+        "column": 41,
+        "code": 2379,
+        "message": "Argument of type '{ flags: GeneratedIdentifierFlags; id: number; prefix: string | GeneratedNamePart | undefined; suffix: string | undefined; }' is not assignable to parameter of type 'AutoGenerateInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'prefix' are incompatible.\n    Type 'string | GeneratedNamePart | undefined' is not assignable to type 'string | GeneratedNamePart'.\n      Type 'undefined' is not assignable to type 'string | GeneratedNamePart'.",
+        "source": "{\r\n            flags: autoGenerateFlags,\r\n            id: nextAutoGenerateId,\r\n            prefix,\r\n            suffix,\r\n        }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 1721,
+            "column": 5,
+            "name": "suffix"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 132,
+        "column": 13,
+        "code": 2375,
+        "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+        "source": "packageId",
+        "resolution_group": "nullable-assignment",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 8065,
+            "column": 21,
+            "name": "peerDependencies"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 635,
+        "column": 5,
+        "code": 2375,
+        "message": "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: Diagnostic[] | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'resolutionDiagnostics' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+        "source": "result",
+        "resolution_group": "nullable-assignment",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 8120,
+            "column": 22,
+            "name": "resolutionDiagnostics"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2772,
+        "column": 21,
+        "code": 2322,
+        "message": "Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'.",
+        "source": "return",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/moduleNameResolver.ts",
+            "line": 168,
+            "column": 5,
+            "name": "originalPath"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 990,
+        "column": 43,
+        "code": 2379,
+        "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.",
+        "source": "{\r\n            entries: typeDirectiveReferences,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedTypeReferenceDirectives,\r\n            loader: createTypeReferenceResolutionLoader(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                getModuleResolutionHost(resolutionHost),\r\n                typeReferenceDirectiveResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedTypeReferenceDirectiveFromResolution,\r\n            shouldRetryResolution: resolution => resolution.resolvedTypeReferenceDirective === undefined,\r\n            deferWatchingNonRelativeResolution: false,\r\n        }",
+        "resolution_group": "generic-owner",
+        "owners": [
+          {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 850,
+            "column": 9,
+            "name": "reusedNames"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1019,
+        "column": 43,
+        "code": 2379,
+        "message": "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.",
+        "source": "{\r\n            entries: moduleLiterals,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedModuleNames,\r\n            loader: createModuleResolutionLoaderUsingGlobalCache(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                resolutionHost,\r\n                moduleResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedModuleFromResolution,\r\n            shouldRetryResolution: resolution => !resolution.resolvedModule || !resolutionExtensionIsTSOrJson(resolution.resolvedModule.extension),\r\n            logChanges: logChangesWhenResolvingModule,\r\n            deferWatchingNonRelativeResolution: true, // Defer non relative resolution watch because we could be using ambient modules\r\n        }",
+        "resolution_group": "generic-owner",
+        "owners": [
+          {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 850,
+            "column": 9,
+            "name": "reusedNames"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1332,
+        "column": 58,
+        "code": 2375,
+        "message": "Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+        "source": "dirWatcher",
+        "resolution_group": "nullable-assignment",
+        "owners": [
+          {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 235,
+            "column": 5,
+            "name": "nonRecursive"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1332,
+        "column": 58,
+        "code": 2379,
+        "message": "Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+        "source": "dirWatcher = { watcher: createDirectoryWatcher(dir, dirPath, nonRecursive), refCount: 1, nonRecursive }",
+        "resolution_group": "nullable-argument",
+        "owners": [
+          {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 235,
+            "column": 5,
+            "name": "nonRecursive"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2745,
+        "column": 16,
+        "code": 2375,
+        "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+        "source": "lexicalEnvironment.privateEnv",
+        "resolution_group": "nested-generic-result",
+        "owners": [
+          {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 301,
+            "column": 5,
+            "name": "className"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2745,
+        "column": 16,
+        "code": 2375,
+        "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+        "source": "lexicalEnvironment.privateEnv",
+        "resolution_group": "nested-generic-result",
+        "owners": [
+          {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 306,
+            "column": 5,
+            "name": "weakSetName"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2864,
+        "column": 52,
+        "code": 2345,
+        "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'setterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+        "source": "{\r\n                kind: PrivateIdentifierKind.Accessor,\r\n                getterName,\r\n                setterName: undefined,\r\n                brandCheckIdentifier,\r\n                isStatic,\r\n                isValid,\r\n            }",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 272,
+            "column": 5,
+            "name": "setterName"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 2896,
+        "column": 52,
+        "code": 2345,
+        "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'getterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+        "source": "{\r\n                kind: PrivateIdentifierKind.Accessor,\r\n                getterName: undefined,\r\n                setterName,\r\n                brandCheckIdentifier,\r\n                isStatic,\r\n                isValid,\r\n            }",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 268,
+            "column": 5,
+            "name": "getterName"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 351,
+        "column": 9,
+        "code": 2322,
+        "message": "Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'.",
+        "source": "top",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/transformers/esDecorators.ts",
+            "line": 266,
+            "column": 5,
+            "name": "savedPendingExpressions"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 398,
+        "column": 13,
+        "code": 2322,
+        "message": "Type '{ kind: \"other\"; next: ClassLexicalEnvironmentStackEntry | ClassElementLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"other\"; next: ClassLexicalEnvironmentStackEntry | ClassElementLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'OtherLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'.",
+        "source": "top",
+        "resolution_group": "unsupported-code",
+        "owners": [
+          {
+            "file": "src/compiler/transformers/esDecorators.ts",
+            "line": 285,
+            "column": 5,
+            "name": "savedPendingExpressions"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 371,
+        "column": 65,
+        "code": 2379,
+        "message": "Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+        "source": "{\r\n            rootFiles: rootFilesOrConfigFileName,\r\n            options: options!,\r\n            watchOptions: watchOptionsOrExtraFileExtensions as WatchOptions,\r\n            projectReferences: projectReferencesOrWatchOptionsToExtend as readonly ProjectReference[],\r\n            system,\r\n            createProgram,\r\n            reportDiagnostic,\r\n            reportWatchStatus,\r\n        }",
+        "resolution_group": "generic-owner",
+        "owners": [
+          {
+            "file": "src/compiler/watch.ts",
+            "line": 906,
+            "column": 5,
+            "name": "createProgram"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 383,
+        "column": 52,
+        "code": 2379,
+        "message": "Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+        "source": "{\r\n            configFileName: rootFilesOrConfigFileName,\r\n            optionsToExtend: options,\r\n            watchOptionsToExtend: projectReferencesOrWatchOptionsToExtend as WatchOptions,\r\n            extraFileExtensions: watchOptionsOrExtraFileExtensions as readonly FileExtensionInfo[],\r\n            system,\r\n            createProgram,\r\n            reportDiagnostic,\r\n            reportWatchStatus,\r\n        }",
+        "resolution_group": "generic-owner",
+        "owners": [
+          {
+            "file": "src/compiler/watch.ts",
+            "line": 906,
+            "column": 5,
+            "name": "createProgram"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 285,
+        "column": 12,
+        "code": null,
+        "source": "{\r\n        resolvedModule: resolved && {\r\n            resolvedFileName: resolved.path,\r\n            originalPath: resolved.originalPath === true ? undefined : resolved.originalPath,\r\n            extension: resolved.extension,\r\n            isExternalLibraryImport,\r\n            packageId: resolved.packageId,\r\n            resolvedUsingTsExtension: !!resolved.resolvedUsingTsExtension,\r\n        },\r\n        failedLookupLocations: initializeResolutionField(failedLookupLocations),\r\n        affectingLocations: initializeResolutionField(affectingLocations),\r\n        resolutionDiagnostics: initializeResolutionField(diagnostics),\r\n        alternateResult,\r\n    }",
+        "message": "Existing object construction stores undefined; another incompatible member can mask its optional-property diagnostic",
+        "resolution_group": "late-exposure",
+        "owners": [
+          {
+            "file": "src/compiler/types.ts",
+            "line": 8097,
+            "column": 5,
+            "name": "alternateResult"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2273,
+        "column": 17,
+        "code": null,
+        "source": "{\r\n            fileInfos,\r\n            compilerOptions: buildInfo.options ? convertToOptionsWithAbsolutePaths(buildInfo.options, toAbsolutePath) : {},\r\n            semanticDiagnosticsPerFile: toPerFileSemanticDiagnostics(buildInfo.semanticDiagnosticsPerFile),\r\n            emitDiagnosticsPerFile: toPerFileEmitDiagnostics(buildInfo.emitDiagnosticsPerFile),\r\n            hasReusableDiagnostic: true,\r\n            changedFilesSet,\r\n            latestChangedDtsFile,\r\n            outSignature: buildInfo.outSignature,\r\n            programEmitPending: buildInfo.pendingEmit === undefined ? undefined : toProgramEmitPending(buildInfo.pendingEmit, buildInfo.options),\r\n            hasErrors: buildInfo.errors,\r\n            checkPending: buildInfo.checkPending,\r\n        }",
+        "message": "Existing object construction stores undefined; another incompatible member can mask its optional-property diagnostic",
+        "resolution_group": "late-exposure",
+        "owners": [
+          {
+            "file": "src/compiler/builder.ts",
+            "line": 176,
+            "column": 5,
+            "name": "outSignature"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2273,
+        "column": 17,
+        "code": null,
+        "source": "{\r\n            fileInfos,\r\n            compilerOptions: buildInfo.options ? convertToOptionsWithAbsolutePaths(buildInfo.options, toAbsolutePath) : {},\r\n            semanticDiagnosticsPerFile: toPerFileSemanticDiagnostics(buildInfo.semanticDiagnosticsPerFile),\r\n            emitDiagnosticsPerFile: toPerFileEmitDiagnostics(buildInfo.emitDiagnosticsPerFile),\r\n            hasReusableDiagnostic: true,\r\n            changedFilesSet,\r\n            latestChangedDtsFile,\r\n            outSignature: buildInfo.outSignature,\r\n            programEmitPending: buildInfo.pendingEmit === undefined ? undefined : toProgramEmitPending(buildInfo.pendingEmit, buildInfo.options),\r\n            hasErrors: buildInfo.errors,\r\n            checkPending: buildInfo.checkPending,\r\n        }",
+        "message": "Existing object construction stores undefined; another incompatible member can mask its optional-property diagnostic",
+        "resolution_group": "late-exposure",
+        "owners": [
+          {
+            "file": "src/compiler/builder.ts",
+            "line": 182,
+            "column": 5,
+            "name": "hasErrors"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2310,
+        "column": 17,
+        "code": null,
+        "source": "{\r\n            fileInfos,\r\n            compilerOptions: buildInfo.options ? convertToOptionsWithAbsolutePaths(buildInfo.options, toAbsolutePath) : {},\r\n            referencedMap: toManyToManyPathMap(buildInfo.referencedMap, buildInfo.options ?? {}),\r\n            semanticDiagnosticsPerFile: toPerFileSemanticDiagnostics(buildInfo.semanticDiagnosticsPerFile),\r\n            emitDiagnosticsPerFile: toPerFileEmitDiagnostics(buildInfo.emitDiagnosticsPerFile),\r\n            hasReusableDiagnostic: true,\r\n            changedFilesSet,\r\n            affectedFilesPendingEmit: buildInfo.affectedFilesPendingEmit && arrayToMap(buildInfo.affectedFilesPendingEmit, value => toFilePath(isNumber(value) ? value : value[0]), value => toBuilderFileEmit(value, fullEmitForOptions!)),\r\n            latestChangedDtsFile,\r\n            emitSignatures: emitSignatures?.size ? emitSignatures : undefined,\r\n            hasErrors: buildInfo.errors,\r\n            checkPending: buildInfo.checkPending,\r\n        }",
+        "message": "Existing object construction stores undefined; another incompatible member can mask its optional-property diagnostic",
+        "resolution_group": "late-exposure",
+        "owners": [
+          {
+            "file": "src/compiler/builder.ts",
+            "line": 172,
+            "column": 5,
+            "name": "emitSignatures"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 2310,
+        "column": 17,
+        "code": null,
+        "source": "{\r\n            fileInfos,\r\n            compilerOptions: buildInfo.options ? convertToOptionsWithAbsolutePaths(buildInfo.options, toAbsolutePath) : {},\r\n            referencedMap: toManyToManyPathMap(buildInfo.referencedMap, buildInfo.options ?? {}),\r\n            semanticDiagnosticsPerFile: toPerFileSemanticDiagnostics(buildInfo.semanticDiagnosticsPerFile),\r\n            emitDiagnosticsPerFile: toPerFileEmitDiagnostics(buildInfo.emitDiagnosticsPerFile),\r\n            hasReusableDiagnostic: true,\r\n            changedFilesSet,\r\n            affectedFilesPendingEmit: buildInfo.affectedFilesPendingEmit && arrayToMap(buildInfo.affectedFilesPendingEmit, value => toFilePath(isNumber(value) ? value : value[0]), value => toBuilderFileEmit(value, fullEmitForOptions!)),\r\n            latestChangedDtsFile,\r\n            emitSignatures: emitSignatures?.size ? emitSignatures : undefined,\r\n            hasErrors: buildInfo.errors,\r\n            checkPending: buildInfo.checkPending,\r\n        }",
+        "message": "Existing object construction stores undefined; another incompatible member can mask its optional-property diagnostic",
+        "resolution_group": "late-exposure",
+        "owners": [
+          {
+            "file": "src/compiler/builder.ts",
+            "line": 182,
+            "column": 5,
+            "name": "hasErrors"
+          }
+        ]
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 285,
+        "column": 12,
+        "code": null,
+        "source": "{\r\n        resolvedModule: resolved && {\r\n            resolvedFileName: resolved.path,\r\n            originalPath: resolved.originalPath === true ? undefined : resolved.originalPath,\r\n            extension: resolved.extension,\r\n            isExternalLibraryImport,\r\n            packageId: resolved.packageId,\r\n            resolvedUsingTsExtension: !!resolved.resolvedUsingTsExtension,\r\n        },\r\n        failedLookupLocations: initializeResolutionField(failedLookupLocations),\r\n        affectingLocations: initializeResolutionField(affectingLocations),\r\n        resolutionDiagnostics: initializeResolutionField(diagnostics),\r\n        alternateResult,\r\n    }",
+        "message": "Existing object construction stores undefined; another incompatible member can mask its optional-property diagnostic",
+        "resolution_group": "late-exposure",
+        "resolution": "same present-undefined slot through an inherited optional declaration",
+        "from": [
+          "ResolvedModuleWithFailedLookupLocations",
+          "alternateResult"
+        ],
+        "owners": [
+          {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 172,
+            "column": 5,
+            "name": "alternateResult"
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "file": "src/compiler/builder.ts",
+        "beforeSha256": "16f7d3712acb944b6007613979fc4606fd0e8cb6fc3524cfb1959f633fb6dd6c",
+        "afterSha256": "2406a7d64881d8df2382789790d315729be291560ad49956021fcbd813848bcc",
+        "javascriptSha256": "64c6f623c9d5b7c51228ca2b1a692387f70991295f05fd2f789a3d26df1f4274",
+        "javascriptBytes": 91213
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "beforeSha256": "edb5d5577dc13166e836d3d123c2a443ec1c0f92f41069fde901e20f3e63e053",
+        "afterSha256": "de44f5bec2a8431166e97eaa0a44910739d3e71773164282d89f8cb7c3892437",
+        "javascriptSha256": "786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e",
+        "javascriptBytes": 2892419
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "beforeSha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+        "afterSha256": "69c9cd16dadb7fc0120a92625008bc0065320f2c0e3ea171ee14816a3e4290ae",
+        "javascriptSha256": "a902312a8aca1a36a67e16991b8f62e7b05ead9d57ddc8c032a57ae510baf976",
+        "javascriptBytes": 150464
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "beforeSha256": "03a1f222e852db26faf0564e8a2ff66f764b3c5c001771f59d94339868d90673",
+        "afterSha256": "9aa97921c4135bb0752ae3755368363a563002ab9c4f779add09f598459aeebf",
+        "javascriptSha256": "292021472b79ca104dd66c526a4e281542568f6386ce8c2c4ee239b6dd8d2685",
+        "javascriptBytes": 64086
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "beforeSha256": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c",
+        "afterSha256": "514560de8384d965805ef4e6d2d728268c3a521572e767741c39ce0a90f06170",
+        "javascriptSha256": "2ca84767b571ecd804badc32f009e2abad40358fbee8556d8c6699b7e17da048",
+        "javascriptBytes": 134151
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "beforeSha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+        "afterSha256": "3e5553daefe963089058c1628cb1a690a946803ab3a8e5a80b7395473296f54a",
+        "javascriptSha256": "c8964ef2ae56bc39274a417889c6106baf8fe832040816c73a12c2e4bff6e42a",
+        "javascriptBytes": 109299
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "beforeSha256": "cf51f61165e0193945042f060a4f079dee1392d31c952c77cfe687534f41bc3b",
+        "afterSha256": "05683a10945308f928e687ea5ccca7f7ed4e909035a87f1efd0bbe8b577c2def",
+        "javascriptSha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3",
+        "javascriptBytes": 139659
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "beforeSha256": "e5d9a85079a9cc08ba4919c594c92cc1ba6236a378cd4ac1293b750ce174084e",
+        "afterSha256": "f697acb7bc02bc3f5261ac615414a479ca1c6378edf01e5cd8a4a12603f02511",
+        "javascriptSha256": "4ad8b4bc7e3f4fedf526daaddc3c8cbc67bac2b4b4a08b39c9f96e281e57fdbd",
+        "javascriptBytes": 36250
+      }
+    ],
+    "runtimeExpressionMutants": [
+      {
+        "file": "src/compiler/builder.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/resolutionCache.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/transformers/classFields.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "caught": true
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "caught": true
+      }
+    ]
+  },
+  "api": {
+    "status": "pass",
+    "composed": 222,
+    "sanctioned": 222,
+    "beforeAfterBytesIdentical": true,
+    "publicMethodToPropertyMutant": "rejected"
+  },
+  "applyTests": {
+    "count": 23,
+    "seconds": 15.657,
+    "exit": 0,
+    "log": "optional-wave2-final-apply-tests.log.gz"
+  },
+  "inPlaceHeaders": {
+    "nullable-return.a": "TS2375",
+    "internal-resolution.a": "TS2375"
+  },
+  "mutants": [
+    {
+      "group": "generic-owner",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 1
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 0
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "e504acdc908b9b860da55d42e742e0ee5a0289851561eb992c18934123f357ff",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 207,
+          "returned_ids": [
+            "D5fa96141b629",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dd08d8be5f37d"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 208,
+          "returned_ids": [
+            "D5fa96141b629",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dd08d8be5f37d"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 207,
+          "returned_ids": [
+            "D5fa96141b629",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dd08d8be5f37d"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 208,
+          "returned_ids": [
+            "D5fa96141b629",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dd08d8be5f37d"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 108,
+          "returned_ids": [
+            "D5fa96141b629",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dd08d8be5f37d"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 292,
+          "returned_ids": [
+            "D5fa96141b629",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dd08d8be5f37d"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ]
+    },
+    {
+      "group": "late-exposure",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 1
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 0
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "6d47fff7063adee6c040b5cb07a05d2de01add4e1315f236695d7c7fdf5c9f3a",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 205,
+          "returned_ids": [
+            "D551a5cf2dd60",
+            "Df257019e13f7"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 206,
+          "returned_ids": [
+            "D551a5cf2dd60",
+            "Df257019e13f7"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 205,
+          "returned_ids": [
+            "D551a5cf2dd60",
+            "Df257019e13f7"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 206,
+          "returned_ids": [
+            "D551a5cf2dd60",
+            "Df257019e13f7"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 106,
+          "returned_ids": [
+            "D551a5cf2dd60",
+            "Df257019e13f7"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 290,
+          "returned_ids": [
+            "D551a5cf2dd60",
+            "Df257019e13f7"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ]
+    },
+    {
+      "group": "nested-expression",
+      "status": "unchanged: scoped group declined; witness also reached by construction scan",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 0
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 0
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "2f080d203254e78547c9f4efe32a691d93515d376c0cccfcc16f2c81c74a65b6",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 203,
+          "returned_ids": [],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 204,
+          "returned_ids": [],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 203,
+          "returned_ids": [],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 204,
+          "returned_ids": [],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 104,
+          "returned_ids": [],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 288,
+          "returned_ids": [],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": []
+    },
+    {
+      "group": "nested-generic-result",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 1
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 0
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "8d670a43bd02508d04284a9ae555a74243fbedef9da3a9f5c0baf83b005b4033",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 204,
+          "returned_ids": [
+            "D1c9885b9e665"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 205,
+          "returned_ids": [
+            "D1c9885b9e665"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 204,
+          "returned_ids": [
+            "D1c9885b9e665"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 205,
+          "returned_ids": [
+            "D1c9885b9e665"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 105,
+          "returned_ids": [
+            "D1c9885b9e665"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 289,
+          "returned_ids": [
+            "D1c9885b9e665"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": [
+        "D1c9885b9e665"
+      ]
+    },
+    {
+      "group": "nullable-argument",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 0
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 1
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "266b6dfc3801f491e6c6ce65d1df5849e4ca74a601560ec477fb6c1287746e0d",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 212,
+          "returned_ids": [
+            "D5fa96141b629",
+            "D9cecacb705c3",
+            "Db5cc84e69483",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dbb70df85cbc3",
+            "Dd08d8be5f37d",
+            "Dd8176fe26c6e",
+            "Dedba949185e9"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 213,
+          "returned_ids": [
+            "D5fa96141b629",
+            "D9cecacb705c3",
+            "Db5cc84e69483",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dbb70df85cbc3",
+            "Dd08d8be5f37d",
+            "Dd8176fe26c6e",
+            "Dedba949185e9"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 212,
+          "returned_ids": [
+            "D5fa96141b629",
+            "D9cecacb705c3",
+            "Db5cc84e69483",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dbb70df85cbc3",
+            "Dd08d8be5f37d",
+            "Dd8176fe26c6e",
+            "Dedba949185e9"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 213,
+          "returned_ids": [
+            "D5fa96141b629",
+            "D9cecacb705c3",
+            "Db5cc84e69483",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dbb70df85cbc3",
+            "Dd08d8be5f37d",
+            "Dd8176fe26c6e",
+            "Dedba949185e9"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 113,
+          "returned_ids": [
+            "D5fa96141b629",
+            "D9cecacb705c3",
+            "Db5cc84e69483",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dbb70df85cbc3",
+            "Dd08d8be5f37d",
+            "Dd8176fe26c6e",
+            "Dedba949185e9"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 297,
+          "returned_ids": [
+            "D5fa96141b629",
+            "D9cecacb705c3",
+            "Db5cc84e69483",
+            "Dba090b507f07",
+            "Dba1da66fe167",
+            "Dbb70df85cbc3",
+            "Dd08d8be5f37d",
+            "Dd8176fe26c6e",
+            "Dedba949185e9"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": [
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ]
+    },
+    {
+      "group": "nullable-assignment",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 1
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 0
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "02dd375921a817f52a64260974f803402a57e26312d6d877f47c771401508dea",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 209,
+          "returned_ids": [
+            "D12935f679493",
+            "D31a062fa64e8",
+            "D4c7cd2fa4786",
+            "D5977dd79a645",
+            "D664bf39bc400",
+            "Db18a6d195733"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 210,
+          "returned_ids": [
+            "D12935f679493",
+            "D31a062fa64e8",
+            "D4c7cd2fa4786",
+            "D5977dd79a645",
+            "D664bf39bc400",
+            "Db18a6d195733"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 209,
+          "returned_ids": [
+            "D12935f679493",
+            "D31a062fa64e8",
+            "D4c7cd2fa4786",
+            "D5977dd79a645",
+            "D664bf39bc400",
+            "Db18a6d195733"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 210,
+          "returned_ids": [
+            "D12935f679493",
+            "D31a062fa64e8",
+            "D4c7cd2fa4786",
+            "D5977dd79a645",
+            "D664bf39bc400",
+            "Db18a6d195733"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 110,
+          "returned_ids": [
+            "D12935f679493",
+            "D31a062fa64e8",
+            "D4c7cd2fa4786",
+            "D5977dd79a645",
+            "D664bf39bc400",
+            "Db18a6d195733"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 294,
+          "returned_ids": [
+            "D12935f679493",
+            "D31a062fa64e8",
+            "D4c7cd2fa4786",
+            "D5977dd79a645",
+            "D664bf39bc400",
+            "Db18a6d195733"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": [
+        "D4c7cd2fa4786",
+        "Db18a6d195733"
+      ]
+    },
+    {
+      "group": "public-blocker",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 1
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 0
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "05564ed70fc7dc639118a2fa5253da4bba74b72e3fde4762c66d6878c3dc2cca",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 203,
+          "returned_ids": [],
+          "other_new_diagnostics": [
+            [
+              "src/compiler/moduleNameResolver.ts",
+              627,
+              9,
+              "TS2375",
+              "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+            ],
+            [
+              "src/compiler/commandLineParser.ts",
+              2668,
+              9,
+              "TS2375",
+              "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+            ],
+            [
+              "src/compiler/moduleNameResolver.ts",
+              286,
+              9,
+              "TS2322",
+              "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+            ]
+          ],
+          "removed_from_fixed": [
+            "D5af6153ea92f",
+            "Dcb3573ed8c8f",
+            "Da5c0ee2a5f85"
+          ]
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 204,
+          "returned_ids": [],
+          "other_new_diagnostics": [
+            [
+              "src/compiler/moduleNameResolver.ts",
+              627,
+              9,
+              "TS2375",
+              "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+            ],
+            [
+              "src/compiler/commandLineParser.ts",
+              2668,
+              9,
+              "TS2375",
+              "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+            ],
+            [
+              "src/compiler/moduleNameResolver.ts",
+              286,
+              9,
+              "TS2322",
+              "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+            ]
+          ],
+          "removed_from_fixed": [
+            "D5af6153ea92f",
+            "Dcb3573ed8c8f",
+            "Da5c0ee2a5f85"
+          ]
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 203,
+          "returned_ids": [],
+          "other_new_diagnostics": [
+            [
+              "src/compiler/moduleNameResolver.ts",
+              627,
+              9,
+              "TS2375",
+              "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+            ],
+            [
+              "src/compiler/commandLineParser.ts",
+              2668,
+              9,
+              "TS2375",
+              "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+            ],
+            [
+              "src/compiler/moduleNameResolver.ts",
+              286,
+              9,
+              "TS2322",
+              "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+            ]
+          ],
+          "removed_from_fixed": [
+            "D5af6153ea92f",
+            "Dcb3573ed8c8f",
+            "Da5c0ee2a5f85"
+          ]
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 204,
+          "returned_ids": [],
+          "other_new_diagnostics": [
+            [
+              "src/compiler/moduleNameResolver.ts",
+              627,
+              9,
+              "TS2375",
+              "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+            ],
+            [
+              "src/compiler/commandLineParser.ts",
+              2668,
+              9,
+              "TS2375",
+              "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+            ],
+            [
+              "src/compiler/moduleNameResolver.ts",
+              286,
+              9,
+              "TS2322",
+              "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+            ]
+          ],
+          "removed_from_fixed": [
+            "D5af6153ea92f",
+            "Dcb3573ed8c8f",
+            "Da5c0ee2a5f85"
+          ]
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 104,
+          "returned_ids": [],
+          "other_new_diagnostics": [
+            [
+              "src/compiler/moduleNameResolver.ts",
+              627,
+              9,
+              "TS2375",
+              "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+            ],
+            [
+              "src/compiler/commandLineParser.ts",
+              2668,
+              9,
+              "TS2375",
+              "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+            ],
+            [
+              "src/compiler/moduleNameResolver.ts",
+              286,
+              9,
+              "TS2322",
+              "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+            ]
+          ],
+          "removed_from_fixed": [
+            "D5af6153ea92f",
+            "Dcb3573ed8c8f",
+            "Da5c0ee2a5f85"
+          ]
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 288,
+          "returned_ids": [],
+          "other_new_diagnostics": [
+            [
+              "src/compiler/moduleNameResolver.ts",
+              627,
+              9,
+              "TS2375",
+              "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+            ],
+            [
+              "src/compiler/commandLineParser.ts",
+              2668,
+              9,
+              "TS2375",
+              "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+            ],
+            [
+              "src/compiler/moduleNameResolver.ts",
+              286,
+              9,
+              "TS2322",
+              "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+            ]
+          ],
+          "removed_from_fixed": [
+            "D5af6153ea92f",
+            "Dcb3573ed8c8f",
+            "Da5c0ee2a5f85"
+          ]
+        }
+      ],
+      "group_ids_returned": []
+    },
+    {
+      "group": "unsupported-code",
+      "status": "caught",
+      "witnesses": [
+        {
+          "witness": "check-internal.cjs",
+          "exit": 1
+        },
+        {
+          "witness": "check-nullable-return.cjs",
+          "exit": 1
+        }
+      ],
+      "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+      "mutant_helper_sha256": "1e8d16089d3da0310bd3555de136e24ba08186be40504aea4a49ae1f1ef9463a",
+      "runs": [
+        {
+          "run": "stock-no-prelude",
+          "count": 209,
+          "returned_ids": [
+            "D255c75fe6d0a",
+            "D85a162474867",
+            "D899ab2dda4eb",
+            "Daf767ecf9b24",
+            "Dc00d790b49ab",
+            "Dcc8edd0800fa"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-filtered-prelude",
+          "count": 210,
+          "returned_ids": [
+            "D255c75fe6d0a",
+            "D85a162474867",
+            "D899ab2dda4eb",
+            "Daf767ecf9b24",
+            "Dc00d790b49ab",
+            "Dcc8edd0800fa"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-no-prelude",
+          "count": 209,
+          "returned_ids": [
+            "D255c75fe6d0a",
+            "D85a162474867",
+            "D899ab2dda4eb",
+            "Daf767ecf9b24",
+            "Dc00d790b49ab",
+            "Dcc8edd0800fa"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-filtered-prelude",
+          "count": 210,
+          "returned_ids": [
+            "D255c75fe6d0a",
+            "D85a162474867",
+            "D899ab2dda4eb",
+            "Daf767ecf9b24",
+            "Dc00d790b49ab",
+            "Dcc8edd0800fa"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "stock-no-unchecked-control",
+          "count": 110,
+          "returned_ids": [
+            "D255c75fe6d0a",
+            "D85a162474867",
+            "D899ab2dda4eb",
+            "Daf767ecf9b24",
+            "Dc00d790b49ab",
+            "Dcc8edd0800fa"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        },
+        {
+          "run": "loader-original-prelude-mutant",
+          "count": 294,
+          "returned_ids": [
+            "D255c75fe6d0a",
+            "D85a162474867",
+            "D899ab2dda4eb",
+            "Daf767ecf9b24",
+            "Dc00d790b49ab",
+            "Dcc8edd0800fa"
+          ],
+          "other_new_diagnostics": [],
+          "removed_from_fixed": []
+        }
+      ],
+      "group_ids_returned": [
+        "D255c75fe6d0a",
+        "D85a162474867",
+        "D899ab2dda4eb",
+        "Daf767ecf9b24",
+        "Dc00d790b49ab",
+        "Dcc8edd0800fa"
+      ]
+    }
+  ],
+  "additionalMutants": [
+    {
+      "name": "append runtime expression",
+      "files": [
+        "src/compiler/builder.ts",
+        "src/compiler/checker.ts",
+        "src/compiler/moduleNameResolver.ts",
+        "src/compiler/resolutionCache.ts",
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/transformers/esDecorators.ts",
+        "src/compiler/types.ts",
+        "src/compiler/watch.ts"
+      ],
+      "caughtBy": "same transpile byte equality assertion for every changed file"
+    },
+    {
+      "name": "remove all resolved-findings attribution for questionToken",
+      "caughtBy": "owner ledger check",
+      "exit": 1
+    },
+    {
+      "name": "public method converted to property",
+      "caughtBy": "actual lane api_check"
+    },
+    {
+      "name": "feed actual public-blocker census to final comparator",
+      "caughtBy": "same no-new-chain comparison; unchanged total count does not pass"
+    },
+    {
+      "name": "alter retained reverted resolver bytes",
+      "kind": "evidence integrity",
+      "caughtBy": "mutant input SHA-256 check"
+    }
+  ],
+  "limitations": "No native or complete upstream oracle gate claimed. Two public rows and all 29 method rows remain unchanged. The declined nested-initializer revert survives focused witnesses through the shared construction scan and leaves all six census runs unchanged; no kill is claimed.",
+  "finalEvidenceVerifier": "pass: eight baseline/final profiles and eight per-group/safety reverts"
+}
