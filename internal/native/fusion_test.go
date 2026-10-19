@@ -88,12 +88,20 @@ func readFusionCases(t *testing.T, file string) map[string]fusionCase {
 	return cases
 }
 
-// handled holds one of the sweep's answers to the list. A listed question must answer its pinned value
-// natively, everywhere, and Node either that (x86-64) or the fused answer the list records (arm64).
-// accounted says the answer was dealt with here, explained or reported, so the sweep doesn't count it
-// again, and explained that Node differed and an audited case says why. A pending question is
-// reported where Node differs, with what it waits on.
-func (list *fusionList) handled(t *testing.T, question, native, oracle string) (accounted, explained bool) {
+// fusionReporter is what handled reports through: a test, or a recorder that proves a check can fail.
+type fusionReporter interface {
+	Helper()
+	Errorf(format string, arguments ...any)
+}
+
+// handled holds one of the sweep's answers to the list, on architecture (GOARCH). A listed question
+// must answer its pinned value natively, everywhere, and Node the pinned value too, except on arm64,
+// where an audited case explains Node's recorded fused answer. Anywhere else Node can't have fused, so
+// a fused answer there is red: it's the only independent proof of a pinned value -update-fusion took
+// from native's own arm64 answer. accounted says the answer was dealt with here, explained or
+// reported, so the sweep doesn't count it again, and explained that Node differed and an audited case
+// says why. A pending question is reported where Node differs, with what it waits on.
+func (list *fusionList) handled(t fusionReporter, architecture, question, native, oracle string) (accounted, explained bool) {
 	t.Helper()
 	listed, audited := list.cases[question]
 	if !audited {
@@ -110,6 +118,8 @@ func (list *fusionList) handled(t *testing.T, question, native, oracle string) (
 	switch {
 	case oracle == listed.pinned:
 		return true, false
+	case oracle == listed.fused && architecture != "arm64":
+		t.Errorf("%s: Node on %s gives %s, the fused value the %s fusion list records for arm64, where only the pinned %s is the unfused answer", question, architecture, oracle, list.name, listed.pinned)
 	case oracle == listed.fused && audited:
 		return true, true
 	case oracle == listed.fused:
@@ -320,5 +330,40 @@ func TestParseIntFusionListIsV8sLoop(t *testing.T) {
 	}
 	for question := range list.pending {
 		t.Errorf("parseInt has a pending case, %q, which its audit would explain or refuse", question)
+	}
+}
+
+// fusionRecorder counts the errors handled reports, so a test can show a check fails.
+type fusionRecorder struct{ errors []string }
+
+func (recorder *fusionRecorder) Helper() {}
+
+func (recorder *fusionRecorder) Errorf(format string, arguments ...any) {
+	recorder.errors = append(recorder.errors, fmt.Sprintf(format, arguments...))
+}
+
+// A listed case explains a fused answer from Node only on arm64. On x86-64 that answer is red: the x86
+// run is the only independent proof of an IEEE 754 pinned value, which -update-fusion took from
+// native's own arm64 answer, so an unfused bug whose fused twin happened to match Node would otherwise
+// pass there. The mutant that drops the arm64 condition makes the amd64 case go green, and this red.
+func TestFusionListExplainsOnlyOnArm64(t *testing.T) {
+	t.Parallel()
+	list := &fusionList{name: "probe", cases: map[string]fusionCase{"cos 1 3ff0000000000000": {"3fe14a280fb5068c", "3fe14a280fb5068b"}}, pending: map[string]fusionCase{}, asked: map[string]bool{}}
+	for _, run := range []struct {
+		architecture, oracle string
+		explained            bool
+		errors               int
+	}{
+		{"arm64", "3fe14a280fb5068b", true, 0},
+		{"amd64", "3fe14a280fb5068b", false, 1},
+		{"amd64", "3fe14a280fb5068c", false, 0},
+		{"arm64", "3fe14a280fb5068c", false, 0},
+		{"arm64", "3fe14a280fb5068d", false, 1},
+	} {
+		recorder := &fusionRecorder{}
+		accounted, explained := list.handled(recorder, run.architecture, "cos 1 3ff0000000000000", "3fe14a280fb5068c", run.oracle)
+		if !accounted || explained != run.explained || len(recorder.errors) != run.errors {
+			t.Errorf("%s, Node %s: accounted %t, explained %t, %d errors %q; want explained %t and %d errors", run.architecture, run.oracle, accounted, explained, len(recorder.errors), recorder.errors, run.explained, run.errors)
+		}
 	}
 }
