@@ -23,7 +23,15 @@
 // there, over this graph, for checking rather than for construction.
 //
 // (cohere's comment here also covers its other control-flow graph and the doubled `finally`. Adamic
-// has neither: 0.1 has no `try`.)
+// has neither.)
+//
+// # A throw's edge, which carries less than the block it leaves
+//
+// Adamic: a block whose last instruction can throw ends in MayThrow, and its edge to the handler
+// leaves before that instruction's definitions happen. In `local = f()` where f throws and the
+// catch reads local, the catch reads the old value on Node. So a lookup through that edge reads
+// what each binding held just before the last instruction defined it (valueOut), never the block's
+// final answer, which is what every other edge carries. cohere had no such edge to keep apart.
 //
 // # The one property everything rests on
 //
@@ -120,8 +128,25 @@ type ssaState struct {
 	defs map[DeclarationId]IdentifierId
 
 	// incompletePhis are phis minted before every predecessor was processed. Their result is already
-	// bound in defs; only the operands are outstanding.
+	// bound in defs (or entry); only the operands are outstanding.
 	incompletePhis []incompletePhi
+
+	// beforeThrow is, for a block that ends in MayThrow, what each binding its last instruction
+	// defines held just before that definition: what the edge to the handler carries (valueOut).
+	beforeThrow map[DeclarationId]beforeDefine
+
+	// entry is what a binding held on entry to this block, for a binding the handler edge needs
+	// from before the block defined it. defs can't hold it: by the end of the block, defs holds
+	// the block's own definition.
+	entry map[DeclarationId]IdentifierId
+}
+
+// beforeDefine is what a binding held just before an instruction defined it: a value the block
+// already gave it, or, when onEntry, whatever it held on entry to the block, looked up only if a
+// handler reads it.
+type beforeDefine struct {
+	value   IdentifierId
+	onEntry bool
 }
 
 // incompletePhi is a phi awaiting operands.
@@ -176,7 +201,8 @@ func (b *ssaBuilder) run() {
 		}
 		b.visited[block.Id] = true
 
-		for _, instructionId := range block.Instructions {
+		_, endsInThrow := block.Terminal.(*MayThrow)
+		for position, instructionId := range block.Instructions {
 			instruction := b.function.Instructions[instructionId]
 			// Uses first, then definitions. `x = x + 1` must read the OLD x before the store mints
 			// the new one; visiting in the other order would make the increment read itself.
@@ -185,6 +211,11 @@ func (b *ssaBuilder) run() {
 					b.useIn(block.Id, place)
 				}
 			})
+			// Adamic: the instruction that may throw ends the block, and a throw never makes its
+			// definitions, so the handler edge is owed what each binding holds now.
+			if endsInThrow && position == len(block.Instructions)-1 {
+				b.recordBeforeThrow(block.Id, instruction)
+			}
 			// Adamic: no context store, so every definition is a fresh value.
 			EachInstructionPlacePointer(instruction, func(place *Place, role PlaceRole) {
 				if role == PlaceRoleDefine {
@@ -236,6 +267,28 @@ func (b *ssaBuilder) defineIn(blockId BlockId, place *Place) {
 	place.Identifier = renamed
 }
 
+// recordBeforeThrow keeps, for each binding a throwing instruction defines, what it holds before the
+// definition: the block's own answer so far, or its value on entry, which isn't looked up here. A
+// lookup here would walk off the entry for a variable this instruction declares and mark it unknown
+// for the whole function; only a handler that reads the binding needs its value from before.
+func (b *ssaBuilder) recordBeforeThrow(blockId BlockId, instruction *Instruction) {
+	state := b.states[blockId]
+	if state.beforeThrow == nil {
+		state.beforeThrow = map[DeclarationId]beforeDefine{}
+	}
+	EachInstructionPlace(instruction, func(place Place, role PlaceRole) {
+		if role != PlaceRoleDefine {
+			return
+		}
+		binding := b.function.Identifiers[place.Identifier].Declaration
+		if value, defined := state.defs[binding]; defined {
+			state.beforeThrow[binding] = beforeDefine{value: value}
+		} else {
+			state.beforeThrow[binding] = beforeDefine{onEntry: true}
+		}
+	})
+}
+
 // useIn rewrites a use to whatever value reaches this block.
 func (b *ssaBuilder) useIn(blockId BlockId, place *Place) {
 	place.Identifier = b.valueAt(place, blockId)
@@ -265,6 +318,9 @@ func (b *ssaBuilder) mint(original IdentifierId) IdentifierId {
 //     construction.
 //  5. Several predecessors - a real join. Mint the result, record it, THEN collect operands; a
 //     predecessor whose lookup comes back around to this block must find the result already bound.
+//
+// Cases 2 to 5 are lookupEntry, which valueOnEntry shares, and a predecessor is read through
+// valueOut, which is where a throw's edge differs.
 func (b *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
 	original := place.Identifier
 	binding := b.function.Identifiers[original].Declaration
@@ -280,6 +336,34 @@ func (b *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
 	if renamed, defined := state.defs[binding]; defined {
 		return renamed
 	}
+	return b.lookupEntry(place, blockId, state, state.defs)
+}
+
+// valueOnEntry is what a binding holds on entry to a block the walk has already processed: what
+// valueAt would have answered before the block's own definitions, which defs no longer holds. Its
+// answers are kept in the block's entry, never its defs.
+func (b *ssaBuilder) valueOnEntry(place *Place, blockId BlockId) IdentifierId {
+	original := place.Identifier
+	binding := b.function.Identifiers[original].Declaration
+	if b.unknown[binding] {
+		return original
+	}
+	state := b.states[blockId]
+	if renamed, defined := state.entry[binding]; defined {
+		return renamed
+	}
+	if state.entry == nil {
+		state.entry = map[DeclarationId]IdentifierId{}
+	}
+	return b.lookupEntry(place, blockId, state, state.entry)
+}
+
+// lookupEntry is valueAt's cases 2 to 5: the binding isn't defined in the block, so its value is
+// what the predecessors hand it, and the answer is recorded in record (the block's defs, or its
+// entry for valueOnEntry) before any recursion that could come back around to it.
+func (b *ssaBuilder) lookupEntry(place *Place, blockId BlockId, state *ssaState, record map[DeclarationId]IdentifierId) IdentifierId {
+	original := place.Identifier
+	binding := b.function.Identifiers[original].Declaration
 
 	block, ok := b.function.Block(blockId)
 	if !ok {
@@ -297,7 +381,7 @@ func (b *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
 	}
 	if remaining > 0 {
 		renamed := b.mint(original)
-		state.defs[binding] = renamed
+		record[binding] = renamed
 		state.incompletePhis = append(state.incompletePhis, incompletePhi{
 			original: *place,
 			renamed:  Place{Identifier: renamed},
@@ -306,17 +390,34 @@ func (b *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
 	}
 
 	if len(block.Predecessors) == 1 {
-		renamed := b.valueAt(place, block.Predecessors[0])
-		state.defs[binding] = renamed
+		renamed := b.valueOut(place, block.Predecessors[0], blockId)
+		record[binding] = renamed
 		return renamed
 	}
 
 	renamed := b.mint(original)
-	state.defs[binding] = renamed
+	record[binding] = renamed
 	b.addPhi(blockId, *place, Place{
 		Identifier: renamed,
 	})
 	return renamed
+}
+
+// valueOut is what a binding holds on the edge from a block to one of its successors: the block's
+// final answer, except on a MayThrow's edge to its handler, which leaves before the last
+// instruction's definitions (the file comment's "A throw's edge").
+func (b *ssaBuilder) valueOut(place *Place, from BlockId, to BlockId) IdentifierId {
+	if block, ok := b.function.Block(from); ok && throwsTo(block, to) {
+		binding := b.function.Identifiers[place.Identifier].Declaration
+		// A predecessor is looked through only once it is processed, so its state is there.
+		if before, defined := b.states[from].beforeThrow[binding]; defined {
+			if before.onEntry {
+				return b.valueOnEntry(place, from)
+			}
+			return before.value
+		}
+	}
+	return b.valueAt(place, from)
 }
 
 // addPhi collects one operand per predecessor and attaches the phi to the block.
@@ -330,7 +431,7 @@ func (b *ssaBuilder) addPhi(blockId BlockId, original Place, renamed Place) {
 	for _, predecessorId := range block.Predecessors {
 		lookup := original
 		operands[predecessorId] = Place{
-			Identifier: b.valueAt(&lookup, predecessorId),
+			Identifier: b.valueOut(&lookup, predecessorId, blockId),
 		}
 	}
 

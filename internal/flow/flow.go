@@ -284,6 +284,21 @@ func EachSuccessor(terminal Terminal, visit func(block BlockId)) {
 	}
 }
 
+// throwsTo reports whether control from a block to a successor is a throw out of the block's last
+// instruction: its MayThrow's edge to its handler, on which that instruction defined nothing.
+func throwsTo(block *BasicBlock, successor BlockId) bool {
+	throws, ok := block.Terminal.(*MayThrow)
+	if !ok || throws.Handler != successor {
+		return false
+	}
+	// Build always continues in a new block, so the two edges are never one. If they were, the one
+	// edge would carry both the definition and its absence, and no single value could say which.
+	if throws.Next == successor {
+		panic(fmt.Sprintf("flow: bb%d's MayThrow goes on and throws to the same block", block.Id))
+	}
+	return true
+}
+
 // TerminalOrder is a terminal's position in evaluation order.
 func TerminalOrder(terminal Terminal) EvaluationOrder {
 	switch terminal := terminal.(type) {
