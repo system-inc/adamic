@@ -1716,8 +1716,11 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 			kept = append(kept, other)
 		}
 		for _, entry := range set.Entries {
-			if (entry.Kind == "product" || entry.Kind == productKeyKind) && readsBackTo(cache, entry.Path, nameKey) {
-				return fmt.Errorf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", entry.Path[:min(12, len(entry.Path))])
+			if entry.Kind != "product" && entry.Kind != productKeyKind {
+				continue
+			}
+			if back := readsBackTo(cache, entry.Path, nameKey); back != "" {
+				return fmt.Errorf("it reads product %s, %s", entry.Path[:min(12, len(entry.Path))], back)
 			}
 		}
 		reachBackChecked(nameKey)
