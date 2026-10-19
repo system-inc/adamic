@@ -107,8 +107,6 @@ func TestEnumLimitsStayLoud(t *testing.T) {
 	for _, source := range []string{
 		"enum E { A = Math.floor(2) }",
 		"enum E { A } enum E { B = 1 }",
-		"declare enum E { A }",
-		"declare enum E { A = 0 }",
 		"enum E { A = 1 / 0 }",
 		"function read(): number { return E.A; } read(); enum E { A }",
 		"function read(): number { return E.A; } function call(): number { return read(); } call(); enum E { A }",
@@ -125,6 +123,8 @@ func TestEnumLimitsStayLoud(t *testing.T) {
 		}
 	}
 	for _, source := range []string{
+		"declare enum E { A }",
+		"declare enum E { A = 0 }",
 		"enum E { '__proto__' = 'bad' }",
 		"enum E { NaN = 0 }",
 		"enum E { Infinity = 0 }",

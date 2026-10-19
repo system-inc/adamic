@@ -1,0 +1,3 @@
+// a-check: refused a global augmentation
+declare global { const augmentedLimit: number; }
+console.log(`${augmentedLimit + 1}`);

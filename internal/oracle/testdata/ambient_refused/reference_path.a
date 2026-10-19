@@ -1,0 +1,3 @@
+// a-check: refused a triple-slash reference path directive
+/// <reference path="./reference_target.d.ts" />
+console.log(`${referencedLimit + 1}`);

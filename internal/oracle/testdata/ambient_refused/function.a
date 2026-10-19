@@ -1,0 +1,3 @@
+// a-check: refused an ambient function declaration
+declare function missing(): string;
+console.log(missing());
