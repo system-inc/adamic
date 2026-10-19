@@ -63,11 +63,11 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	cache := filepath.Join(directory, "cache")
 	unit := compilationUnit{"probe.c", `int adamic_probe(int input) { return input + 2147483647; }` + "\n"}
 	files := []runtimeFile{{unit.name, []byte(unit.source)}}
-	release, err := compileUnit(unit, files, Flags(Options{}), compiler, string(version), cache, directory, false)
+	release, err := compileUnit(unit, files, Flags(Options{}), compiler, string(version), cache, directory, false, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	sanitized, err := compileUnit(unit, files, Flags(Options{Sanitize: true}), compiler, string(version), cache, directory, false)
+	sanitized, err := compileUnit(unit, files, Flags(Options{Sanitize: true}), compiler, string(version), cache, directory, false, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -150,7 +150,7 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	compile := func(header string, uncached bool) string {
 		t.Helper()
 		files := []runtimeFile{{unit.name, []byte(unit.source)}, {"probe-system.h", []byte(header)}}
-		object, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, uncached)
+		object, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, uncached, nil)
 		if err != nil {
 			t.Fatalf("system-header provenance lost: %v", err)
 		}
@@ -182,7 +182,7 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
 	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
 	files := []runtimeFile{{unit.name, []byte(unit.source)}, {"probe-system.h", []byte(userHeader)}}
-	if _, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, true); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
+	if _, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, true, nil); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
 		t.Fatalf("user-header extension must be rejected: %v", err)
 	}
 	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")

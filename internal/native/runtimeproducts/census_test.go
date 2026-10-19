@@ -23,6 +23,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -856,7 +857,11 @@ func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if err := request.Build(directory, 4); err != nil {
+		jobserver, err := ccjobserver.Process()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := request.Build(directory, 4, jobserver); err != nil {
 			t.Fatal(err)
 		}
 		return
@@ -881,7 +886,7 @@ func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
 			}
 		}
 		command := exec.Command(os.Args[0], "-test.run=^TestTheJobserverNeverReachesAnArchivesBytes$", "-test.count=1")
-		command.Env = append(os.Environ(), archiveProbe+"="+directory, native.JobserverVariable+"="+jobserver)
+		command.Env = append(os.Environ(), archiveProbe+"="+directory, ccjobserver.Variable+"="+jobserver)
 		if output, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("the release archive with %d tokens: %v\n%s", tokens, err, output)
 		}

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
