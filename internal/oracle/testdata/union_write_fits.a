@@ -1,0 +1,33 @@
+// Writes through a union that fit the slot in every member still compile (#yawc0z5): the refusal
+// takes only a value some member can't hold.
+type Shape = { kind: 'Circle'; size: number; label: string } | { kind: 'Square'; size: number; label: string };
+function grow(shape: Shape): void {
+	shape.size = shape.size * 2;
+	shape.size += 1;
+	shape.label = `${shape.kind}:${shape.size}`;
+}
+const circle: Shape = { kind: 'Circle', size: 3, label: '' };
+grow(circle);
+console.log(circle.label);
+
+type Token = { kind: 'Word'; payload: string } | { kind: 'Count'; payload: number };
+function bump(token: Token): void {
+	if (token.kind === 'Count') {
+		token.payload = token.payload + 1;
+		token.kind = 'Count';
+	} else {
+		token.payload = token.payload.toUpperCase();
+	}
+}
+const word: Token = { kind: 'Word', payload: 'ahra' };
+const count: Token = { kind: 'Count', payload: 41 };
+bump(word);
+bump(count);
+console.log(`${word.payload} ${count.payload}`);
+
+function reset<C extends { value: number }>(cell: C): void {
+	cell.value = 0;
+}
+const cell = { value: 9 };
+reset(cell);
+console.log(`${cell.value}`);

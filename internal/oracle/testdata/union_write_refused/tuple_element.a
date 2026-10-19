@@ -1,0 +1,8 @@
+// a-check: refused a write through a union of "text" into a slot that holds number in [number]
+type Pair = [string] | [number];
+function label(pair: Pair): void {
+	pair[0] = 'text';
+}
+const counts: [number] = [4];
+label(counts);
+console.log(`${counts[0] * 2}`);

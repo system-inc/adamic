@@ -1,0 +1,8 @@
+// a-check: refused a write through a union of string | number into a slot that holds string in { value: string
+type Cell = { value: string } | { value: number };
+function label(cell: Cell, text: string): void {
+	({ value: cell.value } = { value: text });
+}
+const counter = { value: 4 };
+label(counter, 'text');
+console.log(`${counter.value * 2}`);
