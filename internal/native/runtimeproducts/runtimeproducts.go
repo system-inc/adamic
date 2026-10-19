@@ -23,6 +23,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -81,8 +82,13 @@ func Supply(request native.RuntimeRequest) (string, error) {
 		return "", err
 	}
 	// Lean (#mmpt615): an archive's build takes nothing but its request, made from the runtime's files Inputs names, so
-	// a test that asks for it mid-run never keys it by what that test read before.
-	return buildcache.LeanGet(Inputs(request), func(directory string) error { return request.Build(directory, 1) })
+	// a test that asks for it mid-run never keys it by what that test read before. Its compiles are bounded by the
+	// process's jobserver, handed to the build as a value (#yzwm4rj).
+	jobserver, err := ccjobserver.Process()
+	if err != nil {
+		return "", err
+	}
+	return buildcache.LeanGet(Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })
 }
 
 // Declared says why a request is for an archive the tree build doesn't build ahead, or nil when it is one.
@@ -134,7 +140,11 @@ func Build(t *testing.T, name string, group int) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, 4) })
+		jobserver, err := ccjobserver.Process()
+		if err != nil {
+			t.Fatal(err)
+		}
+		buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, 4, jobserver) })
 	}
 }
 
@@ -152,8 +162,12 @@ func Find(t *testing.T, name string, group int, owner string) {
 		if err != nil {
 			t.Fatal(err)
 		}
+		jobserver, err := ccjobserver.Process()
+		if err != nil {
+			t.Fatal(err)
+		}
 		what := fmt.Sprintf("the %s runtime archive for %v", variant.Name, set.Features)
-		buildcache.BuiltElsewhere(t, what, Inputs(request), owner, func(directory string) error { return request.Build(directory, 4) })
+		buildcache.BuiltElsewhere(t, what, Inputs(request), owner, func(directory string) error { return request.Build(directory, 4, jobserver) })
 	}
 }
 

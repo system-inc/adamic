@@ -385,7 +385,7 @@ func TestARuntimeIsTheSameOnAnyNumberOfWorkers(t *testing.T) {
 	var archives [][]byte
 	for _, workers := range []int{1, 4, 8} {
 		directory := t.TempDir()
-		if err := compileRuntime(files, Flags(Options{}), compiler, directory, workers); err != nil {
+		if err := compileRuntime(files, Flags(Options{}), compiler, directory, workers, nil); err != nil {
 			t.Fatal(err)
 		}
 		archive, err := os.ReadFile(filepath.Join(directory, "runtime.a"))

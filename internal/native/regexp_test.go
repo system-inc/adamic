@@ -316,7 +316,7 @@ func regexWitnessRuntime(t testing.TB, request RuntimeRequest, part int) string 
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: fmt.Sprintf("regexp-bytecode-witness-runtime-%d", part), Files: files, Flags: request.Portable,
 		Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
-	}, func(directory string) error { return request.Build(directory, 4) })
+	}, func(directory string) error { return request.Build(directory, 4, nil) })
 }
 
 func regexWitnessRequest(t testing.TB, options Options, part int) RuntimeRequest {

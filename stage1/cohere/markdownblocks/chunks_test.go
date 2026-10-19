@@ -10,6 +10,7 @@ import (
 	"time"
 	"unicode/utf16"
 
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
