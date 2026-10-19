@@ -48,7 +48,8 @@ type run struct {
 // The port parses every text Go cohere's tests hold and thousands generated as Go cohere does: the same
 // tree, field for field and offset for offset, the same comments, or the same syntax error, natively,
 // on Node and through the JavaScript backend, byte for byte; and the native port leaks nothing, on the
-// texts it parses and on those it throws out of.
+// texts it parses and on those it throws out of. The sanitized port and each mutant's are portSanitized's,
+// built ahead; the lowered program is for the JavaScript backend, and for leaks off Linux.
 func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	t.Parallel()
 	casesPath, goAnswers := askedCases(t)
@@ -58,7 +59,8 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 	t.Run("natively and on Node, as Go cohere", func(t *testing.T) {
 		t.Parallel()
 		nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
-		nativeRun, sanitized := natively(t, program, casesPath)
+		sanitized := filepath.Join(portSanitized(t, nil), "port")
+		nativeRun := sanitizedRun(t, sanitized, casesPath)
 		backendRun := onJavaScriptBackend(t, program, casesPath)
 		for _, side := range []struct {
 			name string
@@ -125,16 +127,17 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 
 	// The comparison has to be able to fail. Each mutant changes the port where only its answers can
 	// show it, and the port must then disagree with Go cohere: natively, since that is the program this
-	// test holds, and on Node, which shows the fault is the port's and not stage 0's.
+	// test holds, built ahead as portSanitized's, and on Node, which shows the fault is the port's and
+	// not stage 0's.
 	for _, mutant := range mutants {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
 			mutated := portDirectory(t, &mutant)
-			mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
+			binary := filepath.Join(portSanitized(t, &mutant), "port")
 			for _, side := range []struct {
 				name string
 				run  run
-			}{{"natively", nativelyRun(t, mutatedProgram, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
+			}{{"natively", sanitizedRun(t, binary, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
 				if side.run.exitCode != 0 {
 					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
 					continue
@@ -155,6 +158,7 @@ type mutant struct {
 	name, file, from, to string
 }
 
+// mutants are the mutants the comparison must catch; TestProduct_GraphQLPortMutantsSanitized builds each ahead.
 var mutants = []mutant{
 	// An edge of a class: the byte order mark is ignored between tokens, as graphql-js ignores it.
 	{
@@ -442,29 +446,6 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 		t.Fatal(err)
 	}
 	return onNode(t, path, arguments...)
-}
-
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
