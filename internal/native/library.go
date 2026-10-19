@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -60,7 +61,7 @@ type RuntimeRequest struct {
 // compiling up to workers of its translation units at once: one where a test waits on it, as the cache compiles, and
 // more where a product build is given the CPUs for it.
 func (request RuntimeRequest) Build(directory string, workers int) error {
-	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers)
+	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers, partsKey(request.Parts))
 }
 
 // runtimeSupplier, when set, supplies every archive of the embedded runtime this process links, in place of the
@@ -419,6 +420,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	lock.Lock()
 	defer lock.Unlock()
 	if found, ok := cachedFile(library); ok {
+		buildLog("cArchive", "runtime.a", filepath.Base(directory), "hit", 0)
 		return found, nil
 	}
 	if err := os.MkdirAll(cache, 0o755); err != nil {
@@ -432,7 +434,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if err := os.Chmod(temporary, 0o755); err != nil {
 		return "", err
 	}
-	if err := compileRuntime(files, flags, compiler, temporary, 1); err != nil {
+	if err := compileRuntime(files, flags, compiler, temporary, 1, filepath.Base(directory)); err != nil {
 		return "", err
 	}
 	// Publish everything together. A competing process may already have published this key; its
@@ -448,8 +450,9 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 }
 
 // compileRuntime compiles the runtime's files with flags into directory, up to workers translation units at once, and
-// archives them as runtime.a there, in the files' order whatever order they finished in.
-func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int) error {
+// archives them as runtime.a there, in the files' order whatever order they finished in. key is the archive's, which
+// names each of its compiles and its archiving in the build log (buildLog).
+func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int, key string) error {
 	for _, feature := range runtimeFeatures {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
@@ -489,9 +492,14 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
 			command := toolchain.CommandIn(directory, compiler, arguments...)
 			var output []byte
-			if err := withCompilerToken(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
+			var clang time.Duration
+			if err := withCompilerToken(func() error {
+				return timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
+			}); err != nil {
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
+				return
 			}
+			buildLog("cCompile", "runtime/"+source, key, "miss", clang)
 		})
 	}
 	compiles.Wait()
@@ -504,9 +512,12 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 	arguments := append([]string{"rcs", filepath.Join(directory, "runtime.a")}, objects...)
 	archive := toolchain.Command(archiverName(compiler), arguments...)
 	archive.Env = append(archive.Env, "ZERO_AR_DATE=1")
-	if output, err := archive.CombinedOutput(); err != nil {
+	var archiving time.Duration
+	var output []byte
+	if err := timed(&archiving, func() (err error) { output, err = archive.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
+	buildLog("cArchive", "runtime.a", key, "miss", archiving)
 	return nil
 }
 

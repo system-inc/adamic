@@ -219,9 +219,13 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
 		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
 		var combined []byte
-		if err := withCompilerToken(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
+		var compiling time.Duration
+		if err := withCompilerToken(func() error {
+			return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
+		}); err != nil {
 			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 		}
+		buildLog("cCompile", "main.c", "", "off", compiling)
 		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
 		// ZERO_AR_DATE has ar give an archive member's: a fresh main.o's would differ per build.
 		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
@@ -258,8 +262,18 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	}
 	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
 	var combined []byte
-	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
+	var building time.Duration
+	if err := withCompilerToken(func() error {
+		return timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
+	}); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
+	// Where main.c was compiled first, this call only links; elsewhere one clang call compiles main.c and links it, which
+	// the log says as cBuild, so neither its compile nor its link is taken for the other.
+	kind := "cBuild"
+	if program == "main.o" {
+		kind = "cLink"
+	}
+	buildLog(kind, filepath.Base(output), "", "off", building)
 	return nil
 }
