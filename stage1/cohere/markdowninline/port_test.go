@@ -98,27 +98,14 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 	return onNode(t, path, arguments...)
 }
 
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
+// sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.
+func sanitizedRun(t *testing.T, binary string, arguments ...string) run {
 	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, arguments...), binary
+	return execute(t, environment, binary, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
