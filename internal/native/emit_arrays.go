@@ -4,6 +4,7 @@ package native
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -254,4 +255,110 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 		packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
 	}
 	return fmt.Sprintf("%s, %s, %s, %t, %d, %s", array, start, count, splice.Count != nil, len(items), packed)
+}
+
+// constantNumbers is how many constant numbers an array literal holds before they're emitted as
+// static data a loop pushes, not a push a line. clang spends little on data and much on a long run of
+// calls: tsprinter's emoji width table, 1,472 arrays of numbers, was one 11,409-line statement
+// (docs/tsc-generated-c.md).
+const constantNumbers = 64
+
+// constantArray emits an array literal of constant numbers, or of array literals of them, from a
+// static table, when it holds at least constantNumbers numbers. Every array is fresh and the
+// constants run nothing, so making them in a loop is what one push a line does. It's false for any
+// other literal.
+func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
+	numbers, flat := constantNumbersOf(literal)
+	lengths := []int{}
+	if !flat {
+		if !literal.Element.IsReference() || len(literal.Elements) == 0 {
+			return "", false
+		}
+		for _, element := range literal.Elements {
+			row, isLiteral := element.(ir.ArrayLiteral)
+			if !isLiteral {
+				return "", false
+			}
+			values, constant := constantNumbersOf(row)
+			if !constant {
+				return "", false
+			}
+			numbers = append(numbers, values...)
+			lengths = append(lengths, len(values))
+		}
+	}
+	if len(numbers) < constantNumbers {
+		return "", false
+	}
+	e.temporaries++
+	table := fmt.Sprintf("adamic_numbers_%d", e.temporaries)
+	values := make([]string, len(numbers))
+	for index, number := range numbers {
+		values[index] = cNumber(number)
+	}
+	e.declarations = append(e.declarations, fmt.Sprintf("static const double %s[%d] = {%s};", table, len(numbers), constantList(values)))
+	if flat {
+		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, false)", len(numbers)))
+		index := e.temporary()
+		e.line("for (size_t %s = 0; %s < %d; %s++) {", index, index, len(numbers), index)
+		e.line("\tadamic_array_push(%s, (adamic_value){.number = %s[%s]});", array, table, index)
+		e.line("}")
+		return array, true
+	}
+	counts := make([]string, len(lengths))
+	for index, length := range lengths {
+		counts[index] = strconv.Itoa(length)
+	}
+	e.temporaries++
+	rows := fmt.Sprintf("adamic_lengths_%d", e.temporaries)
+	e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s[%d] = {%s};", rows, len(lengths), constantList(counts)))
+	array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, true)", len(lengths)))
+	row, at, column, inner := e.temporary(), e.temporary(), e.temporary(), e.temporary()
+	e.line("for (size_t %s = 0, %s = 0; %s < %d; %s++) {", row, at, row, len(lengths), row)
+	e.line("\tadamic_array *%s = adamic_array_new(%s[%s], false);", inner, rows, row)
+	e.line("\tfor (size_t %s = 0; %s < %s[%s]; %s++, %s++) {", column, column, rows, row, column, at)
+	e.line("\t\tadamic_array_push(%s, (adamic_value){.number = %s[%s]});", inner, table, at)
+	e.line("\t}")
+	// The row is fresh: the outer array takes its only reference.
+	e.line("\tadamic_array_push(%s, (adamic_value){.%s = %s});", array, member(literal.Element), slotted(literal.Element, inner))
+	e.line("}")
+	return array, true
+}
+
+// constantNumbersOf is an array literal's numbers, when it holds only constant numbers, a negative
+// one among them (a constant negated, which is exact).
+func constantNumbersOf(literal ir.ArrayLiteral) ([]float64, bool) {
+	if literal.Element != ir.Number || slices.Contains(literal.Spread, true) {
+		return nil, false
+	}
+	numbers := make([]float64, 0, len(literal.Elements))
+	for _, element := range literal.Elements {
+		sign := 1.0
+		if unary, isUnary := element.(ir.Unary); isUnary && unary.Operator == ir.Negate {
+			sign, element = -1, unary.Operand
+		}
+		constant, isConstant := element.(ir.NumberConstant)
+		if !isConstant {
+			return nil, false
+		}
+		numbers = append(numbers, sign*constant.Value)
+	}
+	return numbers, true
+}
+
+// constantList is a static table's initializer, sixteen values a line.
+func constantList(values []string) string {
+	var builder strings.Builder
+	for index, value := range values {
+		if index > 0 {
+			builder.WriteString(",")
+			if index%16 == 0 {
+				builder.WriteString("\n\t")
+			} else {
+				builder.WriteString(" ")
+			}
+		}
+		builder.WriteString(value)
+	}
+	return builder.String()
 }
