@@ -1,3 +1,4 @@
+// a-check: type error TS2375
 interface ReturnStorage { value?: number; }
 function makeStorage(value: number | undefined): ReturnStorage | undefined {
     return { value };
