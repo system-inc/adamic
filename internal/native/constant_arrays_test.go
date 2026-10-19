@@ -54,8 +54,8 @@ console.log(`+"`${first[1]?.length ?? -1} ${second[1]?.length ?? -1} ${first.len
 }
 
 // Constant tables print what Node prints, under the sanitizers, and let go of every array they make.
-// Three mutants of the loops must each be seen: the flat loop one short, a row read from the wrong
-// place in the table, and a row the outer array retains instead of taking.
+// Four mutants must each be seen: the flat loop one short, every table read at index 0, a row the
+// outer array retains instead of taking, and each table's first entry written as 12.
 func TestConstantArraysAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
@@ -77,6 +77,7 @@ func TestConstantArraysAgreeWithNode(t *testing.T) {
 	}
 	flatBound := regexp.MustCompile(`(for \(size_t adamic_temporary_\d+ = 0; adamic_temporary_\d+ < )(\d+)(;)`)
 	rowRead := regexp.MustCompile(`(\.number = adamic_numbers_\d+\[)(adamic_temporary_\d+)(\]\})`)
+	tableEntry := regexp.MustCompile(`(static const double adamic_numbers_\d+\[\d+\] = \{)(\([^)]*\)|NAN)`)
 	rowTaken := regexp.MustCompile(`(\(adamic_value\)\{\.reference = )(adamic_temporary_\d+)(\}\);\n\t*\})`)
 	for _, mutant := range []struct {
 		name    string
@@ -86,6 +87,7 @@ func TestConstantArraysAgreeWithNode(t *testing.T) {
 		{"flat loop one short", flatBound, "${1}${2} - 1${3}"},
 		{"table read at index 0", rowRead, "${1}0${3}"},
 		{"row retained", rowTaken, "${1}adamic_retain(${2})${3}"},
+		{"a table's first entry written wrong", tableEntry, "${1}(0x1.8p+03)"},
 	} {
 		if !mutant.pattern.MatchString(code) {
 			t.Fatalf("mutant %q lost its anchor", mutant.name)
