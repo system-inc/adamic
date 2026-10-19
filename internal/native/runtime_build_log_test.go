@@ -170,7 +170,7 @@ func TestOneUnitBuildLogsItsClang(t *testing.T) {
 	}
 	var steps []string
 	for _, match := range lines {
-		if match[1] == "cArchive" {
+		if match[1] == "cArchive" || strings.HasPrefix(match[2], "runtime/") {
 			continue
 		}
 		if match[3] != "-" || match[4] != "off" || loggedSeconds(t, match) <= 0 {

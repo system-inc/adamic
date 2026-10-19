@@ -13,7 +13,7 @@ import (
 )
 
 // buildLogLine is a line buildLog writes: kind, name, key12 or -, outcome, seconds.
-var buildLogLine = regexp.MustCompile(`^(cCompile|cLink) (\S+) ([0-9a-f]{12}|-) (hit|miss|off) ([0-9]+\.[0-9]{3})$`)
+var buildLogLine = regexp.MustCompile(`^(cCompile|cArchive|cLink|cBuild) (\S+) ([0-9a-f]{12}|-) (hit|miss|off) ([0-9]+\.[0-9]{3})$`)
 
 // A split build writes one cCompile line per unit and one cLink line to ADAMIC_BUILD_LOG, each saying whether its
 // object came from the cache and how long clang ran, and the log never reaches the binary: the same program built with
@@ -85,6 +85,11 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 			if err != nil {
 				t.Fatal(err)
 			}
+			// The runtime's archive, looked up or compiled for the build, is its own test's
+			// (TestRuntimeArchiveLogsItsCompilesAndItsHit).
+			if match[1] == "cArchive" || strings.HasPrefix(match[2], "runtime/") {
+				continue
+			}
 			switch match[1] {
 			case "cCompile":
 				if match[4] != outcome || match[3] == "-" {
@@ -103,6 +108,8 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 				if match[2] != "program" || match[3] != "-" || match[4] != "off" || seconds <= 0 {
 					t.Fatalf("%s: %q, want the program's link, unkeyed, off, with its seconds", name, line)
 				}
+			default:
+				t.Fatalf("%s: %q from a split build", name, line)
 			}
 		}
 		if len(compiled) != len(units) || links != 1 {
