@@ -56,24 +56,54 @@ func packages() *packageIndex {
 
 func (index *packageIndex) owner(path string) (string, bool) {
 	index.ownersOnce.Do(func() {
-		index.owners = map[string]string{}
-		lists, _ := filepath.Glob(filepath.Join(dpkgDirectory, "info", "*.list"))
-		sort.Strings(lists)
-		for _, list := range lists {
-			name := strings.TrimSuffix(filepath.Base(list), ".list")
-			file, err := os.Open(list)
-			if err != nil {
-				continue
-			}
-			scanner := bufio.NewScanner(file)
-			for scanner.Scan() {
-				index.owners[scanner.Text()] = name
-			}
-			file.Close()
-		}
+		index.owners = packageOwners(dpkgDirectory, loaderArchitecture)
 	})
 	owner, ok := index.owners[path]
 	return owner, ok
+}
+
+// packageOwners is each file's package in the dpkg database at directory, read from its info/*.list in sorted order.
+// Where two architectures' twins of one package list a path (a Mac guest holding libc6-dev:amd64 and libc6-dev:arm64,
+// #qmjv4z4), the twin of architecture, the build's loader's, owns it, as the house's own box would say, never whichever
+// list sorted last: the twins' headers are the same bytes, and the owner's md5sums still decide whether the file is
+// valued by the package at all (systemValue). Any other path keeps the last list naming it, so a box with one owner per
+// path values as it did.
+func packageOwners(directory, architecture string) map[string]string {
+	owners := map[string]string{}
+	lists, _ := filepath.Glob(filepath.Join(directory, "info", "*.list"))
+	sort.Strings(lists)
+	loaderSuffix := ":" + debianArchitecture(architecture)
+	for _, list := range lists {
+		name := strings.TrimSuffix(filepath.Base(list), ".list")
+		file, err := os.Open(list)
+		if err != nil {
+			continue
+		}
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			if held, found := owners[scanner.Text()]; found && strings.HasSuffix(held, loaderSuffix) && !strings.HasSuffix(name, loaderSuffix) &&
+				packageName(held) == packageName(name) {
+				continue
+			}
+			owners[scanner.Text()] = name
+		}
+		file.Close()
+	}
+	return owners
+}
+
+// packageName is an owner's package without its architecture: libc6-dev for libc6-dev:arm64.
+func packageName(owner string) string {
+	name, _, _ := strings.Cut(owner, ":")
+	return name
+}
+
+// debianArchitecture is Go's name for an architecture as dpkg spells it, where the two differ.
+func debianArchitecture(architecture string) string {
+	if spelled, ok := map[string]string{"386": "i386"}[architecture]; ok {
+		return spelled
+	}
+	return architecture
 }
 
 func (index *packageIndex) version(name string) (string, bool) {
