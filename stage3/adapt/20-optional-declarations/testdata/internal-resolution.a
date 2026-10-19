@@ -1,0 +1,57 @@
+// a-check: type error TS2375
+interface AssignmentStorage { value?: number; }
+function assigned(value: number | undefined): AssignmentStorage | undefined {
+    let storage: AssignmentStorage | undefined;
+    storage = { value };
+    return storage;
+}
+interface InitializerData { value?: number; }
+interface Envelope { data: InitializerData; }
+const envelope: Envelope = { data: { value: undefined } };
+interface GenericData { value?: number; }
+interface Container<T> { data: T; }
+function box<T>(data: T): Container<T> { return { data }; }
+let container: Container<GenericData> | undefined;
+function nested(): Container<GenericData> {
+    return container ??= box({ value: undefined });
+}
+interface ArrayStorage<T> { value?: readonly T[]; }
+function arrayStorage<T>(value: readonly T[] | undefined): ArrayStorage<T> {
+    return { value };
+}
+interface CallableStorage<T> { callback?: () => T; }
+function callableStorage<T>(callback: (() => T) | undefined): CallableStorage<T> {
+    return { callback };
+}
+interface BareStorage<T> { value?: T; }
+function bareStorage<T>(value: T | undefined): BareStorage<T> {
+    return { value };
+}
+interface MaskedStorage { required: string; optional?: number; }
+const masked: MaskedStorage = { required: 1, optional: undefined };
+interface ProjectReference { originalPath?: string; }
+function publicStorage(value: string | undefined): ProjectReference | undefined {
+    const source = { originalPath: value };
+    return source;
+}
+interface PackageId { name: string; }
+interface ResolvedModuleFull { originalPath?: string; packageId?: PackageId; }
+const blockedPublic: ResolvedModuleFull | undefined = { originalPath: undefined, packageId: undefined };
+interface MethodStorage { callback?(): number; }
+function methodStorage(callback: (() => number) | undefined): MethodStorage | undefined {
+    return { callback };
+}
+interface IndexedStorage { value?: number; }
+function indexedStorage(storage: IndexedStorage, values: number[]): void {
+    storage.value = values[0];
+}
+interface ReceiverStorage { value?: number; }
+function reset<T extends ReceiverStorage>(storage: T): void {
+    storage.value = undefined;
+}
+interface PresentStorage { value: number; }
+interface MaybeStorage { value?: number; }
+function requiredView(storage: PresentStorage | MaybeStorage): void {
+    storage.value = undefined;
+}
+console.log(JSON.stringify([Object.keys(assigned(undefined)!), Object.hasOwn(assigned(undefined)!, "value")]));

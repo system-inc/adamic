@@ -1,0 +1,82 @@
+{
+  "group": "late-exposure",
+  "status": "caught",
+  "witnesses": [
+    {
+      "witness": "check-internal.cjs",
+      "exit": 1
+    },
+    {
+      "witness": "check-nullable-return.cjs",
+      "exit": 0
+    }
+  ],
+  "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "mutant_helper_sha256": "6d47fff7063adee6c040b5cb07a05d2de01add4e1315f236695d7c7fdf5c9f3a",
+  "runs": [
+    {
+      "run": "stock-no-prelude",
+      "count": 205,
+      "returned_ids": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-filtered-prelude",
+      "count": 206,
+      "returned_ids": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-no-prelude",
+      "count": 205,
+      "returned_ids": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-filtered-prelude",
+      "count": 206,
+      "returned_ids": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-no-unchecked-control",
+      "count": 106,
+      "returned_ids": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-original-prelude-mutant",
+      "count": 290,
+      "returned_ids": [
+        "D551a5cf2dd60",
+        "Df257019e13f7"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    }
+  ],
+  "group_ids_returned": [
+    "D551a5cf2dd60",
+    "Df257019e13f7"
+  ]
+}

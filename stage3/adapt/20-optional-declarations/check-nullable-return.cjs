@@ -17,14 +17,15 @@ const report = JSON.parse(cp.execFileSync(process.execPath, [process.argv[2] || 
     env: { ...process.env, TSC_ADAPT_TYPESCRIPT: require.resolve('../../api/node_modules/typescript') },
     timeout: 60000, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
 }));
-assert.equal(report.declarations_changed, 1, 'only the single object nullable return owner is eligible');
-assert.deepEqual(report.declarations[0].owner_path, ['ReturnStorage', 'value']);
+assert.equal(report.declarations_changed, 3, 'return, argument and discriminated object owners are eligible');
+assert.deepEqual(report.declarations.map(owner => owner.owner_path).sort(),
+    [['ArgumentStorage', 'value'], ['LeftStorage', 'left'], ['ReturnStorage', 'value']]);
 assert(report.resolved_findings.some(row => row.owners.some(owner => owner.name === 'value')));
 const after = fs.readFileSync(file, 'utf8');
 assert(after.includes('interface MethodStorage { callback?(): number; }'));
 assert(after.includes('interface GenericStorage<T> { value?: T; }'));
-assert(after.includes('interface LeftStorage { kind: "left"; left?: number; }'));
-assert(after.includes('interface ArgumentStorage { value?: number; }'));
+assert(after.includes('interface LeftStorage { kind: "left"; left?: number | undefined; }'));
+assert(after.includes('interface ArgumentStorage { value?: number | undefined; }'));
 assert.equal(emit(fixture), emit(after), 'transpile output bytes');
 const originalJs = path.join(scratch, 'before.mjs'), adaptedJs = path.join(scratch, 'after.mjs');
 fs.writeFileSync(originalJs, emit(fixture));
