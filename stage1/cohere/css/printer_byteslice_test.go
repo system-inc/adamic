@@ -44,7 +44,8 @@ func TestCSSPrinterByteSlicesMatchGo(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	result, binary := natively(t, program)
+	binary := filepath.Join(programSanitized(t, "testdata/byte_slices.ts"), "port")
+	result := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result run
