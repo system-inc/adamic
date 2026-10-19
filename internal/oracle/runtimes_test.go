@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -23,46 +24,7 @@ func init() {
 	native.SupplyRuntimes(runtimeproducts.Supply)
 }
 
-// Every variant's archives, built ahead a third of the sets at a time (runtimeproducts.Build).
-func TestProduct_NativeRuntimesSanitized0(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "sanitized", 0)
-}
-func TestProduct_NativeRuntimesSanitized1(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "sanitized", 1)
-}
-func TestProduct_NativeRuntimesSanitized2(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "sanitized", 2)
-}
-func TestProduct_NativeRuntimesRelease0(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "release", 0)
-}
-func TestProduct_NativeRuntimesRelease1(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "release", 1)
-}
-func TestProduct_NativeRuntimesRelease2(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "release", 2)
-}
-func TestProduct_NativeRuntimesCounted0(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "counted", 0)
-}
-func TestProduct_NativeRuntimesCounted1(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "counted", 1)
-}
-func TestProduct_NativeRuntimesCounted2(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "counted", 2)
-}
-func TestProduct_NativeRuntimesWASI0(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 0) }
-func TestProduct_NativeRuntimesWASI1(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 1) }
-func TestProduct_NativeRuntimesWASI2(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 2) }
+// Build one keyed archive per product: cold four-archive groups exceeded the 60-second law.
 
 // Each set in the table is one some program needs: its witness turns on exactly its features, so a set no program
 // needs any more fails here rather than staying to be built ahead for nothing. A program needing a set the table lacks
@@ -242,15 +204,266 @@ func fileExists(path string) bool {
 	return err == nil && info.Mode().IsRegular()
 }
 
-func TestProduct_NativeRuntimesShipped0(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Build(t, "shipped", 0)
+func nodeHostRuntimeProduct(t *testing.T, name string, index int) {
+	t.Helper()
+	if len(runtimeproducts.Sets) != 12 {
+		t.Fatal("runtime sets changed: regenerate the one-archive product tests")
+	}
+	variant := slices.IndexFunc(runtimeproducts.Variants, func(v runtimeproducts.Variant) bool { return v.Name == name })
+	if variant < 0 {
+		t.Fatalf("unknown runtime variant %s", name)
+	}
+	options := runtimeproducts.Variants[variant]
+	if options.Requires != "" && os.Getenv(options.Requires) != "1" {
+		t.Skipf("set %s=1", options.Requires)
+	}
+	request, err := native.RuntimeRequestFor(options.Options, runtimeproducts.Sets[index].Features...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	jobserver, err := ccjobserver.Process()
+	if err != nil {
+		t.Fatal(err)
+	}
+	buildcache.LeanProduct(t, runtimeproducts.Inputs(request), func(directory string) error { return request.Build(directory, 4, jobserver) })
 }
-func TestProduct_NativeRuntimesShipped1(t *testing.T) {
+func TestProduct_NativeRuntimesSanitized_000(t *testing.T) {
 	t.Parallel()
-	runtimeproducts.Build(t, "shipped", 1)
+	nodeHostRuntimeProduct(t, "sanitized", 0)
 }
-func TestProduct_NativeRuntimesShipped2(t *testing.T) {
+func TestProduct_NativeRuntimesSanitized_001(t *testing.T) {
 	t.Parallel()
-	runtimeproducts.Build(t, "shipped", 2)
+	nodeHostRuntimeProduct(t, "sanitized", 1)
+}
+func TestProduct_NativeRuntimesSanitized_002(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 2)
+}
+func TestProduct_NativeRuntimesSanitized_003(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 3)
+}
+func TestProduct_NativeRuntimesSanitized_004(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 4)
+}
+func TestProduct_NativeRuntimesSanitized_005(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 5)
+}
+func TestProduct_NativeRuntimesSanitized_006(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 6)
+}
+func TestProduct_NativeRuntimesSanitized_007(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 7)
+}
+func TestProduct_NativeRuntimesSanitized_008(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 8)
+}
+func TestProduct_NativeRuntimesSanitized_009(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 9)
+}
+func TestProduct_NativeRuntimesSanitized_010(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 10)
+}
+func TestProduct_NativeRuntimesSanitized_011(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "sanitized", 11)
+}
+func TestProduct_NativeRuntimesRelease_000(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 0)
+}
+func TestProduct_NativeRuntimesRelease_001(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 1)
+}
+func TestProduct_NativeRuntimesRelease_002(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 2)
+}
+func TestProduct_NativeRuntimesRelease_003(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 3)
+}
+func TestProduct_NativeRuntimesRelease_004(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 4)
+}
+func TestProduct_NativeRuntimesRelease_005(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 5)
+}
+func TestProduct_NativeRuntimesRelease_006(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 6)
+}
+func TestProduct_NativeRuntimesRelease_007(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 7)
+}
+func TestProduct_NativeRuntimesRelease_008(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 8)
+}
+func TestProduct_NativeRuntimesRelease_009(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 9)
+}
+func TestProduct_NativeRuntimesRelease_010(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 10)
+}
+func TestProduct_NativeRuntimesRelease_011(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "release", 11)
+}
+func TestProduct_NativeRuntimesCounted_000(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 0)
+}
+func TestProduct_NativeRuntimesCounted_001(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 1)
+}
+func TestProduct_NativeRuntimesCounted_002(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 2)
+}
+func TestProduct_NativeRuntimesCounted_003(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 3)
+}
+func TestProduct_NativeRuntimesCounted_004(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 4)
+}
+func TestProduct_NativeRuntimesCounted_005(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 5)
+}
+func TestProduct_NativeRuntimesCounted_006(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 6)
+}
+func TestProduct_NativeRuntimesCounted_007(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 7)
+}
+func TestProduct_NativeRuntimesCounted_008(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 8)
+}
+func TestProduct_NativeRuntimesCounted_009(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 9)
+}
+func TestProduct_NativeRuntimesCounted_010(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 10)
+}
+func TestProduct_NativeRuntimesCounted_011(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "counted", 11)
+}
+func TestProduct_NativeRuntimesWASI_000(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 0)
+}
+func TestProduct_NativeRuntimesWASI_001(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 1)
+}
+func TestProduct_NativeRuntimesWASI_002(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 2)
+}
+func TestProduct_NativeRuntimesWASI_003(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 3)
+}
+func TestProduct_NativeRuntimesWASI_004(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 4)
+}
+func TestProduct_NativeRuntimesWASI_005(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 5)
+}
+func TestProduct_NativeRuntimesWASI_006(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 6)
+}
+func TestProduct_NativeRuntimesWASI_007(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 7)
+}
+func TestProduct_NativeRuntimesWASI_008(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 8)
+}
+func TestProduct_NativeRuntimesWASI_009(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 9)
+}
+func TestProduct_NativeRuntimesWASI_010(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 10)
+}
+func TestProduct_NativeRuntimesWASI_011(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "wasm", 11)
+}
+func TestProduct_NativeRuntimesShipped_000(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 0)
+}
+func TestProduct_NativeRuntimesShipped_001(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 1)
+}
+func TestProduct_NativeRuntimesShipped_002(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 2)
+}
+func TestProduct_NativeRuntimesShipped_003(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 3)
+}
+func TestProduct_NativeRuntimesShipped_004(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 4)
+}
+func TestProduct_NativeRuntimesShipped_005(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 5)
+}
+func TestProduct_NativeRuntimesShipped_006(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 6)
+}
+func TestProduct_NativeRuntimesShipped_007(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 7)
+}
+func TestProduct_NativeRuntimesShipped_008(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 8)
+}
+func TestProduct_NativeRuntimesShipped_009(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 9)
+}
+func TestProduct_NativeRuntimesShipped_010(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 10)
+}
+func TestProduct_NativeRuntimesShipped_011(t *testing.T) {
+	t.Parallel()
+	nodeHostRuntimeProduct(t, "shipped", 11)
 }
