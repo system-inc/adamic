@@ -1,0 +1,10 @@
+type AdamicCollectionIteratorResult<T> =
+	| { readonly done: false; readonly value: T }
+	| { readonly done: true; readonly value: undefined };
+interface MapIterator<T> {
+	next(): AdamicCollectionIteratorResult<T>;
+}
+interface SetIterator<T> {
+	next(): AdamicCollectionIteratorResult<T>;
+}
+

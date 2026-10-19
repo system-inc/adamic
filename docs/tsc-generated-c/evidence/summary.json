@@ -1,0 +1,418 @@
+{
+ "rows_compiled": 23,
+ "tsc_files": 77,
+ "tsc_files_lowering": [],
+ "adapted_files_lowering": [
+  "hostErrors.ts"
+ ],
+ "fits": {
+  "c_bytes_by_ts_bytes": {
+   "a": 2.612008122174273,
+   "b": 1.1031770193864827,
+   "b_standard_error": 0.03124550021884804,
+   "log_residual_sd": 0.23961727271960379,
+   "n": 23,
+   "x_min": 447,
+   "x_max": 677284
+  },
+  "c_lines_by_ts_lines": {
+   "a": 5.146911104215538,
+   "b": 0.9987403871366617,
+   "b_standard_error": 0.03656088505994588,
+   "log_residual_sd": 0.28765124489005034,
+   "n": 23,
+   "x_min": 9,
+   "x_max": 16692
+  },
+  "clang-O0_seconds_by_c_bytes": {
+   "a": 1.664297326129842e-05,
+   "b": 0.7033842523259136,
+   "b_standard_error": 0.06563114669249574,
+   "log_residual_sd": 0.5599038943884934,
+   "n": 23,
+   "x_min": 3001,
+   "x_max": 6958533
+  },
+  "clang-O0_seconds_by_ts_bytes": {
+   "a": 4.127857905122238e-05,
+   "b": 0.7547769909143259,
+   "b_standard_error": 0.08577509868667477,
+   "log_residual_sd": 0.6577969650221088,
+   "n": 23,
+   "x_min": 447,
+   "x_max": 677284
+  },
+  "clang-O0_rss_kb_by_c_bytes": {
+   "a": 7625.967669956383,
+   "b": 0.18354557027744112,
+   "b_standard_error": 0.025237448159363702,
+   "log_residual_sd": 0.21530243216779169,
+   "n": 23,
+   "x_min": 3001,
+   "x_max": 6958533
+  },
+  "clang-O1_seconds_by_c_bytes": {
+   "a": 2.4432035219940534e-06,
+   "b": 1.0160209487198368,
+   "b_standard_error": 0.0627523714228359,
+   "log_residual_sd": 0.5353448615850009,
+   "n": 23,
+   "x_min": 3001,
+   "x_max": 6958533
+  },
+  "clang-O1_seconds_by_ts_bytes": {
+   "a": 8.026098434238835e-06,
+   "b": 1.1014099275441973,
+   "b_standard_error": 0.08909662987498054,
+   "log_residual_sd": 0.6832693126888244,
+   "n": 23,
+   "x_min": 447,
+   "x_max": 677284
+  },
+  "clang-O1_rss_kb_by_c_bytes": {
+   "a": 3742.7590750653,
+   "b": 0.26145290938534615,
+   "b_standard_error": 0.03939749629758529,
+   "log_residual_sd": 0.3361027914006636,
+   "n": 23,
+   "x_min": 3001,
+   "x_max": 6958533
+  },
+  "clang-O2_seconds_by_c_bytes": {
+   "a": 1.4944110411103593e-06,
+   "b": 1.0606586348790172,
+   "b_standard_error": 0.05620956417721805,
+   "log_residual_sd": 0.47952771619489065,
+   "n": 23,
+   "x_min": 3001,
+   "x_max": 6958533
+  },
+  "clang-O2_seconds_by_ts_bytes": {
+   "a": 4.724164130843625e-06,
+   "b": 1.15804173387168,
+   "b_standard_error": 0.0796517497566887,
+   "log_residual_sd": 0.6108378777859673,
+   "n": 23,
+   "x_min": 447,
+   "x_max": 677284
+  },
+  "clang-O2_rss_kb_by_c_bytes": {
+   "a": 3829.514396401993,
+   "b": 0.25994881738693476,
+   "b_standard_error": 0.039355881397565656,
+   "log_residual_sd": 0.335747771783305,
+   "n": 23,
+   "x_min": 3001,
+   "x_max": 6958533
+  }
+ },
+ "projection": {
+  "tsc_ts_bytes": 9433689,
+  "tsc_ts_lines": 192592,
+  "largest_file": "checker.ts",
+  "largest_file_ts_bytes": 3154767,
+  "per_file_units": {
+   "c_bytes_fit": 95505677,
+   "clang-O0_seconds_fit": 17.4,
+   "clang-O0_peak_rss_kb_fit": 188261,
+   "clang-O1_seconds_fit": 286.7,
+   "clang-O1_peak_rss_kb_fit": 360330,
+   "clang-O2_seconds_fit": 358.9,
+   "clang-O2_peak_rss_kb_fit": 359122,
+   "c_bytes_low": 59142580,
+   "clang-O0_seconds_low": 4.7,
+   "clang-O0_peak_rss_kb_low": 122392,
+   "clang-O1_seconds_low": 73.1,
+   "clang-O1_peak_rss_kb_low": 183978,
+   "clang-O2_seconds_low": 105.8,
+   "clang-O2_peak_rss_kb_low": 183491,
+   "c_bytes_high": 154226182,
+   "clang-O0_seconds_high": 64.8,
+   "clang-O0_peak_rss_kb_high": 289581,
+   "clang-O1_seconds_high": 1124.3,
+   "clang-O1_peak_rss_kb_high": 705726,
+   "clang-O2_seconds_high": 1217.7,
+   "clang-O2_peak_rss_kb_high": 702860
+  },
+  "one_unit": {
+   "c_bytes_fit": 129206074,
+   "clang-O0_seconds_fit": 7.6,
+   "clang-O0_peak_rss_kb_fit": 235009,
+   "clang-O1_seconds_fit": 385.9,
+   "clang-O1_peak_rss_kb_fit": 494209,
+   "clang-O2_seconds_fit": 564.0,
+   "clang-O2_peak_rss_kb_fit": 491657,
+   "c_bytes_low": 80011795,
+   "clang-O0_seconds_low": 2.0,
+   "clang-O0_peak_rss_kb_low": 152783,
+   "clang-O1_seconds_low": 98.4,
+   "clang-O1_peak_rss_kb_low": 252334,
+   "clang-O2_seconds_low": 166.2,
+   "clang-O2_peak_rss_kb_low": 251209,
+   "c_bytes_high": 208646859,
+   "clang-O0_seconds_high": 28.3,
+   "clang-O0_peak_rss_kb_high": 361488,
+   "clang-O1_seconds_high": 1513.5,
+   "clang-O1_peak_rss_kb_high": 967934,
+   "clang-O2_seconds_high": 1913.7,
+   "clang-O2_peak_rss_kb_high": 962252
+  },
+  "extrapolation_factor_one_unit": 13.92870494504521,
+  "extrapolation_factor_largest_file": 4.657967706309318
+ },
+ "seconds_per_mb": [
+  {
+   "file": "hostErrors.ts",
+   "c_bytes": 3001,
+   "largest_function_lines": 25,
+   "-O0_seconds_per_mb": 6.664,
+   "-O0_rss_mb": 49.3,
+   "-O1_seconds_per_mb": 6.664,
+   "-O1_rss_mb": 52.6,
+   "-O2_seconds_per_mb": 3.332,
+   "-O2_rss_mb": 52.6
+  },
+  {
+   "file": "stage1/cohere/cssstrings/main.ts",
+   "c_bytes": 24541,
+   "largest_function_lines": 124,
+   "-O0_seconds_per_mb": 1.222,
+   "-O0_rss_mb": 57.9,
+   "-O1_seconds_per_mb": 4.075,
+   "-O1_rss_mb": 66.0,
+   "-O2_seconds_per_mb": 4.075,
+   "-O2_rss_mb": 66.7
+  },
+  {
+   "file": "stage1/cohere/cssnumbers/main.ts",
+   "c_bytes": 58532,
+   "largest_function_lines": 124,
+   "-O0_seconds_per_mb": 0.513,
+   "-O0_rss_mb": 58.8,
+   "-O1_seconds_per_mb": 3.246,
+   "-O1_rss_mb": 71.7,
+   "-O2_seconds_per_mb": 4.955,
+   "-O2_rss_mb": 72.5
+  },
+  {
+   "file": "stage1/cohere/markdowninline/main.ts",
+   "c_bytes": 89103,
+   "largest_function_lines": 373,
+   "-O0_seconds_per_mb": 0.449,
+   "-O0_rss_mb": 60.6,
+   "-O1_seconds_per_mb": 2.581,
+   "-O1_rss_mb": 70.4,
+   "-O2_seconds_per_mb": 3.03,
+   "-O2_rss_mb": 71.7
+  },
+  {
+   "file": "stage1/cohere/mediaquery/main.ts",
+   "c_bytes": 160550,
+   "largest_function_lines": 562,
+   "-O0_seconds_per_mb": 0.311,
+   "-O0_rss_mb": 61.3,
+   "-O1_seconds_per_mb": 2.118,
+   "-O1_rss_mb": 76.8,
+   "-O2_seconds_per_mb": 2.741,
+   "-O2_rss_mb": 77.8
+  },
+  {
+   "file": "stage1/cohere/suppression/main.ts",
+   "c_bytes": 218767,
+   "largest_function_lines": 323,
+   "-O0_seconds_per_mb": 0.274,
+   "-O0_rss_mb": 61.8,
+   "-O1_seconds_per_mb": 2.057,
+   "-O1_rss_mb": 75.6,
+   "-O2_seconds_per_mb": 2.286,
+   "-O2_rss_mb": 76.5
+  },
+  {
+   "file": "stage1/cohere/lint/helpers/main.ts",
+   "c_bytes": 310928,
+   "largest_function_lines": 857,
+   "-O0_seconds_per_mb": 0.289,
+   "-O0_rss_mb": 64.3,
+   "-O1_seconds_per_mb": 2.348,
+   "-O1_rss_mb": 78.1,
+   "-O2_seconds_per_mb": 2.766,
+   "-O2_rss_mb": 77.1
+  },
+  {
+   "file": "stage1/cohere/selector/main.ts",
+   "c_bytes": 317225,
+   "largest_function_lines": 615,
+   "-O0_seconds_per_mb": 0.189,
+   "-O0_rss_mb": 64.9,
+   "-O1_seconds_per_mb": 2.081,
+   "-O1_rss_mb": 78.0,
+   "-O2_seconds_per_mb": 2.553,
+   "-O2_rss_mb": 78.9
+  },
+  {
+   "file": "stage1/cohere/values/main.ts",
+   "c_bytes": 359083,
+   "largest_function_lines": 818,
+   "-O0_seconds_per_mb": 0.223,
+   "-O0_rss_mb": 65.0,
+   "-O1_seconds_per_mb": 1.81,
+   "-O1_rss_mb": 77.3,
+   "-O2_seconds_per_mb": 2.172,
+   "-O2_rss_mb": 77.9
+  },
+  {
+   "file": "stage1/cohere/gitignore/main.ts",
+   "c_bytes": 377012,
+   "largest_function_lines": 372,
+   "-O0_seconds_per_mb": 0.212,
+   "-O0_rss_mb": 63.2,
+   "-O1_seconds_per_mb": 2.016,
+   "-O1_rss_mb": 80.3,
+   "-O2_seconds_per_mb": 2.122,
+   "-O2_rss_mb": 79.9
+  },
+  {
+   "file": "stage1/cohere/graphql/main.ts",
+   "c_bytes": 494252,
+   "largest_function_lines": 399,
+   "-O0_seconds_per_mb": 0.182,
+   "-O0_rss_mb": 66.7,
+   "-O1_seconds_per_mb": 1.922,
+   "-O1_rss_mb": 81.3,
+   "-O2_seconds_per_mb": 2.226,
+   "-O2_rss_mb": 82.2
+  },
+  {
+   "file": "stage1/cohere/css/main.ts",
+   "c_bytes": 538607,
+   "largest_function_lines": 646,
+   "-O0_seconds_per_mb": 0.241,
+   "-O0_rss_mb": 68.0,
+   "-O1_seconds_per_mb": 2.135,
+   "-O1_rss_mb": 85.8,
+   "-O2_seconds_per_mb": 2.377,
+   "-O2_rss_mb": 85.3
+  },
+  {
+   "file": "stage1/cohere/formatfiles/main.ts",
+   "c_bytes": 545353,
+   "largest_function_lines": 547,
+   "-O0_seconds_per_mb": 0.165,
+   "-O0_rss_mb": 66.1,
+   "-O1_seconds_per_mb": 1.999,
+   "-O1_rss_mb": 82.2,
+   "-O2_seconds_per_mb": 2.365,
+   "-O2_rss_mb": 81.3
+  },
+  {
+   "file": "stage1/cohere/static_single_assignment/main.ts",
+   "c_bytes": 583478,
+   "largest_function_lines": 469,
+   "-O0_seconds_per_mb": 0.257,
+   "-O0_rss_mb": 67.6,
+   "-O1_seconds_per_mb": 2.279,
+   "-O1_rss_mb": 86.5,
+   "-O2_seconds_per_mb": 2.708,
+   "-O2_rss_mb": 88.1
+  },
+  {
+   "file": "stage1/typescript/scanner/main.ts",
+   "c_bytes": 705330,
+   "largest_function_lines": 4400,
+   "-O0_seconds_per_mb": 0.326,
+   "-O0_rss_mb": 83.5,
+   "-O1_seconds_per_mb": 1.985,
+   "-O1_rss_mb": 97.5,
+   "-O2_seconds_per_mb": 1.772,
+   "-O2_rss_mb": 97.0
+  },
+  {
+   "file": "stage1/cohere/graphql/printer/main.ts",
+   "c_bytes": 1744917,
+   "largest_function_lines": 12534,
+   "-O0_seconds_per_mb": 0.327,
+   "-O0_rss_mb": 120.8,
+   "-O1_seconds_per_mb": 7.456,
+   "-O1_rss_mb": 237.2,
+   "-O2_seconds_per_mb": 7.897,
+   "-O2_rss_mb": 237.8
+  },
+  {
+   "file": "stage1/cohere/json/main.ts",
+   "c_bytes": 1879342,
+   "largest_function_lines": 19857,
+   "-O0_seconds_per_mb": 0.442,
+   "-O0_rss_mb": 147.8,
+   "-O1_seconds_per_mb": 10.727,
+   "-O1_rss_mb": 346.2,
+   "-O2_seconds_per_mb": 11.382,
+   "-O2_rss_mb": 345.4
+  },
+  {
+   "file": "stage1/typescript/parser/main.ts",
+   "c_bytes": 2005320,
+   "largest_function_lines": 4427,
+   "-O0_seconds_per_mb": 0.304,
+   "-O0_rss_mb": 99.2,
+   "-O1_seconds_per_mb": 2.404,
+   "-O1_rss_mb": 135.9,
+   "-O2_seconds_per_mb": 2.778,
+   "-O2_rss_mb": 136.0
+  },
+  {
+   "file": "stage1/cohere/lint/helpers/comments/main.ts",
+   "c_bytes": 2219689,
+   "largest_function_lines": 4668,
+   "-O0_seconds_per_mb": 0.284,
+   "-O0_rss_mb": 102.0,
+   "-O1_seconds_per_mb": 2.712,
+   "-O1_rss_mb": 139.8,
+   "-O2_seconds_per_mb": 3.176,
+   "-O2_rss_mb": 140.0
+  },
+  {
+   "file": "stage1/cohere/yaml/main.ts",
+   "c_bytes": 3371301,
+   "largest_function_lines": 12505,
+   "-O0_seconds_per_mb": 0.314,
+   "-O0_rss_mb": 138.3,
+   "-O1_seconds_per_mb": 5.36,
+   "-O1_rss_mb": 260.9,
+   "-O2_seconds_per_mb": 5.838,
+   "-O2_rss_mb": 261.5
+  },
+  {
+   "file": "stage1/cohere/estree/main.ts",
+   "c_bytes": 4083924,
+   "largest_function_lines": 6405,
+   "-O0_seconds_per_mb": 0.245,
+   "-O0_rss_mb": 132.9,
+   "-O1_seconds_per_mb": 2.916,
+   "-O1_rss_mb": 221.8,
+   "-O2_seconds_per_mb": 3.215,
+   "-O2_rss_mb": 222.0
+  },
+  {
+   "file": "stage1/cohere/tsprinter/main.ts",
+   "c_bytes": 4429107,
+   "largest_function_lines": 19887,
+   "-O0_seconds_per_mb": 0.309,
+   "-O0_rss_mb": 176.9,
+   "-O1_seconds_per_mb": 7.406,
+   "-O1_rss_mb": 306.9,
+   "-O2_seconds_per_mb": 7.995,
+   "-O2_rss_mb": 308.3
+  },
+  {
+   "file": "stage1/cohere/lint/main.ts",
+   "c_bytes": 6958533,
+   "largest_function_lines": 9625,
+   "-O0_seconds_per_mb": 0.257,
+   "-O0_rss_mb": 178.3,
+   "-O1_seconds_per_mb": 2.64,
+   "-O1_rss_mb": 274.1,
+   "-O2_seconds_per_mb": 2.991,
+   "-O2_rss_mb": 271.6
+  }
+ ]
+}

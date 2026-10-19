@@ -1,0 +1,12 @@
+type Path = string & { __pathBrand: any };
+function arrayFrom<T, U>(iterator: Iterable<T>, map: (t: T) => U): U[];
+function arrayFrom<T>(iterator: Iterable<T>): T[];
+function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] {
+    const result: (T | U)[] = [];
+    for (const value of iterator) result.push(map ? map(value) : value);
+    return result;
+}
+function toPath(f: string): Path { return f as Path; }
+function relative(p: string): string { return p; }
+const rootFileNames = new Set(["a", "b"].map(f => toPath(f)));
+console.log(arrayFrom(rootFileNames, r => relative(r)).join(","));

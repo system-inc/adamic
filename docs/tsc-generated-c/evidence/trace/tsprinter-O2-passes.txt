@@ -1,0 +1,16 @@
+Frontend 0.78
+Backend 32.83
+Optimizer 5.92
+CodeGenPasses 26.9
+OptFunction 26.82
+12.06 Greedy Register Allocator
+5.27 Live Interval Analysis
+1.9 Live Variable Analysis
+1.6 X86 DAG->DAG Instruction Selection
+1.19 Machine code sinking
+0.7 Constant Hoisting
+0.31 CodeGen Prepare
+0.3 Register Coalescer
+fn 22.36 main
+fn 0.55 adamic_function_179_Statements_classDeclaration
+fn 0.17 adamic_function_70_Scanner_scan
