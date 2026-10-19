@@ -10,11 +10,24 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// onV8Input runs binary under main's own WASI runner (oracle/wasi.mjs): root access, and the working directory handed
-// to the runtime as ADAMIC_WASI_CWD.
+// Match oracle/wasi.mjs root access, plus libc's cwd alias and explicit absolute
+// scratch/dev aliases. A dot preopen alone shadows these absolute paths.
 func onV8Input(t *testing.T, how inputRun, binary string) run {
 	t.Helper()
-	return executeInput(t, how, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary}, how.arguments...)...)
+	arguments := []string{"--disable-warning=ExperimentalWarning", "--input-type=module", "-e", `
+import { readFileSync } from 'node:fs';
+import { WASI } from 'node:wasi';
+const binary = process.argv[1];
+const preopens = { '/': '/' };
+if (process.argv[2] === 'cwd') Object.assign(preopens, { '.': process.cwd(), [process.argv[3]]: process.argv[3], '/dev': '/dev' });
+const wasi = new WASI({version:'preview1', args:[binary, ...process.argv.slice(4)], env:process.env, preopens, returnOnExit:true});
+const module = await WebAssembly.compile(readFileSync(binary));
+const instance = await WebAssembly.instantiate(module, wasi.getImportObject());
+process.exitCode = wasi.start(instance);`, binary, "root", filepath.Dir(binary)}
+	if how.directory != "" {
+		arguments[len(arguments)-2] = "cwd"
+	}
+	return executeInput(t, how, nil, "node", append(arguments, how.arguments...)...)
 }
 
 func TestWASIInputRunnerCatchesMutants(t *testing.T) {
