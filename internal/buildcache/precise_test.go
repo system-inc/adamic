@@ -19,6 +19,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -1246,6 +1247,126 @@ func TestASetThatWouldReadItselfBackIsRefused(t *testing.T) {
 		if found, err := productFor(r.root, r.cache, nativeTrue, 0, productMemo{freshLookups: &productLookup{done: true}}); err != nil || found.key != before.Sets[0].Key {
 			t.Fatalf("older upstream %v: a runner looking up native-true found %+v, %v; its own test's set is %s", olderUpstream, found, err, before.Sets[0].Key)
 		}
+	}
+}
+
+// Two products recorded at once, each set naming the other, as internal/lower's t.Parallel rows record theirs (Planner's
+// M1): the reach-back check and the write hold one lock for the whole cache (lockReadsGraph), so the second checks
+// after the first wrote, exactly one is refused, and the files hold no ring. reachBackChecked holds a recorder that
+// passed its check until the other passes too, or a second goes by: under the lock the other can't, and without it
+// both pass and both are recorded. Mutant: the lock dropped (both recorded).
+// Not parallel: newRig, and reachBackChecked.
+func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
+	r := newRig(t)
+	first, second := fmt.Sprintf("%064x", 0x90), fmt.Sprintf("%064x", 0xa0)
+	for _, nameKey := range []string{first, second} {
+		set := readSet{Entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
+		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		set.Key = evaluated.key
+		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
+			t.Fatal(err)
+		}
+		write(t, filepath.Join(r.cache, evaluated.key), "out", nameKey)
+	}
+	var arrivals atomic.Int32
+	both := make(chan struct{})
+	original := reachBackChecked
+	t.Cleanup(func() { reachBackChecked = original })
+	reachBackChecked = func(string) {
+		if arrivals.Add(1) == 2 {
+			close(both)
+		}
+		select {
+		case <-both:
+		case <-time.After(time.Second):
+		}
+	}
+	forgetHeldForLife()
+	refusals := make([]error, 2)
+	var recorders sync.WaitGroup
+	for index, pair := range [][2]string{{first, second}, {second, first}} {
+		recorders.Go(func() {
+			set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: pair[1]}})}
+			_, _, _, refusals[index] = recordUnion(r.root, r.cache, pair[0], pair[0][60:], set, func(key string) string {
+				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
+				return filepath.Join(r.cache, key)
+			})
+		})
+	}
+	recorders.Wait()
+	refused := 0
+	for _, err := range refusals {
+		if err != nil {
+			if !strings.Contains(err.Error(), "reads it back through recorded sets") {
+				t.Fatalf("a recorder failed otherwise than refused: %v", err)
+			}
+			refused++
+		}
+	}
+	components := map[string]string{}
+	walkComponents(r.cache, first, components)
+	walkComponents(r.cache, second, components)
+	if refused != 1 || components[first] == components[second] {
+		t.Fatalf("two recorded at once, each naming the other: %d refused (%v), one component %v", refused, refusals, components[first] == components[second])
+	}
+}
+
+// The under-way mark (freshMemo) refuses what the reach-back walk can't see: a product whose file changes between the
+// walk and the valuation, reading nameKey back by then (one an output directory recorded arriving in the build cache,
+// which location.ReadPlaces reads after it). The walk sees upstream's plain set; by the valuation upstream's only set
+// reads reader and holds a product, so only meeting reader's own lookup under way refuses reader's set. Mutant: the
+// memo unmarked (the set is recorded).
+// Not parallel: newRig, and reachBackChecked.
+func TestAnUpstreamChangedUnderTheValuationIsRefused(t *testing.T) {
+	r := newRig(t)
+	reader, upstream := fmt.Sprintf("%064x", 0xb0), fmt.Sprintf("%064x", 0xc0)
+	// keyed is set as it values now in a pass of its own, with its product in the cache.
+	keyed := func(nameKey string, entries ...readEntry) readSet {
+		t.Helper()
+		forgetHeldForLife()
+		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
+		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		set.Key = evaluated.key
+		write(t, filepath.Join(r.cache, evaluated.key), "out", nameKey+" "+evaluated.key)
+		return set
+	}
+	for _, nameKey := range []string{reader, upstream} {
+		if err := recordReads(r.cache, nameKey, nameKey[60:], keyed(nameKey)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	readingBack := keyed(upstream, readEntry{Kind: "product", Path: reader})
+	before, err := loadReads(r.cache, reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := reachBackChecked
+	t.Cleanup(func() { reachBackChecked = original })
+	reachBackChecked = func(nameKey string) {
+		if nameKey != reader {
+			return
+		}
+		if err := withReads(r.cache, upstream, func(file *readsFile) error { file.Sets = []readSet{readingBack}; return nil }); err != nil {
+			t.Error(err)
+		}
+	}
+	forgetHeldForLife()
+	set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}})}
+	_, evaluated, _, err := recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
+		os.MkdirAll(filepath.Join(r.cache, key), 0o755)
+		return filepath.Join(r.cache, key)
+	})
+	if err == nil || !strings.Contains(err.Error(), "cycle") {
+		t.Fatalf("reader's set, whose upstream reads it back by its valuation: recorded %s, %v", evaluated.key, err)
+	}
+	if after, _ := loadReads(r.cache, reader); len(after.Sets) != len(before.Sets) || after.Sets[0].Key != before.Sets[0].Key {
+		t.Fatalf("a refused set changed reader's file: %d sets, newest %s", len(after.Sets), after.Sets[0].Key)
 	}
 }
 
