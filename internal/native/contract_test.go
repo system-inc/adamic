@@ -93,3 +93,26 @@ func TestArithmeticIsNeverFused(t *testing.T) {
 	}
 	t.Logf("%s/%s, -march=%q: contraction allowed fuses, and Build never does, with or without the sanitizers", goruntime.GOOS, goruntime.GOARCH, cpu)
 }
+
+// fusedTwin is, on arm64, what harness answers to input when built as Node's arm64 release is: with
+// contraction on (Options.contract). That release's GCC fuses multiply-adds, so its last bits differ
+// from V8's own build and from x86-64 Node, which are the oracle's truth for arithmetic (#4z1nx1s). It
+// is nil anywhere else, where Node can't have fused and every difference stays a difference.
+func fusedTwin(t *testing.T, harness, input string) []string {
+	t.Helper()
+	if goruntime.GOARCH != "arm64" {
+		return nil
+	}
+	binary := filepath.Join(t.TempDir(), "fused")
+	if err := Build(harness, binary, Options{Sanitize: true, contract: true}); err != nil {
+		t.Fatal(err)
+	}
+	return strings.Split(strings.TrimSuffix(runWithInput(t, input, binary), "\n"), "\n")
+}
+
+// fusionOnly says Node's answer differs from the native one only because Node fused: the fused twin
+// gives Node's answer where the native build, which never fuses, doesn't. That answer is held to the
+// native, unfused value, and anything else is still a difference.
+func fusionOnly(fused []string, index int, native, oracle string) bool {
+	return fused != nil && index < len(fused) && fused[index] == oracle && native != oracle
+}

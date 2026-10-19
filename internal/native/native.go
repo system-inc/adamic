@@ -95,6 +95,11 @@ type Options struct {
 	// see what fused multiply-adds would do, as on arm64.
 	cpu string
 
+	// contract, for tests, lets clang fuse multiply-adds (-ffp-contract=fast, which disregards
+	// ieee754.c's FP_CONTRACT pragma): the twin of a program built as Node's arm64 release is, which
+	// GCC compiled with contraction on (fusedTwin, #4z1nx1s).
+	contract bool
+
 	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
 	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
 	slabs bool
@@ -109,8 +114,14 @@ func Flags(options Options) []string {
 	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-Wcast-function-type-strict", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
-	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
-	flags = append(flags, "-ffp-contract=off")
+	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8's own build doesn't fuse either;
+	// Node's arm64 release does, since GCC contracts by default, and its last bits aren't the
+	// language's answer (#4z1nx1s): what Node gives on x86-64 is.
+	if options.contract {
+		flags = append(flags, "-ffp-contract=fast")
+	} else {
+		flags = append(flags, "-ffp-contract=off")
+	}
 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.

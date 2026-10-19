@@ -236,10 +236,18 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	if len(native) != lines || len(oracle) != lines {
 		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
+	fused := fusedTwin(t, ieee754Harness, input.String())
 	mismatches := map[string]int{}
-	total := 0
+	total, held := 0, 0
 	for index := range asked {
 		if native[index] == oracle[index] {
+			continue
+		}
+		if fusionOnly(fused, index, native[index], oracle[index]) {
+			held++
+			if held <= 10 {
+				t.Logf("%s: held to the unfused %s; arm64 Node fused it to %s", asked[index], native[index], oracle[index])
+			}
 			continue
 		}
 		// A program can't see a NaN's payload (0.1 has no typed arrays), so every NaN is the same NaN.
@@ -258,5 +266,5 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	if total > 0 {
 		t.Errorf("%d of %d answers differ, by function: %v", total, lines, mismatches)
 	}
-	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches", lines, len(values), len(ieee754Unary), total)
+	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches, %d held to the unfused value where arm64 Node fused", lines, len(values), len(ieee754Unary), total, held)
 }

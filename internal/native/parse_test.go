@@ -176,17 +176,26 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 	if len(native) != len(cases) || len(oracle) != len(cases) {
 		t.Fatalf("got %d native lines and %d from Node for %d texts", len(native), len(oracle), len(cases))
 	}
-	mismatches := 0
+	fused := fusedTwin(t, parseHarness, input.String())
+	mismatches, held := 0, 0
 	for index, parse := range cases {
-		if native[index] != oracle[index] {
-			mismatches++
-			if mismatches <= 10 {
-				t.Errorf("parseInt %t, radix %v, text %q: native %s, Node %s", parse.parseInt, parse.radix, parse.text, native[index], oracle[index])
+		if native[index] == oracle[index] {
+			continue
+		}
+		if fusionOnly(fused, index, native[index], oracle[index]) {
+			held++
+			if held <= 10 {
+				t.Logf("parseInt %t, radix %v, text %q: held to the unfused %s; arm64 Node fused it to %s", parse.parseInt, parse.radix, parse.text, native[index], oracle[index])
 			}
+			continue
+		}
+		mismatches++
+		if mismatches <= 10 {
+			t.Errorf("parseInt %t, radix %v, text %q: native %s, Node %s", parse.parseInt, parse.radix, parse.text, native[index], oracle[index])
 		}
 	}
 	if mismatches > 0 {
 		t.Errorf("%d of %d texts parse differently", mismatches, len(cases))
 	}
-	t.Logf("%d texts, %d mismatches", len(cases), mismatches)
+	t.Logf("%d texts, %d mismatches, %d held to the unfused value where arm64 Node fused", len(cases), mismatches, held)
 }
