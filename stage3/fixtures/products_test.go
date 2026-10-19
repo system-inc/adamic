@@ -214,17 +214,17 @@ func TestProduct_FixtureOracleHook(t *testing.T) {
 // there. Mutant: no test here, and every fixture's hook reads its archive as not built.
 func TestProduct_FixtureRuntimesSanitized0(t *testing.T) {
 	t.Parallel()
-	runtimeproducts.Find(t, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized0")
+	runtimeproducts.Find(t, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
 }
 
 func TestProduct_FixtureRuntimesSanitized1(t *testing.T) {
 	t.Parallel()
-	runtimeproducts.Find(t, "sanitized", 1, "internal/oracle TestProduct_NativeRuntimesSanitized1")
+	runtimeproducts.Find(t, "sanitized", 1, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
 }
 
 func TestProduct_FixtureRuntimesSanitized2(t *testing.T) {
 	t.Parallel()
-	runtimeproducts.Find(t, "sanitized", 2, "internal/oracle TestProduct_NativeRuntimesSanitized2")
+	runtimeproducts.Find(t, "sanitized", 2, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
 }
 
 func TestFixtureOracleProductTracksInputs(t *testing.T) {

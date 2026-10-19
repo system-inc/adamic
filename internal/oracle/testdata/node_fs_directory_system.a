@@ -1,0 +1,26 @@
+import { getAccessibleFileSystemEntries, getDirectories, directoryExists, realpath, resolvePath, isFileSystemCaseSensitive } from '../../../stage3/host/fs_directory.a';
+for (const path of ['node_fs_directory_inputs/link-deep/..', 'node_fs_directory_inputs', 'walking', 'walking/link-to-inner', 'walking/dangling', 'walking/missing', 'reading/hello.txt', '']) {
+    const entries = getAccessibleFileSystemEntries(path);
+    console.log(`entries ${path}: ${entries.files.join('|')} / ${entries.directories.join('|')}`);
+    console.log(`directories ${getDirectories(path).join('|')}`);
+    console.log(`exists ${directoryExists(path)}`);
+    console.log(`realpath ${realpath(path)}`);
+    console.log(`resolve ${resolvePath(path)}`);
+}
+console.log(`case ${isFileSystemCaseSensitive('reading/hello.txt')}`);
+console.log(`missing case ${isFileSystemCaseSensitive('missing')}`);
+
+import { createDirectorySystem, type MatchFiles } from '../../../stage3/host/fs_directory.a';
+import { resolve } from 'node:path';
+// Caller-supplied matcher checks forwarding and callbacks without substituting wildcard semantics.
+const matcher: MatchFiles = (path, extensions, excludes, includes, sensitive, currentDirectory, depth, entries, canonical) => {
+    console.log(`matcher ${path} ${extensions === undefined ? '' : extensions.join('|')} ${excludes === undefined ? '' : excludes.join('|')} ${includes === undefined ? '' : includes.join('|')} ${sensitive} ${currentDirectory} ${depth ?? -1}`);
+    console.log(`canonical ${canonical(path)}`);
+    return entries(path).files.slice();
+};
+const system = createDirectorySystem('reading/hello.txt', () => resolve('.'), matcher);
+console.log(`system case ${system.useCaseSensitiveFileNames}`);
+console.log(`read ${system.readDirectory('walking', ['.txt'], ['closed'], ['**/*'], 2).join('|')}`);
+console.log(`read default ${system.readDirectory('reading').join('|')}`);
+
+console.log(`empty identity ${getAccessibleFileSystemEntries("missing") === getAccessibleFileSystemEntries("missing")}`);
