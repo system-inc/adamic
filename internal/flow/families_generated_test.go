@@ -383,6 +383,7 @@ func registerFlowCorpusIR() {
 		gob.Register(ir.Narrow{})
 		gob.Register(ir.NodeBufferCall{})
 		gob.Register(ir.NodeFSFile{})
+		gob.Register(ir.NodeHostCall{})
 		gob.Register(ir.Null{})
 		gob.Register(ir.NumberCall{})
 		gob.Register(ir.NumberConstant{})

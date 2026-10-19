@@ -50,6 +50,7 @@ var writesNothing = []struct {
 	expression ir.Expression
 	why        string
 }{
+	{ir.NodeHostCall{}, "owned host result; may share argument string storage through a counted share"},
 	{ir.ArrayConcat{}, "a new array of the arrays' elements"},
 	{ir.ArrayIndex{}, "reads an element"},
 	{ir.ArrayIsArray{}, "tests a value's brand"},
