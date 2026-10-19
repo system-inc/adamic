@@ -249,7 +249,7 @@ These are exact sets, not subsets. The fixture table assigns one set per module.
 | R | `fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
 | P | `fd_close, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
 
-`internal/native/wasm/shim.mjs` is 38 physical lines including comments and
+`internal/native/wasm/shim.mjs` is 44 physical lines including comments and
 blank lines, has no Node imports, and exports `wasiShim({ stdout, stderr })`.
 Instantiate with `shim.imports`, call `shim.attach(instance)`, then call `_start`
 for a command or `_initialize` once for a reactor before using request exports.
@@ -267,12 +267,13 @@ Do not decode each callback separately if UTF-8 may span iovecs.
 | Every other `fd_*` and `path_*`, including `fd_read`, `fd_filestat_get`, `fd_readdir`, `path_open` | EBADF (8), without touching output memory or granting host file access. |
 | `args_sizes_get`, `environ_sizes_get` | Write zero count and zero buffer size, return 0: this host has an empty argument vector and environment. |
 | `args_get`, `environ_get` | Return 0 without writes: zero entries require zero bytes. |
-| `clock_time_get`, `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Fake time and predictable random bytes would not satisfy those services. Neither occurs in the inventoried file-free modules. |
+| `clock_time_get` | The host's real clocks as a 64-bit nanosecond count: realtime (0) from `Date.now()`, monotonic (1) from `performance.now()`; any other clock returns EINVAL (28). Every module reads both as it starts (the runtime's clock origin, since main 561aeb4b), so refusing it would refuse every module. Fake time is what would be wrong, not real time. `TestWASIShimClockReadsTheHost` holds it to node:wasi with a probe, and a shim that returns without writing the time fails it. |
+| `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Predictable random bytes would not satisfy the service, and no file-free fixture calls it. |
 | Other imports | Throw `AdamicUnsupportedWASI` naming the import; no success stub. |
 
 No inventoried file-free fixture requires an import that the shim cannot
 satisfy. File fixtures cannot run honestly without file access, so the test
-leaves these five out by name (`shimFileFixtures`), without a skip. It still
+leaves these eight out by name (`shimFileFixtures`), without a skip. It still
 asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`,
 `fd_readdir` or `fd_filestat_get` fails, and so does an unlisted one that starts.
 

@@ -8,17 +8,21 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // The fixtures that read or write files, which the shim refuses by design (docs/wasm.md). They are
 // left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
 // TestWASIAgreesWithNode runs these fixtures under node:wasi.
 var shimFileFixtures = map[string]bool{
-	"internal/oracle/testdata/closure_convention_host24.a": true,
-	"internal/oracle/testdata/unknown_narrowing_host.a":    true,
-	"internal/oracle/testdata/write_stdout_order.a":        true,
-	"internal/oracle/testdata/write_stderr_order.a":        true,
-	"internal/oracle/testdata/prompt_then_read.a":          true,
+	"internal/oracle/testdata/closure_convention_host24.a":  true,
+	"internal/oracle/testdata/unknown_narrowing_host.a":     true,
+	"internal/oracle/testdata/write_stdout_order.a":         true,
+	"internal/oracle/testdata/write_stderr_order.a":         true,
+	"internal/oracle/testdata/prompt_then_read.a":           true,
+	"internal/oracle/testdata/node_fs_rm_options.a":         true,
+	"internal/oracle/testdata/node_options_const_capture.a": true,
+	"internal/oracle/testdata/node_options_widening.a":      true,
 }
 
 // Not parallel: the import inventory and final counts follow fixture order.
@@ -173,10 +177,16 @@ if(check==='iovecs') {
   assert.equal(api[name](32,36),0); assert.equal(view.getUint32(32,true),0); assert.equal(view.getUint32(36,true),0);
  }
  for(const name of ['args_get','environ_get']) assert.equal(api[name](0,0),0);
- for(const name of ['clock_time_get','random_get','not_a_wasi_service']) assert.throws(()=>api[name](),e=>e.name==='AdamicUnsupportedWASI'&&e.message.includes(name));
+ for(const name of ['random_get','not_a_wasi_service']) assert.throws(()=>api[name](),e=>e.name==='AdamicUnsupportedWASI'&&e.message.includes(name));
+} else if(check==='clock') {
+ view.setBigUint64(40,0n,true); assert.equal(api.clock_time_get(0,1n,40),0,'realtime');
+ const realtime=Number(view.getBigUint64(40,true)/1000000n); assert.ok(Math.abs(realtime-Date.now())<1000,'realtime is the host clock in nanoseconds');
+ assert.equal(api.clock_time_get(1,1n,48),0,'monotonic'); const first=view.getBigUint64(48,true);
+ assert.equal(api.clock_time_get(1,1n,56),0,'monotonic again'); assert.ok(first>0n&&view.getBigUint64(56,true)>=first,'monotonic never goes back');
+ assert.equal(api.clock_time_get(9,1n,64),28,'unknown clock is EINVAL');
 }
 `
-	for _, check := range []string{"iovecs", "exit", "preopens", "empty"} {
+	for _, check := range []string{"iovecs", "exit", "preopens", "empty", "clock"} {
 		t.Run(check, func(t *testing.T) {
 			directory := t.TempDir()
 			if err := os.WriteFile(filepath.Join(directory, "shim.mjs"), original, 0644); err != nil {
@@ -193,6 +203,7 @@ if(check==='iovecs') {
 			changes := map[string][2]string{
 				"iovecs":   {"index < count", "index < count - 1"},
 				"exit":     {"throw new AdamicExit(code)", "return 0"},
+				"clock":    {"new DataView(memory.buffer).setBigUint64(time, BigInt(Math.round(milliseconds * 1e6)), true); return 0;", "return 0;"},
 				"preopens": {"fd_prestat_get: () => 8", "fd_prestat_get: (fd, pointer) => { new DataView(memory.buffer).setUint32(pointer, 0, true); new DataView(memory.buffer).setUint32(pointer + 4, 1, true); return 0; }"},
 			}
 			if change, ok := changes[check]; ok {
@@ -289,4 +300,69 @@ if(mode==='source') {
 	if difference := disagreement(oracle, shim); difference != "" {
 		t.Fatalf("request shim vs source: %s\nshim %+v\nsource %+v", difference, shim, oracle)
 	}
+}
+
+// Every module reads both clocks as it starts (the runtime's clock origin), and no Adamic program reads
+// time yet, so a probe in C holds the shim's clock to node:wasi's: realtime is the host's wall clock,
+// and monotonic only moves forward. A shim whose clock_time_get returns without writing the time is the
+// mutant, and the probe's own output catches it.
+func TestWASIShimClockReadsTheHost(t *testing.T) {
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	clang, err := native.WASIClang()
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	source := filepath.Join(directory, "clock.c")
+	probe := "#include <stdio.h>\n#include <time.h>\nint main(void) {\n" +
+		"\tstruct timespec wall, first, second;\n" +
+		"\tclock_gettime(CLOCK_REALTIME, &wall); clock_gettime(CLOCK_MONOTONIC, &first); clock_gettime(CLOCK_MONOTONIC, &second);\n" +
+		"\tprintf(\"realtime after 2023: %d\\n\", wall.tv_sec > 1672531200 && wall.tv_sec < 4102444800);\n" +
+		"\tprintf(\"monotonic started and forward: %d\\n\", (first.tv_sec > 0 || first.tv_nsec > 0) && (second.tv_sec > first.tv_sec || (second.tv_sec == first.tv_sec && second.tv_nsec >= first.tv_nsec)));\n" +
+		"\treturn 0;\n}\n"
+	if err := os.WriteFile(source, []byte(probe), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "clock.wasm")
+	if output, err := toolchain.Command(clang, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-O2", source, "-o", binary).CombinedOutput(); err != nil {
+		t.Fatalf("clock probe: %v\n%s", err, output)
+	}
+	const agreed = "realtime after 2023: 1\nmonotonic started and forward: 1\n"
+	reference := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	if string(reference.stdout) != agreed || reference.exitCode != 0 {
+		t.Fatalf("node:wasi control: exit %d stdout %q stderr %q", reference.exitCode, reference.stdout, reference.stderr)
+	}
+	actual := execute(t, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
+	if difference := disagreement(reference, actual); difference != "" {
+		t.Fatalf("shim vs node:wasi: %s\nshim: exit %d stdout %q stderr %q", difference, actual.exitCode, actual.stdout, actual.stderr)
+	}
+	// The same runner over a shim whose clock returns without writing the time.
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	runner, err := os.ReadFile(filepath.Join(repository, "oracle", "wasi-shim.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	const write = "new DataView(memory.buffer).setBigUint64(time, BigInt(Math.round(milliseconds * 1e6)), true); return 0;"
+	mutant := strings.Replace(string(original), write, "return 0;", 1)
+	if mutant == string(original) {
+		t.Fatal("clock mutant did not change the shim")
+	}
+	for path, contents := range map[string]string{"internal/native/wasm/shim.mjs": mutant, "oracle/wasi-shim.mjs": string(runner)} {
+		if err := os.MkdirAll(filepath.Join(directory, filepath.Dir(path)), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(directory, path), []byte(contents), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	mutated := execute(t, "node", filepath.Join(directory, "oracle", "wasi-shim.mjs"), binary)
+	if disagreement(reference, mutated) != "stdout differs" {
+		t.Fatalf("clock mutant escaped: exit %d stdout %q stderr %q", mutated.exitCode, mutated.stdout, mutated.stderr)
+	}
+	t.Logf("clock mutant caught by the probe: %q", mutated.stdout)
 }
