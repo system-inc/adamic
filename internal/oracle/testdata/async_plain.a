@@ -3,7 +3,7 @@ async function empty(): Promise<void> {
     console.log("empty");
 }
 async function forwarding(): Promise<void> {
-    return await empty();
+    await empty();
 }
 const number = await 7;
 const truth = await true;

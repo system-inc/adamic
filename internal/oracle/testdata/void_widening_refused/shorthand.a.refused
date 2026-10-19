@@ -1,0 +1,1 @@
+internal/oracle/testdata/void_widening_refused/shorthand.a:3:50: Adamic 0.1 refuses a void-returning function at the object field site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)

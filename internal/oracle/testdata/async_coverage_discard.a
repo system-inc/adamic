@@ -8,7 +8,7 @@ async function discard(): Promise<void> {
     await 'primitive';
     await false;
     await 0;
-    return await Promise.resolve();
+    await Promise.resolve();
 }
 await discard();
 console.log('discarded');

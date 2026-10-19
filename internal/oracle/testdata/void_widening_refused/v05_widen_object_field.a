@@ -1,0 +1,8 @@
+// a-check: refused a void-returning function at the object field site seen as () => unknown
+// A void-typed function stored in a field typed to return unknown.
+interface Task {
+	readonly run: () => unknown;
+}
+const make: () => void = () => 42;
+const task: Task = { run: make };
+console.log(typeof task.run());
