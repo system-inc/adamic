@@ -221,6 +221,26 @@ func withReads(cache, nameKey string, change func(file *readsFile) error) error 
 	return os.Rename(temporary.Name(), readsPath(cache, nameKey))
 }
 
+// lockReadsGraph takes the lock, one for the whole of cache, that a recorder of a set naming a product holds across its
+// reach-back check and its write (recordUnion), and returns what releases it. withReads locks one product's file and
+// the check reads every file the set reaches, so two products recorded at once, each naming the other (internal/lower's
+// t.Parallel rows), each passed the check before the other wrote and made a ring (Planner's M1). It's taken before
+// withReads' lock and never inside it, so no two recorders wait on each other.
+func lockReadsGraph(cache string) (func(), error) {
+	lock, err := os.OpenFile(filepath.Join(cache, ".reads-graph.lock"), os.O_CREATE|os.O_RDWR, 0o644)
+	if err != nil {
+		return nil, err
+	}
+	if err = syscall.Flock(int(lock.Fd()), syscall.LOCK_EX); err != nil {
+		lock.Close()
+		return nil, err
+	}
+	return func() {
+		syscall.Flock(int(lock.Fd()), syscall.LOCK_UN)
+		lock.Close()
+	}, nil
+}
+
 // sortedEntries is entries without repeats, in the order every machine reads them: by path, then kind.
 func sortedEntries(lists ...[]readEntry) []readEntry {
 	seen := map[readEntry]bool{}
