@@ -49,7 +49,8 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 func TestClosedEmptyArrayUnionGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/4_empty_array_union.ts")
 	program := lowered(t, path)
-	nativeRun, binary := natively(t, program)
+	binary := filepath.Join(programSanitized(t, "gaps/4_empty_array_union.ts"), "port")
+	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result run
@@ -69,7 +70,8 @@ func TestClosedEmptyArrayUnionGap(t *testing.T) {
 func TestClosedParserRegexGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/1_regex_and_value_tree.ts")
 	program := lowered(t, path)
-	nativeRun, binary := natively(t, program)
+	binary := filepath.Join(programSanitized(t, "gaps/1_regex_and_value_tree.ts"), "port")
+	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result run
@@ -92,7 +94,8 @@ func TestClosedOptionalBooleanConditionGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	nativeRun, binary := natively(t, program)
+	binary := filepath.Join(programSanitized(t, "gaps/3_optional_boolean_condition.ts"), "port")
+	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result run
