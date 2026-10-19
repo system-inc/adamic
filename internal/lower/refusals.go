@@ -87,6 +87,11 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
 		}
+		// A write through a union is refused before any gap says not yet: it's never a lowering.
+		if err := l.unionSlotWriteRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.knownLoweringGap(node); err != nil {
 			found = err
 			return true
