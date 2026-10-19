@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site through .list[].run seen as () => unknown
+const make: () => void = () => 42;
+const holder: { readonly list: readonly { readonly run: () => void }[] } = { list: [{ run: make }] };
+const wide: { readonly list: readonly { readonly run: () => unknown }[] } = holder;
+const first = wide.list[0];
+console.log(first === undefined ? 'none' : typeof first.run());

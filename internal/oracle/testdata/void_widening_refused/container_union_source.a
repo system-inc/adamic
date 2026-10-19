@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site through .run seen as () => unknown
+const make: () => void = () => 42;
+const flag = [true][0] === true;
+const holder: { readonly kind: 'First'; readonly run: () => void } | { readonly kind: 'Other'; readonly run: () => void } = flag ? { kind: 'First', run: make } : { kind: 'Other', run: make };
+const wide: { readonly run: () => unknown } = holder;
+console.log(typeof wide.run());

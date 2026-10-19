@@ -1,0 +1,8 @@
+// a-check: refused a void-returning function at the argument site seen as () => unknown
+// A void-typed function passed where an explicit unknown result is wanted.
+function call<Result>(callback: () => Result): Result {
+	return callback();
+}
+const make: () => void = () => 42;
+const result = call<unknown>(make);
+console.log(typeof result);
