@@ -208,7 +208,9 @@ func (p *Program) ClosureMayThrow(call Expression) bool {
 				return true
 			}
 		}
-		return false
+		// Runtime host closures are not entries in Functions. Their lowering
+		// contributes to this flag; bounded user targets below stay precise.
+		return p.ClosuresMayThrow
 	}
 	for _, target := range targets.Functions {
 		if p.Functions[target].MayThrow {
