@@ -55,8 +55,9 @@ var Sets = []Set{
 }
 
 // A Variant is one way the oracle builds a program: sanitized for the comparison and the leak check, release as a
-// user's build, counted for the counts table and macOS's leak check, and wasm for the WASI families, which run only
-// where Requires is set.
+// user's build, counted for the counts table and macOS's leak check, wasm for the WASI families, and wasm-request for
+// the request reactor's shim (TestWASIShimRequest), counted so it can check each request leaves nothing live; the wasm
+// variants run only where Requires is set.
 type Variant struct {
 	Name     string
 	Options  native.Options
@@ -69,6 +70,7 @@ var Variants = []Variant{
 	{"shipped", native.Options{Release: true}, ""},
 	{"counted", native.Options{Count: true}, ""},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, "ADAMIC_ORACLE_WASI"},
+	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, "ADAMIC_ORACLE_WASI"},
 }
 
 // Groups is how many product tests each variant's archives are cut into.
