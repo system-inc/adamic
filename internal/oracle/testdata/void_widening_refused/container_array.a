@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site through [] seen as () => unknown
+const make: () => void = () => 42;
+const voids: (() => void)[] = [make];
+const wide: readonly (() => unknown)[] = voids;
+const first = wide[0];
+console.log(first === undefined ? 'none' : typeof first());

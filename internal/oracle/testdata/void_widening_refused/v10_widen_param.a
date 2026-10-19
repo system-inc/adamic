@@ -1,0 +1,7 @@
+// a-check: refused a void-returning function at the argument site seen as () => unknown
+// A void-typed function passed as an argument whose type returns unknown.
+function show(callback: () => unknown): string {
+	return typeof callback();
+}
+const make: () => void = () => 42;
+console.log(show(make));

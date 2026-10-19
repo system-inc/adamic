@@ -1,0 +1,6 @@
+// a-check: refused a void value at a return site whose function returns unknown
+const make: () => void = () => 42;
+function step(): unknown {
+	return make();
+}
+console.log(typeof step());
