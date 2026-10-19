@@ -1,0 +1,5 @@
+// a-check: refused a void-returning function at the initializer site through [0] seen as () => unknown
+const make: () => void = () => 42;
+const holder: readonly [() => void, number] = [make, 7];
+const wide: readonly [() => unknown, number] = holder;
+console.log(typeof wide[0]());

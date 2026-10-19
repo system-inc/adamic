@@ -1,0 +1,7 @@
+// a-check: refused a void-returning function at the initializer site through .run seen as () => unknown
+interface Narrow { readonly next?: Narrow; readonly run: () => void; }
+interface Wide { readonly next?: Wide; readonly run: () => unknown; }
+const make: () => void = () => 42;
+const holder: Narrow = { run: make };
+const wide: Wide = holder;
+console.log(typeof wide.run());

@@ -1,0 +1,4 @@
+// a-check: refused a void-returning function at the initializer site seen as () => any
+const make: () => void = () => 42;
+const wider: () => any = make;
+console.log(typeof wider());

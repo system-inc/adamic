@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the argument site seen as (() => void) | (() => number)
+function show<Result>(callback: (() => void) | (() => Result)): string {
+	return typeof callback();
+}
+const make: () => void = () => 42;
+console.log(show<number>(make));
