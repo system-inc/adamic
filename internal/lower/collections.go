@@ -327,7 +327,8 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			if property == nil {
 				return nil, l.notYet(binding, "destructuring a field the type doesn't name")
 			}
-			if l.inheritedLibrarySymbol(property) {
+			ownResultField := l.iteratorResultField(property)
+			if l.inheritedLibrarySymbol(property) && !ownResultField {
 				return nil, l.prototypeRead(binding, field)
 			}
 			if property.Flags&ast.SymbolFlagsMethod != 0 {
@@ -335,7 +336,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			}
 			for _, root := range l.checker.GetRootSymbols(property) {
 				for _, declaration := range root.Declarations {
-					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+					if load.IsLibrary(ast.GetSourceFileOfNode(declaration)) && !ownResultField {
 						return nil, l.notYet(binding, "an inherited library member in object destructuring, which is not an own field")
 					}
 				}
