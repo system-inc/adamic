@@ -29,7 +29,8 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 	t.Logf("%d profiled snapshots agree on %d texts, %d answer bytes", len(filepath.SplitList(snapshots)), len(cases), len(expected))
 }
 
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+// Not parallel: where its product is missing, mutantPortProduct builds it, and native.Build writes the shared user
+// cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestCachedWidthMutantIsCaught(t *testing.T) {
 	cases := []textCase{{"probe.json", `["` + strings.Repeat("wide", 25) + `",1]`}}
 	answers, _ := cohereAnswers(t, cases, false)
@@ -38,12 +39,9 @@ func TestCachedWidthMutantIsCaught(t *testing.T) {
 	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 		t.Fatal(err)
 	}
-	directory := portDirectory(t, &printerMutation{"zero cached width", "doc.ts", "width: stringWidth(text)", "width: 0"})
-	entry := filepath.Join(directory, "main.ts")
-	binary := filepath.Join(t.TempDir(), "release")
-	if err := native.Build(native.C(lowered(t, entry)), binary, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
+	mutation := cachedWidthMutant
+	entry := filepath.Join(portDirectory(t, &mutation), "main.ts")
+	binary := filepath.Join(mutantPortProduct(t, cachedWidthMutant, native.Options{}), "port")
 	for _, side := range []struct {
 		name   string
 		result run
