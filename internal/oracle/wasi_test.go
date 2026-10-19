@@ -88,14 +88,14 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 func onWASI(t *testing.T, source string) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
-	}
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	buildWASI(t, source, binary)
+	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	wasiRuntimeRefusal(t, actual)
+	return actual
 }
 
-func TestWASIOracleCatchesMutants(t *testing.T) {
-	t.Parallel()
+func wasiOracleCatchesMutant(t *testing.T, exit bool) {
+	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -107,15 +107,22 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	expected := onNode(t, path)
-	program.Strings[0] += "!"
-	if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "stdout differs" {
-		t.Fatalf("byte mutant: got %q", difference)
-	}
-	if difference := disagreement(expected, onWASI(t, "int main(void) { return 23; }\n")); difference != "exit codes differ" {
-		t.Fatalf("exit mutant: got %q", difference)
+	// A WASI oracle mutant needs a fresh Node witness, not native runtime cache identity.
+	expected := onNodeWith(t, inputRun{}, path)
+	if exit {
+		if difference := disagreement(expected, onWASI(t, "int main(void) { return 23; }\n")); difference != "exit codes differ" {
+			t.Fatalf("exit mutant: got %q", difference)
+		}
+	} else {
+		program.Strings[0] += "!"
+		if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "stdout differs" {
+			t.Fatalf("byte mutant: got %q", difference)
+		}
 	}
 }
+
+func TestWASIOracleCatchesMutants_000(t *testing.T) { t.Parallel(); wasiOracleCatchesMutant(t, false) }
+func TestWASIOracleCatchesMutants_001(t *testing.T) { t.Parallel(); wasiOracleCatchesMutant(t, true) }
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
