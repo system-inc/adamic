@@ -60,6 +60,8 @@ for (let index=0;index<requests.length;index++) {
 }
 
 await writeFile(responsePath, expected.join('\n') + '\n');
+// '-' for the module generates the requests and Node's responses only, for the native agreement leg.
+if (modulePath === '-') { console.log(JSON.stringify({requests:requests.length,seed:'0x6a09e667',generated:true})); process.exit(0); }
 const bytes = await readFile(modulePath);
 const wasi = new WASI({version:'preview1',args:[],env:{},preopens:{},returnOnExit:true});
 const instance = await WebAssembly.instantiate(bytes, wasi.getImportObject());
@@ -77,9 +79,10 @@ function handle(request) {
 		finally { api.adamic_release(response); }
 	} finally { api.free(input); }
 }
-// Warm every generated size/shape, including the maximum body, in this same instance.
+// Warm every generated size and shape, including the maximum body, in this same instance: the first 1,000
+// requests hold all 20 shapes 50 times each, and the measured pass below still checks all of them.
 for (const [request,response] of pins) assert.equal(handle(request),response,'wasm semantic pin');
-for (let index=0;index<requests.length;index++) {
+for (let index=0;index<1000;index++) {
 	assert.equal(handle(requests[index]),expected[index],`warmup response ${index}`);
 	if (counted==='1') assert.equal(api.adamic_live(),0,`warmup ${index} retained a live allocation`);
 }

@@ -32,8 +32,8 @@ escapes; Node's JSON.parse and default string sort additionally judge malformed 
 and successful listings.
 
 Each release or counted run initializes one WASI reactor, with no filesystem preopens,
-once. It warms that instance with all 100,000 generated requests, then measures another
-100,000 calls on the same instance. The host allocates borrowed UTF-8 input, copies the
+once. It warms that instance with the first 1,000 generated requests, which hold all
+20 request shapes 50 times each, then measures all 100,000 calls on the same instance. The host allocates borrowed UTF-8 input, copies the
 owned response through the ABI, and releases both. Every measured response must equal
 Node exactly, and every measured memory capacity must equal the post-warmup capacity.
 The counted run also requires zero live counted values after every warmup and measured
@@ -44,16 +44,20 @@ Run:
 ```sh
 bash cloud/setup.sh --wasi-sdk > /tmp/wasm-requests-setup.log 2>&1
 source /workspace/adamic-tools/env.sh
-ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService$' -count=1 -v -timeout 45m > /tmp/wasm-service-test.log 2>&1
+ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService' -count=1 -v -timeout 45m > /tmp/wasm-service-test.log 2>&1
 ```
 
-The test invokes `adamic build --target wasm32-wasi` twice (release and `--count`),
-serves requests through the compiler's existing reactor ABI, and builds a temporary
+The oracle runs as four tests, so each fits Loom's 60 s per-test budget, and each builds
+what it needs: `TestWASIService` (release) and `TestWASIServiceCounted` serve the requests
+through the compiler's existing reactor ABI, `TestWASIServiceNativeAgrees` has the host
+generate the requests and Node's responses only (module `-`) and builds a temporary
 native `.a` command importing the same service with `adamic build --sanitize`. The
 native command reads the identical JSONL request file and its full stdout must match
 Node's response file, with ASan, UBSan and LeakSanitizer enabled. Each mutant is built
 from an isolated temporary `.a` source while the Node oracle keeps the original source.
-A mutant must compile successfully and fail its named runtime assertion.
+A mutant must compile successfully and fail its named runtime assertion
+(`TestWASIServiceMutants`). Every leg refuses a host report of fewer than 100,000 requests,
+and the `shrunk-count` mutant, a host generating 1,000, proves that refusal fires.
 
 Machine: shared Linux 6.18.44 container, AMD EPYC 9V74, Node 24.19.0, Go 1.27.1, clang 20.1.8,
 WASI SDK 27. `nproc` = 5; cgroup CPU quota = 400000/100000 (four CPUs); memory limit
@@ -94,7 +98,7 @@ Verification after the main merge:
 
 ```sh
 source /workspace/adamic-tools/env.sh
-ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService$' -count=1 -v -timeout 45m > /tmp/wasm-service-land-service.log 2>&1
+ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService' -count=1 -v -timeout 45m > /tmp/wasm-service-land-service.log 2>&1
 ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASI' -count=1 -timeout 30m > /tmp/wasm-service-land-oracle.log 2>&1
 go test ./internal/native -count=1 -timeout 30m > /tmp/wasm-service-land-native.log 2>&1
 go vet ./... > /tmp/wasm-service-land-vet.log 2>&1

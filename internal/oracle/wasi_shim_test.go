@@ -104,6 +104,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
+// Not parallel: sets ADAMIC_GATE_UNCACHED for the whole process with t.Setenv.
 func TestWASIShimCheckedWitnessControl(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -144,6 +145,7 @@ func TestWASIShimCheckedWitnessControl(t *testing.T) {
 }
 
 func TestWASIShimContractsAndMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -230,6 +232,7 @@ if(check==='iovecs') {
 }
 
 func TestWASIShimRequest(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -312,6 +315,7 @@ if(mode==='source') {
 // and monotonic only moves forward. A shim whose clock_time_get returns without writing the time is the
 // mutant, and the probe's own output catches it.
 func TestWASIShimClockReadsTheHost(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
