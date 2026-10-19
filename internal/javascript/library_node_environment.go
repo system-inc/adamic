@@ -13,7 +13,9 @@ func nodeEnvironmentRuntime() string {
 		keys[i] = quote(key)
 	}
 	return "const adamicEnvironmentPrototypeKeys = new Set([" + strings.Join(keys, ",") + "]);\n" +
-		`const adamicHostEnvironment = name => {
+		`const adamicHostEnvironment = (name, operation, assigned) => {
+ if (operation === 'set') return adamicNodeProcess.env[name] = assigned;
+ if (operation === 'delete') return delete adamicNodeProcess.env[name];
  const value = adamicNodeProcess.env[name];
  if ((value !== undefined && typeof value !== 'string') || (value === undefined && adamicEnvironmentPrototypeKeys.has(name))) panic(` + quote(ir.NodeEnvironmentInheritedPanic) + ` + name);
  return value;

@@ -25,6 +25,7 @@ var writeExamples = []ir.Expression{
 	ir.ArraySplice{}, ir.ArrayFill{}, ir.ArraySort{}, ir.MapSet{}, ir.MapDelete{}, ir.MapClear{}, ir.SetAdd{},
 	ir.NodeBufferCall{Function: "buffer_set"}, ir.NodeFSFile{Operation: "read_sync"}, ir.ObjectCall{Method: "assign"},
 	ir.RegExpCall{Method: "test"},
+	ir.NodeFSFile{Operation: "host_env_set"}, ir.NodeFSFile{Operation: "host_env_delete"},
 }
 
 // callBackExamples are what callsBack reports, each as a value it reports.
@@ -50,6 +51,7 @@ var writesNothing = []struct {
 	expression ir.Expression
 	why        string
 }{
+	{ir.ProcessCall{}, "host operation does not write a program value or call a callback"},
 	{ir.NodeHostCall{}, "owned host result; may share argument string storage through a counted share"},
 	{ir.ArrayConcat{}, "a new array of the arrays' elements"},
 	{ir.ArrayIndex{}, "reads an element"},
@@ -352,4 +354,21 @@ func valueCaseNames(t *testing.T) map[string]bool {
 		t.Fatal("found no cases in inference.value's switch")
 	}
 	return names
+}
+
+func TestProcessEnvironmentWrites(t *testing.T) {
+	t.Parallel()
+	for _, one := range []struct {
+		operation string
+		want      bool
+	}{
+		{"host_env", false}, {"host_env_set", true}, {"host_env_delete", true},
+	} {
+		t.Run(one.operation, func(t *testing.T) {
+			t.Parallel()
+			if got := writes(ir.NodeFSFile{Operation: one.operation}); got != one.want {
+				t.Fatalf("writes(%s)=%t, want %t", one.operation, got, one.want)
+			}
+		})
+	}
 }
