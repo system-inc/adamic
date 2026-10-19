@@ -386,7 +386,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		return object, nil
 	}
 	// clang compiled it, so it is a miss even when another process published the same entry first.
-	buildLog("cCompile", unit.name, key, "miss", clang)
+	buildLog("cCompile", unit.name, key, "miss", 0)
 	if err := os.MkdirAll(cache, 0o755); err != nil {
 		return "", err
 	}
