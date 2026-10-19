@@ -724,6 +724,26 @@ func TestUnitKeyKeepsOtherUnits(t *testing.T) {
 	t.Fatal("beta.c was compiled again on every one of five hits")
 }
 
+// A mismatch's line is noted in the build log a product test is given, where Loom's builder reads it (Node's M1), one
+// line, and nothing is written when no log is named. Mutant: the note left out.
+// Not parallel: t.Setenv sets the build log every compile in the process would note to.
+func TestUnitMismatchIsNotedInTheBuildLog(t *testing.T) {
+	mismatch := unitMismatch{Unit: "probe.c", Key: strings.Repeat("a", 64), Cached: strings.Repeat("b", 64), Cold: strings.Repeat("c", 64)}
+	log := filepath.Join(t.TempDir(), "build.log")
+	writeUnitKeyFile(t, log, "build adamic-runtime 0123456789ab hit 0.01\n")
+	t.Setenv(unitBuildLog, log)
+	noteUnitMismatch(mismatch)
+	contents, err := os.ReadFile(log)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := "build adamic-runtime 0123456789ab hit 0.01\n" + unitMismatchLine(mismatch) + "\n"; string(contents) != want {
+		t.Fatalf("the build log holds %q, want %q", contents, want)
+	}
+	t.Setenv(unitBuildLog, "")
+	noteUnitMismatch(mismatch)
+}
+
 // A cold check compiles a hit again and compares: a hit whose bytes match passes, and one whose cached object was
 // planted with other bytes builds green with the cold object, and marks the cache off naming the unit, its key and both
 // digests. Mutant: the mismatch returned as an error.
