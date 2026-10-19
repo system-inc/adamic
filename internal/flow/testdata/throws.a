@@ -96,7 +96,7 @@ function declaresInTry(): string {
 }
 
 console.log(readsOld());
-console.log(writesOld());
+console.log(`writes old: ${writesOld()}`);
 console.log(headerReads(7));
 console.log(headerDefines());
 console.log(inFinally(true));
