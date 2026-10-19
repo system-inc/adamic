@@ -237,7 +237,9 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path). clang
 				// runs in this package's directory, which each unit's comp_dir named, so a builder's checkout path reached the
 				// bytes until the compilation directory was named too (#dhm3wav: Workshop's profiled 8 bytes off Adam's).
-				flags := append(native.Flags(options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
+				// The runtime's units are compiled with the program's features (its leading #defines) as flags, or
+				// their closures' layout isn't the program's.
+				flags := append(native.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := toolchain.Command("clang", flags...)

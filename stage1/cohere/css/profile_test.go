@@ -105,7 +105,8 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	}
 	runtimeDir := filepath.Join(repo, "internal/native/runtime")
 	files, _ := filepath.Glob(filepath.Join(runtimeDir, "*.c"))
-	args := append(native.Flags(native.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)
+	// The runtime's units are compiled with the program's features as flags, as main.c's #defines say.
+	args := append(native.SourceFlags(code, native.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)
 	args = append(args, files...)
 	args = append(args, "-lm")
 	result := execute(t, nil, "clang", args...)
