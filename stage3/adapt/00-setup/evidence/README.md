@@ -129,3 +129,60 @@ inputs and apply tests are byte-identical to the measured base. The full
 23-test apply suite passed again after the merge in 14.482s, and the evidence
 verifier passed. The table preserves the original measurement base and records
 this separate main-tip verification; the census was not rerun or relabeled.
+
+## Optional-value contracts, wave 1
+
+The [62-row split](optional-contracts-2026-10-19.json) preserves exact census IDs,
+positions and codes. It follows the innermost incompatible slot in each message,
+with every declaration owner of that slot and its AST form. Anonymous type
+literals are identified as such. Public membership is checked against the actual
+`built/local/typescript.d.ts` from a fresh, locked upstream build, rather than
+assuming that an exported source declaration is public. Owner positions refer
+to the completed apply tree; the adapter ledger retains its earlier positions.
+
+The [fresh adaptation 20 report](optional-contracts-20-before-2026-10-19.json)
+retains its complete `declined`, `initially_declined` and `declined_owners` lists.
+Each split row includes its matching entries, or explicitly says it is outside
+the seed code set or absent at adaptation 20 time. The adapter's broad reason
+is preserved separately from the reviewed explanation of the resolver gap.
+Counts are diagnostic rows, so the TS2375 and TS2379 at resolutionCache:1332
+count twice; multiple declaration owners do not multiply a row.
+
+| Reason | Count | Visibility | Form |
+|---|---:|---|---|
+| nullable-return | 1 | internal | property |
+| nullable-argument | 5 | internal | property |
+| nullable-assignment | 5 | internal | property |
+| generic-owner | 4 | internal | property |
+| indexed-read | 1 | internal | property |
+| generic-receiver | 1 | internal | property |
+| required-view | 1 | internal | property |
+| nested-expression | 1 | internal | property |
+| nested-generic-result | 1 | internal | property |
+| late-exposure | 2 | internal | property |
+| unsupported-code | 2 | public | property |
+| unsupported-code | 9 | internal | property |
+| optional-method | 22 | public | method |
+| optional-method | 7 | internal | method |
+
+There are 29 method rows (22 public, seven internal). Their syntax and variance
+remain unchanged. The property groups contain 33 rows. The smallest selected
+resolver group is the one nullable contextual return row,
+`D4012d5810140`, checker.ts:6035:9 TS2375, targeting internal
+`SymbolVisibilityResult.aliasesToMakeVisible`. Other resolver gaps are deferred
+to keep this wave bounded. The generic and required-view groups retain their
+existing rule boundaries.
+
+Method slots for the language lead, three examples from each visibility group:
+
+- Public: 22 rows. `src/compiler/program.ts:472:11` (CompilerHost.createHash); `src/compiler/program.ts:4956:9` (ModuleResolutionHost.directoryExists); `src/compiler/program.ts:4957:9` (ModuleResolutionHost.getDirectories).
+- Internal: 7 rows. `src/compiler/checker.ts:54261:5` (ModuleSpecifierResolutionHost.readFile); `src/compiler/program.ts:1876:11` (ModuleSpecifierResolutionHost.directoryExists); `src/compiler/program.ts:2599:9` (EmitHost.createHash).
+
+Validate the split and actual owner/API locations with:
+
+```sh
+timeout 60 node stage3/adapt/00-setup/evidence/verify-optional-contracts.cjs stage3/adapt/00-setup/evidence/optional-contracts-2026-10-19.json /tmp/optional-before > /tmp/optional-split-check.log 2>&1
+```
+
+This classification is committed before the resolver repair. Repair measurements,
+mutants and toolchain results will be added separately.
