@@ -97,8 +97,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -117,8 +117,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -151,8 +151,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/08_getDirectories.a:187:25: stage 0 can't lower node:fs.readdirSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/08_getDirectories.a:220:9: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
     }
   },
   {
@@ -190,7 +190,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/10_getModifiedTime.a:37:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:36:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"
     }
   },
   {
@@ -221,8 +221,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/12_deleteFile.a:23:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -278,8 +278,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:22:52: stage 0 can't lower node:path.dirname yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {

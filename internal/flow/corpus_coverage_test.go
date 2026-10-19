@@ -86,7 +86,7 @@ func TestFlowCorpusUnitsCoverEveryProgram(t *testing.T) {
 				t.Fatalf("family %s covers %d of %d programs", families[family], len(bindings), len(expected))
 			}
 			prefix := "TestFlowProgram"
-			if path == "../oracle/testdata/timsort.a" {
+			if path == "../oracle/testdata/timsort.a" || path == "../oracle/testdata/node_fs_directory_system.a" {
 				prefix = "TestFlow" + families[family]
 			}
 			want := corpusTestName(prefix, path)

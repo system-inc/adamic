@@ -98,6 +98,12 @@ if (mode === 'output') {
         try { fs.realpathSync.native(path); throw new Error('expected ENOENT'); }
         catch (error) { for (const field of ['code', 'syscall', 'path', 'message', 'errno']) log(error[field]); }
     }
+ } else if (mode === 'realpath-walk-error') {
+    process.chdir(process.env.HOST_CHILD);
+    for (const path of ['missing/child', 'dangling', 'file/', 'a\0b', 'loop-a']) {
+        try { log(fs.realpathSync(path)); }
+        catch (error) { for (const field of ['code', 'syscall', 'path', 'message', 'errno']) log(error[field]); }
+    }
 } else if (mode === 'eol') {
     log(JSON.stringify(os.EOL));
     process.stdout.write('Version 6.0.3' + os.EOL + 'diagnostic' + os.EOL);

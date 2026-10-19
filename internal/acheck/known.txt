@@ -1,6 +1,0 @@
-# The .a programs outside a Go package that broke their first line's promise when
-# TestEveryProgramOutsideAPackageKeepsItsPromise came (#7xsbxbk, Oct 18), one a line as "<path>: <how it broke>", so a
-# listed program that starts breaking another way is named, never sheltered. It only shrinks: a listed program that
-# keeps its promise again is named and must come off, and none is added. Each is its owner's to settle: its header
-# updated, its directory exempted as evidence, or the compiler's regression fixed (TypeScript holds the stage3 rows as
-# #95revar; Compiler rechecks stage3/adapt/48-memoize after #s5sn3eg).
