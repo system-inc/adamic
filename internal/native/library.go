@@ -416,7 +416,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	lock.Lock()
 	defer lock.Unlock()
 	if found, ok := cachedFile(library); ok {
-		buildLog("cArchive", "runtime.a", filepath.Base(directory), "hit", 0)
+		buildLog("cArchive", "runtime.a", filepath.Base(directory), "miss", 0)
 		return found, nil
 	}
 	if err := os.MkdirAll(cache, 0o755); err != nil {
