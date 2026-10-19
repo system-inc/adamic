@@ -85,9 +85,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	if counted {
-		builder.WriteString("const adamicCallee = (object, name) => { if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
 	} else {
-		builder.WriteString("const adamicCallee = (object, name) => { if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
@@ -230,7 +230,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		if options.Leave != nil {
 			emitter.indent--
 			emitter.line("} finally {")
-			emitter.line("\t%s;", options.Leave(index))
+			emitter.line("\tif (!adamicProcessExiting()) { %s; }", options.Leave(index))
 			emitter.line("}")
 		}
 		builder.WriteString(emitter.out.String())
@@ -276,6 +276,16 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if len(emitter.jsonDescriptors) != 0 {
 		code = code[:jsonDescriptorPosition] + strings.Join(emitter.jsonDescriptors, "") + code[jsonDescriptorPosition:]
 	}
+	if emitter.hostCalleeUsed {
+		const callee = "const adamicCallee = (object, name) => { "
+		code = strings.Replace(code, callee, callee+"if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; ", 1)
+	}
+	if emitter.processExitUsed {
+		code = "import { processExit as adamicProcessExit, processExiting as adamicProcessExiting } from " + runtimeImport + ";\n" + code
+	} else if strings.Contains(code, "adamicProcessExiting()") {
+		// A custom runtime need not expose Node exit helpers for programs without exit.
+		code = "const adamicProcessExiting = () => false;\n" + code
+	}
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
 	}
@@ -307,6 +317,8 @@ func classCountRuntime(runtime string, counted bool) string {
 }
 
 type emitter struct {
+	processExitUsed     bool
+	hostCalleeUsed      bool
 	program             *ir.Program
 	options             Options
 	function            *ir.Function
@@ -652,6 +664,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			caught := e.temporary()
 			e.line("} catch (%s) {", caught)
 			e.indent++
+			e.line("if (adamicProcessExiting()) throw %s;", caught)
 			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
 			e.markLine(at, 1)
 			if statement.CatchLocal >= 0 {
@@ -662,7 +675,11 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		if statement.HasFinally {
 			e.line("} finally {")
+			e.indent++
+			e.line("if (!adamicProcessExiting()) {")
 			e.nested(statement.Finally)
+			e.line("}")
+			e.indent--
 		}
 		e.line("}")
 	default:
@@ -790,10 +807,20 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
 	case ir.ProcessCall:
+		if expression.Operation == "performance" || expression.Operation == "handle" {
+			e.hostCalleeUsed = true
+		}
 		if value, known := e.nodeProcessCall(expression); known {
 			return value
 		}
 		switch expression.Operation {
+		case "exitCode":
+			return "process.exitCode"
+		case "setExitCode":
+			return "(process.exitCode = " + e.value(expression.Arguments[0]) + ")"
+		case "exit":
+			e.processExitUsed = true
+			return "adamicProcessExit(" + e.value(expression.Arguments[0]) + ")"
 		case "stdoutTTY":
 			return "process.stdout.isTTY"
 		case "stderrTTY":
