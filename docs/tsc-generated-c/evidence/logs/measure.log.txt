@@ -1,0 +1,171 @@
+tsc _namespaces/ts.moduleSpecifiers.ts
+tsc _namespaces/ts.performance.ts
+tsc _namespaces/ts.ts
+tsc binder.ts
+tsc builder.ts
+tsc builderPublic.ts
+tsc builderState.ts
+tsc builderStatePublic.ts
+tsc checker.ts
+tsc commandLineParser.ts
+tsc core.ts
+tsc corePublic.ts
+tsc debug.ts
+tsc diagnosticInformationMap.generated.ts
+tsc emitter.ts
+tsc executeCommandLine.ts
+tsc expressionToTypeNode.ts
+tsc factory/baseNodeFactory.ts
+tsc factory/emitHelpers.ts
+tsc factory/emitNode.ts
+tsc factory/nodeChildren.ts
+tsc factory/nodeConverters.ts
+tsc factory/nodeFactory.ts
+tsc factory/nodeTests.ts
+tsc factory/parenthesizerRules.ts
+tsc factory/utilities.ts
+tsc factory/utilitiesPublic.ts
+tsc hostErrors.ts
+  hostErrors.ts -O0: 0.02s 50504 KB exit 0
+  hostErrors.ts -O1: 0.02s 53872 KB exit 0
+  hostErrors.ts -O2: 0.01s 53852 KB exit 0
+tsc moduleNameResolver.ts
+tsc moduleSpecifiers.ts
+tsc parser.ts
+tsc path.ts
+tsc performance.ts
+tsc performanceCore.ts
+tsc program.ts
+tsc programDiagnostics.ts
+tsc resolutionCache.ts
+tsc scanner.ts
+tsc semver.ts
+tsc sourcemap.ts
+tsc symbolWalker.ts
+tsc sys.ts
+tsc tracing.ts
+tsc transformer.ts
+tsc transformers/classFields.ts
+tsc transformers/classThis.ts
+tsc transformers/declarations.ts
+tsc transformers/declarations/diagnostics.ts
+tsc transformers/destructuring.ts
+tsc transformers/es2015.ts
+tsc transformers/es2016.ts
+tsc transformers/es2017.ts
+tsc transformers/es2018.ts
+tsc transformers/es2019.ts
+tsc transformers/es2020.ts
+tsc transformers/es2021.ts
+tsc transformers/esDecorators.ts
+tsc transformers/esnext.ts
+tsc transformers/generators.ts
+tsc transformers/jsx.ts
+tsc transformers/legacyDecorators.ts
+tsc transformers/module/esnextAnd2015.ts
+tsc transformers/module/impliedNodeFormatDependent.ts
+tsc transformers/module/module.ts
+tsc transformers/module/system.ts
+tsc transformers/namedEvaluation.ts
+tsc transformers/taggedTemplate.ts
+tsc transformers/ts.ts
+tsc transformers/typeSerializer.ts
+tsc transformers/utilities.ts
+tsc tsbuild.ts
+tsc tsbuildPublic.ts
+tsc types.ts
+tsc utilities.ts
+tsc utilitiesPublic.ts
+tsc visitorPublic.ts
+tsc watch.ts
+tsc watchPublic.ts
+tsc watchUtilities.ts
+proxy stage1/cohere/cssstrings/main.ts
+  stage1/cohere/cssstrings/main.ts -O0: 0.03s 59336 KB exit 0
+  stage1/cohere/cssstrings/main.ts -O1: 0.1s 67608 KB exit 0
+  stage1/cohere/cssstrings/main.ts -O2: 0.1s 68300 KB exit 0
+proxy stage1/cohere/cssnumbers/main.ts
+  stage1/cohere/cssnumbers/main.ts -O0: 0.03s 60188 KB exit 0
+  stage1/cohere/cssnumbers/main.ts -O1: 0.19s 73396 KB exit 0
+  stage1/cohere/cssnumbers/main.ts -O2: 0.29s 74192 KB exit 0
+proxy stage1/cohere/markdowninline/main.ts
+  stage1/cohere/markdowninline/main.ts -O0: 0.04s 62028 KB exit 0
+  stage1/cohere/markdowninline/main.ts -O1: 0.23s 72044 KB exit 0
+  stage1/cohere/markdowninline/main.ts -O2: 0.27s 73444 KB exit 0
+proxy stage1/cohere/lint/helpers/main.ts
+  stage1/cohere/lint/helpers/main.ts -O0: 0.09s 65800 KB exit 0
+  stage1/cohere/lint/helpers/main.ts -O1: 0.73s 80008 KB exit 0
+  stage1/cohere/lint/helpers/main.ts -O2: 0.86s 78968 KB exit 0
+proxy stage1/cohere/mediaquery/main.ts
+  stage1/cohere/mediaquery/main.ts -O0: 0.05s 62736 KB exit 0
+  stage1/cohere/mediaquery/main.ts -O1: 0.34s 78660 KB exit 0
+  stage1/cohere/mediaquery/main.ts -O2: 0.44s 79660 KB exit 0
+proxy stage1/cohere/selector/main.ts
+  stage1/cohere/selector/main.ts -O0: 0.06s 66416 KB exit 0
+  stage1/cohere/selector/main.ts -O1: 0.66s 79920 KB exit 0
+  stage1/cohere/selector/main.ts -O2: 0.81s 80832 KB exit 0
+proxy stage1/cohere/suppression/main.ts
+  stage1/cohere/suppression/main.ts -O0: 0.06s 63304 KB exit 0
+  stage1/cohere/suppression/main.ts -O1: 0.45s 77456 KB exit 0
+  stage1/cohere/suppression/main.ts -O2: 0.5s 78292 KB exit 0
+proxy stage1/cohere/values/main.ts
+  stage1/cohere/values/main.ts -O0: 0.08s 66532 KB exit 0
+  stage1/cohere/values/main.ts -O1: 0.65s 79132 KB exit 0
+  stage1/cohere/values/main.ts -O2: 0.78s 79780 KB exit 0
+proxy stage1/cohere/css/main.ts
+  stage1/cohere/css/main.ts -O0: 0.13s 69664 KB exit 0
+  stage1/cohere/css/main.ts -O1: 1.15s 87908 KB exit 0
+  stage1/cohere/css/main.ts -O2: 1.28s 87348 KB exit 0
+proxy stage1/cohere/gitignore/main.ts
+  stage1/cohere/gitignore/main.ts -O0: 0.08s 64748 KB exit 0
+  stage1/cohere/gitignore/main.ts -O1: 0.76s 82188 KB exit 0
+  stage1/cohere/gitignore/main.ts -O2: 0.8s 81816 KB exit 0
+proxy stage1/typescript/scanner/main.ts
+  stage1/typescript/scanner/main.ts -O0: 0.23s 85496 KB exit 0
+  stage1/typescript/scanner/main.ts -O1: 1.4s 99872 KB exit 0
+  stage1/typescript/scanner/main.ts -O2: 1.25s 99364 KB exit 0
+proxy stage1/cohere/formatfiles/main.ts
+  stage1/cohere/formatfiles/main.ts -O0: 0.09s 67680 KB exit 0
+  stage1/cohere/formatfiles/main.ts -O1: 1.09s 84200 KB exit 0
+  stage1/cohere/formatfiles/main.ts -O2: 1.29s 83292 KB exit 0
+proxy stage1/cohere/graphql/main.ts
+  stage1/cohere/graphql/main.ts -O0: 0.09s 68268 KB exit 0
+  stage1/cohere/graphql/main.ts -O1: 0.95s 83264 KB exit 0
+  stage1/cohere/graphql/main.ts -O2: 1.1s 84148 KB exit 0
+proxy stage1/cohere/static_single_assignment/main.ts
+  stage1/cohere/static_single_assignment/main.ts -O0: 0.15s 69272 KB exit 0
+  stage1/cohere/static_single_assignment/main.ts -O1: 1.33s 88580 KB exit 0
+  stage1/cohere/static_single_assignment/main.ts -O2: 1.58s 90220 KB exit 0
+proxy stage1/cohere/json/main.ts
+  stage1/cohere/json/main.ts -O0: 0.83s 151372 KB exit 0
+  stage1/cohere/json/main.ts -O1: 20.16s 354552 KB exit 0
+  stage1/cohere/json/main.ts -O2: 21.39s 353700 KB exit 0
+proxy stage1/cohere/graphql/printer/main.ts
+  stage1/cohere/graphql/printer/main.ts -O0: 0.57s 123656 KB exit 0
+  stage1/cohere/graphql/printer/main.ts -O1: 13.01s 242924 KB exit 0
+  stage1/cohere/graphql/printer/main.ts -O2: 13.78s 243508 KB exit 0
+proxy stage1/typescript/parser/main.ts
+  stage1/typescript/parser/main.ts -O0: 0.61s 101604 KB exit 0
+  stage1/typescript/parser/main.ts -O1: 4.82s 139136 KB exit 0
+  stage1/typescript/parser/main.ts -O2: 5.57s 139296 KB exit 0
+proxy stage1/cohere/typeaware/main.ts
+proxy stage1/cohere/lint/helpers/comments/main.ts
+  stage1/cohere/lint/helpers/comments/main.ts -O0: 0.63s 104412 KB exit 0
+  stage1/cohere/lint/helpers/comments/main.ts -O1: 6.02s 143148 KB exit 0
+  stage1/cohere/lint/helpers/comments/main.ts -O2: 7.05s 143404 KB exit 0
+proxy stage1/cohere/yaml/main.ts
+  stage1/cohere/yaml/main.ts -O0: 1.06s 141620 KB exit 0
+  stage1/cohere/yaml/main.ts -O1: 18.07s 267120 KB exit 0
+  stage1/cohere/yaml/main.ts -O2: 19.68s 267816 KB exit 0
+proxy stage1/cohere/tsprinter/main.ts
+  stage1/cohere/tsprinter/main.ts -O0: 1.37s 181160 KB exit 0
+  stage1/cohere/tsprinter/main.ts -O1: 32.8s 314256 KB exit 0
+  stage1/cohere/tsprinter/main.ts -O2: 35.41s 315732 KB exit 0
+proxy stage1/cohere/estree/main.ts
+  stage1/cohere/estree/main.ts -O0: 1.0s 136052 KB exit 0
+  stage1/cohere/estree/main.ts -O1: 11.91s 227088 KB exit 0
+  stage1/cohere/estree/main.ts -O2: 13.13s 227320 KB exit 0
+proxy stage1/cohere/lint/main.ts
+  stage1/cohere/lint/main.ts -O0: 1.79s 182592 KB exit 0
+  stage1/cohere/lint/main.ts -O1: 18.37s 280656 KB exit 0
+  stage1/cohere/lint/main.ts -O2: 20.81s 278156 KB exit 0
