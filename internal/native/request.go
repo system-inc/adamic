@@ -19,7 +19,7 @@ func WASI(program *ir.Program, handler int) (string, error) {
 	if function.Closure || function.Returns != ir.String || len(function.Parameters) != 1 || program.Locals[function.Parameters[0]].Type != ir.String {
 		return "", fmt.Errorf("native: request handler must take one string and return a string")
 	}
-	return cProgram(program, handler), nil
+	return cProgram(program, handler, mainLines), nil
 }
 
 func (e *emitter) requestABI(handler int) string {
