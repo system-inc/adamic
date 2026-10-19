@@ -442,7 +442,7 @@ func (e *emitter) closureDiscard(closure string, function int) {
 
 // discardOf is the adamic_discard a closure of function is made with.
 func (e *emitter) discardOf(function int) string {
-	if e.program.Functions[function].Returns.IsReference() {
+	if e.program.Functions[function].Returns.IsReference() || e.program.Functions[function].Returns == ir.Number {
 		return "adamic_discard_reference"
 	}
 	return "adamic_discard_none"
