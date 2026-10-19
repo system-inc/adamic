@@ -6,6 +6,12 @@
       "memoryMegabytes": 9710,
       "cpus": 16,
       "record": "wall time (Loom 02:08Z, Release 02:21Z): unit ec123b7f's test phase took 1390.9 s wall on 4 contended cores (user 3498.5 s, sys 605.5 s), about 23 minutes, past Kirk's 10-minute rule; on 16 cores it is about 5 to 6 minutes. Declared at 16 cpus because no honest 32-cpu pool exists tonight (Cloud at load 48 of 64; Fabric 02:20Z). Memory measured on Cloud (Fabric 02:05Z): cgroup memory.peak 9710 MB in the test phase, ~/loom-fabric/rss-ec123b7f/memory.log; setup peaked at 9.9 GB (go build ./... at link)"
+    },
+    {
+      "package": "stage1/cohere/json",
+      "memoryMegabytes": 8192,
+      "cpus": 8,
+      "record": "a floor its tests hold (Planner, #zavtret, Oct 19): stage1/cohere/json/memory_budget_test.go sizes its sanitizer budget from the unit's cgroup (testguard.MemoryLimit) and refuses to start below 16 units of 512 MiB, the parent's 7 plus one sanitized child's 9, so a share under 8192 MB reds every test of the unit; its measured peak is low because the budget fits its children to what it holds; cpus 8 is the default share's, declared only because a need names both"
     }
   ]
 }
