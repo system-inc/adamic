@@ -1,4 +1,5 @@
 """Independently verify the checker work queue, source coverage and guarded lowering ledger."""
+from unit_status import body_eligible, audit_deferred
 import collections, copy, gzip, hashlib, json, pathlib, re, sys
 ROOT=pathlib.Path(__file__).resolve().parent;adapted=pathlib.Path(sys.argv[1]).resolve()
 report=json.loads((ROOT/'REPORT.json').read_text())
@@ -45,12 +46,13 @@ def check(r):
    assert d==e,'queue diagnostic metadata'
  assert run['lowering_counts']=={k:sum(s[0]==k for s in keys) for k in ['NotYet','Refused','SkippedDependency','error','panic']},'lowering totals'
  assert run['per_reason']==dict(collections.Counter(s[0]+': '+s[2] for s in keys)),'lowering reasons'
+ audit_deferred(run, [u for row in raw[1:] for u in row["units"]])
  for row in raw[1:]:
   assert row['measurement']==LABEL,'label'
   for unit in row['units']:
    if 'body_start' not in unit:continue
    sites=[s['text'] for s in raw[0]['diagnostic_sites'] if s['file']==row['file'] and s['start']<unit['body_end'] and (s['end']>unit['body_start'] or s['start']>=unit['body_start'])]
-   assert unit['checker_diagnostics']==sites and (unit['status']=='skipped_checker_body')==bool(sites),'body eligibility'
+   assert unit['checker_diagnostics']==sites and body_eligible(unit, sites),'body eligibility'
    if sites:assert not any(f['unit']==unit['where'] for f in row['findings']),'body eligibility'
 check(report);print('source, all 78 files, checker codes/lines, zero ratio, complete 1-to-10 queue, lowering and body eligibility passed')
 mutants=[

@@ -13,6 +13,8 @@ import (
 	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/leancensus"
 )
 
 // makeCensus is every use, in a make_*.go file, of something this package defines in a machinery file: each as
@@ -169,5 +171,98 @@ func TestABinaryLinkingBuildcacheKeysItsMakeFilesAlone(t *testing.T) {
 	own := recipeOf(root, journalEntry{Package: buildcachePackage + ".test"})
 	if own.reason != "" || !slices.Contains(own.entries, readEntry{Kind: "content", Path: "internal/buildcache/settle.go"}) {
 		t.Errorf("this package's own tests' recipe doesn't key settle.go (%s)", own.reason)
+	}
+}
+
+// goProductCensusExports is the export data of this package and every package it and its tests import, built ahead
+// (TestProduct_GoProductCensusExports), so goProduct's lean census type-checks with real types and runs no go.
+func goProductCensusExports(t testing.TB) string {
+	t.Helper()
+	return GoExports(t, "./internal/buildcache")
+}
+
+func TestProduct_GoProductCensusExports(t *testing.T) {
+	t.Parallel()
+	goProductCensusExports(t)
+}
+
+// A go product's build, goplan's Plan.Run, which goProduct hands a plan made before the build's window, reaches nothing
+// its recipe doesn't key, and every package variable it reads is written by its own initializer alone. goplan holds no
+// init and no package variable, so rail 1(c) and the invariant hold over its whole package, with no exemption (leancensus,
+// Node's and Tests' ruling on adcc8fd771, Node's ruling (B) on b20037f75b).
+func TestAGoProductsBuildReadsNoStateButItsInitializers(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	exports, tree, _, err := leancensus.Imports(goProductCensusExports(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	census := leancensus.Census{
+		Root: root, Directory: filepath.Join(root, "internal", "buildcache", "goplan"), ImportPath: buildcachePackage + "/goplan",
+		Entries:  []string{"Plan.Run"},
+		Declared: []string{"internal/buildcache/goplan"},
+		Slice:    []string{buildcachePackage + "/goplan"},
+		Exports:  exports, Tree: tree, TestsBuildLean: true,
+	}
+	findings, err := census.Findings()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(findings) > 0 {
+		t.Fatalf("a go product's build reaches past what its key holds:\n%s", strings.Join(findings, "\n"))
+	}
+}
+
+// IsMachinery is exactly what a binary linking this package leaves out of its key, of this package's own files, plus
+// everything under cmd/, which no product links (#kjgmzt8, Node's ruling): a file of the package is machinery when, and
+// only when, cmd/find's recipe doesn't key it. So the seed rule Loom asks it of grows with the split's exclusions, never
+// a second list. Mutants, each caught: a make file called machinery; settle.go not; cmd/traced not; a file outside the
+// package (go.mod, another package's) called machinery.
+// Not parallel: go list runs in the repository.
+func TestMachineryIsWhatAProductsKeyLeavesOut(t *testing.T) {
+	root := repositoryRootForTest(t)
+	linking := recipeOf(root, journalEntry{Package: buildcachePackage + "/cmd/find"})
+	if linking.reason != "" {
+		t.Fatal(linking.reason)
+	}
+	entries, err := os.ReadDir(filepath.Join(root, "internal", "buildcache"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	machinery := 0
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+		file := "internal/buildcache/" + entry.Name()
+		keyed := slices.Contains(linking.entries, readEntry{Kind: "content", Path: file})
+		if IsMachinery(file) == keyed {
+			t.Errorf("%s: keyed %v, machinery %v", file, keyed, IsMachinery(file))
+		}
+		if !keyed {
+			machinery++
+		}
+	}
+	if machinery == 0 {
+		t.Fatal("no file of the package is machinery, so the comparison saw nothing left out")
+	}
+	err = filepath.WalkDir(filepath.Join(root, "internal", "buildcache", "cmd"), func(file string, entry os.DirEntry, err error) error {
+		if err != nil || entry.IsDir() {
+			return err
+		}
+		relative, err := filepath.Rel(root, file)
+		if err == nil && !IsMachinery(filepath.ToSlash(relative)) {
+			t.Errorf("%s isn't machinery", relative)
+		}
+		return err
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, outside := range []string{"go.mod", "go.sum", "go.work", "internal/toolchain/toolchain.go", "internal/buildcache/make_go.go",
+		"internal/buildcachex/settle.go", "internal/buildcache/testdata/settle.go", "cmd/traced/main.go"} {
+		if IsMachinery(outside) {
+			t.Errorf("%s is called machinery", outside)
+		}
 	}
 }

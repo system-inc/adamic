@@ -1,0 +1,52 @@
+=== RUN   TestMiscompile2ADerivedSymbol
+=== PAUSE TestMiscompile2ADerivedSymbol
+=== RUN   TestMiscompile2AOverrideSource
+=== PAUSE TestMiscompile2AOverrideSource
+=== CONT  TestMiscompile2ADerivedSymbol
+=== CONT  TestMiscompile2AOverrideSource
+=== NAME  TestMiscompile2ADerivedSymbol
+    miscompile_2a_test.go:53: Node: exit=0 stdout="1,2\n"
+=== NAME  TestMiscompile2AOverrideSource
+    miscompile_2a_test.go:57: Node: exit=0 stdout="300\n3\n"
+--- FAIL: TestMiscompile2AOverrideSource (3.87s)
+panic: Unhandled case in Node.Text: *ast.ComputedPropertyName [recovered, repanicked]
+
+goroutine 22 [running]:
+testing.tRunner.func1.2({0x2289b38, 0x39d9fc78180})
+	testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	testing/testing.go:2126 +0x329
+panic({0x2289b38?, 0x39d9fc78180?})
+	runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x39da03dd8c0?)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x39d9fc6a600, 0x39da03dd8c0, 0x39d9fc41080, 0x39d9fc40f00, 0x0)
+	github.com/system-inc/adamic/internal/lower/class_inheritance.go:54 +0x17a
+github.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x39d9fc6a600, 0x39da03dd8c0, 0x39d9fc41080)
+	github.com/system-inc/adamic/internal/lower/class_inheritance.go:45 +0x4d
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x39da03dd8c0)
+	github.com/system-inc/adamic/internal/lower/refusals.go:221 +0xfc5
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x39d9eb94708, 0x39d9fb21b80)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2?, 0x39d9fb21b80)
+	github.com/microsoft/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x39d9fc6a600, 0x39d9eb94708)
+	github.com/system-inc/adamic/internal/lower/refusals.go:245 +0x565
+github.com/system-inc/adamic/internal/lower.Lower({0x235fa50?, 0x2489260?}, 0x39d9eb9a480)
+	github.com/system-inc/adamic/internal/lower/lower.go:47 +0x411
+github.com/system-inc/adamic/internal/oracle.lowered(0x39d9e5b1208, {0x39d9e716000, 0x5c})
+	github.com/system-inc/adamic/internal/oracle/oracle_test.go:585 +0x18b
+github.com/system-inc/adamic/internal/oracle.checkMiscompile2AStop(0x39d9e5b1208, {0xeb9a44, 0x19}, {0xe9aafd, 0x6}, {0xedac6a, 0x27}, 0x0)
+	github.com/system-inc/adamic/internal/oracle/miscompile_2a_test.go:26 +0x36b
+github.com/system-inc/adamic/internal/oracle.TestMiscompile2AOverrideSource(0x39d9e5b1208)
+	github.com/system-inc/adamic/internal/oracle/miscompile_2a_test.go:57 +0x4a
+testing.tRunner(0x39d9e5b1208, 0x236b488)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	3.887s
+FAIL

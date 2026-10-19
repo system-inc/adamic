@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T08:51:09.852321341Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining"}
+{"Time":"2026-10-18T08:51:09.856143656Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Test":"TestCompileProfiles"}
+{"Time":"2026-10-18T08:51:09.856212598Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Test":"TestCompileProfiles","Output":"=== RUN   TestCompileProfiles\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:51:31.382268088Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Test":"TestCompileProfiles","Output":"    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled\n"}
+{"Time":"2026-10-18T08:51:31.383533144Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Test":"TestCompileProfiles","Output":"--- PASS: TestCompileProfiles (21.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:51:31.383553224Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Test":"TestCompileProfiles","Elapsed":21.53}
+{"Time":"2026-10-18T08:51:31.383571121Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:51:31.385474521Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining\t21.533s\n"}
+{"Time":"2026-10-18T08:51:31.385495312Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining","Elapsed":21.533}

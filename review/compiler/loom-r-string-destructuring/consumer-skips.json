@@ -1,0 +1,27 @@
+[
+  {
+    "package": "./internal/lower/cycleledger",
+    "test": "TestOriginalCycleLedger",
+    "log": "consumer-internal_lower_cycleledger.log.txt"
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "test": "TestRecoveryLibraryGaps",
+    "log": "consumer-stage1_cohere_estree.log.txt"
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "test": "TestTypeMemberLibraryGap",
+    "log": "consumer-stage1_cohere_estree.log.txt"
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "test": "TestCookedSurrogateLibraryGap",
+    "log": "consumer-stage1_cohere_estree.log.txt"
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "test": "TestPinnedNumericGaps",
+    "log": "consumer-stage1_cohere_estree.log.txt"
+  }
+]

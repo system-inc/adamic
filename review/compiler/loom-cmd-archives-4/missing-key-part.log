@@ -1,0 +1,5 @@
+--- FAIL: TestCommandRuntimeProductKeyHoldsEveryPart (4.64s)
+    runtimes_test.go:109: native key part "adamic-runtime-v6" is missing from the product key
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	4.657s
+FAIL

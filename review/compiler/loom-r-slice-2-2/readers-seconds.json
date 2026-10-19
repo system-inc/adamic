@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestCallTargetReadersFresh",
+    "seconds": 3.09,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallTargetReadersFlow",
+    "seconds": 3.11,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallTargetReadersNative",
+    "seconds": 3.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestCallTargetReadersLower",
+    "seconds": 3.27,
+    "action": "pass"
+  }
+]

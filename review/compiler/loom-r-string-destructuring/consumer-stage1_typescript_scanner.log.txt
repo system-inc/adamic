@@ -1,0 +1,10 @@
+=== RUN   TestGapStandsWhereGapsMdSays
+=== PAUSE TestGapStandsWhereGapsMdSays
+=== RUN   TestBigintGapStandsWhereGapsMdSays
+=== PAUSE TestBigintGapStandsWhereGapsMdSays
+=== CONT  TestGapStandsWhereGapsMdSays
+=== CONT  TestBigintGapStandsWhereGapsMdSays
+--- PASS: TestGapStandsWhereGapsMdSays (0.21s)
+--- PASS: TestBigintGapStandsWhereGapsMdSays (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	0.239s

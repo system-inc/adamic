@@ -205,14 +205,36 @@ func printerCorpusFiles(t *testing.T) []string {
 
 func DocumentCorpus(t *testing.T) (string, string, string) {
 	t.Helper()
+	oracle := DocumentOracle(t)
+	product := PrinterGateOnce(t, "document-corpus", func() string {
+		return oracleProduct(t, buildcache.Inputs{
+			Name:      "tsprinter-documents-oracle-output-v1",
+			Files:     []string{"stage1/cohere/tsprinter/oracles/oracles.go"},
+			Flags:     []string{"Go oracle sha256=" + statementFileHash(t, oracle)},
+			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		}, func(dir string) error {
+			cohere, _ := filepath.Abs(Repository + "/cohere")
+			// The oracle runs in its package's directory and writes docs.txt, answers.txt and docs.json into dir; the
+			// documents are generated, so the product names no path.
+			command := toolchain.Command(oracle, "-test.run=^TestAdamicDocuments$")
+			command.Dir = cohere + "/internal/format/doc"
+			command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+dir)
+			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+				return fmt.Errorf("Go doc corpus %v\n%s", err, output)
+			}
+			return nil
+		})
+	})
+	// A private copy per test: PlanCorpus keys its plan by path and forgets it when the test ends (#g7a9yd3).
 	directory := t.TempDir()
-	cohere, _ := filepath.Abs(Repository + "/cohere")
-	// The unit only runs the oracle, in the package's directory.
-	command := toolchain.Command(DocumentOracle(t), "-test.run=^TestAdamicDocuments$")
-	command.Dir = cohere + "/internal/format/doc"
-	command.Env = append(os.Environ(), "ADAMIC_TS_DOC_OUTPUT="+directory)
-	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-		t.Fatalf("Go doc corpus %v\n%s", err, output)
+	for _, name := range []string{"docs.txt", "answers.txt", "docs.json"} {
+		data, err := os.ReadFile(filepath.Join(product, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(directory, name), data, 0o644); err != nil {
+			t.Fatal(err)
+		}
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {

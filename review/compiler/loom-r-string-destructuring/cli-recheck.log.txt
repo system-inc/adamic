@@ -1,0 +1,86 @@
+=== RUN   TestExplainChecksOutput
+=== PAUSE TestExplainChecksOutput
+=== CONT  TestExplainChecksOutput
+=== RUN   TestExplainChecksOutput/overload_some_empty
+=== PAUSE TestExplainChecksOutput/overload_some_empty
+=== RUN   TestExplainChecksOutput/overload_some_false_read
+=== PAUSE TestExplainChecksOutput/overload_some_false_read
+=== RUN   TestExplainChecksOutput/overload_some_true_only
+=== PAUSE TestExplainChecksOutput/overload_some_true_only
+=== RUN   TestExplainChecksOutput/overload_erased
+=== PAUSE TestExplainChecksOutput/overload_erased
+=== RUN   TestExplainChecksOutput/overload_assertion
+=== PAUSE TestExplainChecksOutput/overload_assertion
+=== CONT  TestExplainChecksOutput/overload_some_empty
+=== RUN   TestExplainChecksOutput/overload_some_empty/c
+=== PAUSE TestExplainChecksOutput/overload_some_empty/c
+=== RUN   TestExplainChecksOutput/overload_some_empty/js
+=== PAUSE TestExplainChecksOutput/overload_some_empty/js
+=== RUN   TestExplainChecksOutput/overload_some_empty/build
+=== PAUSE TestExplainChecksOutput/overload_some_empty/build
+=== CONT  TestExplainChecksOutput/overload_some_empty/c
+=== CONT  TestExplainChecksOutput/overload_some_true_only
+=== CONT  TestExplainChecksOutput/overload_assertion
+=== CONT  TestExplainChecksOutput/overload_some_empty/build
+=== RUN   TestExplainChecksOutput/overload_assertion/c
+=== RUN   TestExplainChecksOutput/overload_some_true_only/c
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/c
+=== RUN   TestExplainChecksOutput/overload_some_true_only/js
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/js
+=== RUN   TestExplainChecksOutput/overload_some_true_only/build
+=== PAUSE TestExplainChecksOutput/overload_some_true_only/build
+=== CONT  TestExplainChecksOutput/overload_some_empty/js
+=== PAUSE TestExplainChecksOutput/overload_assertion/c
+=== RUN   TestExplainChecksOutput/overload_assertion/js
+=== PAUSE TestExplainChecksOutput/overload_assertion/js
+=== RUN   TestExplainChecksOutput/overload_assertion/build
+=== PAUSE TestExplainChecksOutput/overload_assertion/build
+=== CONT  TestExplainChecksOutput/overload_erased
+=== RUN   TestExplainChecksOutput/overload_erased/c
+=== PAUSE TestExplainChecksOutput/overload_erased/c
+=== RUN   TestExplainChecksOutput/overload_erased/js
+=== PAUSE TestExplainChecksOutput/overload_erased/js
+=== RUN   TestExplainChecksOutput/overload_erased/build
+=== PAUSE TestExplainChecksOutput/overload_erased/build
+=== CONT  TestExplainChecksOutput/overload_some_false_read
+=== RUN   TestExplainChecksOutput/overload_some_false_read/c
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/c
+=== RUN   TestExplainChecksOutput/overload_some_false_read/js
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/js
+=== RUN   TestExplainChecksOutput/overload_some_false_read/build
+=== PAUSE TestExplainChecksOutput/overload_some_false_read/build
+=== CONT  TestExplainChecksOutput/overload_some_true_only/c
+=== CONT  TestExplainChecksOutput/overload_assertion/c
+=== CONT  TestExplainChecksOutput/overload_some_true_only/build
+=== CONT  TestExplainChecksOutput/overload_some_true_only/js
+=== CONT  TestExplainChecksOutput/overload_assertion/build
+=== CONT  TestExplainChecksOutput/overload_assertion/js
+=== CONT  TestExplainChecksOutput/overload_erased/c
+=== CONT  TestExplainChecksOutput/overload_some_false_read/c
+=== CONT  TestExplainChecksOutput/overload_erased/build
+=== CONT  TestExplainChecksOutput/overload_erased/js
+=== CONT  TestExplainChecksOutput/overload_some_false_read/build
+=== CONT  TestExplainChecksOutput/overload_some_false_read/js
+--- PASS: TestExplainChecksOutput (0.00s)
+    --- PASS: TestExplainChecksOutput/overload_some_empty (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_empty/c (0.19s)
+        --- PASS: TestExplainChecksOutput/overload_some_empty/js (0.19s)
+        --- PASS: TestExplainChecksOutput/overload_some_empty/build (5.74s)
+    --- PASS: TestExplainChecksOutput/overload_some_true_only (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_true_only/c (0.22s)
+        --- PASS: TestExplainChecksOutput/overload_some_true_only/js (0.17s)
+        --- PASS: TestExplainChecksOutput/overload_some_true_only/build (5.63s)
+    --- PASS: TestExplainChecksOutput/overload_erased (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_erased/c (0.13s)
+        --- PASS: TestExplainChecksOutput/overload_erased/build (4.49s)
+        --- PASS: TestExplainChecksOutput/overload_erased/js (0.22s)
+    --- PASS: TestExplainChecksOutput/overload_assertion (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_assertion/c (0.29s)
+        --- PASS: TestExplainChecksOutput/overload_assertion/js (0.23s)
+        --- PASS: TestExplainChecksOutput/overload_assertion/build (5.71s)
+    --- PASS: TestExplainChecksOutput/overload_some_false_read (0.00s)
+        --- PASS: TestExplainChecksOutput/overload_some_false_read/c (0.27s)
+        --- PASS: TestExplainChecksOutput/overload_some_false_read/js (0.16s)
+        --- PASS: TestExplainChecksOutput/overload_some_false_read/build (4.99s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	10.755s

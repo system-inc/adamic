@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -51,6 +53,11 @@ type cycleFinder struct {
 	shapes []*checker.Type
 	shaped map[*checker.Type]bool
 
+	// scalarShapes shares identical plain literal shapes. These have no hidden
+	// members, signatures, or reference fields; their complete structural types
+	// are the same, so repeating them adds no reachability edge.
+	scalarShapes map[string]bool
+
 	// writes is every write in the program, judged by the relaxation for fresh writes (fresh.go),
 	// worked out the first time a slot needs it.
 	writes []fresh.Write
@@ -61,6 +68,16 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	// Generated frame/Promise/reaction layouts are IR identities, never checker declarations.
+	// Only their runtime-owned protocol edges are exempt. Source types, including a class
+	// called adamic_async_frame, continue through slotsOf with no name-based escape hatch.
+	if l.result.Async != nil {
+		for _, generated := range l.result.Async.Generated {
+			if !fresh.RuntimeBreaksCycles(generated) {
+				return fmt.Errorf("lower: unaudited generated cycle identity")
+			}
+		}
+	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor
@@ -151,10 +168,61 @@ func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
 		f.shaped = map[*checker.Type]bool{}
 	}
 	f.shaped[proven] = true
+	if key, ok := f.scalarShapeKey(proven, where); ok {
+		if f.scalarShapes[key] {
+			return
+		}
+		if f.scalarShapes == nil {
+			f.scalarShapes = map[string]bool{}
+		}
+		f.scalarShapes[key] = true
+	}
 	f.shapes = append(f.shapes, proven)
 	for _, field := range f.fields(proven) {
 		f.use(f.l.checker.GetTypeOfSymbol(field), declaredAt(field, where))
 	}
+}
+
+// scalarShapeKey is deliberately limited to plain, directly written scalar
+// properties. Reference-bearing, spread, method, accessor, and computed shapes
+// retain their individual identities and all their cycle edges.
+func (f *cycleFinder) scalarShapeKey(proven *checker.Type, where *ast.Node) (string, bool) {
+	if where == nil || where.Kind != ast.KindObjectLiteralExpression ||
+		proven.Flags() != checker.TypeFlagsObject ||
+		proven.ObjectFlags()&checker.ObjectFlagsFreshLiteral == 0 ||
+		len(f.l.checker.GetIndexInfosOfType(proven)) != 0 ||
+		len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
+		len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
+		return "", false
+	}
+	properties := where.AsObjectLiteralExpression().Properties.Nodes
+	fields := f.l.checker.GetPropertiesOfType(proven)
+	if len(properties) != len(fields) {
+		return "", false
+	}
+	var key strings.Builder
+	for i, property := range properties {
+		if property.Kind != ast.KindPropertyAssignment || property.Name() == nil ||
+			property.Name().Kind != ast.KindIdentifier {
+			return "", false
+		}
+		field := fields[i]
+		if field.Name != property.Name().Text() {
+			return "", false
+		}
+		value := f.l.checker.GetTypeOfSymbol(field)
+		// Exact checker identities retain distinct scalar literal values.
+		flags := value.Flags()
+		boolean := flags&checker.TypeFlagsBoolean != 0 && flags & ^(checker.TypeFlagsBoolean|checker.TypeFlagsUnion) == 0
+		if !boolean && flags & ^(checker.TypeFlagsNumber|checker.TypeFlagsString|checker.TypeFlagsBooleanLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsStringLiteral|checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+			return "", false
+		}
+		key.WriteString(strconv.Itoa(len(field.Name)))
+		key.WriteByte(':')
+		key.WriteString(field.Name)
+		fmt.Fprintf(&key, ":%p:%d:%t;", value, field.Flags, f.l.checker.IsReadonlySymbol(field))
+	}
+	return key.String(), true
 }
 
 // use notes a type the program uses, and every type it's made of.

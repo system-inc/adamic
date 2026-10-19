@@ -8,12 +8,15 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"runtime/debug"
 	"slices"
 	"sort"
 	"strings"
 	"sync"
 	"syscall"
+
+	"github.com/system-inc/adamic/internal/buildcache/location"
 )
 
 // What a build reads of the machine itself (#vt46geg, review 3): /usr, /lib, /bin, /etc. A linker from binutils, a
@@ -167,8 +170,9 @@ func packageVersion(name string) string {
 	return "not installed"
 }
 
-// ldCache is the dynamic loader's cache, which ldconfig builds from every library the machine holds.
-const ldCache = "/etc/ld.so.cache"
+// ldCache is the dynamic loader's cache, which ldconfig builds from every library the machine holds (a var so a test
+// can value a cache of its own as the machine's).
+var ldCache = "/etc/ld.so.cache"
 
 // wslLibraries is where WSL mounts the Windows GPU driver's libraries, which ldconfig puts in ldCache: the driver is
 // Windows', each box's own version, and no build loads it (a build that opens one refuses its product, classifyPath).
@@ -182,16 +186,45 @@ var machineZone = []string{"/etc/localtime", "/etc/timezone"}
 // whether or not the cache names it.
 var loaderDirectories = []string{"/lib/x86_64-linux-gnu", "/usr/lib/x86_64-linux-gnu", "/lib", "/usr/lib", "/lib64", "/usr/lib64"}
 
-// ldCacheValue is the loader's cache as what only it can find: the soname map's entries outside loaderDirectories and
-// wslLibraries, each by flags, soname and path. A library in a loader directory is read by its own path when it's
-// loaded, and a soname the cache misses is looked for in each loader directory, each a read of its own, so neither
-// needs the cache's word; a library anywhere else (ld.so.conf.d's /usr/local/lib) is found through the cache alone, and
-// keyed by it. So two boxes that installed different libraries in the loader's directories, or run different Windows
-// GPU drivers, value it the same (#6eexfyv, measured Oct 12: Cloud's cache maps about 120 more libraries, QEMU's, and
-// Server's maps libnvidia-ngx). It reads glibc's format, a header "glibc-ld.so.cache1.1" (48 bytes) and 24-byte
-// entries whose string offsets are from the file's start; a cache in another format, or one that doesn't read, is
-// false, and it is then valued by its content.
+// loaderFlags are the flags an entry must have, exactly, for the build's own loader to take it, by the architecture
+// the build runs as: glibc's _dl_cache_check_flags, which on x86_64 is `(flags) == 0x303` (FLAG_ELF_LIBC6 with
+// FLAG_X8664_LIB64, sysdeps/x86_64/dl-cache.h). An architecture not here has no rule this knows, and its cache doesn't
+// read.
+var loaderFlags = map[string]int32{"amd64": 0x303}
+
+// loaderArchitecture is the architecture the build's loader runs as: this binary's own, an amd64 build under Rosetta in
+// an arm64 guest included (a var so a test can ask as another).
+var loaderArchitecture = runtime.GOARCH
+
+// ldCacheValue is the loader's cache as what only it can find: the soname map's entries the build's own loader takes
+// (loaderFlags), outside loaderDirectories and wslLibraries, each by flags, soname and path. A library in a loader
+// directory is read by its own path when it's loaded, and a soname the cache misses is looked for in each loader
+// directory, each a read of its own, so neither needs the cache's word; a library anywhere else (ld.so.conf.d's
+// /usr/local/lib) is found through the cache alone, and keyed by it. So two boxes that installed different libraries
+// in the loader's directories, or run different Windows GPU drivers, value it the same (#6eexfyv, measured Oct 12:
+// Cloud's cache maps about 120 more libraries, QEMU's, and Server's maps libnvidia-ngx). An entry for another
+// architecture is one this loader never takes: an arm64 Mac guest's ldconfig flags its own aarch64 libraries 0xa03,
+// and an amd64 build there sees none of them (#q4z4cmj, Oct 17: every one of Marin's and Zach's guests' 456 and 439
+// entries). It reads glibc's format, a header "glibc-ld.so.cache1.1" (48 bytes) and 24-byte entries whose string
+// offsets are from the file's start; a cache in another format, one that doesn't read, or one for an architecture
+// loaderFlags doesn't know, is false, and systemValue then calls it unreadable, with its reason and its content's hash,
+// never a value a cache that reads could have.
 func ldCacheValue(content []byte) (string, bool) {
+	return ldCacheValueAs(content, loaderArchitecture)
+}
+
+// ldCacheValueAs is ldCacheValue for the loader of architecture: false for one loaderFlags has no rule for, never a
+// guess at its flags (no flag at all would keep nothing, and value every cache as the empty one).
+func ldCacheValueAs(content []byte, architecture string) (string, bool) {
+	wanted, known := loaderFlags[architecture]
+	if !known {
+		return "", false
+	}
+	return ldCacheValueFor(content, wanted)
+}
+
+// ldCacheValueFor is ldCacheValue for a loader that takes entries flagged exactly wanted.
+func ldCacheValueFor(content []byte, wanted int32) (string, bool) {
 	const magic, header, entrySize = "glibc-ld.so.cache1.1", 48, 24
 	if len(content) < header || string(content[:len(magic)]) != magic {
 		return "", false
@@ -224,10 +257,11 @@ func ldCacheValue(content []byte) (string, bool) {
 		if !ok {
 			return "", false
 		}
-		if library == wslLibraries || strings.HasPrefix(library, wslLibraries+"/") || inLoaderDirectory(library) {
+		flags := int32(word(at))
+		if flags != wanted || library == wslLibraries || strings.HasPrefix(library, wslLibraries+"/") || inLoaderDirectory(library) {
 			continue
 		}
-		lines = append(lines, fmt.Sprintf("%d %s %s", int32(word(at)), soname, library))
+		lines = append(lines, fmt.Sprintf("%d %s %s", flags, soname, library))
 	}
 	sort.Strings(lines)
 	sum := sha256.Sum256([]byte(strings.Join(lines, "\n")))
@@ -258,11 +292,23 @@ func systemValue(path string) string {
 	case err != nil:
 		return "absent"
 	case path == ldCache && info.Mode().IsRegular():
-		if content, err := os.ReadFile(path); err == nil {
-			if value, ok := ldCacheValue(content); ok {
-				return value
-			}
+		// The loader's cache is valued only as the loader reads it. One that won't read that way is unreadable, a miss,
+		// and never the empty cache's value: the loader may read what this can't (a newer format), and a library found
+		// only through it would go unkeyed. Two that don't read value alike only when their bytes are the same, so its
+		// reason and its content's hash are both in the value.
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return "unreadable: " + err.Error()
 		}
+		value, ok := ldCacheValue(content)
+		if !ok {
+			reason := "not glibc's cache format as this reads it"
+			if _, known := loaderFlags[loaderArchitecture]; !known {
+				reason = "no loader rule for " + loaderArchitecture
+			}
+			return fmt.Sprintf("unreadable: %s, content %x", reason, sha256.Sum256(content))
+		}
+		return value
 	case info.Mode()&os.ModeSymlink != 0:
 		target, _ := os.Readlink(path)
 		return "link " + target
@@ -288,14 +334,17 @@ func systemValue(path string) string {
 		if value, ok := systemContents.Load(stamp); ok {
 			return value.(string)
 		}
-		// Kept across processes in the build cache too, under the stamp: a file changed in place gets a new stamp.
+		// Kept across processes in the build cache too, under the stamp: a file changed in place gets a new stamp. Read
+		// where this process writes, then in the build cache (location.ReadPlaces), and kept where it writes.
 		name := sha256.Sum256([]byte(fmt.Sprintf("%s\x00%s\x00%d\x00%d\x00%d", stamp.path, stamp.kind, stamp.inode, stamp.size, stamp.time)))
 		var kept string
-		if cache, err := cacheLocation(); err == nil {
-			kept = filepath.Join(cache, "machine", hex.EncodeToString(name[:]))
-			if value, err := os.ReadFile(kept); err == nil && len(value) > 0 {
-				systemContents.Store(stamp, string(value))
-				return string(value)
+		if output, err := outputLocation(); err == nil {
+			kept = filepath.Join(output, "machine", hex.EncodeToString(name[:]))
+			for _, place := range location.ReadPlaces(kept) {
+				if value, err := os.ReadFile(place); err == nil && len(value) > 0 {
+					systemContents.Store(stamp, string(value))
+					return string(value)
+				}
 			}
 		}
 		content, err := os.ReadFile(path)

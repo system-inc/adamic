@@ -14,6 +14,8 @@ import (
 
 func TestProduct_TSPrinterFindsPinnedCorpus(t *testing.T) { t.Parallel(); oracles.PinnedCorpusFiles(t) }
 
+func TestProduct_TSPrinterFindsDocumentCorpus(t *testing.T) { t.Parallel(); oracles.DocumentCorpus(t) }
+
 func TestProduct_TSPrinterFindsDocumentOracle(t *testing.T) { t.Parallel(); oracles.DocumentOracle(t) }
 
 func TestProduct_TSPrinterFindsMutantOracle_000(t *testing.T) {

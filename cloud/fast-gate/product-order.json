@@ -1,6 +1,42 @@
 {
   "version": 1,
   "waits": {
+    "internal/oracle TestProduct_MovesNative_asan": [
+      "internal/oracle TestProduct_MovesSource"
+    ],
+    "internal/oracle TestProduct_MovesNative_release": [
+      "internal/oracle TestProduct_MovesSource"
+    ],
+    "internal/oracle TestProduct_MovesNative_asan_slabs": [
+      "internal/oracle TestProduct_MovesSource"
+    ],
+    "internal/oracle TestProduct_MovesNative_tsan": [
+      "internal/oracle TestProduct_MovesSource"
+    ],
+    "internal/oracle TestProduct_MovesNative_malloc": [
+      "internal/oracle TestProduct_MovesSource"
+    ],
+    "internal/oracle TestProduct_MovesCounted_Control": [
+      "internal/oracle TestProduct_MovesSource",
+      "internal/oracle TestProduct_NativeRuntimesCounted0",
+      "internal/oracle TestProduct_NativeRuntimesCounted1",
+      "internal/oracle TestProduct_NativeRuntimesCounted2"
+    ],
+    "internal/oracle TestProduct_MovesCounted_SharingMutant": [
+      "internal/oracle TestProduct_MovesSource",
+      "internal/oracle TestProduct_NativeRuntimesCounted0",
+      "internal/oracle TestProduct_NativeRuntimesCounted1",
+      "internal/oracle TestProduct_NativeRuntimesCounted2"
+    ],
+    "internal/oracle TestProduct_MovesDeterminism": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "cmd/adamic TestProduct_CommandRuntimeSanitized": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0"
+    ],
+    "cmd/adamic TestProduct_CommandRuntimeWASI": [
+      "internal/oracle TestProduct_NativeRuntimesWASI0"
+    ],
     "cmd/adamic-admission-delta TestProduct_AdmissionCompilerReady": [
       "cmd/adamic-admission-delta TestProduct_AdmissionCompiler"
     ],
@@ -355,7 +391,7 @@
       "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_LintFindsShardsAgreeCapture": [
-      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_LintFindsSuggestionAlongsideGoOracle": [
       "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
@@ -365,11 +401,11 @@
     ],
     "stage1/cohere/lint TestProduct_ShardsAgreePrepared": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
-      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_ShardsAgreeReferences": [
       "stage1/cohere/lint/oracles TestProduct_LintGoOracle",
-      "stage1/cohere/lint/oracles TestProduct_ShardsAgreeCapture"
+      "stage1/cohere/lint/oracles TestProduct_RulesAgreeCapture"
     ],
     "stage1/cohere/lint TestProduct_SuggestionAlongsideLowered": [
       "stage1/cohere/lint/oracles TestProduct_SuggestionAlongsideGoOracle"
@@ -1785,6 +1821,16 @@
     ],
     "stage3/fixtures TestProduct_FixtureRuntimesSanitized2": [
       "internal/oracle TestProduct_NativeRuntimesSanitized2"
+    ],
+    "stage1/cohere/tsprinter TestProduct_TSPrinterFindsDocumentCorpus": [
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterDocumentCorpus",
+      "stage1/cohere/tsprinter/oracles TestProduct_TSPrinterDocumentOracle"
+    ],
+    "cmd/adamic TestProduct_CommandRuntimeShipped": [
+      "internal/oracle TestProduct_NativeRuntimesShipped0"
+    ],
+    "cmd/adamic TestProduct_CommandRuntimeCounted": [
+      "internal/oracle TestProduct_NativeRuntimesCounted0"
     ]
   }
 }

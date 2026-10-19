@@ -64,6 +64,15 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	default:
 		panic("ir: ClosureTargets requires a function-value call")
 	}
+	// Effects preserve the identity of their result. In particular an intrinsic
+	// adapter binds its callback before returning a known closure literal.
+	for {
+		effects, ok := value.(Effects)
+		if !ok {
+			break
+		}
+		value = effects.Result
+	}
 	switch value := value.(type) {
 	case MakeClosure:
 		return FunctionTargets{Functions: []int{value.Function}}

@@ -26,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 )
 
 // The upstream commit fixes the compiler population; this is a lost-corpus
@@ -243,7 +244,7 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	if err := os.WriteFile(path, data, 0755); err != nil {
+	if err := executable.Write(path, data); err != nil {
 		h.t.Fatal(err)
 	}
 

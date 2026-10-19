@@ -1,0 +1,14 @@
+=== RUN   TestNonNullAdamicRefusal
+=== PAUSE TestNonNullAdamicRefusal
+=== CONT  TestNonNullAdamicRefusal
+=== RUN   TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== PAUSE TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== RUN   TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+=== PAUSE TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+=== CONT  TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== CONT  TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+--- PASS: TestNonNullAdamicRefusal (0.00s)
+    --- PASS: TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a (0.11s)
+    --- PASS: TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.131s

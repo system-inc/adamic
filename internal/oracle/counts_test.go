@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"context"
 	"crypto/sha256"
 	"flag"
 	"fmt"
@@ -14,6 +15,8 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -48,7 +51,9 @@ fixture runs as TestInputAgreesWithNode runs it, a directory of its own to write
 inference and reuse in place are measured against (docs/memory.md).
 
 Not counted, though the oracle runs it as it runs every fixture: internal/oracle/testdata/stack_overflow.a, which recurses until
-the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them.
+the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them; and
+internal/oracle/testdata/moves/accepted/objects.a, whose counted build alone is over a unit's 60 s (the moves tests hold it
+to Node and the leak check).
 
 The tree build measures each row once for what it runs (its emitted C, how an input fixture runs and the files it reads, the
 runtime's sources, the counted build's flags and the clang that builds it), into a product keyed by exactly that
@@ -170,6 +175,9 @@ func pinnedStack(name string, arguments ...string) (string, []string) {
 // count that measures something other than counting.
 var uncounted = map[string]bool{
 	"internal/oracle/testdata/stack_overflow.a": true,
+	// Its counted build is clang over its very large C, 70.85 s on a 4-CPU share, over a unit's 60 s; the moves tests
+	// build it as products and hold it to Node and the leak check.
+	moveObjectsPath: true,
 }
 
 // counted lowers a fixture and returns what its row runs, the emitted C and how it is run, and measure, which builds
@@ -182,7 +190,19 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lowered(t, absolute)
+	// Name sources before lowering: a diagnostic string's encoded length also
+	// carries its path, so replacing paths in the emitted C is too late.
+	loaded, err := load.LoadDisplayed([]string{absolute}, func(name string) string {
+		if name == absolute {
+			// The extension selects the checked TypeScript assertion frontend.
+			return "<source>" + filepath.Ext(name)
+		}
+		return countPortable(t, name, "")
+	})
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
 		t.Fatalf("Lower: %v", err)
 	}
@@ -243,7 +263,12 @@ func countedRun(t *testing.T, path string, absolute string, source string, input
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			result = execute(t, name, pinned...)
+			if emitsParallelMap(source) {
+				// One worker keeps peak liveness reproducible across machines.
+				result = executeParallel(t, "1", false, name, pinned...)
+			} else {
+				result = execute(t, name, pinned...)
+			}
 		}
 		return record(result)
 	}

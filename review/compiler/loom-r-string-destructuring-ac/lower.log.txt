@@ -1,0 +1,18 @@
+=== RUN   TestInheritanceKeepsNominalTupleDestructuring
+=== PAUSE TestInheritanceKeepsNominalTupleDestructuring
+=== RUN   TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== PAUSE TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== RUN   TestDestructuredMethodsCannotLoadOwnSlots
+=== PAUSE TestDestructuredMethodsCannotLoadOwnSlots
+=== RUN   TestStringDestructuringMemberDiagnostic
+=== PAUSE TestStringDestructuringMemberDiagnostic
+=== CONT  TestInheritanceKeepsNominalTupleDestructuring
+=== CONT  TestDestructuredMethodsCannotLoadOwnSlots
+=== CONT  TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== CONT  TestStringDestructuringMemberDiagnostic
+--- PASS: TestIteratorDestructuringDoesNotLieAboutExhaustion (0.12s)
+--- PASS: TestStringDestructuringMemberDiagnostic (0.12s)
+--- PASS: TestDestructuredMethodsCannotLoadOwnSlots (0.33s)
+--- PASS: TestInheritanceKeepsNominalTupleDestructuring (0.39s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.404s

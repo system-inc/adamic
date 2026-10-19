@@ -1,0 +1,7 @@
+=== RUN   TestProduct_RegexOptionDialects
+=== PAUSE TestProduct_RegexOptionDialects
+=== CONT  TestProduct_RegexOptionDialects
+    owner_test.go:21: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/option_dialects.go_regex-option-dialects-owner-v1 5d349e745ed7 miss 0.79
+--- PASS: TestProduct_RegexOptionDialects (0.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/regex/oracles	0.903s

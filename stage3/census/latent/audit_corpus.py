@@ -1,4 +1,5 @@
 """Plant one overlay-only NotYet in a real eligible compiler function."""
+from unit_status import attempted
 import collections, json, os, pathlib, subprocess, sys
 scratch=pathlib.Path(sys.argv[1]).resolve(); adapted=pathlib.Path(sys.argv[2]).resolve()
 LABEL='measured on a checker-rejected program'
@@ -8,7 +9,7 @@ evidence.mkdir(parents=True,exist_ok=True)
 baseline=[json.loads(l) for l in (scratch/(configuration+'.jsonl')).read_text().splitlines()]
 where=str(adapted/'src/compiler/binder.ts')+':330:1'; name='getModuleInstanceState'
 unit=next(u for row in baseline[1:] for u in row['units'] if u['where']==where)
-assert unit['kind']=='KindFunctionDeclaration' and unit['status']!='skipped_checker_body'
+assert unit['kind']=='KindFunctionDeclaration' and attempted(unit)
 env=dict(os.environ,LATENT_ASSERT_NO_OUTPUT='1',LATENT_MUTANT_FUNCTION=name,LATENT_MUTANT_WHERE=where)
 with (evidence/'corpus-mutant-run.log').open('w') as log:
  subprocess.run([str(scratch/(configuration+'-census')),str(adapted/'src/compiler'),str(evidence/'corpus-mutant.jsonl')],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)

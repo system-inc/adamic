@@ -2,15 +2,20 @@ package native
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
 	goruntime "runtime"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 var primitiveCases = []string{
@@ -82,59 +87,158 @@ func TestOrdinaryToPrimitive(t *testing.T) {
 	}
 }
 
-// Mutants use separate runtime archives; none modifies the checkout or fails compilation.
-func primitiveMutant(t *testing.T, source, old, changed string) string {
+// primitiveMutation is one mutant's change to the runtime's exceptions.c: before, which must occur exactly once,
+// becomes after. No mutant modifies the checkout or fails compilation.
+type primitiveMutation struct{ name, before, after string }
+
+// primitiveMutations is every mutant the to-primitive tests run, TestOrdinaryToPrimitiveMutants' three and
+// TestOrdinaryToPrimitiveProtocolGuards' two. A test reaches its binary by the mutant's name.
+var primitiveMutations = []primitiveMutation{
+	{"wrong-order", "if (hint == adamic_hint_string)", "if (hint != adamic_hint_string)"},
+	{"missing-TypeError", "adamic_thrown = error;", "adamic_release(error);"},
+	{"leaked-object-result", "adamic_release(result.value.reference);", "adamic_release(NULL);"},
+	{"terminal-invalid-hint", "if (hint != adamic_hint_default && hint != adamic_hint_number && hint != adamic_hint_string)", "if (false)"},
+	{"preserve-pending-error", "if (adamic_thrown != NULL) { return empty; }\n\tif (hint", "if (hint"},
+}
+
+// primitiveMutant is testdata/to-primitive/runtime.c linked against the named mutant's runtime, from the
+// primitive-mutants product.
+func primitiveMutant(t *testing.T, name string) string {
 	t.Helper()
-	directory := t.TempDir()
-	entries, err := os.ReadDir("runtime")
+	if !slices.ContainsFunc(primitiveMutations, func(mutation primitiveMutation) bool { return mutation.name == name }) {
+		t.Fatalf("no primitive mutant is named %s", name)
+	}
+	return filepath.Join(primitiveMutants(t), name)
+}
+
+// primitiveMutants is the primitive-mutants product, built ahead by TestProduct_PrimitiveMutants: the to-primitive
+// harness linked against each mutant's runtime, a binary named for the mutant, with Flags under Sanitize and Count.
+// Each mutant used to build a whole sanitized runtime archive inside its test, about 7 core-seconds of clang apiece,
+// so TestOrdinaryToPrimitiveMutants took 22 s on one core and 64 s on a loaded box (#knrqkkv). As
+// TestProduct_RecordMutants does, the runtime's unchanged translation units compile once, and each mutant compiles
+// only its changed exceptions.c and links every object directly.
+func primitiveMutants(t *testing.T) string {
+	t.Helper()
+	flags := Flags(Options{Sanitize: true, Count: true})
+	inputs := buildcache.Inputs{
+		Name:      "primitive-mutants",
+		Files:     []string{"internal/native/runtime", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/native.go", "internal/native/library.go"},
+		Flags:     slices.Clone(flags),
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
+	}
+	for _, mutation := range primitiveMutations {
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutant %s exceptions.c %x %x", mutation.name, sha256.Sum256([]byte(mutation.before)), sha256.Sum256([]byte(mutation.after))))
+	}
+	harness, err := os.ReadFile("testdata/to-primitive/runtime.c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, entry := range entries {
-		if entry.IsDir() {
-			continue
-		}
-		data, err := os.ReadFile(filepath.Join("runtime", entry.Name()))
+	return buildcache.Product(t, inputs, func(directory string) error {
+		files, err := readRuntime(runtime, "runtime")
 		if err != nil {
-			t.Fatal(err)
+			return err
 		}
-		if entry.Name() == "exceptions.c" {
-			if strings.Count(string(data), old) != 1 {
-				t.Fatal("mutant anchor is no longer unique")
+		var sources []string
+		for _, file := range files {
+			if strings.HasSuffix(file.name, ".c") {
+				sources = append(sources, file.name)
 			}
-			data = []byte(strings.Replace(string(data), old, changed, 1))
 		}
-		if err := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0o644); err != nil {
-			t.Fatal(err)
+		scratch, err := os.MkdirTemp("", "adamic-primitive-mutants-")
+		if err != nil {
+			return err
 		}
-	}
-	options := Options{Sanitize: true, Count: true}
-	library, err := RuntimeLibrary(directory, options)
-	if err != nil {
-		t.Fatal(err)
-	}
-	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(directory, "primitive")
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", binary, main)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
-	arguments = append(arguments, "-lm")
-	if got, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-		t.Fatalf("mutant must compile: %v %s", err, got)
-	}
-	return binary
+		defer os.RemoveAll(scratch)
+		// compile builds a directory's translation unit from inside it, mapped, so no object names the scratch
+		// directory (cachedRuntime's way).
+		compile := func(within, source string) error {
+			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
+			command := toolchain.CommandIn(within, "clang", arguments...)
+			if output, err := command.CombinedOutput(); err != nil {
+				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
+			}
+			return nil
+		}
+		write := func(within string, files []runtimeFile) error {
+			if err := os.MkdirAll(within, 0o755); err != nil {
+				return err
+			}
+			for _, file := range files {
+				if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+		unchanged := filepath.Join(scratch, "runtime")
+		if err := write(unchanged, files); err != nil {
+			return err
+		}
+		if err := eachInParallel(len(sources), func(index int) error { return compile(unchanged, sources[index]) }); err != nil {
+			return err
+		}
+		if err := os.WriteFile(filepath.Join(scratch, "main.c"), harness, 0o644); err != nil {
+			return err
+		}
+		return eachInParallel(len(primitiveMutations), func(index int) error {
+			mutation := primitiveMutations[index]
+			// The mutant's directory holds the runtime's headers and its changed exceptions.c, so that file compiles
+			// as it would among the rest.
+			var changed []runtimeFile
+			found := false
+			for _, file := range files {
+				if file.name == "exceptions.c" {
+					contents := string(file.contents)
+					if strings.Count(contents, mutation.before) != 1 {
+						return fmt.Errorf("mutant %s: its anchor is no longer unique in exceptions.c", mutation.name)
+					}
+					changed = append(changed, runtimeFile{file.name, []byte(strings.Replace(contents, mutation.before, mutation.after, 1))})
+					found = true
+				} else if strings.HasSuffix(file.name, ".h") {
+					changed = append(changed, file)
+				}
+			}
+			if !found {
+				return fmt.Errorf("mutant %s: the runtime has no exceptions.c", mutation.name)
+			}
+			within := filepath.Join(scratch, "mutant-"+strconv.Itoa(index))
+			if err := write(within, changed); err != nil {
+				return err
+			}
+			if err := compile(within, "exceptions.c"); err != nil {
+				return fmt.Errorf("mutant %s: %w", mutation.name, err)
+			}
+			// Linked from the scratch directory by relative names, mapped, so the binary names neither it nor the
+			// product.
+			arguments := append(append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...), "-I", "runtime", "-o", filepath.Join(directory, mutation.name), "main.c")
+			for _, source := range sources {
+				object := strings.TrimSuffix(source, ".c") + ".o"
+				if source == "exceptions.c" {
+					arguments = append(arguments, filepath.Join(filepath.Base(within), object))
+				} else {
+					arguments = append(arguments, filepath.Join("runtime", object))
+				}
+			}
+			arguments = append(arguments, "-lm")
+			command := toolchain.CommandIn(scratch, "clang", arguments...)
+			if output, err := command.CombinedOutput(); err != nil {
+				return fmt.Errorf("mutant %s must compile: %w\n%s", mutation.name, err, output)
+			}
+			return nil
+		})
+	})
+}
+
+// TestProduct_PrimitiveMutants builds every primitive mutant, so the tree build builds them ahead.
+func TestProduct_PrimitiveMutants(t *testing.T) {
+	t.Parallel()
+	primitiveMutants(t)
 }
 
 func TestOrdinaryToPrimitiveMutants(t *testing.T) {
 	t.Parallel()
-	source, err := os.ReadFile("testdata/to-primitive/runtime.c")
-	if err != nil {
-		t.Fatal(err)
-	}
 	t.Run("wrong-order", func(t *testing.T) {
-		binary := primitiveMutant(t, string(source), "if (hint == adamic_hint_string)", "if (hint != adamic_hint_string)")
+		binary := primitiveMutant(t, "wrong-order")
 		for index, name := range primitiveCases {
 			t.Run(name, func(t *testing.T) {
 				got := primitiveRun(binary, index, "ASAN_OPTIONS=detect_leaks=1")
@@ -149,7 +253,7 @@ func TestOrdinaryToPrimitiveMutants(t *testing.T) {
 		}
 	})
 	t.Run("missing-TypeError", func(t *testing.T) {
-		binary := primitiveMutant(t, string(source), "adamic_thrown = error;", "adamic_release(error);")
+		binary := primitiveMutant(t, "missing-TypeError")
 		for _, index := range []int{5, 7, 17} {
 			got := primitiveRun(binary, index, "ASAN_OPTIONS=detect_leaks=1")
 			if got.ExitCode != 0 || primitiveUnbalanced(got) != "" {
@@ -162,7 +266,7 @@ func TestOrdinaryToPrimitiveMutants(t *testing.T) {
 		}
 	})
 	t.Run("leaked-object-result", func(t *testing.T) {
-		binary := primitiveMutant(t, string(source), "adamic_release(result.value.reference);", "adamic_release(NULL);")
+		binary := primitiveMutant(t, "leaked-object-result")
 		got := primitiveRun(binary, 5, "ASAN_OPTIONS=detect_leaks=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0")
 		if !bytes.Contains(got.Stderr, []byte("LeakSanitizer: detected memory leaks")) {
 			t.Fatalf("leaked object result survived: %+v", got)
@@ -187,8 +291,7 @@ func TestOrdinaryToPrimitiveProtocolGuards(t *testing.T) {
 		if got.ExitCode != 70 || !bytes.HasPrefix(got.Stderr, []byte("adamic: panic: compiler bug: invalid primitive hint\n")) {
 			t.Fatalf("invalid hint must be terminal: %+v", got)
 		}
-		old := "if (hint != adamic_hint_default && hint != adamic_hint_number && hint != adamic_hint_string)"
-		mutant := primitiveMutant(t, string(source), old, "if (false)")
+		mutant := primitiveMutant(t, "terminal-invalid-hint")
 		got = primitiveRun(mutant, 20, "ASAN_OPTIONS=detect_leaks=1")
 		if got.ExitCode != 0 || primitiveUnbalanced(got) != "" {
 			t.Fatalf("guard mutant must finish cleanly: %+v", got)
@@ -201,8 +304,7 @@ func TestOrdinaryToPrimitiveProtocolGuards(t *testing.T) {
 		if got.ExitCode != 0 || string(got.Stdout) != want || primitiveUnbalanced(got) != "" {
 			t.Fatalf("pending error must prevent lookup: %+v", got)
 		}
-		old := "if (adamic_thrown != NULL) { return empty; }\n\tif (hint"
-		mutant := primitiveMutant(t, string(source), old, "if (hint")
+		mutant := primitiveMutant(t, "preserve-pending-error")
 		got = primitiveRun(mutant, 21, "ASAN_OPTIONS=detect_leaks=1")
 		if got.ExitCode != 0 || primitiveUnbalanced(got) != "" {
 			t.Fatalf("guard mutant must finish cleanly: %+v", got)

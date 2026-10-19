@@ -232,4 +232,9 @@ Adamic compiler gate. This binary cannot produce runnable native output, and eve
 adapted configuration remains checker-rejected. The ledger records latent lowering
 observations under the stated rules, not native tsc readiness or correctness.
 '''
+for run in json.loads((root/'REPORT.json').read_text())['runs']:
+    coverage = run.get('units', run)
+    if 'never_reached' in coverage:
+        text += f"\nDeferred generic units: {coverage['deferred_generic_instantiation']}; reached: {coverage['instantiated_generics']}. Deferred body bytes: {coverage['deferred_body_bytes']}, neither examined nor blocked.\nNever reached (unexamined coverage gaps):\n"
+        text += ''.join(f"- {unit['where']} {unit['name']}\n" for unit in coverage['never_reached'])
 (root/'REPORT.md').write_text(text)

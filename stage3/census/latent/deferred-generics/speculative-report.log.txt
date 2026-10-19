@@ -1,0 +1,58 @@
+{
+  "base": "historical census base a5630a90",
+  "mapper_fix": "historical mapper merge 69501280",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "observation_kinds": {
+    "NotYet": 20
+  },
+  "stream_inventory": null,
+  "counts": {
+    "NotYet": [
+      8,
+      10,
+      2,
+      0,
+      0
+    ],
+    "Refused": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "source_bytes": 591,
+  "examined_bytes": 406,
+  "deferred_body_bytes": 185,
+  "deferred_generic_instantiation": 6,
+  "instantiated_generics": 3,
+  "never_reached": [
+    {
+      "where": "/tmp/kaxjrp9-deferred/source/a.a:2:1",
+      "name": "unused",
+      "body_start": 68,
+      "body_end": 131
+    },
+    {
+      "where": "/tmp/kaxjrp9-deferred/source/a.a:4:1",
+      "name": "diagnosed",
+      "body_start": 230,
+      "body_end": 277
+    },
+    {
+      "where": "/tmp/kaxjrp9-deferred/source/a.a:2:42",
+      "name": "unusedNested",
+      "body_start": 97,
+      "body_end": 115
+    }
+  ],
+  "examined_share": 0.6869712351945855,
+  "typescript_source_bytes": 591,
+  "typescript_examined_share": 0.6869712351945855,
+  "coverage_definition": "Every TypeScript AST child visited; value/statement/signature/binding positions attempted. This is speculative examination, not successful production lowering.",
+  "independent_depth_matches": 20,
+  "independent_depth_unmatched": 0,
+  "independent_depth_without_source": 0,
+  "unexamined": []
+}

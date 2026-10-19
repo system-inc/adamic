@@ -320,6 +320,12 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 				}
 			}
 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+			// Layout must follow the destination, even when the literal infers narrower elements.
+			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
+				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
+					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
+				}
+			}
 			// Keep every proven nonempty contextual element representation, including weak handles.
 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
 				arrayType = contextual
@@ -347,6 +353,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.eepPropertyPresence(node); err != nil {
+		return nil, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -1237,7 +1246,14 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if err != nil {
 			return nil, true, err
 		}
-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+		callbackType := int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())
+		if !known {
+			callback, callbackType, err = l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
+			if err != nil {
+				return nil, true, err
+			}
+		}
+		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType}, true, nil
 	}
 	if _, isVisit := visits[name]; isVisit {
 		return l.arrayVisit(node, array, element, name)
@@ -1393,9 +1409,9 @@ func (l *lowering) newArrayFilled(node *ast.Node, created *ast.Node) (ir.Express
 // visits are the array methods that call a function per element and look at what it returns.
 var visits = map[string]struct{}{"forEach": {}, "filter": {}, "some": {}, "every": {}, "find": {}, "findIndex": {}}
 
-// arrayVisit lowers forEach, filter, some, every, find and findIndex. All but forEach decide by what
-// the callback returns, which 0.1 requires to be a boolean: JavaScript would take any value's
-// truthiness there, and 0.1 has none.
+// arrayVisit lowers forEach, filter, some, every, find, findIndex, findLast and findLastIndex.
+// All but forEach decide by what the callback returns, which 0.1 requires to be a boolean:
+// JavaScript would take any value's truthiness there, and 0.1 has none.
 func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Type, name string) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 1 {
@@ -1414,6 +1430,14 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	}
 	claim := predicateOfSignature(l.checker, signatures[0])
 	if claim != nil && claim.Type() != nil {
+		// A predicate changes the receiver's flow type, never its stored elements.
+		// Optional numbers and references keep their storage; boxed unions cannot become S[].
+		if name == "every" && element == ir.Union {
+			target, known := l.kept(l.concrete(claim.Type()))
+			if known && target != element {
+				return nil, true, &Refused{Where: l.program.Where(node), What: "array element narrowing across a union layout is not yet sound", Fix: "read the elements through the union type, or copy them into a new S[]"}
+			}
+		}
 		if name == "filter" && element == ir.Union {
 			target, known := l.kept(l.concrete(claim.Type()))
 			if known && target != element {
@@ -1422,10 +1446,10 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		}
 		// An undefined result already fits packed optional-number storage.
 		// Heap-backed and boxed sources cannot be reused as that result slot.
-		if name == "find" && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
+		if (name == "find" || name == "findLast") && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
 			result, err := l.typeOf(node)
 			if err != nil || result != ir.Maybe(element) {
-				return nil, true, l.notYet(node, "find predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
+				return nil, true, l.notYet(node, name+" predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
 			}
 		}
 	}
@@ -1439,7 +1463,11 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: callbackType}, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1471,7 +1499,11 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if result != initial.Type() || slotless(result) {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{result, element, ir.Number, ir.Array})
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType}, true, nil
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
@@ -1779,9 +1811,24 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
 			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
 		}
-		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(comparator)).Id())}, true, nil
+		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
 	}
 	declared := l.result.Functions[function]
+	if declared.Returns == ir.Number && len(declared.Parameters) == 2 && (l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element) {
+		callback, err := l.expression(comparator)
+		if err != nil {
+			return nil, true, err
+		}
+		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
+	}
 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {
 		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number")
 	}

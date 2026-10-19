@@ -1,0 +1,50 @@
+{
+  "predicate_pin": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "source_sha256": "c81d5f29ae6a06c5671fd8caf961828bc040c1f565df0c0f2cb660ce28a29317",
+  "result": {
+    "a_check": {
+      "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_t5.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet"
+      },
+      "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v1.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v1.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet"
+      },
+      "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v2.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v2.a:2:9: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet"
+      },
+      "internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v5.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-93122fa_t_v5.a:7:16: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet"
+      },
+      "internal/lower/testdata/eep_presence/eep1m5z-classfeat_method_view.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-classfeat_method_view.a:10:46: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet"
+      },
+      "internal/lower/testdata/eep_presence/eep1m5z-classfeat_static_virtual.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet"
+      },
+      "internal/lower/testdata/eep_presence/eep1m5z.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/eep_presence/eep1m5z.a:1:68: stage 0 can't lower a union or optional tuple length; declare arrays where the values are constructed, or carry an explicit length alongside each tuple yet"
+      }
+    }
+  },
+  "steps": {
+    "a-check": 0.9
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null
+}

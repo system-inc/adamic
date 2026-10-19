@@ -1,0 +1,3 @@
+package main
+import("context";"encoding/json";"fmt";"os";"time"; "runtime/pprof";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
+func main(){p,err:=load.Load([]string{os.Args[1]});if err!=nil{panic(err)};profile,e:=os.Create(os.Args[2]);if e!=nil{panic(e)};if e=pprof.StartCPUProfile(profile);e!=nil{panic(e)};start:=time.Now();result,err:=lower.Lower(context.Background(),p);elapsed:=time.Since(start);pprof.StopCPUProfile();profile.Close();message:="";if err!=nil{message=err.Error()};functions:=0;if result!=nil{functions=len(result.Functions)};bytes,_:=json.Marshal(map[string]any{"lower_seconds":elapsed.Seconds(),"error":message,"functions":functions});fmt.Println(string(bytes));if err!=nil{os.Exit(1)}}

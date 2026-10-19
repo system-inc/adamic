@@ -1,0 +1,22 @@
+=== RUN   TestProduct_LowerAgreementNative
+=== PAUSE TestProduct_LowerAgreementNative
+=== CONT  TestProduct_LowerAgreementNative
+--- PASS: TestProduct_LowerAgreementNative (4.40s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	4.423s
+refused lower agreement native (name key 01c7e28392f2): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 10cb9be6e708): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 466cb7776777): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 50fc6c48992e): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 58d7dbae9303): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 5a9e15687cb5): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 69d29958f03f): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key 9cfb71e47e7d): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key bcfb789085fb): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key dd79f4f91c46): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key e29e2aa1b207): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key ea997fb099ac): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key eb1403923403): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+refused lower agreement native (name key f856a6936a94): the whole run can't be keyed: the tree changed during the run (git HEAD, status or a submodule), so its reads can't be valued now
+traced: 0 settled, 14 refused; journal and report in /home/agent/.cache/adamic-build/traces/20261018T001900Z-405967727
+exit status 3

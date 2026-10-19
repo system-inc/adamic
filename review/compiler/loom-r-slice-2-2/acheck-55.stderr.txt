@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/internal/oracle/testdata/weak_miscompiles_refused/9984394_narrowed_reduce.a:10:16: stage 0 can't lower reduce callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet

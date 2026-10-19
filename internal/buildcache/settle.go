@@ -22,6 +22,7 @@ import (
 	"syscall"
 	"unicode"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -165,6 +166,9 @@ type Report struct {
 	// Window is how a settled build's reads were taken (#mmpt615's census): BuildWindowed, BuildLeanSuperset or
 	// BuildSuperset.
 	Window string `json:"window,omitempty"`
+	// Lean is a product keyed by the lean recipe (leanRecipeOf), settled or found under a lean set (leanSet): the products
+	// Loom's sampled key check draws from, hits as well as builds.
+	Lean bool `json:"lean,omitempty"`
 }
 
 // How a settled build's reads were taken: a lean build (LeanProduct) by its own window and declared files; a lean build
@@ -219,6 +223,10 @@ type traceFacts struct {
 	ran, opened map[string]bool
 	// goCaches are goCache's spellings, as written and resolved, each without its leading slash (goCacheJoined).
 	goCaches []string
+	// cache is where the run wrote products, and caches is every spelling of every directory its lookups read them in:
+	// the output directory and, when that is another, the build cache (location.ReadPlaces). cacheRoots is, for each
+	// spelling, the directory it spells, as the journal names it.
+	cacheRoots map[string]string
 }
 
 // settleFacts are the places a read can be in, as this machine (the one that ran the trace) spells them.
@@ -227,9 +235,18 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	if err != nil {
 		return nil, err
 	}
-	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}, opened: map[string]bool{}}
+	facts := &traceFacts{root: root, cache: cache, trace: trace, tools: tools, searched: map[string]bool{}, executables: map[string]bool{}, ran: map[string]bool{}, opened: map[string]bool{},
+		cacheRoots: map[string]string{}}
 	// A path a descriptor decodes to is resolved; one a call names isn't. The tree and the cache are matched either way.
-	facts.roots, facts.caches = variants(root), variants(cache)
+	// A read in the build cache through an output directory of this run's own is the cache's, as a read in that
+	// directory is: placed in the one, classified in either.
+	facts.roots = variants(root)
+	for _, place := range location.ReadPlaces(cache) {
+		for _, spelling := range variants(place) {
+			facts.caches = append(facts.caches, spelling)
+			facts.cacheRoots[spelling] = place
+		}
+	}
 	// Where a product's go keeps things: toolchain's go, under the environment GoBuild gives it.
 	output, err := toolchain.Command("go", "env", "-json", "GOROOT", "GOCACHE", "GOMODCACHE").Output()
 	if err != nil {
@@ -294,6 +311,15 @@ func (facts *traceFacts) inTree(name string) (string, bool) {
 		}
 	}
 	return "", false
+}
+
+// cacheRoot is the directory spelling, one of caches, spells, as the journal names it: the run's cache when facts
+// don't know it.
+func (facts *traceFacts) cacheRoot(spelling string) string {
+	if root, ok := facts.cacheRoots[spelling]; ok {
+		return root
+	}
+	return facts.cache
 }
 
 func isGit(relative string) bool {
@@ -446,11 +472,12 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 		}
 		parts := strings.Split(strings.TrimPrefix(name, cache+"/"), "/")
 		switch {
-		// Named under the cache as the journal names it, whichever spelling the trace used.
+		// Named under the directory it was read in as the journal names it, whichever spelling the trace used: the output
+		// directory's or the build cache's, where the lookup that found it found it.
 		case isKey(parts[0]):
-			return classed{"product", filepath.Join(facts.cache, parts[0])}
+			return classed{"product", filepath.Join(facts.cacheRoot(cache), parts[0])}
 		case parts[0] == "pending" && len(parts) >= 3 && isKey(parts[2]):
-			return classed{"product", filepath.Join(facts.cache, "pending", parts[1], parts[2])}
+			return classed{"product", filepath.Join(facts.cacheRoot(cache), "pending", parts[1], parts[2])}
 		case parts[0] == "local" && len(parts) >= 2 && isKey(parts[1]):
 			return classed{refusal + "local product", name}
 		}
@@ -889,9 +916,15 @@ func (state *traceState) handle(call traceCall) {
 		name, kind = filepath.Clean(unescape(decoded)), readListing
 	default:
 		var rest string
-		name, rest = target(call.call, call.arguments, state.directory[process])
+		var crossed []string
+		name, rest, crossed = target(call.call, call.arguments, state.directory[process])
 		if name == "" {
 			return
+		}
+		// Each link a `..` stepped back out of decided where the call landed, so it's read, as a lookup of the link
+		// (throughLink keys it by where it points): chg_6p4j4p8f's link-deep/.. landed in nested, through link-deep.
+		for _, link := range crossed {
+			state.record(call.pid, process, link, readStat)
 		}
 		if strings.HasPrefix(name, traceMarker) {
 			state.marker(call.pid, process, strings.TrimPrefix(name, traceMarker), call.queued)
@@ -1061,7 +1094,7 @@ func (state *traceState) openWindow(id string, owner int) {
 // window's, never outside it (Mentat's M2). A process it doesn't know yet has no placed thread to read meanwhile, and its
 // marker opens the window when its thread is placed, late (windowLate).
 func (state *traceState) openEarly(call traceCall) {
-	name, _ := target(call.call, call.arguments, "")
+	name, _, _ := target(call.call, call.arguments, "")
 	marker, ok := strings.CutPrefix(name, traceMarker)
 	if !ok {
 		return
@@ -1118,21 +1151,13 @@ func (state *traceState) snapshotOf(processes map[int]map[string]*pathReads, own
 // build was open, by kinds, with when each path was last read, but what they wrote after the window opened and before
 // reading it. A write before the window is never the build's own output: the reads behind those bytes are outside the
 // window, so the file reads by content (Mentat's M1: a test that writes a fixed path from its own case and builds from
-// it), but for a file keyed names, whose bytes the build's name key holds (leanBuild).
-func (state *traceState) windowSnapshot(id string, keyed []string) (map[string]int, map[string]int) {
+// it).
+func (state *traceState) windowSnapshot(id string) (map[string]int, map[string]int) {
 	owner, opened := state.windowOwner[id], state.windowOpened[id]
-	var holds []string
-	for _, name := range keyed {
-		holds = append(holds, variants(name)...)
-	}
 	snapshot, last := map[string]int{}, map[string]int{}
 	for name, found := range state.windows[id] {
 		kinds := found.kinds
-		since := opened
-		if slices.Contains(holds, name) {
-			since = 0
-		}
-		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, since, found.firstRead) {
+		if kinds&^readWrite != 0 && !underAny(name, state.facts.caches) && state.madeBy(owner, name, opened, found.firstRead) {
 			kinds &= readWrite
 		}
 		if kinds != 0 {
@@ -1293,40 +1318,85 @@ func (state *traceState) joinRun(run, last map[string]int, reads map[string]*pat
 	}
 }
 
-// target is the absolute path a call names and the rest of its arguments, or "".
-func target(call, arguments, directory string) (string, string) {
+// target is the absolute path a call names (kernelPath), the rest of its arguments, and the links its `..` stepped back
+// out of, or "".
+func target(call, arguments, directory string) (string, string, []string) {
 	base := directory
 	if atCalls[call] {
 		decoded, length, ok := directoryArgument(arguments)
 		if !ok {
-			return "", arguments
+			return "", arguments, nil
 		}
 		if decoded != "" {
 			base = unescape(decoded)
 		}
 		arguments = arguments[length:]
 	} else if !plainCalls[call] && call != "symlink" && call != "symlinkat" {
-		return "", arguments
+		return "", arguments, nil
 	}
 	quotedName, length, ok := quotedArgument(arguments)
 	if !ok {
-		return "", arguments
+		return "", arguments, nil
 	}
 	name := unescape(quotedName)
 	rest := arguments[length:]
 	if name == "" && strings.Contains(rest, "AT_EMPTY_PATH") {
 		if base == "" {
-			return "", rest
+			return "", rest, nil
 		}
-		return filepath.Clean(base), rest
+		return filepath.Clean(base), rest, nil
 	}
 	if !filepath.IsAbs(name) {
 		if base == "" {
-			return "", rest
+			return "", rest, nil
 		}
-		name = filepath.Join(base, name)
+		name = base + string(filepath.Separator) + name
 	}
-	return filepath.Clean(name), rest
+	landed, crossed := kernelPath(name)
+	return landed, rest, crossed
+}
+
+// kernelPath is name, an absolute path a call named, with its `.` and `..` taken as the kernel takes them: a `..` is
+// the parent of where the path so far lands, never the parent of how it's spelled. filepath.Clean takes `..` by the
+// spelling, so a read of link-deep/../link-inside, link-deep a link to nested/deeper, was keyed as link-inside beside
+// link-deep, a path the tree doesn't carry, where the kernel read nested/link-inside, and the run was refused as reading
+// an untracked file (chg_6p4j4p8f's node_fs_directory_inputs, Oct 18). Only a path so far that ends in a symbolic link
+// lands anywhere but its spelled parent: an earlier link in it is followed by any read through it (throughLink), and its
+// spelled parent resolves where the kernel's does. So a `..` out of a link returns that link among the crossed, the
+// read's whatever the landing, since a link repointed moves it; the path goes on from the link's target's parent, kept
+// as spelled where that's where the spelled parent lands, so a path that lands as it always did reads as it did; and a
+// dangling link stops the path there, as the kernel's lookup stops.
+func kernelPath(name string) (string, []string) {
+	if !slices.Contains(strings.Split(name, string(filepath.Separator)), "..") {
+		return filepath.Clean(name), nil
+	}
+	current := string(filepath.Separator)
+	var crossed []string
+	for _, part := range strings.Split(name, string(filepath.Separator)) {
+		switch part {
+		case "", ".":
+			continue
+		case "..":
+			spelled := filepath.Dir(current)
+			if info, err := os.Lstat(current); err != nil || info.Mode()&fs.ModeSymlink == 0 {
+				current = spelled
+				continue
+			}
+			crossed = append(crossed, current)
+			landed := resolved(current)
+			switch {
+			case landed == "":
+				return current, crossed
+			case resolved(spelled) != filepath.Dir(landed):
+				current = filepath.Dir(landed)
+			default:
+				current = spelled
+			}
+		default:
+			current = filepath.Join(current, part)
+		}
+	}
+	return current, crossed
 }
 
 // secondTarget is the path a rename, link or symlink writes: its second path argument.
@@ -1345,7 +1415,7 @@ func secondTarget(call, rest, directory string) string {
 		return filepath.Clean(name)
 	case "renameat", "renameat2", "linkat", "symlinkat":
 		rest = strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(rest), ","))
-		name, _ := target("openat", rest, directory)
+		name, _, _ := target("openat", rest, directory)
 		return name
 	}
 	return ""
@@ -1448,7 +1518,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 		if entry.Lean {
 			window = BuildLeanSuperset
 			if !state.windowLate[id] {
-				inside, last := state.windowSnapshot(id, entry.Keyed)
+				inside, last := state.windowSnapshot(id)
 				var why string
 				if reads, lastReads, why = state.leanReads(entry, inside, last, state.endedAt[id]); why != "" {
 					refuse(entry, why)
@@ -1458,11 +1528,23 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			}
 		}
 		set, reason := state.measured(entry, reads, lastReads, products, productEnds)
+		// The code a build ran: a windowed lean build's own when it's buildcache's (leanRecipeOf, #earlycut), every other
+		// build's process's binary whole (decision 1). A lean caller's build keeps its window and the whole recipe until its
+		// census holds: native's archives reach the jobserver, a package variable written outside its initializer, until it's
+		// handed in as a value (#yzwm4rj, Node's reading 1).
+		own := processes[entry.Process]
+		name := recipeName(own)
+		leanRecipe := window == BuildWindowed && entry.LeanCaller == ""
+		if leanRecipe {
+			name = "lean " + name
+		}
 		if reason == "" {
-			own := processes[entry.Process]
-			name := recipeName(own)
 			if _, ok := recipes[name]; !ok {
-				recipes[name] = recipeFor(facts.root, own)
+				if leanRecipe {
+					recipes[name] = leanRecipeFor(facts.root, entry.LeanCaller, own)
+				} else {
+					recipes[name] = recipeFor(facts.root, own)
+				}
 			}
 			set.Entries, reason = withRecipe(set.Entries, recipes[name])
 		}
@@ -1470,8 +1552,8 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			refuse(entry, reason)
 			continue
 		}
-		set.Trace = filepath.Base(facts.trace)
-		settingsOverride = recipes[recipeName(processes[entry.Process])].settings
+		set.Trace, set.Lean = filepath.Base(facts.trace), leanRecipe
+		settingsOverride = recipes[name].settings
 		set, evaluated, product, err := recordUnion(facts.root, facts.cache, entry.NameKey, entry.Name, set, func(key string) string {
 			return placeSettled(facts.cache, key, entry)
 		})
@@ -1487,7 +1569,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			line += fmt.Sprintf("; declared Files: %d reads undeclared, %d declared unread", set.Drift.Undeclared, set.Drift.Unread)
 		}
 		settlement.Settled = append(settlement.Settled, line)
-		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window})
+		settlement.Reports = append(settlement.Reports, Report{Name: entry.Name, NameKey: entry.NameKey, Key: evaluated.key, Outcome: ReportSettled, Reads: len(set.Entries), Window: window, Lean: set.Lean})
 	}
 	for id, entry := range built {
 		if !settled[id] {
@@ -1512,7 +1594,7 @@ func (state *traceState) settle(entries []journalEntry) Settlement {
 			continue
 		}
 		reported[entry.NameKey+key] = true
-		settlement.Reports = append(settlement.Reports, Report{Name: names[entry.NameKey], NameKey: entry.NameKey, Key: key, Outcome: ReportFound})
+		settlement.Reports = append(settlement.Reports, Report{Name: names[entry.NameKey], NameKey: entry.NameKey, Key: key, Outcome: ReportFound, Lean: leanSet(facts.cache, entry.NameKey, key)})
 	}
 	os.Remove(filepath.Join(facts.cache, "pending", filepath.Base(facts.trace)))
 	sort.Strings(settlement.Refused)
@@ -1598,7 +1680,8 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 // recordUnion keys set on this tree, places the product by placing it under the key, and records the set first among
 // nameKey's, all under the read sets' lock. An earlier set that still values as it was recorded came from a build of
 // this same tree: its reads are ones this build could have made too (a build's reads can vary from run to run, and
-// two settlements can race), so the set recorded and keyed is their union, and the earlier set gives way to it.
+// two settlements can race), so the set recorded and keyed is their union, and the earlier set gives way to it. The
+// union is lean only when every set in it is: a lean set folded with a whole one keys by the whole recipe's reads too.
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
@@ -1606,7 +1689,7 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 		var kept []readSet
 		for _, other := range file.Sets {
 			if before, err := evaluate(root, cache, nameKey, other, 0, nil); err == nil && len(differing(other, before)) == 0 {
-				set.Entries = sortedEntries(set.Entries, other.Entries)
+				set.Entries, set.Lean = sortedEntries(set.Entries, other.Entries), set.Lean && other.Lean
 				continue
 			}
 			kept = append(kept, other)
@@ -1626,10 +1709,27 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 	return set, evaluated, product, err
 }
 
+// leanSet says whether the set nameKey's read sets in cache store under key is lean: what a found product's report
+// says, so Loom's sampled key check draws from lean products a run found as well as the ones it built.
+func leanSet(cache, nameKey, key string) bool {
+	file, err := loadReads(cache, nameKey)
+	if err != nil {
+		return false
+	}
+	for _, set := range file.Sets {
+		if set.Key == key {
+			return set.Lean
+		}
+	}
+	return false
+}
+
 // placeSettled puts a settled build's product under its key and returns where it is: a product already there (the same
 // bytes, from a build of the same reads) stays and the build's copy goes; an uncached build's directory on another
 // file system stays where it was built. It looks and places under the key's lock, as filled does, so a lookup fetching
-// the same key never loses its rename to this one, nor this one to it (#bcae1e2).
+// the same key never loses its rename to this one, nor this one to it (#bcae1e2). cache is where the run writes: a
+// product already under the key in the build cache it reads through an output directory of its own is placed too, and
+// stays where it is; the lock, a rename and the rewritten <key>.inputs are the output directory's alone.
 func placeSettled(cache, key string, entry journalEntry) string {
 	product := filepath.Join(cache, key)
 	pending := under(entry.Directory, filepath.Join(cache, "pending"))
@@ -1638,20 +1738,48 @@ func placeSettled(cache, key string, entry journalEntry) string {
 		return entry.Directory
 	}
 	defer unlock()
-	switch _, err := os.Stat(product); {
-	case err == nil:
+	placed, already := existingPlace(product)
+	switch {
+	case already:
 		if pending {
 			os.RemoveAll(entry.Directory)
 		}
 	case os.Rename(entry.Directory, product) != nil:
 		return entry.Directory
+	default:
+		placed = product
 	}
 	if pending {
 		os.Remove(entry.Directory + ".inputs")
 		os.Remove(entry.Directory + ".lock")
 	}
-	os.WriteFile(product+".inputs", []byte("name key "+entry.NameKey+"\n"+entry.Inputs), 0o644)
-	return product
+	writeWhole(product+".inputs", []byte("name key "+entry.NameKey+"\n"+entry.Inputs))
+	return placed
+}
+
+// writeWhole writes content to path through a temporary file beside it, whose name starts with a dot as every scratch
+// name in the cache does, renamed into place, so a reader or a copy of the directory never meets half of it. A failure
+// leaves path as it was and is its error.
+func writeWhole(path string, content []byte) error {
+	temporary, err := os.CreateTemp(filepath.Dir(path), "."+filepath.Base(path)+"-")
+	if err != nil {
+		return err
+	}
+	if _, err = temporary.Write(content); err == nil {
+		err = temporary.Close()
+	} else {
+		temporary.Close()
+	}
+	if err == nil {
+		err = os.Chmod(temporary.Name(), 0o644)
+	}
+	if err == nil {
+		err = os.Rename(temporary.Name(), path)
+	}
+	if err != nil {
+		os.Remove(temporary.Name())
+	}
+	return err
 }
 
 // TestReadSetName is a test read set's name in its read sets file, and so in a Finding (#sfqdxvy).
@@ -1876,31 +2004,74 @@ func isMakeFile(name string) bool {
 	return strings.HasPrefix(name, "make_") && strings.HasSuffix(name, ".go") && !strings.HasSuffix(name, "_test.go")
 }
 
+// IsMachinery says whether file, slash-separated from the tree's root, is part of the build machinery: a file of this
+// package that a product keyed by recipeOf leaves out of its key (every one but its make files, under makeFilesOnly),
+// though a lean product, keyed by leanRecipeOf, keys them all; or anything under its cmd/ (traced, which decides what a
+// read set records, and find, the skip), which no product's process links. Calling a file some products key machinery
+// only refuses more seeds, the safe side. A product's key never says which machinery made it, so Loom seeds a tree from another only
+// when the diff between them names none of it (#kjgmzt8, Node's ruling): the same machinery, from the same inputs the
+// keys name.
+func IsMachinery(file string) bool {
+	directory := strings.TrimPrefix(buildcachePackage, "github.com/system-inc/adamic/")
+	if strings.HasPrefix(file, directory+"/cmd/") {
+		return true
+	}
+	parent, name := path.Split(file)
+	return makeFilesOnly && parent == directory+"/" && !isMakeFile(name)
+}
+
 func recipeOf(root string, process journalEntry) recipe {
 	pkg, test := strings.CutSuffix(process.Package, ".test")
 	if pkg == "" || pkg == "command-line-arguments" {
 		return recipe{reason: fmt.Sprintf("its process's binary (%s) names no package, so the code it ran can't be keyed", process.Executable)}
 	}
-	arguments := []string{"list", "-deps", "-json"}
-	if test {
-		arguments = append(arguments, "-test")
+	return recipeListed(root, process, []recipeListing{{pkg: pkg, test: test, deps: true}})
+}
+
+// leanRecipeFor is leanRecipeOf; a test in a tree of its own names a lean build's recipe itself, as recipeFor does.
+var leanRecipeFor = leanRecipeOf
+
+// leanRecipeOf is a lean build's recipe (#earlycut, Node's approved design): the code that makes it, never the code of
+// the test binary that settled it, which keyed every native runtime archive and every go oracle built in a test linking
+// the compiler on the whole compiler. It's buildcache and each package of the tree buildcache links, all their non-test
+// files (buildcache whole, Tests' ruling of Oct 16: goProduct's plan runs a go build, and
+// they're no make file), and a lean caller's own package (caller, leanCallers), never what the caller links: what its
+// build calls there is in the Files it declares, which the window keys as read (leanReads), and the caller's census holds
+// the build's reach to them (runtimeproducts' TestTheRuntimeBuildReachesOnlyItsDeclaredFiles). Under process's build
+// settings, as the binary was built, and refused as recipeOf refuses when process names no package.
+func leanRecipeOf(root, caller string, process journalEntry) recipe {
+	if pkg := strings.TrimSuffix(process.Package, ".test"); pkg == "" || pkg == "command-line-arguments" {
+		return recipe{reason: fmt.Sprintf("its process's binary (%s) names no package, so the code it ran can't be keyed", process.Executable)}
 	}
+	listings := []recipeListing{{pkg: buildcachePackage, deps: true, whole: true}}
+	if caller != "" && caller != buildcachePackage {
+		listings = append(listings, recipeListing{pkg: caller})
+	}
+	return recipeListed(root, process, listings)
+}
+
+// A recipeListing is one package a recipe keys, as go list names it: with every package of the tree it links (deps), and
+// its test files with it, when it's a test binary's package (test). Buildcache is keyed by its make files alone
+// (makeFilesOnly), unless it's the package under test or the listing keys it whole (whole, a lean build's).
+type recipeListing struct {
+	pkg               string
+	test, deps, whole bool
+}
+
+// recipeListed is the recipe of listings, under process's build settings: every file of each listed package of the tree,
+// each package's directory listing, each module's go.mod and go.sum, the modules the main module replaces with a
+// directory of the tree, and the workspace file.
+func recipeListed(root string, process journalEntry, listings []recipeListing) recipe {
 	// The binary's own build settings over toolchain's environment, the one GoBuild's go builds under.
-	var environment []string
+	var tags, environment []string
 	for _, setting := range process.Settings {
 		key, value, _ := strings.Cut(setting, "=")
 		switch key {
 		case "-tags":
-			arguments = append(arguments, "-tags="+value)
+			tags = append(tags, "-tags="+value)
 		case "GOOS", "GOARCH", "CGO_ENABLED", "GOAMD64", "GOARM64", "GOEXPERIMENT":
 			environment = append(environment, key+"="+value)
 		}
-	}
-	command := toolchain.Command("go", append(arguments, pkg)...)
-	command.Dir, command.Env = root, toolchain.Env(environment...)
-	output, err := command.Output()
-	if err != nil {
-		return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, err)}
 	}
 	entries := map[readEntry]bool{}
 	var untracked []string
@@ -1916,62 +2087,23 @@ func recipeOf(root string, process journalEntry) recipe {
 		}
 		entries[readEntry{Kind: kind, Path: filepath.ToSlash(relative)}] = true
 	}
-	decoder := json.NewDecoder(strings.NewReader(string(output)))
-	for {
-		var listed struct {
-			ImportPath, Dir                                                            string
-			Standard                                                                   bool
-			Module                                                                     *struct{ GoMod string }
-			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
-			IgnoredGoFiles, TestGoFiles, XTestGoFiles                                  []string
+	for _, listing := range listings {
+		pkg, test := listing.pkg, listing.test
+		arguments := []string{"list", "-json"}
+		if listing.deps {
+			arguments = append(arguments, "-deps")
 		}
-		if err := decoder.Decode(&listed); err == io.EOF {
-			break
-		} else if err != nil {
-			return recipe{reason: "go list: " + err.Error()}
+		if test {
+			arguments = append(arguments, "-test")
 		}
-		if listed.Standard || !inside(root, listed.Dir) {
-			continue
+		command := toolchain.Command("go", append(append(arguments, tags...), pkg)...)
+		command.Dir, command.Env = root, toolchain.Env(environment...)
+		output, err := command.Output()
+		if err != nil {
+			return recipe{reason: fmt.Sprintf("go list of its binary's package %s: %v", pkg, err)}
 		}
-		add("listing", listed.Dir)
-		// Only the package under test's test files are compiled into its binary (its own and its external test
-		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
-		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
-		// tests' read sets). A dependency's ignored files stay, since a build-constraint edit can compile one in, but
-		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
-		name, _, _ := strings.Cut(listed.ImportPath, " ")
-		under := test && (name == pkg || name == pkg+"_test")
-		ignored := listed.IgnoredGoFiles
-		if !under {
-			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
-		}
-		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
-			listed.EmbedFiles, ignored}
-		if under {
-			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
-		}
-		// This package, linked by every product's process, is keyed by its make files alone (makeFilesOnly), unless it is
-		// the package under test.
-		makeOnly := makeFilesOnly && name == buildcachePackage && !under
-		for _, names := range files {
-			for _, name := range names {
-				if makeOnly && !isMakeFile(name) {
-					continue
-				}
-				// go list -test names the test main it generated by its absolute place in go's own cache: go's, made from
-				// the test files keyed here, and outside the tree, so add leaves it out. Joined to the package's directory
-				// it was a tree path naming the cache's location, and every product keyed where its builder's Go cache sat
-				// (#pqq9z5q: 1,271 of 1,271 in Server's comparison against Workshop).
-				if !filepath.IsAbs(name) {
-					name = filepath.Join(listed.Dir, name)
-				}
-				add("content", name)
-			}
-		}
-		if listed.Module != nil && inside(root, listed.Module.GoMod) {
-			for _, name := range existing(filepath.Dir(listed.Module.GoMod), "go.mod", "go.sum") {
-				add("content", filepath.Join(filepath.Dir(listed.Module.GoMod), name))
-			}
+		if reason := recipeEntries(root, pkg, test, listing.whole, output, add); reason != "" {
+			return recipe{reason: reason}
 		}
 	}
 	// A module the main module replaces with a directory of the tree selects versions through its go.mod, whether or not
@@ -1998,6 +2130,71 @@ func recipeOf(root string, process journalEntry) recipe {
 		result.entries = append(result.entries, entry)
 	}
 	return result
+}
+
+// recipeEntries adds to a recipe, through add, what output, go list's JSON of pkg (a test binary's when test), names of
+// the tree: each package's directory, its files, and its module's go.mod and go.sum, buildcache's every non-test file
+// when whole. It's the reason the listing can't be read, or "".
+func recipeEntries(root, pkg string, test, whole bool, output []byte, add func(kind, name string)) string {
+	decoder := json.NewDecoder(strings.NewReader(string(output)))
+	for {
+		var listed struct {
+			ImportPath, Dir                                                            string
+			Standard                                                                   bool
+			Module                                                                     *struct{ GoMod string }
+			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+			IgnoredGoFiles, TestGoFiles, XTestGoFiles                                  []string
+		}
+		if err := decoder.Decode(&listed); err == io.EOF {
+			break
+		} else if err != nil {
+			return "go list: " + err.Error()
+		}
+		if listed.Standard || !inside(root, listed.Dir) {
+			continue
+		}
+		add("listing", listed.Dir)
+		// Only the package under test's test files are compiled into its binary (its own and its external test
+		// package's): a dependency's _test.go never is, and keying it moved every product whose binary linked that
+		// package at every test edit there (#c2chyab: internal/buildcache/precise_test.go was in all 808 product
+		// tests' read sets). A dependency's ignored files stay, since a build-constraint edit can compile one in, but
+		// never its ignored test files, another platform's, which no edit compiles into a binary that isn't its own.
+		name, _, _ := strings.Cut(listed.ImportPath, " ")
+		under := test && (name == pkg || name == pkg+"_test")
+		ignored := listed.IgnoredGoFiles
+		if !under {
+			ignored = slices.DeleteFunc(slices.Clone(ignored), func(file string) bool { return strings.HasSuffix(file, "_test.go") })
+		}
+		files := [][]string{listed.GoFiles, listed.CgoFiles, listed.CFiles, listed.CXXFiles, listed.HFiles, listed.SFiles, listed.SysoFiles,
+			listed.EmbedFiles, ignored}
+		if under {
+			files = append(files, listed.TestGoFiles, listed.XTestGoFiles)
+		}
+		// This package, linked by every product's process, is keyed by its make files alone (makeFilesOnly), unless it is
+		// the package under test or a lean build's recipe keys it whole.
+		makeOnly := makeFilesOnly && name == buildcachePackage && !under && !whole
+		for _, names := range files {
+			for _, name := range names {
+				if makeOnly && !isMakeFile(name) {
+					continue
+				}
+				// go list -test names the test main it generated by its absolute place in go's own cache: go's, made from
+				// the test files keyed here, and outside the tree, so add leaves it out. Joined to the package's directory
+				// it was a tree path naming the cache's location, and every product keyed where its builder's Go cache sat
+				// (#pqq9z5q: 1,271 of 1,271 in Server's comparison against Workshop).
+				if !filepath.IsAbs(name) {
+					name = filepath.Join(listed.Dir, name)
+				}
+				add("content", name)
+			}
+		}
+		if listed.Module != nil && inside(root, listed.Module.GoMod) {
+			for _, name := range existing(filepath.Dir(listed.Module.GoMod), "go.mod", "go.sum") {
+				add("content", filepath.Join(filepath.Dir(listed.Module.GoMod), name))
+			}
+		}
+	}
+	return ""
 }
 
 // localReplacements are the directories each place's go.mod and go.work replace modules with, absolute, read from the

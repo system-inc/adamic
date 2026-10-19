@@ -38,7 +38,7 @@ var compilerAgreementCheckerSanitizedWrapper = regexp.MustCompile(`(?m)^func ` +
 var compilerAgreementSide4Split = []struct{ Owner, Parts int }{{289, 4}, {293, 4}, {385, 4}, {673, 4}, {1009, 4}, {1215, 2}, {compilerAgreementCheckerAllOwner, compilerAgreementCheckerGroupCount}}
 
 // compilerAgreementMaxParts bounds a split owner's parts, so every sub-unit has its own number past the shards'.
-const compilerAgreementMaxParts = 16
+const compilerAgreementMaxParts = 32
 
 // compilerAgreementSide4Parts is how many sub-shards owner's side 4 is split into, or 0 when it isn't.
 func compilerAgreementSide4Parts(owner int) int {
@@ -214,7 +214,11 @@ func compilerAgreementCheckerSanitized(t *testing.T, slug string) {
 
 func TestProduct_CompilerAgreementLowered(t *testing.T) {
 	t.Parallel()
-	compilerAgreementMeasureProduct(t, compilerAgreementLowered)
+	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
+		directory := compilerAgreementLowered(t)
+		requireLintArtifacts(t, directory, "lint.c", "lint.mjs")
+		return directory
+	})
 }
 
 func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
@@ -819,4 +823,109 @@ func TestCompilerAndStage1Agree_6564_10(t *testing.T) {
 func TestCompilerAndStage1Agree_6564_11(t *testing.T) {
 	t.Parallel()
 	compilerAgreementSubShard(t, 6564, 11)
+}
+
+func TestCompilerAndStage1Agree_6564_12(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 12)
+}
+
+func TestCompilerAndStage1Agree_6564_13(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 13)
+}
+
+func TestCompilerAndStage1Agree_6564_14(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 14)
+}
+
+func TestCompilerAndStage1Agree_6564_15(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 15)
+}
+
+func TestCompilerAndStage1Agree_6564_16(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 16)
+}
+
+func TestCompilerAndStage1Agree_6564_17(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 17)
+}
+
+func TestCompilerAndStage1Agree_6564_18(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 18)
+}
+
+func TestCompilerAndStage1Agree_6564_19(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 19)
+}
+
+func TestCompilerAndStage1Agree_6564_20(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 20)
+}
+
+func TestCompilerAndStage1Agree_6564_21(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 21)
+}
+
+func TestCompilerAndStage1Agree_6564_22(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 22)
+}
+
+func TestCompilerAndStage1Agree_6564_23(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 23)
+}
+
+func TestCompilerAndStage1Agree_6564_24(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 24)
+}
+
+func TestCompilerAndStage1Agree_6564_25(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 25)
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_cond_assign(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-cond-assign")
+}
+
+func TestCompilerAndStage1Agree_6564_26(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 26)
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_extra_bind(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-extra-bind")
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_unused_labels(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-unused-labels")
+}
+
+func TestCompilerAndStage1Agree_6564_27(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6564, 27)
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_useless_rename(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-useless-rename")
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_default_param_last(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "default-param-last")
 }

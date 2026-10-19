@@ -14,11 +14,23 @@ patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts'
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
+# Read the explicit lists from the corpus owner so generation follows main's exclusions.
+flow_source = (root / 'internal/flow/flow_test.go').read_text()
+flow_excluded = set()
+for helper in ['refusedConstructorFixture', 'refusedGettersCensusFixture', 'uninstrumentedAsyncFixture']:
+    function = re.search(r'func ' + helper + r'\(path string\) bool \{(.*?)\n\}', flow_source, re.S)
+    assert function, 'missing flow exclusion helper: ' + helper
+    switch = re.fullmatch(r'\s*switch filepath.Base\(path\) \{\s*case (.*?)\s*:\s*return true\s*\}\s*return false\s*', function[1], re.S)
+    assert switch, 'flow exclusion helper changed shape: ' + helper
+    names = re.findall(r'"([^"\n]+)"', switch[1])
+    assert names and re.sub(r'"[^"\n]+"|[\s,]', '', switch[1]) == '', 'unparsed flow exclusions'
+    flow_excluded.update(names)
+
 # Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
 def refused(name):
     if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
         return True
-    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+    return name in flow_excluded
 
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []

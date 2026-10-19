@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'latent'))
+from unit_status import attempted, body_eligible, audit_deferred
 """Independently recount raw evidence, verify body eligibility, and kill report mutants."""
 import collections, copy, gzip, hashlib, json, pathlib, sys
 root=pathlib.Path(__file__).resolve().parent.parent; adapted=pathlib.Path(sys.argv[1]).resolve()
@@ -9,8 +13,7 @@ def keys(raw): return {(f['kind'],f['where'],f['reason'],f['text']) for row in r
 def kinds(s):
     c=collections.Counter(k[0] for k in s)
     return {k:c[k] for k in ['NotYet','Refused','SkippedDependency','error','panic']}
-def unit_counts(us):
-    return dict(total=len(us),functions=sum(u['kind']=='KindFunctionDeclaration' for u in us),skipped_checker_body=sum(u['status']=='skipped_checker_body' for u in us),attempted_functions=sum(u['kind']=='KindFunctionDeclaration' and u['status']!='skipped_checker_body' for u in us),attempted_statements=sum(u['kind']!='KindFunctionDeclaration' for u in us),panicked_units=sum(u['status']=='panic' for u in us))
+from unit_status import unit_counts
 def check(value):
     expected={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (adapted/'src/compiler').rglob('*.ts')}
     assert {s['file']:s['sha256'] for s in value['source']['files']}==expected,'source manifest'
@@ -31,12 +34,14 @@ def check(value):
         assert run['per_reason']==dict(sorted(collections.Counter(k[0]+': '+k[2] for k in sites).items())),'reason recount'
         assert {(f['kind'],f['where'],f['reason'],f['text']) for f in run['findings']}==sites,'finding ledger'
         assert run['recorded_events']==sum(len(row['findings']) for row in raw[1:]),'event recount'
+        audit_deferred(run['units'], [u for row in raw[1:] for u in row['units']])
         assert run['units']==unit_counts([u for row in raw[1:] for u in row['units']]),'unit recount'
         for row in raw[1:]:
             assert row['measurement']==LABEL,'measurement label'
             file=row['file']; own={k for k in sites if k[1].rsplit(':',2)[0]==file}; entry=run['per_file'][file]
             assert entry['measurement']==LABEL,'measurement label'
             assert {k:entry[k] for k in ['NotYet','Refused','SkippedDependency','error','panic']}==kinds(own) and entry['unique_sites']==len(own),'per-file recount'
+            audit_deferred(entry['units'], row['units'])
             assert entry['units']==unit_counts(row['units']),'unit recount'
             assert entry['checker']==sum(d['file']==file for d in header['diagnostic_sites']),'per-file recount'
             assert entry['per_reason']==dict(sorted(collections.Counter(k[0]+': '+k[2] for k in own).items())),'per-file reason recount'
@@ -47,7 +52,7 @@ def check(value):
                 # Raw positions are independent of the overlay's reported skipped status.
                 ds=[d['text'] for d in header['diagnostic_sites'] if d['file']==file and d['start']<u['body_end'] and (d['end']>u['body_start'] or d['start']>=u['body_start'])]
                 assert u['checker_diagnostics']==ds,'body eligibility'
-                assert (u['status']=='skipped_checker_body')==bool(ds),'body eligibility'
+                assert body_eligible(u, ds),'body eligibility'
                 if ds: skipped.add(u['where'])
             assert not any(f['unit'] in skipped for f in row['findings']),'body eligibility'
             assert all(f['measurement']==LABEL for f in row['findings']),'measurement label'
@@ -63,8 +68,8 @@ def check(value):
         reasons=run['per_reason'].keys()|baseline['per_reason'].keys()
         assert delta['per_reason']=={k:run['per_reason'].get(k,0)-baseline['per_reason'].get(k,0) for k in sorted(reasons)},'delta recount'
         br=raw_by_name['main']
-        be={u['where'] for row in br[1:] for u in row['units'] if u['status']!='skipped_checker_body'}
-        oe={u['where'] for row in raw[1:] for u in row['units'] if u['status']!='skipped_checker_body'}
+        be={u['where'] for row in br[1:] for u in row['units'] if attempted(u)}
+        oe={u['where'] for row in raw[1:] for u in row['units'] if attempted(u)}
         common=be&oe
         bk={(f['kind'],f['where'],f['reason'],f['text']) for row in br[1:] for f in row['findings'] if f['unit'] in common}
         ok={(f['kind'],f['where'],f['reason'],f['text']) for row in raw[1:] for f in row['findings'] if f['unit'] in common}

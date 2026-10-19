@@ -1,0 +1,16 @@
+=== RUN   TestWeakDifferentialUnionNarrowed
+=== PAUSE TestWeakDifferentialUnionNarrowed
+=== CONT  TestWeakDifferentialUnionNarrowed
+    weak_differential_test.go:23: Node: exit=0 stdout="before\nafter: nn\n" stderr=""
+    weak_differential_test.go:23: javascript: exit=0 stdout="before\nafter: nn\n" stderr=""
+    weak_differential_test.go:23: release: exit=-1 stdout="" stderr=""
+    weak_differential_test.go:23: release: exit codes differ
+    weak_differential_test.go:23: sanitized: exit=1 stdout="" stderr="main.c:67:97: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior main.c:67:97 \n"
+    weak_differential_test.go:23: sanitized: exit codes differ
+--- FAIL: TestWeakDifferentialUnionNarrowed (6.01s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.033s
+FAIL

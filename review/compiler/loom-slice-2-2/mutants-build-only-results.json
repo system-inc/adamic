@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "error-spread",
+    "exit": -9,
+    "caught": false,
+    "seconds": 110.145,
+    "markers": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-2/overlay-error-spread/overlay.json",
+      "-run",
+      "^TestMiscompile2A(ErrorSpread|ErrorSubclassSpread)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  }
+]

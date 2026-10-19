@@ -1,0 +1,9 @@
+// a-check: type error TS1101
+export function nested(): void {
+    with ({}) {
+        with ({}) {
+            with ({}) {}
+        }
+    }
+    with ({}) {}
+}

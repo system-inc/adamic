@@ -1,0 +1,233 @@
+{
+  "baseline": 2,
+  "comparison_exits": {
+    "baseline": 0,
+    "mutant": 1,
+    "mutant_ownership": 1,
+    "ownership": 0,
+    "pieces": 0
+  },
+  "comparisons": {
+    "baseline": {
+      "differences": [],
+      "exact_match": true,
+      "pieces": 2,
+      "whole": 2
+    },
+    "mutant": {
+      "differences": [
+        {
+          "body_end": 5841,
+          "body_start": 5685,
+          "name": "addToMultimap",
+          "pieces": 2,
+          "where": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts:171:5",
+          "whole": 1
+        },
+        {
+          "body_end": 6138,
+          "body_start": 5924,
+          "name": "deleteFromMultimap",
+          "pieces": 2,
+          "where": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts:180:5",
+          "whole": 1
+        }
+      ],
+      "exact_match": false,
+      "pieces": 4,
+      "whole": 2
+    },
+    "mutant_ownership": {
+      "deferred_units": 4,
+      "exact_ownership": false,
+      "issues": [
+        {
+          "actual_piece": 1,
+          "atom": "3146:26207:ModuleDeclaration",
+          "expected_piece": 0,
+          "name": "addToMultimap",
+          "where": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts:171:5"
+        },
+        {
+          "actual_piece": 1,
+          "atom": "3146:26207:ModuleDeclaration",
+          "expected_piece": 0,
+          "name": "deleteFromMultimap",
+          "where": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts:180:5"
+        }
+      ]
+    },
+    "ownership": {
+      "deferred_units": 2,
+      "exact_ownership": true,
+      "issues": []
+    },
+    "pieces": {
+      "differences": [],
+      "exact_match": true,
+      "pieces": 2,
+      "whole": 2
+    }
+  },
+  "exact_baseline": true,
+  "exact_piece_union": true,
+  "guard_restoration": {
+    "mutant_sha256": "2c9c24ae81691804fe9197bf355ca7f3d5a7882e1aa411a1ef356028d7f53927",
+    "original_sha256": "16c0d5805ae7a082f930304fa2c4b97ddcacb3be20fd6df0c961270a74c5bc91",
+    "restored_sha256": "16c0d5805ae7a082f930304fa2c4b97ddcacb3be20fd6df0c961270a74c5bc91"
+  },
+  "mutant": 4,
+  "mutant_check_exit": 1,
+  "mutant_duplicates": [
+    {
+      "body_end": 5841,
+      "body_start": 5685,
+      "mutant": 2,
+      "name": "addToMultimap",
+      "where": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts:171:5",
+      "whole": 1
+    },
+    {
+      "body_end": 6138,
+      "body_start": 5924,
+      "mutant": 2,
+      "name": "deleteFromMultimap",
+      "where": "/tmp/kaxjrp9/tree/src/compiler/builderState.ts:180:5",
+      "whole": 1
+    }
+  ],
+  "piece_runs": [
+    {
+      "atom_bytes": 23061,
+      "atom_count": 1,
+      "deferred_units": 2,
+      "id": 0,
+      "metrics": {
+        "address_space_limit_mib": 6144,
+        "command": [
+          "/tmp/loom-census",
+          "/tmp/kaxjrp9/tree/src/compiler",
+          "/tmp/kaxjrp9/pieces/piece-000.pending.jsonl"
+        ],
+        "exit": 0,
+        "peak_rss_kib": 1031676,
+        "phase_first_wall_seconds": {
+          "completed": 288.62538276299983,
+          "refusal_scan": 27.469428417000017,
+          "registration": 29.78170678799961,
+          "walk": 31.268427502999657
+        },
+        "rss_limit_killed": false,
+        "rss_limit_mib": 3072,
+        "system_cpu_seconds": 15.35828,
+        "time_limit_seconds": 600.0,
+        "user_cpu_seconds": 243.106999,
+        "wall_seconds": 288.72794394099947
+      },
+      "mode": "guarded",
+      "peak_rss_kib": 1031676,
+      "record_sha256": "e985f73e1d2e582f24e63de45be6f7c6c6c4415cddf125bfc3a68c4428e4dad5",
+      "wall_seconds": 288.72794394099947
+    },
+    {
+      "atom_bytes": 3146,
+      "atom_count": 4,
+      "deferred_units": 0,
+      "id": 1,
+      "metrics": {
+        "address_space_limit_mib": 6144,
+        "command": [
+          "/tmp/loom-census",
+          "/tmp/kaxjrp9/tree/src/compiler",
+          "/tmp/kaxjrp9/pieces/piece-001.pending.jsonl"
+        ],
+        "exit": 0,
+        "peak_rss_kib": 392696,
+        "phase_first_wall_seconds": {
+          "completed": 37.83463149899944,
+          "refusal_scan": 30.97365771299974,
+          "registration": 32.47693373099992,
+          "walk": 33.73264173699954
+        },
+        "rss_limit_killed": false,
+        "rss_limit_mib": 3072,
+        "system_cpu_seconds": 4.483755,
+        "time_limit_seconds": 600.0,
+        "user_cpu_seconds": 22.836439,
+        "wall_seconds": 37.936913900000036
+      },
+      "mode": "guarded",
+      "peak_rss_kib": 392696,
+      "record_sha256": "ce407b67400c04b669c9c7979db53fd7c4dd94a86ed9ae1c4a395b66e25e1851",
+      "wall_seconds": 37.936913900000036
+    },
+    {
+      "atom_bytes": 23061,
+      "atom_count": 1,
+      "deferred_units": 2,
+      "id": 0,
+      "metrics": {
+        "address_space_limit_mib": 6144,
+        "command": [
+          "/tmp/kaxjrp9/mutant",
+          "/tmp/kaxjrp9/tree/src/compiler",
+          "/tmp/kaxjrp9/mutant-pieces/piece-000.pending.jsonl"
+        ],
+        "exit": 0,
+        "peak_rss_kib": 1010656,
+        "phase_first_wall_seconds": {
+          "completed": 235.2766604059998,
+          "refusal_scan": 25.642610119999517,
+          "registration": 26.062276687999656,
+          "walk": 26.58233506399938
+        },
+        "rss_limit_killed": false,
+        "rss_limit_mib": 3072,
+        "system_cpu_seconds": 10.050548,
+        "time_limit_seconds": 600.0,
+        "user_cpu_seconds": 198.778913,
+        "wall_seconds": 235.50768796899956
+      },
+      "mode": "mutant",
+      "peak_rss_kib": 1010656,
+      "record_sha256": "e985f73e1d2e582f24e63de45be6f7c6c6c4415cddf125bfc3a68c4428e4dad5",
+      "wall_seconds": 235.50768796899956
+    },
+    {
+      "atom_bytes": 3146,
+      "atom_count": 4,
+      "deferred_units": 2,
+      "id": 1,
+      "metrics": {
+        "address_space_limit_mib": 6144,
+        "command": [
+          "/tmp/kaxjrp9/mutant",
+          "/tmp/kaxjrp9/tree/src/compiler",
+          "/tmp/kaxjrp9/mutant-pieces/piece-001.pending.jsonl"
+        ],
+        "exit": 0,
+        "peak_rss_kib": 394292,
+        "phase_first_wall_seconds": {
+          "completed": 28.59131861900005,
+          "refusal_scan": 25.050033709000672,
+          "registration": 26.023496800999965,
+          "walk": 26.716452399000445
+        },
+        "rss_limit_killed": false,
+        "rss_limit_mib": 3072,
+        "system_cpu_seconds": 2.600818,
+        "time_limit_seconds": 600.0,
+        "user_cpu_seconds": 17.714934,
+        "wall_seconds": 28.691774747000636
+      },
+      "mode": "mutant",
+      "peak_rss_kib": 394292,
+      "record_sha256": "623767d63619dd81d0d2e35f26a4526e416d89bf5602afe0ce4d19bdf4a2b231",
+      "wall_seconds": 28.691774747000636
+    }
+  ],
+  "piece_union": 2,
+  "pieces": 2,
+  "specimen": "builderState.ts",
+  "whole": 2
+}

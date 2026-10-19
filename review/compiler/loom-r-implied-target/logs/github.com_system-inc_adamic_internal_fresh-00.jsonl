@@ -1,0 +1,28 @@
+{"Time":"2026-10-18T00:07:26.760555175Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-18T00:07:26.767530267Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven"}
+{"Time":"2026-10-18T00:07:26.767607702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"=== RUN   TestStatAtimeSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767631417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"=== PAUSE TestStatAtimeSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767633811Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven"}
+{"Time":"2026-10-18T00:07:26.767636825Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-18T00:07:26.767639008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== RUN   TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767643405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== PAUSE TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767645177Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-18T00:07:26.76764709Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites"}
+{"Time":"2026-10-18T00:07:26.767648923Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites","Output":"=== RUN   TestRegexOperandsStillJudgeCycleWrites\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767652528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites","Output":"=== PAUSE TestRegexOperandsStillJudgeCycleWrites\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767654011Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites"}
+{"Time":"2026-10-18T00:07:26.767655813Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven"}
+{"Time":"2026-10-18T00:07:26.767658818Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"=== CONT  TestStatAtimeSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767669143Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Output":"--- PASS: TestStatAtimeSelfCycleRemainsUnproven (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767673239Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestStatAtimeSelfCycleRemainsUnproven","Elapsed":0}
+{"Time":"2026-10-18T00:07:26.767690625Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-18T00:07:26.76769405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== CONT  TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767698927Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites"}
+{"Time":"2026-10-18T00:07:26.767754349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites","Output":"=== CONT  TestRegexOperandsStillJudgeCycleWrites\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.767766437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"--- PASS: TestClassMethodOutsideSelfCycleRemainsUnproven (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.76812521Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Elapsed":0}
+{"Time":"2026-10-18T00:07:26.768146451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites","Output":"--- PASS: TestRegexOperandsStillJudgeCycleWrites (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.768151479Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestRegexOperandsStillJudgeCycleWrites","Elapsed":0}
+{"Time":"2026-10-18T00:07:26.768154573Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:07:26.768270896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.007s\n"}
+{"Time":"2026-10-18T00:07:26.768283144Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.008}

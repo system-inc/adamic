@@ -1,0 +1,42 @@
+[
+  {
+    "mutant": "fixture-owner-omitted",
+    "caught": true,
+    "exit": 1,
+    "seconds": 6.35374905599997,
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-3/fixture-owner-omitted/overlay.json",
+      "-run",
+      "^TestFixtureDirectoriesHaveTopLevelTests$",
+      "-json",
+      "-count=1",
+      "-timeout=90s"
+    ],
+    "marker": "has no top-level test"
+  },
+  {
+    "mutant": "reader-allowlist-omitted",
+    "caught": true,
+    "exit": 1,
+    "seconds": 8.235816606000071,
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./internal/ir",
+      "-overlay=/workspace/adamic/review/compiler/loom-slice-2-3/reader-allowlist-omitted/overlay.json",
+      "-run",
+      "^TestCallTargetReadersNative$",
+      "-json",
+      "-count=1",
+      "-timeout=90s"
+    ],
+    "marker": "unapproved call-target read"
+  }
+]

@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,97 +25,6 @@ type goRequest struct {
 	verb, module, output, pkg string
 	arguments, environment    []string
 	mutations                 []Mutation
-}
-
-// build runs the request's go command, writing its output into directory, the product, with arguments as goProduct
-// made them, and the request's mutations planted first when it has any.
-func (request goRequest) build(root, directory string, arguments []string) error {
-	if len(request.mutations) > 0 {
-		planted, cleanup, err := request.plant(root, directory, arguments)
-		if err != nil {
-			return err
-		}
-		defer cleanup()
-		arguments = planted
-	}
-	command := toolchain.Command("go", append(append(append(strings.Fields(request.verb), arguments...), "-o", filepath.Join(directory, request.output)), strings.Fields(request.pkg)...)...)
-	command.Dir = filepath.Join(root, request.module)
-	command.Env = toolchain.Env(request.environment...)
-	if combined, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("go %s %s: %v\n%s", request.verb, request.pkg, err, combined)
-	}
-	return nil
-}
-
-// plant writes each mutated file inside directory, the product, under mutations/<its path in the repository>, and
-// returns arguments whose overlay lays the copies over what they mutate: the request's own overlay with every
-// replacement that is a mutated file pointed at its copy, and a mutated package source replaced by its copy. The
-// overlay names this checkout's paths, so it sits in a temporary directory and leaves with the build (#tqrqx60).
-func (request goRequest) plant(root, directory string, arguments []string) ([]string, func(), error) {
-	replace := map[string]string{}
-	var kept []string
-	for index := 0; index < len(arguments); index++ {
-		path := ""
-		switch argument := arguments[index]; {
-		case argument == "-overlay" && index+1 < len(arguments):
-			path = arguments[index+1]
-			index++
-		case strings.HasPrefix(argument, "-overlay="):
-			path = strings.TrimPrefix(argument, "-overlay=")
-		default:
-			kept = append(kept, argument)
-			continue
-		}
-		content, err := os.ReadFile(path)
-		if err != nil {
-			return nil, nil, err
-		}
-		var declared struct{ Replace map[string]string }
-		if err := json.Unmarshal(content, &declared); err != nil {
-			return nil, nil, fmt.Errorf("overlay %s: %v", path, err)
-		}
-		maps.Copy(replace, declared.Replace)
-	}
-	texts, err := request.mutated(root)
-	if err != nil {
-		return nil, nil, err
-	}
-	for file, text := range texts {
-		original := filepath.Join(root, file)
-		copied := filepath.Join(directory, "mutations", filepath.FromSlash(file))
-		if err := os.MkdirAll(filepath.Dir(copied), 0o755); err != nil {
-			return nil, nil, err
-		}
-		if err := os.WriteFile(copied, []byte(text), 0o644); err != nil {
-			return nil, nil, err
-		}
-		pointed := false
-		for from, to := range replace {
-			if !filepath.IsAbs(to) {
-				to = filepath.Join(root, request.module, to)
-			}
-			if filepath.Clean(to) == original {
-				replace[from], pointed = copied, true
-			}
-		}
-		if !pointed {
-			replace[original] = copied
-		}
-	}
-	scratch, err := os.MkdirTemp("", "buildcache-mutations-")
-	if err != nil {
-		return nil, nil, err
-	}
-	cleanup := func() { os.RemoveAll(scratch) }
-	encoded, err := json.Marshal(map[string]any{"Replace": replace})
-	if err == nil {
-		err = os.WriteFile(filepath.Join(scratch, "overlay.json"), encoded, 0o644)
-	}
-	if err != nil {
-		cleanup()
-		return nil, nil, err
-	}
-	return append(kept, "-overlay="+filepath.Join(scratch, "overlay.json")), cleanup, nil
 }
 
 // mutated is each file the request's mutations change, by its path in the repository, with every mutation of it

@@ -554,7 +554,7 @@ func testShardsAgreeReferences(t *testing.T) string {
 	root := testShardsAgreePreparedRoot
 	inputs, sources := testShardsAgreePreparedInputs(t)
 	inputs.Name = "shards-agree-references-v1"
-	inputs.Flags = append(inputs.Flags, "reads shards-agree-prepared-v1 shards-agree-native shards-agree-capture")
+	inputs.Flags = append(inputs.Flags, "reads shards-agree-prepared-v1 shards-agree-native lint-rules-agree-capture")
 	return buildcache.Product(t, inputs, func(d string) error {
 		products := testShardsAgreeRead(t, root)
 		type job struct {

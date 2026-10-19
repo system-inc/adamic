@@ -1,0 +1,5 @@
+--- a/cmd/adamic/runtimes_test.go
++++ b/cmd/adamic/runtimes_test.go
+@@ -71 +71 @@
+-			buildcache.BuiltElsewhere(t, "the "+product.name+" command runtime archive", commandRuntimeInputs(request), product.owner, build)
++			buildcache.Product(t, commandRuntimeInputs(request), build)

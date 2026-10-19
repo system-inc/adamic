@@ -1,0 +1,33 @@
+=== RUN   TestWeakDifferentialViewMethodParameter
+=== PAUSE TestWeakDifferentialViewMethodParameter
+=== RUN   TestWeakDifferentialViewMethod
+=== PAUSE TestWeakDifferentialViewMethod
+=== CONT  TestWeakDifferentialViewMethodParameter
+=== CONT  TestWeakDifferentialViewMethod
+=== NAME  TestWeakDifferentialViewMethodParameter
+    weak_differential_test.go:13: Node: exit=0 stdout="t1 b1\n" stderr=""
+=== NAME  TestWeakDifferentialViewMethod
+    weak_differential_test.go:18: Node: exit=0 stdout="true b1\n" stderr=""
+=== NAME  TestWeakDifferentialViewMethodParameter
+    weak_differential_test.go:13: both backends unexpectedly admit the pinned view NotYet
+=== NAME  TestWeakDifferentialViewMethod
+    weak_differential_test.go:18: both backends unexpectedly admit the pinned view NotYet
+    weak_differential_test.go:18: javascript: exit=0 stdout="true b1\n" stderr=""
+    weak_differential_test.go:18: release: exit=-1 stdout="" stderr=""
+    weak_differential_test.go:18: release: exit codes differ
+    weak_differential_test.go:18: sanitized: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==14483==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55db0df2b2b0 bp 0x7fff09278920 sp 0x7fff09278850 T0)\n==14483==The signal is caused by a READ memory access.\n==14483==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55db0df2b2b0  (/tmp/adamic-gate/TestWeakDifferentialViewMethod3953542560/003/program+0x1462b0)\n    #1 0x55db0df2ae8b  (/tmp/adamic-gate/TestWeakDifferentialViewMethod3953542560/003/program+0x145e8b)\n    #2 0x7f3d8df4aca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f3d8df4ad64  (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55db0de44540  (/tmp/adamic-gate/TestWeakDifferentialViewMethod3953542560/003/program+0x5f540)\n\n==14483==Register values:\nrax = 0xa5a5f07eaba46040  rbx = 0x00007fff09278860  rcx = 0x14b4be0fd5748c09  rdx = 0x0000000000000000  \nrdi = 0xa5a5f07eaba4604c  rsi = 0x0000000000000000  rbp = 0x00007fff09278920  rsp = 0x00007fff09278850  \n r8 = 0x00000f73b19fc016   r9 = 0x0000000000000000  r10 = 0x0000000000000006  r11 = 0x00007f3d8dfb8830  \nr12 = 0x00007b9d8cfe0020  r13 = 0x00007b9d8cfe0090  r14 = 0x00007b3d8bc00000  r15 = 0x00007b9d8cfe00a8  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV (/tmp/adamic-gate/TestWeakDifferentialViewMethod3953542560/003/program+0x1462b0) \n==14483==ABORTING\n"
+    weak_differential_test.go:18: sanitized: exit codes differ
+--- FAIL: TestWeakDifferentialViewMethod (6.47s)
+=== NAME  TestWeakDifferentialViewMethodParameter
+    weak_differential_test.go:13: javascript: exit=0 stdout="t1 b1\n" stderr=""
+    weak_differential_test.go:13: release: exit=0 stdout="t1 none\n" stderr=""
+    weak_differential_test.go:13: release: stdout differs
+    weak_differential_test.go:13: sanitized: exit=1 stdout="" stderr="=================================================================\n==14492==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bd23fde0068 at pc 0x5636e9e2b355 bp 0x7ffc74532690 sp 0x7ffc74532688\nREAD of size 8 at 0x7bd23fde0068 thread T0\n    #0 0x5636e9e2b354  (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter3329685508/003/program+0x146354)\n    #1 0x5636e9e2aea0  (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter3329685508/003/program+0x145ea0)\n    #2 0x7fa240d1bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7fa240d1bd64  (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x5636e9d44540  (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter3329685508/003/program+0x5f540)\n\n0x7bd23fde0068 is located 16 bytes after 24-byte region [0x7bd23fde0040,0x7bd23fde0058)\nallocated by thread T0 here:\n    #0 0x5636e9de7354  (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter3329685508/003/program+0x102354)\n    #1 0x5636e9e41d1f  (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter3329685508/003/program+0x15cd1f)\n    #2 0x7fa240d1bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter3329685508/003/program+0x146354) \nShadow bytes around the buggy address:\n  0x7bd23fddfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd23fddfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd23fddfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd23fddff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd23fddff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7bd23fde0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa[fa]fa fa\n  0x7bd23fde0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd23fde0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd23fde0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd23fde0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd23fde0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==14492==ABORTING\n"
+    weak_differential_test.go:13: sanitized: exit codes differ
+--- FAIL: TestWeakDifferentialViewMethodParameter (6.60s)
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.623s
+FAIL

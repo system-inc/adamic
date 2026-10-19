@@ -148,7 +148,28 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 			limit = declaration.initializer
 		}
 		// Generated declarators are a single identifier, followed by an array or argument list.
+		// An attribute's parentheses name nothing: regexp's compiled programs are declared
+		// `static const adamic_regex_program name __attribute__((aligned(64))) = {...}`.
+		beforeAttribute := ""
 		for j := 1; j < limit; j++ {
+			if declaration.tokens[j].text == "__attribute__" {
+				if beforeAttribute == "" {
+					beforeAttribute = declaration.tokens[j-1].text
+				}
+				nesting := 0
+				for j+1 < limit {
+					j++
+					if declaration.tokens[j].text == "(" {
+						nesting++
+					} else if declaration.tokens[j].text == ")" {
+						nesting--
+						if nesting == 0 {
+							break
+						}
+					}
+				}
+				continue
+			}
 			if declaration.tokens[j].text == "(" {
 				declaration.name = declaration.tokens[j-1].text
 				break
@@ -157,6 +178,9 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 				declaration.name = declaration.tokens[j-1].text
 				break
 			}
+		}
+		if declaration.name == "" && beforeAttribute != "" {
+			declaration.name = beforeAttribute
 		}
 		if declaration.name == "" && limit >= 2 {
 			declaration.name = declaration.tokens[limit-1].text
@@ -173,7 +197,8 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 	return declarations, nil
 }
 
-// splitC gives every generated static symbol one external definition. Token replacement never
+// splitC gives generated static symbols external definitions, except inline helpers whose
+// definitions stay in the shared header with static linkage. Token replacement never
 // touches literal bytes. The fixed namespace cannot collide with runtime API names. Existing
 // program-wide indexes distinguish symbols; no whole-program content hash invalidates all units.
 func splitC(source string) (string, []compilationUnit, error) {
@@ -211,6 +236,11 @@ func splitC(source string) (string, []compilationUnit, error) {
 	defined := map[string]bool{}
 	for _, d := range declarations {
 		if d.name == "" {
+			header.WriteString(rewrite(d.tokens) + "\n")
+			continue
+		}
+		// Every using translation unit needs the definition of a static inline helper.
+		if d.function && d.tokens[0].text == "static" && d.tokens[1].text == "inline" {
 			header.WriteString(rewrite(d.tokens) + "\n")
 			continue
 		}
@@ -314,8 +344,10 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	lock.Lock()
 	defer lock.Unlock()
 	if !uncached {
-		if info, err := os.Stat(object); err == nil && info.Mode().IsRegular() {
-			return object, nil
+		// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it
+		// was found.
+		if found, ok := cachedFile(object); ok {
+			return found, nil
 		}
 	}
 	if err := os.WriteFile(filepath.Join(temporary, unit.name), preprocessed, 0o644); err != nil {
@@ -357,9 +389,11 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		return "", err
 	}
 	if err := os.Rename(published, entry); err != nil {
-		if info, statErr := os.Stat(object); statErr != nil || !info.Mode().IsRegular() {
+		found, ok := cachedFile(object)
+		if !ok {
 			return "", err
 		}
+		return found, nil
 	}
 	return object, nil
 }
@@ -467,7 +501,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	arguments := append(Flags(options), "-o", output)
+	arguments := append(LinkFlags(options), "-o", output)
 	for index, object := range objects {
 		name := fmt.Sprintf("unit-%d.o", index)
 		if err := os.Symlink(object, filepath.Join(directory, name)); err != nil {

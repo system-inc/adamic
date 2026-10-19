@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeStaticsAreListed
+=== PAUSE TestRuntimeStaticsAreListed
+=== CONT  TestRuntimeStaticsAreListed
+    runtime_statics_test.go:293: runtime/exceptions.c:18: unlisted mutable storage empty_message; audit it in testdata/runtime-statics/storage.txt
+--- FAIL: TestRuntimeStaticsAreListed (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.193s
+FAIL

@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"slices"
 	"strings"
@@ -50,7 +52,7 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
 	}
 	// withc reaches testdata/include, outside its own directory, so the key names the package and that directory, and
-	// the build lays a header into withc that moves with it (withOutsideHeaders).
+	// the build lays a header into withc that moves with it (outsideHeaderPlan).
 	if want := outsideHeaders + `{"package":"internal/buildcache/testdata/withc","includes":["internal/buildcache/testdata/include"]}`; !slices.Contains(inputs.Flags, want) {
 		t.Fatalf("the key doesn't name withc's header outside it, %s: %v", want, inputs.Flags)
 	}
@@ -378,27 +380,39 @@ func TestGoTestKeysAModulesTestBinary(t *testing.T) {
 	}
 }
 
-// goProduct names a request's -overlay as a file its key holds (keyedOutside): its test writes it before the build, in a
-// directory of its own, and the key holds its map and its replacements' content, so its read in the build's window is
-// no input the key lacks. Without it every overlay oracle would refuse, a temporary file its build didn't make
-// (#mmpt615, Mentat's M1). Mutant: keyedOutside naming nothing.
-func TestAGoRequestsOverlayIsAFileItsKeyHolds(t *testing.T) {
+// A go product's plan holds its request's -overlay as the map it declares, never the file (#mmpt615, Mentat's M1): the
+// test writes the file before the build, in a directory of its own, and run writes its own overlay inside the window,
+// so go reads no file of the test's there that the window would count as an input. Two plans of one request are the
+// same, so the plan is a function of the request and what its key holds. Mutant: the request's -overlay kept among the
+// plan's arguments.
+func TestAGoRequestsOverlayIsItsPlansMap(t *testing.T) {
 	t.Parallel()
 	root := repositoryRootForTest(t)
 	overlay := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlay, []byte(`{"Replace":{}}`), 0o644); err != nil {
+	replacement := filepath.Join(root, "internal/buildcache/testdata/module/greet/greet.go")
+	if err := os.WriteFile(overlay, []byte(`{"Replace":{"greet/extra.go":"`+replacement+`"}}`), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	request := goRequest{verb: "test -c", module: "internal/buildcache/testdata/module", output: "greet.test", pkg: "./greet"}
 	for _, arguments := range [][]string{{"-overlay=" + overlay}, {"-trimpath", "-overlay", overlay}} {
 		request.arguments = arguments
-		if got := request.keyedOutside(root); !slices.Equal(got, []string{overlay}) {
-			t.Errorf("arguments %q: the files its key holds are %q; want the overlay", arguments, got)
+		parts, err := request.planned(root, Inputs{})
+		if err != nil {
+			t.Fatalf("arguments %q: %v", arguments, err)
+		}
+		if slices.ContainsFunc(parts.command.Arguments, func(argument string) bool { return strings.HasPrefix(argument, "-overlay") || argument == overlay }) {
+			t.Errorf("arguments %q: the plan runs go with the test's overlay file: %q", arguments, parts.command.Arguments)
+		}
+		if want := map[string]string{"greet/extra.go": replacement}; !maps.Equal(parts.replace, want) {
+			t.Errorf("arguments %q: the plan's overlay is %q, want %q", arguments, parts.replace, want)
+		}
+		if again := request.plan(root, Inputs{}); !reflect.DeepEqual(request.plan(root, Inputs{}), again) {
+			t.Errorf("arguments %q: two plans of one request differ:\n%+v\n%+v", arguments, request.plan(root, Inputs{}), again)
 		}
 	}
 	request.arguments = []string{"-trimpath"}
-	if got := request.keyedOutside(root); got != nil {
-		t.Errorf("a request without an overlay holds %q", got)
+	if parts, err := request.planned(root, Inputs{}); err != nil || parts.replace != nil {
+		t.Errorf("a request without an overlay plans %q, %v", parts.replace, err)
 	}
 }
 

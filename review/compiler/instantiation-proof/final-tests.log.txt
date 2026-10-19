@@ -1,0 +1,84 @@
+=== RUN   TestInstantiationFind
+=== PAUSE TestInstantiationFind
+=== RUN   TestInstantiationFirst
+=== PAUSE TestInstantiationFirst
+=== RUN   TestInstantiationLast
+=== PAUSE TestInstantiationLast
+=== RUN   TestInstantiationCallback
+=== PAUSE TestInstantiationCallback
+=== RUN   TestInstantiationArray
+=== PAUSE TestInstantiationArray
+=== RUN   TestInstantiationPresenceMutant
+=== PAUSE TestInstantiationPresenceMutant
+=== CONT  TestInstantiationFind
+=== CONT  TestInstantiationCallback
+=== CONT  TestInstantiationLast
+=== CONT  TestInstantiationFirst
+=== CONT  TestInstantiationPresenceMutant
+=== NAME  TestInstantiationFind
+    instantiation_proof_test.go:49: gate cache node miss
+=== NAME  TestInstantiationFirst
+    instantiation_proof_test.go:50: gate cache node miss
+=== NAME  TestInstantiationLast
+    instantiation_proof_test.go:51: gate cache node miss
+=== NAME  TestInstantiationCallback
+    instantiation_proof_test.go:52: gate cache node miss
+=== NAME  TestInstantiationLast
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestInstantiationPresenceMutant
+    instantiation_proof_test.go:67: gate cache node hit
+=== NAME  TestInstantiationFirst
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestInstantiationPresenceMutant
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestInstantiationCallback
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestInstantiationFind
+    oracle_test.go:597: gate cache native miss
+=== NAME  TestInstantiationFirst
+    instantiation_proof_test.go:50: gate cache node miss
+=== NAME  TestInstantiationLast
+    instantiation_proof_test.go:51: gate cache node miss
+=== NAME  TestInstantiationCallback
+    instantiation_proof_test.go:52: gate cache node miss
+=== NAME  TestInstantiationPresenceMutant
+    instantiation_proof_test.go:85: gate cache node miss
+=== NAME  TestInstantiationFirst
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestInstantiationLast
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestInstantiationFind
+    instantiation_proof_test.go:49: gate cache node miss
+=== NAME  TestInstantiationCallback
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestInstantiationPresenceMutant
+    oracle_test.go:604: gate cache native hit
+=== CONT  TestInstantiationArray
+--- PASS: TestInstantiationPresenceMutant (0.49s)
+=== NAME  TestInstantiationFind
+    oracle_test.go:590: gate cache native miss
+=== NAME  TestInstantiationArray
+    instantiation_proof_test.go:53: gate cache node miss
+=== NAME  TestInstantiationFirst
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestInstantiationFirst (0.55s)
+=== NAME  TestInstantiationLast
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestInstantiationLast (0.56s)
+=== NAME  TestInstantiationCallback
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestInstantiationCallback (0.57s)
+=== NAME  TestInstantiationFind
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestInstantiationFind (0.61s)
+=== NAME  TestInstantiationArray
+    oracle_test.go:597: gate cache native miss
+    instantiation_proof_test.go:53: gate cache node miss
+    oracle_test.go:590: gate cache native miss
+    oracle_test.go:604: gate cache native hit
+--- PASS: TestInstantiationArray (0.38s)
+PASS
+gate cache: native hits=6 misses=11
+gate cache: node hits=1 misses=11
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.881s

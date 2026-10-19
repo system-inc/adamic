@@ -1,0 +1,8 @@
+{
+  "control": "refused-control.a.txt (temporary .a only)",
+  "reason": "an index signature; use a Map, which keeps keys in the order they were added",
+  "control_header": "// a-check: refused an index signature; use a Map, which keeps keys in the order they were added",
+  "removed_header": "caught",
+  "wrong_reason": "caught",
+  "scope": "Independent refusal control; no changed program needs a header"
+}

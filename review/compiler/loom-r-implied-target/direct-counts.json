@@ -1,0 +1,112 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/invariance_readonly.a",
+    "recorded": [
+      30,
+      30,
+      38,
+      51,
+      16,
+      0
+    ],
+    "measured": [
+      30,
+      30,
+      38,
+      51,
+      16,
+      0
+    ],
+    "exit": 0,
+    "seconds": 0.9437041190000173,
+    "match": true
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_widening_class.a",
+    "recorded": [
+      3,
+      3,
+      2,
+      7,
+      3,
+      0
+    ],
+    "measured": [
+      3,
+      3,
+      2,
+      7,
+      3,
+      0
+    ],
+    "exit": 0,
+    "seconds": 0.9252224930000352,
+    "match": true
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_widening_declared.a",
+    "recorded": [
+      6,
+      6,
+      2,
+      12,
+      4,
+      0
+    ],
+    "measured": [
+      6,
+      6,
+      2,
+      12,
+      4,
+      0
+    ],
+    "exit": 0,
+    "seconds": 1.0938012800000365,
+    "match": true
+  },
+  {
+    "fixture": "internal/oracle/testdata/optional_widening_fresh.a",
+    "recorded": [
+      3,
+      3,
+      2,
+      8,
+      3,
+      0
+    ],
+    "measured": [
+      3,
+      3,
+      2,
+      8,
+      3,
+      0
+    ],
+    "exit": 0,
+    "seconds": 1.0445245569999884,
+    "match": true
+  },
+  {
+    "fixture": "internal/oracle/testdata/node_options_widening.a",
+    "recorded": [
+      5,
+      5,
+      1,
+      7,
+      5,
+      0
+    ],
+    "measured": [
+      5,
+      5,
+      1,
+      7,
+      5,
+      0
+    ],
+    "exit": 0,
+    "seconds": 1.1857474409999895,
+    "match": true
+  }
+]

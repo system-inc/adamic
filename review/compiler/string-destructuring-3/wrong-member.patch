@@ -1,0 +1,11 @@
+--- a/internal/lower/collections.go
++++ b/internal/lower/collections.go
+@@ -386,7 +386,7 @@
+ 		if l.result.Locals[local].Type != ir.Number {
+ 			return nil, l.notYet(binding, "a destructured string length held otherwise than a number; use an explicitly typed string source")
+ 		}
+-		value := ir.StringLength{Value: ir.Read{Local: held, Of: ir.String}}
++		value := ir.CharCodeAt{Value: ir.Read{Local: held, Of: ir.String}, Index: ir.NumberConstant{Value: 0}}
+ 		statements = append(statements, l.initializeLocal(local, value)...)
+ 	}
+ 	return statements, nil

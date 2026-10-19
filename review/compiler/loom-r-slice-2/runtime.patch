@@ -1,0 +1,80 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index f8273026..26d417dc 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -1042,7 +1042,9 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
+ // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+ // Error(message), and adamic_uncaught the panic of an error nothing caught.
+ extern _Thread_local adamic_object *adamic_thrown;
++// NULL is an omitted or undefined message; its empty fallback is not an own field.
+ adamic_object *adamic_error_new(adamic_string *message);
++const char *adamic_error_field_name(const adamic_object *object, const char *name);
+ _Noreturn void adamic_uncaught(void);
+ 
+ // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+diff --git a/internal/native/runtime/exceptions.c b/internal/native/runtime/exceptions.c
+index a4fc0890..69a8a0e4 100644
+--- a/internal/native/runtime/exceptions.c
++++ b/internal/native/runtime/exceptions.c
+@@ -2,6 +2,7 @@
+ // designed into counting"). The emitter does the unwinding; the runtime holds what's thrown.
+ 
+ #include "adamic.h"
++#include "view_representations.h"
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -12,12 +13,19 @@ _Thread_local adamic_object *adamic_thrown;
+ static const char *const error_names[] = {"name", "message"};
+ static const bool error_references[] = {true, true};
+ static const adamic_shape error_shape = {2, error_names, error_references, NULL};
++static const char *const absent_message_names[] = {"name", "#message"};
++static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};
++static adamic_string empty_message = ADAMIC_STRING("");
+ static adamic_string error_name = ADAMIC_STRING("Error");
+ 
+ adamic_object *adamic_error_new(adamic_string *message) {
+-	adamic_object *error = adamic_object_new(&error_shape);
++	// Undefined creates no own message property. Keep the inherited empty fallback
++	// in private storage so ordinary and checked field reads share the same slot.
++	adamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);
+ 	error->slots[0].reference = adamic_retain(&error_name);
+-	error->slots[1].reference = adamic_retain(message);
++	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
++	adamic_object_field_types(error)[0] = adamic_rep_string;
++	adamic_object_field_types(error)[1] = adamic_rep_string;
+ 	return error;
+ }
+ 
+@@ -57,6 +65,11 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
+ 	return empty;
+ }
+ 
++// Public lookup sees Error.prototype.message without creating an own property.
++const char *adamic_error_field_name(const adamic_object *object, const char *name) {
++	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;
++}
++
+ _Noreturn void adamic_uncaught(void) {
+ 	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
+ 	// when there is one.
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index b6b41102..6cf9e0bb 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -96,6 +96,7 @@ void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape
+ }
+ 
+ adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
++	name = adamic_error_field_name(object, name);
+ 	adamic_object *mutable = (adamic_object *)object;
+ 	for (size_t index = 0; index < object->shape->count; index++) {
+ 		if (strcmp(object->shape->names[index], name) == 0) {
+@@ -156,6 +157,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
+ 
+ // Cache absence too, with count as the index, without adding a field to the object's shape.
+ adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
++	name = adamic_error_field_name(object, name);
+ 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+ 	size_t slot = packed >> 48;
+ 	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {

@@ -1,0 +1,20 @@
+=== RUN   TestCallbackWideningNullableObjectMapRelease
+=== PAUSE TestCallbackWideningNullableObjectMapRelease
+=== RUN   TestCallbackWideningNullableObjectMapSanitized
+=== PAUSE TestCallbackWideningNullableObjectMapSanitized
+=== CONT  TestCallbackWideningNullableObjectMapRelease
+=== CONT  TestCallbackWideningNullableObjectMapSanitized
+=== NAME  TestCallbackWideningNullableObjectMapRelease
+    callback_widening_test.go:196: native: exit codes differ; stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n" exit 70
+--- FAIL: TestCallbackWideningNullableObjectMapRelease (3.42s)
+=== NAME  TestCallbackWideningNullableObjectMapSanitized
+    callback_widening_test.go:201: exit 70
+        adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back
+        
+--- FAIL: TestCallbackWideningNullableObjectMapSanitized (3.53s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.545s
+FAIL

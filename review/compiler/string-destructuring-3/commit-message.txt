@@ -1,0 +1,10 @@
+Re-cut string length destructuring on current main
+
+Save string binding sources once and preserve their string representation
+in destructured parameters. Keep unsupported members as located NotYet
+results with a fix. Hold Unicode lengths and effects to Node and refresh
+only the new fixture's counts with Linux clang 20.1.8.
+
+Assumption: current main's counts-only table supersedes the requested
+digest column because measurement identity now belongs to products.
+Keep that infrastructure and admit only plain static length bindings.

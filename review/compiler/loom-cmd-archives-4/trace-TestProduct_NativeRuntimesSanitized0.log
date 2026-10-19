@@ -1,0 +1,14 @@
+=== RUN   TestProduct_NativeRuntimesSanitized0
+=== PAUSE TestProduct_NativeRuntimesSanitized0
+=== CONT  TestProduct_NativeRuntimesSanitized0
+    runtimes_test.go:29: build native-runtime 3ac8c29ccf42 miss 5.43
+    runtimes_test.go:29: build native-runtime 19877fc5e50b miss 5.62
+    runtimes_test.go:29: build native-runtime 74c7e3895326 miss 5.46
+    runtimes_test.go:29: build native-runtime 9c3a08bf55d2 miss 5.46
+--- PASS: TestProduct_NativeRuntimesSanitized0 (35.75s)
+PASS
+settled native-runtime e8a3bde0aaa6: 1569 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+settled native-runtime 1d7a0a3145dc: 1569 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+settled native-runtime 825e1c6ec8b7: 1569 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+settled native-runtime 5ee9293da3e3: 1569 reads, windowed; declared Files: 0 reads undeclared, 0 declared unread
+traced: 4 settled, 0 refused; journal and report in /tmp/adamic-recut4-cache-final/traces/20261017T133934Z-1521471071

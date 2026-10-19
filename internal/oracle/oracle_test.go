@@ -39,6 +39,9 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/release_fma.a", true, false},
+	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
+	{"internal/oracle/testdata/moves/accepted/cleanup.a", true, false},
 	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
 	{"internal/oracle/testdata/string_views_holders.a", true, false},
 	{"internal/oracle/testdata/string_views_throw.a", true, false},
@@ -458,6 +461,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	{"internal/oracle/testdata/long_field_name.a", true, false},
 	// A method called on a spread's source inside the literal runs code with the source as this
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},

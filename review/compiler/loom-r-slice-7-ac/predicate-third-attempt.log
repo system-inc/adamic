@@ -1,0 +1,7 @@
+predicate-scan {'a-check': 0} PASS
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-slice-7-ac/predicate.py", line 37, in <module>
+    diagnostic=r.stderr.decode(); assert r.returncode==1 and 'Adamic 0.1 refuses ' in diagnostic,diagnostic
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: adamic: /tmp/adamic-gate/eep-header-control-j3w4r93c/control.a:1:16: stage 0 can't lower a value of type any yet
+

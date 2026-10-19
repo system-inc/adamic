@@ -248,8 +248,11 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 	}
 	outputInputs := buildcache.Inputs{Name: "volume-type-symbol-oracle-output", Files: []string{"stage1/cohere/typeaware/testdata/tsconfig.json"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}
 	outputDir := buildcache.Product(t, outputInputs, func(dir string) error {
-		command, cancel := typeSymbolExec(90*time.Second, oracle, config, manifest)
+		// The oracle's run is the product's fill, as typeSymbolCommand's builds are: no clock of its own, the unit
+		// bounds it, so a builder's load never decides the product (#h4hrxpe).
+		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
+		command := typeSymbolExecContext(ctx, oracle, config, manifest)
 		command.Dir = repository
 		var stdout, stderr bytes.Buffer
 		command.Stdout = &stdout

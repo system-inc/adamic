@@ -38,6 +38,7 @@ func TestBuildIsTheSameFromAnyDirectory(t *testing.T) {
 		t.Setenv("HOME", filepath.Join(root, "home"))
 		t.Setenv("XDG_CACHE_HOME", filepath.Join(root, "cache"))
 		t.Setenv("ADAMIC_BUILD_CACHE_DIR", filepath.Join(root, "cache", "adamic-build"))
+		t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
 		t.Setenv("TMPDIR", filepath.Join(root, "tmp"))
 		binary := filepath.Join(root, "out", "program")
 		if err := Build(source, binary, Options{Sanitize: true}); err != nil {

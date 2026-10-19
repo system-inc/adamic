@@ -1,0 +1,9 @@
+{"Time":"2026-10-18T08:55:08.109400235Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-18T08:55:08.113896273Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow"}
+{"Time":"2026-10-18T08:55:08.114041268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Output":"=== RUN   TestCallTargetExportInputsFlow\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:55:12.575104307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Output":"    call_targets_guard_test.go:209: build go_list_-export__./internal/flow_./internal/leakcheck_listing.json 6a8d344d90c4 miss 2.89\n"}
+{"Time":"2026-10-18T08:55:12.575265377Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Output":"--- PASS: TestCallTargetExportInputsFlow (4.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:55:12.575274581Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Elapsed":4.46}
+{"Time":"2026-10-18T08:55:12.575292878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:55:12.58474041Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t4.475s\n"}
+{"Time":"2026-10-18T08:55:12.584775402Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":4.475}

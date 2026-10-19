@@ -22,12 +22,29 @@ import (
 //go:embed runtime/*.c runtime/*.h
 var runtime embed.FS
 
-// cString is a C string literal holding exactly value's bytes.
+// cString is a NUL-terminated C expression. Long names use a compound literal,
+// with static storage at file scope and block storage through a call.
 //
 // Every byte outside printable ASCII becomes a three-digit octal escape, which can't run into the
 // character after it the way \x can, and quote, backslash and question mark are escaped too, the last
 // so no ?? can ever read as a trigraph.
 func cString(value string) string {
+	if len(value) > longestLiteral {
+		return "((const char[])" + cArray(value) + ")"
+	}
+	return cLiteral(value)
+}
+
+// cArray initializes a char array, including its terminator.
+func cArray(value string) string {
+	if len(value) > longestLiteral {
+		return "{" + cBytes(value) + ", 0}"
+	}
+	return cLiteral(value)
+}
+
+// cLiteral preserves the existing octal escaping and trigraph protection.
+func cLiteral(value string) string {
 	var builder strings.Builder
 	builder.WriteByte('"')
 	for index := 0; index < len(value); index++ {
@@ -48,6 +65,9 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
+	Release bool
+
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
 
@@ -63,6 +83,9 @@ type Options struct {
 
 	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
 	Sanitize bool
+
+	// ThreadSanitize enables the separate race-check build.
+	ThreadSanitize bool
 
 	// Count makes the binary count its allocations, frees, retains and releases, and write them to
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
@@ -95,6 +118,9 @@ func Flags(options Options) []string {
 	if options.Target == "wasm32-wasi" {
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
 	}
+	if options.Target != "wasm32-wasi" {
+		flags = append(flags, "-pthread")
+	}
 	if options.Count {
 		flags = append(flags, "-DADAMIC_COUNT")
 	}
@@ -104,10 +130,36 @@ func Flags(options Options) []string {
 	if options.cpu != "" {
 		flags = append(flags, "-march="+options.cpu)
 	}
+	if options.Sanitize && options.ThreadSanitize {
+		panic("native: ASan and TSan cannot be combined")
+	}
+	if options.ThreadSanitize {
+		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
+	}
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
-	return append(flags, "-O2")
+	flags = append(flags, "-O2")
+	if shippedRelease(options) {
+		flags = append(flags, "-flto=thin")
+	}
+	return flags
+}
+
+func shippedRelease(options Options) bool {
+	return options.Release && !options.Sanitize && !options.ThreadSanitize && !options.Count && options.Target == ""
+}
+
+// LinkFlags carries every semantic compilation flag through ThinLTO code generation.
+func LinkFlags(options Options) []string {
+	return linkFlags(Flags(options), options)
+}
+
+func linkFlags(flags []string, options Options) []string {
+	if shippedRelease(options) && goruntime.GOOS != "darwin" {
+		return append(flags, "-fuse-ld=lld")
+	}
+	return flags
 }
 
 // Build compiles C source and the runtime into a native binary at output.
@@ -131,6 +183,14 @@ func BuildFlags(source string, output string, options Options, flags []string) e
 }
 
 func buildOne(source string, output string, options Options, flags []string) error {
+	library, err := RuntimeLibraryForSource("", source, options)
+	if err != nil {
+		return err
+	}
+	return buildOneWithRuntime(source, output, options, flags, library)
+}
+
+func buildOneWithRuntime(source string, output string, options Options, flags []string, library string) error {
 	jobserver, err := defaultJobserver()
 	if err != nil {
 		return err
@@ -141,10 +201,6 @@ func buildOne(source string, output string, options Options, flags []string) err
 	}
 	defer os.RemoveAll(directory)
 
-	library, err := RuntimeLibraryForSource("", source, options)
-	if err != nil {
-		return err
-	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
@@ -177,7 +233,7 @@ func buildOne(source string, output string, options Options, flags []string) err
 		}
 		program = "main.o"
 	}
-	arguments := append(compileFlags, "-o", output)
+	arguments := append(linkFlags(compileFlags, options), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, program)
 	}

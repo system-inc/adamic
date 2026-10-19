@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/audit_deferred.py", line 60, in <module>
+    assert not named['unused']['instantiated'], (mode, named['unused'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('legacy', {'measurement': 'measured on a checker-rejected program', 'where': '/workspace/adamic/review/compiler/loom-census-deferral/no-caller-audit/source/a.a:2:1', 'kind': 'KindFunctionDeclaration', 'body_start': 68, 'body_end': 131, 'instantiated': True, 'status': 'deferred_generic_instantiation', 'checker_diagnostics': [], 'name': 'unused'})

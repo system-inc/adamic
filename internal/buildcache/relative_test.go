@@ -569,9 +569,15 @@ func TestVouchingIsALookupAtTheCorpusSize(t *testing.T) {
 
 // places resolves each product directory a process holds once, not once per key: a test that keys many products while
 // holding many (bridge/tsgo's BridgeInputProofs, home-6's dry run, Oct 11) spent its 10 minutes resolving them again for
-// every key, a stat per path element, each a stop under a trace. Mutant: product directories resolved on every call.
-// Not parallel: it adds to productDirectories, which every key in the process reads.
+// every key, a stat per path element, each a stop under a trace. The fixed directories resolve once too (Cloud, Oct 17:
+// tsprinter's NPM tests lstat'ed /home 32,600 times each). Mutants: product directories resolved on every call; the
+// home directory resolved on every call.
+// The cache and the output are directories that exist, since one that doesn't resolves again until it does
+// (TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes).
+// Not parallel: it adds to productDirectories, which every key in the process reads, and sets the cache's variables.
 func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", t.TempDir())
 	parent := t.TempDir()
 	var directories []string
 	for index := range 50 {
@@ -585,17 +591,71 @@ func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
 	t.Cleanup(func() {
 		for index, directory := range directories {
 			forgotten(fmt.Sprintf("%064x", index), directory)
-			productResolutions.Delete(directory)
+			directoryResolutions.Delete(directory)
 		}
 	})
 	first := places("")
 	before := resolutions.Load()
 	second := places("")
-	if again := resolutions.Load() - before; again > 3 {
-		t.Fatalf("places resolved %d paths the second time, with 50 product directories it had resolved already", again)
+	if again := resolutions.Load() - before; again != 0 {
+		t.Fatalf("places resolved %d paths the second time, with the repository, the cache, the home directory and 50 product directories it had resolved already", again)
 	}
 	if len(first) != len(second) || len(first) < 50 {
 		t.Fatalf("places gave %d, then %d", len(first), len(second))
+	}
+}
+
+// A directory resolved before it exists resolves again once it does, so an output or a cache made after the first key
+// is named by its real path, never left unresolved for the rest of the process; one that exists then resolves once.
+// Mutant: the failed resolution memoized.
+func TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes(t *testing.T) {
+	t.Parallel()
+	parent := t.TempDir()
+	target := filepath.Join(parent, "target")
+	if err := os.Mkdir(target, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	link := filepath.Join(parent, "made-later")
+	t.Cleanup(func() { rootResolutions.Delete(link) })
+	if got := resolvedOnce(link); got != "" {
+		t.Fatalf("a directory that isn't there resolved to %q", got)
+	}
+	if err := os.Symlink(target, link); err != nil {
+		t.Fatal(err)
+	}
+	want, err := filepath.EvalSymlinks(target)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := resolvedOnce(link); got != want {
+		t.Fatalf("once it exists it resolves to %q, want %q", got, want)
+	}
+	if value, ok := rootResolutions.Load(link); !ok || value != want {
+		t.Fatalf("the resolution that worked wasn't kept: %v %v", value, ok)
+	}
+}
+
+// A product directory's resolution that failed, kept by its own rule, never stands for a root of the same path: the two
+// are held apart (Tests' should on cb285d2e33). Mutant: one map for both.
+func TestAProductDirectorysFailureNeverStandsForARoot(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "both")
+	t.Cleanup(func() {
+		directoryResolutions.Delete(path)
+		rootResolutions.Delete(path)
+	})
+	if got := productResolved(path); got != "" {
+		t.Fatalf("a directory that isn't there resolved to %q", got)
+	}
+	if err := os.Mkdir(path, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	want, err := filepath.EvalSymlinks(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := resolvedOnce(path); got != want {
+		t.Fatalf("the root resolves to %q, want %q: the product directory's failure stood for it", got, want)
 	}
 }
 

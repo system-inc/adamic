@@ -41,13 +41,13 @@ var targetReaders = map[string]targetReader{
 	"internal/native/loop_borrow_test.go:TestLoopCallCoverage:Call.Function":                          {"runtime", "names the function under test"},
 }
 
-func TestCallTargetReaders(t *testing.T) {
-	t.Parallel()
+func checkCallTargetReaders(t *testing.T, selected string) {
+	t.Helper()
 	root, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
 	}
-	listingProduct := callTargetExports(t)
+	listingProduct := callTargetExports(t, selected)
 	encoded, err := os.ReadFile(filepath.Join(listingProduct, "listing.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -68,7 +68,7 @@ func TestCallTargetReaders(t *testing.T) {
 		exports[pkg.ImportPath] = pkg.Export
 		// External tests may use declarations from export_test.go. Import their
 		// package's test variant rather than the production-only export file.
-		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && path == pkg.ForTest {
+		if path, _, variant := strings.Cut(pkg.ImportPath, " ["); variant && (path == pkg.ForTest || exports[path] == "") {
 			exports[path] = pkg.Export
 		}
 	}
@@ -94,6 +94,9 @@ func TestCallTargetReaders(t *testing.T) {
 			continue
 		}
 		base := filepath.Base(pkg.Dir)
+		if base != selected {
+			continue
+		}
 		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow") {
 			continue
 		}
@@ -173,7 +176,7 @@ func TestCallTargetReaders(t *testing.T) {
 		if entry.owner != "compiler" && entry.owner != "runtime" || entry.reason == "" {
 			t.Errorf("invalid reader metadata: %s", reader)
 		}
-		if !seen[reader] {
+		if strings.HasPrefix(reader, "internal/"+selected+"/") && !seen[reader] {
 			t.Errorf("stale call-target allowlist entry %s; remove it", reader)
 		}
 	}
@@ -181,12 +184,67 @@ func TestCallTargetReaders(t *testing.T) {
 
 // callTargetExports is the export data of the packages TestCallTargetReaders reads and everything they import, their
 // tests included, a product built ahead so the test runs no go.
-func callTargetExports(t *testing.T) string {
+func callTargetExports(t *testing.T, selected string) string {
 	t.Helper()
-	return buildcache.GoExports(t, "./internal/native", "./internal/lower", "./internal/fresh", "./internal/flow")
+	return buildcache.GoExports(t, "./internal/"+selected, "./internal/leakcheck")
 }
 
-func TestProduct_CallTargetExports(t *testing.T) {
+// Not parallel: prepare this export group before parallel reader checks on four CPUs.
+func TestCallTargetExportInputsNative(t *testing.T) {
+	callTargetExports(t, "native")
+}
+
+// Not parallel: prepare this export group serially before parallel reader checks.
+func TestCallTargetExportInputsLower(t *testing.T) {
+	callTargetExports(t, "lower")
+}
+
+// Not parallel: prepare this export group serially before parallel reader checks.
+func TestCallTargetExportInputsFresh(t *testing.T) {
+	callTargetExports(t, "fresh")
+}
+
+// Not parallel: prepare this export group serially before parallel reader checks.
+func TestCallTargetExportInputsFlow(t *testing.T) {
+	callTargetExports(t, "flow")
+}
+
+func TestProduct_CallTargetReaderArchivesNative(t *testing.T) {
 	t.Parallel()
-	callTargetExports(t)
+	callTargetExports(t, "native")
+}
+
+func TestProduct_CallTargetReaderArchivesLower(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "lower")
+}
+
+func TestProduct_CallTargetReaderArchivesFresh(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "fresh")
+}
+
+func TestProduct_CallTargetReaderArchivesFlow(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "flow")
+}
+
+func TestCallTargetReadersNative(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "native")
+}
+
+func TestCallTargetReadersLower(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "lower")
+}
+
+func TestCallTargetReadersFresh(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "fresh")
+}
+
+func TestCallTargetReadersFlow(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "flow")
 }

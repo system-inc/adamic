@@ -1,0 +1,28 @@
+=== RUN   TestInstantiationFind
+=== PAUSE TestInstantiationFind
+=== RUN   TestInstantiationFirst
+=== PAUSE TestInstantiationFirst
+=== RUN   TestInstantiationLast
+=== PAUSE TestInstantiationLast
+=== RUN   TestInstantiationCallback
+=== PAUSE TestInstantiationCallback
+=== RUN   TestInstantiationArray
+=== PAUSE TestInstantiationArray
+=== RUN   TestInstantiationPresenceMutant
+=== PAUSE TestInstantiationPresenceMutant
+=== CONT  TestInstantiationFind
+=== CONT  TestInstantiationCallback
+=== CONT  TestInstantiationLast
+=== CONT  TestInstantiationPresenceMutant
+--- PASS: TestInstantiationPresenceMutant (3.17s)
+=== CONT  TestInstantiationFirst
+--- PASS: TestInstantiationCallback (3.25s)
+=== CONT  TestInstantiationArray
+--- PASS: TestInstantiationLast (3.27s)
+--- PASS: TestInstantiationFind (3.29s)
+--- PASS: TestInstantiationFirst (0.48s)
+--- PASS: TestInstantiationArray (0.43s)
+PASS
+gate cache: native hits=0 misses=17
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0

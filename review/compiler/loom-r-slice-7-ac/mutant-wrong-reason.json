@@ -1,0 +1,20 @@
+{
+  "predicate_pin": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "source_sha256": "c81d5f29ae6a06c5671fd8caf961828bc040c1f565df0c0f2cb660ce28a29317",
+  "result": {
+    "a_check": {
+      "/tmp/adamic-gate/eep-header-control-cydh5eum/control.a": {
+        "outcome": "refused",
+        "expected": "refused deliberately wrong reason",
+        "first": "adamic: /tmp/adamic-gate/eep-header-control-cydh5eum/control.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      }
+    }
+  },
+  "steps": {
+    "a-check": 0.7
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\n/tmp/adamic-gate/eep-header-control-cydh5eum/control.a: refused, expected refused deliberately wrong reason (adamic: /tmp/adamic-gate/eep-header-control-cydh5eum/control.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added)"
+}

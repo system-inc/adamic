@@ -12,6 +12,7 @@ import (
 	"testing"
 	"testing/fstest"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -153,6 +154,48 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 	runLibrary(t, first, "1\n")
 	runLibrary(t, second, "2\n")
 	runLibrary(t, third, "4\n")
+}
+
+// With ADAMIC_BUILD_OUTPUT_DIR set, a runtime the build cache already holds is found there, and nothing is written for
+// it anywhere; a runtime it doesn't hold is built and published in the output directory, at the place it would have in
+// the cache. Mutants: cachedRuntime looking only where it writes (the second build runs, into the output directory);
+// cacheDirectory still the build cache's.
+// Not parallel: t.Setenv.
+func TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory(t *testing.T) {
+	cache, output := t.TempDir(), filepath.Join(t.TempDir(), "output")
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
+	t.Setenv("ADAMIC_SANDBOX", "")
+	t.Setenv(location.OutputDirectoryVariable, "")
+	sources := fstest.MapFS{
+		"answer.c": &fstest.MapFile{Data: []byte("#include \"answer.h\"\nint answer(void) { return ANSWER + 0; }\n")},
+		"answer.h": &fstest.MapFile{Data: []byte("#define ANSWER 5\n")},
+	}
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	written, err := cacheDirectory("native-runtime")
+	if err != nil {
+		t.Fatal(err)
+	}
+	held := smallRuntime(t, sources, written, compiler)
+	t.Setenv(location.OutputDirectoryVariable, output)
+	if written, err = cacheDirectory("native-runtime"); err != nil || written != filepath.Join(output, "native-runtime") {
+		t.Fatalf("with an output directory the runtime cache is written at %q (%v)", written, err)
+	}
+	if found := smallRuntime(t, sources, written, compiler); found != held {
+		t.Fatalf("the runtime the cache holds was taken from %s, want %s", found, held)
+	}
+	if _, err := os.Stat(output); err == nil {
+		t.Error("finding a runtime the cache holds wrote into the output directory")
+	}
+	sources["answer.h"].Data = []byte("#define ANSWER 6\n")
+	built := smallRuntime(t, sources, written, compiler)
+	if !strings.HasPrefix(built, written+string(filepath.Separator)) {
+		t.Fatalf("a new runtime was published at %s, not in the output directory's runtime cache", built)
+	}
+	runLibrary(t, held, "5\n")
+	runLibrary(t, built, "6\n")
 }
 
 // Many callers begin on an empty cache together. A compiler wrapper records actual compilations,
@@ -410,7 +453,7 @@ func TestASuppliedRuntimeIsAskedOncePerKey(t *testing.T) {
 		return
 	}
 	command := exec.Command(os.Args[0], "-test.run=^TestASuppliedRuntimeIsAskedOncePerKey$")
-	command.Env = append(os.Environ(), variable+"="+t.TempDir(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir())
+	command.Env = append(os.Environ(), variable+"="+t.TempDir(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_OUTPUT_DIR=")
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("%v\n%s", err, output)
 	}

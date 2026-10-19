@@ -6,9 +6,9 @@
 //	<directory>/find < name-keys
 //
 // Run it inside the adamic tree, with the environment its product tests run in (ADAMIC_BUILD_CACHE_DIR,
-// ADAMIC_BUILD_STORE, ADAMIC_TOOLS, PATH's go) but untraced, and build it with their GOFLAGS: every read set values
-// the build settings of the binary that looks it up, so a finder built otherwise misses every product, naming that
-// entry. Standard input is one name key per line (blank lines are skipped); standard output is one JSON line per name
+// ADAMIC_BUILD_OUTPUT_DIR, ADAMIC_BUILD_STORE, ADAMIC_TOOLS, PATH's go) but untraced, and build it with their GOFLAGS:
+// every read set values the build settings of the binary that looks it up, so a finder built otherwise misses every
+// product, naming that entry. Standard input is one name key per line (blank lines are skipped); standard output is one JSON line per name
 // key, in the same order: {"nameKey", "outcome": "found"|"missing", "key", "name", "why"}, key and name only when
 // found, why only when missing. A found product is in the cache under key, as a test's lookup leaves it; buildcache.Find
 // says what found means. It exits 0 when it answered every name key, and 1 with a line on standard error when it

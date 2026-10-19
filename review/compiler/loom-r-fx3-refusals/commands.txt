@@ -1,0 +1,59 @@
+Repository: /workspace/adamic
+Common test environment: ADAMIC_GOCACHE_OFF=1; source /workspace/adamic-tools/env.sh; GOMAXPROCS=4; GOPROXY=https://proxy.golang.org|direct.
+Final reader/owner environment additionally exports ADAMIC_BUILD_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/adamic-build" so driver subprocesses changing XDG_CACHE_HOME still find products.
+
+timeout 120 git fetch origin
+timeout 120 git fetch origin 088a27988a63171d8485e921973018df27688779
+git checkout -b compiler/loom-r-fx3-refusals dbdf977f5b
+git cherry-pick --no-commit 088a27988a63171d8485e921973018df27688779
+GOPROXY='https://proxy.golang.org|direct' GOMAXPROCS=4 timeout 600 bash cloud/setup.sh > setup.log 2>&1
+nproc; cat /sys/fs/cgroup/cpu.max
+
+timeout 1500 python3 review/compiler/loom-r-fx3-refusals/validate.py > validation-progress.log 2>&1
+All validation.py commands, exit codes and command seconds: validation.json.
+
+timeout 180 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -v -timeout 90s -parallel 4 -args -update-counts > counts-update.log 2>&1
+Initial aggregate timeout at 90.035s; no table written, no leaf over 60s.
+timeout 360 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -v -timeout 300s -parallel 4 -args -update-counts > counts-regenerate.log 2>&1
+PASS 52.521s, table identical.
+
+timeout 1200 python3 review/compiler/loom-r-fx3-refusals/consumers.py > consumer-progress.log 2>&1
+timeout 1200 python3 review/compiler/loom-r-fx3-refusals/consumers-resume.py > consumer-resume-progress.log 2>&1
+timeout 1200 python3 review/compiler/loom-r-fx3-refusals/consumers-final.py > consumer-final-progress.log 2>&1
+timeout 1200 python3 review/compiler/loom-r-fx3-refusals/consumers-rest.py >> consumer-rest-progress.log 2>&1
+Consumer command details and outcomes: consumer-results.json, consumer-resume-results.json, consumer-final-results.json, consumer-rest-results.json. Each go test has -count=1 -v -timeout 90s -parallel 4 and outer 180s.
+
+timeout 180 go test ./internal/oracle -run '^TestProduct_NativeRuntimesSanitized0$' -count=1 -v -timeout 90s -parallel 4 > runtime-product.log 2>&1
+timeout 180 go test ./cmd/adamic -run '^TestExplainChecksOutput$' -count=1 -v -timeout 90s -parallel 4 > command-fixed-cache.log 2>&1
+
+timeout 650 python3 review/compiler/loom-r-fx3-refusals/supplement.py > declared-reader-progress.log 2>&1
+timeout 180 go test ./cmd/adamic-admission-delta -run '^TestProduct_AdmissionCompiler$' -count=1 -v -timeout 90s -parallel 4 > admission-product.log 2>&1
+timeout 650 python3 review/compiler/loom-r-fx3-refusals/supplement-final.py > declared-reader-final-progress.log 2>&1
+Exact declared-reader command details and outcomes: declared-reader-results.json, declared-reader-final-results.json.
+
+timeout 180 go test ./stage1/cohere/lint/helpers/comments/oracles -run '^TestProduct_CommentsOracle$' -count=1 -v -timeout 90s -parallel 4 > comments-oracle-product.log 2>&1
+timeout 180 go test ./stage1/cohere/lint/regex/oracles -run '^TestProduct_RegexOptionDialects$' -count=1 -v -timeout 90s -parallel 4 > regex-option-product.log 2>&1
+
+timeout 120 npm ci --ignore-scripts --prefix stage3/api > node-types-setup.log 2>&1
+timeout 180 go test ./stage3/lane -run '^TestApplyPython$' -count=1 -v -timeout 90s -parallel 4 > lane-ready.log 2>&1
+This attempt lacked the pinned TypeScript gate input.
+timeout 180 git clone --depth 1 --branch v6.0.3 https://github.com/microsoft/TypeScript.git /workspace/scratch/fx3-typescript > typescript-input-setup.log 2>&1
+git -C /workspace/scratch/fx3-typescript rev-parse HEAD > typescript-input-sha.log
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/fx3-typescript timeout 180 go test ./stage3/lane -run '^TestApplyPython$' -count=1 -v -timeout 90s -parallel 4 > lane-pinned-input.log 2>&1
+
+timeout 600 python3 review/compiler/loom-r-fx3-refusals/sanitizers.py > sanitizers-progress.log 2>&1
+Two incomplete harness attempts retained as sanitizers-initial.log and sanitizers-loader-initial.log; final corrected script passes seven comparisons. Every native build has --sanitize and a 90s limit; all Node/native executions have 15s limits. ASAN_OPTIONS=detect_leaks=1:halt_on_error=1, UBSAN_OPTIONS=halt_on_error=1.
+
+timeout 650 python3 review/compiler/loom-r-fx3-refusals/run-mutants-overlay.py > mutants-progress.log 2>&1
+Four exact go test commands, nonzero assertion exits and command seconds: mutants.json.
+
+timeout 180 go run ./internal/buildcache/cmd/traced -- go test ./internal/lower -run '^TestProduct_LowerAgreementNative$' -count=1 -v -timeout 90s -parallel 4 > traced-products.log 2>&1
+Initial trace refused settlement because concurrent evidence creation changed tree status.
+timeout 180 go run ./internal/buildcache/cmd/traced -- go test ./internal/lower -run '^TestProduct_LowerAgreementNative$' -count=1 -v -timeout 90s -parallel 4 > /tmp/fx3-traced-products-final.log 2>&1
+Quiet-tree pass copied to traced-products-final.log, 14 settled and 0 refused.
+ADAMIC_BUILD_CACHE=read timeout 180 go test ./internal/lower -run '^(TestArrayNarrowing.*|TestFX5.*|TestNativeAgreementRowsNameRegisteredPrograms)$' -count=1 -v -timeout 90s -parallel 4 > read-products.log 2>&1
+
+timeout 650 python3 review/compiler/loom-r-fx3-refusals/extra-readers.py > extra-reader-progress.log 2>&1
+Dynamic CLI/backend reader commands/results: extra-reader-results.json.
+gofmt -l internal/lower/object.go internal/lower/agree_test.go internal/lower/array_narrowing_test.go internal/lower/fx5_literal_test.go > gofmt.log
+git diff --cached --check -- internal > source-whitespace.log 2>&1

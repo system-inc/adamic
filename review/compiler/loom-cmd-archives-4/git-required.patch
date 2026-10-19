@@ -1,0 +1,8 @@
+--- a/cmd/adamic/runtime_owners_test.go
++++ b/cmd/adamic/runtime_owners_test.go
+@@ -30 +30,4 @@
+-	return runtimeBuilderPackagesIn(t, filepath.Join("..", ".."))
++	command := exec.Command("git", "ls-files", "-z", "--", "*.go")
++ command.Dir = filepath.Join("..", "..")
++ if _, err := command.Output(); err != nil { t.Fatal(err) }
++ return runtimeBuilderPackagesIn(t, filepath.Join("..", ".."))

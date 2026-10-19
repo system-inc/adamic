@@ -13,6 +13,8 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+
+	"github.com/system-inc/adamic/internal/buildcache/location"
 )
 
 // Absolute finds a product it reads back, and Resolved tells a product from another directory, as the cache lays them
@@ -62,8 +64,9 @@ func relocating(inputs Inputs, nameKey string, build func(directory string) erro
 // productDirectory is where the product named nameKey is on this machine: the directory this process holds it in;
 // else the one its read sets name in the cache (settled, as Loom's runner unpacks it), the one this trace built and
 // hasn't settled (pending), or the one built here for this machine alone (local), in that order; else <cache>/<name>,
-// as a settled key names itself. What it finds is held, and journaled as found, so a build reading there under a trace
-// reads that product (trace.go). Looking it up reads read sets, the tree and declared files, all under keying.
+// as a settled key names itself. Each is looked for in the output directory first, then in the build cache
+// (location.ReadPlaces). What it finds is held, and journaled as found, so a build reading there under a trace reads
+// that product (trace.go). Looking it up reads read sets, the tree and declared files, all under keying.
 func productDirectory(nameKey string) string {
 	if directory, ok := productKeys.Load(nameKey); ok {
 		return directory.(string)
@@ -72,31 +75,46 @@ func productDirectory(nameKey string) string {
 	if err != nil {
 		return filepath.Join(cache, nameKey)
 	}
+	output, err := outputLocation()
+	if err != nil {
+		return filepath.Join(cache, nameKey)
+	}
 	var directory string
 	var upstreams []upstream
 	if root, err := repositoryRoot(); err == nil {
-		keying(func() { directory, upstreams = namedProduct(root, cache, nameKey) })
+		keying(func() { directory, upstreams = namedProduct(root, output, nameKey) })
 	}
 	if directory == "" {
-		return filepath.Join(cache, nameKey)
+		settled := filepath.Join(cache, nameKey)
+		if output != cache {
+			keying(func() {
+				if found, ok := existingPlace(filepath.Join(output, nameKey)); ok {
+					settled = found
+				}
+			})
+		}
+		return settled
 	}
 	journalFound(nameKey, "", directory, upstreams)
 	return holding(nameKey, directory)
 }
 
 // namedProduct is productDirectory's place for nameKey, with the upstreams of the set that found it there, if a set did.
+// cache is where this process writes products, and each place is looked for there and then in the build cache.
 func namedProduct(root, cache, nameKey string) (string, []upstream) {
 	if looked, err := productFor(root, cache, nameKey, 0, nil); err == nil && looked.directory != "" {
 		return looked.directory, looked.upstreams
 	}
 	if traceDirectory() != "" {
-		if pending := filepath.Join(pendingDirectory(cache), nameKey); isDirectory(pending) {
+		if pending, ok := directoryPlace(filepath.Join(pendingDirectory(cache), nameKey)); ok {
 			return pending, nil
 		}
 	}
 	if inputs, ok := localInputs(cache, nameKey); ok {
-		if key, err := Key(root, inputs); err == nil && isDirectory(filepath.Join(cache, "local", key)) {
-			return filepath.Join(cache, "local", key), nil
+		if key, err := Key(root, inputs); err == nil {
+			if built, ok := directoryPlace(filepath.Join(cache, "local", key)); ok {
+				return built, nil
+			}
 		}
 	}
 	return "", nil
@@ -105,6 +123,17 @@ func namedProduct(root, cache, nameKey string) (string, []upstream) {
 func isDirectory(path string) bool {
 	info, err := os.Stat(path)
 	return err == nil && info.IsDir()
+}
+
+// directoryPlace is the first place path is a directory at, under the output directory or the build cache
+// (location.ReadPlaces), the output directory's first.
+func directoryPlace(path string) (string, bool) {
+	for _, place := range location.ReadPlaces(path) {
+		if isDirectory(place) {
+			return place, true
+		}
+	}
+	return "", false
 }
 
 // localPointer is where a product built for this machine alone records the inputs that key it, by name key: its
@@ -135,8 +164,14 @@ func pointLocal(cache, nameKey string, inputs Inputs) error {
 		return err
 	}
 	path := localPointer(cache, nameKey)
-	if existing, err := os.ReadFile(path); err == nil && bytes.Equal(existing, encoded) {
-		return nil
+	// Written where this process writes, unless the output directory or the build cache already holds the same pointer.
+	for _, place := range location.ReadPlaces(path) {
+		if existing, err := os.ReadFile(place); err == nil && bytes.Equal(existing, encoded) {
+			return nil
+		}
+	}
+	if err = os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
 	}
 	temporary, err := os.CreateTemp(filepath.Dir(path), ".pointer-")
 	if err != nil {
@@ -155,13 +190,17 @@ func pointLocal(cache, nameKey string, inputs Inputs) error {
 	return os.Rename(temporary.Name(), path)
 }
 
+// localInputs are the inputs nameKey's pointer records, read in the output directory first, then in the build cache.
 func localInputs(cache, nameKey string) (Inputs, bool) {
-	content, err := os.ReadFile(localPointer(cache, nameKey))
-	if err != nil {
-		return Inputs{}, false
+	for _, place := range location.ReadPlaces(localPointer(cache, nameKey)) {
+		content, err := os.ReadFile(place)
+		if err != nil {
+			continue
+		}
+		var inputs Inputs
+		return inputs, json.Unmarshal(content, &inputs) == nil
 	}
-	var inputs Inputs
-	return inputs, json.Unmarshal(content, &inputs) == nil
+	return Inputs{}, false
 }
 
 // relocatable refuses a product whose text names a path of the machine that built it: the repository, the build
@@ -304,20 +343,23 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 	return false
 }
 
-// isProduct says whether directory is a product: one this process holds, or a key's directory in the build cache,
-// in its local directory or in this trace's pending one.
+// isProduct says whether directory is a product: one this process holds, or a key's directory in the build cache or
+// the output directory, in either's local directory or in this trace's pending one.
 func isProduct(directory string) bool {
 	if _, ok := productDirectories.Load(directory); ok {
 		return true
 	}
-	cache, err := cacheLocation()
+	roots, err := location.Roots()
 	if err != nil || !productKey.MatchString(filepath.Base(directory)) {
 		return false
 	}
 	parent := filepath.Dir(directory)
-	places := []string{cache, filepath.Join(cache, "local")}
-	if traceDirectory() != "" {
-		places = append(places, pendingDirectory(cache))
+	var places []string
+	for _, cache := range roots {
+		places = append(places, cache, filepath.Join(cache, "local"))
+		if traceDirectory() != "" {
+			places = append(places, pendingDirectory(cache))
+		}
 	}
 	return slices.ContainsFunc(places, func(place string) bool {
 		return parent == place || resolved(parent) != "" && resolved(parent) == resolved(place)
@@ -348,8 +390,13 @@ func machinePlaces() []place {
 	if root, err := repositoryRoot(); err == nil {
 		add(root, "the repository")
 	}
-	if cache, err := cacheLocation(); err == nil {
+	cache, cacheErr := cacheLocation()
+	if cacheErr == nil {
 		add(cache, "the build cache")
+	}
+	// The output directory is the build cache's, whose products Loom copies into it: no product names it either.
+	if output, err := outputLocation(); err == nil && (cacheErr != nil || output != cache) {
+		add(output, "the build cache")
 	}
 	productDirectories.Range(func(directory, _ any) bool {
 		add(directory.(string), "a product directory")

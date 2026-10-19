@@ -1,0 +1,376 @@
+{
+  "typescript": "6.0.3",
+  "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "files": [
+    {
+      "file": "src/compiler/scanner.ts",
+      "sha256": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "sha256": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09"
+    }
+  ],
+  "spans": [
+    {
+      "file": "src/compiler/corePublic.ts",
+      "line": 13,
+      "start": 588,
+      "end": 645,
+      "text": "export interface MapLike<T> {\r\n    [index: string]: T;\r\n}"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 135,
+      "start": 5057,
+      "end": 8343,
+      "text": "export const textToKeywordObj: MapLike<KeywordSyntaxKind> = {\r\n    abstract: SyntaxKind.AbstractKeyword,\r\n    accessor: SyntaxKind.AccessorKeyword,\r\n    any: SyntaxKind.AnyKeyword,\r\n    as: SyntaxKind.AsKeyword,\r\n    asserts: SyntaxKind.AssertsKeyword,\r\n    assert: SyntaxKind.AssertKeyword,\r\n    bigint: SyntaxKind.BigIntKeyword,\r\n    boolean: SyntaxKind.BooleanKeyword,\r\n    break: SyntaxKind.BreakKeyword,\r\n    case: SyntaxKind.CaseKeyword,\r\n    catch: SyntaxKind.CatchKeyword,\r\n    class: SyntaxKind.ClassKeyword,\r\n    continue: SyntaxKind.ContinueKeyword,\r\n    const: SyntaxKind.ConstKeyword,\r\n    [\"\" + \"constructor\"]: SyntaxKind.ConstructorKeyword,\r\n    debugger: SyntaxKind.DebuggerKeyword,\r\n    declare: SyntaxKind.DeclareKeyword,\r\n    default: SyntaxKind.DefaultKeyword,\r\n    defer: SyntaxKind.DeferKeyword,\r\n    delete: SyntaxKind.DeleteKeyword,\r\n    do: SyntaxKind.DoKeyword,\r\n    else: SyntaxKind.ElseKeyword,\r\n    enum: SyntaxKind.EnumKeyword,\r\n    export: SyntaxKind.ExportKeyword,\r\n    extends: SyntaxKind.ExtendsKeyword,\r\n    false: SyntaxKind.FalseKeyword,\r\n    finally: SyntaxKind.FinallyKeyword,\r\n    for: SyntaxKind.ForKeyword,\r\n    from: SyntaxKind.FromKeyword,\r\n    function: SyntaxKind.FunctionKeyword,\r\n    get: SyntaxKind.GetKeyword,\r\n    if: SyntaxKind.IfKeyword,\r\n    implements: SyntaxKind.ImplementsKeyword,\r\n    import: SyntaxKind.ImportKeyword,\r\n    in: SyntaxKind.InKeyword,\r\n    infer: SyntaxKind.InferKeyword,\r\n    instanceof: SyntaxKind.InstanceOfKeyword,\r\n    interface: SyntaxKind.InterfaceKeyword,\r\n    intrinsic: SyntaxKind.IntrinsicKeyword,\r\n    is: SyntaxKind.IsKeyword,\r\n    keyof: SyntaxKind.KeyOfKeyword,\r\n    let: SyntaxKind.LetKeyword,\r\n    module: SyntaxKind.ModuleKeyword,\r\n    namespace: SyntaxKind.NamespaceKeyword,\r\n    never: SyntaxKind.NeverKeyword,\r\n    new: SyntaxKind.NewKeyword,\r\n    null: SyntaxKind.NullKeyword,\r\n    number: SyntaxKind.NumberKeyword,\r\n    object: SyntaxKind.ObjectKeyword,\r\n    package: SyntaxKind.PackageKeyword,\r\n    private: SyntaxKind.PrivateKeyword,\r\n    protected: SyntaxKind.ProtectedKeyword,\r\n    public: SyntaxKind.PublicKeyword,\r\n    override: SyntaxKind.OverrideKeyword,\r\n    out: SyntaxKind.OutKeyword,\r\n    readonly: SyntaxKind.ReadonlyKeyword,\r\n    require: SyntaxKind.RequireKeyword,\r\n    global: SyntaxKind.GlobalKeyword,\r\n    return: SyntaxKind.ReturnKeyword,\r\n    satisfies: SyntaxKind.SatisfiesKeyword,\r\n    set: SyntaxKind.SetKeyword,\r\n    static: SyntaxKind.StaticKeyword,\r\n    string: SyntaxKind.StringKeyword,\r\n    super: SyntaxKind.SuperKeyword,\r\n    switch: SyntaxKind.SwitchKeyword,\r\n    symbol: SyntaxKind.SymbolKeyword,\r\n    this: SyntaxKind.ThisKeyword,\r\n    throw: SyntaxKind.ThrowKeyword,\r\n    true: SyntaxKind.TrueKeyword,\r\n    try: SyntaxKind.TryKeyword,\r\n    type: SyntaxKind.TypeKeyword,\r\n    typeof: SyntaxKind.TypeOfKeyword,\r\n    undefined: SyntaxKind.UndefinedKeyword,\r\n    unique: SyntaxKind.UniqueKeyword,\r\n    unknown: SyntaxKind.UnknownKeyword,\r\n    using: SyntaxKind.UsingKeyword,\r\n    var: SyntaxKind.VarKeyword,\r\n    void: SyntaxKind.VoidKeyword,\r\n    while: SyntaxKind.WhileKeyword,\r\n    with: SyntaxKind.WithKeyword,\r\n    yield: SyntaxKind.YieldKeyword,\r\n    async: SyntaxKind.AsyncKeyword,\r\n    await: SyntaxKind.AwaitKeyword,\r\n    of: SyntaxKind.OfKeyword,\r\n};"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 222,
+      "start": 8347,
+      "end": 8411,
+      "text": "const textToKeyword = new Map(Object.entries(textToKeywordObj));"
+    }
+  ],
+  "constants": [
+    {
+      "name": "AbstractKeyword",
+      "value": 128
+    },
+    {
+      "name": "AccessorKeyword",
+      "value": 129
+    },
+    {
+      "name": "AnyKeyword",
+      "value": 133
+    },
+    {
+      "name": "AsKeyword",
+      "value": 130
+    },
+    {
+      "name": "AssertsKeyword",
+      "value": 131
+    },
+    {
+      "name": "AssertKeyword",
+      "value": 132
+    },
+    {
+      "name": "BigIntKeyword",
+      "value": 163
+    },
+    {
+      "name": "BooleanKeyword",
+      "value": 136
+    },
+    {
+      "name": "BreakKeyword",
+      "value": 83
+    },
+    {
+      "name": "CaseKeyword",
+      "value": 84
+    },
+    {
+      "name": "CatchKeyword",
+      "value": 85
+    },
+    {
+      "name": "ClassKeyword",
+      "value": 86
+    },
+    {
+      "name": "ContinueKeyword",
+      "value": 88
+    },
+    {
+      "name": "ConstKeyword",
+      "value": 87
+    },
+    {
+      "name": "ConstructorKeyword",
+      "value": 137
+    },
+    {
+      "name": "DebuggerKeyword",
+      "value": 89
+    },
+    {
+      "name": "DeclareKeyword",
+      "value": 138
+    },
+    {
+      "name": "DefaultKeyword",
+      "value": 90
+    },
+    {
+      "name": "DeferKeyword",
+      "value": 166
+    },
+    {
+      "name": "DeleteKeyword",
+      "value": 91
+    },
+    {
+      "name": "DoKeyword",
+      "value": 92
+    },
+    {
+      "name": "ElseKeyword",
+      "value": 93
+    },
+    {
+      "name": "EnumKeyword",
+      "value": 94
+    },
+    {
+      "name": "ExportKeyword",
+      "value": 95
+    },
+    {
+      "name": "ExtendsKeyword",
+      "value": 96
+    },
+    {
+      "name": "FalseKeyword",
+      "value": 97
+    },
+    {
+      "name": "FinallyKeyword",
+      "value": 98
+    },
+    {
+      "name": "ForKeyword",
+      "value": 99
+    },
+    {
+      "name": "FromKeyword",
+      "value": 161
+    },
+    {
+      "name": "FunctionKeyword",
+      "value": 100
+    },
+    {
+      "name": "GetKeyword",
+      "value": 139
+    },
+    {
+      "name": "IfKeyword",
+      "value": 101
+    },
+    {
+      "name": "ImplementsKeyword",
+      "value": 119
+    },
+    {
+      "name": "ImportKeyword",
+      "value": 102
+    },
+    {
+      "name": "InKeyword",
+      "value": 103
+    },
+    {
+      "name": "InferKeyword",
+      "value": 140
+    },
+    {
+      "name": "InstanceOfKeyword",
+      "value": 104
+    },
+    {
+      "name": "InterfaceKeyword",
+      "value": 120
+    },
+    {
+      "name": "IntrinsicKeyword",
+      "value": 141
+    },
+    {
+      "name": "IsKeyword",
+      "value": 142
+    },
+    {
+      "name": "KeyOfKeyword",
+      "value": 143
+    },
+    {
+      "name": "LetKeyword",
+      "value": 121
+    },
+    {
+      "name": "ModuleKeyword",
+      "value": 144
+    },
+    {
+      "name": "NamespaceKeyword",
+      "value": 145
+    },
+    {
+      "name": "NeverKeyword",
+      "value": 146
+    },
+    {
+      "name": "NewKeyword",
+      "value": 105
+    },
+    {
+      "name": "NullKeyword",
+      "value": 106
+    },
+    {
+      "name": "NumberKeyword",
+      "value": 150
+    },
+    {
+      "name": "ObjectKeyword",
+      "value": 151
+    },
+    {
+      "name": "PackageKeyword",
+      "value": 122
+    },
+    {
+      "name": "PrivateKeyword",
+      "value": 123
+    },
+    {
+      "name": "ProtectedKeyword",
+      "value": 124
+    },
+    {
+      "name": "PublicKeyword",
+      "value": 125
+    },
+    {
+      "name": "OverrideKeyword",
+      "value": 164
+    },
+    {
+      "name": "OutKeyword",
+      "value": 147
+    },
+    {
+      "name": "ReadonlyKeyword",
+      "value": 148
+    },
+    {
+      "name": "RequireKeyword",
+      "value": 149
+    },
+    {
+      "name": "GlobalKeyword",
+      "value": 162
+    },
+    {
+      "name": "ReturnKeyword",
+      "value": 107
+    },
+    {
+      "name": "SatisfiesKeyword",
+      "value": 152
+    },
+    {
+      "name": "SetKeyword",
+      "value": 153
+    },
+    {
+      "name": "StaticKeyword",
+      "value": 126
+    },
+    {
+      "name": "StringKeyword",
+      "value": 154
+    },
+    {
+      "name": "SuperKeyword",
+      "value": 108
+    },
+    {
+      "name": "SwitchKeyword",
+      "value": 109
+    },
+    {
+      "name": "SymbolKeyword",
+      "value": 155
+    },
+    {
+      "name": "ThisKeyword",
+      "value": 110
+    },
+    {
+      "name": "ThrowKeyword",
+      "value": 111
+    },
+    {
+      "name": "TrueKeyword",
+      "value": 112
+    },
+    {
+      "name": "TryKeyword",
+      "value": 113
+    },
+    {
+      "name": "TypeKeyword",
+      "value": 156
+    },
+    {
+      "name": "TypeOfKeyword",
+      "value": 114
+    },
+    {
+      "name": "UndefinedKeyword",
+      "value": 157
+    },
+    {
+      "name": "UniqueKeyword",
+      "value": 158
+    },
+    {
+      "name": "UnknownKeyword",
+      "value": 159
+    },
+    {
+      "name": "UsingKeyword",
+      "value": 160
+    },
+    {
+      "name": "VarKeyword",
+      "value": 115
+    },
+    {
+      "name": "VoidKeyword",
+      "value": 116
+    },
+    {
+      "name": "WhileKeyword",
+      "value": 117
+    },
+    {
+      "name": "WithKeyword",
+      "value": 118
+    },
+    {
+      "name": "YieldKeyword",
+      "value": 127
+    },
+    {
+      "name": "AsyncKeyword",
+      "value": 134
+    },
+    {
+      "name": "AwaitKeyword",
+      "value": 135
+    },
+    {
+      "name": "OfKeyword",
+      "value": 165
+    }
+  ],
+  "entries_count": 84
+}

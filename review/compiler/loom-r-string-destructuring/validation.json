@@ -1,0 +1,102 @@
+[
+  {
+    "name": "guards",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "./internal/lower",
+      "./cmd/adamic-gate",
+      "./internal/oracle",
+      "-run",
+      "^(TestEveryMapAProgramHoldsIsSorted|TestNativeAgreementRowsNameRegisteredPrograms|TestEveryTestIsParallelOrSaysWhy|TestEveryDuplicatedProductDeclarationAgrees|TestRuntimeSetsAreEachUsed)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 31.719
+  },
+  {
+    "name": "lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestStringDestructuring.*|Test.*Destructur.*)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.298
+  },
+  {
+    "name": "fixture",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_097$/^internal$/^oracle$/^testdata$/^string_destructuring\\.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 28.68
+  },
+  {
+    "name": "readers",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 44.967
+  },
+  {
+    "name": "flow",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^(TestFlowCorpusRemainder|TestFlowCorpusUnitsCoverEveryProgram|TestFlowCorpusSetupIsShared)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 11.052
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower",
+      "./internal/oracle"
+    ],
+    "exit": 0,
+    "seconds": 3.645
+  }
+]

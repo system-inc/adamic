@@ -3,11 +3,13 @@
 //
 //	go run ./internal/buildcache/cmd/traced -- go test -count=1 -run '^TestProduct_' ./stage1/cohere/...
 //
-// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR, GOFLAGS).
-// Workshop's tree builder sets ADAMIC_BUILD_STORE=traced, which refuses any product built outside a trace; what settles
-// stays in the cache, which Loom ships, read sets and all, and nothing is written to the store. The command runs under
-// strace -f with ADAMIC_BUILD_TRACE naming a trace directory under the build cache, so every process that builds a
-// product marks it in the trace and journals it; the trace streams through a pipe into buildcache.Settle, never to disk.
+// Run it inside the adamic tree, with the environment the command builds in (ADAMIC_BUILD_CACHE_DIR,
+// ADAMIC_BUILD_OUTPUT_DIR, GOFLAGS). Workshop's tree builder sets ADAMIC_BUILD_STORE=traced, which refuses any product
+// built outside a trace; what settles stays in the cache, which Loom ships, read sets and all, and nothing is written to
+// the store. With ADAMIC_BUILD_OUTPUT_DIR set, the run reads the cache and writes everything there instead, the trace
+// too, for Loom to copy into the cache. The command runs under strace -f with ADAMIC_BUILD_TRACE naming a trace
+// directory under the build cache (or the output directory), so every process that builds a product marks it in the
+// trace and journals it; the trace streams through a pipe into buildcache.Settle, never to disk.
 // GOENV is off unless set, so go never reads a configuration file in the home directory, which no key can name.
 //
 // The tree is taken as git sees it (HEAD, status, each submodule) before the run and after: a read set is valued when
@@ -15,6 +17,11 @@
 // traced -tree-state <file> takes it and writes it to the file, nothing more; a run with ADAMIC_TRACE_TREE_STATE naming
 // that file starts from it rather than taking its own (Loom's build-tree, once for each wave of product tests that start
 // together, so a wave's start never forks git in the hundreds, #2q48btg).
+//
+// traced -machinery reads paths on stdin, one a line, slash-separated from the tree's root, and prints those that are
+// the build machinery (buildcache.IsMachinery), nothing more, on any system: Loom seeds a tree from another only when
+// the diff between them names none (#kjgmzt8), asking this tree's traced and main's, so the machinery is defined once,
+// here, and grows with the split's exclusions. A traced without the flag exits 2, and Loom then seeds strictly.
 //
 // It prints one line per settled product (its key, how many reads, and how far its declared Files drift from them) and
 // one per refused product, naming what it read that no key can name; refused products are Loom's to fix and are never
@@ -29,6 +36,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
 	"flag"
@@ -44,21 +52,36 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/buildcache/location"
 )
 
 // The calls strace reports: every call that names a path (open, stat, access, readlink, exec, chdir, ...), directory
 // listings, fchdir and forks, failed calls too (a missing file the build looked for is a read). Filtered in the
-// kernel (--seccomp-bpf), so untraced calls cost nothing; --decode-fds=path prints descriptors as their paths.
+// kernel (--seccomp-bpf), so untraced calls cost nothing; --decode-fds=path prints descriptors as their paths. Every
+// call Settle parses is here (TestSettleParsesOnlyAskedCalls): once strace is gone this list is what Loom's BPF tracer
+// records, so a call Settle reads and nobody asks for is a read no trace holds (getdents, #9tr6c6j).
 var straceArguments = []string{"-f", "--seccomp-bpf", "--decode-fds=path", "-q", "-e", "signal=none", "-e",
-	"trace=%file,getdents64,fchdir,clone,clone3,fork,vfork"}
+	"trace=%file,getdents,getdents64,fchdir,clone,clone3,fork,vfork"}
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, "usage: traced -- <command> [arguments...]\n       traced -tree-state <file>")
+		fmt.Fprintln(os.Stderr, "usage: traced -- <command> [arguments...]\n       traced -tree-state <file>\n       traced -machinery < paths")
 		flag.PrintDefaults()
 	}
 	treeState := flag.String("tree-state", "", "write the tree's state to this file and exit, for every run of a wave to start from (ADAMIC_TRACE_TREE_STATE)")
+	machinery := flag.Bool("machinery", false, "read paths on stdin, one a line, and print those that are the build machinery (buildcache.IsMachinery), for Loom's seed rule")
 	flag.Parse()
+	if *machinery {
+		if flag.NArg() != 0 || *treeState != "" {
+			flag.Usage()
+			os.Exit(2)
+		}
+		if err := printMachinery(os.Stdin, os.Stdout); err != nil {
+			fmt.Fprintln(os.Stderr, "traced:", err)
+			os.Exit(2)
+		}
+		return
+	}
 	if *treeState != "" && flag.NArg() == 0 {
 		if err := writeTreeState(*treeState); err != nil {
 			fmt.Fprintln(os.Stderr, "traced:", err)
@@ -91,6 +114,22 @@ func main() {
 	os.Exit(status)
 }
 
+// printMachinery writes each line of paths that names the build machinery, in order, to out.
+func printMachinery(paths io.Reader, out io.Writer) error {
+	scanner := bufio.NewScanner(paths)
+	scanner.Buffer(make([]byte, 64*1024), 1024*1024)
+	writer := bufio.NewWriter(out)
+	for scanner.Scan() {
+		if buildcache.IsMachinery(scanner.Text()) {
+			fmt.Fprintln(writer, scanner.Text())
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	return writer.Flush()
+}
+
 func run(command []string, report string) (int, error) {
 	if runtime.GOOS != "linux" {
 		return 0, errors.New("tracing is strace's, on Linux (Workshop); here a product builds only with ADAMIC_BUILD_STORE=off, for this machine alone")
@@ -99,13 +138,11 @@ func run(command []string, report string) (int, error) {
 	if output, err := probe.CombinedOutput(); err != nil {
 		return 0, fmt.Errorf("this strace can't trace as Settle needs (strace 6 with --seccomp-bpf and --decode-fds=path): %v\n%s", err, output)
 	}
-	cache := os.Getenv("ADAMIC_BUILD_CACHE_DIR")
-	if cache == "" {
-		user, err := os.UserCacheDir()
-		if err != nil {
-			return 0, err
-		}
-		cache = filepath.Join(user, "adamic-build")
+	// The trace, its journal and what settled are written where the run writes its products (location.Output): the
+	// build cache, or the output directory of a run that only reads the cache, which Loom copies into it afterwards.
+	cache, err := location.Output()
+	if err != nil {
+		return 0, err
 	}
 	if err := os.MkdirAll(filepath.Join(cache, "traces"), 0o755); err != nil {
 		return 0, err
