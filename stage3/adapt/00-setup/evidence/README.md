@@ -185,4 +185,119 @@ timeout 60 node stage3/adapt/00-setup/evidence/verify-optional-contracts.cjs sta
 ```
 
 This classification is committed before the resolver repair. Repair measurements,
-mutants and toolchain results will be added separately.
+mutants and toolchain results follow below.
+
+
+## Optional-contract wave 1 repair proofs
+
+The [proof report](optional-contracts-wave1/proof.json) and
+[exact census deltas](optional-contracts-wave1/optional-census-delta.json)
+record the final outcome. Six complete CLI/API-backed runs each remove exactly
+`D4012d5810140` (checker.ts:6035:9 TS2375), add none, and preserve every remaining
+full diagnostic and related-information chain. The required no-prelude run is
+234 -> 233; the filtered-prelude run is 235 -> 234. The full resolver-revert
+apply and census restore the original counts, exact diagnostic sets and every
+original source hash in all six runs. This leaves 61 of the original 62 rows.
+
+The smallest selected group is the internal nullable-return row. Resolving the
+single object arm exposes three internal property owners at adaptation 20,
+with five `resolved_findings` rows. Two unions are already supplied by later
+adaptations. The final source delta is **one line in types.ts**, adding undefined
+to `SymbolVisibilityResult.aliasesToMakeVisible`, preserving its question mark.
+Stock `transpileModule` emits exactly the same 139,659 JavaScript bytes for this
+file. `check-wave1.cjs` checks the entire source file set, changed-file bytes,
+all three new ledger owners, and their exclusion from the actual built API.
+The emitted `typescript.d.ts` files are byte-identical before and after.
+The real stage3/lane `api_check` reports 222 composed and 222 sanctioned
+declarations, with 194 added and 193 removed diff lines; the API stays unchanged.
+
+The [retained directory](optional-contracts-wave1/) contains full raw census
+JSON, every CLI stream, full adaptation reports, actual emitted API snapshots,
+and full apply logs compressed with deterministic gzip. Other proof logs are
+plain text. `before.json.gz`, `after.json.gz` and `mutant.json.gz` are fresh
+observations, not relabeled copies of the initial evidence table.
+`verify-optional-repair.py` checks baseline identity against that original table,
+CLI log SHA-256, the exact one-ID delta and absence of new diagnostic chains,
+source-file coverage, unchanged options, and full revert identity.
+
+Every mutant run in this unit:
+
+| Mutant | Observed catcher |
+|---|---|
+| Omit one split row | Split verifier exits 1 on row count. |
+| Flip a split owner's public flag | Split verifier exits 1 on group/API classification. |
+| Change an owner line | Stock AST owner lookup exits 1. |
+| Revert the resolver to split commit e1c0cb0d | Focused witness exits 1 (zero owners instead of one); full fresh apply and census restore D4012d5810140 in all six runs. Using that real result as the repaired observation fails the delta verifier. |
+| Append a runtime expression to the witness | Transpile byte comparator detects inequality. |
+| Append a runtime expression to the changed compiler file | The same equality assertion throws; the proof runner requires that failure. |
+| Omit the errorModuleName resolved finding | Owner-to-finding ledger check exits 1. |
+| Convert public ModuleResolutionHost.directoryExists to a property | The actual lane check rejects the unsanctioned API declaration. |
+
+The census driver also runs its existing original-prelude iterator-next mutant:
+319 before, 318 repaired, 319 reverted. Its complete diagnostic IDs are retained;
+this is a separate pre-existing control, not the resolver-revert proof.
+
+Commands run from the repository root, with each output retained in a log:
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh > /tmp/optional-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+export ADAMIC_TYPESCRIPT_SOURCE=/tmp/optional-source
+timeout 240 bash stage3/apply.sh /tmp/optional-before > /tmp/optional-apply-before.log 2>&1
+timeout 180 npm ci --prefix /tmp/optional-before --no-audit --no-fund > /tmp/optional-upstream-install.log 2>&1
+timeout 300 npm run build --prefix /tmp/optional-before > /tmp/optional-build-before.log 2>&1
+# Move locked dependencies out of the census graph after building.
+# /tmp/optional-deps/node_modules preserves Node's package-directory layout.
+timeout 360 node stage3/adapt/00-setup/evidence/checker-census.cjs "$PWD" /tmp/optional-before /tmp/optional-census-baseline > /tmp/optional-census-baseline.log 2>&1
+# Split committed as e1c0cb0d before changing the resolver.
+timeout 240 bash stage3/apply.sh /tmp/optional-after > /tmp/optional-apply-after.log 2>&1
+# Build with the identical locked dependencies, then remove their temporary link.
+timeout 300 npm run build --prefix /tmp/optional-after > /tmp/optional-build-after-final.log 2>&1
+timeout 360 node stage3/adapt/00-setup/evidence/checker-census.cjs "$PWD" /tmp/optional-after /tmp/optional-census-after > /tmp/optional-census-after.log 2>&1
+PYTHONPATH="$PWD/stage3" PYTHONDONTWRITEBYTECODE=1 timeout 90 python3 -m unittest stage3/test_apply.py > /tmp/optional-apply-tests-final.log 2>&1
+timeout 90 node stage3/adapt/20-optional-declarations/check-nullable-return.cjs > /tmp/optional-return-check.log 2>&1
+timeout 60 node stage3/adapt/20-optional-declarations/check-wave1.cjs /tmp/optional-before /tmp/optional-after /tmp/optional-20-before.json /tmp/optional-20-after.json > /tmp/optional-wave1-check.json 2> /tmp/optional-wave1-check.log
+PYTHONDONTWRITEBYTECODE=1 timeout 60 python3 stage3/adapt/00-setup/evidence/check-optional-api.py /tmp/optional-before /tmp/optional-after > /tmp/optional-api-check-final.log 2>&1
+# Temporarily restore e1c0cb0d's adapt.cjs with a shell EXIT trap to restore the repair.
+timeout 240 bash stage3/apply.sh /tmp/optional-mutant > /tmp/optional-apply-mutant.log 2>&1
+timeout 360 node stage3/adapt/00-setup/evidence/checker-census.cjs "$PWD" /tmp/optional-mutant /tmp/optional-census-mutant > /tmp/optional-census-mutant.log 2>&1
+# Revert witness uses a scratch copy of e1c0cb0d's adapter, expected exit 1.
+timeout 90 node stage3/adapt/20-optional-declarations/check-nullable-return.cjs /tmp/optional-revert-adapt.cjs > /tmp/optional-return-revert-mutant.log 2>&1
+PYTHONDONTWRITEBYTECODE=1 timeout 60 python3 stage3/adapt/00-setup/evidence/verify-optional-repair.py > /tmp/optional-census-delta.json 2> /tmp/optional-census-delta.log
+```
+
+The apply suite passes **23 tests in 13.990s**, and the final file-set rerun
+passes all **23 in 13.213s** (`optional-apply-tests-complete.log`). An initial invocation
+without `PYTHONPATH=stage3` failed importing `caches`; only its generated bytecode
+was removed, and the corrected complete suite passed. Two early census attempts
+were discarded: the first overlapped apply, and the second overlapped dependency
+installation, causing a CLI/API difference at source-map-support. Only the
+completed, frozen dependency-view runs above are retained as observations.
+A first after-build attempt used a dependency directory whose name was not
+`node_modules`; Node could not resolve picocolors. Moving it to
+`/tmp/optional-deps/node_modules` fixed resolution; the complete build passed.
+These failed logs are retained separately and are not claimed as proofs.
+
+Setup succeeded on the first bounded invocation; `nproc` is **5**, with
+`cpu.max=400000 100000`. Its timing lines are:
+
+```text
+setup: node ready (0.063s)
+setup: go ready (0.084s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.540s)
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.853s
+setup: markdown dependencies ready (1.034s)
+setup: submodules ready (246.157s)
+setup: shared cache ready (254.358s)
+setup: go build ready (491.898s)
+setup: test binaries deferred (use --warm-tests) (492.019s)
+setup: build cache warm (492.020s)
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (492.055s)
+setup: source /workspace/adamic-tools/env.sh
+```
+
+Node is v24.19.0, Go 1.27.1, clang 20.1.8. The public method groups remain
+for the language lead, with counts and examples above. The full native gate,
+full upstream oracle and fixes for the other groups were not run or claimed.
+No PR is opened; this branch must land with its census evidence base.

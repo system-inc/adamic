@@ -1,0 +1,133 @@
+{
+  "status": "pass",
+  "typescript": "6.0.3",
+  "beforeOwners": 373,
+  "afterOwners": 376,
+  "newOwners": [
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5814,
+      "column": 5,
+      "name": "errorModuleName",
+      "owner_path": [
+        "SymbolAccessibilityResult",
+        "errorModuleName"
+      ],
+      "before": "string"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5807,
+      "column": 5,
+      "name": "aliasesToMakeVisible",
+      "owner_path": [
+        "SymbolVisibilityResult",
+        "aliasesToMakeVisible"
+      ],
+      "before": "LateVisibilityPaintedStatement[]"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 5828,
+      "column": 5,
+      "name": "parameters",
+      "owner_path": [
+        "AllDecorators",
+        "parameters"
+      ],
+      "before": "readonly (readonly Decorator[] | undefined)[]"
+    }
+  ],
+  "resolved_findings": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5964,
+      "column": 13,
+      "code": 2375,
+      "message": "Type '{ accessibility: SymbolAccessibility.NotAccessible; errorSymbolName: string; errorModuleName: string | undefined; }' is not assignable to type 'SymbolAccessibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errorModuleName' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+      "source": "return",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 5814,
+          "column": 5,
+          "name": "errorModuleName"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6035,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'aliasesToMakeVisible' are incompatible.\n    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.\n      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.",
+      "source": "return",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 5807,
+          "column": 5,
+          "name": "aliasesToMakeVisible"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 689,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.",
+      "source": "return",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 5828,
+          "column": 5,
+          "name": "parameters"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 749,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; getDecorators: readonly Decorator[] | undefined; setDecorators: readonly Decorator[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.",
+      "source": "return",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 5828,
+          "column": 5,
+          "name": "parameters"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 773,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ decorators: readonly Decorator[] | undefined; parameters: (readonly Decorator[] | undefined)[] | undefined; }' is not assignable to type 'AllDecorators' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'parameters' are incompatible.\n    Type '(readonly Decorator[] | undefined)[] | undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.\n      Type 'undefined' is not assignable to type 'readonly (readonly Decorator[] | undefined)[]'.",
+      "source": "return",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 5828,
+          "column": 5,
+          "name": "parameters"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "file": "src/compiler/types.ts",
+      "beforeSha256": "e44d9acfe0e499c10fba713df3ca10fde38b20a26d51da93facf746c28bf0302",
+      "afterSha256": "cf51f61165e0193945042f060a4f079dee1392d31c952c77cfe687534f41bc3b",
+      "javascriptSha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3",
+      "javascriptBytes": 139659
+    }
+  ],
+  "runtimeExpressionMutant": "caught by the same transpile byte equality check"
+}
