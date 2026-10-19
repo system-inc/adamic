@@ -332,3 +332,9 @@
 `node_cwd_wasi.c:initialized:1`
 `runtime-file:node_cwd_wasi.c`
 `runtime-file:node_cwd_wasi.h`
+
+# Exit status belongs to the synchronous process host; validation metadata is immutable.
+`process.c:prefix:1`
+`process.c:range_prefix:1`
+`process.c:range_name:1`
+`process.c:range_code:1`

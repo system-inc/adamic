@@ -97,3 +97,71 @@ func TestNodeLibraryKeepsOfficialConsoleSignatures(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestNodePreludeConsoleSignatures(t *testing.T) {
+	t.Parallel()
+	for _, nullable := range []bool{false, true} {
+		source := prelude
+		if nullable {
+			source = strings.ReplaceAll(source, "message: string", "message: string | null | undefined")
+		}
+		adapted, err := nodePrelude(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(adapted, "declare var console: Console;") || strings.Contains(adapted, "log(message:") {
+			t.Fatalf("console was not adapted: %s", adapted)
+		}
+		// Standalone main has no Console/process overlay. Exercise both declarations
+		// with nested parameter types and trivia, independent of the method signatures.
+		source += "\n// overlay\ninterface Console { log(message: { value: string | null }): void; error(message: undefined): void; }\ndeclare const process: { nested: { code: number }; };\n"
+		adapted, err = nodePrelude(source, "Console", "process")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if strings.Contains(adapted, "interface Console") || !strings.Contains(adapted, "declare var process: NodeJS.Process;") || !strings.Contains(adapted, "// overlay") {
+			t.Fatalf("overlay was not adapted: %s", adapted)
+		}
+	}
+}
+
+func TestNodePreludeMissingDeclarations(t *testing.T) {
+	t.Parallel()
+	declarations := []string{"declare const console: {log(value: unknown): void;};", "interface Console {error(value: unknown): void;}", "declare const process: {code: number;};"}
+	names := []string{"console", "Console", "process"}
+	for index, name := range names {
+		t.Run(name, func(t *testing.T) {
+			source := ""
+			for other, declaration := range declarations {
+				if other != index {
+					source += declaration + "\n"
+				}
+			}
+			adapted, err := nodePrelude(source, "Console", "process")
+			if err == nil || !strings.Contains(err.Error(), "missing the "+name+" declaration") || adapted != "" {
+				t.Fatalf("want clear missing %s error and no prelude, got %q, %v", name, adapted, err)
+			}
+		})
+	}
+}
+
+func TestNodePreludeRejectsMalformedAndDuplicateDeclarations(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{"declare const console: {", "declare const console: {}; declare var console: {};", "declare const console: {}, other: {};"} {
+		if adapted, err := nodePrelude(source); err == nil || adapted != "" {
+			t.Fatalf("invalid prelude passed through: %q, %v", adapted, err)
+		}
+	}
+}
+
+// Not parallel: this simulates the independently queued prelude change in the
+// embedded source without changing its declarations on this branch.
+// Not parallel: replaces the package prelude used by loader calls.
+func TestNodeLibraryNullablePrelude(t *testing.T) {
+	original := prelude
+	t.Cleanup(func() { prelude = original })
+	prelude = strings.ReplaceAll(prelude, "message: string", "message: string | null | undefined")
+	if _, err := nodeSource(t, `import 'node:process'; console.log(true); console.log(undefined); console.error('a','b');`); err != nil {
+		t.Fatal(err)
+	}
+}
