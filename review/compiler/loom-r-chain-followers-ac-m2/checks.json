@@ -1,0 +1,250 @@
+[
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 66.712
+  },
+  {
+    "label": "internal-lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 57.922
+  },
+  {
+    "label": "internal-native-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 320.484
+  },
+  {
+    "label": "internal-native-all-fixed",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 189.775
+  },
+  {
+    "label": "internal-oracle-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 448.14
+  },
+  {
+    "label": "internal-ir-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 62.46
+  },
+  {
+    "label": "internal-javascript-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.673
+  },
+  {
+    "label": "internal-flow-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 66.788
+  },
+  {
+    "label": "internal-fresh-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 16.764
+  },
+  {
+    "label": "stage3-fixtures-all",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 54.121
+  },
+  {
+    "label": "reader-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders.*|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 6.063
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.677
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/ir/...",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./internal/javascript/...",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": 6.213
+  },
+  {
+    "label": "a-check",
+    "command": [
+      "python3",
+      "review/compiler/loom-r-chain-followers-ac-m2/header-check.py"
+    ],
+    "exit": 0,
+    "seconds": 3.829
+  },
+  {
+    "label": "integration-mutants",
+    "command": [
+      "python3",
+      "/workspace/scratch/chain-m2-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 36.383
+  }
+]

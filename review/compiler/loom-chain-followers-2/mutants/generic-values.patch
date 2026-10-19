@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -536,7 +536,7 @@
+ 			return l.functionValue(node, function)
+ 		}
+ 		if declaration, isGeneric := l.generics[l.symbol(node)]; !isLocal && isGeneric {
+-			return l.genericFunctionValue(node, declaration)
++			_ = declaration; return nil, l.notYet(node, "a generic function as a value")
+ 		}
+ 		if !isLocal && l.isLibraryGlobal(node, "String") {
+ 			return nil, l.notYet(node, "reading String as a first-class constructor (its any-typed call signature, construction and static members need an intrinsic value representation)")

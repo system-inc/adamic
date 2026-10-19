@@ -12,7 +12,8 @@ func (a *analysis) libraryLanguage(expression ir.Expression) (value, bool) {
 	switch expression := expression.(type) {
 	case ir.NodeBufferCall:
 		return a.nodeBufferCall(expression), true
-	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal:
+	// Phantom reads also keep this conservative model, including every receiver effect.
+	case ir.ObjectKeys, ir.ClosureSelf, ir.LibraryGlobal, ir.PhantomMember:
 		return a.call(a.operands(expression), expression.Type()), true
 	}
 	return value{}, false

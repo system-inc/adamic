@@ -1,0 +1,146 @@
+[
+  {
+    "topic": "non-null-check",
+    "file": "internal/lower/non_null.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/non-null-check.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestCheckedNonNullTypeScript/undefined$"
+  },
+  {
+    "topic": "non-null-narrowing",
+    "file": "internal/lower/non_null.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/non-null-narrowing.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestCheckedNonNullTypeScript/narrowed$"
+  },
+  {
+    "topic": "nested-empty",
+    "file": "internal/lower/empty_literal.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/nested-empty.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestNestedEmptyArrayElementKinds$"
+  },
+  {
+    "topic": "string-concatenation",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/string-concatenation.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$"
+  },
+  {
+    "topic": "phantom-primitive",
+    "file": "internal/lower/view_unions_primitive_brands.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/phantom-primitive.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestPhantomCastsAreErased$"
+  },
+  {
+    "topic": "proven-predicates",
+    "file": "internal/lower/proven_relations.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/proven-predicates.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestCensusComputedRelation$"
+  },
+  {
+    "topic": "generic-empty",
+    "file": "internal/lower/invariance.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-empty.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/generic_empty_array.a$"
+  },
+  {
+    "topic": "debugger",
+    "file": "internal/lower/statements.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/debugger.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestDebuggerNativeEmitsNothing$"
+  },
+  {
+    "topic": "generic-values",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-values.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestGenericFunctionValuesHaveSeparateInstances$"
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "file": "internal/lower/generic_function_value.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-namespace-interaction.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$"
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "file": "internal/lower/phantom_brands.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/phantom-overload-interaction.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestPhantomOverloadOnlyBrandsKeepMainProof$"
+  },
+  {
+    "topic": "proven-cleanup",
+    "file": "internal/lower/generic.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/proven-cleanup.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestCensusGenericRefusalInsideClosure$"
+  },
+  {
+    "topic": "constructor-context",
+    "file": "internal/lower/class_inheritance.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/constructor-context.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestArrowFieldCaptureFrames$"
+  },
+  {
+    "topic": "dropped-capture",
+    "file": "internal/lower/locals.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/dropped-capture.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestArrowSuperCaptureFrames$"
+  },
+  {
+    "topic": "main-implied-target-cache",
+    "file": "internal/lower/invariance.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/main-implied-target-cache.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestImpliedTargetOrQueriesOnce$"
+  },
+  {
+    "topic": "generic-operand-context",
+    "file": "internal/lower/generic_function_value.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-operand-context.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "^TestGenericFunctionValueOperandContexts$"
+  }
+]

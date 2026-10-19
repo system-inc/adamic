@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/internal/lower/testdata/census_panics/generic_closure.a:3:17: Adamic 0.1 refuses instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)

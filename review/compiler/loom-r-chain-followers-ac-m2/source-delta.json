@@ -1,0 +1,364 @@
+[
+  {
+    "path": "internal/flow/build.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/fresh/library_language.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/ir/phantom_brands.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/javascript/javascript.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/arrow_capture_frames_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/cast_proof.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/census_panics_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/census_small.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/clock_generic_returns_t_01_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/empty_arrays.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/empty_arrays_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/exceptions.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/expression.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/generic.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/generic_arms_context_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/generic_function_value.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/generic_function_value_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/invariance.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/library_string.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/lower_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/object.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/phantom_brands.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/phantom_brands_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/proven_relations.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/statements.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/computed_relation.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/generic_closure.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/qualified.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/types.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/emit_expressions.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/phantom_brands.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/arrow_this_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/element_access_boundaries_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/empty_arrays_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/generic_function_value_arms_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/generic_function_value_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/host_phantom_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/scanner_expressions_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/arrow_this_field.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/arrow_this_stored.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/arrow_this_super.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/generic_empty_array.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/generic_function_value.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/generic_function_value_arms.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/host_phantom_optional_array.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/host_phantom_overload_primitive.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/native-generic-empty-array.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/phantom_brands.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/phantom_catch.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/phantom_undefined.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/scanner_expressions/number_spellings.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/fixtures/assertions/status.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/fixtures/cycles/status.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/fixtures/namespaces/status.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/callback_widening.go",
+    "source_own_identical": false,
+    "source_delta": [],
+    "recut_delta": [
+      "-\tkind := int(l.concrete(l.checker.GetTypeAtLocation(node)).Id())",
+      "-\tsignatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)",
+      "+\t// Generic function values use the signature inferred for this operand's",
+      "+\t// concrete callback slot, the same signature used to lower their closure.",
+      "+\tproven := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node))",
+      "+\tkind := int(l.concrete(proven).Id())",
+      "+\tsignatures := l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)"
+    ]
+  }
+]

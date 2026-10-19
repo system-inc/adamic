@@ -1,0 +1,548 @@
+[
+  {
+    "path": "internal/lower/testdata/census_panics/computed_relation.a",
+    "status": "refused",
+    "reason": "an unproven relation from { arrow: { message: string; }; } to { readonly arrow: { readonly message: string; readonly suggestion?: string; }; }: optional field arrow.suggestion has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+    "code": "",
+    "header": "// a-check: refused adamic/no-optional-widening",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "de49cb5868ce550a1c615f87a0e01962c4e5ead2e3a8ce1bcfae8ce0ea8bf6b2",
+    "file_sha256": "b72dd996052f595998fcf155b36df3ead0ff4e009cddcd0e7c835758bb738fa1",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 0,
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/computed_relation.a:3:15: Adamic 0.1 refuses an unproven relation from { arrow: { message: string; }; } to { readonly arrow: { readonly message: string; readonly suggestion?: string; }; }: optional field arrow.suggestion has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)\n",
+    "exit": 1,
+    "seconds": 0.036,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/lower/testdata/census_panics/computed_relation.a"
+    ],
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused adamic/no-optional-widening",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/computed_relation.a:3:15: Adamic 0.1 refuses an unproven relation from { arrow: { message: string; }; } to { readonly arrow: { readonly message: string; readonly suggestion?: string; }; }: optional field arrow.suggestion has no proven c"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/generic_closure.a",
+    "status": "refused",
+    "reason": "instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)",
+    "code": "",
+    "header": "// a-check: refused adamic/invariant-mutable",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "678d2c5dba0f89b90bd048fabf85c0b4caca1309c25a8d1dbcf19ae88ae7b676",
+    "file_sha256": "63610bf910b5a2e0370be71ccdfa78acb73435a0a420eba3f2bf90324b630611",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 0,
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/generic_closure.a:3:17: Adamic 0.1 refuses instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)\n",
+    "exit": 1,
+    "seconds": 0.038,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/lower/testdata/census_panics/generic_closure.a"
+    ],
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused adamic/invariant-mutable",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/census_panics/generic_closure.a:3:17: Adamic 0.1 refuses instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic"
+    }
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/qualified.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "024b1a44171cd022480a87a5746b181b7c98147e88df1b91ede7a73c2c8966ca",
+    "file_sha256": "024b1a44171cd022480a87a5746b181b7c98147e88df1b91ede7a73c2c8966ca",
+    "stdout_sha256": "1ce1f5edde9a35cfe2dca9956b51865c03fefd38b68acb3c84498e69b7b9ac39",
+    "stdout_bytes": 1339,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.036,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/lower/testdata/census_panics/qualified.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/lower/testdata/census_panics/types.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "8c7963c1db9b7521c5c1615f48cd8ea8a5de3dab6df55d68d823874e67f6afe6",
+    "file_sha256": "8c7963c1db9b7521c5c1615f48cd8ea8a5de3dab6df55d68d823874e67f6afe6",
+    "stdout_sha256": "90ef98e0b3e03f1c92ff70c5ecd0b99ec32b82cec5864a8c1c96f2e88bbc28e5",
+    "stdout_bytes": 186,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.033,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/lower/testdata/census_panics/types.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/arrow_this_field.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "905c1b0f904ec0abedc0f6d16c336faa1874508535155ad51edb85beffc402a2",
+    "file_sha256": "905c1b0f904ec0abedc0f6d16c336faa1874508535155ad51edb85beffc402a2",
+    "stdout_sha256": "2f46c12b19589c8e07bb50ca30b25c9affb1b40cf1be3909b88ed7d02bb2d9ab",
+    "stdout_bytes": 10266,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.041,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/arrow_this_field.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/arrow_this_stored.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "e9bc3d55b95c0a9a09d2f4f05adc42521c0618269504004662f34c62fd66a004",
+    "file_sha256": "e9bc3d55b95c0a9a09d2f4f05adc42521c0618269504004662f34c62fd66a004",
+    "stdout_sha256": "8a72730be89cfcb6058f887d9701c3ac49c0d10db03ea0b9f4959a4de23c0885",
+    "stdout_bytes": 11025,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.08,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/arrow_this_stored.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/arrow_this_super.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "1a54376c5693d39f5cde792a4aec4c6a0ca2a0d9a04a5694b7f0c624b0ae483b",
+    "file_sha256": "1a54376c5693d39f5cde792a4aec4c6a0ca2a0d9a04a5694b7f0c624b0ae483b",
+    "stdout_sha256": "8f5a3cf4063597a8a50e6a15daa29e0a0a5c02e71e1988207af136c8df2697d7",
+    "stdout_bytes": 10308,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.036,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/arrow_this_super.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/generic_empty_array.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "8b73612502ac2054ff75a64ab933770617047a09823a982e6ec19ad22a58c8ba",
+    "file_sha256": "8b73612502ac2054ff75a64ab933770617047a09823a982e6ec19ad22a58c8ba",
+    "stdout_sha256": "674ed5edfa56d3f9a6c6dae3e0efeffc77bc85f94c606101e179da73f473f69f",
+    "stdout_bytes": 20780,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.04,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/generic_empty_array.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/generic_function_value.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "331e8a8b93ebc5ae2e41d7039ecc1f0fec4a47f4b031dfd7c84b4afa104a23c5",
+    "file_sha256": "331e8a8b93ebc5ae2e41d7039ecc1f0fec4a47f4b031dfd7c84b4afa104a23c5",
+    "stdout_sha256": "e06b13307b330b661710ed20f6f761af1a5b265302cb1a7f7a945694c75a084a",
+    "stdout_bytes": 14775,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.039,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/generic_function_value.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/generic_function_value_arms.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "c014b9630aa0bdb4dfd0eb7574f14dcd0faa7136461a4d0180ee37f9684f7e44",
+    "file_sha256": "c014b9630aa0bdb4dfd0eb7574f14dcd0faa7136461a4d0180ee37f9684f7e44",
+    "stdout_sha256": "966afb7058982d35f7afdcc701a28889681950e65a3babd0a2acda3f24817043",
+    "stdout_bytes": 30342,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.041,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/generic_function_value_arms.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/host_phantom_optional_array.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "f5ff8a797afb5e4367a0a451a675f3c9cce1ad795c31183b318d685faa564696",
+    "file_sha256": "f5ff8a797afb5e4367a0a451a675f3c9cce1ad795c31183b318d685faa564696",
+    "stdout_sha256": "d2276e13181ff7019e1305af51259b7af8f9e71e884eba7d4e42e64be273837e",
+    "stdout_bytes": 3350,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.04,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/host_phantom_optional_array.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/host_phantom_overload_primitive.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "74c273fecb1a13487697d3c0d66e00899912eb4a7be4ef7dc705653f61778c9b",
+    "file_sha256": "74c273fecb1a13487697d3c0d66e00899912eb4a7be4ef7dc705653f61778c9b",
+    "stdout_sha256": "38ff6ed16c4114c2b95f23ebc5fa6374e09b2aea6711cf5d8c6b5bc57a0b73c8",
+    "stdout_bytes": 10704,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.039,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/host_phantom_overload_primitive.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/native-generic-empty-array.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "1cef3a48b405b58b724c4ff96ae9cb0cb595f88306ec1681499d40c1db40e259",
+    "file_sha256": "1cef3a48b405b58b724c4ff96ae9cb0cb595f88306ec1681499d40c1db40e259",
+    "stdout_sha256": "d533bbb0a53fde86b9ff4ddf80cc5a41dfac8489b41509ac31dd166e6070566f",
+    "stdout_bytes": 1879,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.036,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/native-generic-empty-array.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/phantom_brands.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "b29ba5575ce6d2e873587bfe41eac4e1c85d5ce73845959c10cd468d9fc45108",
+    "file_sha256": "b29ba5575ce6d2e873587bfe41eac4e1c85d5ce73845959c10cd468d9fc45108",
+    "stdout_sha256": "cc2882defb3efd309efbef713da1afa7473a3c97954b638426e3f841b43229ac",
+    "stdout_bytes": 15365,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.041,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/phantom_brands.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/phantom_catch.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "a0bb0d99efd85bfbe7a6f471e87ec2c81eae0d28c8529e994e731dd5ab05a840",
+    "file_sha256": "a0bb0d99efd85bfbe7a6f471e87ec2c81eae0d28c8529e994e731dd5ab05a840",
+    "stdout_sha256": "8d85feaa368a4fed2c65192d175868d4289a28d3815b20264283d595ddd1c520",
+    "stdout_bytes": 8051,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.048,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/phantom_catch.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/phantom_undefined.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "bfce868ef3c1e68fd719637415505400292ad473bf8e8f6e2d3b2c31f5943ed2",
+    "file_sha256": "bfce868ef3c1e68fd719637415505400292ad473bf8e8f6e2d3b2c31f5943ed2",
+    "stdout_sha256": "cb60e542cdae695f2d40241e1232c0d05179b09a0310139b685b33462ecb329d",
+    "stdout_bytes": 1541,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.037,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/phantom_undefined.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/scanner_expressions/number_spellings.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "78d2c3633b8341c064ac35193bb89b2f3b493ef8d7c960c05a66b3c5f0deed39",
+    "file_sha256": "78d2c3633b8341c064ac35193bb89b2f3b493ef8d7c960c05a66b3c5f0deed39",
+    "stdout_sha256": "680c9c025052c846459b8f5a441f3d8906bbf7f535d2411701ac3c856a6a7053",
+    "stdout_bytes": 8656,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.039,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/scanner_expressions/number_spellings.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "41ad127eb59991c6dc885dbee98fd6d379ae1993f872187671cdc49831d2fe6f",
+    "file_sha256": "41ad127eb59991c6dc885dbee98fd6d379ae1993f872187671cdc49831d2fe6f",
+    "stdout_sha256": "f36a462d1571bfadafb6d7e080a854b1d86fff5bfcabb6a86bcefe12e89bf931",
+    "stdout_bytes": 12124,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.036,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a",
+    "status": "checked",
+    "reason": "",
+    "code": "",
+    "header": "",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "cfe8d9b0a1226343ac33232242abef453fbb1f89412f0cc980f3252e3309278d",
+    "file_sha256": "cfe8d9b0a1226343ac33232242abef453fbb1f89412f0cc980f3252e3309278d",
+    "stdout_sha256": "b5f8e060a05ef6ffe7a7544078d75f790ddba4f94def02bbc0a9e7829d5c822a",
+    "stdout_bytes": 1231,
+    "stderr": "",
+    "exit": 0,
+    "seconds": 0.035,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a"
+    ],
+    "predicate": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  {
+    "path": "review/compiler/chain-followers/host-fixtures/nonvoid-path.a",
+    "status": "refused",
+    "reason": "a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom",
+    "code": "",
+    "header": "// a-check: refused a primitive brand member __pathBrand whose type is not void",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "3e7c1771da86931a9f949725054d20ecbddbc5ed5757cb75662aa95d726aba22",
+    "file_sha256": "1061eef7e313b0733969572ca863b08e526997d687832f440a6093d124149bc1",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 0,
+    "stderr": "adamic: /workspace/adamic/review/compiler/chain-followers/host-fixtures/nonvoid-path.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom\n",
+    "exit": 1,
+    "seconds": 0.037,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "review/compiler/chain-followers/host-fixtures/nonvoid-path.a"
+    ],
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused a primitive brand member __pathBrand whose type is not void",
+      "first": "adamic: /workspace/adamic/review/compiler/chain-followers/host-fixtures/nonvoid-path.a:3:20: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom"
+    }
+  },
+  {
+    "path": "review/compiler/chain-followers/host-fixtures/prototype-read.a",
+    "status": "refused",
+    "reason": "a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain",
+    "code": "",
+    "header": "// a-check: refused a primitive brand member __proto__ that exists on the primitive",
+    "header_added": false,
+    "header_changed": false,
+    "body_sha256": "1c464500739a05c3e7b51b68a9fee22e471f6226497f0d037f345c720d22d6ed",
+    "file_sha256": "93ffbaedc175286fd679fcf8955af4829a70a9557af14a1d7cd67f032552651f",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 0,
+    "stderr": "adamic: /workspace/adamic/review/compiler/chain-followers/host-fixtures/prototype-read.a:2:14: Adamic 0.1 refuses a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain\n",
+    "exit": 1,
+    "seconds": 0.036,
+    "command": [
+      "/workspace/adamic-binaries/adamic-acheck",
+      "c",
+      "review/compiler/chain-followers/host-fixtures/prototype-read.a"
+    ],
+    "predicate": {
+      "outcome": "refused",
+      "expected": "refused a primitive brand member __proto__ that exists on the primitive",
+      "first": "adamic: /workspace/adamic/review/compiler/chain-followers/host-fixtures/prototype-read.a:2:14: Adamic 0.1 refuses a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain"
+    }
+  }
+]

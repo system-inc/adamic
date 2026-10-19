@@ -1,0 +1,78 @@
+[
+  {
+    "name": "drop-main-preflight",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m2/mutants/drop-main-preflight.json",
+      "-run",
+      "^TestMiscompile2AErrorSpread$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.459,
+    "catchers": [
+      "TestMiscompile2AErrorSpread"
+    ]
+  },
+  {
+    "name": "drop-phantom-refusal",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m2/mutants/drop-phantom-refusal.json",
+      "-run",
+      "^TestPhantomRefusals$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 10.273,
+    "catchers": [
+      "TestPhantomRefusals/prototype",
+      "TestPhantomRefusals/required_undefined",
+      "TestPhantomRefusals/nonvoid",
+      "TestPhantomRefusals/any_Path",
+      "TestPhantomRefusals/review_exact_message",
+      "TestPhantomRefusals/length",
+      "TestPhantomRefusals/string_index",
+      "TestPhantomRefusals"
+    ]
+  },
+  {
+    "name": "drop-callback-specialization",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m2/mutants/drop-callback-specialization.json",
+      "-run",
+      "^TestGenericFunctionValuesHaveSeparateInstances$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.606,
+    "catchers": [
+      "TestGenericFunctionValuesHaveSeparateInstances"
+    ]
+  }
+]

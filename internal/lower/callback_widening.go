@@ -10,8 +10,11 @@ import (
 // Capture the callback once and adapt those slots before invoking its signature.
 // The adapter is ordinary IR, including every box and its ownership.
 func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, supplied []ir.Type) (ir.Expression, int, error) {
-	kind := int(l.concrete(l.checker.GetTypeAtLocation(node)).Id())
-	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
+	// Generic function values use the signature inferred for this operand's
+	// concrete callback slot, the same signature used to lower their closure.
+	proven := l.contextualGenericType(node, l.checker.GetTypeAtLocation(node))
+	kind := int(l.concrete(proven).Id())
+	signatures := l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)
 	if len(signatures) != 1 {
 		return callback, kind, nil
 	}

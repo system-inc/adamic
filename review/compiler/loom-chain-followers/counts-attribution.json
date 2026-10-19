@@ -1,0 +1,22 @@
+{
+  "base": "c0fd8945b872e57a341ccee5973e3f4d1b75c34b",
+  "added": {
+    "internal/oracle/testdata/arrow_this_super.a": "| internal/oracle/testdata/arrow_this_super.a | 5 | 5 | 8 | 8 | 5 | 0 |",
+    "internal/oracle/testdata/arrow_this_field.a": "| internal/oracle/testdata/arrow_this_field.a | 7 | 7 | 9 | 11 | 6 | 0 |",
+    "internal/oracle/testdata/arrow_this_stored.a": "| internal/oracle/testdata/arrow_this_stored.a | 7 | 7 | 9 | 11 | 7 | 0 |",
+    "internal/oracle/testdata/native-generic-empty-array.a": "| internal/oracle/testdata/native-generic-empty-array.a | 3 | 3 | 1 | 5 | 3 | 0 |",
+    "internal/oracle/testdata/generic_empty_array.a": "| internal/oracle/testdata/generic_empty_array.a | 32 | 32 | 24 | 60 | 17 | 0 |",
+    "internal/oracle/testdata/generic_function_value_arms.a": "| internal/oracle/testdata/generic_function_value_arms.a | 18 | 18 | 72 | 99 | 7 | 0 |",
+    "internal/oracle/testdata/generic_function_value.a": "| internal/oracle/testdata/generic_function_value.a | 15 | 15 | 27 | 45 | 7 | 0 |",
+    "internal/oracle/testdata/phantom_brands.a": "| internal/oracle/testdata/phantom_brands.a | 15 | 15 | 29 | 42 | 6 | 0 |",
+    "internal/oracle/testdata/phantom_undefined.a": "| internal/oracle/testdata/phantom_undefined.a | 1 | 0 | 5 | 4 | 1 | 0 |",
+    "internal/oracle/testdata/phantom_catch.a": "| internal/oracle/testdata/phantom_catch.a | 8 | 8 | 10 | 18 | 2 | 0 |",
+    "internal/oracle/testdata/host_phantom_overload_primitive.a": "| internal/oracle/testdata/host_phantom_overload_primitive.a | 25 | 25 | 13 | 43 | 7 | 0 |",
+    "internal/oracle/testdata/host_phantom_optional_array.a": "| internal/oracle/testdata/host_phantom_optional_array.a | 5 | 5 | 2 | 7 | 2 | 0 |",
+    "internal/oracle/testdata/scanner_expressions/string-number-concatenation.a": "| internal/oracle/testdata/scanner_expressions/string-number-concatenation.a | 2 | 2 | 3 | 6 | 2 | 0 |",
+    "internal/oracle/testdata/scanner_expressions/number_spellings.a": "| internal/oracle/testdata/scanner_expressions/number_spellings.a | 85 | 85 | 2 | 88 | 3 | 0 |",
+    "internal/oracle/testdata/scanner_expressions/primitive_concatenation.a": "| internal/oracle/testdata/scanner_expressions/primitive_concatenation.a | 33 | 33 | 2 | 38 | 3 | 0 |"
+  },
+  "changed_existing": [],
+  "removed": []
+}

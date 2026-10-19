@@ -1,0 +1,24 @@
+{
+  "newly_added": [],
+  "changed": [],
+  "retained": [
+    {
+      "path": "internal/lower/testdata/census_panics/computed_relation.a",
+      "header": "// a-check: refused adamic/no-optional-widening"
+    },
+    {
+      "path": "internal/lower/testdata/census_panics/generic_closure.a",
+      "header": "// a-check: refused adamic/invariant-mutable"
+    },
+    {
+      "path": "review/compiler/chain-followers/host-fixtures/nonvoid-path.a",
+      "header": "// a-check: refused a primitive brand member __pathBrand whose type is not void"
+    },
+    {
+      "path": "review/compiler/chain-followers/host-fixtures/prototype-read.a",
+      "header": "// a-check: refused a primitive brand member __proto__ that exists on the primitive"
+    }
+  ],
+  "body_bytes_unchanged": true,
+  "source": "09aa4ee0aad721c1a027b15eba5b23344a588a83"
+}

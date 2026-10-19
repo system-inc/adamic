@@ -1,0 +1,194 @@
+[
+  {
+    "log": "mutant-constructor-context.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestArrowFieldCaptureFrames",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-debugger.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestDebuggerNativeEmitsNothing/.a",
+    "seconds": 0.04,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-debugger.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestDebuggerNativeEmitsNothing/.ts",
+    "seconds": 0.04,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-debugger.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestDebuggerNativeEmitsNothing",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-dropped-capture.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestArrowSuperCaptureFrames",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-generic-empty.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_059/internal/oracle/testdata/generic_empty_array.a",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-generic-empty.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_059",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-generic-namespace-interaction.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestGenericFunctionValueNamespaceDirectCallsKeepIdentity",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-generic-operand-context.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestGenericFunctionValueOperandContexts",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-generic-values.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestGenericFunctionValuesHaveSeparateInstances",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-main-implied-target-cache.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestImpliedTargetOrQueriesOnce",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-nested-empty.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNestedEmptyArrayElementKinds/strings",
+    "seconds": 0.09,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-nested-empty.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNestedEmptyArrayElementKinds/objects",
+    "seconds": 0.04,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-nested-empty.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestNestedEmptyArrayElementKinds",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-non-null-check.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedNonNullTypeScript/undefined",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-non-null-check.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedNonNullTypeScript",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-non-null-narrowing.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedNonNullTypeScript/narrowed",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-non-null-narrowing.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedNonNullTypeScript",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  },
+  {
+    "log": "mutant-phantom-overload-interaction.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestPhantomOverloadOnlyBrandsKeepMainProof",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-phantom-primitive.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestPhantomCastsAreErased",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-proven-cleanup.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCensusGenericRefusalInsideClosure",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-proven-predicates.log",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCensusComputedRelation",
+    "seconds": 0.03,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-string-concatenation.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_081/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+    "seconds": 2.86,
+    "result": "fail",
+    "leaf": true
+  },
+  {
+    "log": "mutant-string-concatenation.log",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestNativeAgreesWithNode_081",
+    "seconds": 0,
+    "result": "fail",
+    "leaf": false
+  }
+]
