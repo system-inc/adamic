@@ -76,6 +76,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if found, err := l.nodePlatformUseRefusal(node); found {
 		return err
 	}
+	if err := l.nodeProcessSignature(node); err != nil {
+		return err
+	}
 	name := l.nodeLibraryMember(node)
 	if name != "" && !implementedNodeMembers[name] {
 		return l.notYet(node, name)

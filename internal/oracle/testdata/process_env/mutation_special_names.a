@@ -1,0 +1,15 @@
+import process from 'node:process';
+function mutate(name: string, value: string, probe: string): void {
+    const assigned = (process.env[name] = value);
+    console.log(String(assigned.length));
+    console.log(process.env[name] ?? 'missing');
+    console.log(process.env[probe] ?? 'missing');
+    const ok = delete process.env[name];
+    console.log(`${ok}`);
+    console.log(process.env[name] ?? 'missing');
+    console.log(process.env[probe] ?? 'missing');
+}
+mutate('A=B', 'x', 'A=B');
+mutate('ADAMIC_ENV_NUL_NAME\0suffix', 'x', 'ADAMIC_ENV_NUL_NAME');
+mutate('ADAMIC_ENV_NUL_VALUE', 'a\0b', 'ADAMIC_ENV_NUL_VALUE');
+mutate('', 'x', '');

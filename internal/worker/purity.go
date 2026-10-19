@@ -44,6 +44,10 @@ func CheckPure(program *ir.Program, function int) error {
 				return fmt.Errorf("calls adamic I/O (%T)", node)
 			case ir.NodeFSFile:
 				return fmt.Errorf("impure: host operation %s", node.Operation)
+			case ir.NodeHostCall:
+				return fmt.Errorf("impure: host operation %s.%s", node.Module, node.Member)
+			case ir.ProcessCall:
+				return fmt.Errorf("impure: host operation process.%s", node.Operation)
 			case ir.Read:
 				return global(node.Local)
 			case ir.Assign:

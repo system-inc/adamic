@@ -13,6 +13,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	switch call.Operation {
 	case "host_realpath":
 		return "adamicNodeFSFile.realpathSync.native(" + args[0] + ")"
+	case "host_env_set":
+		return "adamicHostEnvironment(" + args[0] + ", 'set', " + args[1] + ")"
+	case "host_env_delete":
+		return "adamicHostEnvironment(" + args[0] + ", 'delete')"
 	case "host_env":
 		return "adamicHostEnvironment(" + args[0] + ")"
 	case "host_join":

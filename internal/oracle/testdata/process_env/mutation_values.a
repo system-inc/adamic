@@ -1,0 +1,7 @@
+import process from 'node:process';
+const v = (process.env.ADAMIC_ENV_VALUE = 'a');
+console.log(v);
+console.log(process.env.ADAMIC_ENV_VALUE);
+const ok = delete process.env.ADAMIC_ENV_VALUE;
+console.log(`${ok}`);
+console.log(process.env.ADAMIC_ENV_VALUE ?? 'missing');

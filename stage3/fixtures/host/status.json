@@ -294,8 +294,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:19:5: stage 0 can't lower node:process.Process.env written yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -310,8 +310,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -412,8 +412,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/23_newLine.a:12:31: stage 0 can't lower node:os.EOL yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {

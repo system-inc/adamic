@@ -24,6 +24,8 @@ double adamic_host_time_origin(void);
 double adamic_host_date_now(void);
 // Owned decoded text; missing env is NULL, empty env is an owned empty string. Reads are live.
 adamic_string *adamic_host_environment(const adamic_string *name);
+void adamic_host_environment_set(const adamic_string *, const adamic_string *);
+bool adamic_host_environment_delete(const adamic_string *);
 // Borrowed Node UTF-8 path; owned decoded canonical path, or NULL with errno (NUL is EINVAL).
 // After NULL, adamic_fs_file_realpath_error must be the very next call: it reads errno.
 adamic_string *adamic_host_realpath(const adamic_string *path);

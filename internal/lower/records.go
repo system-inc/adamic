@@ -88,7 +88,7 @@ func init() {
 
 // deleteRefusal refuses delete on anything but a record entry.
 func (l *lowering) deleteRefusal(node *ast.Node) error {
-	if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) {
+	if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) && !l.nodeProcessEnvironmentDelete(node) {
 		return &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
 	}
 	return nil

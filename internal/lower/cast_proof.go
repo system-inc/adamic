@@ -98,7 +98,7 @@ func castMembers(proven *checker.Type) []*checker.Type {
 // castRefusal refuses a cast the runtime can't check, and records a checked one in
 // l.refusal.checkedCasts for stringWideningRefusal (3100).
 func (l *lowering) castRefusal(node *ast.Node) error {
-	if node.Kind == ast.KindAsExpression {
+	if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
 		proof, err := l.castProof(node)
 		if err != nil {
 			return err
