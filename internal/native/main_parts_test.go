@@ -63,7 +63,7 @@ func TestMainPartsRunAsMain(t *testing.T) {
 	}{
 		{"../oracle/testdata/modules/main.a", true},
 		{"../oracle/testdata/import_cycles/order/main.a", true},
-		{"../oracle/testdata/import_cycles/hoisted/a.a", false},
+		{"../oracle/testdata/import_cycles/classes/a.a", true},
 		{"../oracle/testdata/import_cycles/read/a.a", false},
 		{"../oracle/testdata/exceptions_uncaught.a", true},
 		{"../oracle/testdata/adversarial_order.a", true},
