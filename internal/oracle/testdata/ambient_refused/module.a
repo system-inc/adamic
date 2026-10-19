@@ -1,0 +1,4 @@
+// a-check: refused a module augmentation or ambient external module
+declare module 'adamic' { export interface Added { readonly value: number; } }
+declare let limit: number;
+console.log(`${limit + 1}`);
