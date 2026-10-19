@@ -229,6 +229,10 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		}
 		program = "main.o"
 	}
+	compilerLink, err := regexpCompilerLinkFlags(source, options, directory)
+	if err != nil {
+		return err
+	}
 	arguments := append(linkFlags(compileFlags, options), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, program)
@@ -244,6 +248,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		// Runtime constructors precede module initialization at the same default priority.
 		arguments = append(arguments, program)
 	}
+	arguments = append(arguments, compilerLink...)
 	if program == "main.o" {
 		arguments = append(arguments, objectPrefixFlags()...)
 	}

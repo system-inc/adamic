@@ -9,7 +9,7 @@ import (
 
 // Cache exhaustion is a fallback, not a failed match. This regular language has
 // exponentially many distinguishable suffixes, beyond the bounded lazy cache.
-func runRegExpRegularEngineNodeUnit(t *testing.T, wasmOnly bool) {
+func runRegExpRegularEngineNodeUnit(t *testing.T, wasmOnly bool, unit int) {
 	t.Helper()
 	if wasmOnly && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -32,11 +32,30 @@ func runRegExpRegularEngineNodeUnit(t *testing.T, wasmOnly bool) {
 		{Pattern: `a.*b`, Input: []uint16{'a', 'a', 'x', 'b'}},
 		{Pattern: `a.*b`, Input: []uint16{'a', 'x', 'b', 'b'}},
 	}
+	// Keep the cache-exhaustion witness separate from the semantic cases on
+	// wasm. Both units still compare all three execution modes with live Node.
+	if wasmOnly {
+		switch unit {
+		case 0:
+			cases = cases[:1]
+		case 1:
+			cases = cases[1:]
+		default:
+			t.Fatal("unknown regular-engine wasm unit")
+		}
+	}
 	runRegexNodeCasesForTarget(t, cases, wasmOnly)
 }
 
 func TestRegExpRegularEngineNode(t *testing.T) {
 	t.Parallel()
-	runRegExpRegularEngineNodeUnit(t, false)
+	runRegExpRegularEngineNodeUnit(t, false, -1)
 }
-func TestRegExpRegularEngineWASM(t *testing.T) { t.Parallel(); runRegExpRegularEngineNodeUnit(t, true) }
+func TestRegExpRegularEngineWASMCache(t *testing.T) {
+	t.Parallel()
+	runRegExpRegularEngineNodeUnit(t, true, 0)
+}
+func TestRegExpRegularEngineWASMSemantics(t *testing.T) {
+	t.Parallel()
+	runRegExpRegularEngineNodeUnit(t, true, 1)
+}
