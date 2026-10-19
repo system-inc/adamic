@@ -59,7 +59,9 @@ func TestMdastIdentifierWitnesses(t *testing.T) {
 		t.Fatal(e)
 	}
 	program := lowered(t, main)
-	answer, binary := natively(t, program, transport)
+	// The mdast grain's sanitized port is this program too, so the witness reads that product.
+	binary := grainProduct(t, "mdast", "sanitized").sanitized
+	answer := sanitizedRun(t, binary, transport)
 	for _, side := range []run{answer, onNode(t, main, transport), onJavaScriptBackend(t, program, transport)} {
 		clean(t, "native Go-held identifier witness", side)
 		equal(t, "native Go-held identifier witness", side.stdout, goResult.stdout)
