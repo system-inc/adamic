@@ -117,3 +117,28 @@ func TestProcessEnvironmentNULFixtureMatchesNode(t *testing.T) {
 		})
 	}
 }
+
+func TestProcessEnvironmentAdmittedUsesMatchNode(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("testdata/process_env/mutations.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := processEnvironmentRun(t, nil, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "first\n\nhéllo 世界 🌍\ntrue\nmissing\ntrue\nown environment string\ntrue\n" {
+		t.Fatalf("Node mutation witness changed: %+v", truth)
+	}
+	processEnvironmentBackends(t, "mutations.a", nil, truth)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "counted")
+	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := processEnvironmentRun(t, nil, binary)
+	if got.exitCode != truth.exitCode || !bytes.Equal(got.stdout, truth.stdout) || countsLine.FindSubmatch(got.stderr) == nil {
+		t.Fatalf("counted mutation disagrees: %+v", got)
+	}
+}

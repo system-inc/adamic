@@ -546,6 +546,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.nodeFSDirectoryValue(node); known {
 		return value, err
 	}

@@ -20,6 +20,13 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		}
 		code = fmt.Sprintf("adamic_fs_file_host_join(%d, %s)", len(args), array)
 	}
+	if call.Operation == "host_env_set" {
+		e.line("adamic_host_environment_set(%s, %s);", args[0], args[1])
+		code = "adamic_retain(" + args[1] + ")"
+	}
+	if call.Operation == "host_env_delete" {
+		code = "adamic_host_environment_delete(" + args[0] + ")"
+	}
 	if call.Operation == "host_env" {
 		code = e.nodeEnvironmentRead(args[0])
 	}

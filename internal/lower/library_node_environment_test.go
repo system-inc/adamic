@@ -11,10 +11,16 @@ import (
 func TestProcessEnvironmentRejectsNonReadUses(t *testing.T) {
 	t.Parallel()
 	for _, one := range []struct{ name, source, want string }{
-		{"write", `process.env.X = 'value';`, "written"},
+		{"non-string value", `process.env.X = undefined;`, "written with a non-string value"},
+		{"non-string write key", `process.env[0] = 'value';`, "read with a non-string key"},
+		{"non-string delete key", `delete process.env[0];`, "read with a non-string key"},
+		{"optional delete", `delete process.env?.X;`, "used as a value (optional chain)"},
+		{"alias write", `const environment = process.env; environment.X = 'value';`, "used as a value"},
+		{"alias delete", `const environment = process.env; delete environment.X;`, "used as a value"},
+		{"nullish compound", `process.env.X ??= 'value';`, "written"},
+		{"prototype write", `process.env['toString'] = 'value';`, "mutation with literal prototype key toString"},
+		{"prototype delete", `delete process.env['toString'];`, "mutation with literal prototype key toString"},
 		{"compound", `process.env.X += 'value';`, "written"},
-		{"element write", `const key = 'X'; process.env[key] = 'value';`, "written"},
-		{"delete", `delete process.env.X;`, "deleted"},
 		{"passed", `function accept(value: object): void {console.log('called');} accept(process.env);`, "used as a value"},
 		{"stored", `const environment = process.env;`, "used as a value"},
 		{"spread", `const environment = {...process.env};`, "used as a value"},
@@ -45,6 +51,26 @@ func TestProcessEnvironmentRefusesLiteralPrototypeNames(t *testing.T) {
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "literal prototype key "+key) || !strings.Contains(notYet.What, "process.env['NAME']") || !strings.Contains(notYet.What, "plain object") {
 				t.Fatalf("want located prototype NotYet with fix, got %v", err)
+			}
+		})
+	}
+}
+
+// The paired oracle TestProcessEnvironmentAdmittedUsesMatchNode runs these uses
+// natively, under ASan and counting, and through the JavaScript backend.
+func TestProcessEnvironmentAdmitsStringWritesAndDeletes(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`process.env.X = 'value';`,
+		`function write(key: 'A' | 'B', value: 'x' | 'y'): void { process.env[key] = value; } write('A', 'x');`,
+		`const key = 'X'; process.env[key] = 'value';`,
+		`delete process.env.X;`,
+		`const key = 'X'; delete process.env[key];`,
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSource(t, `import process from 'node:process'; `+source); err != nil {
+				t.Fatal(err)
 			}
 		})
 	}

@@ -85,9 +85,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	if counted {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
 	} else {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
@@ -278,6 +278,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	}
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
+	}
+	if strings.Contains(code, "adamicNodeTmpdir()") {
+		code = "import { tmpdir as adamicNodeTmpdir } from 'node:os';\n" + code
 	}
 	if strings.Contains(code, "adamicNodeFS.") {
 		code = "import * as adamicNodeFS from 'node:fs';\n" + code
@@ -786,6 +789,16 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
+	case ir.ProcessCall:
+		if value, known := e.nodeProcessCall(expression); known {
+			return value
+		}
+		switch expression.Operation {
+		case "stdoutTTY":
+			return "process.stdout.isTTY"
+		case "stderrTTY":
+			return "process.stderr.isTTY"
+		}
 	case ir.NodeHostCall:
 		return e.nodeHostCall(expression)
 	case ir.NodeFSFile:
