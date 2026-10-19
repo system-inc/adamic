@@ -1,0 +1,8 @@
+// a-check: refused a write through a union of "text" into a slot that holds number in { value: number
+type Holder = { inner: { value: string } } | { inner: { value: number } };
+function label(holder: Holder): void {
+	holder.inner.value = 'text';
+}
+const holder = { inner: { value: 4 } };
+label(holder);
+console.log(`${holder.inner.value * 2}`);
