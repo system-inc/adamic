@@ -53,7 +53,7 @@ type program struct {
 type measurement struct {
 	elapsed time.Duration
 	user    time.Duration // CPU time in user mode, summed over every thread
-	peak    int64 // bytes
+	peak    int64         // bytes
 	stdout  string
 	failure string
 }
