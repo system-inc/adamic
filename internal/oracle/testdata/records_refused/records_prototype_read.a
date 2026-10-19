@@ -1,0 +1,4 @@
+// a-check: refused record read of toString: the record's prototype chain isn't modeled; check Object.hasOwn(record, key) immediately before reading its own value, or use a Map
+const r: Record<string, number> = {};
+function read(key: string): void {console.log(String(r[key]));}
+read('toString');

@@ -1,0 +1,55 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "review/compiler/loom-r-views-fx-b/scalar-check-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestScalarUnionViewMisfit",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "seconds": 33.696,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitNumberJavaScript",
+      "Action": "pass",
+      "Elapsed": 6.47
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitBooleanNative",
+      "Action": "fail",
+      "Elapsed": 6.61
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitNumberNative",
+      "Action": "fail",
+      "Elapsed": 6.63
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitNumberSanitized",
+      "Action": "fail",
+      "Elapsed": 6.7
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitBooleanJavaScript",
+      "Action": "pass",
+      "Elapsed": 0.14
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitBooleanSanitized",
+      "Action": "fail",
+      "Elapsed": 0.4
+    }
+  ]
+}

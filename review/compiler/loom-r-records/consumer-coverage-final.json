@@ -1,0 +1,1052 @@
+[
+  {
+    "package": "./bench/regex",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./bridge/tsgo",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^(TestTSGoRequiresLink)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^(TestRuntimeFeaturesMatchNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic",
+    "status": "passed after oracle/cache preparation; corrected commands in commands.jsonl",
+    "initial_exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^(TestExplainChecksOutput)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-fuzz",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-fuzz",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-reduce",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-reduce",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^(TestAdaptSingletonArrayCallback)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^(TestCheckKeyTellsTheCompilerFromTscWhole)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/fresh",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^(TestFreshCorpusRemainder)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/fuzz",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^(TestGeneratedProgramsCheckAndLower)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/javascript",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^(TestViewMixedUnionSelectsNumber)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^(TestOriginalCycleLedger)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/native/runtimeproducts",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes|TestClosedEmptyArrayUnionGap|TestClosedParserRegexGap|TestClosedOptionalBooleanConditionGap|TestClosedPrinterRegexGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbersAnswerProductsRekey)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestMultiPushGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^(TestPostfixValueGap|TestMethodReplacementGap|TestRawInputGap|TestParserRecoveryGap|TestInterfaceTypeMethodGap|TestRecoveryLibraryGaps|TestPinnedNumericGaps|TestTypeMemberLibraryGap|TestCookedSurrogateLibraryGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/formatfiles",
+      "-run",
+      "^(TestExtAgreesWithGo)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql/printer",
+      "-run",
+      "^(TestPrinterConstructorGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestDocumentedStageZeroGaps|TestClosedEmptyFallbackGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^(TestClosedComparatorGaps|TestNestedConstructorGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers",
+      "-run",
+      "^(TestKnownGapsAreExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "status": "passed after oracle/cache preparation; corrected commands in commands.jsonl",
+    "initial_exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^(TestJsxParserGapIsExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "status": "passed after oracle/cache preparation; corrected commands in commands.jsonl",
+    "initial_exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^(TestDynamicPatternGap|TestOptionDialectGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestArrayGrowthWitness)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/mediaquery",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/suppression",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestCompilerGaps|TestClosedPrefixUpdateValueGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^(TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^(TestLexerGaps|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^(TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/scanner",
+      "-run",
+      "^(TestGapStandsWhereGapsMdSays|TestBigintGapStandsWhereGapsMdSays)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage3/census/tool",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/census/tool",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage3/drivers/parser/probe",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/leakcheck",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^(TestReportedLeakIsRejected|TestCountedBalance)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/boundedrun",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/boundedrun",
+      "-run",
+      "^(TestDeadlineKillsGrandchild)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-admission-delta",
+      "-run",
+      "^(TestClassification|TestDiffCoverage|TestShardPartitionKeepsDiff)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/compilercensus",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/compilercensus",
+      "-run",
+      "^(TestEveryCCompilerRunsThroughNative|TestDependenciesFollowTheMarkers|TestDependenciesCoverTheDeclaredMap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gocacheprog",
+      "-run",
+      "^(TestNoToken)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/productidentity",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/cmd/traced",
+      "-run",
+      "^(TestSettleParsesOnlyAskedCalls)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/buildcache/goplan",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/tracked",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/tracked",
+      "-run",
+      "^(TestChangedNamesEveryDifference)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/toolchain",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./internal/toolchain",
+      "-run",
+      "^(TestAToolsCompilersAreClangUnlessTheCallerNamesOne)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "status": "focused pass or compile-only",
+    "initial_exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/executable",
+      "-run",
+      "^(TestWriteLeavesNoWritableDescriptorForSiblingForksToExec)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./stage3/lane",
+    "status": "manifest passes; Python suites hit deadlines; not rerun",
+    "initial_exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./stage3/lane",
+      "-run",
+      "^(TestShardsMatchManifest|TestApplyPython|TestLanePython)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ]
+  },
+  {
+    "package": "./internal/flow",
+    "status": "core focused checks pass"
+  },
+  {
+    "package": "./internal/ir",
+    "status": "core focused checks pass"
+  },
+  {
+    "package": "./internal/lower",
+    "status": "core focused checks pass"
+  },
+  {
+    "package": "./internal/native",
+    "status": "core focused checks pass"
+  },
+  {
+    "package": "./internal/oracle",
+    "status": "core focused checks pass"
+  },
+  {
+    "package": "./stage3/fixtures",
+    "status": "core focused checks pass"
+  }
+]

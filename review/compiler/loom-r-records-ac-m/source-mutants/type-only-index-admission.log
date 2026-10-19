@@ -1,0 +1,24 @@
+=== RUN   TestRecordForms
+=== PAUSE TestRecordForms
+=== CONT  TestRecordForms
+=== RUN   TestRecordForms/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1};_console.log(String(r.named));
+    records_test.go:23: /tmp/adamic-gate/TestRecordFormsinterface_R_{_keystringnumber_namednumber_2339575361/001/main.a:1:15: Adamic 0.1 refuses an index signature; deliberate mutant
+=== RUN   TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x']));
+    records_test.go:23: /tmp/adamic-gate/TestRecordFormsinterface_R_{_keystring_number_}_const_rR={483147026/001/main.a:1:15: Adamic 0.1 refuses an index signature; deliberate mutant
+=== RUN   TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(','));
+=== RUN   TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1});
+=== RUN   TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent']));
+    records_test.go:23: /tmp/adamic-gate/TestRecordFormsinterface_MapLikeT_{_keystringT_}_const_r2372488827/001/main.a:1:24: Adamic 0.1 refuses an index signature; deliberate mutant
+=== RUN   TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_}
+=== RUN   TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}};
+--- FAIL: TestRecordForms (0.19s)
+    --- FAIL: TestRecordForms/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1};_console.log(String(r.named)); (0.03s)
+    --- FAIL: TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x'])); (0.03s)
+    --- PASS: TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(',')); (0.03s)
+    --- PASS: TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1}); (0.03s)
+    --- FAIL: TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent'])); (0.03s)
+    --- PASS: TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_} (0.03s)
+    --- PASS: TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}}; (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.199s
+FAIL

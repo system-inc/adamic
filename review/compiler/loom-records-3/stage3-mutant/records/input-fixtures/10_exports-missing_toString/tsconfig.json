@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": [],
+    "customConditions": [
+      "toString"
+    ]
+  },
+  "files": [
+    "main.ts"
+  ]
+}

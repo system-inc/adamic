@@ -15,6 +15,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
@@ -353,6 +356,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if err := l.eepPropertyPresence(node); err != nil {
+		return nil, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -592,7 +598,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 	property.View = sourceExpression(node)
 	property.ViewWhere = l.program.Where(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+		property.ViewReceiverTypeID = l.viewReceiverTypeID(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
@@ -693,6 +699,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.detachedOwnCall(node); handled {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
@@ -1243,7 +1252,14 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if err != nil {
 			return nil, true, err
 		}
-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+		callbackType := int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())
+		if !known {
+			callback, callbackType, err = l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
+			if err != nil {
+				return nil, true, err
+			}
+		}
+		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType}, true, nil
 	}
 	if _, isVisit := visits[name]; isVisit {
 		return l.arrayVisit(node, array, element, name)
@@ -1453,7 +1469,11 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{element, ir.Number, ir.Array})
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, CallbackType: callbackType}, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1485,7 +1505,11 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if result != initial.Type() || slotless(result) {
 		return nil, true, l.notYet(node, "reduce to a "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 	}
-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
+	callback, callbackType, err := l.adaptArrayCallback(arguments[0], callback, []ir.Type{result, element, ir.Number, ir.Array})
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType}, true, nil
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
@@ -1793,9 +1817,24 @@ func (l *lowering) arraySort(node *ast.Node, array ir.Expression, element ir.Typ
 		if returns, _ := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); returns != ir.Number {
 			return nil, true, l.notYet(comparator, "a comparator that doesn't return a number")
 		}
-		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(comparator)).Id())}, true, nil
+		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
 	}
 	declared := l.result.Functions[function]
+	if declared.Returns == ir.Number && len(declared.Parameters) == 2 && (l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element) {
+		callback, err := l.expression(comparator)
+		if err != nil {
+			return nil, true, err
+		}
+		callback, callbackType, err := l.adaptArrayCallback(comparator, callback, []ir.Type{element, element})
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.ArraySort{Array: array, Callback: callback, Element: element, CallbackType: callbackType}, true, nil
+	}
 	if declared.Returns != ir.Number || len(declared.Parameters) != 2 || l.result.Locals[declared.Parameters[0]].Type != element || l.result.Locals[declared.Parameters[1]].Type != element {
 		return nil, true, l.notYet(comparator, "a comparator that doesn't take two elements and return a number")
 	}
@@ -1898,7 +1937,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position >= 0 && position < len(elements) {
 			property.ViewTypeID = int(elements[position].Id())
 			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-			property.ViewReceiverTypeID = int(receiver.Id())
+			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
 			property.ViewType = l.checker.TypeToString(elements[position])
 			property.ViewAllowed = l.viewLiterals(elements[position])
 			property.View = sourceExpression(node)

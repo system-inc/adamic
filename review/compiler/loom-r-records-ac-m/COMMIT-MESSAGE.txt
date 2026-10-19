@@ -1,0 +1,28 @@
+Add a-check headers to the pinned records change
+
+Apply 611cbc943a28e88567bcb5fb9a43031518a69d3d on exactly
+dbdf977f5b8b0979d414ebe6f20e7aadd312e309, as requested.
+
+Scan every changed .a, review evidence included, with this compiler and the
+README's unchanged pinned Gate.aCheck. Add 9 measured refusal headers and
+26 checker-code headers. Preserve every program body and counts.md byte.
+
+Advance eight oracle line pins and archived diagnostic positions. As a
+conservative choice, align four already-stale stock CLI positions beneath
+existing headers too. Only measured line numbers change in those records.
+
+All 109 a-check cases, affected readers, header and old-pin mutants, reader
+guard and vet pass. Full commands and per-file status are in
+review/compiler/loom-r-records-ac. No compiler or runtime implementation
+changes beyond the original records commit.
+
+Re-cut onto main 5a94465370ea0172e25aae8c13478e59e40c2bb4 (was e47a602d81b9b0533eb8d85df3df5f45e328cf25 on dbdf977f)
+
+Preserve main JSON preparation, ownership, throws and cycle infrastructure.
+Adapt affected oracle assertions and add direct record runtime witnesses.
+
+Assumptions: preserve the complete old branch basename including -ac; keep
+unsupported record-union metadata refused; retain Linux measured census
+counts from main rather than copying the old count row.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

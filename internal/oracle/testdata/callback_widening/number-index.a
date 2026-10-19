@@ -1,0 +1,1 @@
+console.log([4,5].map((x:number|string,index:number|string):string=>`${x}:${index}`).join(','));

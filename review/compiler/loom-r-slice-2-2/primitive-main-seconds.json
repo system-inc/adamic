@@ -1,0 +1,207 @@
+[
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/version-template",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/version-add",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/declaration-array",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/valueOf-first",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/string-fallback",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/objects-throw",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/noncallable-skipped",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/absent-throw",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/call-throws",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/get-throws",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/lookup-after-mutation",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/undefined-result",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/null-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/boolean-result",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/negative-zero-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/string-result",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/number-hint",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/function-results-throw",
+    "seconds": 0.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/getter-mutates-next",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-false/second-get-throws",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/version-template",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/version-add",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/declaration-array",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/valueOf-first",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/string-fallback",
+    "seconds": 0.05,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/objects-throw",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/noncallable-skipped",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/absent-throw",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/call-throws",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/get-throws",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/lookup-after-mutation",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/undefined-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/null-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/boolean-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/negative-zero-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/string-result",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/number-hint",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/function-results-throw",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/getter-mutates-next",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive/slabs-true/second-get-throws",
+    "seconds": 0.04,
+    "action": "pass"
+  },
+  {
+    "test": "TestOrdinaryToPrimitive",
+    "seconds": 3.95,
+    "action": "pass"
+  }
+]

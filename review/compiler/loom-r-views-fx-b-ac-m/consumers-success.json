@@ -1,0 +1,850 @@
+[
+  {
+    "package": "./bench/regex",
+    "command": [
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.16973036099989258
+  },
+  {
+    "package": "./bridge/tsgo",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.8913291170001685
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "command": [
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.196931976000087
+  },
+  {
+    "package": "./cmd/adamic",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.50397162399986
+  },
+  {
+    "package": "./cmd/adamic-fuzz",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-fuzz",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.11513367499992455
+  },
+  {
+    "package": "./cmd/adamic-gate",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.7208949319992826
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.298971804999383
+  },
+  {
+    "package": "./cmd/adamic-reduce",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-reduce",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.11528492100023868
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.814505650999308
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "command": [
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 1.7766515049997906
+  },
+  {
+    "package": "./internal/flow",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.1316163760002382
+  },
+  {
+    "package": "./internal/fresh",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 1.9212529140004335
+  },
+  {
+    "package": "./internal/fuzz",
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.652019754999856
+  },
+  {
+    "package": "./internal/ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 1.7721867850004855
+  },
+  {
+    "package": "./internal/javascript",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.21603244300058577
+  },
+  {
+    "package": "./internal/leakcheck",
+    "command": [
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.21446645600008196
+  },
+  {
+    "package": "./internal/lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 2.127994151999701
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 43.53161591800017
+  },
+  {
+    "package": "./internal/native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 1.9238833499994143
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/runtimeproducts",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 0.5161505829992166
+  },
+  {
+    "package": "./internal/oracle",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 20.354037153000718
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.648815270999876
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.281713008999759
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.486475755000356
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.6453494339993995
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/formatfiles",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.243555788999402
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.989588703000663
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.934068302999549
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql/printer",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.102053720000185
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.659212778999972
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 7.0022320729995045
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.845085513999948
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.98340947899942
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.844509606000429
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.739196143000299
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.881281058999775
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.694299552000302
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.839018675000261
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 6.402261395000096
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.954945619999307
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/mediaquery",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 4.990524595000352
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.189546917000371
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.092712474999644
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/suppression",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.141162210999937
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.800233081000442
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.501430956999684
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.284791600999597
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.749550663000264
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.388319114000296
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/scanner",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.1845756869997786
+  },
+  {
+    "package": "./stage3/census/tool",
+    "command": [
+      "go",
+      "test",
+      "./stage3/census/tool",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.342524677000256
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "command": [
+      "go",
+      "test",
+      "./stage3/drivers/parser/probe",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 3.3779674600000362
+  },
+  {
+    "package": "./stage3/fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestLowerViews|^TestOracleViews|^TestScalarUnionView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "seconds": 5.337671167000735
+  }
+]

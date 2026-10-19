@@ -1,0 +1,17 @@
+[
+  {
+    "test": "TestParallelSlotPairs/asan",
+    "seconds": 1.37,
+    "action": "pass"
+  },
+  {
+    "test": "TestParallelSlotPairs/release",
+    "seconds": 5.24,
+    "action": "pass"
+  },
+  {
+    "test": "TestParallelSlotPairs",
+    "seconds": 6.61,
+    "action": "pass"
+  }
+]

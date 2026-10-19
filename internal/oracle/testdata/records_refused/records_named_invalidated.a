@@ -1,0 +1,11 @@
+// a-check: refused a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven; snapshot the value before the call, or read and recheck its type after the call
+interface Options {
+    name: string;
+    [key: string]: number | string | undefined;
+}
+const options: Options = { name: "options", value: 1 };
+function replace(): void { options["value"] = "changed"; }
+if (typeof options["value"] === "number") {
+    replace();
+    console.log(`${options["value"] + 1}`);
+}

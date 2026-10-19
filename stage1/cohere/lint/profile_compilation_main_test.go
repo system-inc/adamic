@@ -7,6 +7,7 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
 	"io"
@@ -247,7 +248,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 			})
 			data, err := os.ReadFile(filepath.Join(product, kind))
 			if err == nil {
-				err = os.WriteFile(filepath.Join(directory, kind), data, 0755)
+				err = executable.Write(filepath.Join(directory, kind), data)
 			}
 			if err != nil {
 				t.Error(err)

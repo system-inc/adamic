@@ -1,0 +1,217 @@
+[
+  {
+    "package": "./bench/regex",
+    "pattern": "^$",
+    "compile_only": true
+  },
+  {
+    "package": "./bridge/tsgo",
+    "pattern": "^TestBridgeUnitsCoverEveryPiece$",
+    "compile_only": false
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "pattern": "^TestRuntimeFeaturesMatchNode$",
+    "compile_only": false
+  },
+  {
+    "package": "./cmd/adamic",
+    "pattern": "^TestUsageExitStatus$",
+    "compile_only": false
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "pattern": "^TestOptionalPositionCountsUTF16Surrogates$",
+    "compile_only": false
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "pattern": "^TestAdaptSingletonArrayCallback$",
+    "compile_only": false
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "pattern": "^TestLoweringIsACopy$",
+    "compile_only": false
+  },
+  {
+    "package": "./internal/fuzz",
+    "pattern": "^TestOneSeedOneProgram$",
+    "compile_only": false
+  },
+  {
+    "package": "./internal/javascript",
+    "pattern": "^TestViewMixedUnionSelectsNumber$",
+    "compile_only": false
+  },
+  {
+    "package": "./internal/leakcheck",
+    "pattern": "^TestCountedBalance$",
+    "compile_only": false
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "pattern": "^TestOriginalCycleLedger$",
+    "compile_only": false
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "pattern": "^TestTheJobserverNeverReachesAnArchivesBytes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "pattern": "^TestCompositionMatchesGoUnion$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "pattern": "^TestCSSNumbersAnswerProductsRekey$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "pattern": "^TestMultiPushGap$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "pattern": "^TestAcceptanceMutantsUnion$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "pattern": "^TestExtAgreesWithGo$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "pattern": "^TestPortAnswerPreparedUnitPlan$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "pattern": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "pattern": "^TestPrinterConstructorGap$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "pattern": "^TestJSONClassOrderAnswerKey$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "pattern": "^TestDecodedOptionsAndMutantUnion$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "pattern": "^TestHelperMutantsUnion$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "pattern": "^TestCommentMutantsUnion$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "pattern": "^TestDynamicPatternGap$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "pattern": "^TestCompileProfiles$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "pattern": "^TestCompileProfiles$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "pattern": "^TestCompileProfiles$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "pattern": "^TestCompileProfiles$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "pattern": "^TestArrayGrowthWitness$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "pattern": "^TestDelimiterExpressionMatchesNode$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "pattern": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "pattern": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "pattern": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "pattern": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "pattern": "^TestClosedOptionalBooleanFunctionGap$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "pattern": "^TestSixShardUnionRejectsLossAndDuplication$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "pattern": "^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "pattern": "^TestComposeMatchGoUnion$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "pattern": "^TestCompilerShardsHoldEveryFileOnce$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "pattern": "^TestGapStandsWhereGapsMdSays$",
+    "compile_only": false
+  },
+  {
+    "package": "./stage3/census/tool",
+    "pattern": "^$",
+    "compile_only": true
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "pattern": "^$",
+    "compile_only": true
+  }
+]

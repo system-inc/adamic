@@ -919,3 +919,13 @@ func TestCompilerAndStage1Agree_6564_27(t *testing.T) {
 	t.Parallel()
 	compilerAgreementSubShard(t, 6564, 27)
 }
+
+func TestCompilerAndStage1Agree_CheckerSanitized_no_useless_rename(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "no-useless-rename")
+}
+
+func TestCompilerAndStage1Agree_CheckerSanitized_default_param_last(t *testing.T) {
+	t.Parallel()
+	compilerAgreementCheckerSanitized(t, "default-param-last")
+}

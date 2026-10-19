@@ -1,0 +1,352 @@
+[
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningLibraryMap",
+    "after": "TestFlowCallbackWideningLibraryMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberCapture",
+    "after": "TestFlowCallbackWideningNumberCapture"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberEvery",
+    "after": "TestFlowCallbackWideningNumberEvery"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFilter",
+    "after": "TestFlowCallbackWideningNumberFilter"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFind",
+    "after": "TestFlowCallbackWideningNumberFind"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFindIndex",
+    "after": "TestFlowCallbackWideningNumberFindIndex"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFindLast",
+    "after": "TestFlowCallbackWideningNumberFindLast"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberForEach",
+    "after": "TestFlowCallbackWideningNumberForEach"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberGeneric",
+    "after": "TestFlowCallbackWideningNumberGeneric"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberIndex",
+    "after": "TestFlowCallbackWideningNumberIndex"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberMap",
+    "after": "TestFlowCallbackWideningNumberMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberNamedSort",
+    "after": "TestFlowCallbackWideningNumberNamedSort"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberReduceAccumulator",
+    "after": "TestFlowCallbackWideningNumberReduceAccumulator"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberReduce",
+    "after": "TestFlowCallbackWideningNumberReduce"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberSome",
+    "after": "TestFlowCallbackWideningNumberSome"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberSort",
+    "after": "TestFlowCallbackWideningNumberSort"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberThrow",
+    "after": "TestFlowCallbackWideningNumberThrow"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberToSorted",
+    "after": "TestFlowCallbackWideningNumberToSorted"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectEvery",
+    "after": "TestFlowCallbackWideningObjectEvery"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectFilter",
+    "after": "TestFlowCallbackWideningObjectFilter"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectFind",
+    "after": "TestFlowCallbackWideningObjectFind"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectForEach",
+    "after": "TestFlowCallbackWideningObjectForEach"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectGeneric",
+    "after": "TestFlowCallbackWideningObjectGeneric"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectMap",
+    "after": "TestFlowCallbackWideningObjectMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectReduce",
+    "after": "TestFlowCallbackWideningObjectReduce"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectSome",
+    "after": "TestFlowCallbackWideningObjectSome"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectSort",
+    "after": "TestFlowCallbackWideningObjectSort"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberGenericMap",
+    "after": "TestFlowCallbackWideningNumberGenericMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectGenericMap",
+    "after": "TestFlowCallbackWideningObjectGenericMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberArguments",
+    "after": "TestFlowCallbackWideningNumberArguments"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningBooleanMap",
+    "after": "TestFlowCallbackWideningBooleanMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningStringMap",
+    "after": "TestFlowCallbackWideningStringMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningOptionalNumberMap",
+    "after": "TestFlowCallbackWideningOptionalNumberMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningNullableObjectMap",
+    "after": "TestFlowCallbackWideningNullableObjectMap"
+  },
+  {
+    "path": "internal/flow/callback_widening_test.go",
+    "before": "TestCallbackWideningOptionalObjectMap",
+    "after": "TestFlowCallbackWideningOptionalObjectMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningLibraryMap",
+    "after": "TestFreshCallbackWideningLibraryMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberCapture",
+    "after": "TestFreshCallbackWideningNumberCapture"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberEvery",
+    "after": "TestFreshCallbackWideningNumberEvery"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFilter",
+    "after": "TestFreshCallbackWideningNumberFilter"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFind",
+    "after": "TestFreshCallbackWideningNumberFind"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFindIndex",
+    "after": "TestFreshCallbackWideningNumberFindIndex"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberFindLast",
+    "after": "TestFreshCallbackWideningNumberFindLast"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberForEach",
+    "after": "TestFreshCallbackWideningNumberForEach"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberGeneric",
+    "after": "TestFreshCallbackWideningNumberGeneric"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberIndex",
+    "after": "TestFreshCallbackWideningNumberIndex"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberMap",
+    "after": "TestFreshCallbackWideningNumberMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberNamedSort",
+    "after": "TestFreshCallbackWideningNumberNamedSort"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberReduceAccumulator",
+    "after": "TestFreshCallbackWideningNumberReduceAccumulator"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberReduce",
+    "after": "TestFreshCallbackWideningNumberReduce"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberSome",
+    "after": "TestFreshCallbackWideningNumberSome"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberSort",
+    "after": "TestFreshCallbackWideningNumberSort"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberThrow",
+    "after": "TestFreshCallbackWideningNumberThrow"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberToSorted",
+    "after": "TestFreshCallbackWideningNumberToSorted"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectEvery",
+    "after": "TestFreshCallbackWideningObjectEvery"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectFilter",
+    "after": "TestFreshCallbackWideningObjectFilter"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectFind",
+    "after": "TestFreshCallbackWideningObjectFind"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectForEach",
+    "after": "TestFreshCallbackWideningObjectForEach"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectGeneric",
+    "after": "TestFreshCallbackWideningObjectGeneric"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectMap",
+    "after": "TestFreshCallbackWideningObjectMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectReduce",
+    "after": "TestFreshCallbackWideningObjectReduce"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectSome",
+    "after": "TestFreshCallbackWideningObjectSome"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectSort",
+    "after": "TestFreshCallbackWideningObjectSort"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberGenericMap",
+    "after": "TestFreshCallbackWideningNumberGenericMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningObjectGenericMap",
+    "after": "TestFreshCallbackWideningObjectGenericMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNumberArguments",
+    "after": "TestFreshCallbackWideningNumberArguments"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningBooleanMap",
+    "after": "TestFreshCallbackWideningBooleanMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningStringMap",
+    "after": "TestFreshCallbackWideningStringMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningOptionalNumberMap",
+    "after": "TestFreshCallbackWideningOptionalNumberMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningNullableObjectMap",
+    "after": "TestFreshCallbackWideningNullableObjectMap"
+  },
+  {
+    "path": "internal/fresh/callback_widening_test.go",
+    "before": "TestCallbackWideningOptionalObjectMap",
+    "after": "TestFreshCallbackWideningOptionalObjectMap"
+  }
+]

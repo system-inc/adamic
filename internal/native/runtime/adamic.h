@@ -1042,7 +1042,9 @@ adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
 extern _Thread_local adamic_object *adamic_thrown;
+// NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
+const char *adamic_error_field_name(const adamic_object *object, const char *name);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
@@ -1227,5 +1229,8 @@ void *adamic_library_identity(size_t index);
 #define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
 #endif
 #endif
+// Library host contracts, also needed by the generated entry point.
+#include "host_runtime.h"
+
 
 #endif

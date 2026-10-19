@@ -1,0 +1,10 @@
+=== RUN   TestSplitSelfCompareAgreesWithNode
+=== PAUSE TestSplitSelfCompareAgreesWithNode
+=== CONT  TestSplitSelfCompareAgreesWithNode
+    units_self_compare_test.go:53: native: <nil>
+        got "closure: true false\nobject: true false\narray: true false\nstring: true false\nboolean: true false\nNaN: true false\n-0: true false\n1: true false\nzero: true\nstring value: true\ndistinct: false\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n"
+        Node "closure: true false\nobject: true false\narray: true false\nstring: true false\nboolean: true false\nNaN: false true\n-0: true false\n1: true false\nzero: true\nstring value: true\ndistinct: false\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\nfalse\n"
+--- FAIL: TestSplitSelfCompareAgreesWithNode (1.22s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.228s
+FAIL

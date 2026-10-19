@@ -1,0 +1,32 @@
+[
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow.a",
+    "before": "class Box {",
+    "after": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "body_sha256": "0b73c3be31199b71ffa6c43fc0e0bdb772c5b4e1cf311891c6be07ba72db9304"
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a_refused/d7054e9_this_arrow_number.a",
+    "before": "class Counter {",
+    "after": "// a-check: refused this escaping a constructor through a closure before every field is set",
+    "body_sha256": "97c6f97e02e1ecf18e389a2cdd0fcf47488748c383c5c5cbc10ea45f2d58b75c"
+  },
+  {
+    "path": "stage3/fixtures/self-compare/array-fill.a",
+    "before": "// a-check: compile",
+    "after": "function run() {",
+    "body_sha256": "7e93d34c2dacc9af4a69cb57e4e872c3d8abeb6b525cb54e411eff196f21aee5"
+  },
+  {
+    "path": "stage3/fixtures/self-compare/closure.a",
+    "before": "// a-check: compile",
+    "after": "function run() {",
+    "body_sha256": "94b96bff32889feadcb046e0eaa7095375b4371a13cc78e416763cb31f2cbd06"
+  },
+  {
+    "path": "stage3/fixtures/self-compare/sweep.a",
+    "before": "// a-check: compile",
+    "after": "function compareNumber(label: string, value: number) {",
+    "body_sha256": "775ef63db129757536ceb18596e1397cc97b4a34d3af62f78454451601727aec"
+  }
+]

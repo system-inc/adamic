@@ -1,3 +1,4 @@
+// a-check: refused view member read by element access is not yet checked
 // A wrong view's function-valued field called through a string-literal key.
 interface Holder { readonly kind: 'Holder'; readonly compute: (value: number) => number; }
 const raw = { kind: 'Holder' as const, compute: (value: string): number => value.length };

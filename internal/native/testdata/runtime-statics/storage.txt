@@ -54,6 +54,10 @@
 `directory.c:ok_kind:1`
 `directory.c:other_type:1`
 `exceptions.c:adamic_thrown:1`
+# empty_message is an immortal ADAMIC_STRING literal (references=0). Retain/release and share
+# leave it unchanged; string_index.c excludes immortal literals from units/index cache writes.
+# It has no mutable shared state and requires neither a lock nor thread-local storage.
+`exceptions.c:empty_message:1`
 `exceptions.c:error_name:1`
 `exceptions.c:message_cache:1`
 `exceptions.c:name_cache:1`
@@ -71,6 +75,19 @@
 `heap_parallel.h:chunk_pages:1`
 `heap_parallel.h:owner_number:1`
 `heap_parallel.h:thread_count:1`
+`host_runtime.c:backing_bytes:1`
+`host_runtime.c:eol:1`
+`host_runtime.c:epoch_origin:1`
+`host_runtime.c:exit_lock:1`
+`host_runtime.c:exit_present:1`
+`host_runtime.c:exit_value:1`
+`host_runtime.c:identity_bytes:1`
+`host_runtime.c:identity_error:1`
+`host_runtime.c:identity_length:1`
+`host_runtime.c:identity_saved:1`
+`host_runtime.c:monotonic_origin:1`
+`host_runtime.c:saved_count:1`
+`host_runtime.c:saved_values:1`
 `ieee754.c:huge:1`
 `ieee754.c:huge:2`
 `ieee754.c:huge:3`
@@ -118,6 +135,8 @@
 `parallel.c:visits:1`
 `parallel.c:worker_index:1`
 `parallel.c:workers:1`
+# Atomic test/embedding mode; matcher calls hold their own regular state.
+`regexp.c:regex_regular_mode:1`
 `regexp.c:regex_step_limit:1`
 `runtime-file:adamic.c`
 `runtime-file:adamic.h`
@@ -142,6 +161,8 @@
 `runtime-file:from_codes.c`
 `runtime-file:heap.c`
 `runtime-file:heap_parallel.h`
+`runtime-file:host_runtime.c`
+`runtime-file:host_runtime.h`
 `runtime-file:hypot.c`
 `runtime-file:ieee754.c`
 `runtime-file:input.c`
@@ -175,6 +196,8 @@
 `runtime-file:regexp.h`
 `runtime-file:regexp_fold.h`
 `runtime-file:regexp_replace.c`
+# Regular matcher has automatic per-call state and no mutable static storage.
+`runtime-file:regexp_regular.c`
 `runtime-file:region.c`
 `runtime-file:set.c`
 `runtime-file:share.c`
@@ -248,3 +271,16 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+
+# Runtime compiler storage is per parse/compile arena; generated tables are const.
+`runtime-file:regexp_compile.h`
+`runtime-file:regexp_compile_bytecode.c`
+`runtime-file:regexp_compile_bytecode.h`
+`runtime-file:regexp_compile_parser.c`
+`runtime-file:regexp_compile_parser.h`
+`runtime-file:regexp_compile_properties.c`
+`runtime-file:regexp_compile_sets.c`
+`runtime-file:regexp_compile_sets.h`
+`runtime-file:regexp_compile_tables.h`
+`runtime-file:regexp_compile_v8.c`
+`runtime-file:regexp_compile_v8.h`

@@ -1,0 +1,31 @@
+=== RUN   TestJSONRecordsRuntimePreparedValues
+=== PAUSE TestJSONRecordsRuntimePreparedValues
+=== RUN   TestJSONRecordsRuntimePrepareMutant
+=== PAUSE TestJSONRecordsRuntimePrepareMutant
+=== RUN   TestJSONRecordsRuntimeOwnershipMutant
+=== PAUSE TestJSONRecordsRuntimeOwnershipMutant
+=== RUN   TestJSONRecordsRuntimeThrowCleanupMutant
+=== PAUSE TestJSONRecordsRuntimeThrowCleanupMutant
+=== RUN   TestJSONRecordsRuntimeCycleGuard
+=== PAUSE TestJSONRecordsRuntimeCycleGuard
+=== CONT  TestJSONRecordsRuntimePreparedValues
+=== CONT  TestJSONRecordsRuntimeThrowCleanupMutant
+=== CONT  TestJSONRecordsRuntimeCycleGuard
+=== CONT  TestJSONRecordsRuntimeOwnershipMutant
+=== NAME  TestJSONRecordsRuntimePreparedValues
+    json_records_runtime_test.go:90: adamic: counts: allocations 14 frees 14 retains 14 releases 16 peak 11 regions 0
+--- PASS: TestJSONRecordsRuntimePreparedValues (1.82s)
+=== CONT  TestJSONRecordsRuntimePrepareMutant
+=== NAME  TestJSONRecordsRuntimeOwnershipMutant
+    json_records_runtime_test.go:100: ownership mutant caught by allocation/free balance or LeakSanitizer
+--- PASS: TestJSONRecordsRuntimeOwnershipMutant (1.89s)
+=== NAME  TestJSONRecordsRuntimeThrowCleanupMutant
+    json_records_runtime_test.go:105: ownership mutant caught by allocation/free balance or LeakSanitizer
+--- PASS: TestJSONRecordsRuntimeThrowCleanupMutant (1.94s)
+--- PASS: TestJSONRecordsRuntimeCycleGuard (2.29s)
+=== NAME  TestJSONRecordsRuntimePrepareMutant
+    json_records_runtime_test.go:95: adamic: counts: allocations 13 frees 13 retains 9 releases 11 peak 10 regions 0
+    json_records_runtime_test.go:95: skipped preparation: clean sanitizers and counts; caught by source Node
+--- PASS: TestJSONRecordsRuntimePrepareMutant (0.57s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	2.392s

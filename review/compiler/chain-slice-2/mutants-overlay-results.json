@@ -1,0 +1,208 @@
+[
+  {
+    "mutant": "error-spread",
+    "exit": 1,
+    "caught": true,
+    "seconds": 40.022,
+    "markers": [
+      "want path-bearing stop"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-error-spread/overlay.json",
+      "-run",
+      "^TestMiscompile2A(ErrorSpread|ErrorSubclassSpread)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "maybe-setter",
+    "exit": 1,
+    "caught": true,
+    "seconds": 29.915,
+    "markers": [
+      "want path-bearing stop"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-maybe-setter/overlay.json",
+      "-run",
+      "^TestMiscompile2AMaybeSetter$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "long-name",
+    "exit": 1,
+    "caught": true,
+    "seconds": 29.073,
+    "markers": [
+      "want path-bearing stop"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-long-name/overlay.json",
+      "-run",
+      "^TestMiscompile2ALongName$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "computed-name",
+    "exit": 1,
+    "caught": true,
+    "seconds": 30.601,
+    "markers": [
+      "panic: Unhandled case in Node.Text"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-computed-name/overlay.json",
+      "-run",
+      "^TestMiscompile2A(DerivedSymbol|OverrideSource)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "constructor-capture",
+    "exit": 1,
+    "caught": true,
+    "seconds": 51.013,
+    "markers": [
+      "want path-bearing stop"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-constructor-capture/overlay.json",
+      "-run",
+      "^TestMiscompile2A(ConstructorArrow|ConstructorNumberArrow)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "optional-error",
+    "exit": 1,
+    "caught": true,
+    "seconds": 85.307,
+    "markers": [
+      "member access within null pointer"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-optional-error/overlay.json",
+      "-run",
+      "^TestMiscompile2A(OptionalError|MarkerUndefined)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "error-own-message",
+    "exit": 1,
+    "caught": true,
+    "seconds": 27.105,
+    "markers": [
+      "native ",
+      "Node "
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-error-own-message/overlay.json",
+      "-run",
+      "^TestErrorUndefinedMessageHasNoOwnProperty$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "method-views",
+    "exit": 1,
+    "caught": true,
+    "seconds": 18.924,
+    "markers": [
+      "both backends unexpectedly admit the pinned view NotYet",
+      "release: exit=0 stdout=\"t1 none",
+      "release: stdout differs",
+      "AddressSanitizer"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-method-views/overlay.json",
+      "-run",
+      "^TestWeakDifferential(ViewMethodParameter|ViewMethod)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "union-liveness",
+    "exit": 1,
+    "caught": true,
+    "seconds": 15.788,
+    "markers": [
+      "release: exit codes differ",
+      "sanitized: exit codes differ",
+      "runtime error: member access within null pointer"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-union-liveness/overlay.json",
+      "-run",
+      "^TestWeakDifferentialUnionNarrowed$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ]
+  },
+  {
+    "mutant": "weak-callback",
+    "exit": 1,
+    "caught": true,
+    "seconds": 16.359,
+    "markers": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay=/workspace/adamic/review/compiler/chain-slice-2/overlay-weak-callback/overlay.json",
+      "-run",
+      "^TestWeakDifferential(Each|Find|Map|Reduce|Some|Sort)$",
+      "-count=1",
+      "-v",
+      "-timeout=90s"
+    ],
+    "catcher": "Exact weak NotYet pins reject the different callback-widening refusal on all six witnesses.",
+    "runtime_reproduction": "Isolated member: ASan heap-buffer-overflow, unexpected admission, and sanitized exit mismatch caught on all six original witnesses."
+  }
+]

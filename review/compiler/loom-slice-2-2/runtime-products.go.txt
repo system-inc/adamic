@@ -1,0 +1,93 @@
+package main
+
+import (
+ "context"
+ "crypto/sha256"
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "github.com/system-inc/adamic/internal/buildcache/location"
+ "time"
+ "strings"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+ "github.com/system-inc/adamic/internal/buildcache"
+ "github.com/system-inc/adamic/internal/native"
+)
+
+func main() {
+ name := os.Args[1]
+ options := native.Options{}
+ switch name { case "sanitized": options.Sanitize = true; case "counted": options.Count = true; case "release": default: panic("unknown option") }
+ sets := [][]string{
+  nil,
+  {"ADAMIC_CLOSURE_CONVENTION"},
+  {"ADAMIC_CANONICAL_CLOSURES"},
+  {"ADAMIC_CLOSURE_RECEIVERS"},
+  {"ADAMIC_REGEXP_REPLACE_CALLBACK"},
+  {"ADAMIC_NODE_HOST"},
+  {"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES"},
+  {"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_RECEIVERS"},
+  {"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"},
+  {"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"},
+  {"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"},
+ }
+ if len(os.Args) > 2 && os.Args[2] == "base" { sets = sets[:1] }
+ if len(os.Args) > 2 && os.Args[2] == "slice" {
+  kept := sets[:0]
+  for _, set := range sets {
+   skip := false
+   for _, feature := range set { skip = skip || feature == "ADAMIC_REGEXP_REPLACE_CALLBACK" || feature == "ADAMIC_NODE_HOST" }
+   if !skip { kept = append(kept, set) }
+  }
+  sets = kept
+ }
+
+ if len(os.Args) > 2 && strings.HasPrefix(os.Args[2], "witness=") {
+  sets = nil
+  seen := map[string]bool{}
+  for _, path := range strings.Split(strings.TrimPrefix(os.Args[2], "witness="), ",") {
+   program, err := load.Load([]string{path}); if err != nil { panic(err) }
+   lowered, err := lower.Lower(context.Background(), program); if err != nil { panic(err) }
+   features := native.Features(native.C(lowered))
+   key := strings.Join(features, "+")
+   if !seen[key] { seen[key] = true; sets = append(sets, features) }
+  }
+ }
+ for _, features := range sets {
+  start := time.Now()
+  request, err := native.RuntimeRequestFor(options, features...)
+  if err != nil { panic(err) }
+  inputs := buildcache.Inputs{
+   Name: "native-runtime",
+   Files: []string{"internal/native/runtime", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"},
+   Flags: request.Portable,
+   Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
+  }
+  held, err := buildcache.Get(inputs, func(directory string) error { return request.Build(directory, 4) })
+  if err == nil { err = publishNativeCache(held, request.Parts) }
+  row := map[string]any{"option": name, "features": features, "seconds": time.Since(start).Seconds(), "error": err}
+  data, _ := json.Marshal(row); fmt.Println(string(data))
+  if err != nil { os.Exit(1) }
+ }
+}
+
+// RuntimeRequest exposes native's complete key parts. Preserve the same length-prefixed
+// key from internal/native/library.go when warming the standalone native cache too.
+func publishNativeCache(held string, parts []string) error {
+ hash := sha256.New()
+ fmt.Fprintf(hash, "%d:", len(parts))
+ for _, part := range parts { fmt.Fprintf(hash, "%d:", len(part)); hash.Write([]byte(part)) }
+ cache, err := location.BuildCache()
+ if err != nil { return err }
+ parent := filepath.Join(cache, "native-runtime")
+ destination := filepath.Join(parent, fmt.Sprintf("%x", hash.Sum(nil)))
+ if info, err := os.Stat(filepath.Join(destination, "runtime.a")); err == nil && info.Mode().IsRegular() { return nil }
+ if err := os.MkdirAll(parent, 0755); err != nil { return err }
+ temporary, err := os.MkdirTemp(parent, ".slice2-warm-")
+ if err != nil { return err }
+ defer os.RemoveAll(temporary)
+ if err := os.CopyFS(temporary, os.DirFS(held)); err != nil { return err }
+ return os.Rename(temporary, destination)
+}

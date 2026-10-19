@@ -1,0 +1,52 @@
+[
+  {
+    "log": "newest-main-packages.log",
+    "Time": "2026-10-18T23:22:03.974375323Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+    "Elapsed": 1.54
+  },
+  {
+    "log": "newest-main-packages.log",
+    "Time": "2026-10-18T23:23:22.999294729Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Elapsed": 66.907
+  },
+  {
+    "log": "newest-main-packages.log",
+    "Time": "2026-10-18T23:23:23.513794172Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/javascript",
+    "Elapsed": 0.15
+  },
+  {
+    "log": "newest-main-packages.log",
+    "Time": "2026-10-18T23:31:56.359191376Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Elapsed": 506.236
+  },
+  {
+    "log": "newest-main-packages.log",
+    "Time": "2026-10-18T23:31:56.427883464Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Elapsed": 0,
+    "FailedBuild": "github.com/system-inc/adamic/internal/native [github.com/system-inc/adamic/internal/native.test]"
+  },
+  {
+    "log": "newest-main-native.log",
+    "Time": "2026-10-18T23:39:02.14715587Z",
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Elapsed": 381.709
+  },
+  {
+    "log": "newest-main-gcc-toolchain.log",
+    "Time": "2026-10-18T23:40:18.088150269Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Elapsed": 5.066
+  }
+]

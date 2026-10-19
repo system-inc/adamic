@@ -1,0 +1,74 @@
+[
+  {
+    "label": "node",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "internal/oracle/testdata/callback_widening/nullable-object-map.a"
+    ],
+    "exit": 0,
+    "stdout": "1,null\n",
+    "stderr": "",
+    "seconds": 0.8499682620004023
+  },
+  {
+    "label": "release-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/adamic-slice2-nullable-mutant",
+      "build",
+      "internal/oracle/testdata/callback_widening/nullable-object-map.a",
+      "-o",
+      "/tmp/adamic-slice2-nullable-release"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 7.082518035999783
+  },
+  {
+    "label": "release",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/adamic-slice2-nullable-release"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+    "seconds": 0.008025456999348535
+  },
+  {
+    "label": "sanitized-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/adamic-slice2-nullable-mutant",
+      "build",
+      "internal/oracle/testdata/callback_widening/nullable-object-map.a",
+      "-o",
+      "/tmp/adamic-slice2-nullable-sanitized",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 10.030130465999719
+  },
+  {
+    "label": "sanitized",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/adamic-slice2-nullable-sanitized"
+    ],
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+    "seconds": 0.1026728209999419
+  }
+]

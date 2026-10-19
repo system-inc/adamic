@@ -267,6 +267,9 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 	if err != nil {
 		return nil, err
 	}
+	if err := l.refuseIncompatibleDestructuredView(pattern, initializer); err != nil {
+		return nil, err
+	}
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: value.Type(), Function: l.functionIndex})
 	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
@@ -353,6 +356,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
 		value.View = sourceExpression(binding) + " (field " + field + ")"
+		value.ViewReceiverTypeID = l.viewReceiverTypeID(destructured)
+		value.ViewTypeID = int(fieldType.Id())
+		value.ViewWhere = l.program.Where(binding)
 		value.ViewType = l.checker.TypeToString(fieldType)
 		value.ViewAllowed = l.viewLiterals(fieldType)
 		statements = append(statements, l.initializeLocal(local, value)...)

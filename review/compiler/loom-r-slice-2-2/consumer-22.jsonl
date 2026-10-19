@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T08:49:54.248739698Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-18T08:49:54.259091184Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion"}
+{"Time":"2026-10-18T08:49:54.259164874Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion","Output":"=== RUN   TestHelperMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:54.25919589Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion","Output":"=== PAUSE TestHelperMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:54.259198253Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion"}
+{"Time":"2026-10-18T08:49:54.259200597Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion"}
+{"Time":"2026-10-18T08:49:54.259202309Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion","Output":"=== CONT  TestHelperMutantsUnion\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:56.081132451Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion","Output":"    helper_mutants_test.go:228: union: 4 mutants x 29399 cases = 117596 unique pairs\n"}
+{"Time":"2026-10-18T08:49:56.081341402Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion","Output":"--- PASS: TestHelperMutantsUnion (1.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:56.081353319Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutantsUnion","Elapsed":1.82}
+{"Time":"2026-10-18T08:49:56.081374421Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:49:56.083746954Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/helpers\t1.829s\n"}
+{"Time":"2026-10-18T08:49:56.083779352Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Elapsed":1.835}

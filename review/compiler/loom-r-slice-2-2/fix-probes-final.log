@@ -1,0 +1,2 @@
+{"mutant": "immortal-units-write", "caught": true, "exit": 1, "seconds": 13.387, "command": ["timeout", "180", "go", "test", "./internal/native", "-run", "^TestErrorUndefinedMessageHasNoOwnProperty$", "-count=1", "-v", "-timeout=90s", "-overlay=/workspace/adamic/review/compiler/loom-r-slice-2-2/fix-mutants/immortal-units-write/overlay.json"], "marker": "exit status 4"}
+Live header probes caught: 6

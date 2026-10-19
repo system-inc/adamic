@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T08:48:21.21393067Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilerinputs"}
+{"Time":"2026-10-18T08:48:21.218605921Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T08:48:21.218684077Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== RUN   TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:48:21.218710226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== PAUSE TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:48:21.21871289Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T08:48:21.218715354Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy"}
+{"Time":"2026-10-18T08:48:21.218716836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"=== CONT  TestLoweringIsACopy\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:48:21.218722755Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Output":"--- PASS: TestLoweringIsACopy (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:48:21.218725489Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Test":"TestLoweringIsACopy","Elapsed":0}
+{"Time":"2026-10-18T08:48:21.218735724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:48:21.218766705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilerinputs\t0.005s\n"}
+{"Time":"2026-10-18T08:48:21.218787125Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Elapsed":0.005}

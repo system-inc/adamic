@@ -1,0 +1,39 @@
+=== RUN   TestCallbackWideningNumberEveryRelease
+=== PAUSE TestCallbackWideningNumberEveryRelease
+=== RUN   TestCallbackWideningNumberEverySanitized
+=== PAUSE TestCallbackWideningNumberEverySanitized
+=== CONT  TestCallbackWideningNumberEveryRelease
+=== CONT  TestCallbackWideningNumberEverySanitized
+=== NAME  TestCallbackWideningNumberEveryRelease
+    callback_widening_test.go:46: native: exit codes differ; stdout "" stderr "" exit -1
+--- FAIL: TestCallbackWideningNumberEveryRelease (5.14s)
+=== NAME  TestCallbackWideningNumberEverySanitized
+    callback_widening_test.go:51: exit 1
+        AddressSanitizer:DEADLYSIGNAL
+        =================================================================
+        ==19105==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x562d6a007082 bp 0x7ffd0b8f8c90 sp 0x7ffd0b8f8c50 T0)
+        ==19105==The signal is caused by a READ memory access.
+        ==19105==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+            #0 0x562d6a007082  (/tmp/adamic-gate/TestCallbackWideningNumberEverySanitized1746887160/001/program+0x146082)
+            #1 0x562d6a006e80  (/tmp/adamic-gate/TestCallbackWideningNumberEverySanitized1746887160/001/program+0x145e80)
+            #2 0x562d6a006ca4  (/tmp/adamic-gate/TestCallbackWideningNumberEverySanitized1746887160/001/program+0x145ca4)
+            #3 0x7fb3875ebca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x7fb3875ebd64  (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #5 0x562d69f20540  (/tmp/adamic-gate/TestCallbackWideningNumberEverySanitized1746887160/001/program+0x5f540)
+        
+        ==19105==Register values:
+        rax = 0x07fe000000000001  rbx = 0x3ff0000000000000  rcx = 0x00000f7c70cfc000  rdx = 0x00007be3867e0040  
+        rdi = 0x3ff000000000000c  rsi = 0x3ff0000000000000  rbp = 0x00007ffd0b8f8c90  rsp = 0x00007ffd0b8f8c50  
+         r8 = 0x00007c13867e0020   r9 = 0x00007c13867e0030  r10 = 0x00000f8270cfc006  r11 = 0x0000000000000003  
+        r12 = 0x00000ff670eb7bf7  r13 = 0xfffffffffffffff8  r14 = 0x00007fb3875bdfb8  r15 = 0x0000000000000000  
+        AddressSanitizer can not provide additional info.
+        SUMMARY: AddressSanitizer: SEGV (/tmp/adamic-gate/TestCallbackWideningNumberEverySanitized1746887160/001/program+0x146082) 
+        ==19105==ABORTING
+        
+--- FAIL: TestCallbackWideningNumberEverySanitized (5.31s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.338s
+FAIL

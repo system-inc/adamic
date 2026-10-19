@@ -1,0 +1,14 @@
+[
+  {
+    "file": "internal/lower/interface_cast.go",
+    "merge_exit": 0,
+    "keeps_A_guard": true,
+    "keeps_B_receiver_keys": true
+  },
+  {
+    "file": "internal/lower/element_access_fields.go",
+    "merge_exit": 0,
+    "keeps_A_guard": true,
+    "keeps_B_receiver_keys": null
+  }
+]
