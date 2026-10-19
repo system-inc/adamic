@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -15,12 +16,10 @@ import (
 // left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
 // TestWASIAgreesWithNode runs these fixtures under node:wasi.
 var shimFileFixtures = map[string]bool{
-	"internal/oracle/testdata/closure_convention_host24.a":  true,
 	"internal/oracle/testdata/unknown_narrowing_host.a":     true,
 	"internal/oracle/testdata/write_stdout_order.a":         true,
 	"internal/oracle/testdata/write_stderr_order.a":         true,
 	"internal/oracle/testdata/prompt_then_read.a":           true,
-	"internal/oracle/testdata/node_fs_rm_options.a":         true,
 	"internal/oracle/testdata/node_options_const_capture.a": true,
 	"internal/oracle/testdata/node_options_widening.a":      true,
 }
@@ -51,6 +50,12 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 			}
 			binary := filepath.Join(t.TempDir(), "program.wasm")
 			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+				// A fixture wasm32 refuses by name (buildWASI's rule) has no module to inventory or run.
+				var refused *native.TargetRefused
+				if errors.As(err, &refused) {
+					skipped++
+					t.Skipf("target refusal: %v", refused)
+				}
 				t.Fatal(err)
 			}
 			inventory := execute(t, "node", "-e", `const fs=require('node:fs'); const m=new WebAssembly.Module(fs.readFileSync(process.argv[1])); console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
