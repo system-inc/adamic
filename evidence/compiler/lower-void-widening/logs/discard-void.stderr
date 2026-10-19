@@ -1,0 +1,9 @@
+
+=================================================================
+==70028==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 223 byte(s) in 3 object(s) allocated from:
+    #0 0x55aa8d5da354 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+    #1 0x55aa8d634baf in adamic_allocate /adamic-runtime/heap.c:250:10
+
+SUMMARY: AddressSanitizer: 223 byte(s) leaked in 3 allocation(s).

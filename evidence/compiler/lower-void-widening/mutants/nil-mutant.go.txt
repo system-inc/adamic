@@ -1,0 +1,39 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// A void call has already discarded its result. No runtime check can recover it
+// when another view of the function promises a value, even through a union.
+func (l *lowering) refuseVoidWidening(node *ast.Node) error { return nil }
+
+func (l *lowering) onlyVoidCalls(source *checker.Type) bool {
+	signatures := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
+	if len(signatures) == 0 {
+		return false
+	}
+	for _, signature := range signatures {
+		if l.checker.GetReturnTypeOfSignature(signature).Flags() != checker.TypeFlagsVoid {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) hasWiderVoidCall(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if l.hasWiderVoidCall(member) {
+				return true
+			}
+		}
+	}
+	for _, signature := range l.checker.GetSignaturesOfType(target, checker.SignatureKindCall) {
+		if l.checker.GetReturnTypeOfSignature(signature).Flags() != checker.TypeFlagsVoid {
+			return true
+		}
+	}
+	return false
+}

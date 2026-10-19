@@ -1,0 +1,9 @@
+function text(): string {
+ return ['kept', 'value'].join(' ');
+}
+const discard: () => void = text;
+discard();
+function accept(callback: () => void): void { callback(); }
+accept((): string => ['arrow', 'value'].join(' '));
+accept(text);
+console.log('discarded');

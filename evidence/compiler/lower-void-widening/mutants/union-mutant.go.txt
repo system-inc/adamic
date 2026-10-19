@@ -1,0 +1,122 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// A void call has already discarded its result. No runtime check can recover it
+// when another view of the function promises a value, even through a union.
+func (l *lowering) refuseVoidWidening(node *ast.Node) error {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+		return nil
+	}
+	site := node
+	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+		site = site.Parent
+	}
+	parent := site.Parent
+	if parent == nil {
+		return nil
+	}
+	source := l.checker.GetTypeAtLocation(node)
+	var target *checker.Type
+	name := "relation"
+	if viewSite(node) {
+		target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	}
+	switch parent.Kind {
+	case ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration:
+		name = "initializer"
+	case ast.KindBinaryExpression:
+		name = "assignment"
+	case ast.KindReturnStatement, ast.KindArrowFunction:
+		name = "return"
+	case ast.KindPropertyAssignment:
+		name = "object field"
+	case ast.KindShorthandPropertyAssignment:
+		name = "object field"
+		if symbol := l.checker.GetShorthandAssignmentValueSymbol(parent); symbol != nil {
+			source = l.checker.GetTypeOfSymbol(symbol)
+		}
+		if object := l.checker.GetContextualType(parent.Parent, checker.ContextFlagsNone); object != nil {
+			target = l.checker.GetTypeOfPropertyOfType(object, parent.Name().Text())
+		}
+	case ast.KindArrayLiteralExpression:
+		name = "array element"
+	case ast.KindAsExpression:
+		name = "assertion"
+		target = l.checker.GetTypeAtLocation(parent)
+	case ast.KindCallExpression, ast.KindNewExpression:
+		name = "argument"
+		// Explicit type arguments do not always contextualize the argument.
+		// Read the instantiated parameter, not the generic declaration's binder.
+		if signature := l.checker.GetResolvedSignature(parent); signature != nil {
+			var arguments []*ast.Node
+			if parent.Kind == ast.KindCallExpression {
+				arguments = parent.AsCallExpression().Arguments.Nodes
+			} else if parent.AsNewExpression().Arguments != nil {
+				arguments = parent.AsNewExpression().Arguments.Nodes
+			}
+			parameters := signature.Parameters()
+			for index, argument := range arguments {
+				if argument != site || len(parameters) == 0 {
+					continue
+				}
+				parameter := parameters[min(index, len(parameters)-1)]
+				target = l.checker.GetTypeOfSymbol(parameter)
+				if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+					target = l.checker.GetElementTypeOfArrayType(target)
+				}
+			}
+		}
+	}
+	if target == nil {
+		target = l.impliedTarget(node)
+	}
+	if target == nil || source == nil {
+		return nil
+	}
+	what := ""
+	if name == "return" && source.Flags() == checker.TypeFlagsVoid && target.Flags() != checker.TypeFlagsVoid {
+		what = "a void value at a return site whose function returns " + l.checker.TypeToString(target)
+	} else if l.onlyVoidCalls(source) && l.hasWiderVoidCall(target) {
+		what = "a void-returning function at the " + name + " site seen as " + l.checker.TypeToString(target)
+	}
+	if what == "" {
+		return nil
+	}
+	return &Refused{Where: l.program.Where(node), What: what,
+		Fix: "declare the function's real return type (adamic/no-void-widening)"}
+}
+
+func (l *lowering) onlyVoidCalls(source *checker.Type) bool {
+	signatures := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
+	if len(signatures) == 0 {
+		return false
+	}
+	for _, signature := range signatures {
+		if l.checker.GetReturnTypeOfSignature(signature).Flags() != checker.TypeFlagsVoid {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) hasWiderVoidCall(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+ return false // mutant: admit only union targets
+
+		for _, member := range target.Types() {
+			if l.hasWiderVoidCall(member) {
+				return true
+			}
+		}
+	}
+	for _, signature := range l.checker.GetSignaturesOfType(target, checker.SignatureKindCall) {
+		if l.checker.GetReturnTypeOfSignature(signature).Flags() != checker.TypeFlagsVoid {
+			return true
+		}
+	}
+	return false
+}

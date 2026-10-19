@@ -1,0 +1,1028 @@
+{
+  "version": "6.0.3",
+  "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "files": 78,
+  "diagnostics": 2,
+  "diagnosticDetails": [
+    "Cannot find module 'source-map-support' or its corresponding type declarations.",
+    "Type 'never' must have a '[Symbol.iterator]()' method that returns an iterator."
+  ],
+  "hits": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8579,
+      "column": 38,
+      "source": "(fn: (objectAllocator: ObjectAllocator) => void) => void",
+      "target": "(element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined",
+      "text": "fn => fn(objectAllocator)"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1164,
+      "column": 34,
+      "source": "(fn: (factory: NodeFactory) => void) => void",
+      "target": "(element: (factory: NodeFactory) => void, index: number) => void | undefined",
+      "text": "fn => fn(factory)"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1313,
+      "column": 24,
+      "source": "(n: Node | NodeArray<Node>) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "addWorkItem"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1313,
+      "column": 37,
+      "source": "(n: Node | NodeArray<Node>) => void",
+      "target": "((nodes: NodeArray<Node>) => void | undefined) | undefined",
+      "text": "addWorkItem"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10112,
+      "column": 32,
+      "source": "(node: Node) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "visitNode as (node: Node) => void"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10112,
+      "column": 67,
+      "source": "(nodes: NodeArray<Node>) => void",
+      "target": "((nodes: NodeArray<Node>) => void | undefined) | undefined",
+      "text": "visitArray as (nodes: NodeArray<Node>) => void"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10228,
+      "column": 32,
+      "source": "(child: Node) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "visitNode"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10265,
+      "column": 37,
+      "source": "(node: Node) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "visitNode as (node: Node) => void"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10265,
+      "column": 72,
+      "source": "(nodes: NodeArray<Node>) => void",
+      "target": "((nodes: NodeArray<Node>) => void | undefined) | undefined",
+      "text": "visitArray as (nodes: NodeArray<Node>) => void"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 119,
+      "column": 45,
+      "source": "(type: Type | undefined) => void",
+      "target": "(element: Type, index: number) => void | undefined",
+      "text": "visitType"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 127,
+      "column": 33,
+      "source": "(type: Type | undefined) => void",
+      "target": "(element: Type, index: number) => void | undefined",
+      "text": "visitType"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 152,
+      "column": 47,
+      "source": "(type: Type | undefined) => void",
+      "target": "(element: TypeParameter, index: number) => void | undefined",
+      "text": "visitType"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 163,
+      "column": 48,
+      "source": "(type: Type | undefined) => void",
+      "target": "(element: TypeParameter, index: number) => void | undefined",
+      "text": "visitType"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 164,
+      "column": 47,
+      "source": "(type: Type | undefined) => void",
+      "target": "(element: BaseType, index: number) => void | undefined",
+      "text": "visitType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8226,
+      "column": 61,
+      "source": "(e: BindingElement | OmittedExpression) => void",
+      "target": "(element: BindingElement | OmittedExpression, index: number) => void | undefined",
+      "text": "e => {\r\n                                            switch (e.kind) {\r\n                                                case SyntaxKind.OmittedExpression:\r\n                         "
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14832,
+      "column": 65,
+      "source": "(keyType: Type) => void",
+      "target": "(t: Type) => void | undefined",
+      "text": "addMemberForKeyType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14838,
+      "column": 39,
+      "source": "(t: Type) => void",
+      "target": "(t: Type) => void | undefined",
+      "text": "t => addMemberForKeyTypeWorker(keyType, t)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 17984,
+      "column": 39,
+      "source": "(t: Type, n: number) => void",
+      "target": "(element: Type, index: number) => void | undefined",
+      "text": "(t, n) => addElement(t, type.target.elementFlags[n], type.target.labeledElementDeclarations?.[n])"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18903,
+      "column": 41,
+      "source": "(keyType: Type) => void",
+      "target": "(t: Type) => void | undefined",
+      "text": "addMemberForKeyType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18910,
+      "column": 65,
+      "source": "(keyType: Type) => void",
+      "target": "(t: Type) => void | undefined",
+      "text": "addMemberForKeyType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 30360,
+      "column": 28,
+      "source": "(node: Node) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "markNodeAssignments"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 35577,
+      "column": 41,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36582,
+      "column": 40,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 37553,
+      "column": 49,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38174,
+      "column": 37,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42164,
+      "column": 34,
+      "source": "(node: ParameterDeclaration) => void",
+      "target": "(element: ParameterDeclaration, index: number) => void | undefined",
+      "text": "checkParameter"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42494,
+      "column": 28,
+      "source": "(node: Node | undefined) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42774,
+      "column": 37,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42863,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeElement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42912,
+      "column": 32,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode | NamedTupleMember, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42917,
+      "column": 29,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42995,
+      "column": 28,
+      "source": "(node: Node | undefined) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44770,
+      "column": 38,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44774,
+      "column": 38,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 45126,
+      "column": 41,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: BindingElement | OmittedExpression, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 45300,
+      "column": 36,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: VariableDeclaration, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46649,
+      "column": 40,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46953,
+      "column": 32,
+      "source": "(node: Node) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "visit"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47087,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: ClassElement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47100,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: ClassElement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47127,
+      "column": 49,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47146,
+      "column": 61,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeNode, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47854,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeElement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48688,
+      "column": 74,
+      "source": "(node: ImportEqualsDeclaration | ImportSpecifier | ImportClause | NamespaceImport) => void",
+      "target": "(element: ImportSpecifier, index: number) => void | undefined",
+      "text": "checkImportBinding"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48765,
+      "column": 53,
+      "source": "(node: ExportSpecifier) => void",
+      "target": "(element: ExportSpecifier, index: number) => void | undefined",
+      "text": "checkExportSpecifier"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49188,
+      "column": 36,
+      "source": "(node: Node | undefined) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49602,
+      "column": 38,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49630,
+      "column": 50,
+      "source": "(node: Node) => void",
+      "target": "(element: Node, index: number) => void | undefined",
+      "text": "checkIfThisIsCapturedInEnclosingScope"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49635,
+      "column": 55,
+      "source": "(node: Node) => void",
+      "target": "(element: Node, index: number) => void | undefined",
+      "text": "checkIfNewTargetIsCapturedInEnclosingScope"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49640,
+      "column": 56,
+      "source": "(node: Node) => void",
+      "target": "(element: Node, index: number) => void | undefined",
+      "text": "checkWeakMapSetCollision"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49645,
+      "column": 53,
+      "source": "(node: Node) => void",
+      "target": "(element: Node, index: number) => void | undefined",
+      "text": "checkReflectCollision"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49669,
+      "column": 28,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Node, index: number) => void | undefined",
+      "text": "checkSourceElement"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49756,
+      "column": 40,
+      "source": "(file: SourceFile) => void",
+      "target": "(element: SourceFile, index: number) => void | undefined",
+      "text": "file => checkSourceFileWithEagerDiagnostics(file)"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "line": 608,
+      "column": 36,
+      "source": "({ name }: VariableDeclaration | BindingElement) => void",
+      "target": "(element: VariableDeclaration, index: number) => void | undefined",
+      "text": "hoistVariable"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 981,
+      "column": 28,
+      "source": "(node: Node) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "collectLinkedAliases"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2403,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeElement, index: number) => void | undefined",
+      "text": "generateMemberNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2620,
+      "column": 34,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment, index: number) => void | undefined",
+      "text": "generateMemberNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3446,
+      "column": 34,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: ParameterDeclaration, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3576,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: ClassElement, index: number) => void | undefined",
+      "text": "generateMemberNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3598,
+      "column": 31,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: TypeElement, index: number) => void | undefined",
+      "text": "generateMemberNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3652,
+      "column": 34,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 4349,
+      "column": 34,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5344,
+      "column": 53,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5366,
+      "column": 54,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: CaseClause | DefaultClause, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5370,
+      "column": 67,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: Statement, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5385,
+      "column": 73,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: VariableDeclaration, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5396,
+      "column": 71,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: ParameterDeclaration, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5402,
+      "column": 60,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: BindingElement | OmittedExpression, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5418,
+      "column": 58,
+      "source": "(node: Node | undefined) => void",
+      "target": "(element: ImportSpecifier, index: number) => void | undefined",
+      "text": "generateNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5864,
+      "column": 52,
+      "source": "(comment: SynthesizedComment) => void",
+      "target": "(element: SynthesizedComment, index: number) => void | undefined",
+      "text": "emitLeadingSynthesizedComment"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5871,
+      "column": 53,
+      "source": "(comment: SynthesizedComment) => void",
+      "target": "(element: SynthesizedComment, index: number) => void | undefined",
+      "text": "emitTrailingSynthesizedComment"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1782,
+      "column": 28,
+      "source": "(name: string, index: number) => void",
+      "target": "(element: string, index: number) => void | undefined",
+      "text": "(name, index) => processRootFile(name, /*isDefaultLib*/ false, { kind: FileIncludeKind.RootFile, index })"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 679,
+      "column": 61,
+      "source": "(_?: unknown) => void",
+      "target": "((callback: (...args: any[]) => void, ms: number, ...args: any[]) => any) | undefined",
+      "text": "noop"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 579,
+      "column": 16,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 584,
+      "column": 16,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 589,
+      "column": 16,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 594,
+      "column": 16,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 599,
+      "column": 16,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 605,
+      "column": 20,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 613,
+      "column": 24,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 620,
+      "column": 24,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 632,
+      "column": 24,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 643,
+      "column": 20,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 663,
+      "column": 24,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 667,
+      "column": 20,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 707,
+      "column": 20,
+      "source": "void",
+      "target": "void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 833,
+      "column": 16,
+      "source": "void",
+      "target": "void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 839,
+      "column": 16,
+      "source": "void",
+      "target": "void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 845,
+      "column": 16,
+      "source": "void",
+      "target": "void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.Success)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 850,
+      "column": 16,
+      "source": "void",
+      "target": "void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 899,
+      "column": 12,
+      "source": "void",
+      "target": "void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+      "text": "sys.exit(exitStatus)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1089,
+      "column": 24,
+      "source": "(node: Node) => void",
+      "target": "(element: Node, index: number) => void | undefined",
+      "text": "bindFunction"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1093,
+      "column": 28,
+      "source": "(node: Node | undefined) => void",
+      "target": "(node: Node) => void | undefined",
+      "text": "bind"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1093,
+      "column": 34,
+      "source": "(nodes: NodeArray<Node> | undefined, bindFunction?: (node: Node) => void) => void",
+      "target": "((nodes: NodeArray<Node>) => void | undefined) | undefined",
+      "text": "bindEach"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2871,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkContextualIdentifier(node as Identifier)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2882,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkPrivateIdentifier(node as PrivateIdentifier)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2936,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModeBinaryExpression(node as BinaryExpression)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2938,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModeCatchClause(node as CatchClause)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2940,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModeDeleteExpression(node as DeleteExpression)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2942,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModePostfixUnaryExpression(node as PostfixUnaryExpression)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2944,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModePrefixUnaryExpression(node as PrefixUnaryExpression)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2946,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModeWithStatement(node as WithStatement)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2948,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "checkStrictModeLabeledStatement(node as LabeledStatement)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2955,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindTypeParameter(node as TypeParameterDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2957,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindParameter(node as ParameterDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2959,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindVariableDeclarationOrBindingElement(node as VariableDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2962,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindVariableDeclarationOrBindingElement(node as BindingElement)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2984,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindFunctionDeclaration(node as FunctionDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2995,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindFunctionOrConstructorType(node as SignatureDeclaration | JSDocSignature)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3001,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindJSDocClassTag(node as JSDocClassTag)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3012,
+      "column": 32,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindObjectDefinePropertyAssignment(node as BindableObjectDefinePropertyCall)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3014,
+      "column": 32,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindObjectDefinePropertyExport(node as BindableObjectDefinePropertyCall)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3016,
+      "column": 32,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindObjectDefinePrototypeProperty(node as BindableObjectDefinePropertyCall)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3032,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindClassLikeDeclaration(node as ClassLikeDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3034,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindBlockScopedDeclaration(node as Declaration, SymbolFlags.Interface, SymbolFlags.InterfaceExcludes)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3036,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindBlockScopedDeclaration(node as Declaration, SymbolFlags.TypeAlias, SymbolFlags.TypeAliasExcludes)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3038,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindEnumDeclaration(node as EnumDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3040,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindModuleDeclaration(node as ModuleDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3054,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindNamespaceExportDeclaration(node as NamespaceExportDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3056,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindImportClause(node as ImportClause)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3058,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindExportDeclaration(node as ExportDeclaration)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3060,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindExportAssignment(node as ExportAssignment)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3063,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindSourceFileIfExternalModule()"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3070,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "updateStrictModeStatementList((node as Block | ModuleBlock).statements)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3074,
+      "column": 28,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bindParameter(node as JSDocParameterTag)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3091,
+      "column": 24,
+      "source": "void",
+      "target": "number | void | Symbol",
+      "text": "bind((node as JSDocOverloadTag).typeExpression)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3251,
+      "column": 52,
+      "source": "(node: ShorthandPropertyAssignment) => void",
+      "target": "(element: ShorthandPropertyAssignment, index: number) => void | undefined",
+      "text": "bindExportAssignedObjectMemberAlias"
+    }
+  ]
+}

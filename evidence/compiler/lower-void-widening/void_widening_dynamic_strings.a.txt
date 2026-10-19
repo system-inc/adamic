@@ -1,0 +1,38 @@
+// a-check: pass
+// Returning a void call to an exactly void caller discards its value.
+const make: () => void = () => 42;
+function forward(): void {
+	return make();
+}
+forward();
+console.log('done');
+
+// A union return keeps both explicit numbers and the implicit undefined.
+function maybe(flag: boolean): void | number {
+	if (flag) {
+		return 7;
+	}
+}
+console.log(typeof maybe(true));
+function step(go: boolean): number | void {
+	if (go) {
+		return 3;
+	}
+}
+for (const go of [true, false]) {
+	const next = step(go);
+	console.log(next === undefined ? 'none' : `${next + 1}`);
+}
+
+// A value-returning source can be called through a void view and released.
+function text(): string {
+	return ['kept', 'value'].join(' ');
+}
+const discard: () => void = text;
+discard();
+function accept(callback: () => void): void {
+	callback();
+}
+accept((): string => ['arrow', 'value'].join(' '));
+accept(text);
+console.log('discarded');

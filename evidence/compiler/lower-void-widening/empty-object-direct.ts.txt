@@ -1,0 +1,2 @@
+const make: () => void = () => 42;
+const wider: () => {} = make;

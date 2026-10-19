@@ -1,0 +1,64 @@
+{
+  "implementation": "ad029e0cdfed1c26567fd0cea8a48731a6dd17a6",
+  "base": "141fec7702d4aed21429724b2afd7efcd980f277",
+  "gofmt": {
+    "exit": 0,
+    "log": "logs/gofmt-final.log"
+  },
+  "vet": {
+    "exit": 0,
+    "log": "logs/vet-final.log"
+  },
+  "packages": {
+    "exit": 0,
+    "log": "logs/packages-final.log"
+  },
+  "counts": {
+    "exit": 0,
+    "log": "logs/counts-final.log",
+    "only_added_row": "void_widening_legal.a",
+    "counts": [
+      8,
+      8,
+      7,
+      18,
+      6,
+      0
+    ]
+  },
+  "uncached_oracle": {
+    "exit": 0,
+    "log": "logs/oracle.log"
+  },
+  "nil_mutant": {
+    "exit": 1,
+    "failed_probe_cases": 17,
+    "log": "logs/nil-mutant.log"
+  },
+  "union_mutant": {
+    "native_exit": 0,
+    "native_stdout": "undefined\n",
+    "node_exit": 0,
+    "node_stdout": "number\n",
+    "js_exit": 0,
+    "js_stdout": "undefined\n"
+  },
+  "legal_fixture": {
+    "native_exit": 0,
+    "node_exit": 0,
+    "js_exit": 0,
+    "stdout": "done\nnumber\n4\nnone\ndiscarded\n"
+  },
+  "admission": {
+    "completed": 3699,
+    "timeouts": 0,
+    "new_refusal_first_stops": 17,
+    "existing_panics_both_versions": 9
+  },
+  "remaining_dynamic_string_discard_leak": {
+    "main_exit": 1,
+    "head_exit": 1,
+    "bytes": 223,
+    "allocations": 3
+  }
+}
