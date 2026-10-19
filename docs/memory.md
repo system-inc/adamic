@@ -8,6 +8,79 @@ Status: **draft, written October 5, 2026 by @system_adamic** (#w318mqs), with st
 - **Strings, objects, arrays, maps and closures** live on the heap behind a reference, and each carries a reference count.
 - A **constant** the program spells out (`'Fizz'`, a literal object of constants, later) is static and immortal: its count is 0, and retain and release skip it. Every program's `''`, `'true'` and `'false'` are immortal too.
 
+## Worked examples
+
+These complete programs live in `internal/oracle/testdata/memory_examples/`.
+Each compiled example has its own top-level oracle test, comparing source Node,
+the JavaScript backend, sanitized native and release native. Every program that
+finishes is leak-checked. Each test also builds and runs its example counted and
+requires the measured row below; the counts are recorded in `internal/oracle/counts.md` too.
+The two refused examples run on Node and must be diagnosed before C generation.
+
+### 1. Prepend, walk and map a list
+
+[list.a](../internal/oracle/testdata/memory_examples/list.a) builds three immutable
+links, prints their sum `6`, then maps their values to print `12`. The spreads may
+reuse a consumed node only when nobody else holds it. Recursive reads still see
+the list's original meaning, and the leak check holds its teardown.
+
+### 2. A tree whose parent is Weak
+
+[tree.a](../internal/oracle/testdata/memory_examples/tree.a) owns its children
+strongly and points back with `Weak<Tree>`. While the root remains strongly held,
+the walk from the deepest leaf through its parents prints `6`. The Weak edges do
+not keep their targets alive; the root's strong child edges keep this walk valid.
+
+### 3. The same tree with a strong parent
+
+[refused/tree.a](../internal/oracle/testdata/memory_examples/refused/tree.a) also
+prints `6` on Node. Adamic refuses `Tree.parent` and its closing write with
+`adamic/cycle-capable`: a child would hold its parent while that parent owns the
+child. Restore the Weak parent from example 2. This program has no C or counts row.
+
+### 4. Captured const, captured let, and a captured function
+
+[closures.a](../internal/oracle/testdata/memory_examples/closures.a) prints `7 9`
+then `3`: its closures see a captured const and a shared mutable binding, while
+countdown uses a module function declaration without a captured function cell.
+[refused/closure.a](../internal/oracle/testdata/memory_examples/refused/closure.a)
+prints `3` on Node but is cycle-refused: `countdown` owns a function value that
+captures that same binding. Use a module function declaration that captures
+nothing, or break the strong back-reference. The refused program has no counts row.
+
+### 5. A graph per statement
+
+[regions.a](../internal/oracle/testdata/memory_examples/regions.a) prints `18`.
+A temporary chain passed straight to `sum(build(item))` dies with that statement
+and can use a statement region. The chain kept in `held` survives its declaration
+statement and stays on the heap. The measured six region values are released with
+their regions; the other eight allocations are freed individually.
+
+### 6. Append a string, slice it, then append to the slice
+
+[strings.a](../internal/oracle/testdata/memory_examples/strings.a) appends 160
+characters, takes a slice, and appends `!` to that slice. It prints `160 129 x !`:
+the original remains intact and the slice has its own appended character. The
+oracle holds that immutability, while the counts check holds the current allocation
+behavior without assuming that every slice shares its parent's storage.
+
+### Measured counts
+
+Measured on Linux with clang 20.1.8. Allocations count heap values, rather than
+allocator buffers. Retains and releases count calls, including calls on immortal
+or NULL values. Freeing a container releases its contents internally without adding
+a release call to this counter. A finished program satisfies allocations = frees +
+in regions. Generated C is deliberately not quoted here: the tests measure what
+the current compiler emits.
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak live | In regions |
+|---|---:|---:|---:|---:|---:|---:|
+| internal/oracle/testdata/memory_examples/list.a | 7 | 7 | 6 | 16 | 5 | 0 |
+| internal/oracle/testdata/memory_examples/tree.a | 12 | 12 | 28 | 31 | 12 | 0 |
+| internal/oracle/testdata/memory_examples/closures.a | 9 | 9 | 2 | 9 | 7 | 0 |
+| internal/oracle/testdata/memory_examples/regions.a | 14 | 8 | 0 | 5 | 2 | 6 |
+| internal/oracle/testdata/memory_examples/strings.a | 14 | 14 | 2 | 17 | 5 | 0 |
+
 ## Counting
 
 Every heap value starts at 1. `adamic_retain` adds one, and `adamic_release` subtracts one and frees at zero. The compiler inserts every retain and release; nothing at runtime guesses who's still looking.
