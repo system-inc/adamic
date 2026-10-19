@@ -1,0 +1,21 @@
+{
+  "exits": {
+    "a-check": 1
+  },
+  "result": {
+    "a_check": {
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a": {
+        "outcome": "refused",
+        "expected": "refused wrong mutant reason",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      }
+    }
+  },
+  "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a: refused, expected refused wrong mutant reason (adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; u)",
+  "diagnostics": {
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    }
+  }
+}

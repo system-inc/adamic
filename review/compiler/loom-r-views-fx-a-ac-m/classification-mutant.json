@@ -1,0 +1,19 @@
+{
+  "mutant": "return p07 to agree",
+  "command": [
+    "timeout",
+    "110",
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestReviewProgramsAgreeWithNode_002$/^fxspptb_oct9_views_p07_element_access_union_wrong[.]a$",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "caught": true,
+  "catcher": "TestReviewProgramsAgreeWithNode_002/p07: stage 0 refuses exact key-read reason"
+}

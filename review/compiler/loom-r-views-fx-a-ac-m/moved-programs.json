@@ -1,0 +1,151 @@
+[
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "fix": "use view.value",
+    "body_sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "body_unchanged": true
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p17_callable_call_first_half.a",
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "d9df1651d8110c5d3d33f71ed0e4800aaecf3642abc122c05bdd2ab04e51973f",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "dfe95dc594a1fdf671fda54148b7633499f8f2e13d5a92860d5bda3e459b57cc",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p20_callable_member_call_good.a",
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "948f2e39c0b4c89050860b3fc06d93ce3cb027ce2b5024bddf854e3f41ed9c13",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a",
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "6113b8de402d701f47fdd66161efc836f5338ae53cc7c8f88835d24db65caff5",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 142, a view with an unsupported member reads a numeric slot as a reference (silent wrong output)\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a",
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "f8c1252799cab4bbf5a462cba4e32b79a172d336258a6447f425e4744aea163b",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a",
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "ce11e85355d811112f7a5af89adc4cd5cd4c58674e87601d8f30a185cf683762",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a",
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "e3f464103722c2709a6a194000e7265bef09c7f92019c3a25d02ea16f3d9c06b",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a",
+    "status": "refused",
+    "reason": "checked view read of field value with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "1b417795343fe3f886bca62f8c44352440fdfe47846cae1dfcec447eec7a03ff",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 146, a checked cast with checked fields records no field types, so valid reads abort\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a",
+    "status": "refused",
+    "reason": "checked view read of field count with unsupported representation conversion contract",
+    "fix": "prove or implement the representation conversion contract before reading this field",
+    "body_sha256": "045a7ca5900dcc80e1ee1b4343e1aaa7fb5d849e02d24eaa20d1f8840b6e03d8",
+    "body_unchanged": true,
+    "removed_pending": "awaits #aecx10a: fifth reading 142, a view with an unsupported member reads a numeric slot as a reference (silent wrong output)\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p01_element_access_wrong.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p01_element_access_wrong.a",
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "fix": "use view.text",
+    "body_sha256": "fe1d6dfae0250b382226768d1eafe767d51876c4f43eef8d61abe69a45f048b6",
+    "body_unchanged": true,
+    "removed_pending": "awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p05_element_access_number_wrong.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p05_element_access_number_wrong.a",
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "fix": "use view.count",
+    "body_sha256": "5278ade89c221ec738b970dc3da18a16bcd000a1936374212c85d79e3e5852e2",
+    "body_unchanged": true,
+    "removed_pending": "awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p06_element_access_boolean_wrong.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p06_element_access_boolean_wrong.a",
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "fix": "use view.count",
+    "body_sha256": "23e95edb982cc24f1d144771141561755fbf1c9edc2f351488d8ee2ba3fa9246",
+    "body_unchanged": true,
+    "removed_pending": "awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p19_callable_union_call_element.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p19_callable_union_call_element.a",
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "fix": "use view.value",
+    "body_sha256": "a1cdbd6af2021315472014c9531eeb82ffdede4cf8495ebed1c8404de23f99d3",
+    "body_unchanged": true,
+    "removed_pending": "awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check\n"
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p72_mixed_element_access_wrong.a",
+    "to": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p72_mixed_element_access_wrong.a",
+    "status": "refused",
+    "reason": "view member read by element access is not yet checked",
+    "fix": "use view.value",
+    "body_sha256": "9f865fceaf7146edf018549037b3ca699cd8127f82ec1b8750ad4587dda9c856",
+    "body_unchanged": true,
+    "removed_pending": "awaits #1fk58py: fifth reading 132, a string-literal key read through a view skips the view's check\n"
+  }
+]

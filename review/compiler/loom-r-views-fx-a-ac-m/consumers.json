@@ -1,0 +1,308 @@
+[
+  {
+    "package": "./bench/regex",
+    "exit": 0,
+    "seconds": 0.333,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./bridge/tsgo",
+    "exit": 0,
+    "seconds": 8.752,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "exit": 0,
+    "seconds": 9.356,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./cmd/adamic",
+    "exit": 0,
+    "seconds": 7.919,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-fuzz",
+    "exit": 0,
+    "seconds": 12.782,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic-fuzz",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "exit": 0,
+    "seconds": 8.901,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-reduce",
+    "exit": 0,
+    "seconds": 0.338,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic-reduce",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "exit": 0,
+    "seconds": 9.672,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "exit": 0,
+    "seconds": 2.542,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/flow",
+    "exit": 0,
+    "seconds": 2.746,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/flow",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/fresh",
+    "exit": 0,
+    "seconds": 9.234,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/fuzz",
+    "exit": 0,
+    "seconds": 10.074,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/ir",
+    "exit": 0,
+    "seconds": 9.881,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/javascript",
+    "exit": 0,
+    "seconds": 0.401,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/leakcheck",
+    "exit": 0,
+    "seconds": 0.651,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/lower",
+    "exit": 0,
+    "seconds": 4.591,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "exit": 1,
+    "seconds": 28.366,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^TestLoomView|^TestFlowCorpus|^TestEveryTestHasOneDescriptiveName$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  }
+]

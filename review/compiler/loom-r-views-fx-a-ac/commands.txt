@@ -1,0 +1,18 @@
+timeout 60 git fetch origin
+git checkout -b compiler/loom-r-views-fx-a-ac dbdf977f5b
+timeout 60 git cherry-pick --no-commit 6c733f966fa1636f1158ea7767a40030f65d2126
+export GOPROXY='https://proxy.golang.org|direct'
+timeout 600 bash cloud/setup.sh > review/compiler/loom-r-views-fx-a-ac/setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+nproc
+timeout 60 git fetch origin fbac28c62493f27a788edc02a18bc8edb68de5da
+git show fbac28c62493f27a788edc02a18bc8edb68de5da:cloud/fast-gate/run.py > /tmp/views-ac-gate.py
+timeout 90 go build -o /tmp/views-ac-adamic ./cmd/adamic > review/compiler/loom-r-views-fx-a-ac/compiler-build.log 2>&1
+timeout 300 python3 review/compiler/loom-r-views-fx-a-ac/scan.py > review/compiler/loom-r-views-fx-a-ac/scan.log 2>&1
+timeout 300 python3 review/compiler/loom-r-views-fx-a-ac/check-predicate.py > review/compiler/loom-r-views-fx-a-ac/predicate.log 2>&1
+timeout 300 python3 review/compiler/loom-r-views-fx-a/replay-entrypoints.py > review/compiler/loom-r-views-fx-a-ac/entrypoints.log 2>&1
+timeout 360 go test $(cat review/compiler/loom-r-views-fx-a/reader-packages.txt) -run '^TestLoomView|^TestFlowCorpus|^TestFlowProgram.*(view|interface|element_access)' -count=1 -v -timeout 90s > review/compiler/loom-r-views-fx-a-ac/readers.log 2>&1
+ADAMIC_BUILD_CACHE_DIR=/tmp/views-ac-reader-products timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -v -timeout 90s > review/compiler/loom-r-views-fx-a-ac/reader-guard.log 2>&1
+timeout 120 go vet ./internal/lower > review/compiler/loom-r-views-fx-a-ac/vet.log 2>&1
+timeout 240 python3 review/compiler/loom-r-views-fx-a-ac/run-guard-mutants.py > review/compiler/loom-r-views-fx-a-ac/guard-mutants.log 2>&1
+timeout 120 go test ./internal/lower -run '^TestLoomView' -count=1 -v -timeout 90s > review/compiler/loom-r-views-fx-a-ac/fixtures-final.log 2>&1

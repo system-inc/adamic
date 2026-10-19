@@ -1,0 +1,615 @@
+{
+  "exits": {
+    "a-check": 0
+  },
+  "result": {
+    "a_check": {
+      "internal/lower/testdata/loom_views_a/callable.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "internal/lower/testdata/loom_views_a/key.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      },
+      "internal/lower/testdata/loom_views_a/native_p21.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "internal/lower/testdata/loom_views_a/native_p37.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "internal/lower/testdata/loom_views_a/union_key.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "internal/lower/testdata/loom_views_a/unsupported.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field label with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "internal/lower/testdata/loom_views_a/views_p01.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text"
+      },
+      "internal/lower/testdata/loom_views_a/views_p05.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      },
+      "internal/lower/testdata/loom_views_a/views_p06.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      },
+      "internal/lower/testdata/loom_views_a/views_p19.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "internal/lower/testdata/loom_views_a/views_p72.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p17_callable_call_first_half.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p17_callable_call_first_half.a:9:9: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading "
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p18_cast_kind_no_field_types.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p18_cast_kind_no_field_types.a:7:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p20_callable_member_call_good.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p20_callable_member_call_good.a:8:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before readin"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before re"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a:9:15: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading th"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a:9:14: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a:7:14: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading thi"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a:8:14: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this fiel"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before readi"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p01_element_access_wrong.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p01_element_access_wrong.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p05_element_access_number_wrong.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p05_element_access_number_wrong.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p06_element_access_boolean_wrong.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p06_element_access_boolean_wrong.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p19_callable_union_call_element.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p19_callable_union_call_element.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a:9:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p72_mixed_element_access_wrong.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p72_mixed_element_access_wrong.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "review/compiler/loom-r-views-fx-a/controls/key_fix.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/166413c08ae4/p69.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/19560c042dd4/depth-2000.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a:7:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "review/compiler/loom-views-fx-a/sources/2ca18403dfcd/snapshot-maybe-number.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/2db1d7d06600/depth-200.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a:8:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values"
+      },
+      "review/compiler/loom-views-fx-a/sources/3a666aeb3afd/control.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/4311ed865723/callable_union_result_both.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/4959ae25761c/callable_union_result_number.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values"
+      },
+      "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "review/compiler/loom-views-fx-a/sources/5907cb79c2f5/callable_union_result_zero.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/6f7c7da4c8e2/callable_union_result_string.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/702776fe1a62/scalar-tuple.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/78a920f10d1e/depth-65.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field label with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field value with unsupported representation conversion contract",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a:10:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field"
+      },
+      "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value"
+      },
+      "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/d44ab71300a7/snapshot-maybe-boolean.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-a/sources/d8a921ff2453/oct9_views_p48.a": {
+        "outcome": "refused",
+        "expected": "refused checked view read of field values with unsupported collection contract",
+        "first": "adamic: : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field"
+      },
+      "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a": {
+        "outcome": "refused",
+        "expected": "refused view member read by element access is not yet checked",
+        "first": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a:8:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      },
+      "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    }
+  },
+  "failure": null,
+  "diagnostics": {
+    "internal/lower/testdata/loom_views_a/callable.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/callable.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/lower/testdata/loom_views_a/key.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+    },
+    "internal/lower/testdata/loom_views_a/native_p21.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p21.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/lower/testdata/loom_views_a/native_p37.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/native_p37.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/lower/testdata/loom_views_a/union_key.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/union_key.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "internal/lower/testdata/loom_views_a/unsupported.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/unsupported.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/lower/testdata/loom_views_a/views_p01.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p01.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n"
+    },
+    "internal/lower/testdata/loom_views_a/views_p05.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p05.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+    },
+    "internal/lower/testdata/loom_views_a/views_p06.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p06.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+    },
+    "internal/lower/testdata/loom_views_a/views_p19.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p19.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "internal/lower/testdata/loom_views_a/views_p72.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/views_p72.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p17_callable_call_first_half.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p17_callable_call_first_half.a:9:9: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p18_cast_kind_no_field_types.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p18_cast_kind_no_field_types.a:7:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p20_callable_member_call_good.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p20_callable_member_call_good.a:8:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a:13:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a:9:15: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a:9:14: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a:7:14: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a:8:14: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a:12:16: Adamic 0.1 refuses checked view read of field count with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p01_element_access_wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p01_element_access_wrong.a:7:14: Adamic 0.1 refuses view member read by element access is not yet checked; use view.text\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p05_element_access_number_wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p05_element_access_number_wrong.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p06_element_access_boolean_wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p06_element_access_boolean_wrong.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p19_callable_union_call_element.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p19_callable_union_call_element.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a:9:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p72_mixed_element_access_wrong.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p72_mixed_element_access_wrong.a:8:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "review/compiler/loom-r-views-fx-a/controls/key_fix.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-r-views-fx-a/controls/unsupported_unread.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/00584bccadf7/p19-native-call-gap.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/16353fe155c5/p70_copy.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/166413c08ae4/p69.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/19560c042dd4/depth-2000.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/1dd37b5d0d65/values.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/23b93dc07994/p135_tagged_unread.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/27fe1106b197/wide.a:7:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/2ca18403dfcd/snapshot-maybe-number.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/2db1d7d06600/depth-200.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/2dcbcfe5ab49/spread.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/39035180ca1c/oct9_views_p64.a:8:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/3a666aeb3afd/control.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/4123e0eab5d3/p135_object_result.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/4311ed865723/callable_union_result_both.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/4959ae25761c/callable_union_result_number.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/50f491e5d7c1/entries.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/51e01ecde063/oct9_views_p17.a:7:16: Adamic 0.1 refuses view member read by element access is not yet checked; use view.values\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/55aa222e57ec/p19_read.a:8:18: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/5907cb79c2f5/callable_union_result_zero.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/591c2a2453e4/p49.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/6c1f0555d211/in.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/6f7c7da4c8e2/callable_union_result_string.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/702776fe1a62/scalar-tuple.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/7417f0789932/p54_s.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/78a920f10d1e/depth-65.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/792dd026d5e3/destructured_union.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/93acc4186926/p37.a:10:16: Adamic 0.1 refuses checked view read of field label with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/9889d0b80ce2/p62_adapted.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/9e6bff2a3644/keys_alias.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/9e84065b734b/keys.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/ab0bf403ae83/p22_adapted.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/b1a2a62ba1f4/bad_callable.a:10:16: Adamic 0.1 refuses checked view read of field value with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/c76e229a6927/p07.a:10:15: Adamic 0.1 refuses view member read by element access is not yet checked; use view.value\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/cfb0fcf84cfa/destructured.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/d44ab71300a7/snapshot-maybe-boolean.a": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "review/compiler/loom-views-fx-a/sources/d8a921ff2453/oct9_views_p48.a": {
+      "exit": 1,
+      "stderr": "adamic: : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/review/compiler/loom-views-fx-a/sources/db935ac26f25/literal_key.a:8:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n"
+    },
+    "review/compiler/loom-views-fx-a/sources/fb59d3aecf4e/p59_adapted.a": {
+      "exit": 0,
+      "stderr": ""
+    }
+  }
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p17_callable_call_first_half.a",
+    "exit": 0,
+    "stdout": "16:109\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p18_cast_kind_no_field_types.a",
+    "exit": 0,
+    "stdout": "8\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p20_callable_member_call_good.a",
+    "exit": 0,
+    "stdout": "3\n12\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p21_callable_view_raw_union_slot.a",
+    "exit": 0,
+    "stdout": "xx\n3\n12\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p26_callable_or_undefined.a",
+    "exit": 0,
+    "stdout": "true\n2\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p33_map_in_union.a",
+    "exit": 0,
+    "stdout": "1\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p34_typed_array_in_union.a",
+    "exit": 0,
+    "stdout": "3\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p35_class_in_union.a",
+    "exit": 0,
+    "stdout": "3\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_native_p37_unsupported_view_raw_zero.a",
+    "exit": 0,
+    "stdout": "xx\n0\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p01_element_access_wrong.a",
+    "exit": 0,
+    "stdout": "undefined\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p05_element_access_number_wrong.a",
+    "exit": 0,
+    "stdout": "NaN\nfalse\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p06_element_access_boolean_wrong.a",
+    "exit": 0,
+    "stdout": "2\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p19_callable_union_call_element.a",
+    "exit": 0,
+    "stdout": "undefined\n",
+    "stderr": "",
+    "body_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p72_mixed_element_access_wrong.a",
+    "exit": 0,
+    "stdout": "number 2\n",
+    "stderr": "",
+    "body_unchanged": true
+  }
+]

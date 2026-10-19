@@ -1,0 +1,74 @@
+[
+  {
+    "test": "TestCallTargetReadersNative",
+    "exit": 0,
+    "seconds": 11.238,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReadersNative$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "test": "TestCallTargetReadersLower",
+    "exit": 0,
+    "seconds": 4.29,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReadersLower$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "test": "TestCallTargetReadersFresh",
+    "exit": 0,
+    "seconds": 3.993,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReadersFresh$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  },
+  {
+    "test": "TestCallTargetReadersFlow",
+    "exit": 0,
+    "seconds": 4.081,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReadersFlow$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ]
+  }
+]

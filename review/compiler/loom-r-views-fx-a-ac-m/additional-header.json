@@ -1,0 +1,9 @@
+{
+  "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a",
+  "status": "refused",
+  "reason": "view member read by element access is not yet checked",
+  "fix": "use view.value",
+  "main_status": "NotYet: checked view union arm awaits views-v3: array element kind",
+  "body_sha256": "aa6c9bf135eb73b3ea5a0a38dc8df92bd6a461a3db3bec5adee1f40aaa5875d7",
+  "body_unchanged": true
+}
