@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand/v2"
 	"path/filepath"
+	goruntime "runtime"
 	"strings"
 	"testing"
 )
@@ -176,8 +177,36 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 	if len(native) != len(cases) || len(oracle) != len(cases) {
 		t.Fatalf("got %d native lines and %d from Node for %d texts", len(native), len(oracle), len(cases))
 	}
-	mismatches := 0
+	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
+	fusion := readFusion(t, "parseInt")
+	if *updateFusion && goruntime.GOARCH == "arm64" {
+		// Audited by V8's loop emulated both ways: a difference it reproduces is listed, any other pending.
+		listed, pending := []string{}, []string{}
+		for index, question := range asked {
+			if native[index] == oracle[index] {
+				continue
+			}
+			line := question + "\t" + native[index] + "\t" + oracle[index] + "\n"
+			text, radix, approximated := approximatedParseInt(question)
+			unfused, parsed := v8ParseInt(text, radix, false)
+			fused, _ := v8ParseInt(text, radix, true)
+			if approximated && parsed && fmt.Sprintf("%016x", math.Float64bits(unfused)) == native[index] && fmt.Sprintf("%016x", math.Float64bits(fused)) == oracle[index] {
+				listed = append(listed, line)
+			} else {
+				pending = append(pending, line)
+			}
+		}
+		writeFusion(t, "parseInt", "parseInt cases arm64 Node answers fused: V8's loop (v8ParseInt) gives the pinned value unfused and Node's fused.", listed, pending)
+		return
+	}
+	mismatches, held := 0, 0
 	for index, parse := range cases {
+		if fusion.handled(t, asked[index], native[index], oracle[index]) {
+			if native[index] != oracle[index] {
+				held++
+			}
+			continue
+		}
 		if native[index] != oracle[index] {
 			mismatches++
 			if mismatches <= 10 {
@@ -185,8 +214,9 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 			}
 		}
 	}
+	fusion.complete(t)
 	if mismatches > 0 {
 		t.Errorf("%d of %d texts parse differently", mismatches, len(cases))
 	}
-	t.Logf("%d texts, %d mismatches", len(cases), mismatches)
+	t.Logf("%d texts, %d mismatches, %d on the fusion list where arm64 Node fused", len(cases), mismatches, held)
 }
