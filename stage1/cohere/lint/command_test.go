@@ -1,6 +1,7 @@
 package lint
 
 import (
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -45,7 +46,7 @@ func TestExecuteFailsOnStderrOtherThanModuleDownloads(t *testing.T) {
 			t.Fatal(err)
 		}
 		script := "#!/bin/sh\ncat '" + stderr + "' >&2\n"
-		if err := os.WriteFile(filepath.Join(tools, "bin", "go"), []byte(script), 0755); err != nil {
+		if err := executable.Write(filepath.Join(tools, "bin", "go"), []byte(script)); err != nil {
 			t.Fatal(err)
 		}
 		t.Setenv("ADAMIC_TOOLS", tools)
