@@ -1,0 +1,16 @@
+=== RUN   TestVoidWideningIsRefused
+=== PAUSE TestVoidWideningIsRefused
+=== CONT  TestVoidWideningIsRefused
+=== RUN   TestVoidWideningIsRefused/container_array.a
+=== PAUSE TestVoidWideningIsRefused/container_array.a
+=== CONT  TestVoidWideningIsRefused/container_array.a
+    void_widening_test.go:44: gate cache node miss
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+--- FAIL: TestVoidWideningIsRefused (0.00s)
+    --- FAIL: TestVoidWideningIsRefused/container_array.a (6.12s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.145s
+FAIL

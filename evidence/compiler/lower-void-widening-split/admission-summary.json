@@ -1,0 +1,706 @@
+{
+  "files": 3709,
+  "current_files": 3611,
+  "original_files": 3699,
+  "historical_files": [
+    "internal/native/testdata/json-record-runtime/oracle.a",
+    "internal/oracle/testdata/detached_own_objects.a",
+    "internal/oracle/testdata/detached_own_parser.a",
+    "internal/oracle/testdata/detached_own_records.a",
+    "internal/oracle/testdata/detached_own_unready.a",
+    "internal/oracle/testdata/json_replacer_duplicates_object.a",
+    "internal/oracle/testdata/records_buckets/17_compare_missing_object.a",
+    "internal/oracle/testdata/records_buckets/18_compare_missing_scalar.a",
+    "internal/oracle/testdata/records_buckets/19_compare_empty_objects.a",
+    "internal/oracle/testdata/records_census.a",
+    "internal/oracle/testdata/records_compare_missing_scalar.a",
+    "internal/oracle/testdata/records_discarded.a",
+    "internal/oracle/testdata/records_for_in.a",
+    "internal/oracle/testdata/records_guarded_snapshot.a",
+    "internal/oracle/testdata/records_json_replacer_duplicates.a",
+    "internal/oracle/testdata/records_named_alias_unready.a",
+    "internal/oracle/testdata/records_named_intrinsics.a",
+    "internal/oracle/testdata/records_named_operations.a",
+    "internal/oracle/testdata/records_named_options.a",
+    "internal/oracle/testdata/records_named_union.a",
+    "internal/oracle/testdata/records_narrowed_reference.a",
+    "internal/oracle/testdata/records_operations.a",
+    "internal/oracle/testdata/records_optional.a",
+    "internal/oracle/testdata/records_ownership.a",
+    "internal/oracle/testdata/records_partial_parser.a",
+    "internal/oracle/testdata/records_partial_undefined.a",
+    "internal/oracle/testdata/records_partial_views.a",
+    "internal/oracle/testdata/records_refuse/r24.a",
+    "internal/oracle/testdata/records_refused/records_compare_properties_left.a",
+    "internal/oracle/testdata/records_refused/records_compare_properties_right.a",
+    "internal/oracle/testdata/records_refused/records_environment_boundary.a",
+    "internal/oracle/testdata/records_refused/records_named_invalidated.a",
+    "internal/oracle/testdata/records_refused/records_narrowed_number.a",
+    "internal/oracle/testdata/records_refused/records_prototype_in.a",
+    "internal/oracle/testdata/records_refused/records_prototype_read.a",
+    "internal/oracle/testdata/records_refused/records_prototype_set.a",
+    "internal/oracle/testdata/records_scalars.a",
+    "internal/oracle/testdata/records_type_only_composition.a",
+    "internal/oracle/testdata/records_type_only_scanner.a",
+    "internal/oracle/testdata/records_type_only_value.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/01_has_property.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/02_get_property.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/03_own_keys.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/04_own_values.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/05_integer_order.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/06_delete_readd.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/07_optional_view.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/08_option_boolean.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/09_option_undefined.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/10_option_wrong_type.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/11_option_string.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/12_nested_entries.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/13_strict_option.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/14_group_by.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/15_inherited_read.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/16_built_strings.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/17_compare_missing_object.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/18_compare_missing_scalar.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/19_compare_empty_objects.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/01_paths-missing_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/01_paths-missing_constructor/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/02_paths-missing_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/02_paths-missing_toString/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/03_paths-missing_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/03_paths-missing_hasOwnProperty/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/04_paths-missing___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/04_paths-missing___proto__/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/05_paths-own_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/05_paths-own_constructor/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/06_paths-own_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/06_paths-own_toString/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/07_paths-own_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/07_paths-own_hasOwnProperty/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/08_paths-own___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/08_paths-own___proto__/target.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/09_exports-missing_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/10_exports-missing_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/11_exports-missing_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/12_exports-missing___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/13_exports-own_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/14_exports-own_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/15_exports-own_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/16_exports-own___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/17_typesVersions-own_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/18_typesVersions-own_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/19_typesVersions-own_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/20_typesVersions-own___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/21_config-unknown_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/22_config-unknown_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/23_config-unknown_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/24_config-unknown___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/25_cli-unknown_constructor/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/26_cli-unknown_toString/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/27_cli-unknown_hasOwnProperty/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/28_cli-unknown___proto__/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/29_compare-old/main.a",
+    "review/compiler/loom-records-3/stage3-mutant/records/input-fixtures/30_compare-new/main.a",
+    "stage3/records-maplike-main/corePublic-MapLike.a"
+  ],
+  "additional_files": [
+    "internal/oracle/testdata/void_widening_refused/async_return_unknown.a",
+    "internal/oracle/testdata/void_widening_refused/container_array.a",
+    "internal/oracle/testdata/void_widening_refused/container_interface.a",
+    "internal/oracle/testdata/void_widening_refused/container_nested.a",
+    "internal/oracle/testdata/void_widening_refused/container_object.a",
+    "internal/oracle/testdata/void_widening_refused/container_promise.a",
+    "internal/oracle/testdata/void_widening_refused/container_recursive.a",
+    "internal/oracle/testdata/void_widening_refused/container_tuple.a",
+    "internal/oracle/testdata/void_widening_refused/container_union_source.a",
+    "internal/oracle/testdata/void_widening_refused/container_union_target.a"
+  ],
+  "completed": 3709,
+  "seconds": 205.86637983199944,
+  "timeouts": [],
+  "exit_pairs": {
+    "(0, 0)": 2201,
+    "(1, 1)": 1477,
+    "(2, 2)": 9,
+    "(0, 1)": 22
+  },
+  "newly_refused": [
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/any_return.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/any_return.a:4:20: stage 0 can't lower a call returning any yet\n",
+        "seconds": 0.059
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/any_return.a:3:26: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => any; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.099
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/assignment.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/assignment.a:3:28: stage 0 can't lower a () => number seen as a () => unknown (one keeps something weakly that the other keeps strongly) yet\n",
+        "seconds": 0.088
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/assignment.a:4:9: Adamic 0.1 refuses a void-returning function at the assignment site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.09
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/async_return_unknown.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/async_return_unknown.a:3:1: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet\n",
+        "seconds": 0.1
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/async_return_unknown.a:3:56: Adamic 0.1 refuses a void value at a return site whose function returns unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.107
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_array.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.081
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_array.a:4:42: Adamic 0.1 refuses a void-returning function at the initializer site through [] seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.045
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_interface.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.078
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_interface.a:5:37: Adamic 0.1 refuses a void-returning function at the initializer site through <1> seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.075
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_nested.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.096
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_nested.a:4:77: Adamic 0.1 refuses a void-returning function at the initializer site through .list[].run seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.058
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_object.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.056
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_object.a:4:47: Adamic 0.1 refuses a void-returning function at the initializer site through .run seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.089
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_promise.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_promise.a:2:7: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet\n",
+        "seconds": 0.122
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_promise.a:4:38: Adamic 0.1 refuses a void-returning function at the initializer site through <1> seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.101
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_recursive.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.111
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_recursive.a:6:20: Adamic 0.1 refuses a void-returning function at the initializer site through .run seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.113
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_tuple.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.063
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_tuple.a:4:48: Adamic 0.1 refuses a void-returning function at the initializer site through [0] seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.06
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_union_source.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.109
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_union_source.a:5:47: Adamic 0.1 refuses a void-returning function at the initializer site through .run seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.096
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/container_union_target.a",
+      "original": false,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.099
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_union_target.a:4:77: Adamic 0.1 refuses a void-returning function at the initializer site through .run seen as () => number; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.096
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/empty_object_return.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.047
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/empty_object_return.a:3:42: Adamic 0.1 refuses a void-returning function at the initializer site seen as (() => void) | (() => {}); declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.094
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/generic_union.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/generic_union.a:3:16: stage 0 can't lower a call returning void | Result yet\n",
+        "seconds": 0.089
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/generic_union.a:6:26: Adamic 0.1 refuses a void-returning function at the argument site seen as (() => void) | (() => number); declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.056
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/rest_argument.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.041
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/rest_argument.a:8:6: Adamic 0.1 refuses a void-returning function at the argument site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.111
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/return_unknown.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.092
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/return_unknown.a:4:9: Adamic 0.1 refuses a void value at a return site whose function returns unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.087
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/shorthand.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.1
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/shorthand.a:3:48: Adamic 0.1 refuses a void-returning function at the initializer site through .make seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.061
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v01_widen_unknown.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.094
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v01_widen_unknown.a:4:30: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.098
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v01_widen_unknown.ts",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.1
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v01_widen_unknown.ts:4:30: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.091
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v02_widen_return.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.047
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v02_widen_return.a:4:9: Adamic 0.1 refuses a void-returning function at the return site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.076
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v03_widen_explicit_generic.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.09
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v03_widen_explicit_generic.a:7:30: Adamic 0.1 refuses a void-returning function at the argument site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.089
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v04_widen_union.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.055
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v04_widen_union.a:4:47: Adamic 0.1 refuses a void-returning function at the initializer site seen as (() => void) | (() => number); declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.099
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v05_widen_object_field.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.09
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v05_widen_object_field.a:7:20: Adamic 0.1 refuses a void-returning function at the initializer site through .run seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.097
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v06_widen_array.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.044
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v06_widen_array.a:4:34: Adamic 0.1 refuses a void-returning function at the initializer site through [] seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.095
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/v10_widen_param.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.075
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v10_widen_param.a:7:18: Adamic 0.1 refuses a void-returning function at the argument site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.038
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/w01_void_to_union_return.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.073
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/w01_void_to_union_return.a:4:35: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => void | number; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.042
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 0,
+        "stderr": "",
+        "seconds": 0.097
+      },
+      "head": {
+        "exit": 1,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a:5:9: Adamic 0.1 refuses a void value at a return site whose function returns void | number; declare the function's real return type (adamic/no-void-widening)\n",
+        "seconds": 0.099
+      }
+    }
+  ],
+  "panics": [
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_b.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x39023576ac40, {0x2, 0x399, 0xedf, {0x390234be5140, 0x5e}, 0x0, {0x390234bf0539, 0xc}, {0x390234be2380, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x39023576ac40, {0x2, 0x399, 0xedf, {0x390234be5140, 0x5e}, 0x0, {0x390234bf0539, 0xc}, {0x390234be2380, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x39023576ac40, {0x1f3d008?, 0x390235764a80?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x39023576ac40, {0x1f3d008, 0x390235764a80})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x39023576ac40, {0x1f3d008, 0x390235764a80})\n\t/tmp/adamic-void-split-base/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x39023576ac40, {0x1f3d7a8?, 0x39023573f9b0?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x39023576ac40, {0x1f3d7a8, 0x39023573f9b0})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x39023576ac40, {0x1f3d4e8?, 0x3902357624b0?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:139 +0xbbae\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x39023576ac40, {0x1f3d4e8, 0x3902357624b0})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x39023576ac40, {0x1f3de48?, 0x3902357624c8?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x39023576ac40, 0x390235737110)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x39023576ac40, {0x3902357370e0, 0x6, 0x18?}, 0x0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x390235731680, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffdcf7fb334?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x390234be0250?, 0x1f4fc08?, 0x390234bc01e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.133
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x356568424c40, {0x2, 0x399, 0xedf, {0x35656787d140, 0x5e}, 0x0, {0x356567888539, 0xc}, {0x35656787a480, ...}, ...})\n\t/workspace/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x356568424c40, {0x2, 0x399, 0xedf, {0x35656787d140, 0x5e}, 0x0, {0x356567888539, 0xc}, {0x35656787a480, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x356568424c40, {0x1f3ecc8?, 0x35656841eb40?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x356568424c40, {0x1f3ecc8, 0x35656841eb40})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x356568424c40, {0x1f3ecc8, 0x35656841eb40})\n\t/workspace/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x356568424c40, {0x1f3f468?, 0x35656841a990?})\n\t/workspace/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x356568424c40, {0x1f3f468, 0x35656841a990})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x356568424c40, {0x1f3f1a8?, 0x3565683f0828?})\n\t/workspace/adamic/internal/native/emit_expressions.go:139 +0xbbae\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x356568424c40, {0x1f3f1a8, 0x3565683f0828})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x356568424c40, {0x1f3fb08?, 0x3565683f0840?})\n\t/workspace/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x356568424c40, 0x3565683f5110)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x356568424c40, {0x3565683f50e0, 0x6, 0x18?}, 0x0)\n\t/workspace/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3565683ed680, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffe71294336?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x356567878250?, 0x1f50ca8?, 0x3565678581e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.101
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_native_p54_maybe_n.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x173b4107e700, {0x2, 0x56, 0xedf, {0x173b404f9140, 0x5e}, 0x0, {0x173b40504537, 0xc}, {0x173b404f6360, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x173b4107e700, {0x2, 0x56, 0xedf, {0x173b404f9140, 0x5e}, 0x0, {0x173b40504537, 0xc}, {0x173b404f6360, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x173b4107e700, {0x1f3d008?, 0x173b41076a80?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x173b4107e700, {0x1f3d008, 0x173b41076a80})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x173b4107e700, {0x1f3d008, 0x173b41076a80})\n\t/tmp/adamic-void-split-base/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x173b4107e700, {0x1f3d7a8?, 0x173b41053690?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x173b4107e700, {0x1f3d7a8, 0x173b41053690})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x173b4107e700, {0x1f3d4e8?, 0x173b41078438?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:139 +0xbbae\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x173b4107e700, {0x1f3d4e8, 0x173b41078438})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x173b4107e700, {0x1f3de48?, 0x173b41078450?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x173b4107e700, 0x173b4104b170)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x173b4107e700, {0x173b4104b140, 0x6, 0x18?}, 0x0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x173b41043680, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffd81cd4334?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x173b404f4250?, 0x1f4fc08?, 0x173b404d41e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.128
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: narrowed scalar union view requires a checked conversion\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.readUnionView(0x3ec98d22a700, {0x2, 0x56, 0xedf, {0x3ec98c6a1140, 0x5e}, 0x0, {0x3ec98c6ac537, 0xc}, {0x3ec98c69e360, ...}, ...})\n\t/workspace/adamic/internal/native/view_unions_read.go:65 +0x1354\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x3ec98d22a700, {0x2, 0x56, 0xedf, {0x3ec98c6a1140, 0x5e}, 0x0, {0x3ec98c6ac537, 0xc}, {0x3ec98c69e360, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:17 +0xd3\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3ec98d22a700, {0x1f3ecc8?, 0x3ec98d220b40?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3ec98d22a700, {0x1f3ecc8, 0x3ec98d220b40})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x3ec98d22a700, {0x1f3ecc8, 0x3ec98d220b40})\n\t/workspace/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3ec98d22a700, {0x1f3f468?, 0x3ec98d1ff6b0?})\n\t/workspace/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3ec98d22a700, {0x1f3f468, 0x3ec98d1ff6b0})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3ec98d22a700, {0x1f3f1a8?, 0x3ec98d222438?})\n\t/workspace/adamic/internal/native/emit_expressions.go:139 +0xbbae\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3ec98d22a700, {0x1f3f1a8, 0x3ec98d222438})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x3ec98d22a700, {0x1f3fb08?, 0x3ec98d222450?})\n\t/workspace/adamic/internal/native/emit_statements.go:73 +0x855\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x3ec98d22a700, 0x3ec98d1f7170)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x3ec98d22a700, {0x3ec98d1f7140, 0x6, 0x18?}, 0x0)\n\t/workspace/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3ec98c98b080, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7fff84e28336?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x3ec98c69c250?, 0x1f50ca8?, 0x3ec98c67c1e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.106
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p35_write_after_view_valid.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x614484aa540, {0x0, 0x1d, 0xee0, {0x61447926bd0, 0x6d}, 0x0, {0x61447d001c5, 0xb}, {0x61448353100, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x614484aa540, {0x1f3d008?, 0x6144849b200?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x614484aa540, {0x1f3d008, 0x6144849b200})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x614484aa540, {0x1f3de88?, 0x6144846fa80?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x614484aa540, 0x6144846f860)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x61447d00198, 0x4}, {0x0, 0x0}, {0x614483530e0, 0x1, 0x1}, 0x0, ...})\n\t/tmp/adamic-void-split-base/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x61448455980, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffd0fd1c326?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x61447918250?, 0x1f4fc08?, 0x614478f81e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.082
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x1437b04e540, {0x0, 0x1d, 0xee0, {0x1437a4c0bd0, 0x6d}, 0x0, {0x1437a8ac1c5, 0xb}, {0x1437aef7120, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1437b04e540, {0x1f3ecc8?, 0x1437b03f2c0?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1437b04e540, {0x1f3ecc8, 0x1437b03f2c0})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x1437b04e540, {0x1f3fb48?, 0x1437b011c20?})\n\t/workspace/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x1437b04e540, 0x1437b011a00)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x1437a8ac198, 0x4}, {0x0, 0x0}, {0x1437aef7100, 0x1, 0x1}, 0x0, ...})\n\t/workspace/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x1437aff9980, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffea2cc0328?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x1437a4b2250?, 0x1f50ca8?, 0x1437a4921e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.105
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p36_write_unrelated_same_name.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x299ce84b0fc0, {0x0, 0x1d, 0xee0, {0x299ce7f8abd0, 0x70}, 0x0, {0x299ce84b4178, 0xb}, {0x299ce899a3d0, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x299ce84b0fc0, {0x1f3d008?, 0x299ce8af5a40?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x299ce84b0fc0, {0x1f3d008, 0x299ce8af5a40})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x299ce84b0fc0, {0x1f3de88?, 0x299ce86ee7e0?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x299ce84b0fc0, 0x299ce86ee340)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x299ce84b414c, 0x4}, {0x0, 0x0}, {0x299ce899a3b8, 0x1, 0x1}, 0x0, ...})\n\t/tmp/adamic-void-split-base/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x299ce8ac3980, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffdd424a323?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x299ce7f7c250?, 0x1f4fc08?, 0x299ce7f5c1e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.087
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x7b1955a700, {0x0, 0x1d, 0xee0, {0x7b189d6bd0, 0x70}, 0x0, {0x7b18f02178, 0xb}, {0x7b19417120, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x7b1955a700, {0x1f3ecc8?, 0x7b1954bbc0?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x7b1955a700, {0x1f3ecc8, 0x7b1954bbc0})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x7b1955a700, {0x1f3fb48?, 0x7b1951dd80?})\n\t/workspace/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x7b1955a700, 0x7b1951db60)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x7b18f0214c, 0x4}, {0x0, 0x0}, {0x7b19417100, 0x1, 0x1}, 0x0, ...})\n\t/workspace/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x7b19505980, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffe0dbe4325?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x7b189c8250?, 0x1f50ca8?, 0x7b189a81e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.099
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p37_union_field_same_name.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x261c1935c700, {0x0, 0x1d, 0xee0, {0x261c187cebd0, 0x6b}, 0x0, {0x261c18bb0145, 0xb}, {0x261c19253420, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x261c1935c700, {0x1f3d008?, 0x261c1934da40?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x261c1935c700, {0x1f3d008, 0x261c1934da40})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x261c1935c700, {0x1f3de88?, 0x261c19329ac0?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x261c1935c700, 0x261c193298e0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x261c18bb0119, 0x4}, {0x0, 0x0}, {0x261c19253410, 0x1, 0x1}, 0x0, ...})\n\t/tmp/adamic-void-split-base/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x261c18a57c80, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffc23f91327?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x261c187c0250?, 0x1f4fc08?, 0x261c187a01e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.083
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x38a914e6a700, {0x0, 0x1d, 0xee0, {0x38a9142c2bd0, 0x6b}, 0x0, {0x38a9147ee145, 0xb}, {0x38a914cc33c0, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x38a914e6a700, {0x1f3ecc8?, 0x38a914e57bc0?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x38a914e6a700, {0x1f3ecc8, 0x38a914e57bc0})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x38a914e6a700, {0x1f3fb48?, 0x38a914e3d200?})\n\t/workspace/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x38a914e6a700, 0x38a914e3d020)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x38a9147ee119, 0x4}, {0x0, 0x0}, {0x38a914cc33a8, 0x1, 0x1}, 0x0, ...})\n\t/workspace/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x38a914e29980, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffd89c6d329?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x38a9142b4250?, 0x1f50ca8?, 0x38a9142941e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.081
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p38_same_name_maybe_number.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x3bfdbfa32700, {0x0, 0x56, 0xee0, {0x3bfdbeeb0a10, 0x6c}, 0x0, {0x3bfdbf292150, 0xb}, {0x3bfdbeea4300, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3bfdbfa32700, {0x1f3d008?, 0x3bfdbfa25800?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3bfdbfa32700, {0x1f3d008, 0x3bfdbfa25800})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x3bfdbfa32700, {0x1f3d008, 0x3bfdbfa25800})\n\t/tmp/adamic-void-split-base/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3bfdbfa32700, {0x1f3d7a8?, 0x3bfdbfa03710?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3bfdbfa32700, {0x1f3d7a8, 0x3bfdbfa03710})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3bfdbfa32700, {0x1f3d4e8?, 0x3bfdbfa2c690?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:139 +0xbbae\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3bfdbfa32700, {0x1f3d4e8, 0x3bfdbfa2c690})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).returnStatement(0x3bfdbfa32700, {{0x1f3d4e8?, 0x3bfdbfa2c690?}})\n\t/tmp/adamic-void-split-base/internal/native/emit_functions.go:155 +0x27c\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x3bfdbfa32700, {0x1f3dee8?, 0x3bfdbfa03740?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:182 +0x3836\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x3bfdbfa32700, 0x3bfdbfa03470)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x3bfdbf292127, 0x4}, {0x0, 0x0}, {0x3bfdbf8e7048, 0x1, 0x1}, 0x0, ...})\n\t/tmp/adamic-void-split-base/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3bfdbf9e1800, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7ffd7594b326?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x3bfdbeea2250?, 0x1f4fc08?, 0x3bfdbee821e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.072
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x2a35c1976700, {0x0, 0x56, 0xee0, {0x2a35c0ddca10, 0x6c}, 0x0, {0x2a35c1306150, 0xb}, {0x2a35c0dd02a0, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x2a35c1976700, {0x1f3ecc8?, 0x2a35c1961980?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x2a35c1976700, {0x1f3ecc8, 0x2a35c1961980})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).maybeToString(0x2a35c1976700, {0x1f3ecc8, 0x2a35c1961980})\n\t/workspace/adamic/internal/native/maybe.go:34 +0x2c\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x2a35c1976700, {0x1f3f468?, 0x2a35c19706c0?})\n\t/workspace/adamic/internal/native/emit_expressions.go:245 +0x4b29\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x2a35c1976700, {0x1f3f468, 0x2a35c19706c0})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x2a35c1976700, {0x1f3f1a8?, 0x2a35c1966768?})\n\t/workspace/adamic/internal/native/emit_expressions.go:139 +0xbbae\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x2a35c1976700, {0x1f3f1a8, 0x2a35c1966768})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).returnStatement(0x2a35c1976700, {{0x1f3f1a8?, 0x2a35c1966768?}})\n\t/workspace/adamic/internal/native/emit_functions.go:155 +0x27c\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x2a35c1976700, {0x1f3fba8?, 0x2a35c19706f0?})\n\t/workspace/adamic/internal/native/emit_statements.go:182 +0x3836\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x2a35c1976700, 0x2a35c1970420)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, {0x2a35c1306127, 0x4}, {0x0, 0x0}, {0x2a35c17d5368, 0x1, 0x1}, 0x0, ...})\n\t/workspace/adamic/internal/native/emit_functions.go:113 +0x1139\ngithub.com/system-inc/adamic/internal/native.cProgram(0x2a35c1939800, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:99 +0x13fd\ngithub.com/system-inc/adamic/internal/native.C(0x7fff71ab6328?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x2a35c0dce250?, 0x1f50ca8?, 0x2a35c0dae1e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.102
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p51_callable_union_destructure_wrong.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x294b27246a80, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x294b26af4120, 0x13}, {0x294b2757f528, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x294b27246a80, {0x1f3d008?, 0x294b26f25140?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x294b27246a80, {0x1f3d008, 0x294b26f25140})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x294b27246a80, {0x1f3de88?, 0x294b26ef7ae0?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x294b27246a80, 0x294b26efb3c0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x294b27246a80, {0x294b26efb380, 0x6, 0x0?}, 0x0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x294b26d85500, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7fff7ee1131c?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x294b26aee250?, 0x1f4fc08?, 0x294b26ace1e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.077
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x3f51abc74a80, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x3f51ab0d0978, 0x13}, {0x3f51abad14c0, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3f51abc74a80, {0x1f3ecc8?, 0x3f51abc63200?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3f51abc74a80, {0x1f3ecc8, 0x3f51abc63200})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x3f51abc74a80, {0x1f3fb48?, 0x3f51abc475c0?})\n\t/workspace/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x3f51abc74a80, 0x3f51abc413c0)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x3f51abc74a80, {0x3f51abc41380, 0x6, 0x0?}, 0x0)\n\t/workspace/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3f51abc3b380, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffecd22531e?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x3f51ab0ca250?, 0x1f50ca8?, 0x3f51ab0aa1e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.099
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p53_callable_union_destructure_good.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x3f86e7664a80, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x3f86e6ada240, 0x13}, {0x3f86e7513210, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x3f86e7664a80, {0x1f3d008?, 0x3f86e7657140?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x3f86e7664a80, {0x1f3d008, 0x3f86e7657140})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x3f86e7664a80, {0x1f3de88?, 0x3f86e762de40?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x3f86e7664a80, 0x3f86e762f480)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x3f86e7664a80, {0x3f86e762f440, 0x6, 0x0?}, 0x0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x3f86e6dc0900, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffc4cb8d31d?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x3f86e6ad4250?, 0x1f4fc08?, 0x3f86e6ab41e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.061
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x325180e90a80, {0x0, 0x0, 0x0, {0x0, 0x0}, 0x0, {0x32518032c240, 0x13}, {0x325180e1c7a0, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x325180e90a80, {0x1f3ecc8?, 0x325180e85200?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x325180e90a80, {0x1f3ecc8, 0x325180e85200})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x325180e90a80, {0x1f3fb48?, 0x325180e62fc0?})\n\t/workspace/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x325180e90a80, 0x325180e49480)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x325180e90a80, {0x325180e49440, 0x6, 0x0?}, 0x0)\n\t/workspace/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x32518064e480, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7fff5e7e931f?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0x325180326250?, 0x1f50ca8?, 0x3251803061e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.106
+      }
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p70_length_view_over_tuple.a",
+      "original": true,
+      "current": true,
+      "source_root": "/workspace/adamic",
+      "base": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0x1421686d08c0, {0x2, 0xedc, 0xee0, {0x142167b37880, 0x6c}, 0x0, {0x142167b38585, 0xc}, {0x142168529388, ...}, ...})\n\t/tmp/adamic-void-split-base/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0x1421686d08c0, {0x1f3d008?, 0x1421686d6180?})\n\t/tmp/adamic-void-split-base/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0x1421686d08c0, {0x1f3d008, 0x1421686d6180})\n\t/tmp/adamic-void-split-base/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0x1421686d08c0, {0x1f3de88?, 0x1421686a53e0?})\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x1421686d08c0, 0x14216869f180)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0x1421686d08c0, {0x14216869f140, 0x6, 0x18?}, 0x0)\n\t/tmp/adamic-void-split-base/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0x142168697680, 0xffffffffffffffff)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffc14462326?)\n\t/tmp/adamic-void-split-base/internal/native/emit.go:26 +0x2f\nmain.run({0x142167b28250?, 0x1f4fc08?, 0x142167b081e0?})\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/tmp/adamic-void-split-base/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.097
+      },
+      "head": {
+        "exit": 2,
+        "stderr": "panic: compiler bug: incomplete checked field contract\n\ngoroutine 1 [running]:\ngithub.com/system-inc/adamic/internal/native.(*emitter).viewField(0xc889de988c0, {0x2, 0xedc, 0xee0, {0xc889d2fb880, 0x6c}, 0x0, {0xc889d2fc585, 0xc}, {0xc889dcf3398, ...}, ...})\n\t/workspace/adamic/internal/native/view_fields.go:26 +0xce5\ngithub.com/system-inc/adamic/internal/native.(*emitter).evaluate(0xc889de988c0, {0x1f3ecc8?, 0xc889de9c180?})\n\t/workspace/adamic/internal/native/emit_expressions.go:148 +0xa254\ngithub.com/system-inc/adamic/internal/native.(*emitter).value(0xc889de988c0, {0x1f3ecc8, 0xc889de9c180})\n\t/workspace/adamic/internal/native/borrow.go:41 +0x249\ngithub.com/system-inc/adamic/internal/native.(*emitter).statement(0xc889de988c0, {0x1f3fb48?, 0xc889de695c0?})\n\t/workspace/adamic/internal/native/emit_statements.go:97 +0xc05\ngithub.com/system-inc/adamic/internal/native.(*emitter).statementAt(0xc889de988c0, 0xc889de63180)\n\t/workspace/adamic/internal/native/emit_statements.go:59 +0x65\ngithub.com/system-inc/adamic/internal/native.(*emitter).block(0xc889de988c0, {0xc889de63140, 0x6, 0x18?}, 0x0)\n\t/workspace/adamic/internal/native/emit_statements.go:32 +0xfc\ngithub.com/system-inc/adamic/internal/native.cProgram(0xc889de5d680, 0xffffffffffffffff)\n\t/workspace/adamic/internal/native/emit.go:109 +0x183f\ngithub.com/system-inc/adamic/internal/native.C(0x7ffc18915328?)\n\t/workspace/adamic/internal/native/emit.go:26 +0x2f\nmain.run({0xc889d2ec250?, 0x1f50ca8?, 0xc889d2cc1e0?})\n\t/workspace/adamic/cmd/adamic/main.go:81 +0x40f\nmain.main()\n\t/workspace/adamic/cmd/adamic/main.go:33 +0x45\n",
+        "seconds": 0.074
+      }
+    }
+  ]
+}

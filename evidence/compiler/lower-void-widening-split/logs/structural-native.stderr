@@ -1,0 +1,19 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==249384==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x559bc29a58b9 bp 0x000000000001 sp 0x7fff91cf47a0 T0)
+==249384==The signal is caused by a READ memory access.
+==249384==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+    #0 0x559bc29a58b9 in adamic_union_typeof /adamic-runtime/union.c:71:17
+    #1 0x559bc2937b9b in main /adamic-build/main.c:70:39
+    #2 0x7f40a916fca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+    #3 0x7f40a916fd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+    #4 0x559bc2851540 in _start (/tmp/void-split-evidence/structural-native+0x61540)
+
+==249384==Register values:
+rax = 0x0000559bc2a4d3e0  rbx = 0x00007b70a83e0040  rcx = 0x4045000000000000  rdx = 0x0808a00000000001  
+rdi = 0x4045000000000008  rsi = 0x0000000000000000  rbp = 0x0000000000000001  rsp = 0x00007fff91cf47a0  
+ r8 = 0x00007b70a83e0040   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0xafffff00000fff01  
+r12 = 0x0000000000000000  r13 = 0x00007fff91cf48e8  r14 = 0x00007ba0a83e0020  r15 = 0x4045000000000000  
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /adamic-runtime/union.c:71:17 in adamic_union_typeof
+==249384==ABORTING

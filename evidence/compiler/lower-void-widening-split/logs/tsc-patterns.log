@@ -1,0 +1,20 @@
+57 void callback passed to forEach
+  src/compiler/utilities.ts:8579 forEach(objectAllocatorPatchers, fn => fn(objectAllocator));
+  src/compiler/factory/nodeFactory.ts:1164 forEach(nodeFactoryPatchers, fn => fn(factory));
+15 void callback passed to forEachChild
+  src/compiler/parser.ts:1313 forEachChild(node, addWorkItem, addWorkItem); // By using a stack above and `unshift` here, we emulate a depth-first preorder traversal
+  src/compiler/parser.ts:10112 forEachChild(node, visitNode as (node: Node) => void, visitArray as (nodes: NodeArray<Node>) => void);
+4 void callback passed to forEachType
+  src/compiler/checker.ts:14832 forEachType(getLowerBoundOfKeyType(constraintType), addMemberForKeyType);
+  src/compiler/checker.ts:14838 forEachType(propNameType, t => addMemberForKeyTypeWorker(keyType, t));
+1 void fallback assigned to an any-returning timer field
+  src/compiler/watch.ts:679 setTimeout: maybeBind(system, system.setTimeout) || noop,
+13 void return into void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>
+  src/compiler/executeCommandLine.ts:579 return sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped);
+  src/compiler/executeCommandLine.ts:584 return sys.exit(ExitStatus.Success);
+5 void return into void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>
+  src/compiler/executeCommandLine.ts:833 return sys.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped);
+  src/compiler/executeCommandLine.ts:839 return sys.exit(ExitStatus.Success);
+32 void return into number | void | Symbol
+  src/compiler/binder.ts:2871 return checkContextualIdentifier(node as Identifier);
+  src/compiler/binder.ts:2882 return checkPrivateIdentifier(node as PrivateIdentifier);

@@ -1,0 +1,230 @@
+package lower
+
+import (
+	"strconv"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// A void call has already discarded its result. No runtime check can recover it
+// when another view of the function promises a value, even through a union.
+func (l *lowering) refuseVoidWidening(node *ast.Node) error {
+	if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
+		return nil
+	}
+	site := node
+	for site.Parent != nil && site.Parent.Kind == ast.KindParenthesizedExpression {
+		site = site.Parent
+	}
+	parent := site.Parent
+	if parent == nil {
+		return nil
+	}
+	source := l.checker.GetTypeAtLocation(node)
+	var target *checker.Type
+	name := "relation"
+	if viewSite(node) {
+		target = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	}
+	switch parent.Kind {
+	case ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration:
+		name = "initializer"
+	case ast.KindBinaryExpression:
+		name = "assignment"
+	case ast.KindReturnStatement, ast.KindArrowFunction:
+		name = "return"
+		for function := parent; function != nil; function = function.Parent {
+			if !ast.IsFunctionLike(function) {
+				continue
+			}
+			if ast.HasSyntacticModifier(function, ast.ModifierFlagsAsync) {
+				returns := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(function))
+				target = checker.Checker_getAwaitedType(l.checker, returns)
+			}
+			break
+		}
+	case ast.KindPropertyAssignment:
+		name = "object field"
+	case ast.KindShorthandPropertyAssignment:
+		name = "object field"
+		if symbol := l.checker.GetShorthandAssignmentValueSymbol(parent); symbol != nil {
+			source = l.checker.GetTypeOfSymbol(symbol)
+		}
+		if object := l.checker.GetContextualType(parent.Parent, checker.ContextFlagsNone); object != nil {
+			target = l.checker.GetTypeOfPropertyOfType(object, parent.Name().Text())
+		}
+	case ast.KindArrayLiteralExpression:
+		name = "array element"
+	case ast.KindAsExpression:
+		name = "assertion"
+		target = l.checker.GetTypeAtLocation(parent)
+	case ast.KindCallExpression, ast.KindNewExpression:
+		name = "argument"
+		// Explicit type arguments do not always contextualize the argument.
+		// Read the instantiated parameter, not the generic declaration's binder.
+		if signature := l.checker.GetResolvedSignature(parent); signature != nil {
+			var arguments []*ast.Node
+			if parent.Kind == ast.KindCallExpression {
+				arguments = parent.AsCallExpression().Arguments.Nodes
+			} else if parent.AsNewExpression().Arguments != nil {
+				arguments = parent.AsNewExpression().Arguments.Nodes
+			}
+			parameters := signature.Parameters()
+			for index, argument := range arguments {
+				if argument != site || len(parameters) == 0 {
+					continue
+				}
+				parameter := parameters[min(index, len(parameters)-1)]
+				target = l.checker.GetTypeOfSymbol(parameter)
+				if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+					target = l.checker.GetElementTypeOfArrayType(target)
+				}
+			}
+		}
+	}
+	if target == nil {
+		target = l.impliedTarget(node)
+	}
+	if target == nil || source == nil {
+		return nil
+	}
+	what := ""
+	if name == "return" && source.Flags() == checker.TypeFlagsVoid && target.Flags() != checker.TypeFlagsVoid {
+		what = "a void value at a return site whose function returns " + l.checker.TypeToString(target)
+	} else if found := l.voidWidened(source, target, 0, map[[2]*checker.Type]bool{}); found != nil {
+		if found.depthLimit {
+			return l.notYet(node, "a structural relation deeper than 64 type pairs while checking void function results")
+		}
+		what = "a void-returning function at the " + name + " site"
+		if found.path != "" {
+			what += " through " + found.path
+		}
+		what += " seen as " + l.checker.TypeToString(found.target)
+	}
+	if what == "" {
+		return nil
+	}
+	return &Refused{Where: l.program.Where(node), What: what,
+		Fix: "declare the function's real return type (adamic/no-void-widening)"}
+}
+
+func (l *lowering) onlyVoidCalls(source *checker.Type) bool {
+	signatures := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
+	if len(signatures) == 0 {
+		return false
+	}
+	for _, signature := range signatures {
+		if l.checker.GetReturnTypeOfSignature(signature).Flags() != checker.TypeFlagsVoid {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) hasWiderVoidCall(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if l.hasWiderVoidCall(member) {
+				return true
+			}
+		}
+	}
+	for _, signature := range l.checker.GetSignaturesOfType(target, checker.SignatureKindCall) {
+		if l.checker.GetReturnTypeOfSignature(signature).Flags() != checker.TypeFlagsVoid {
+			return true
+		}
+	}
+	return false
+}
+
+// A view can hide the discarded result inside a container, including a phantom
+// interface argument. Arrays use element slots, never their library methods.
+type voidWidening struct {
+	target     *checker.Type
+	path       string
+	depthLimit bool
+}
+
+func (l *lowering) voidWidened(source, target *checker.Type, depth int, seen map[[2]*checker.Type]bool) *voidWidening {
+	if source == nil || target == nil || source == target {
+		return nil
+	}
+	pair := [2]*checker.Type{source, target}
+	if seen[pair] {
+		return nil
+	}
+	seen[pair] = true
+	if depth >= 64 {
+		// Exhausting a proof must not silently admit a deeper unsafe callable.
+		return &voidWidening{depthLimit: true}
+	}
+	if l.onlyVoidCalls(source) && target.Flags()&checker.TypeFlagsUnion != 0 { return nil }
+	if l.onlyVoidCalls(source) && l.hasWiderVoidCall(target) {
+		return &voidWidening{target: target}
+	}
+	if source.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range source.Types() {
+			if found := l.voidWidened(member, target, depth+1, seen); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if found := l.voidWidened(source, member, depth+1, seen); found != nil {
+				return found
+			}
+		}
+		return nil
+	}
+	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return l.voidWidened(l.checker.GetBaseConstraintOfType(source), target, depth+1, seen)
+	}
+	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return l.voidWidened(source, l.checker.GetBaseConstraintOfType(target), depth+1, seen)
+	}
+	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
+		return nil
+	}
+	if (l.checker.IsArrayType(source) || checker.IsTupleType(source)) && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+		if checker.IsTupleType(source) && checker.IsTupleType(target) {
+			sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+			for index, inside := range sources {
+				if index < len(targets) {
+					if found := l.voidWidened(inside, targets[index], depth+1, seen); found != nil {
+						found.path = "[" + strconv.Itoa(index) + "]" + found.path
+						return found
+					}
+				}
+			}
+			return nil
+		}
+		if found := l.voidWidened(l.checker.GetNumberIndexType(source), l.checker.GetNumberIndexType(target), depth+1, seen); found != nil {
+			found.path = "[]" + found.path
+			return found
+		}
+		return nil
+	}
+	if source.ObjectFlags()&checker.ObjectFlagsReference != 0 && target.ObjectFlags()&checker.ObjectFlagsReference != 0 && source.Target() != nil && source.Target() == target.Target() {
+		sources, targets := l.checker.GetTypeArguments(source), l.checker.GetTypeArguments(target)
+		for index, inside := range sources {
+			if index < len(targets) {
+				if found := l.voidWidened(inside, targets[index], depth+1, seen); found != nil {
+					found.path = "<" + strconv.Itoa(index+1) + ">" + found.path
+					return found
+				}
+			}
+		}
+	}
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		from := l.checker.GetTypeOfPropertyOfType(source, property.Name)
+		to := l.checker.GetTypeOfPropertyOfType(target, property.Name)
+		if found := l.voidWidened(from, to, depth+1, seen); found != nil {
+			found.path = "." + property.Name + found.path
+			return found
+		}
+	}
+	return nil
+}

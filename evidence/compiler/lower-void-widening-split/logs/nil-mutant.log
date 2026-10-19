@@ -1,0 +1,225 @@
+=== RUN   TestVoidWideningIsRefused
+=== PAUSE TestVoidWideningIsRefused
+=== CONT  TestVoidWideningIsRefused
+=== RUN   TestVoidWideningIsRefused/any_return.a
+=== PAUSE TestVoidWideningIsRefused/any_return.a
+=== RUN   TestVoidWideningIsRefused/assignment.a
+=== PAUSE TestVoidWideningIsRefused/assignment.a
+=== RUN   TestVoidWideningIsRefused/async_return_unknown.a
+=== PAUSE TestVoidWideningIsRefused/async_return_unknown.a
+=== RUN   TestVoidWideningIsRefused/container_array.a
+=== PAUSE TestVoidWideningIsRefused/container_array.a
+=== RUN   TestVoidWideningIsRefused/container_interface.a
+=== PAUSE TestVoidWideningIsRefused/container_interface.a
+=== RUN   TestVoidWideningIsRefused/container_nested.a
+=== PAUSE TestVoidWideningIsRefused/container_nested.a
+=== RUN   TestVoidWideningIsRefused/container_object.a
+=== PAUSE TestVoidWideningIsRefused/container_object.a
+=== RUN   TestVoidWideningIsRefused/container_promise.a
+=== PAUSE TestVoidWideningIsRefused/container_promise.a
+=== RUN   TestVoidWideningIsRefused/container_recursive.a
+=== PAUSE TestVoidWideningIsRefused/container_recursive.a
+=== RUN   TestVoidWideningIsRefused/container_tuple.a
+=== PAUSE TestVoidWideningIsRefused/container_tuple.a
+=== RUN   TestVoidWideningIsRefused/container_union_source.a
+=== PAUSE TestVoidWideningIsRefused/container_union_source.a
+=== RUN   TestVoidWideningIsRefused/container_union_target.a
+=== PAUSE TestVoidWideningIsRefused/container_union_target.a
+=== RUN   TestVoidWideningIsRefused/empty_object_return.a
+=== PAUSE TestVoidWideningIsRefused/empty_object_return.a
+=== RUN   TestVoidWideningIsRefused/generic_union.a
+=== PAUSE TestVoidWideningIsRefused/generic_union.a
+=== RUN   TestVoidWideningIsRefused/rest_argument.a
+=== PAUSE TestVoidWideningIsRefused/rest_argument.a
+=== RUN   TestVoidWideningIsRefused/return_unknown.a
+=== PAUSE TestVoidWideningIsRefused/return_unknown.a
+=== RUN   TestVoidWideningIsRefused/shorthand.a
+=== PAUSE TestVoidWideningIsRefused/shorthand.a
+=== RUN   TestVoidWideningIsRefused/v01_widen_unknown.a
+=== PAUSE TestVoidWideningIsRefused/v01_widen_unknown.a
+=== RUN   TestVoidWideningIsRefused/v01_widen_unknown.ts
+=== PAUSE TestVoidWideningIsRefused/v01_widen_unknown.ts
+=== RUN   TestVoidWideningIsRefused/v02_widen_return.a
+=== PAUSE TestVoidWideningIsRefused/v02_widen_return.a
+=== RUN   TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+=== PAUSE TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+=== RUN   TestVoidWideningIsRefused/v04_widen_union.a
+=== PAUSE TestVoidWideningIsRefused/v04_widen_union.a
+=== RUN   TestVoidWideningIsRefused/v05_widen_object_field.a
+=== PAUSE TestVoidWideningIsRefused/v05_widen_object_field.a
+=== RUN   TestVoidWideningIsRefused/v06_widen_array.a
+=== PAUSE TestVoidWideningIsRefused/v06_widen_array.a
+=== RUN   TestVoidWideningIsRefused/v10_widen_param.a
+=== PAUSE TestVoidWideningIsRefused/v10_widen_param.a
+=== RUN   TestVoidWideningIsRefused/w01_void_to_union_return.a
+=== PAUSE TestVoidWideningIsRefused/w01_void_to_union_return.a
+=== RUN   TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+=== PAUSE TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+=== CONT  TestVoidWideningIsRefused/any_return.a
+=== CONT  TestVoidWideningIsRefused/rest_argument.a
+=== CONT  TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+=== CONT  TestVoidWideningIsRefused/w01_void_to_union_return.a
+=== CONT  TestVoidWideningIsRefused/v10_widen_param.a
+=== NAME  TestVoidWideningIsRefused/any_return.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v10_widen_param.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/rest_argument.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/w01_void_to_union_return.a
+    void_widening_test.go:44: gate cache node miss
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/v06_widen_array.a
+=== NAME  TestVoidWideningIsRefused/any_return.a
+    void_widening_test.go:50: want a void widening refusal, got /workspace/adamic/internal/oracle/testdata/void_widening_refused/any_return.a:4:20: stage 0 can't lower a call returning any yet
+=== CONT  TestVoidWideningIsRefused/v05_widen_object_field.a
+=== NAME  TestVoidWideningIsRefused/v10_widen_param.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/v04_widen_union.a
+=== NAME  TestVoidWideningIsRefused/rest_argument.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+=== NAME  TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/v02_widen_return.a
+=== NAME  TestVoidWideningIsRefused/v04_widen_union.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v06_widen_array.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v05_widen_object_field.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v02_widen_return.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v04_widen_union.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/v01_widen_unknown.ts
+=== NAME  TestVoidWideningIsRefused/v06_widen_array.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/v01_widen_unknown.a
+=== NAME  TestVoidWideningIsRefused/v05_widen_object_field.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/shorthand.a
+=== NAME  TestVoidWideningIsRefused/v01_widen_unknown.ts
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v01_widen_unknown.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/return_unknown.a
+=== NAME  TestVoidWideningIsRefused/v02_widen_return.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_promise.a
+=== NAME  TestVoidWideningIsRefused/shorthand.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/return_unknown.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_promise.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v01_widen_unknown.ts
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/generic_union.a
+=== NAME  TestVoidWideningIsRefused/shorthand.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/empty_object_return.a
+=== NAME  TestVoidWideningIsRefused/generic_union.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/v01_widen_unknown.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_union_target.a
+=== NAME  TestVoidWideningIsRefused/return_unknown.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_union_source.a
+=== NAME  TestVoidWideningIsRefused/container_promise.a
+    void_widening_test.go:50: want a void widening refusal, got /workspace/adamic/internal/oracle/testdata/void_widening_refused/container_promise.a:2:7: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet
+=== CONT  TestVoidWideningIsRefused/container_tuple.a
+=== NAME  TestVoidWideningIsRefused/empty_object_return.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_union_target.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_tuple.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_union_source.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/generic_union.a
+    void_widening_test.go:50: want a void widening refusal, got /workspace/adamic/internal/oracle/testdata/void_widening_refused/generic_union.a:3:16: stage 0 can't lower a call returning void | Result yet
+=== CONT  TestVoidWideningIsRefused/container_recursive.a
+=== NAME  TestVoidWideningIsRefused/container_tuple.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_interface.a
+=== NAME  TestVoidWideningIsRefused/empty_object_return.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_object.a
+=== NAME  TestVoidWideningIsRefused/container_recursive.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_union_source.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_nested.a
+=== NAME  TestVoidWideningIsRefused/container_union_target.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/async_return_unknown.a
+=== NAME  TestVoidWideningIsRefused/container_object.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_interface.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_nested.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/async_return_unknown.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_recursive.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/container_array.a
+=== NAME  TestVoidWideningIsRefused/container_nested.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== CONT  TestVoidWideningIsRefused/assignment.a
+=== NAME  TestVoidWideningIsRefused/async_return_unknown.a
+    void_widening_test.go:50: want a void widening refusal, got /workspace/adamic/internal/oracle/testdata/void_widening_refused/async_return_unknown.a:3:1: stage 0 can't lower async object, union, Promise-handle or thenable payloads (full Promise compatibility) yet
+=== NAME  TestVoidWideningIsRefused/container_array.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_interface.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== NAME  TestVoidWideningIsRefused/container_object.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== NAME  TestVoidWideningIsRefused/assignment.a
+    void_widening_test.go:44: gate cache node miss
+=== NAME  TestVoidWideningIsRefused/container_array.a
+    void_widening_test.go:50: want a void widening refusal, got <nil>
+=== NAME  TestVoidWideningIsRefused/assignment.a
+    void_widening_test.go:50: want a void widening refusal, got /workspace/adamic/internal/oracle/testdata/void_widening_refused/assignment.a:3:28: stage 0 can't lower a () => number seen as a () => unknown (one keeps something weakly that the other keeps strongly) yet
+--- FAIL: TestVoidWideningIsRefused (0.00s)
+    --- FAIL: TestVoidWideningIsRefused/w01_void_to_union_return.a (21.45s)
+    --- FAIL: TestVoidWideningIsRefused/any_return.a (21.55s)
+    --- FAIL: TestVoidWideningIsRefused/v10_widen_param.a (21.62s)
+    --- FAIL: TestVoidWideningIsRefused/rest_argument.a (21.68s)
+    --- FAIL: TestVoidWideningIsRefused/w03_union_void_returns_void_call.a (21.78s)
+    --- FAIL: TestVoidWideningIsRefused/v04_widen_union.a (1.17s)
+    --- FAIL: TestVoidWideningIsRefused/v06_widen_array.a (1.57s)
+    --- FAIL: TestVoidWideningIsRefused/v05_widen_object_field.a (1.71s)
+    --- FAIL: TestVoidWideningIsRefused/v03_widen_explicit_generic.a (1.71s)
+    --- FAIL: TestVoidWideningIsRefused/v02_widen_return.a (1.62s)
+    --- FAIL: TestVoidWideningIsRefused/v01_widen_unknown.ts (1.51s)
+    --- FAIL: TestVoidWideningIsRefused/shorthand.a (1.31s)
+    --- FAIL: TestVoidWideningIsRefused/v01_widen_unknown.a (1.78s)
+    --- FAIL: TestVoidWideningIsRefused/return_unknown.a (1.49s)
+    --- FAIL: TestVoidWideningIsRefused/container_promise.a (1.52s)
+    --- FAIL: TestVoidWideningIsRefused/generic_union.a (1.72s)
+    --- FAIL: TestVoidWideningIsRefused/container_tuple.a (1.50s)
+    --- FAIL: TestVoidWideningIsRefused/empty_object_return.a (1.84s)
+    --- FAIL: TestVoidWideningIsRefused/container_union_source.a (1.69s)
+    --- FAIL: TestVoidWideningIsRefused/container_union_target.a (1.88s)
+    --- FAIL: TestVoidWideningIsRefused/container_recursive.a (1.46s)
+    --- FAIL: TestVoidWideningIsRefused/container_nested.a (1.37s)
+    --- FAIL: TestVoidWideningIsRefused/async_return_unknown.a (1.40s)
+    --- FAIL: TestVoidWideningIsRefused/container_interface.a (1.75s)
+    --- FAIL: TestVoidWideningIsRefused/container_object.a (1.76s)
+    --- FAIL: TestVoidWideningIsRefused/container_array.a (1.42s)
+    --- FAIL: TestVoidWideningIsRefused/assignment.a (1.35s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=27
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	29.408s
+FAIL

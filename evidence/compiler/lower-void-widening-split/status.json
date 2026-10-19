@@ -1,0 +1,24 @@
+{
+  "implementation": "0dfe22fb540f7a7649a1811d62f9b1c9e2a74016",
+  "base": "6c69f66f55e754889f8fa88e17f93f887980b808",
+  "implementation_commits": 1,
+  "clean": true,
+  "gates": "passed",
+  "refused_programs": 27,
+  "mutants": "all three caught",
+  "counts_changed": [
+    "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/void_widening_legal.a.counts"
+  ],
+  "sweep": {
+    "unique": 3709,
+    "current": 3611,
+    "original": 3699,
+    "historical_absent_from_base": 98,
+    "additional_probes": 10,
+    "new_refusals": 27,
+    "timeouts": 0,
+    "existing_matching_panics": 9,
+    "other_exit_changes": 0
+  },
+  "first_green_pushed_utc": "2026-10-19T07:44:06.191609+00:00"
+}

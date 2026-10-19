@@ -1,0 +1,72 @@
+0dfe22fb540f7a7649a1811d62f9b1c9e2a74016
+6c69f66f55e754889f8fa88e17f93f887980b808
+never cut alone: lands with chg_tsr07c1d (the counts split, 6c69f66f), because its counts are the split's per-fixture files.
+
+Refuse relating an exactly void function result to a wider result before native code can read a value it discarded. Walk arrays, tuples, properties, unions, and shared generic references, with a seen-set and a depth bound. Name the relation site and container path and ask for the function's real return type.
+
+Use the awaited return type for async forwarding so Promise<void> keeps its legal discard. Keep both async forwarding fixtures intact and declare the regexp callback's actual undefined result. Permit implicit undefined exits in declared void unions.
+
+Pin 27 refused programs and compare the legal forms with source Node through both backends. Record only the new legal fixture's counts in the split layout.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+
+/tmp/adamic-void-split-commit: go1.27.1
+	path	github.com/system-inc/adamic/cmd/adamic
+	mod	github.com/system-inc/adamic	v0.0.0-20261019074340-0dfe22fb540f	
+	dep	github.com/klauspost/cpuid/v2	v2.2.10	h1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=
+	dep	github.com/microsoft/TypeScript/tsc	(devel)	
+	dep	github.com/microsoft/TypeScript/tsc/shim/ast	v0.0.0
+	=>	./cohere/TypeScript-shim/ast	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/bundled	v0.0.0
+	=>	./cohere/TypeScript-shim/bundled	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/checker	v0.0.0
+	=>	./cohere/TypeScript-shim/checker	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/compiler	v0.0.0
+	=>	./cohere/TypeScript-shim/compiler	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/core	v0.0.0
+	=>	./cohere/TypeScript-shim/core	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/locale	v0.0.0
+	=>	./cohere/TypeScript-shim/locale	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/scanner	v0.0.0
+	=>	./cohere/TypeScript-shim/scanner	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/tsoptions	v0.0.0
+	=>	./cohere/TypeScript-shim/tsoptions	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/tspath	v0.0.0
+	=>	./cohere/TypeScript-shim/tspath	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/vfs	v0.0.0
+	=>	./cohere/TypeScript-shim/vfs	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs	v0.0.0
+	=>	./cohere/TypeScript-shim/vfs/cachedvfs	(devel)	
+	
+	dep	github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs	v0.0.0
+	=>	./cohere/TypeScript-shim/vfs/osvfs	(devel)	
+	
+	dep	github.com/zeebo/xxh3	v1.1.0	h1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=
+	dep	golang.org/x/sync	v0.23.0	h1:KameEIfc1IkluZyXWLn39Wd4tURc6GbCiISGiZm2bQk=
+	dep	golang.org/x/sys	v0.48.0	h1:bbX/i/6MgT9BVLM9RT1thmxL04yeTAhbEz4SyadbXoo=
+	dep	golang.org/x/text	v0.42.0	h1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=
+	build	-buildmode=exe
+	build	-compiler=gc
+	build	CGO_ENABLED=1
+	build	CGO_CFLAGS=
+	build	CGO_CPPFLAGS=
+	build	CGO_CXXFLAGS=
+	build	CGO_LDFLAGS=
+	build	GOARCH=amd64
+	build	GOOS=linux
+	build	GOAMD64=v1
+	build	vcs=git
+	build	vcs.revision=0dfe22fb540f7a7649a1811d62f9b1c9e2a74016
+	build	vcs.time=2026-10-19T07:43:40Z
+	build	vcs.modified=false
+733b1c7c889fc51d8121252a75af15979d1ddaa5ace96799434faaa68c38583c  /tmp/adamic-void-split-commit
