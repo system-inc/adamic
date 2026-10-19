@@ -23,10 +23,11 @@ func C(program *ir.Program) string {
 	if program.Async != nil {
 		return asyncC(program)
 	}
-	return cProgram(program, -1)
+	return cProgram(program, -1, mainLines)
 }
 
-func cProgram(program *ir.Program, handler int) string {
+// cProgram is C for program, with main's top-level code in parts of about lines lines (mainParts).
+func cProgram(program *ir.Program, handler, lines int) string {
 	// Borrowed elements first: reuse must see the variables they mark Borrowed.
 	elementBorrows, lending := planElementBorrows(program)
 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}
@@ -121,14 +122,39 @@ func cProgram(program *ir.Program, handler int) string {
 		}
 	}
 	emitter.inRegion = false
+	// main's top-level code, one statement at a time, as block emits it, so it can be cut into parts.
+	emitter.indent = 1
+	emitter.scopes = append(emitter.scopes, nil)
+	statements := make([]string, 0, len(program.Main)+1)
+	for index := range program.Main {
+		emitter.statementAt(&program.Main[index])
+		statements = append(statements, emitter.out.String())
+		emitter.out.Reset()
+	}
+	emitter.releaseScopes(len(emitter.scopes) - 1)
+	emitter.scopes = emitter.scopes[:len(emitter.scopes)-1]
+	statements = append(statements, emitter.out.String())
+	emitter.out.Reset()
+	parts := mainParts(statements, lines)
+	if len(parts) > 1 {
+		for index, part := range parts {
+			fmt.Fprintf(&bodies, "static void adamic_main_%d(void) {\n%s}\n\n", index, part)
+		}
+	}
 	bodies.WriteString("int main(int argc, char **argv) {\n")
 	bodies.WriteString("\tadamic_start(argc, argv);\n")
-	emitter.indent = 1
-	emitter.block(program.Main, nil)
+	if len(parts) > 1 {
+		for index := range parts {
+			fmt.Fprintf(&bodies, "\tadamic_main_%d();\n", index)
+		}
+	} else {
+		bodies.WriteString(parts[0])
+	}
 	if handler < 0 {
 		emitter.releaseGlobals()
 	}
 	bodies.WriteString(emitter.out.String())
+	emitter.out.Reset()
 	bodies.WriteString("\treturn adamic_host_exit_status();\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))
@@ -164,6 +190,128 @@ func cProgram(program *ir.Program, handler int) string {
 	emitter.classDeclarations(&builder)
 	builder.WriteString(bodies.String())
 	return builder.String()
+}
+
+// mainLines is about the most lines of C main's top-level code is given in one function. clang -O2
+// spends time superlinear in a function's size once it passes about 12,500 lines, and every module's
+// top-level code runs in main, so a long main is cut into parts that main calls in order
+// (docs/tsc-generated-c.md). A part can be longer only by holding one statement that is.
+const mainLines = 4000
+
+// mainParts groups main's statements, each one top-level statement's C (the last what main's scope
+// releases at its end), into parts of about lines lines, in order. A cut falls only between two
+// statements that share no name either one declares: a local, a temporary or a label lives in the
+// function that declares it, so one used past a cut would leave the part after it without it. Every
+// statement's own names are within it, its temporaries released where it ends, except what main's
+// scope holds, which the last statement releases, so that keeps whatever holds it in the last part.
+// main's own parameters stay in main: a statement that reads them is never cut away.
+func mainParts(statements []string, lines int) []string {
+	total := 0
+	for _, statement := range statements {
+		total += strings.Count(statement, "\n")
+	}
+	if total <= lines {
+		return []string{strings.Join(statements, "")}
+	}
+	// declared is the statement each name is declared in, last the last statement that uses each
+	// identifier.
+	declared, last := map[string]int{}, map[string]int{}
+	for index, statement := range statements {
+		for _, line := range strings.Split(statement, "\n") {
+			tokens, err := cTokens(line)
+			if err != nil {
+				// A literal or comment that spans lines isn't what the emitter writes: no cut.
+				return []string{strings.Join(statements, "")}
+			}
+			for _, token := range tokens {
+				if !identifierByte(token.text[0]) {
+					continue
+				}
+				last[token.text] = index
+				if _, seen := declared[token.text]; !seen && emittedLocal(token.text) {
+					declared[token.text] = index
+				}
+			}
+			if name := declaredName(line, tokens); name != "" {
+				if _, seen := declared[name]; !seen {
+					declared[name] = index
+				}
+			}
+		}
+	}
+	if _, read := last["argc"]; read {
+		return []string{strings.Join(statements, "")}
+	}
+	if _, read := last["argv"]; read {
+		return []string{strings.Join(statements, "")}
+	}
+	// held[index] says a name declared at or before statement index is used after it: each name
+	// opens a span where it's declared and closes it where it's last used.
+	spans := make([]int, len(statements)+1)
+	for name, first := range declared {
+		if last[name] > first {
+			spans[first]++
+			spans[last[name]]--
+		}
+	}
+	held := make([]bool, len(statements))
+	for index, open := 0, 0; index < len(statements); index++ {
+		open += spans[index]
+		held[index] = open > 0
+	}
+	parts := []string{}
+	var part strings.Builder
+	partLines := 0
+	for index, statement := range statements {
+		if statement == "" {
+			continue
+		}
+		count := strings.Count(statement, "\n")
+		if partLines > 0 && partLines+count > lines && !held[index-1] {
+			parts = append(parts, part.String())
+			part.Reset()
+			partLines = 0
+		}
+		part.WriteString(statement)
+		partLines += count
+	}
+	return append(parts, part.String())
+}
+
+// emittedLocal says a name is one the emitter gives only a function's own C variables: a temporary
+// (labels among them) or a local that isn't a global. Each is unique in the program, so wherever it's
+// first seen in main is where main declares it, however deep.
+func emittedLocal(name string) bool {
+	return strings.HasPrefix(name, "adamic_temporary_") || strings.HasPrefix(name, "adamic_local_")
+}
+
+// declaredName is the name a line of main declares, or "": a label (`name:;`, how the emitter writes
+// every one), or a declaration at main's own depth, a type then the name, then `=`, `;` or `[`. A
+// line that isn't a declaration may read as one (`return x;`), which only keeps a cut from falling
+// where x is used on both sides of it.
+func declaredName(line string, tokens []cToken) string {
+	if len(tokens) == 3 && tokens[1].text == ":" && tokens[2].text == ";" && identifierByte(tokens[0].text[0]) {
+		return tokens[0].text
+	}
+	for index, token := range tokens {
+		switch token.text {
+		case "(":
+			return ""
+		case "=", ";", "[":
+			if index < 2 || !identifierByte(tokens[0].text[0]) || !identifierByte(tokens[index-1].text[0]) {
+				return ""
+			}
+			if before := tokens[index-2].text; before != "*" && !identifierByte(before[0]) {
+				return ""
+			}
+			if !strings.HasPrefix(line, "\t") || strings.HasPrefix(line, "\t\t") {
+				// Inside a statement's own braces: its scope ends with it.
+				return ""
+			}
+			return tokens[index-1].text
+		}
+	}
+	return ""
 }
 
 // longestLiteral is the longest string literal C11 promises to compile (5.2.4.1: 4,095 characters),
