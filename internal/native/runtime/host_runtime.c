@@ -26,7 +26,13 @@
 #if defined(__has_feature)
 #if __has_feature(address_sanitizer)
 #define HOST_ASAN 1
+#if __has_include(<sanitizer/allocator_interface.h>)
 #include <sanitizer/allocator_interface.h>
+#else
+// GCC's libasan exports this size_t API but does not ship the optional header.
+size_t __sanitizer_get_heap_size(void);
+size_t __sanitizer_get_current_allocated_bytes(void);
+#endif
 #endif
 #endif
 #ifndef HOST_ASAN
