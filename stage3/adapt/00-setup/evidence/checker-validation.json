@@ -1,0 +1,180 @@
+{
+  "date": "2026-10-19",
+  "base": "2b22b31ccc8b218ac564fba8f8641adb63160e6f",
+  "commands": [
+    {
+      "command": "timeout 120 git fetch origin",
+      "exit": 0,
+      "result": "origin/main fetched; branch created at 2b22b31ccc8b218ac564fba8f8641adb63160e6f"
+    },
+    {
+      "command": "export GOPROXY='https://proxy.golang.org|direct'; timeout 600 bash cloud/setup.sh > /tmp/onediag-setup.log 2>&1",
+      "exit": 124,
+      "result": "Submodules ready at 483.940s; shared cache ready at 490.330s; stopped during dependency cache warming at 600s. Retried with completed downloads.",
+      "log": "checker-validation-logs/setup-first.log.gz"
+    },
+    {
+      "command": "export GOPROXY='https://proxy.golang.org|direct'; timeout 300 bash cloud/setup.sh > /tmp/onediag-setup-retry.log 2>&1",
+      "exit": 0,
+      "result": "Setup complete in 168.750s, nproc 5, cgroup quota 4 CPUs. Completed using downloaded submodules and partially warmed cache.",
+      "timingLines": [
+        "setup: go ready (0.023s)",
+        "setup: node ready (0.025s)",
+        "setup: submodules ready (0.067s)",
+        "setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s",
+        "setup: markdown dependencies ready (0.075s)",
+        "setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.155s)",
+        "setup: shared cache ready (0.823s)",
+        "setup: go build ready (168.641s)",
+        "setup: test binaries deferred (use --warm-tests) (168.717s)",
+        "setup: build cache warm (168.719s)",
+        "setup: build-flags commit=2b22b31ccc8b218ac564fba8f8641adb63160e6f nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gocacheprog=on load-before=0.94 1.01 0.57 1/156 7007 load-after=4.81 2.90 1.38 1/161 8701",
+        "setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (168.750s)",
+        "setup: source /workspace/adamic-tools/env.sh",
+        "setup: logs /tmp/adamic-gate/setup.LDdlil"
+      ],
+      "log": "checker-validation-logs/setup-retry.log.gz"
+    },
+    {
+      "command": "source /workspace/adamic-tools/env.sh; timeout 180 npm ci --prefix stage3/api > /tmp/onediag-api-install.log 2>&1",
+      "exit": 0,
+      "result": "added 3 packages in 3s",
+      "log": "checker-validation-logs/api-install.log.gz"
+    },
+    {
+      "command": "timeout 240 git clone --depth 1 --branch v6.0.3 https://github.com/microsoft/TypeScript.git /tmp/onediag-typescript-source > /tmp/onediag-source.log 2>&1",
+      "exit": 0,
+      "result": "Pinned 050880ce59e30b356b686bd3144efe24f875ebc8 source checkout",
+      "log": "checker-validation-logs/source.log.gz"
+    },
+    {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_TYPESCRIPT_SOURCE=/tmp/onediag-typescript-source timeout 180 bash stage3/apply.sh /tmp/onediag-adapted > /tmp/onediag-apply.log 2>&1",
+      "exit": 0,
+      "result": "Completed all adaptations and saved adapted tree",
+      "log": "checker-validation-logs/apply.log.gz"
+    },
+    {
+      "command": "source /workspace/adamic-tools/env.sh; timeout 360 node /tmp/onediag-census.cjs > /tmp/onediag-census.log 2>&1",
+      "exit": 0,
+      "result": "Six CLI/API runs: 234, 235, 234, 235, 135, 319 diagnostics. The committed portable driver accepts repo/tree/scratch as arguments.",
+      "log": "checker-validation-logs/census.log.gz"
+    },
+    {
+      "command": "source /workspace/adamic-tools/env.sh; timeout 150 node /tmp/onediag-census.cjs /workspace/adamic /tmp/onediag-adapted /tmp/onediag-census --option-controls > /tmp/onediag-option-controls.log 2>&1",
+      "exit": 0,
+      "result": "Two CLI/API controls: 166 and 230 diagnostics",
+      "log": "checker-validation-logs/option-controls.log.gz"
+    },
+    {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_TYPESCRIPT_SOURCE=/tmp/onediag-typescript-source timeout 90 python3 stage3/test_apply.py > /tmp/onediag-apply-tests.log 2>&1",
+      "exit": 0,
+      "result": "Ran 23 tests in 16.142s; OK",
+      "log": "checker-validation-logs/apply-tests.log.gz"
+    },
+    {
+      "command": "timeout 30 node --check stage3/adapt/00-setup/evidence/checker-census.cjs > /tmp/onediag-driver-syntax.log 2>&1",
+      "exit": 0,
+      "result": "No syntax errors"
+    },
+    {
+      "command": "timeout 30 node --check stage3/adapt/00-setup/evidence/verify-checker-census.cjs > /tmp/onediag-verifier-syntax.log 2>&1",
+      "exit": 0,
+      "result": "No syntax errors"
+    },
+    {
+      "command": "timeout 30 node stage3/adapt/00-setup/evidence/verify-checker-census.cjs > /tmp/onediag-verify-final.log 2>&1",
+      "exit": 0,
+      "result": "Verified 8 CLI streams, 322 unique diagnostics, every class and root; filtered prelude excludes builder defect.",
+      "log": "checker-validation-logs/verify.log.gz"
+    },
+    {
+      "command": "timeout 60 python3 /tmp/onediag-mutants.py > /tmp/onediag-mutants.log 2>&1",
+      "exit": 0,
+      "result": "All five mutants caught by their intended checks",
+      "log": "checker-validation-logs/mutants.log.gz"
+    },
+    {
+      "command": "timeout 30 git ls-remote origin refs/heads/main",
+      "exit": 0,
+      "result": "2b22b31ccc8b218ac564fba8f8641adb63160e6f refs/heads/main"
+    },
+    {
+      "command": "git diff --exit-code 2b22b31ccc8b218ac564fba8f8641adb63160e6f 141fec7702d4aed21429724b2afd7efcd980f277 -- CLAUDE.md stage3/adapt stage3/apply.py stage3/apply.sh stage3/caches.py stage3/source.json stage3/api stage3/test_apply.py internal/load/load.go internal/load/prelude.d.ts internal/load/regexp_library.go > /tmp/onediag-main-input-diff.log",
+      "exit": 0,
+      "result": "Empty diff. All measurement and apply-test inputs unchanged on the new main.",
+      "log": "checker-validation-logs/main-input-diff.log.gz"
+    },
+    {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_TYPESCRIPT_SOURCE=/tmp/onediag-typescript-source timeout 90 python3 stage3/test_apply.py > /tmp/onediag-main-apply-tests.log 2>&1",
+      "exit": 0,
+      "result": "After merging main 141fec77: Ran 23 tests in 14.482s; OK",
+      "log": "checker-validation-logs/main-apply-tests.log.gz"
+    },
+    {
+      "command": "timeout 30 node stage3/adapt/00-setup/evidence/verify-checker-census.cjs > /tmp/onediag-main-verify.log 2>&1",
+      "exit": 0,
+      "result": "Verified all 8 CLI streams and 322 unique diagnostics after incorporating main.",
+      "log": "checker-validation-logs/main-verify.log.gz"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "omitted-diagnostic",
+      "command": "timeout 30 node /workspace/adamic/stage3/adapt/00-setup/evidence/verify-checker-census.cjs /tmp/onediag-table-mutants/omitted-diagnostic.json",
+      "exit": 1,
+      "catcher": "table differs from tsc CLI diagnostics",
+      "log": "checker-validation-logs/mutant-omitted-diagnostic.log.gz"
+    },
+    {
+      "name": "wrong-class",
+      "command": "timeout 30 node /workspace/adamic/stage3/adapt/00-setup/evidence/verify-checker-census.cjs /tmp/onediag-table-mutants/wrong-class.json",
+      "exit": 1,
+      "catcher": "class counts",
+      "log": "checker-validation-logs/mutant-wrong-class.log.gz"
+    },
+    {
+      "name": "omitted-root",
+      "command": "timeout 30 node /workspace/adamic/stage3/adapt/00-setup/evidence/verify-checker-census.cjs /tmp/onediag-table-mutants/omitted-root.json",
+      "exit": 1,
+      "catcher": "omitted source root",
+      "log": "checker-validation-logs/mutant-omitted-root.log.gz"
+    },
+    {
+      "name": "unexpected-node-types",
+      "command": "timeout 30 node /workspace/adamic/stage3/adapt/00-setup/evidence/verify-checker-census.cjs /tmp/onediag-table-mutants/unexpected-node-types.json",
+      "exit": 1,
+      "catcher": "Node types loaded",
+      "log": "checker-validation-logs/mutant-unexpected-node-types.log.gz"
+    },
+    {
+      "name": "restored-collection-next",
+      "command": "timeout 30 node /workspace/adamic/stage3/adapt/00-setup/evidence/verify-checker-census.cjs /workspace/adamic/stage3/adapt/00-setup/evidence/checker-stops-2026-10-19.json loader-original-prelude-mutant",
+      "exit": 1,
+      "catcher": "required filtered census includes builder.ts:1246:69 TS2345",
+      "input": "The real restored-next tsc run recorded in the table, not an injected diagnostic.",
+      "log": "checker-validation-logs/mutant-restored-collection-next.log.gz"
+    }
+  ],
+  "discardedAttempt": {
+    "command": "timeout 360 node /tmp/onediag-census.cjs",
+    "exit": 1,
+    "reason": "Started before apply finished. CLI/API output mismatch; no data from this attempt is retained in the table."
+  },
+  "notCovered": [
+    "No TypeScript source repairs",
+    "No adaptation-30 Set/Map iterator type arguments",
+    "No new real type lie or Node counterexample",
+    "No repair transpileModule comparison",
+    "No baseline oracle",
+    "No meter or full Go gate"
+  ],
+  "runtime": {
+    "node": "v24.19.0",
+    "go": "go1.27.1",
+    "clang": "20.1.8",
+    "nproc": 5,
+    "environmentFile": "/workspace/adamic-tools/env.sh"
+  },
+  "verifiedOnMain": "141fec7702d4aed21429724b2afd7efcd980f277",
+  "integrationNote": "Main advanced during the final check. The shell failed to propagate a failed main-tip assertion and still created c6cf77d3. Current main was then fetched and merged without rewriting that commit. Input equivalence and post-merge apply tests are recorded; no push occurred before verification."
+}
