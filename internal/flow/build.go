@@ -521,7 +521,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = throws || !value.Interface().(ir.PhantomMember).Optional
 			case reflect.TypeOf(ir.ProcessCall{}):
 				operation := value.Interface().(ir.ProcessCall).Operation
-				throws = throws || operation == "cwd" || operation == "chdir" || operation == "measure"
+				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:
