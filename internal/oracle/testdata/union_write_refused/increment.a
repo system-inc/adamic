@@ -1,0 +1,9 @@
+// a-check: refused a write through a union of number into a slot that holds 1 | 2 in { step: 1 | 2
+type Dial = { step: number } | { step: 1 | 2 };
+function turn(dial: Dial): void {
+	dial.step++;
+}
+const dial: { step: 1 | 2 } = { step: 2 };
+turn(dial);
+const names = { 1: 'one', 2: 'two' };
+console.log(names[dial.step]);

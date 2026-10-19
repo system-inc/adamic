@@ -1,0 +1,1 @@
+internal/oracle/testdata/union_write_refused/logical_assignment.a:4:2: Adamic 0.1 refuses a write through a union of "text" into a slot that holds number in { value?: number; }; narrow to one member before writing, so the value fits the slot it lands in; a discriminant is written only after narrowing (union-write)
