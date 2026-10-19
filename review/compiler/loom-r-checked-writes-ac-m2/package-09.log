@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T23:48:28.815777092Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles"}
+{"Time":"2026-10-18T23:48:28.81943307Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle"}
+{"Time":"2026-10-18T23:48:28.819503216Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle","Output":"=== RUN   TestProduct_ValuesGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:48:28.81952581Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle","Output":"=== PAUSE TestProduct_ValuesGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:48:28.819528103Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle"}
+{"Time":"2026-10-18T23:48:28.819531589Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle"}
+{"Time":"2026-10-18T23:48:28.819533261Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle","Output":"=== CONT  TestProduct_ValuesGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:48:29.371324211Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle","Output":"    products_test.go:15: build go_test_-c_cohere_./internal/format/css/values_values.test-oracle-owner-v1 4c531f384106 hit 0.40\n"}
+{"Time":"2026-10-18T23:48:29.371466576Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle","Output":"--- PASS: TestProduct_ValuesGoOracle (0.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:48:29.371472164Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Test":"TestProduct_ValuesGoOracle","Elapsed":0.55}
+{"Time":"2026-10-18T23:48:29.371492245Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:48:29.373980208Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/values/oracles\t0.558s\n"}
+{"Time":"2026-10-18T23:48:29.374007238Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/values/oracles","Elapsed":0.558}

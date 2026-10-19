@@ -1,0 +1,534 @@
+[
+  {
+    "path": "internal/native/testdata/checked_library_push.a",
+    "status": "NotYet",
+    "reason": "adamic: /workspace/adamic/internal/native/testdata/checked_library_push.a:7:14: stage 0 can't lower a SpreadElement yet\n",
+    "exit": 1,
+    "first_line": "const iterator = 'aba'.matchAll(/a/g);",
+    "sha256": "00f7a019b0cc5c68f60d41342c25e51302f1d749303a2efef1d6adedcdcac50d",
+    "seconds": 0.037,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/native/testdata/checked_library_push.a"
+    ],
+    "body_sha256": "00f7a019b0cc5c68f60d41342c25e51302f1d749303a2efef1d6adedcdcac50d",
+    "header_before": null,
+    "header_after": null,
+    "diagnostic": "adamic: /workspace/adamic/internal/native/testdata/checked_library_push.a:7:14: stage 0 can't lower a SpreadElement yet\n",
+    "first_line_after": "const iterator = 'aba'.matchAll(/a/g);"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/directory.a",
+    "status": "refused",
+    "reason": "a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Result[] seen as",
+    "sha256": "27079cc6bd4ba27c2a816be97ca5d6e4976003e83f74dd9fbd631d192e3496cd",
+    "seconds": 0.038,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-runtime-fields_refused/directory.a"
+    ],
+    "body_sha256": "7bb2929bc358dab54fec3c0fc1d6e9be3d0b263e9cfdcbc12b396f1bc688372c",
+    "header_before": "// a-check: refused a value of type Result[] seen as",
+    "header_after": "// a-check: refused a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/fs.a",
+    "status": "refused",
+    "reason": "a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Result[] seen as",
+    "sha256": "a3dcf0e8ae7a9d4cdea0ed8b7298d6ee73cc63fcc3cd6193530d906125aefbe6",
+    "seconds": 0.041,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-runtime-fields_refused/fs.a"
+    ],
+    "body_sha256": "8fc148a205dc7853c1de66b306c7e660aec99434e478b2a5d19fddc30d2802e0",
+    "header_before": "// a-check: refused a value of type Result[] seen as",
+    "header_after": "// a-check: refused a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/fs.a:7:35: Adamic 0.1 refuses a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/map.a",
+    "status": "refused",
+    "reason": "a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Result[] seen as",
+    "sha256": "ae9d06c4bb250d14c50d36ebb8f6ec65f4708fc71e497280153bdff35d39350c",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-runtime-fields_refused/map.a"
+    ],
+    "body_sha256": "2fe4154ebf5deb62c8e27950b352e20daa660f0c177468fded0c0afdde0750f2",
+    "header_before": "// a-check: refused a value of type Result[] seen as",
+    "header_after": "// a-check: refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/map.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/regex.a",
+    "status": "refused",
+    "reason": "a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Result[] seen as",
+    "sha256": "0b7731ae10fa65d1b9c6010ed5c868ec43046af095d82e168e9d66412e129c46",
+    "seconds": 0.037,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-runtime-fields_refused/regex.a"
+    ],
+    "body_sha256": "bc8212a1c67065c955e8b3316cd9ab1495e6ae6c7a181cc2aaa1ba01c4994827",
+    "header_before": "// a-check: refused a value of type Result[] seen as",
+    "header_after": "// a-check: refused a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/regex.a:5:101: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/set.a",
+    "status": "refused",
+    "reason": "a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Result[] seen as",
+    "sha256": "c92ecce928171c2a2f0a2c5146b93b2ba44a5fcdf93ba979b96c3423da185616",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-runtime-fields_refused/set.a"
+    ],
+    "body_sha256": "462f6f989d8677c44b3ac8b9cc59bf6e453b83e60632f5ff7086f0ba119666c2",
+    "header_before": "// a-check: refused a value of type Result[] seen as",
+    "header_after": "// a-check: refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/set.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/status.a",
+    "status": "refused",
+    "reason": "a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Result[] seen as",
+    "sha256": "8dd1a3fffc6992f6c8310b4fdcbb3e398f15ebabbff9a8523d067736c1d94dfd",
+    "seconds": 0.034,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-runtime-fields_refused/status.a"
+    ],
+    "body_sha256": "9ce455a1908114a66306ad5f2378dd71ce9d6df199223e09fc369ce16992f8f6",
+    "header_before": "// a-check: refused a value of type Result[] seen as",
+    "header_after": "// a-check: refused a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/status.a:7:72: Adamic 0.1 refuses a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a",
+    "status": "refused",
+    "reason": "a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+    "sha256": "60c3624abe7b68a2d065e6aba67d6d4e34072501d3ec5281f6433111ba8e8e20",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a"
+    ],
+    "body_sha256": "21930e31ee0fa2057e60a43f21b8620fd0c699699902f14a1d98628d1f80eb34",
+    "header_before": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read",
+    "header_after": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a",
+    "status": "refused",
+    "reason": "a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "sha256": "29f28c436c2e16ae71ba3d1c38a36f24992eafd4a244f5cd3f4affd7c085158b",
+    "seconds": 0.042,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a"
+    ],
+    "body_sha256": "4d4991e73fb2478b80e108d1769dfd6790186ea30b15cd11ace15af8b441be6b",
+    "header_before": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "header_after": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a",
+    "status": "refused",
+    "reason": "a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+    "sha256": "9d3eabfe3da7c487a5edb1cecfd02848cc9f7b52423092892f126428a0a98edf",
+    "seconds": 0.038,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a"
+    ],
+    "body_sha256": "7bbc54ae0d74b26559aa07438354ad63d74c8e549a27ab6c861a6584c58876d9",
+    "header_before": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",
+    "header_after": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a",
+    "status": "refused",
+    "reason": "a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+    "sha256": "2a758fc22aff6453bc7245ffc2c271d04630192778706c9cc08a1002af335b62",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a"
+    ],
+    "body_sha256": "a08604fce0d0d112abe380fe198c3e6aaa8dd6c83e0b2795cb7f86cb9abfe41d",
+    "header_before": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",
+    "header_after": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a",
+    "status": "refused",
+    "reason": "a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "sha256": "b726397421acb6cfccb102170a4a2ca08b58bfc7840c286b960a0cfce02fb2ec",
+    "seconds": 0.041,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a"
+    ],
+    "body_sha256": "01f2bf38d793503975902032f303f88761dc83219fb746c9733bb26879d81c0b",
+    "header_before": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read",
+    "header_after": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "review/compiler/checked-writes-follow/push-loop.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "first_line": "const values: number[] = [];",
+    "sha256": "58cf74daf5c701767168df6103387798f1bac787ecf80f975cc2676dcadcbbdd",
+    "seconds": 0.037,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "review/compiler/checked-writes-follow/push-loop.a"
+    ],
+    "body_sha256": "58cf74daf5c701767168df6103387798f1bac787ecf80f975cc2676dcadcbbdd",
+    "header_before": null,
+    "header_after": null,
+    "diagnostic": "",
+    "first_line_after": "const values: number[] = [];"
+  },
+  {
+    "path": "stage3/checked-writes/array-refused.a",
+    "status": "refused",
+    "reason": "a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "b3563e56ccdce2912416f9701b6ad0dca1bd3fddbb33476b4fa1855e3c3e82b9",
+    "seconds": 0.034,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/array-refused.a"
+    ],
+    "body_sha256": "d68b7696c21c952a0ec1092677775be06386f8bf862a63a6925dec536dc1d9c1",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/array-refused.a:4:7: Adamic 0.1 refuses a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/emit-refused.a",
+    "status": "refused",
+    "reason": "a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "112280fb9f20f2298ff8f46d64cef9ea7e01696d40e0c4142751de6f6ee97886",
+    "seconds": 0.038,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/emit-refused.a"
+    ],
+    "body_sha256": "2694fd63e1548b84d895141273d5f4e90a41b67b359184135ee2ec46ad486858",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/emit-refused.a:12:7: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/flags-refused.a",
+    "status": "refused",
+    "reason": "a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "77327bd1ae56449219b667e5c8c9390e0ce93a70d33303624488d68cd627bd40",
+    "seconds": 0.034,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/flags-refused.a"
+    ],
+    "body_sha256": "22fcd3b4a3b5f1a798f21eb77060b9244304d5f3b523938847f934cdf2b6784d",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/flags-refused.a:6:6: Adamic 0.1 refuses a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "first_line_after": "// a-check: refused a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "path": "stage3/checked-writes/flow-refused.a",
+    "status": "refused",
+    "reason": "a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "213b32520d53c299202cfafea285bce419876f2c109e6ea5d03be861a361bf23",
+    "seconds": 0.032,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/flow-refused.a"
+    ],
+    "body_sha256": "dd53c29584290d908f109a0a1db9330157b6aac7ccf37c636b3deebf727080da",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/flow-refused.a:12:7: Adamic 0.1 refuses a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/map-refused.a",
+    "status": "refused",
+    "reason": "a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "8f26c687e0194584125130ed9236bf6a627a418c3b174f7f3584f20b663f27db",
+    "seconds": 0.033,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/map-refused.a"
+    ],
+    "body_sha256": "9d391a4c5e561f64cce59fe8c841ff3f7d9ebf2a5dccfe3ff960d9959db9154c",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/map-refused.a:4:7: Adamic 0.1 refuses a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/proven-containers.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "first_line": "const values: (1 | 2)[] = [1];",
+    "sha256": "ccfce0b6c1941ba6095f1a46380c8ff2fa976e4f84034548129ccd927457be65",
+    "seconds": 0.039,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/proven-containers.a"
+    ],
+    "body_sha256": "ccfce0b6c1941ba6095f1a46380c8ff2fa976e4f84034548129ccd927457be65",
+    "header_before": null,
+    "header_after": null,
+    "diagnostic": "",
+    "first_line_after": "const values: (1 | 2)[] = [1];"
+  },
+  {
+    "path": "stage3/checked-writes/proven-emit.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "first_line": "interface GeneratedNamePart { readonly text: string }",
+    "sha256": "55a2cf5f89d3ff861e5201c345dcbd677b8625208073aecc326e62b1528f7381",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/proven-emit.a"
+    ],
+    "body_sha256": "55a2cf5f89d3ff861e5201c345dcbd677b8625208073aecc326e62b1528f7381",
+    "header_before": null,
+    "header_after": null,
+    "diagnostic": "",
+    "first_line_after": "interface GeneratedNamePart { readonly text: string }"
+  },
+  {
+    "path": "stage3/checked-writes/proven-generic.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "first_line": "// a-check: compile",
+    "sha256": "94dd30f3769cb0c93ca18882c05accc2e8fea4a6f8c2d5407e88b7a313c0e3e8",
+    "seconds": 0.037,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/proven-generic.a"
+    ],
+    "body_sha256": "94dd30f3769cb0c93ca18882c05accc2e8fea4a6f8c2d5407e88b7a313c0e3e8",
+    "header_before": "// a-check: compile",
+    "header_after": null,
+    "diagnostic": "",
+    "first_line_after": "interface Node { readonly flags: number }"
+  },
+  {
+    "path": "stage3/checked-writes/proven-number.a",
+    "status": "checked",
+    "reason": null,
+    "exit": 0,
+    "first_line": "enum NodeFlags { Synthesized = 16, Other = 0 }",
+    "sha256": "1835c25e984eb83f14c89051fb59e4e04a5247c42bd308d61950cf1e14cce54e",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/proven-number.a"
+    ],
+    "body_sha256": "1835c25e984eb83f14c89051fb59e4e04a5247c42bd308d61950cf1e14cce54e",
+    "header_before": null,
+    "header_after": null,
+    "diagnostic": "",
+    "first_line_after": "enum NodeFlags { Synthesized = 16, Other = 0 }"
+  },
+  {
+    "path": "stage3/checked-writes/refused-branch-bottom.a",
+    "status": "refused",
+    "reason": "a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "a62c7c971ad448e224005896085ca0c90134945553fa42ea32dba39441bc9a49",
+    "seconds": 0.031,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/refused-branch-bottom.a"
+    ],
+    "body_sha256": "6db197f27ce6fcb59924ca41e0a4fb3c1f06f4d356e966a0740eb3c85d89117e",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-bottom.a:4:41: Adamic 0.1 refuses a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/refused-branch-diagnostic.a",
+    "status": "refused",
+    "reason": "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "4ad49e9cab24606904fa0d80ac16f6d2a51eab70b81504b546e97bad9d497db8",
+    "seconds": 0.033,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/refused-branch-diagnostic.a"
+    ],
+    "body_sha256": "ddb6639187d754996d8db3838dc54bc25b2d900535637e8ff0fda9f1c7dd5c67",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-diagnostic.a:8:41: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/refused-optional-boolean.a",
+    "status": "refused",
+    "reason": "a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "8d4c688f2b633207206ee8b1f5ed74fc22b2652d0379991c4817ff8859231302",
+    "seconds": 0.033,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/refused-optional-boolean.a"
+    ],
+    "body_sha256": "e24dd7760cb3fdebbb595aace671bc507d014862cd50daa13f9c8cecd7d9d795",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/refused-optional-boolean.a:4:7: Adamic 0.1 refuses a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/refused-overload-result.a",
+    "status": "refused",
+    "reason": "overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result",
+    "exit": 1,
+    "first_line": "// a-check: refused overload 1",
+    "sha256": "b0c4d28171e63f85edff9ff4f5ee139934e35f3c4a143494e2f0a7c6b2e381cf",
+    "seconds": 0.038,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/refused-overload-result.a"
+    ],
+    "body_sha256": "192b852f82d25dda40a302701b2752025366083fe1c7596f4cc54bf2c608e4e9",
+    "header_before": "// a-check: refused overload 1",
+    "header_after": "// a-check: refused overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/refused-overload-result.a:9:1: Adamic 0.1 refuses overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result\n",
+    "first_line_after": "// a-check: refused overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result"
+  },
+  {
+    "path": "stage3/checked-writes/shared-never.a",
+    "status": "refused",
+    "reason": "a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type never[] seen as number[]",
+    "sha256": "ed77c879896b000f9630fd29ee8cbbd8571f33abd824b118cd1c05207d8319bf",
+    "seconds": 0.038,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/shared-never.a"
+    ],
+    "body_sha256": "aafe611d62f904b602f2f3bb7a799e81b2e1c54900dde5530134a977a3eed4e6",
+    "header_before": "// a-check: refused a value of type never[] seen as number[]",
+    "header_after": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/shared-never.a:4:7: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+  },
+  {
+    "path": "stage3/checked-writes/string-refused.a",
+    "status": "refused",
+    "reason": "a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "exit": 1,
+    "first_line": "// a-check: refused a value of type",
+    "sha256": "7dd6b0eb10a99f09053988581150935c05fcaff4612063e54ace283da7b6e475",
+    "seconds": 0.036,
+    "command": [
+      "adamic-acheck",
+      "c",
+      "stage3/checked-writes/string-refused.a"
+    ],
+    "body_sha256": "a45d21c0bcbfb6d1822bec40c77f5afbd03be8c973dd0597f9551c2b493fec7c",
+    "header_before": "// a-check: refused a value of type",
+    "header_after": "// a-check: refused a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+    "diagnostic": "adamic: /workspace/adamic/stage3/checked-writes/string-refused.a:4:7: Adamic 0.1 refuses a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "first_line_after": "// a-check: refused a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+  }
+]

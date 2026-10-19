@@ -1,0 +1,98 @@
+[
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/directory.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "a4b7d6b00df415b0dee66f0c5264192ef26d90d23672b1758eea0c66315907bb",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/fs.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "b5eeb2b532830b13c70c5388cdac4084eb94d724204305be53e06809ed34fc13",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/map.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "07760549d9736d32fdfd2e97420ae7100e35b1f26ef912ea0686401a7c2d1a20",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/regex.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "1eed484decc78156a5c84f5c5f3f0e202e18c51926fde78ca69537dc93b883dc",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/set.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "1fcaf614137a4f9850ee0b94d77af8feb79f51b6adc27aae2ceb386980bdde07",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/status.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "bf1978e77e46caa535674b1791ffdb6ade49e195e0a4f139e2b1a73d96c8206d",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "73a71b7c85b6bbc456ab0111bfd6ce59004371ef72568ad8218b56dec05fb4e8",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "7b4f6caa5c68d94f9fca73d250fd5355c65577c72bae3f2a6536ff08327d9f76",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "cbdf602548de51feba9cb40e7a15f73e4ba67ee9530778bc8e2db635ed9a2141",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "2d255a29bab333c31c640dd4cd5fea41abf9db9289ee012bfbca3843fc8b74da",
+    "identical": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a",
+    "kind": "TypeScript adapter",
+    "c_sha256": "49cc1d0c7459f3afa9313a84846f8f9405f93941324805a994c4cbaabfca5a2a",
+    "identical": true
+  },
+  {
+    "path": "review/compiler/checked-writes-follow/push-loop.a",
+    "kind": "direct .a",
+    "c_sha256": "e7e2c7971c351196a4434ef077ef0a7acec5e7bf068f88be4968301d37be5f1a",
+    "identical": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-containers.a",
+    "kind": "direct .a",
+    "c_sha256": "34fbe74b0b8d58c0b713898d0e7c8e1c85b0333fbbecb094f787ca72e48cd3aa",
+    "identical": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-emit.a",
+    "kind": "direct .a",
+    "c_sha256": "69ea992a5054d0122112d7e1b3effab5cfbfa1ba19e7dcbf229ef62ce1a9948d",
+    "identical": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-generic.a",
+    "kind": "direct .a",
+    "c_sha256": "a1755969524f7480582b8f02d5337169334e6cc03f34b4f4ea39cf4120bc0f43",
+    "identical": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-number.a",
+    "kind": "direct .a",
+    "c_sha256": "8c42063f7d67d8d57ccb5e1f15cb6cce757b6f1d8110fa2e59259383098afa57",
+    "identical": true
+  }
+]

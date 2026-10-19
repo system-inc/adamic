@@ -1,0 +1,129 @@
+review/compiler/checked-writes-follow/merge-main/conflicted-objects.go.txt:481: leftover conflict marker
+review/compiler/checked-writes-follow/merge-main/conflicted-objects.go.txt:492: leftover conflict marker
+review/compiler/checked-writes-follow/merge-main/conflicted-objects.go.txt:495: leftover conflict marker
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:13: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:23: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:24: space before tab in indent.
++ 	// reuse is where objects are reused in place (reuse.go), at names the statement being emitted,
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:25: space before tab in indent.
++ 	// where it stands in its slice, and taking is the spread whose replaced fields are being
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:31: space before tab in indent.
++ 	return name
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:33: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:50: space before tab in indent.
++ 	walkExpressions(e.program, func(expression ir.Expression) {
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:63: space before tab in indent.
++ 		}
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:64: space before tab in indent.
++ 	})
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:75: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:79: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/main-cache-change.patch:94: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:4: space before tab in indent.
++ 		names = append(names, field.Name)
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:5: space before tab in indent.
++ 		types = append(types, field.Value.Type())
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:6: space before tab in indent.
++ 	}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:10: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:17: space before tab in indent.
++ 	names, types := []string{}, []ir.Type{}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:18: space before tab in indent.
++ 	for _, field := range literal.Fields {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:19: space before tab in indent.
++ 		names = append(names, field.Name)
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:20: space before tab in indent.
++ 		types = append(types, field.Value.Type())
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:21: space before tab in indent.
++ 	}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:25: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:31: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:36: space before tab in indent.
++ 	names, references, kinds := []string{}, []string{}, []string{}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:37: space before tab in indent.
++ 	for index, name := range fieldNames {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:38: space before tab in indent.
++ 		names = append(names, cString(name))
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:40: space before tab in indent.
++ 		layout = kinds
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:41: space before tab in indent.
++ 	}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:42: space before tab in indent.
++ 	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:56: space before tab in indent.
++ 	for _, method := range methods {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:57: space before tab in indent.
++ 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:58: space before tab in indent.
++ 	}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:60: space before tab in indent.
++ 	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:61: space before tab in indent.
++ 	e.shapes[key] = name
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:62: space before tab in indent.
++ 	table := "NULL"
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:67: space before tab in indent.
++ 	methodNames, thunks := []string{}, []string{}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:68: space before tab in indent.
++ 	for _, method := range methods {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:69: space before tab in indent.
++ 		if !e.dispatchable(method.Function) {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:71: space before tab in indent.
++ 		table = "&" + name + "_methods"
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:72: space before tab in indent.
++ 	}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:73: space before tab in indent.
++ 	if len(fields) == 0 {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:76: space before tab in indent.
++ 	} else {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:77: space before tab in indent.
++ 		e.declarations = append(e.declarations,
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:78: space before tab in indent.
++ 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:79: space before tab in indent.
++ 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:82: space before tab in indent.
++ 	}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:83: space before tab in indent.
++ 	if len(fields) > 0 && e.dynamicProperties() {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:84: space before tab in indent.
++ 		e.declarations = append(e.declarations,
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:86: space before tab in indent.
++ 	return name
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:88: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:105: space before tab in indent.
++ 	walkExpressions(e.program, func(expression ir.Expression) {
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:118: space before tab in indent.
++ 		}
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:119: space before tab in indent.
++ 	})
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:130: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:134: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/merge-main/objects-before.patch:149: trailing whitespace.
++ 
+review/compiler/checked-writes-follow/reference-fields/examples.log:32: trailing whitespace.
++        
+review/compiler/loom-r-checked-writes/counts-conflicted-hunks.txt:1: leftover conflict marker
+review/compiler/loom-r-checked-writes/counts-conflicted-hunks.txt:7: leftover conflict marker
+review/compiler/loom-r-checked-writes/counts-conflicted-hunks.txt:122: leftover conflict marker
+review/compiler/loom-r-checked-writes/emit_statements.go.conflicts.go.txt:288: leftover conflict marker
+review/compiler/loom-r-checked-writes/emit_statements.go.conflicts.go.txt:291: leftover conflict marker
+review/compiler/loom-r-checked-writes/emit_statements.go.conflicts.go.txt:295: leftover conflict marker
+review/compiler/loom-r-checked-writes/ir.go.conflicts.go.txt:28: leftover conflict marker
+review/compiler/loom-r-checked-writes/ir.go.conflicts.go.txt:30: leftover conflict marker
+review/compiler/loom-r-checked-writes/ir.go.conflicts.go.txt:39: leftover conflict marker
+review/compiler/loom-r-checked-writes/ir.go.conflicts.go.txt:1386: leftover conflict marker
+review/compiler/loom-r-checked-writes/ir.go.conflicts.go.txt:1388: leftover conflict marker
+review/compiler/loom-r-checked-writes/ir.go.conflicts.go.txt:1398: leftover conflict marker

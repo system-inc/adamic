@@ -1,0 +1,18 @@
+{"Time":"2026-10-18T23:46:24.380150723Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T23:46:24.386076501Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-18T23:46:24.386144774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== RUN   TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:24.386173707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== PAUSE TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:24.386176251Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-18T23:46:24.386178825Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-18T23:46:24.386180427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== CONT  TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:25.130837012Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"    c_portability_oracle_test.go:25: native: listing the runtime's headers: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-18T23:46:25.130940908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"        host_runtime.c:29:10: fatal error: sanitizer/allocator_interface.h: No such file or directory\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T23:46:25.130948029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"           29 | #include \u003csanitizer/allocator_interface.h\u003e\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T23:46:25.130950823Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"              |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T23:46:25.130953547Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"        compilation terminated.\n","OutputType":"error-continue"}
+{"Time":"2026-10-18T23:46:25.130960247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-18T23:46:25.13098228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"--- FAIL: TestLongUnicodePortabilityGCC (0.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:25.130984774Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Elapsed":0.74}
+{"Time":"2026-10-18T23:46:25.131006988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:25.133318991Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.753s\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:25.133340684Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.753}

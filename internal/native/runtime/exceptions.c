@@ -12,9 +12,9 @@ _Thread_local adamic_object *adamic_thrown;
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};
-static const adamic_shape error_shape = {2, error_names, error_references, NULL};
+static const adamic_shape error_shape = {2, error_names, error_references, NULL, NULL};
 static const char *const absent_message_names[] = {"name", "#message"};
-static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};
+static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL, NULL};
 static adamic_string empty_message = ADAMIC_STRING("");
 static adamic_string error_name = ADAMIC_STRING("Error");
 

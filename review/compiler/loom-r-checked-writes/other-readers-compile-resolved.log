@@ -1,0 +1,44 @@
+{"Time":"2026-10-18T00:16:51.006157534Z","Action":"start","Package":"github.com/system-inc/adamic/bench/regex"}
+{"Time":"2026-10-18T00:16:51.006267209Z","Action":"output","Package":"github.com/system-inc/adamic/bench/regex","Output":"?   \tgithub.com/system-inc/adamic/bench/regex\t[no test files]\n"}
+{"Time":"2026-10-18T00:16:51.006284816Z","Action":"skip","Package":"github.com/system-inc/adamic/bench/regex","Elapsed":0}
+{"Time":"2026-10-18T00:16:57.803761805Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-18T00:16:57.855822711Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:16:57.85592106Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:57.856502621Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.043s [no tests to run]\n"}
+{"Time":"2026-10-18T00:16:57.856550193Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.053}
+{"Time":"2026-10-18T00:16:58.010315596Z","Action":"start","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii"}
+{"Time":"2026-10-18T00:16:58.058999031Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:16:58.059073683Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:58.061280639Z","Action":"output","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Output":"ok  \tgithub.com/system-inc/adamic/cloud/reports/decode-ascii\t0.051s [no tests to run]\n"}
+{"Time":"2026-10-18T00:16:58.061348291Z","Action":"pass","Package":"github.com/system-inc/adamic/cloud/reports/decode-ascii","Elapsed":0.051}
+{"Time":"2026-10-18T00:16:58.451300949Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-meter"}
+{"Time":"2026-10-18T00:16:58.464537658Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-18T00:16:58.47297193Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:16:58.473022376Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:58.475029742Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:16:58.475063092Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:58.475284706Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.011s [no tests to run]\n"}
+{"Time":"2026-10-18T00:16:58.475319689Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.011}
+{"Time":"2026-10-18T00:16:58.486174519Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-meter\t0.033s [no tests to run]\n"}
+{"Time":"2026-10-18T00:16:58.48621509Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-meter","Elapsed":0.035}
+{"Time":"2026-10-18T00:17:01.689821941Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilerinputs"}
+{"Time":"2026-10-18T00:17:01.701100297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:17:01.701167388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:01.705079753Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilerinputs","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilerinputs\t0.015s [no tests to run]\n"}
+{"Time":"2026-10-18T00:17:01.705128206Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilerinputs","Elapsed":0.015}
+{"Time":"2026-10-18T00:17:03.891358762Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower/cycleledger"}
+{"Time":"2026-10-18T00:17:03.89161607Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts"}
+{"Time":"2026-10-18T00:17:03.891997454Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/census/tool"}
+{"Time":"2026-10-18T00:17:03.89202132Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/tool","Output":"?   \tgithub.com/system-inc/adamic/stage3/census/tool\t[no test files]\n"}
+{"Time":"2026-10-18T00:17:03.892098597Z","Action":"skip","Package":"github.com/system-inc/adamic/stage3/census/tool","Elapsed":0}
+{"Time":"2026-10-18T00:17:03.892097105Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/drivers/parser/probe"}
+{"Time":"2026-10-18T00:17:03.892121431Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/drivers/parser/probe","Output":"?   \tgithub.com/system-inc/adamic/stage3/drivers/parser/probe\t[no test files]\n"}
+{"Time":"2026-10-18T00:17:03.892150425Z","Action":"skip","Package":"github.com/system-inc/adamic/stage3/drivers/parser/probe","Elapsed":0}
+{"Time":"2026-10-18T00:17:03.899796337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:17:03.899839723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:03.900021316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"ok  \tgithub.com/system-inc/adamic/internal/native/runtimeproducts\t0.008s [no tests to run]\n"}
+{"Time":"2026-10-18T00:17:03.900083359Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Elapsed":0.009}
+{"Time":"2026-10-18T00:17:03.910192944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T00:17:03.910247526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:17:03.911508836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower/cycleledger\t0.020s [no tests to run]\n"}
+{"Time":"2026-10-18T00:17:03.91153781Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower/cycleledger","Elapsed":0.02}

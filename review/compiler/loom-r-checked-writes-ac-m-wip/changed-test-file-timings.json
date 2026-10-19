@@ -1,0 +1,4039 @@
+[
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainChecksOutput",
+    "events": [
+      {
+        "test": "TestExplainChecksOutput/overload_some_empty/c",
+        "action": "pass",
+        "seconds": 0.23
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_assertion/c",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_empty/js",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_erased/c",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_assertion/js",
+        "action": "pass",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_true_only/c",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_erased/js",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_false_read/c",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_empty/build",
+        "action": "pass",
+        "seconds": 3.68
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_empty",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_true_only/js",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_assertion/build",
+        "action": "pass",
+        "seconds": 3.66
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_assertion",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_false_read/js",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_erased/build",
+        "action": "pass",
+        "seconds": 3.62
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_erased",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_true_only/build",
+        "action": "pass",
+        "seconds": 3.49
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_true_only",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_false_read/build",
+        "action": "pass",
+        "seconds": 3.58
+      },
+      {
+        "test": "TestExplainChecksOutput/overload_some_false_read",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestExplainChecksOutput",
+        "action": "pass",
+        "seconds": 0.01
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainChecksDriver",
+    "events": [
+      {
+        "test": "TestExplainChecksDriver",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_emit_node_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_emit_node_misfit",
+        "action": "pass",
+        "seconds": 4.12
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_number_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_number_misfit",
+        "action": "pass",
+        "seconds": 4.06
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_flow_node_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_flow_node_misfit",
+        "action": "pass",
+        "seconds": 4.15
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_container_number_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_container_number_misfit",
+        "action": "pass",
+        "seconds": 3.82
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_container_map_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_container_map_misfit",
+        "action": "pass",
+        "seconds": 4.01
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_container_fill_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_container_fill_misfit",
+        "action": "pass",
+        "seconds": 3.69
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_optional_boolean_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 3.65
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_overload_result_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_overload_result_misfit",
+        "action": "pass",
+        "seconds": 3.75
+      }
+    ]
+  },
+  {
+    "file": "cmd/adamic/checks_test.go",
+    "test": "TestExplainCheckedWritesOutput_overload_callback_misfit",
+    "events": [
+      {
+        "test": "TestExplainCheckedWritesOutput_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 4.15
+      }
+    ]
+  },
+  {
+    "file": "internal/ir/gob_map_test.go",
+    "test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+    "events": [
+      {
+        "test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+        "action": "pass",
+        "seconds": 0.02
+      }
+    ]
+  },
+  {
+    "file": "internal/ir/gob_map_test.go",
+    "test": "TestASortedMapIsNilWhereAPlainMapIs",
+    "events": [
+      {
+        "test": "TestASortedMapIsNilWhereAPlainMapIs",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/ir/gob_map_test.go",
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "events": [
+      {
+        "test": "TestEveryMapAProgramHoldsIsSorted",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/checked_signatures_test.go",
+    "test": "TestCheckedSignatureInstantiation",
+    "events": [
+      {
+        "test": "TestCheckedSignatureInstantiation",
+        "action": "pass",
+        "seconds": 0.12
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/checked_signatures_test.go",
+    "test": "TestCheckedSignatureEveryReceivingOverload",
+    "events": [
+      {
+        "test": "TestCheckedSignatureEveryReceivingOverload",
+        "action": "pass",
+        "seconds": 0.12
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/checked_signatures_test.go",
+    "test": "TestCheckedLogicalAndDoesNotWidenTruthTestedLeft",
+    "events": [
+      {
+        "test": "TestCheckedLogicalAndDoesNotWidenTruthTestedLeft",
+        "action": "pass",
+        "seconds": 0.14
+      }
+    ]
+  },
+  {
+    "file": "internal/native/checked_library_push_test.go",
+    "test": "TestRuntimeCheckedLibraryPush",
+    "events": [
+      {
+        "test": "TestRuntimeCheckedLibraryPush",
+        "action": "pass",
+        "seconds": 0.35
+      }
+    ]
+  },
+  {
+    "file": "internal/native/checked_library_push_test.go",
+    "test": "TestRuntimeCheckedLibraryPushRejectsLiteral",
+    "events": [
+      {
+        "test": "TestRuntimeCheckedLibraryPushRejectsLiteral",
+        "action": "pass",
+        "seconds": 0.19
+      }
+    ]
+  },
+  {
+    "file": "internal/native/checked_reference_fields_test.go",
+    "test": "TestRuntimeCheckedReferenceArrayKeepsContract",
+    "events": [
+      {
+        "test": "TestRuntimeCheckedReferenceArrayKeepsContract",
+        "action": "pass",
+        "seconds": 0.17
+      }
+    ]
+  },
+  {
+    "file": "internal/native/checked_reference_fields_test.go",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsWrongElement",
+    "events": [
+      {
+        "test": "TestRuntimeCheckedReferenceArrayRejectsWrongElement",
+        "action": "pass",
+        "seconds": 0.16
+      }
+    ]
+  },
+  {
+    "file": "internal/native/checked_reference_fields_test.go",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsLiteral",
+    "events": [
+      {
+        "test": "TestRuntimeCheckedReferenceArrayRejectsLiteral",
+        "action": "pass",
+        "seconds": 0.17
+      }
+    ]
+  },
+  {
+    "file": "internal/native/checked_reference_fields_test.go",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsWeakerContract",
+    "events": [
+      {
+        "test": "TestRuntimeCheckedReferenceArrayRejectsWeakerContract",
+        "action": "pass",
+        "seconds": 0.16
+      }
+    ]
+  },
+  {
+    "file": "internal/native/fields_test.go",
+    "test": "TestUniformFieldsMatchNode",
+    "events": [
+      {
+        "test": "TestUniformFieldsMatchNode",
+        "action": "pass",
+        "seconds": 0.5
+      }
+    ]
+  },
+  {
+    "file": "internal/native/fields_test.go",
+    "test": "TestRuntimeFieldLayoutsAreIncluded",
+    "events": [
+      {
+        "test": "TestRuntimeFieldLayoutsAreIncluded",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/native/fields_test.go",
+    "test": "TestRegexProgramsKeepCheckedFieldReads",
+    "events": [
+      {
+        "test": "TestRegexProgramsKeepCheckedFieldReads",
+        "action": "pass",
+        "seconds": 0.44
+      }
+    ]
+  },
+  {
+    "file": "internal/native/fields_test.go",
+    "test": "TestOptionalWriteMissingSlotRemainsChecked",
+    "events": [
+      {
+        "test": "TestOptionalWriteMissingSlotRemainsChecked",
+        "action": "pass",
+        "seconds": 0.12
+      }
+    ]
+  },
+  {
+    "file": "internal/native/object_metadata_test.go",
+    "test": "TestObjectMetadataCacheIsPerEmission",
+    "events": [
+      {
+        "test": "TestObjectMetadataCacheIsPerEmission",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/native/object_metadata_test.go",
+    "test": "TestObjectMetadataCheckedWritesIsPerEmission",
+    "events": [
+      {
+        "test": "TestObjectMetadataCheckedWritesIsPerEmission",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/native/prototype_contract_probe_test.go",
+    "test": "TestPrototypeNodeResearch",
+    "events": [
+      {
+        "test": "TestPrototypeNodeResearch/debug_shapes",
+        "action": "pass",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestPrototypeNodeResearch/errors",
+        "action": "pass",
+        "seconds": 0.31
+      },
+      {
+        "test": "TestPrototypeNodeResearch/mixed_cycle",
+        "action": "pass",
+        "seconds": 0.3
+      },
+      {
+        "test": "TestPrototypeNodeResearch",
+        "action": "pass",
+        "seconds": 0.86
+      }
+    ]
+  },
+  {
+    "file": "internal/native/prototype_contract_probe_test.go",
+    "test": "TestPrototypeMixedCountedCycleProbe",
+    "events": [
+      {
+        "test": "TestPrototypeMixedCountedCycleProbe",
+        "action": "pass",
+        "seconds": 2.77
+      }
+    ]
+  },
+  {
+    "file": "internal/native/prototype_contract_probe_test.go",
+    "test": "TestPrototypeDebugSiteRefusals",
+    "events": [
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_554",
+        "action": "pass",
+        "seconds": 0.22
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_558",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_561",
+        "action": "pass",
+        "seconds": 0.18
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_594",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_598",
+        "action": "pass",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_601",
+        "action": "pass",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_859",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_944",
+        "action": "pass",
+        "seconds": 0.18
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals",
+        "action": "pass",
+        "seconds": 1.65
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket0Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket0Of32",
+        "action": "pass",
+        "seconds": 2.01
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket1Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket1Of32",
+        "action": "pass",
+        "seconds": 2.34
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket2Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket2Of32",
+        "action": "pass",
+        "seconds": 2.98
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket3Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket3Of32",
+        "action": "pass",
+        "seconds": 2.73
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket4Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket4Of32",
+        "action": "pass",
+        "seconds": 2.75
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket5Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket5Of32",
+        "action": "pass",
+        "seconds": 2.65
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket6Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket6Of32",
+        "action": "pass",
+        "seconds": 2.62
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket7Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket7Of32",
+        "action": "pass",
+        "seconds": 2.49
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket8Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket8Of32",
+        "action": "pass",
+        "seconds": 2.53
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket9Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket9Of32",
+        "action": "pass",
+        "seconds": 2.12
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket10Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket10Of32",
+        "action": "pass",
+        "seconds": 2.36
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket11Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket11Of32",
+        "action": "pass",
+        "seconds": 1.9
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket12Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket12Of32",
+        "action": "pass",
+        "seconds": 2.88
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket13Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket13Of32",
+        "action": "pass",
+        "seconds": 1.31
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket14Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket14Of32",
+        "action": "pass",
+        "seconds": 1
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket15Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket15Of32",
+        "action": "pass",
+        "seconds": 1.08
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket16Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket16Of32",
+        "action": "pass",
+        "seconds": 1.09
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket17Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket17Of32",
+        "action": "pass",
+        "seconds": 1.12
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket18Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket18Of32",
+        "action": "pass",
+        "seconds": 1.21
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket19Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket19Of32",
+        "action": "pass",
+        "seconds": 0.99
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket20Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket20Of32",
+        "action": "pass",
+        "seconds": 1.46
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket21Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket21Of32",
+        "action": "pass",
+        "seconds": 1.37
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket22Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket22Of32",
+        "action": "pass",
+        "seconds": 1.07
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket23Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket23Of32",
+        "action": "pass",
+        "seconds": 1.06
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket24Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket24Of32",
+        "action": "pass",
+        "seconds": 1.31
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket25Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket25Of32",
+        "action": "pass",
+        "seconds": 1.16
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket26Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket26Of32",
+        "action": "pass",
+        "seconds": 1.18
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket27Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket27Of32",
+        "action": "pass",
+        "seconds": 1
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket28Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket28Of32",
+        "action": "pass",
+        "seconds": 1.07
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket29Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket29Of32",
+        "action": "pass",
+        "seconds": 1.37
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket30Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket30Of32",
+        "action": "pass",
+        "seconds": 1.22
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeTest262Bucket31Of32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeTest262Bucket31Of32",
+        "action": "pass",
+        "seconds": 1.2
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpTest262BucketsEachHaveOneTest",
+    "events": [
+      {
+        "test": "TestRegExpTest262BucketsEachHaveOneTest",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestProduct_RegExpBytecodeNative",
+    "events": [
+      {
+        "test": "TestProduct_RegExpBytecodeNative",
+        "action": "pass",
+        "seconds": 0.03
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpNativeStepLimitBoundary",
+    "events": [
+      {
+        "test": "TestRegExpNativeStepLimitBoundary",
+        "action": "pass",
+        "seconds": 0.24
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpIteratorResultShape",
+    "events": [
+      {
+        "test": "TestRegExpIteratorResultShape",
+        "action": "pass",
+        "seconds": 0.17
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodePatternUnits",
+    "events": [
+      {
+        "test": "TestRegExpBytecodePatternUnits",
+        "action": "pass",
+        "seconds": 0.26
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard00",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard00",
+        "action": "pass",
+        "seconds": 1.3
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard01",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard01",
+        "action": "pass",
+        "seconds": 1.69
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard02",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard02",
+        "action": "pass",
+        "seconds": 1.2
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard03",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard03",
+        "action": "pass",
+        "seconds": 1.2
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard04",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard04",
+        "action": "pass",
+        "seconds": 1.2
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard05",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard05",
+        "action": "pass",
+        "seconds": 1.19
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard06",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard06",
+        "action": "pass",
+        "seconds": 1.09
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard07",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard07",
+        "action": "pass",
+        "seconds": 1.12
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard08",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard08",
+        "action": "pass",
+        "seconds": 1.07
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard09",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard09",
+        "action": "pass",
+        "seconds": 1.11
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard10",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard10",
+        "action": "pass",
+        "seconds": 1.12
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard11",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard11",
+        "action": "pass",
+        "seconds": 1.11
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard12",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard12",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard13",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard13",
+        "action": "pass",
+        "seconds": 1.2
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard14",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard14",
+        "action": "pass",
+        "seconds": 1.12
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard15",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard15",
+        "action": "pass",
+        "seconds": 1.06
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard16",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard16",
+        "action": "pass",
+        "seconds": 1.09
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard17",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard17",
+        "action": "pass",
+        "seconds": 1.22
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard18",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard18",
+        "action": "pass",
+        "seconds": 1.18
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard19",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard19",
+        "action": "pass",
+        "seconds": 1.13
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard20",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard20",
+        "action": "pass",
+        "seconds": 1.22
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard21",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard21",
+        "action": "pass",
+        "seconds": 1.26
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard22",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard22",
+        "action": "pass",
+        "seconds": 1.25
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard23",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard23",
+        "action": "pass",
+        "seconds": 1.14
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard24",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard24",
+        "action": "pass",
+        "seconds": 1.64
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard25",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard25",
+        "action": "pass",
+        "seconds": 1.75
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard26",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard26",
+        "action": "pass",
+        "seconds": 1.51
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard27",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard27",
+        "action": "pass",
+        "seconds": 1.23
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard28",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard28",
+        "action": "pass",
+        "seconds": 1.24
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard29",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard29",
+        "action": "pass",
+        "seconds": 1.26
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard30",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard30",
+        "action": "pass",
+        "seconds": 1.19
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard31",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard31",
+        "action": "pass",
+        "seconds": 1.06
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard32",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard32",
+        "action": "pass",
+        "seconds": 1.28
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard33",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard33",
+        "action": "pass",
+        "seconds": 1.13
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard34",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard34",
+        "action": "pass",
+        "seconds": 1.15
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard35",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard35",
+        "action": "pass",
+        "seconds": 1.25
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard36",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard36",
+        "action": "pass",
+        "seconds": 1.3
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard37",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard37",
+        "action": "pass",
+        "seconds": 1.21
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard38",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard38",
+        "action": "pass",
+        "seconds": 1.04
+      }
+    ]
+  },
+  {
+    "file": "internal/native/regexp_test.go",
+    "test": "TestRegExpBytecodeRandomNodeShard39",
+    "events": [
+      {
+        "test": "TestRegExpBytecodeRandomNodeShard39",
+        "action": "pass",
+        "seconds": 1.14
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsSignalAndExit",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_0",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_15",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_2",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_1",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_3",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_12",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_14",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_24",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_26",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_27",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_29",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_30",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_34",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_false_signal_64",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_15",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_2",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_1",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_3",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_12",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_14",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_24",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_26",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_27",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_29",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_30",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_34",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/worker_true_signal_64",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_guarded",
+        "action": "pass",
+        "seconds": 0.43
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/handler_buffer_mutant",
+        "action": "pass",
+        "seconds": 0.72
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/exit_flush_guarded/threads_4",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/exit_flush_guarded/threads_16",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/exit_flush_guarded",
+        "action": "pass",
+        "seconds": 0.59
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant/threads_4",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant/threads_16",
+        "action": "pass",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit/exit_flush_mutant",
+        "action": "pass",
+        "seconds": 0.56
+      },
+      {
+        "test": "TestRuntimeStaticsSignalAndExit",
+        "action": "pass",
+        "seconds": 4.33
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsStopWholeLines",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsStopWholeLines/drop_flush_false",
+        "action": "pass",
+        "seconds": 0.2
+      },
+      {
+        "test": "TestRuntimeStaticsStopWholeLines/drop_flush_true",
+        "action": "pass",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestRuntimeStaticsStopWholeLines",
+        "action": "pass",
+        "seconds": 0.51
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit00",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit00/regex",
+        "action": "pass",
+        "seconds": 0.33
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit00",
+        "action": "pass",
+        "seconds": 0.36
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit01",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit01/string_bmp",
+        "action": "pass",
+        "seconds": 0.34
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit01",
+        "action": "pass",
+        "seconds": 0.36
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit02",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit02/string_supplementary",
+        "action": "pass",
+        "seconds": 0.63
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit02",
+        "action": "pass",
+        "seconds": 0.66
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit03",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit03/normalization",
+        "action": "pass",
+        "seconds": 0.41
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit03",
+        "action": "pass",
+        "seconds": 0.43
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit04",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit04/numbers",
+        "action": "pass",
+        "seconds": 0.34
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit04",
+        "action": "pass",
+        "seconds": 0.36
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit05",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit05/map",
+        "action": "pass",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit05",
+        "action": "pass",
+        "seconds": 0.27
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit06",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit06/heap_weak",
+        "action": "pass",
+        "seconds": 0.36
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit06",
+        "action": "pass",
+        "seconds": 0.38
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit07",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit07/field_cache",
+        "action": "pass",
+        "seconds": 0.26
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit07",
+        "action": "pass",
+        "seconds": 0.27
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit08",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit08/json",
+        "action": "pass",
+        "seconds": 0.33
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit08",
+        "action": "pass",
+        "seconds": 0.34
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit09",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit09/profiling",
+        "action": "pass",
+        "seconds": 0.37
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit09",
+        "action": "pass",
+        "seconds": 0.39
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit10",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit10/output",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit10",
+        "action": "pass",
+        "seconds": 0.22
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsParallelUnit11",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsParallelUnit11/shape_types",
+        "action": "pass",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestRuntimeStaticsParallelUnit11",
+        "action": "pass",
+        "seconds": 0.26
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit00",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit00/regex_budget",
+        "action": "pass",
+        "seconds": 0.64
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit00",
+        "action": "pass",
+        "seconds": 0.64
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit01",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit01/checker_profiling",
+        "action": "pass",
+        "seconds": 0.46
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit01",
+        "action": "pass",
+        "seconds": 0.46
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit02",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit02/packed_field_cache",
+        "action": "pass",
+        "seconds": 0.52
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit02",
+        "action": "pass",
+        "seconds": 0.52
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit03",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit03/weak_table_lock",
+        "action": "pass",
+        "seconds": 0.44
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit03",
+        "action": "pass",
+        "seconds": 0.44
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit04",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit04/allocator_lists",
+        "action": "pass",
+        "seconds": 0.44
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit04",
+        "action": "pass",
+        "seconds": 0.44
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit05",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit05/count_allocation",
+        "action": "pass",
+        "seconds": 0.43
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit05",
+        "action": "pass",
+        "seconds": 0.43
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit06",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit06/output_buffer",
+        "action": "pass",
+        "seconds": 0.48
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit06",
+        "action": "pass",
+        "seconds": 0.48
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit07",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry/guarded",
+        "action": "pass",
+        "seconds": 0.47
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry/mutant",
+        "action": "pass",
+        "seconds": 0.52
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit07/shape_types_registry",
+        "action": "pass",
+        "seconds": 0.99
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit07",
+        "action": "pass",
+        "seconds": 0.99
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit08",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded/threads_4",
+        "action": "pass",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded/threads_16",
+        "action": "pass",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/guarded",
+        "action": "pass",
+        "seconds": 0.86
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant/threads_4",
+        "action": "pass",
+        "seconds": 0.22
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant/threads_16",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes/mutant",
+        "action": "pass",
+        "seconds": 0.86
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08/normalization_classes",
+        "action": "pass",
+        "seconds": 1.72
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit08",
+        "action": "pass",
+        "seconds": 1.72
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit09",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded/threads_4",
+        "action": "pass",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded/threads_16",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/guarded",
+        "action": "pass",
+        "seconds": 0.65
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant/threads_4",
+        "action": "pass",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant/threads_16",
+        "action": "pass",
+        "seconds": 0.29
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings/mutant",
+        "action": "pass",
+        "seconds": 1.21
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09/normalization_mappings",
+        "action": "pass",
+        "seconds": 1.86
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit09",
+        "action": "pass",
+        "seconds": 1.86
+      }
+    ]
+  },
+  {
+    "file": "internal/native/runtime_statics_parallel_test.go",
+    "test": "TestRuntimeStaticsProtectionMutantsUnit10",
+    "events": [
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded/threads_4",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded/threads_16",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/guarded",
+        "action": "pass",
+        "seconds": 0.68
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant/threads_4",
+        "action": "pass",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant/threads_16",
+        "action": "pass",
+        "seconds": 0.3
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs/mutant",
+        "action": "pass",
+        "seconds": 1.07
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10/normalization_pairs",
+        "action": "pass",
+        "seconds": 1.75
+      },
+      {
+        "test": "TestRuntimeStaticsProtectionMutantsUnit10",
+        "action": "pass",
+        "seconds": 1.75
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_overload_callback_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_overload_callback_fit",
+        "action": "pass",
+        "seconds": 1.58
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_overload_callback_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 1.03
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_optional_boolean_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_optional_boolean_fit",
+        "action": "pass",
+        "seconds": 1.69
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_optional_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 0.74
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_required_boolean_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_required_boolean_fit",
+        "action": "pass",
+        "seconds": 1.44
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_required_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_required_boolean_misfit",
+        "action": "pass",
+        "seconds": 0.75
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_optional_false_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_optional_false_fit",
+        "action": "pass",
+        "seconds": 1.32
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_optional_false_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_optional_false_misfit",
+        "action": "pass",
+        "seconds": 0.8
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_file_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_file_fit",
+        "action": "pass",
+        "seconds": 1.43
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_file_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_file_misfit",
+        "action": "pass",
+        "seconds": 0.81
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_start_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_start_fit",
+        "action": "pass",
+        "seconds": 1.7
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_start_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_start_misfit",
+        "action": "pass",
+        "seconds": 1.03
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_length_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_length_fit",
+        "action": "pass",
+        "seconds": 1.66
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_length_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_length_misfit",
+        "action": "pass",
+        "seconds": 0.83
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_bottom_number_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_number_fit",
+        "action": "pass",
+        "seconds": 1.35
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_bottom_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_number_misfit",
+        "action": "pass",
+        "seconds": 0.72
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_bottom_string_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_string_fit",
+        "action": "pass",
+        "seconds": 1.49
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_branch_bottom_string_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_branch_bottom_string_misfit",
+        "action": "pass",
+        "seconds": 0.77
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_generic_site_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_generic_site_fit",
+        "action": "pass",
+        "seconds": 1.26
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_generic_site_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_generic_site_misfit",
+        "action": "pass",
+        "seconds": 0.85
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_overload_result_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_overload_result_fit",
+        "action": "pass",
+        "seconds": 1.42
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_overload_result_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_overload_result_misfit",
+        "action": "pass",
+        "seconds": 0.81
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_comment_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_comment_fit",
+        "action": "pass",
+        "seconds": 1.42
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_comment_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_comment_misfit",
+        "action": "pass",
+        "seconds": 0.8
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_resolution_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_resolution_fit",
+        "action": "pass",
+        "seconds": 1.3
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_resolution_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_resolution_misfit",
+        "action": "pass",
+        "seconds": 0.81
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_callback_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_callback_fit",
+        "action": "pass",
+        "seconds": 1.75
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_callback_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_callback_misfit",
+        "action": "pass",
+        "seconds": 0.99
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_node_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_node_fit",
+        "action": "pass",
+        "seconds": 1.45
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_node_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_node_misfit",
+        "action": "pass",
+        "seconds": 0.82
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_auto_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_auto_fit",
+        "action": "pass",
+        "seconds": 1.55
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_emit_auto_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_emit_auto_misfit",
+        "action": "pass",
+        "seconds": 0.88
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_slice_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_slice_fit",
+        "action": "pass",
+        "seconds": 1.5
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_slice_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_slice_misfit",
+        "action": "pass",
+        "seconds": 0.83
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_map_values_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_values_fit",
+        "action": "pass",
+        "seconds": 1.6
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_map_values_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_values_misfit",
+        "action": "pass",
+        "seconds": 1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_boolean_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_boolean_fit",
+        "action": "pass",
+        "seconds": 1.29
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_boolean_misfit",
+        "action": "pass",
+        "seconds": 0.79
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_fill_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_fill_fit",
+        "action": "pass",
+        "seconds": 1.39
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_fill_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_fill_misfit",
+        "action": "pass",
+        "seconds": 0.78
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_map_object_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_object_fit",
+        "action": "pass",
+        "seconds": 1.39
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_map_object_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_object_misfit",
+        "action": "pass",
+        "seconds": 0.77
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_alias_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_alias_fit",
+        "action": "pass",
+        "seconds": 1.49
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_alias_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_alias_misfit",
+        "action": "pass",
+        "seconds": 0.88
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_number_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_number_fit",
+        "action": "pass",
+        "seconds": 1.35
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_number_misfit",
+        "action": "pass",
+        "seconds": 0.72
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_string_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_string_fit",
+        "action": "pass",
+        "seconds": 1.51
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_string_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_string_misfit",
+        "action": "pass",
+        "seconds": 0.88
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_map_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_fit",
+        "action": "pass",
+        "seconds": 1.4
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_map_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_map_misfit",
+        "action": "pass",
+        "seconds": 0.72
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_splice_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_splice_fit",
+        "action": "pass",
+        "seconds": 1.46
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_splice_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_splice_misfit",
+        "action": "pass",
+        "seconds": 1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_object_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_object_fit",
+        "action": "pass",
+        "seconds": 1.61
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_object_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_object_misfit",
+        "action": "pass",
+        "seconds": 0.71
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_nested_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_nested_fit",
+        "action": "pass",
+        "seconds": 1.48
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_container_nested_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_container_nested_misfit",
+        "action": "pass",
+        "seconds": 0.85
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flow_node_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flow_node_fit",
+        "action": "pass",
+        "seconds": 1.53
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flow_node_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flow_node_misfit",
+        "action": "pass",
+        "seconds": 0.83
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flow_undefined_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flow_undefined_fit",
+        "action": "pass",
+        "seconds": 1.32
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flow_undefined_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flow_undefined_misfit",
+        "action": "pass",
+        "seconds": 0.85
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flow_array_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flow_array_fit",
+        "action": "pass",
+        "seconds": 1.45
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flow_array_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flow_array_misfit",
+        "action": "pass",
+        "seconds": 0.78
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_nullable_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_nullable_fit",
+        "action": "pass",
+        "seconds": 1.39
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_nullable_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_nullable_misfit",
+        "action": "pass",
+        "seconds": 0.91
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_index_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_index_misfit",
+        "action": "pass",
+        "seconds": 0.93
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_splice_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_splice_misfit",
+        "action": "pass",
+        "seconds": 0.96
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_wide_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_wide_fit",
+        "action": "pass",
+        "seconds": 1.51
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_number_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_number_fit",
+        "action": "pass",
+        "seconds": 1.48
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_number_misfit",
+        "action": "pass",
+        "seconds": 0.82
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_string_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_string_fit",
+        "action": "pass",
+        "seconds": 1.5
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_string_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_string_misfit",
+        "action": "pass",
+        "seconds": 1.11
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_object_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_object_fit",
+        "action": "pass",
+        "seconds": 1.51
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_never_object_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_never_object_misfit",
+        "action": "pass",
+        "seconds": 1.23
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_alias_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_alias_fit",
+        "action": "pass",
+        "seconds": 1.81
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_alias_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_alias_misfit",
+        "action": "pass",
+        "seconds": 0.7
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_proof_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_proof_fit",
+        "action": "pass",
+        "seconds": 1.66
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_proof_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_proof_misfit",
+        "action": "pass",
+        "seconds": 0.7
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_rich_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_rich_fit",
+        "action": "pass",
+        "seconds": 1.33
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_rich_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_rich_misfit",
+        "action": "pass",
+        "seconds": 1.24
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_related_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_related_fit",
+        "action": "pass",
+        "seconds": 1.49
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_related_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_related_misfit",
+        "action": "pass",
+        "seconds": 0.84
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_nested_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_nested_fit",
+        "action": "pass",
+        "seconds": 1.72
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_nested_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_nested_misfit",
+        "action": "pass",
+        "seconds": 0.73
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_inner_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_inner_fit",
+        "action": "pass",
+        "seconds": 1.46
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_inner_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_inner_misfit",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_reference_structure",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_reference_structure",
+        "action": "pass",
+        "seconds": 1.07
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flags_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flags_fit",
+        "action": "pass",
+        "seconds": 1.73
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_flags_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_flags_misfit",
+        "action": "pass",
+        "seconds": 0.96
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_string_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_string_fit",
+        "action": "pass",
+        "seconds": 1.62
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_string_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_string_misfit",
+        "action": "pass",
+        "seconds": 1.09
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_boolean_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_boolean_fit",
+        "action": "pass",
+        "seconds": 1.41
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_boolean_misfit",
+        "action": "pass",
+        "seconds": 0.92
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_fit",
+        "action": "pass",
+        "seconds": 1.52
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_diagnostic_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_diagnostic_misfit",
+        "action": "pass",
+        "seconds": 0.97
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_number_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_number_fit",
+        "action": "pass",
+        "seconds": 1.53
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_number_misfit",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_compound_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_compound_fit",
+        "action": "pass",
+        "seconds": 1.38
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_compound_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_compound_misfit",
+        "action": "pass",
+        "seconds": 1.02
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_nullable_number_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_nullable_number_fit",
+        "action": "pass",
+        "seconds": 1.41
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_nullable_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_nullable_number_misfit",
+        "action": "pass",
+        "seconds": 0.78
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_range_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_range_fit",
+        "action": "pass",
+        "seconds": 1.4
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_range_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_range_misfit",
+        "action": "pass",
+        "seconds": 1.05
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_receiver_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_receiver_fit",
+        "action": "pass",
+        "seconds": 1.56
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_parent_fit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_parent_fit",
+        "action": "pass",
+        "seconds": 1.65
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWrites_parent_misfit",
+    "events": [
+      {
+        "test": "TestCheckedWiderWrites_parent_misfit",
+        "action": "pass",
+        "seconds": 0.96
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWriteMutants_drop_check",
+    "events": [
+      {
+        "test": "TestCheckedWiderWriteMutants_drop_check",
+        "action": "pass",
+        "seconds": 1.14
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedWiderWriteMutants_drop_literal_set",
+    "events": [
+      {
+        "test": "TestCheckedWiderWriteMutants_drop_literal_set",
+        "action": "pass",
+        "seconds": 1.37
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+    "events": [
+      {
+        "test": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+        "action": "pass",
+        "seconds": 1.33
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+    "events": [
+      {
+        "test": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+        "action": "pass",
+        "seconds": 1.45
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+    "events": [
+      {
+        "test": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+        "action": "pass",
+        "seconds": 1.32
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+        "action": "pass",
+        "seconds": 1.21
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+        "action": "pass",
+        "seconds": 1.16
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+        "action": "pass",
+        "seconds": 1.29
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+        "action": "pass",
+        "seconds": 1.01
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+        "action": "pass",
+        "seconds": 1.32
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+        "action": "pass",
+        "seconds": 1.35
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+        "action": "pass",
+        "seconds": 0.87
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+        "action": "pass",
+        "seconds": 1.17
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+        "action": "pass",
+        "seconds": 1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+        "action": "pass",
+        "seconds": 1.4
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+        "action": "pass",
+        "seconds": 1.12
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+        "action": "pass",
+        "seconds": 1.19
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+    "events": [
+      {
+        "test": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+        "action": "pass",
+        "seconds": 1.37
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedEmitContractsMutants_emit_drop_check",
+    "events": [
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_drop_check",
+        "action": "pass",
+        "seconds": 1.13
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedEmitContractsMutants_emit_node_misfit",
+    "events": [
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_node_misfit",
+        "action": "pass",
+        "seconds": 1.22
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+    "events": [
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+        "action": "pass",
+        "seconds": 1.02
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+    "events": [
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+        "action": "pass",
+        "seconds": 1.53
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+    "events": [
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+        "action": "pass",
+        "seconds": 1.07
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+    "events": [
+      {
+        "test": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+        "action": "pass",
+        "seconds": 1.12
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 1.5
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_optional_false_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_optional_false_misfit",
+        "action": "pass",
+        "seconds": 1.7
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_required_boolean_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_required_boolean_misfit",
+        "action": "pass",
+        "seconds": 1.54
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_branch_file_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_branch_file_misfit",
+        "action": "pass",
+        "seconds": 1.6
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_branch_start_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_branch_start_misfit",
+        "action": "pass",
+        "seconds": 1.35
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_branch_length_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_branch_length_misfit",
+        "action": "pass",
+        "seconds": 1.4
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+        "action": "pass",
+        "seconds": 1.39
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+        "action": "pass",
+        "seconds": 1.25
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_generic_site_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_generic_site_misfit",
+        "action": "pass",
+        "seconds": 1.38
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_overload_result_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_overload_result_misfit",
+        "action": "pass",
+        "seconds": 1.31
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_cases_test.go",
+    "test": "TestCheckedViewsNextMutants_overload_callback_misfit",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextMutants_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 1.45
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeRegexFields",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeRegexFields",
+        "action": "pass",
+        "seconds": 1.39
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeMapFields",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeMapFields",
+        "action": "pass",
+        "seconds": 1.54
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeSetFields",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeSetFields",
+        "action": "pass",
+        "seconds": 1.54
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeFSFields",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeFSFields",
+        "action": "pass",
+        "seconds": 1.23
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeDirectoryFields",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeDirectoryFields",
+        "action": "pass",
+        "seconds": 1.26
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeStatusFields",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeStatusFields",
+        "action": "pass",
+        "seconds": 1.23
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_runtime_fields_test.go",
+    "test": "TestCheckedRuntimeReferenceArrayLaterWriter",
+    "events": [
+      {
+        "test": "TestCheckedRuntimeReferenceArrayLaterWriter",
+        "action": "pass",
+        "seconds": 1.19
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_next_test.go",
+    "test": "TestCheckedViewsNextAdamicRefusals",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextAdamicRefusals",
+        "action": "pass",
+        "seconds": 0.27
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_next_test.go",
+    "test": "TestCheckedViewsNextProvenAdamic",
+    "events": [
+      {
+        "test": "TestCheckedViewsNextProvenAdamic",
+        "action": "pass",
+        "seconds": 1.25
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2ReadsAfterWrites",
+    "events": [
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites/mixed-read-write",
+        "action": "pass",
+        "seconds": 0.72
+      },
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good",
+        "action": "pass",
+        "seconds": 0.77
+      },
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites/representation-read-write",
+        "action": "pass",
+        "seconds": 0.79
+      },
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites/undefined-read-write",
+        "action": "pass",
+        "seconds": 0.67
+      },
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites/null-read-write",
+        "action": "pass",
+        "seconds": 0.76
+      },
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites/fs-option-boxing",
+        "action": "pass",
+        "seconds": 3.22
+      },
+      {
+        "test": "TestCheckedViewV2ReadsAfterWrites",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2ArrayArmBoundary",
+    "events": [
+      {
+        "test": "TestCheckedViewV2ArrayArmBoundary",
+        "action": "pass",
+        "seconds": 0.34
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2WrongFamilyMutant",
+    "events": [
+      {
+        "test": "TestCheckedViewV2WrongFamilyMutant",
+        "action": "pass",
+        "seconds": 1.36
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2RepresentationMutants",
+    "events": [
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/null",
+        "action": "pass",
+        "seconds": 0.44
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/float64",
+        "action": "pass",
+        "seconds": 0.45
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/int32",
+        "action": "pass",
+        "seconds": 0.44
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/uint8",
+        "action": "pass",
+        "seconds": 0.39
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/undefined",
+        "action": "pass",
+        "seconds": 0.47
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2MembershipMutant",
+    "events": [
+      {
+        "test": "TestCheckedViewV2MembershipMutant",
+        "action": "pass",
+        "seconds": 1.31
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2TupleIdentityMutant",
+    "events": [
+      {
+        "test": "TestCheckedViewV2TupleIdentityMutant",
+        "action": "pass",
+        "seconds": 1.16
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2CallableProducerMutant",
+    "events": [
+      {
+        "test": "TestCheckedViewV2CallableProducerMutant",
+        "action": "pass",
+        "seconds": 1.37
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_views_v2_migration_test.go",
+    "test": "TestCheckedViewV2MovedStage3Results",
+    "events": [
+      {
+        "test": "TestCheckedViewV2MovedStage3Results/assertions/13_flag_downcast.a",
+        "action": "pass",
+        "seconds": 0.41
+      },
+      {
+        "test": "TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a",
+        "action": "pass",
+        "seconds": 0.97
+      },
+      {
+        "test": "TestCheckedViewV2MovedStage3Results/assertions/20_type_flag_mask.a",
+        "action": "pass",
+        "seconds": 0.76
+      },
+      {
+        "test": "TestCheckedViewV2MovedStage3Results/assertions/11_parenthesized_kind.a",
+        "action": "pass",
+        "seconds": 0.79
+      },
+      {
+        "test": "TestCheckedViewV2MovedStage3Results/predicates/03_void_zero.a",
+        "action": "pass",
+        "seconds": 0.84
+      },
+      {
+        "test": "TestCheckedViewV2MovedStage3Results",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessage02",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessage02",
+        "action": "pass",
+        "seconds": 0.89
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessage03",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessage03",
+        "action": "pass",
+        "seconds": 0.77
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessage13",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessage13",
+        "action": "pass",
+        "seconds": 0.93
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessage15",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessage15",
+        "action": "pass",
+        "seconds": 0.89
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessage16",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessage16",
+        "action": "pass",
+        "seconds": 1.01
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessageMutant03",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessageMutant03",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessageMutant13",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessageMutant13",
+        "action": "pass",
+        "seconds": 1.07
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessageMutant15",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessageMutant15",
+        "action": "pass",
+        "seconds": 1.1
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_write_messages_test.go",
+    "test": "TestCheckedWriteMessageMutant16",
+    "events": [
+      {
+        "test": "TestCheckedWriteMessageMutant16",
+        "action": "pass",
+        "seconds": 0.88
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_writes_test.go",
+    "test": "TestCheckedWiderWritesAdamicRefuses",
+    "events": [
+      {
+        "test": "TestCheckedWiderWritesAdamicRefuses",
+        "action": "pass",
+        "seconds": 0.34
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_writes_test.go",
+    "test": "TestCheckedWiderWritesProvenAdamic",
+    "events": [
+      {
+        "test": "TestCheckedWiderWritesProvenAdamic",
+        "action": "pass",
+        "seconds": 1.39
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_writes_test.go",
+    "test": "TestCheckedNeverContractMutant",
+    "events": [
+      {
+        "test": "TestCheckedNeverContractMutant",
+        "action": "pass",
+        "seconds": 1.2
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_writes_test.go",
+    "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
+    "events": [
+      {
+        "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
+        "action": "pass",
+        "seconds": 0.06
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_writes_test.go",
+    "test": "TestCheckedWiderWritesProvenContainers",
+    "events": [
+      {
+        "test": "TestCheckedWiderWritesProvenContainers",
+        "action": "pass",
+        "seconds": 1.34
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/checked_writes_test.go",
+    "test": "TestCheckedEmitProvenAdamic",
+    "events": [
+      {
+        "test": "TestCheckedEmitProvenAdamic",
+        "action": "pass",
+        "seconds": 1.29
+      }
+    ]
+  },
+  {
+    "file": "stage1/cohere/values/gaps_test.go",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "events": [
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+        "action": "pass",
+        "seconds": 1.46
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+        "action": "pass",
+        "seconds": 1.48
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+        "action": "pass",
+        "seconds": 0.61
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+        "action": "pass",
+        "seconds": 0.63
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  }
+]

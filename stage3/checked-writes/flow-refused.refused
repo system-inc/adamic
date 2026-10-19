@@ -1,0 +1,1 @@
+stage3/checked-writes/flow-refused.a:12:7: Adamic 0.1 refuses a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)

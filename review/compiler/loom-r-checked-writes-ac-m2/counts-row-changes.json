@@ -1,0 +1,5201 @@
+[
+  {
+    "path": "bench/parallel_files.a",
+    "main": [
+      3952651,
+      3952651,
+      8151045,
+      8654930,
+      8839,
+      0
+    ],
+    "recut": [
+      3952651,
+      3952651,
+      11034629,
+      11538514,
+      8839,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      2883584,
+      2883584,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      2883584,
+      2883584,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/06_stack.ts",
+    "main": [
+      39,
+      39,
+      50,
+      76,
+      7,
+      0
+    ],
+    "recut": [
+      39,
+      39,
+      60,
+      86,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      10,
+      10,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      10,
+      10,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/load/testdata/0.1/compile/09_tree.ts",
+    "main": [
+      19,
+      19,
+      28,
+      69,
+      16,
+      0
+    ],
+    "recut": [
+      19,
+      19,
+      37,
+      78,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      9,
+      9,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      9,
+      9,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments.a",
+    "main": [
+      77,
+      77,
+      14,
+      68,
+      27,
+      0
+    ],
+    "recut": [
+      77,
+      77,
+      70,
+      124,
+      27,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      56,
+      56,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      56,
+      56,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/array_literal_empty_first.a",
+    "main": [
+      25,
+      25,
+      17,
+      39,
+      11,
+      0
+    ],
+    "recut": [
+      25,
+      25,
+      21,
+      43,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/array_literal_empty_last.a",
+    "main": [
+      28,
+      28,
+      21,
+      43,
+      14,
+      0
+    ],
+    "recut": [
+      28,
+      28,
+      25,
+      47,
+      14,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/array_literal_empty_typed.a",
+    "main": [
+      17,
+      17,
+      13,
+      31,
+      10,
+      0
+    ],
+    "recut": [
+      17,
+      17,
+      14,
+      32,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/bitwise.a",
+    "main": [
+      9304,
+      9304,
+      1369,
+      9342,
+      45,
+      0
+    ],
+    "recut": [
+      9304,
+      9304,
+      2665,
+      10638,
+      45,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1296,
+      1296,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1296,
+      1296,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_chain_coverage_return.a",
+    "main": [
+      16,
+      16,
+      7,
+      13,
+      5,
+      0
+    ],
+    "recut": [
+      16,
+      16,
+      8,
+      14,
+      5,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_element.a",
+    "main": [
+      113,
+      113,
+      67,
+      128,
+      15,
+      0
+    ],
+    "recut": [
+      113,
+      113,
+      90,
+      151,
+      15,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      23,
+      23,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      23,
+      23,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_element_throw.a",
+    "main": [
+      38,
+      38,
+      30,
+      50,
+      8,
+      0
+    ],
+    "recut": [
+      38,
+      38,
+      35,
+      55,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_loop.a",
+    "main": [
+      128,
+      126,
+      110,
+      181,
+      14,
+      2
+    ],
+    "recut": [
+      128,
+      126,
+      134,
+      205,
+      14,
+      2
+    ],
+    "delta": [
+      0,
+      0,
+      24,
+      24,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      24,
+      24,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/borrow_loop_calls.a",
+    "main": [
+      263,
+      261,
+      176,
+      342,
+      25,
+      2
+    ],
+    "recut": [
+      263,
+      261,
+      216,
+      382,
+      25,
+      2
+    ],
+    "delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-generic.a",
+    "main": [
+      13,
+      13,
+      8,
+      18,
+      8,
+      0
+    ],
+    "recut": [
+      13,
+      13,
+      11,
+      21,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": null,
+    "matches_source": false
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-generic.a",
+    "main": [
+      13,
+      13,
+      20,
+      27,
+      10,
+      0
+    ],
+    "recut": [
+      13,
+      13,
+      23,
+      30,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": null,
+    "matches_source": false
+  },
+  {
+    "path": "internal/oracle/testdata/case_mapping.a",
+    "main": [
+      203,
+      203,
+      19,
+      216,
+      16,
+      0
+    ],
+    "recut": [
+      203,
+      203,
+      271,
+      468,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      252,
+      252,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      252,
+      252,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/census_append_overload.a",
+    "main": [
+      10,
+      10,
+      3,
+      16,
+      3,
+      0
+    ],
+    "recut": [
+      10,
+      10,
+      4,
+      17,
+      3,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/census_small_rest.a",
+    "main": [
+      20,
+      20,
+      35,
+      42,
+      8,
+      0
+    ],
+    "recut": [
+      20,
+      20,
+      36,
+      43,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/directory.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      7,
+      10,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/fs.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      7,
+      9,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/map.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      9,
+      9,
+      19,
+      21,
+      9,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/regex.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      15,
+      15,
+      23,
+      24,
+      13,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/set.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      10,
+      10,
+      19,
+      22,
+      9,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/status.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      6,
+      10,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      4,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      3,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      2,
+      2,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a (TypeScript adapter)",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      4,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/class_as_interface.a",
+    "main": [
+      372,
+      372,
+      303,
+      468,
+      60,
+      0
+    ],
+    "recut": [
+      372,
+      372,
+      324,
+      489,
+      60,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      21,
+      21,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      21,
+      21,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/closures_throw.a",
+    "main": [
+      418,
+      418,
+      1566,
+      1801,
+      142,
+      0
+    ],
+    "recut": [
+      418,
+      418,
+      1572,
+      1807,
+      142,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      6,
+      6,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      6,
+      6,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/closures_throw_uncaught.a",
+    "main": [
+      31,
+      29,
+      20,
+      36,
+      13,
+      0
+    ],
+    "recut": [
+      31,
+      29,
+      28,
+      44,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      8,
+      8,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      8,
+      8,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/collections.a",
+    "main": [
+      362,
+      362,
+      392,
+      550,
+      103,
+      0
+    ],
+    "recut": [
+      362,
+      362,
+      415,
+      573,
+      103,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      23,
+      23,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      23,
+      23,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/doubly_linked.a",
+    "main": [
+      90,
+      90,
+      525,
+      558,
+      49,
+      0
+    ],
+    "recut": [
+      90,
+      90,
+      558,
+      591,
+      49,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      33,
+      33,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      33,
+      33,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/exceptions.a",
+    "main": [
+      133,
+      133,
+      163,
+      229,
+      20,
+      0
+    ],
+    "recut": [
+      133,
+      133,
+      168,
+      234,
+      20,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/finally_leaves.a",
+    "main": [
+      157,
+      157,
+      59,
+      174,
+      10,
+      0
+    ],
+    "recut": [
+      157,
+      157,
+      67,
+      182,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      8,
+      8,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      8,
+      8,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/fresh_calls.a",
+    "main": [
+      113,
+      113,
+      216,
+      273,
+      37,
+      0
+    ],
+    "recut": [
+      113,
+      113,
+      258,
+      315,
+      37,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      42,
+      42,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      42,
+      42,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/fresh_parser.a",
+    "main": [
+      145,
+      145,
+      280,
+      450,
+      34,
+      0
+    ],
+    "recut": [
+      145,
+      145,
+      316,
+      486,
+      34,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      36,
+      36,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      36,
+      36,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/fresh_writes.a",
+    "main": [
+      330,
+      330,
+      369,
+      485,
+      132,
+      0
+    ],
+    "recut": [
+      330,
+      330,
+      386,
+      502,
+      132,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      17,
+      17,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      17,
+      17,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/from_codes.a",
+    "main": [
+      408,
+      408,
+      56,
+      413,
+      12,
+      0
+    ],
+    "recut": [
+      408,
+      408,
+      106,
+      463,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      50,
+      50,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      50,
+      50,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/gaps.a",
+    "main": [
+      97,
+      97,
+      85,
+      154,
+      47,
+      0
+    ],
+    "recut": [
+      97,
+      97,
+      87,
+      156,
+      47,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/generic_functions.a",
+    "main": [
+      35,
+      35,
+      32,
+      55,
+      8,
+      0
+    ],
+    "recut": [
+      35,
+      35,
+      40,
+      63,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      8,
+      8,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      8,
+      8,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/host_map_union.a",
+    "main": [
+      61,
+      61,
+      124,
+      163,
+      12,
+      0
+    ],
+    "recut": [
+      61,
+      61,
+      127,
+      166,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_copy.a",
+    "main": [
+      77,
+      77,
+      55,
+      117,
+      17,
+      0
+    ],
+    "recut": [
+      77,
+      77,
+      56,
+      118,
+      17,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_find_last.a",
+    "main": [
+      43,
+      43,
+      26,
+      75,
+      10,
+      0
+    ],
+    "recut": [
+      43,
+      43,
+      27,
+      76,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_flat.a",
+    "main": [
+      33,
+      33,
+      41,
+      57,
+      19,
+      0
+    ],
+    "recut": [
+      33,
+      33,
+      60,
+      76,
+      19,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      19,
+      19,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      19,
+      19,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_flat_map.a",
+    "main": [
+      50,
+      50,
+      60,
+      109,
+      17,
+      0
+    ],
+    "recut": [
+      50,
+      50,
+      79,
+      128,
+      17,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      19,
+      19,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      19,
+      19,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_iterators.a",
+    "main": [
+      57,
+      57,
+      30,
+      81,
+      13,
+      0
+    ],
+    "recut": [
+      57,
+      57,
+      31,
+      82,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_spliced.a",
+    "main": [
+      72,
+      72,
+      40,
+      114,
+      12,
+      0
+    ],
+    "recut": [
+      72,
+      72,
+      60,
+      134,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      20,
+      20,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      20,
+      20,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_with.a",
+    "main": [
+      68,
+      68,
+      43,
+      109,
+      10,
+      0
+    ],
+    "recut": [
+      68,
+      68,
+      44,
+      110,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_fnexpr_recurse.a",
+    "main": [
+      29,
+      29,
+      69,
+      99,
+      11,
+      0
+    ],
+    "recut": [
+      29,
+      29,
+      74,
+      104,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_construct.a",
+    "main": [
+      180,
+      180,
+      225,
+      271,
+      52,
+      0
+    ],
+    "recut": [
+      180,
+      180,
+      236,
+      282,
+      52,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      11,
+      11,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      11,
+      11,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_group_by.a",
+    "main": [
+      115,
+      115,
+      117,
+      201,
+      36,
+      0
+    ],
+    "recut": [
+      115,
+      115,
+      137,
+      221,
+      36,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      20,
+      20,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      20,
+      20,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_groupby_keys.a",
+    "main": [
+      31,
+      31,
+      42,
+      68,
+      12,
+      0
+    ],
+    "recut": [
+      31,
+      31,
+      53,
+      79,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      11,
+      11,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      11,
+      11,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_iterator_exhausted.a",
+    "main": [
+      20230,
+      20230,
+      30328,
+      50539,
+      18,
+      0
+    ],
+    "recut": [
+      20230,
+      20230,
+      30330,
+      50541,
+      18,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_keys.a",
+    "main": [
+      76,
+      76,
+      64,
+      129,
+      15,
+      0
+    ],
+    "recut": [
+      76,
+      76,
+      68,
+      133,
+      15,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/library_map_set_setops.a",
+    "main": [
+      590,
+      590,
+      336,
+      655,
+      17,
+      0
+    ],
+    "recut": [
+      590,
+      590,
+      427,
+      746,
+      17,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      91,
+      91,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      91,
+      91,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/lint_runtime_release_chain.a",
+    "main": [
+      405034,
+      405034,
+      505776,
+      303790,
+      300003,
+      0
+    ],
+    "recut": [
+      405034,
+      405034,
+      506032,
+      304046,
+      300003,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      256,
+      256,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      256,
+      256,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/lint_runtime_release_shared.a",
+    "main": [
+      1008,
+      1008,
+      8478,
+      6396,
+      263,
+      0
+    ],
+    "recut": [
+      1008,
+      1008,
+      9249,
+      7167,
+      263,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      771,
+      771,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      771,
+      771,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/map_foreach_arrays.a",
+    "main": [
+      995,
+      995,
+      932,
+      1355,
+      95,
+      0
+    ],
+    "recut": [
+      995,
+      995,
+      1028,
+      1451,
+      95,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      96,
+      96,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      96,
+      96,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/map_foreach_closures.a",
+    "main": [
+      816,
+      816,
+      1044,
+      1277,
+      87,
+      0
+    ],
+    "recut": [
+      816,
+      816,
+      1140,
+      1373,
+      87,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      96,
+      96,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      96,
+      96,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/map_foreach_keep.a",
+    "main": [
+      516,
+      516,
+      625,
+      931,
+      35,
+      0
+    ],
+    "recut": [
+      516,
+      516,
+      628,
+      934,
+      35,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/map_foreach_objects.a",
+    "main": [
+      732,
+      732,
+      834,
+      1076,
+      63,
+      0
+    ],
+    "recut": [
+      732,
+      732,
+      930,
+      1172,
+      63,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      96,
+      96,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      96,
+      96,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/maybe_number_slots.a",
+    "main": [
+      484,
+      484,
+      304,
+      797,
+      16,
+      0
+    ],
+    "recut": [
+      484,
+      484,
+      305,
+      798,
+      16,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/method_coverage_array_mutations.a",
+    "main": [
+      18,
+      18,
+      47,
+      58,
+      10,
+      0
+    ],
+    "recut": [
+      18,
+      18,
+      49,
+      60,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/miscompile_2a/controls.a",
+    "main": [
+      33,
+      32,
+      34,
+      56,
+      10,
+      1
+    ],
+    "recut": [
+      33,
+      32,
+      36,
+      58,
+      10,
+      1
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "source_delta": null,
+    "matches_source": false
+  },
+  {
+    "path": "internal/oracle/testdata/nested_array.a",
+    "main": [
+      17,
+      17,
+      17,
+      27,
+      9,
+      0
+    ],
+    "recut": [
+      17,
+      17,
+      21,
+      31,
+      9,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/normalize.a",
+    "main": [
+      205,
+      205,
+      104,
+      274,
+      11,
+      0
+    ],
+    "recut": [
+      205,
+      205,
+      439,
+      609,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      335,
+      335,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      335,
+      335,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/normalize_long_marks.a",
+    "main": [
+      8693,
+      8693,
+      8521,
+      8769,
+      398,
+      0
+    ],
+    "recut": [
+      8693,
+      8693,
+      16898,
+      17146,
+      398,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      8377,
+      8377,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      8377,
+      8377,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/number_edges.a",
+    "main": [
+      74,
+      74,
+      17,
+      94,
+      13,
+      0
+    ],
+    "recut": [
+      74,
+      74,
+      22,
+      99,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      5,
+      5,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/overload_array_to_multimap.a",
+    "main": [
+      11,
+      11,
+      33,
+      39,
+      8,
+      0
+    ],
+    "recut": [
+      11,
+      11,
+      36,
+      42,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/overload_sort_deduplicate.a",
+    "main": [
+      10,
+      10,
+      39,
+      38,
+      3,
+      0
+    ],
+    "recut": [
+      10,
+      10,
+      42,
+      41,
+      3,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/read_files.a",
+    "main": [
+      58,
+      58,
+      33,
+      76,
+      7,
+      0
+    ],
+    "recut": [
+      58,
+      58,
+      130,
+      173,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      97,
+      97,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      97,
+      97,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/regexp_exec.a",
+    "main": [
+      163,
+      163,
+      93,
+      155,
+      17,
+      0
+    ],
+    "recut": [
+      163,
+      163,
+      120,
+      182,
+      17,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      27,
+      27,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      27,
+      27,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/reuse_arrays.a",
+    "main": [
+      78,
+      78,
+      35,
+      94,
+      11,
+      0
+    ],
+    "recut": [
+      78,
+      78,
+      45,
+      104,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      10,
+      10,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      10,
+      10,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/route_targets_recursive.a",
+    "main": [
+      19,
+      18,
+      6,
+      23,
+      7,
+      1
+    ],
+    "recut": [
+      19,
+      18,
+      7,
+      24,
+      7,
+      1
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/route_targets_unknown.a",
+    "main": [
+      36,
+      36,
+      18,
+      49,
+      7,
+      0
+    ],
+    "recut": [
+      36,
+      36,
+      21,
+      52,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/search_from.a",
+    "main": [
+      292,
+      292,
+      159,
+      320,
+      22,
+      0
+    ],
+    "recut": [
+      292,
+      292,
+      287,
+      448,
+      22,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      128,
+      128,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      128,
+      128,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/searches.a",
+    "main": [
+      106,
+      106,
+      81,
+      173,
+      19,
+      0
+    ],
+    "recut": [
+      106,
+      106,
+      83,
+      175,
+      19,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      2,
+      2,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/set_foreach_arrays.a",
+    "main": [
+      516,
+      516,
+      524,
+      713,
+      58,
+      0
+    ],
+    "recut": [
+      516,
+      516,
+      564,
+      753,
+      58,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/set_foreach_closures.a",
+    "main": [
+      411,
+      411,
+      634,
+      705,
+      39,
+      0
+    ],
+    "recut": [
+      411,
+      411,
+      674,
+      745,
+      39,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/set_foreach_objects.a",
+    "main": [
+      368,
+      368,
+      515,
+      586,
+      30,
+      0
+    ],
+    "recut": [
+      368,
+      368,
+      555,
+      626,
+      30,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      40,
+      40,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/size_class_churn.a",
+    "main": [
+      675173,
+      675173,
+      270038,
+      675212,
+      8005,
+      0
+    ],
+    "recut": [
+      675173,
+      675173,
+      405038,
+      810212,
+      8005,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      135000,
+      135000,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      135000,
+      135000,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/sort_releases.a",
+    "main": [
+      30,
+      30,
+      59,
+      72,
+      11,
+      0
+    ],
+    "recut": [
+      30,
+      30,
+      68,
+      81,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      9,
+      9,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      9,
+      9,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/splice_empty.a",
+    "main": [
+      14,
+      14,
+      6,
+      23,
+      10,
+      0
+    ],
+    "recut": [
+      14,
+      14,
+      10,
+      27,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      4,
+      4,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/splices.a",
+    "main": [
+      74,
+      74,
+      29,
+      96,
+      12,
+      0
+    ],
+    "recut": [
+      74,
+      74,
+      44,
+      111,
+      12,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      15,
+      15,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      15,
+      15,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_append.a",
+    "main": [
+      248,
+      248,
+      140,
+      278,
+      48,
+      0
+    ],
+    "recut": [
+      248,
+      248,
+      260,
+      398,
+      48,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      120,
+      120,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      120,
+      120,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_build_boundaries.a",
+    "main": [
+      2229,
+      2229,
+      342,
+      2347,
+      11,
+      0
+    ],
+    "recut": [
+      2229,
+      2229,
+      6749,
+      8754,
+      11,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      6407,
+      6407,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      6407,
+      6407,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_build_calls.a",
+    "main": [
+      47,
+      47,
+      4,
+      52,
+      7,
+      0
+    ],
+    "recut": [
+      47,
+      47,
+      420,
+      468,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      416,
+      416,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      416,
+      416,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_build_join.a",
+    "main": [
+      161,
+      161,
+      81,
+      193,
+      10,
+      0
+    ],
+    "recut": [
+      161,
+      161,
+      281,
+      393,
+      10,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      200,
+      200,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      200,
+      200,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_build_padding.a",
+    "main": [
+      759,
+      759,
+      126,
+      877,
+      7,
+      0
+    ],
+    "recut": [
+      759,
+      759,
+      1154,
+      1905,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1028,
+      1028,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1028,
+      1028,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_build_repeat.a",
+    "main": [
+      240,
+      240,
+      32,
+      264,
+      8,
+      0
+    ],
+    "recut": [
+      240,
+      240,
+      196,
+      428,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      164,
+      164,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      164,
+      164,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_positions.a",
+    "main": [
+      327,
+      327,
+      368,
+      606,
+      97,
+      0
+    ],
+    "recut": [
+      327,
+      327,
+      396,
+      634,
+      97,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      28,
+      28,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      28,
+      28,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_views_characters.a",
+    "main": [
+      281,
+      281,
+      1542,
+      1825,
+      8,
+      0
+    ],
+    "recut": [
+      281,
+      281,
+      2310,
+      2593,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      768,
+      768,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      768,
+      768,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_views_holders.a",
+    "main": [
+      45,
+      45,
+      72,
+      79,
+      13,
+      0
+    ],
+    "recut": [
+      45,
+      45,
+      75,
+      82,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_views_loops.a",
+    "main": [
+      159,
+      159,
+      45,
+      167,
+      21,
+      0
+    ],
+    "recut": [
+      159,
+      159,
+      63,
+      185,
+      21,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      18,
+      18,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      18,
+      18,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_views_surrogates.a",
+    "main": [
+      188,
+      188,
+      83,
+      255,
+      13,
+      0
+    ],
+    "recut": [
+      188,
+      188,
+      98,
+      270,
+      13,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      15,
+      15,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      15,
+      15,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/string_views_throw.a",
+    "main": [
+      55,
+      55,
+      62,
+      76,
+      14,
+      0
+    ],
+    "recut": [
+      55,
+      55,
+      65,
+      79,
+      14,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/throw_keeps_old_value_variants.a",
+    "main": [
+      26,
+      26,
+      11,
+      32,
+      6,
+      0
+    ],
+    "recut": [
+      26,
+      26,
+      12,
+      33,
+      6,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/timsort.a",
+    "main": [
+      2769,
+      2769,
+      3778,
+      6231,
+      308,
+      0
+    ],
+    "recut": [
+      2769,
+      2769,
+      48733,
+      51186,
+      308,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      44955,
+      44955,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      44955,
+      44955,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/undefined_keys.a",
+    "main": [
+      122,
+      122,
+      196,
+      261,
+      24,
+      0
+    ],
+    "recut": [
+      122,
+      122,
+      208,
+      273,
+      24,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      12,
+      12,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      12,
+      12,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/user_iterators.a",
+    "main": [
+      663,
+      663,
+      455,
+      904,
+      64,
+      0
+    ],
+    "recut": [
+      663,
+      663,
+      487,
+      936,
+      64,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      32,
+      32,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      32,
+      32,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/utf8_sweep.a",
+    "main": [
+      38498,
+      38498,
+      7701,
+      38501,
+      7706,
+      0
+    ],
+    "recut": [
+      38498,
+      38498,
+      36235,
+      67035,
+      7706,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      28534,
+      28534,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      28534,
+      28534,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/utf8_view.a",
+    "main": [
+      59,
+      59,
+      33,
+      79,
+      7,
+      0
+    ],
+    "recut": [
+      59,
+      59,
+      105,
+      151,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      72,
+      72,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      72,
+      72,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "internal/oracle/testdata/write_files.a",
+    "main": [
+      132,
+      132,
+      52,
+      167,
+      8,
+      0
+    ],
+    "recut": [
+      132,
+      132,
+      184,
+      299,
+      8,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      132,
+      132,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      132,
+      132,
+      0,
+      0
+    ],
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/boolean-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      1,
+      3,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/boolean-misfit.ts",
+    "main": null,
+    "recut": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-number-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      5,
+      11,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-number-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      3,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-string-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      7,
+      13,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-string-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      4,
+      4,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-file-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      6,
+      11,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-file-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      4,
+      4,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-length-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      4,
+      10,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-length-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      4,
+      4,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-start-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      4,
+      10,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/branch-start-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      4,
+      4,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/compound-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      3,
+      7,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/compound-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      3,
+      2,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-alias-fit.ts",
+    "main": null,
+    "recut": [
+      3,
+      3,
+      2,
+      5,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-alias-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      2,
+      2,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-boolean-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      1,
+      3,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-boolean-misfit.ts",
+    "main": null,
+    "recut": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-fill-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      1,
+      4,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-fill-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-map-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      2,
+      4,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-map-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-map-object-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      3,
+      8,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-map-object-misfit.ts",
+    "main": null,
+    "recut": [
+      5,
+      0,
+      1,
+      3,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-map-values-fit.ts",
+    "main": null,
+    "recut": [
+      10,
+      10,
+      11,
+      17,
+      8,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-map-values-misfit.ts",
+    "main": null,
+    "recut": [
+      10,
+      7,
+      11,
+      13,
+      8,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-nested-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      2,
+      8,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-nested-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      1,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-number-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      1,
+      4,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-number-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-object-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      2,
+      8,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-object-misfit.ts",
+    "main": null,
+    "recut": [
+      5,
+      0,
+      1,
+      3,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-slice-fit.ts",
+    "main": null,
+    "recut": [
+      3,
+      3,
+      2,
+      7,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-slice-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      2,
+      3,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-splice-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      1,
+      4,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-splice-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-string-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      4,
+      4,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/container-string-misfit.ts",
+    "main": null,
+    "recut": [
+      1,
+      0,
+      2,
+      1,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-alias-fit.ts",
+    "main": null,
+    "recut": [
+      3,
+      3,
+      5,
+      10,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-alias-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      5,
+      5,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-fit.ts",
+    "main": null,
+    "recut": [
+      3,
+      3,
+      4,
+      7,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-inner-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      2,
+      6,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-inner-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      2,
+      2,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      2,
+      2,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-nested-fit.ts",
+    "main": null,
+    "recut": [
+      10,
+      10,
+      4,
+      13,
+      10,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-nested-misfit.ts",
+    "main": null,
+    "recut": [
+      7,
+      0,
+      2,
+      3,
+      7,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-proof-fit.ts",
+    "main": null,
+    "recut": [
+      12,
+      12,
+      6,
+      15,
+      12,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-proof-misfit.ts",
+    "main": null,
+    "recut": [
+      9,
+      0,
+      2,
+      3,
+      9,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-related-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      2,
+      6,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-related-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      2,
+      2,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-rich-fit.ts",
+    "main": null,
+    "recut": [
+      27,
+      27,
+      11,
+      32,
+      23,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-rich-misfit.ts",
+    "main": null,
+    "recut": [
+      6,
+      0,
+      2,
+      2,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-auto-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      4,
+      11,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-auto-misfit.ts",
+    "main": null,
+    "recut": [
+      6,
+      0,
+      2,
+      4,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-callback-fit.ts",
+    "main": null,
+    "recut": [
+      7,
+      7,
+      7,
+      16,
+      7,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-callback-misfit.ts",
+    "main": null,
+    "recut": [
+      7,
+      0,
+      6,
+      5,
+      7,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-comment-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      4,
+      8,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-comment-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      4,
+      2,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-node-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      3,
+      10,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-node-misfit.ts",
+    "main": null,
+    "recut": [
+      6,
+      0,
+      2,
+      4,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-resolution-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      6,
+      10,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/emit-resolution-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      5,
+      4,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flags-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      127,
+      132,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flags-misfit.ts",
+    "main": null,
+    "recut": [
+      5,
+      2,
+      4,
+      4,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flow-array-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      1,
+      3,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flow-array-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flow-node-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      6,
+      9,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flow-node-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      4,
+      3,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flow-undefined-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      1,
+      3,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/flow-undefined-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      2,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/generic-site-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      2,
+      5,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/generic-site-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      2,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-index-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-nullable-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      4,
+      10,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-nullable-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      2,
+      2,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-number-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      2,
+      8,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-number-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-object-fit.ts",
+    "main": null,
+    "recut": [
+      7,
+      7,
+      2,
+      9,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-object-misfit.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      1,
+      1,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-splice-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-string-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      2,
+      9,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-string-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/never-wide-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      2,
+      11,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/nullable-number-fit.ts",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      2,
+      5,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/nullable-number-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/number-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      2,
+      10,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/number-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      1,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/optional-boolean-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      4,
+      6,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/optional-boolean-misfit.ts",
+    "main": null,
+    "recut": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/optional-false-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      2,
+      4,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/optional-false-misfit.ts",
+    "main": null,
+    "recut": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/overload-callback-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      4,
+      11,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/overload-callback-misfit.ts",
+    "main": null,
+    "recut": [
+      5,
+      0,
+      3,
+      4,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/overload-result-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      3,
+      8,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/overload-result-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      2,
+      3,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/parent-fit.ts",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      8,
+      11,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/parent-misfit.ts",
+    "main": null,
+    "recut": [
+      4,
+      0,
+      4,
+      2,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-containers.a",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      3,
+      10,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-emit.a",
+    "main": null,
+    "recut": [
+      7,
+      7,
+      3,
+      11,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-generic.a",
+    "main": null,
+    "recut": [
+      2,
+      2,
+      1,
+      4,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/proven-number.a",
+    "main": null,
+    "recut": [
+      4,
+      4,
+      2,
+      6,
+      4,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/range-fit.ts",
+    "main": null,
+    "recut": [
+      5,
+      5,
+      2,
+      8,
+      5,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/range-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      2,
+      2,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/receiver-fit.ts",
+    "main": null,
+    "recut": [
+      6,
+      6,
+      4,
+      13,
+      6,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/reference-structure.ts",
+    "main": null,
+    "recut": [
+      3,
+      0,
+      3,
+      2,
+      3,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/required-boolean-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      2,
+      4,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/required-boolean-misfit.ts",
+    "main": null,
+    "recut": [
+      1,
+      0,
+      1,
+      1,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/string-fit.ts",
+    "main": null,
+    "recut": [
+      1,
+      1,
+      4,
+      5,
+      1,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/checked-writes/string-misfit.ts",
+    "main": null,
+    "recut": [
+      2,
+      0,
+      2,
+      1,
+      2,
+      0
+    ],
+    "delta": null,
+    "source_delta": null,
+    "matches_source": true
+  },
+  {
+    "path": "stage3/fixtures/taste/14_relative_complement.a",
+    "main": [
+      10,
+      10,
+      22,
+      34,
+      7,
+      0
+    ],
+    "recut": [
+      10,
+      10,
+      25,
+      37,
+      7,
+      0
+    ],
+    "delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "source_delta": [
+      0,
+      0,
+      3,
+      3,
+      0,
+      0
+    ],
+    "matches_source": true
+  }
+]

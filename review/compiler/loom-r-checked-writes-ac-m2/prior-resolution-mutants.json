@@ -1,0 +1,48 @@
+[
+  {
+    "mutant": "uncached-and",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-checked-writes-ac-m2/uncached-and.json",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetAndQueriesOnce$",
+      "-count=1",
+      "-parallel=4",
+      "-v",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "reused_recorded_execution": true,
+    "seconds": 0.0,
+    "recorded_test_seconds": 0.81
+  },
+  {
+    "mutant": "widen-and-left",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-checked-writes-ac-m2/widen-and-left.json",
+      "./internal/lower",
+      "-run",
+      "^TestCheckedLogicalAndDoesNotWidenTruthTestedLeft$",
+      "-count=1",
+      "-parallel=4",
+      "-v",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "reused_recorded_execution": false,
+    "seconds": 24.094,
+    "recorded_test_seconds": 0.08
+  }
+]

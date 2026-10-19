@@ -1,0 +1,56 @@
+[
+  {
+    "path": "internal/native/testdata/to-primitive/runtime.c",
+    "line": 11,
+    "before": "static const adamic_shape shape = {0, NULL, NULL, NULL};",
+    "after": "static const adamic_shape shape = {0, NULL, NULL, NULL, NULL};"
+  },
+  {
+    "path": "internal/native/testdata/to-primitive/runtime.c",
+    "line": 87,
+    "before": "    static const adamic_shape version_shape = {3, names, references, NULL};",
+    "after": "    static const adamic_shape version_shape = {3, names, references, NULL, NULL};"
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/shape_types.c",
+    "line": 16,
+    "before": "  shapes[index] = (adamic_shape){1, names, references, NULL};",
+    "after": "  shapes[index] = (adamic_shape){1, names, references, NULL, NULL};"
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/heap_weak.c",
+    "line": 2,
+    "before": "static const adamic_shape shape = {0, NULL, NULL, NULL};",
+    "after": "static const adamic_shape shape = {0, NULL, NULL, NULL, NULL};"
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/field_cache.c",
+    "line": 5,
+    "before": "static const adamic_shape shapes[] = {{2, first_names, references, NULL}, {2, second_names, references, NULL}};",
+    "after": "static const adamic_shape shapes[] = {{2, first_names, references, NULL, NULL}, {2, second_names, references, NULL, NULL}};"
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/json.c",
+    "line": 6,
+    "before": "static const adamic_shape shape = {1, names, references, NULL};",
+    "after": "static const adamic_shape shape = {1, names, references, NULL, NULL};"
+  },
+  {
+    "path": "internal/native/runtime_statics_parallel_test.go",
+    "line": 396,
+    "before": "shapes[index] = (adamic_shape){1, names, references, NULL};",
+    "after": "shapes[index] = (adamic_shape){1, names, references, NULL, NULL};"
+  },
+  {
+    "path": "internal/oracle/testdata/json_encoder_contract/runtime.c",
+    "line": 21,
+    "before": "static const adamic_shape x_shape = {1,x_names,x_references,NULL};",
+    "after": "static const adamic_shape x_shape = {1,x_names,x_references,NULL,NULL};"
+  },
+  {
+    "path": "internal/oracle/testdata/json_encoder_contract/runtime.c",
+    "line": 24,
+    "before": "static const adamic_shape field_shape = {1,field_names,field_references,NULL};",
+    "after": "static const adamic_shape field_shape = {1,field_names,field_references,NULL,NULL};"
+  }
+]

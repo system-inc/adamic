@@ -393,7 +393,7 @@ static _Thread_local size_t worker;
 static _Thread_local size_t visits;
 static void prepare(void) {
  for (size_t index = 0; index < 320; index++) {
-  shapes[index] = (adamic_shape){1, names, references, NULL};
+  shapes[index] = (adamic_shape){1, names, references, NULL, NULL};
   metadata[index] = (adamic_shape_types){&shapes[index], types, NULL, false};
  }
  if (pthread_barrier_init(&registrations, NULL, 4) != 0 || pthread_barrier_init(&fast_paths, NULL, 4) != 0) { abort(); }

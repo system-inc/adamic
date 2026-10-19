@@ -1,0 +1,11 @@
+--- /workspace/adamic/internal/native/runtime/exceptions.c
++++ /workspace/adamic/internal/native/runtime/exceptions.c
+@@ -21,7 +21,7 @@
+ adamic_object *adamic_error_new(adamic_string *message) {
+ 	// Undefined creates no own message property. Keep the inherited empty fallback
+ 	// in private storage so ordinary and checked field reads share the same slot.
+-	adamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);
++	adamic_object *error = adamic_object_new(message == NULL ? &error_shape : &absent_message_shape);
+ 	error->slots[0].reference = adamic_retain(&error_name);
+ 	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
+ 	adamic_object_field_types(error)[0] = adamic_rep_string;

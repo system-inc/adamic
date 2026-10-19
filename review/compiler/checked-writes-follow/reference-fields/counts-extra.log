@@ -1,0 +1,101 @@
+=== RUN   TestCheckedCountsWarmExtra
+=== PAUSE TestCheckedCountsWarmExtra
+=== CONT  TestCheckedCountsWarmExtra
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    counts_test.go:242: gate cache native miss
+    checked_runtime_fields_test.go:77: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/regex.a:5:101: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_runtime_fields_test.go:77: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/map.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_runtime_fields_test.go:77: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/set.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_runtime_fields_test.go:77: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/fs.a:7:35: Adamic 0.1 refuses a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_runtime_fields_test.go:77: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    checked_runtime_fields_test.go:77: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/status.a:7:72: Adamic 0.1 refuses a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    counts_test.go:243: gate cache native miss
+    checked_write_messages_test.go:131: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_write_messages_test.go:131: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_write_messages_test.go:131: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_write_messages_test.go:131: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_write_messages_test.go:131: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    statements_small_typescript_test.go:44: gate cache native miss
+    statements_small_typescript_test.go:44: gate cache native miss
+    statements_small_typescript_test.go:44: gate cache native miss
+    checked_writes_test.go:258: gate cache native miss
+    checked_writes_test.go:259: gate cache native miss
+    checked_writes_test.go:259: gate cache native miss
+    checked_writes_test.go:259: gate cache native miss
+--- PASS: TestCheckedCountsWarmExtra (67.49s)
+PASS
+gate cache: native hits=0 misses=81
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	67.515s

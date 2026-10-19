@@ -7,7 +7,7 @@
 static adamic_string text = ADAMIC_STRING("text");
 static const char *const names[] = {"child"};
 static const bool fields[] = {true};
-static const adamic_shape shape = {1, names, fields, NULL};
+static const adamic_shape shape = {1, names, fields, NULL, NULL};
 static adamic_value scalar(adamic_closure *self, adamic_value *arguments) {
 	(void)self; ADAMIC_CHECK_STACK();
 	return arguments[0];

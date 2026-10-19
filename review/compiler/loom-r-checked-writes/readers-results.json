@@ -1,0 +1,926 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^Test(Regex|NodeFSFile|FutureRegex|MethodKeepsArgument)",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 8.609,
+    "tests": [
+      {
+        "test": "TestNodeFSFileResultsAreFresh",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestFutureRegexMethodRemainsUnknown",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperandsStillJudgeWrites",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRegexOperationsDoNotPoisonTreeWrites",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/read_buffer_fd",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/is_directory",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/utimes",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/stat",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/close",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/write_buffer_fd",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/read_file",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/read_buffer",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/date_new",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/is_file",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/utimes_dates",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/exists",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/write_file",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/utimes_mtime_date",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/write_fd",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/write_buffer",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/read_fd",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/read_sync",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/date_time",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/utimes_atime_date",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/unlink",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/mkdir",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/write",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/open",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestRegexOperandsStillJudgeCycleWrites",
+        "action": "pass",
+        "seconds": 0.02
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown/is_symbolic_link",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestNodeFSFileOperationsAreKnown",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestMethodKeepsArgument",
+        "action": "pass",
+        "seconds": 0.14
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^TestViewMixedUnionSelectsNumber$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 3.456,
+    "tests": [
+      {
+        "test": "TestViewMixedUnionSelectsNumber",
+        "action": "pass",
+        "seconds": 0.24
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/regexp",
+      "-run",
+      "^Test(CaptureFactsCompilerTable|MatcherNodeControls|Parse)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 15.569,
+    "tests": [
+      {
+        "test": "TestCaptureFactsCompilerTable",
+        "action": "pass",
+        "seconds": 0.8
+      },
+      {
+        "test": "TestParse",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestMatcherNodeControls",
+        "action": "pass",
+        "seconds": 0.17
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^Test(ReportedLeakIsRejected|CountedBalance)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 1.688,
+    "tests": [
+      {
+        "test": "TestReportedLeakIsRejected",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestCountedBalance",
+        "action": "pass",
+        "seconds": 0
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^Test(ParallelMapCompilerABI|PrototypeMixedCountedCycleProbe|PrototypeNodeResearch|PrototypeDebugSiteRefusals)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 23.922,
+    "tests": [
+      {
+        "test": "TestParallelMapCompilerABI",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestPrototypeNodeResearch/debug_shapes",
+        "action": "pass",
+        "seconds": 0.5
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_554",
+        "action": "pass",
+        "seconds": 0.55
+      },
+      {
+        "test": "TestPrototypeNodeResearch/errors",
+        "action": "pass",
+        "seconds": 0.5
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_558",
+        "action": "pass",
+        "seconds": 0.5
+      },
+      {
+        "test": "TestPrototypeNodeResearch/mixed_cycle",
+        "action": "pass",
+        "seconds": 0.3
+      },
+      {
+        "test": "TestPrototypeNodeResearch",
+        "action": "pass",
+        "seconds": 1.3
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_561",
+        "action": "pass",
+        "seconds": 0.51
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_594",
+        "action": "pass",
+        "seconds": 0.45
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_598",
+        "action": "pass",
+        "seconds": 0.46
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_601",
+        "action": "pass",
+        "seconds": 0.4
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_859",
+        "action": "pass",
+        "seconds": 0.5
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals/debug_944",
+        "action": "pass",
+        "seconds": 0.36
+      },
+      {
+        "test": "TestPrototypeDebugSiteRefusals",
+        "action": "pass",
+        "seconds": 3.88
+      },
+      {
+        "test": "TestPrototypeMixedCountedCycleProbe",
+        "action": "pass",
+        "seconds": 5.89
+      }
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "^TestParallel(Memory|Lifecycle|Map_numbers|Map_strings|Map_objects|Map_map|Map_fresh|Map_nested|Map_exception|Map_nested_exception|Map_million|Mutant_field_cache|Mutant_oversized_slot)$",
+      "-count=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=90s"
+    ],
+    "exit": 1,
+    "seconds": 97.577,
+    "tests": [
+      {
+        "test": "TestParallelMap_map/asan/map",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestParallelMap_map/asan",
+        "action": "pass",
+        "seconds": 3.01
+      },
+      {
+        "test": "TestParallelMap_exception/asan/exception",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestParallelMap_exception/asan",
+        "action": "pass",
+        "seconds": 3.1
+      },
+      {
+        "test": "TestParallelMap_nested/asan/nested",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestParallelMap_nested/asan",
+        "action": "pass",
+        "seconds": 3.11
+      },
+      {
+        "test": "TestParallelMemory/asan",
+        "action": "pass",
+        "seconds": 3.74
+      },
+      {
+        "test": "TestParallelMap_map/asan_slabs/map",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestParallelMap_map/asan_slabs",
+        "action": "pass",
+        "seconds": 19.72
+      },
+      {
+        "test": "TestParallelMap_nested/asan_slabs/nested",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestParallelMap_nested/asan_slabs",
+        "action": "pass",
+        "seconds": 20.01
+      },
+      {
+        "test": "TestParallelMap_exception/asan_slabs/exception",
+        "action": "pass",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestParallelMap_exception/asan_slabs",
+        "action": "pass",
+        "seconds": 20.04
+      },
+      {
+        "test": "TestParallelMemory/asan_slabs",
+        "action": "pass",
+        "seconds": 20.04
+      },
+      {
+        "test": "TestParallelMap_nested/count/nested",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestParallelMap_nested/count",
+        "action": "pass",
+        "seconds": 2.46
+      },
+      {
+        "test": "TestParallelMap_exception/count/exception",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestParallelMap_exception/count",
+        "action": "pass",
+        "seconds": 2.45
+      },
+      {
+        "test": "TestParallelMap_map/count/map",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestParallelMap_map/count",
+        "action": "pass",
+        "seconds": 2.98
+      },
+      {
+        "test": "TestParallelMemory/count",
+        "action": "pass",
+        "seconds": 1.94
+      },
+      {
+        "test": "TestParallelMemory/release",
+        "action": "pass",
+        "seconds": 19.9
+      },
+      {
+        "test": "TestParallelMap_nested/release/nested",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestParallelMap_nested/release",
+        "action": "pass",
+        "seconds": 20.15
+      },
+      {
+        "test": "TestParallelMap_map/release/map",
+        "action": "pass",
+        "seconds": 0.02
+      },
+      {
+        "test": "TestParallelMap_map/release",
+        "action": "pass",
+        "seconds": 20.19
+      },
+      {
+        "test": "TestParallelMap_exception/release/exception",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestParallelMap_exception/release",
+        "action": "pass",
+        "seconds": 20.66
+      },
+      {
+        "test": "TestParallelMap_map/tsan/map",
+        "action": "pass",
+        "seconds": 0.8
+      },
+      {
+        "test": "TestParallelMap_map/tsan",
+        "action": "pass",
+        "seconds": 19.5
+      },
+      {
+        "test": "TestParallelMap_map",
+        "action": "pass",
+        "seconds": 65.4
+      },
+      {
+        "test": "TestParallelMap_exception/tsan/exception",
+        "action": "pass",
+        "seconds": 0.9
+      },
+      {
+        "test": "TestParallelMap_exception/tsan",
+        "action": "pass",
+        "seconds": 19.55
+      },
+      {
+        "test": "TestParallelMap_exception",
+        "action": "pass",
+        "seconds": 65.81
+      },
+      {
+        "test": "TestParallelMap_nested/tsan/nested",
+        "action": "pass",
+        "seconds": 1.14
+      },
+      {
+        "test": "TestParallelMap_nested/tsan",
+        "action": "pass",
+        "seconds": 20.5
+      },
+      {
+        "test": "TestParallelMap_nested",
+        "action": "pass",
+        "seconds": 66.24
+      },
+      {
+        "test": "TestParallelMap_numbers/asan/numbers",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestParallelMap_numbers/asan",
+        "action": "pass",
+        "seconds": 1.93
+      },
+      {
+        "test": "TestParallelMap_objects/asan/objects",
+        "action": "pass",
+        "seconds": 0.19
+      },
+      {
+        "test": "TestParallelMap_objects/asan",
+        "action": "pass",
+        "seconds": 1.93
+      },
+      {
+        "test": "TestParallelMap_strings/asan/strings",
+        "action": "pass",
+        "seconds": 0.3
+      },
+      {
+        "test": "TestParallelMap_strings/asan",
+        "action": "pass",
+        "seconds": 2.16
+      },
+      {
+        "test": "TestParallelMap_numbers/asan_slabs/numbers",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestParallelMap_numbers/asan_slabs",
+        "action": "pass",
+        "seconds": 2.02
+      },
+      {
+        "test": "TestParallelMap_objects/asan_slabs/objects",
+        "action": "pass",
+        "seconds": 0.3
+      },
+      {
+        "test": "TestParallelMap_objects/asan_slabs",
+        "action": "pass",
+        "seconds": 2.31
+      },
+      {
+        "test": "TestParallelMap_numbers/count/numbers",
+        "action": "pass",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestParallelMap_numbers/count",
+        "action": "pass",
+        "seconds": 1.06
+      },
+      {
+        "test": "TestParallelMap_strings/asan_slabs/strings",
+        "action": "pass",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestParallelMap_strings/asan_slabs",
+        "action": "pass",
+        "seconds": 2.43
+      },
+      {
+        "test": "TestParallelMap_objects/count/objects",
+        "action": "pass",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestParallelMap_objects/count",
+        "action": "pass",
+        "seconds": 1.06
+      },
+      {
+        "test": "TestParallelMap_numbers/release/numbers",
+        "action": "pass",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestParallelMap_numbers/release",
+        "action": "pass",
+        "seconds": 0.89
+      },
+      {
+        "test": "TestParallelMap_strings/count/strings",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestParallelMap_strings/count",
+        "action": "pass",
+        "seconds": 0.88
+      },
+      {
+        "test": "TestParallelMap_objects/release/objects",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestParallelMap_objects/release",
+        "action": "pass",
+        "seconds": 0.94
+      },
+      {
+        "test": "TestParallelMap_strings/release/strings",
+        "action": "pass",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestParallelMap_strings/release",
+        "action": "pass",
+        "seconds": 0.85
+      },
+      {
+        "test": "TestParallelMap_numbers/tsan/numbers",
+        "action": "pass",
+        "seconds": 0.37
+      },
+      {
+        "test": "TestParallelMap_numbers/tsan",
+        "action": "pass",
+        "seconds": 1.92
+      },
+      {
+        "test": "TestParallelMap_numbers",
+        "action": "pass",
+        "seconds": 7.81
+      },
+      {
+        "test": "TestParallelMap_objects/tsan/objects",
+        "action": "pass",
+        "seconds": 0.86
+      },
+      {
+        "test": "TestParallelMap_objects/tsan",
+        "action": "pass",
+        "seconds": 2.05
+      },
+      {
+        "test": "TestParallelMap_objects",
+        "action": "pass",
+        "seconds": 8.28
+      },
+      {
+        "test": "TestParallelMemory/tsan",
+        "action": "pass",
+        "seconds": 29
+      },
+      {
+        "test": "TestParallelMemory",
+        "action": "pass",
+        "seconds": 74.63
+      },
+      {
+        "test": "TestParallelMap_fresh/asan/fresh",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestParallelMap_fresh/asan",
+        "action": "pass",
+        "seconds": 1.42
+      },
+      {
+        "test": "TestParallelMap_strings/tsan/strings",
+        "action": "pass",
+        "seconds": 1.33
+      },
+      {
+        "test": "TestParallelMap_strings/tsan",
+        "action": "pass",
+        "seconds": 2.23
+      },
+      {
+        "test": "TestParallelMap_strings",
+        "action": "pass",
+        "seconds": 8.55
+      },
+      {
+        "test": "TestParallelMap_million/asan/million",
+        "action": "pass",
+        "seconds": 0.31
+      },
+      {
+        "test": "TestParallelMap_million/asan",
+        "action": "pass",
+        "seconds": 1.43
+      },
+      {
+        "test": "TestParallelMap_fresh/asan_slabs/fresh",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "test": "TestParallelMap_fresh/asan_slabs",
+        "action": "pass",
+        "seconds": 1.09
+      },
+      {
+        "test": "TestParallelMap_fresh/count/fresh",
+        "action": "pass",
+        "seconds": 0.02
+      },
+      {
+        "test": "TestParallelMap_fresh/count",
+        "action": "pass",
+        "seconds": 0.39
+      },
+      {
+        "test": "TestParallelMap_fresh/release/fresh",
+        "action": "pass",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestParallelMap_fresh/release",
+        "action": "pass",
+        "seconds": 0.48
+      },
+      {
+        "test": "TestParallelMap_million/asan_slabs/million",
+        "action": "pass",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestParallelMap_million/asan_slabs",
+        "action": "pass",
+        "seconds": 1.13
+      },
+      {
+        "test": "TestParallelMap_million/count/million",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "test": "TestParallelMap_million/count",
+        "action": "pass",
+        "seconds": 0.66
+      },
+      {
+        "test": "TestParallelMap_fresh/tsan/fresh",
+        "action": "pass",
+        "seconds": 0.53
+      },
+      {
+        "test": "TestParallelMap_fresh/tsan",
+        "action": "pass",
+        "seconds": 1.33
+      },
+      {
+        "test": "TestParallelMap_fresh",
+        "action": "pass",
+        "seconds": 4.71
+      },
+      {
+        "test": "TestParallelMap_million/release/million",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "test": "TestParallelMap_million/release",
+        "action": "pass",
+        "seconds": 0.62
+      },
+      {
+        "test": "TestParallelLifecycle/asan",
+        "action": "pass",
+        "seconds": 0.73
+      },
+      {
+        "test": "TestParallelLifecycle/asan_slabs",
+        "action": "pass",
+        "seconds": 1.04
+      },
+      {
+        "test": "TestParallelLifecycle/count",
+        "action": "pass",
+        "seconds": 0.56
+      },
+      {
+        "test": "TestParallelLifecycle/release",
+        "action": "pass",
+        "seconds": 0.36
+      },
+      {
+        "test": "TestParallelMap_million/tsan/million",
+        "action": "pass",
+        "seconds": 2.58
+      },
+      {
+        "test": "TestParallelMap_million/tsan",
+        "action": "pass",
+        "seconds": 3.68
+      },
+      {
+        "test": "TestParallelMap_million",
+        "action": "pass",
+        "seconds": 7.52
+      },
+      {
+        "test": "TestParallelMap_nested_exception/asan/nested_exception",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "test": "TestParallelMap_nested_exception/asan",
+        "action": "pass",
+        "seconds": 2.34
+      },
+      {
+        "test": "TestParallelLifecycle/tsan",
+        "action": "pass",
+        "seconds": 3.4
+      },
+      {
+        "test": "TestParallelLifecycle",
+        "action": "pass",
+        "seconds": 6.08
+      },
+      {
+        "test": "TestParallelMap_nested_exception/asan_slabs/nested_exception",
+        "action": "pass",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestParallelMap_nested_exception/asan_slabs",
+        "action": "pass",
+        "seconds": 2.06
+      },
+      {
+        "test": "TestParallelMap_nested_exception/count/nested_exception",
+        "action": "pass",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestParallelMap_nested_exception/count",
+        "action": "pass",
+        "seconds": 1.01
+      },
+      {
+        "test": "TestParallelMap_nested_exception/release/nested_exception",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "test": "TestParallelMap_nested_exception/release",
+        "action": "pass",
+        "seconds": 0.9
+      }
+    ]
+  }
+]

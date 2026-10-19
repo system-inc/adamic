@@ -1,0 +1,713 @@
+[
+  {
+    "command": [
+      "timeout",
+      "600",
+      "go",
+      "test",
+      "./cmd/adamic/...",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=570s"
+    ],
+    "exit": 0,
+    "seconds": 34.586,
+    "packages": [
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "action": "pass",
+        "seconds": 29.066
+      }
+    ],
+    "tests": [
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksDriver",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/exported",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/alias",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/alias_wrong_parameter",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/alias_wrong_result",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/private",
+        "action": "pass",
+        "seconds": 0.17
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/wrong_parameter",
+        "action": "pass",
+        "seconds": 0.17
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/wrong_result",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/literal_parameter",
+        "action": "pass",
+        "seconds": 0.18
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/optional_parameter",
+        "action": "pass",
+        "seconds": 0.19
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/default_parameter",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/two_parameters",
+        "action": "pass",
+        "seconds": 0.18
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/generic",
+        "action": "pass",
+        "seconds": 0.14
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection/function_value",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestSelection",
+        "action": "pass",
+        "seconds": 2.03
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequest",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestRequestNativeStaysCommand",
+        "action": "pass",
+        "seconds": 2.22
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestModuleSelection",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRequestThrows",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestBuildTargetParsing",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestWASIRejectsTSGoArchive",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestProduct_CommandRuntimeWASICounted",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestProduct_CommandRuntimeWASI",
+        "action": "skip",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestProduct_CommandRuntimeSanitized",
+        "action": "pass",
+        "seconds": 0.07
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestCommandRuntimeProductKeyHoldsEveryPart",
+        "action": "pass",
+        "seconds": 0.41
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestCommandRuntimeCensusWalksSourceTree",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestProduct_CommandRuntimeShipped",
+        "action": "pass",
+        "seconds": 2.44
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestCommandRuntimeProductsWaitForOwners",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestProduct_CommandRuntimeCounted",
+        "action": "pass",
+        "seconds": 2.51
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestBuildSelectsShippedReleaseLTO",
+        "action": "pass",
+        "seconds": 2.8
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestBuildSanitizedExcludesReleaseLTO",
+        "action": "pass",
+        "seconds": 0.47
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestSharedCommandRuntimeCannotBuildItsOwnersArchive",
+        "action": "pass",
+        "seconds": 2.62
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestBuildCountedExcludesReleaseLTO",
+        "action": "pass",
+        "seconds": 0.32
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestBuildWASISanitizeTargetAfterSource",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestUsageExitStatus",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestBuildWASISanitizeTargetBeforeSource",
+        "action": "pass",
+        "seconds": 0.18
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestCommandRuntimeArchivesHaveOneBuilder",
+        "action": "pass",
+        "seconds": 1.33
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_optional_boolean_misfit",
+        "action": "pass",
+        "seconds": 3.65
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_overload_result_misfit",
+        "action": "pass",
+        "seconds": 3.75
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_overload_callback_misfit",
+        "action": "pass",
+        "seconds": 4.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_container_number_misfit",
+        "action": "pass",
+        "seconds": 3.82
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_container_fill_misfit",
+        "action": "pass",
+        "seconds": 3.69
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_container_map_misfit",
+        "action": "pass",
+        "seconds": 4.01
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_empty/c",
+        "action": "pass",
+        "seconds": 0.23
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_number_misfit",
+        "action": "pass",
+        "seconds": 4.06
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_assertion/c",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_empty/js",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_erased/c",
+        "action": "pass",
+        "seconds": 0.16
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_flow_node_misfit",
+        "action": "pass",
+        "seconds": 4.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_assertion/js",
+        "action": "pass",
+        "seconds": 0.14
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_true_only/c",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainCheckedWritesOutput_emit_node_misfit",
+        "action": "pass",
+        "seconds": 4.12
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_erased/js",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_false_read/c",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_empty/build",
+        "action": "pass",
+        "seconds": 3.68
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_empty",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_true_only/js",
+        "action": "pass",
+        "seconds": 0.21
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_assertion/build",
+        "action": "pass",
+        "seconds": 3.66
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_assertion",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/narrowed/c",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_false_read/js",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/initializer/c",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_erased/build",
+        "action": "pass",
+        "seconds": 3.62
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_erased",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/narrowed/js",
+        "action": "pass",
+        "seconds": 0.19
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_null/c",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_true_only/build",
+        "action": "pass",
+        "seconds": 3.49
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_true_only",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/initializer/js",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_undefined/c",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_false_read/build",
+        "action": "pass",
+        "seconds": 3.58
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput/overload_some_false_read",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestExplainChecksOutput",
+        "action": "pass",
+        "seconds": 0.01
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_null/js",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/let_initializer/c",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/narrowed/build",
+        "action": "pass",
+        "seconds": 3.64
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/narrowed",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_undefined/js",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/undefined/c",
+        "action": "pass",
+        "seconds": 0.11
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/initializer/build",
+        "action": "pass",
+        "seconds": 3.49
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/initializer",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/let_initializer/js",
+        "action": "pass",
+        "seconds": 0.09
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/null/c",
+        "action": "pass",
+        "seconds": 0.15
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_null/build",
+        "action": "pass",
+        "seconds": 3.17
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_null",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/undefined/js",
+        "action": "pass",
+        "seconds": 0.1
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/present/c",
+        "action": "pass",
+        "seconds": 0.12
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_undefined/build",
+        "action": "pass",
+        "seconds": 3.1
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/refuse_undefined",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/null/js",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/let_initializer/build",
+        "action": "pass",
+        "seconds": 3.1
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/let_initializer",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/present/js",
+        "action": "pass",
+        "seconds": 0.13
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/undefined/build",
+        "action": "pass",
+        "seconds": 3.07
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/undefined",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/null/build",
+        "action": "pass",
+        "seconds": 2.57
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/null",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/present/build",
+        "action": "pass",
+        "seconds": 2.24
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks/present",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/cmd/adamic",
+        "test": "TestNonNullExplainChecks",
+        "action": "pass",
+        "seconds": 0
+      }
+    ],
+    "over_budget": []
+  },
+  {
+    "command": [
+      "timeout",
+      "600",
+      "go",
+      "test",
+      "./stage1/cohere/values/...",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=570s"
+    ],
+    "exit": 1,
+    "seconds": 39.434,
+    "packages": [
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "action": "fail",
+        "seconds": 3.9699999999999998
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values/oracles",
+        "action": "pass",
+        "seconds": 19.366
+      }
+    ],
+    "tests": [
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+        "action": "pass",
+        "seconds": 2.17
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+        "action": "pass",
+        "seconds": 2.23
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+        "action": "pass",
+        "seconds": 0.51
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+        "action": "pass",
+        "seconds": 0.58
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+        "action": "pass",
+        "seconds": 0.23
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+        "action": "pass",
+        "seconds": 0
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestThePortParsesAsGoCohereDoes",
+        "action": "fail",
+        "seconds": 3.88
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "test": "TestProduct_ValuesFindsGoOracle",
+        "action": "fail",
+        "seconds": 3.94
+      },
+      {
+        "package": "github.com/system-inc/adamic/stage1/cohere/values/oracles",
+        "test": "TestProduct_ValuesGoOracle",
+        "action": "pass",
+        "seconds": 19.36
+      }
+    ],
+    "over_budget": []
+  }
+]
