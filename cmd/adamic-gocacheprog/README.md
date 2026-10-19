@@ -6,6 +6,7 @@ The helper must be built before enabling it.
 
 | Variable | Default / behavior |
 | --- | --- |
+| `ADAMIC_GOCACHE` | `cloud/setup.sh` builds this helper and enables it only when this is `1`, in setup and in each shell that sources its env.sh |
 | `ADAMIC_GOCACHE_DIR` | User cache directory's `adamic-gocache` |
 | `ADAMIC_GOCACHE_STORE` | `https://artifacts.loom.system.inc`; `off` disables all remote operations |
 | `ADAMIC_GOCACHE_WRITE` | `https://runs.loom.system.inc/public` |
