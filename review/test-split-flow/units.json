@@ -4610,6 +4610,86 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_blocking_a_288814d1b319",
+    "program": "internal/oracle/testdata/node_process_blocking.a",
+    "path": "../oracle/testdata/node_process_blocking.a",
+    "sha256": "e9b3ecc7a3b4cb40ea104f2fca73c2a9d38d714b789f7d9328d52f4023a8a16a"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cached_cwd_a_a1ec7a716f9b",
+    "program": "internal/oracle/testdata/node_process_cached_cwd.a",
+    "path": "../oracle/testdata/node_process_cached_cwd.a",
+    "sha256": "19cfc47889015d6f32c6d8e04a97e1e22c1566335f330c6304eb21aecb999737"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cleared_marks_a_e79717c3773c",
+    "program": "internal/oracle/testdata/node_process_cleared_marks.a",
+    "path": "../oracle/testdata/node_process_cleared_marks.a",
+    "sha256": "8821e57181f5cf98b11e1d88c433484c97b970fdefdaac2e97f65368423d4835"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_host_a_354aae2dbacb",
+    "program": "internal/oracle/testdata/node_process_host.a",
+    "path": "../oracle/testdata/node_process_host.a",
+    "sha256": "4e215788377ebead4ade1e79fd6ce5d06b317af7ab7bab27671a038f88eea89c"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_missing_mark_a_89deef9490d8",
+    "program": "internal/oracle/testdata/node_process_missing_mark.a",
+    "path": "../oracle/testdata/node_process_missing_mark.a",
+    "sha256": "396ad01aea4cca27656cbd65fc037e6f1d290f828d12baab8a27b9c5f276f8fb"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_os_namespace_a_85272eafe7b4",
+    "program": "internal/oracle/testdata/node_process_os_namespace.a",
+    "path": "../oracle/testdata/node_process_os_namespace.a",
+    "sha256": "ba5b35e7f6f530e48399eb0e15019c12339f1ca506a2293a7042336a3c70fcb1"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_a_da452f3da03d",
+    "program": "internal/oracle/testdata/node_process_performance.a",
+    "path": "../oracle/testdata/node_process_performance.a",
+    "sha256": "2a4050398f98aa3e4eaf185184b513aa5bc5600c912f696652c95a86755c9df3"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_core_a_f79f9e52a4aa",
+    "program": "internal/oracle/testdata/node_process_performance_core.a",
+    "path": "../oracle/testdata/node_process_performance_core.a",
+    "sha256": "24322fc07f27f61011838935864b945fdd343b39b22cca80f7d8694db4687f3a"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_terminal_a_68101d3fce2b",
+    "program": "internal/oracle/testdata/node_process_terminal.a",
+    "path": "../oracle/testdata/node_process_terminal.a",
+    "sha256": "46c82655997d0a150295a8cf3191efd25ca6bace8127540173e963a77277d149"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_process_tmpdir_a_5467f24e3110",
+    "program": "internal/oracle/testdata/node_process_tmpdir.a",
+    "path": "../oracle/testdata/node_process_tmpdir.a",
+    "sha256": "6b8d422b8b7fd5551e45a8cc38f534dfe75ff684f90bd82d7476cecb401f6a73"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_normalize_a_b4c3474ee5d4",
     "program": "internal/oracle/testdata/normalize.a",
     "path": "../oracle/testdata/normalize.a",
@@ -12174,6 +12254,86 @@
     "program": "internal/oracle/testdata/node_path_relative.a",
     "path": "../oracle/testdata/node_path_relative.a",
     "sha256": "6f8e15452db56b600813923ad6cc8cb5470b58ee63fe412546d3469960b5277b"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_blocking_a_288814d1b319",
+    "program": "internal/oracle/testdata/node_process_blocking.a",
+    "path": "../oracle/testdata/node_process_blocking.a",
+    "sha256": "e9b3ecc7a3b4cb40ea104f2fca73c2a9d38d714b789f7d9328d52f4023a8a16a"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cached_cwd_a_a1ec7a716f9b",
+    "program": "internal/oracle/testdata/node_process_cached_cwd.a",
+    "path": "../oracle/testdata/node_process_cached_cwd.a",
+    "sha256": "19cfc47889015d6f32c6d8e04a97e1e22c1566335f330c6304eb21aecb999737"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cleared_marks_a_e79717c3773c",
+    "program": "internal/oracle/testdata/node_process_cleared_marks.a",
+    "path": "../oracle/testdata/node_process_cleared_marks.a",
+    "sha256": "8821e57181f5cf98b11e1d88c433484c97b970fdefdaac2e97f65368423d4835"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_host_a_354aae2dbacb",
+    "program": "internal/oracle/testdata/node_process_host.a",
+    "path": "../oracle/testdata/node_process_host.a",
+    "sha256": "4e215788377ebead4ade1e79fd6ce5d06b317af7ab7bab27671a038f88eea89c"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_missing_mark_a_89deef9490d8",
+    "program": "internal/oracle/testdata/node_process_missing_mark.a",
+    "path": "../oracle/testdata/node_process_missing_mark.a",
+    "sha256": "396ad01aea4cca27656cbd65fc037e6f1d290f828d12baab8a27b9c5f276f8fb"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_os_namespace_a_85272eafe7b4",
+    "program": "internal/oracle/testdata/node_process_os_namespace.a",
+    "path": "../oracle/testdata/node_process_os_namespace.a",
+    "sha256": "ba5b35e7f6f530e48399eb0e15019c12339f1ca506a2293a7042336a3c70fcb1"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_a_da452f3da03d",
+    "program": "internal/oracle/testdata/node_process_performance.a",
+    "path": "../oracle/testdata/node_process_performance.a",
+    "sha256": "2a4050398f98aa3e4eaf185184b513aa5bc5600c912f696652c95a86755c9df3"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_core_a_f79f9e52a4aa",
+    "program": "internal/oracle/testdata/node_process_performance_core.a",
+    "path": "../oracle/testdata/node_process_performance_core.a",
+    "sha256": "24322fc07f27f61011838935864b945fdd343b39b22cca80f7d8694db4687f3a"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_terminal_a_68101d3fce2b",
+    "program": "internal/oracle/testdata/node_process_terminal.a",
+    "path": "../oracle/testdata/node_process_terminal.a",
+    "sha256": "46c82655997d0a150295a8cf3191efd25ca6bace8127540173e963a77277d149"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_process_tmpdir_a_5467f24e3110",
+    "program": "internal/oracle/testdata/node_process_tmpdir.a",
+    "path": "../oracle/testdata/node_process_tmpdir.a",
+    "sha256": "6b8d422b8b7fd5551e45a8cc38f534dfe75ff684f90bd82d7476cecb401f6a73"
   },
   {
     "package": "flow",
@@ -19746,6 +19906,86 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_blocking_a_288814d1b319",
+    "program": "internal/oracle/testdata/node_process_blocking.a",
+    "path": "../oracle/testdata/node_process_blocking.a",
+    "sha256": "e9b3ecc7a3b4cb40ea104f2fca73c2a9d38d714b789f7d9328d52f4023a8a16a"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cached_cwd_a_a1ec7a716f9b",
+    "program": "internal/oracle/testdata/node_process_cached_cwd.a",
+    "path": "../oracle/testdata/node_process_cached_cwd.a",
+    "sha256": "19cfc47889015d6f32c6d8e04a97e1e22c1566335f330c6304eb21aecb999737"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cleared_marks_a_e79717c3773c",
+    "program": "internal/oracle/testdata/node_process_cleared_marks.a",
+    "path": "../oracle/testdata/node_process_cleared_marks.a",
+    "sha256": "8821e57181f5cf98b11e1d88c433484c97b970fdefdaac2e97f65368423d4835"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_host_a_354aae2dbacb",
+    "program": "internal/oracle/testdata/node_process_host.a",
+    "path": "../oracle/testdata/node_process_host.a",
+    "sha256": "4e215788377ebead4ade1e79fd6ce5d06b317af7ab7bab27671a038f88eea89c"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_missing_mark_a_89deef9490d8",
+    "program": "internal/oracle/testdata/node_process_missing_mark.a",
+    "path": "../oracle/testdata/node_process_missing_mark.a",
+    "sha256": "396ad01aea4cca27656cbd65fc037e6f1d290f828d12baab8a27b9c5f276f8fb"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_os_namespace_a_85272eafe7b4",
+    "program": "internal/oracle/testdata/node_process_os_namespace.a",
+    "path": "../oracle/testdata/node_process_os_namespace.a",
+    "sha256": "ba5b35e7f6f530e48399eb0e15019c12339f1ca506a2293a7042336a3c70fcb1"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_a_da452f3da03d",
+    "program": "internal/oracle/testdata/node_process_performance.a",
+    "path": "../oracle/testdata/node_process_performance.a",
+    "sha256": "2a4050398f98aa3e4eaf185184b513aa5bc5600c912f696652c95a86755c9df3"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_core_a_f79f9e52a4aa",
+    "program": "internal/oracle/testdata/node_process_performance_core.a",
+    "path": "../oracle/testdata/node_process_performance_core.a",
+    "sha256": "24322fc07f27f61011838935864b945fdd343b39b22cca80f7d8694db4687f3a"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_terminal_a_68101d3fce2b",
+    "program": "internal/oracle/testdata/node_process_terminal.a",
+    "path": "../oracle/testdata/node_process_terminal.a",
+    "sha256": "46c82655997d0a150295a8cf3191efd25ca6bace8127540173e963a77277d149"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_process_tmpdir_a_5467f24e3110",
+    "program": "internal/oracle/testdata/node_process_tmpdir.a",
+    "path": "../oracle/testdata/node_process_tmpdir.a",
+    "sha256": "6b8d422b8b7fd5551e45a8cc38f534dfe75ff684f90bd82d7476cecb401f6a73"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_normalize_a_b4c3474ee5d4",
     "program": "internal/oracle/testdata/normalize.a",
     "path": "../oracle/testdata/normalize.a",
@@ -27310,6 +27550,86 @@
     "program": "internal/oracle/testdata/node_path_relative.a",
     "path": "../oracle/testdata/node_path_relative.a",
     "sha256": "6f8e15452db56b600813923ad6cc8cb5470b58ee63fe412546d3469960b5277b"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_blocking_a_288814d1b319",
+    "program": "internal/oracle/testdata/node_process_blocking.a",
+    "path": "../oracle/testdata/node_process_blocking.a",
+    "sha256": "e9b3ecc7a3b4cb40ea104f2fca73c2a9d38d714b789f7d9328d52f4023a8a16a"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cached_cwd_a_a1ec7a716f9b",
+    "program": "internal/oracle/testdata/node_process_cached_cwd.a",
+    "path": "../oracle/testdata/node_process_cached_cwd.a",
+    "sha256": "19cfc47889015d6f32c6d8e04a97e1e22c1566335f330c6304eb21aecb999737"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_cleared_marks_a_e79717c3773c",
+    "program": "internal/oracle/testdata/node_process_cleared_marks.a",
+    "path": "../oracle/testdata/node_process_cleared_marks.a",
+    "sha256": "8821e57181f5cf98b11e1d88c433484c97b970fdefdaac2e97f65368423d4835"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_host_a_354aae2dbacb",
+    "program": "internal/oracle/testdata/node_process_host.a",
+    "path": "../oracle/testdata/node_process_host.a",
+    "sha256": "4e215788377ebead4ade1e79fd6ce5d06b317af7ab7bab27671a038f88eea89c"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_missing_mark_a_89deef9490d8",
+    "program": "internal/oracle/testdata/node_process_missing_mark.a",
+    "path": "../oracle/testdata/node_process_missing_mark.a",
+    "sha256": "396ad01aea4cca27656cbd65fc037e6f1d290f828d12baab8a27b9c5f276f8fb"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_os_namespace_a_85272eafe7b4",
+    "program": "internal/oracle/testdata/node_process_os_namespace.a",
+    "path": "../oracle/testdata/node_process_os_namespace.a",
+    "sha256": "ba5b35e7f6f530e48399eb0e15019c12339f1ca506a2293a7042336a3c70fcb1"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_a_da452f3da03d",
+    "program": "internal/oracle/testdata/node_process_performance.a",
+    "path": "../oracle/testdata/node_process_performance.a",
+    "sha256": "2a4050398f98aa3e4eaf185184b513aa5bc5600c912f696652c95a86755c9df3"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_performance_core_a_f79f9e52a4aa",
+    "program": "internal/oracle/testdata/node_process_performance_core.a",
+    "path": "../oracle/testdata/node_process_performance_core.a",
+    "sha256": "24322fc07f27f61011838935864b945fdd343b39b22cca80f7d8694db4687f3a"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_terminal_a_68101d3fce2b",
+    "program": "internal/oracle/testdata/node_process_terminal.a",
+    "path": "../oracle/testdata/node_process_terminal.a",
+    "sha256": "46c82655997d0a150295a8cf3191efd25ca6bace8127540173e963a77277d149"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_process_tmpdir_a_5467f24e3110",
+    "program": "internal/oracle/testdata/node_process_tmpdir.a",
+    "path": "../oracle/testdata/node_process_tmpdir.a",
+    "sha256": "6b8d422b8b7fd5551e45a8cc38f534dfe75ff684f90bd82d7476cecb401f6a73"
   },
   {
     "package": "flow",
@@ -35166,6 +35486,86 @@
     "program": "internal/oracle/testdata/node_path_relative.a",
     "path": "../oracle/testdata/node_path_relative.a",
     "sha256": "6f8e15452db56b600813923ad6cc8cb5470b58ee63fe412546d3469960b5277b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_blocking_a_288814d1b319",
+    "program": "internal/oracle/testdata/node_process_blocking.a",
+    "path": "../oracle/testdata/node_process_blocking.a",
+    "sha256": "e9b3ecc7a3b4cb40ea104f2fca73c2a9d38d714b789f7d9328d52f4023a8a16a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_cached_cwd_a_a1ec7a716f9b",
+    "program": "internal/oracle/testdata/node_process_cached_cwd.a",
+    "path": "../oracle/testdata/node_process_cached_cwd.a",
+    "sha256": "19cfc47889015d6f32c6d8e04a97e1e22c1566335f330c6304eb21aecb999737"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_cleared_marks_a_e79717c3773c",
+    "program": "internal/oracle/testdata/node_process_cleared_marks.a",
+    "path": "../oracle/testdata/node_process_cleared_marks.a",
+    "sha256": "8821e57181f5cf98b11e1d88c433484c97b970fdefdaac2e97f65368423d4835"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_host_a_354aae2dbacb",
+    "program": "internal/oracle/testdata/node_process_host.a",
+    "path": "../oracle/testdata/node_process_host.a",
+    "sha256": "4e215788377ebead4ade1e79fd6ce5d06b317af7ab7bab27671a038f88eea89c"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_missing_mark_a_89deef9490d8",
+    "program": "internal/oracle/testdata/node_process_missing_mark.a",
+    "path": "../oracle/testdata/node_process_missing_mark.a",
+    "sha256": "396ad01aea4cca27656cbd65fc037e6f1d290f828d12baab8a27b9c5f276f8fb"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_os_namespace_a_85272eafe7b4",
+    "program": "internal/oracle/testdata/node_process_os_namespace.a",
+    "path": "../oracle/testdata/node_process_os_namespace.a",
+    "sha256": "ba5b35e7f6f530e48399eb0e15019c12339f1ca506a2293a7042336a3c70fcb1"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_performance_a_da452f3da03d",
+    "program": "internal/oracle/testdata/node_process_performance.a",
+    "path": "../oracle/testdata/node_process_performance.a",
+    "sha256": "2a4050398f98aa3e4eaf185184b513aa5bc5600c912f696652c95a86755c9df3"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_performance_core_a_f79f9e52a4aa",
+    "program": "internal/oracle/testdata/node_process_performance_core.a",
+    "path": "../oracle/testdata/node_process_performance_core.a",
+    "sha256": "24322fc07f27f61011838935864b945fdd343b39b22cca80f7d8694db4687f3a"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_terminal_a_68101d3fce2b",
+    "program": "internal/oracle/testdata/node_process_terminal.a",
+    "path": "../oracle/testdata/node_process_terminal.a",
+    "sha256": "46c82655997d0a150295a8cf3191efd25ca6bace8127540173e963a77277d149"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_process_tmpdir_a_5467f24e3110",
+    "program": "internal/oracle/testdata/node_process_tmpdir.a",
+    "path": "../oracle/testdata/node_process_tmpdir.a",
+    "sha256": "6b8d422b8b7fd5551e45a8cc38f534dfe75ff684f90bd82d7476cecb401f6a73"
   },
   {
     "package": "fresh",
