@@ -1,0 +1,59 @@
+// A Set's or Map's iterator handed to Iterable<T> infers T as the element alone. The prelude's
+// done arm, { done: true; value: undefined }, must read as the iterator's return, never its value.
+const roots = new Set<string>();
+for (const name of ['src', 'lib', 'src']) {
+	roots.add(name);
+}
+const sizes = new Map<string, number>([['alpha', 3], ['beta', 5]]);
+
+const keyCopy = new Set(sizes.keys());
+for (const key of keyCopy) {
+	console.log(`key ${key.toUpperCase()} ${key.length}`);
+}
+const sizeCopy = new Set(sizes.values());
+for (const size of sizeCopy) {
+	console.log(`size ${size * 2}`);
+}
+const rootCopy = new Set(roots.values());
+rootCopy.add('bin');
+for (const root of rootCopy) {
+	console.log(`root ./${root} ${root.length}`);
+}
+const entryCopy = new Map(sizes.entries());
+entryCopy.set('gamma', 7);
+for (const [key, size] of entryCopy) {
+	console.log(`entry ${key.length} ${size + 1}`);
+}
+
+// The done arm narrowed alone still reads done and value from the step itself.
+const keys = sizes.keys();
+let step = keys.next();
+while (!step.done) {
+	console.log(`step ${step.value.length}`);
+	step = keys.next();
+}
+if (step.done) {
+	console.log(`finished ${step.done} ${step.value === undefined}`);
+}
+const values = new Set<string>(['only']).values();
+const { done: firstDone, value: firstValue } = values.next();
+const { done: lastDone, value: lastValue } = values.next();
+console.log(`destructured ${firstDone} ${firstValue === 'only'} ${lastDone} ${lastValue === undefined}`);
+
+// A program's own object typed by the library's IteratorReturnResult reads its fields the same way.
+function stepOf(index: number, words: readonly string[]): { readonly done: false; readonly value: string } | IteratorReturnResult<number> {
+	const word = words[index];
+	if (word === undefined) {
+		return { value: words.length, done: true };
+	}
+	return { done: false, value: word };
+}
+const words = ['one', 'two'];
+for (let index = 0; index < 3; index++) {
+	const own = stepOf(index, words);
+	if (own.done) {
+		console.log(`own done ${own.value + 1}`);
+	} else {
+		console.log(`own ${own.value.toUpperCase()} ${own.done}`);
+	}
+}
