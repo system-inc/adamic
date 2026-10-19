@@ -1,0 +1,4 @@
+=== RUN   TestCompileProfiles
+    build_test.go:34: native: mkdir /home/agent/.cache/adamic-build/native-runtime/.build-686655601: no space left on device
+--- FAIL: TestCompileProfiles (18.09s)
+FAIL

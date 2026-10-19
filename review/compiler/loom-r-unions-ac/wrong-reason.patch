@@ -1,0 +1,8 @@
+--- a/internal/oracle/testdata/non_null_refused/initialized.a
++++ b/internal/oracle/testdata/non_null_refused/initialized.a
+@@ -1,4 +1,4 @@
+-// a-check: refused the non-null assertion !
++// a-check: refused impossible union header mutant reason
+ function locals(flag: boolean): void {
+     let count: number = undefined!;
+     let text: string = null!;

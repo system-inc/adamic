@@ -87,3 +87,15 @@ func TestNormalizeDropsIncidentalDetails(t *testing.T) {
 		t.Fatalf("normalize = %q", got)
 	}
 }
+
+// The former NotYet corpus witness is admitted by optional boolean field lowering.
+func TestUnionClassFieldHasNoDiagnostic(t *testing.T) {
+	t.Parallel()
+	r, err := measure("testdata/compiled", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.FilesExamined != 1 || r.FilesReachingLowering != 1 || len(r.Reasons) != 0 {
+		t.Fatalf("compiled union field report = %#v", r)
+	}
+}

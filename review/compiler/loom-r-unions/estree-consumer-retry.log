@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T00:12:15.561045696Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-18T00:12:15.571233305Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar"}
+{"Time":"2026-10-18T00:12:15.57133578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"=== RUN   TestAcceptanceGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:12:17.357776924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    oracles.go:172: build estree-go-oracle-v1_oracle-owner-v1 000c1908e2dd hit 1.76\n"}
+{"Time":"2026-10-18T00:13:04.100099886Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:21: build estree-misc-sanitized-emitted d34564c605ce miss 46.68\n"}
+{"Time":"2026-10-18T00:13:04.100244675Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:21: build lowered/sanitized/emitted products: 46.733068s\n"}
+{"Time":"2026-10-18T00:13:04.376909035Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:27: 11 acceptance grammar cases, 8800 identical canonical bytes\n"}
+{"Time":"2026-10-18T00:13:04.377016617Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"--- PASS: TestAcceptanceGrammar (48.81s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:04.377146493Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Elapsed":48.81}
+{"Time":"2026-10-18T00:13:04.377176088Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:04.385862537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t48.824s\n"}
+{"Time":"2026-10-18T00:13:04.385923629Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":48.825}

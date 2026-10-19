@@ -1,0 +1,23 @@
+[
+  "cmd/adamic-meter/main_test.go",
+  "internal/lower/boxed_scalar_fields.go",
+  "internal/lower/class.go",
+  "internal/lower/class_inheritance.go",
+  "internal/lower/expression.go",
+  "internal/lower/locals.go",
+  "internal/lower/nullable_objects.go",
+  "internal/lower/nullable_strings.go",
+  "internal/lower/nullable_strings_test.go",
+  "internal/lower/object.go",
+  "internal/lower/scout_class_boolean_test.go",
+  "internal/lower/scout_nullable_object_views_test.go",
+  "internal/lower/taste_representation_test.go",
+  "internal/native/union.go",
+  "internal/oracle/scout_boxed_scalar_test.go",
+  "internal/oracle/scout_class_boolean_test.go",
+  "internal/oracle/scout_nullable_objects_test.go",
+  "internal/oracle/scout_string_number_test.go",
+  "internal/oracle/scout_unions_test.go",
+  "stage1/cohere/selector/gaps_test.go",
+  "stage1/cohere/values/gaps_test.go"
+]

@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -321,7 +321,7 @@
+ 			}
+ 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+ 			// Layout must follow the destination, even when the literal infers narrower elements.
+-			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
++			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union && false {
+ 				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
+ 					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
+ 				}

@@ -1,0 +1,529 @@
+{
+  "gate_commit": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "builds": [],
+  "checks": [
+    {
+      "label": "changed-programs",
+      "result": {
+        "a_check": {
+          "internal/oracle/testdata/scout_boxed_scalar_fields.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_boxed_scalar_stale_field.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_class_boolean_fields.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_hir_optional_boolean.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_nullable_object_null_field.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_nullable_object_stale_field.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_nullable_object_stale_local.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_nullable_objects.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_nullable_storage_refused/array.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet"
+          },
+          "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a": {
+            "outcome": "refused",
+            "expected": "refused union-typed array built from a narrower literal",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal"
+          },
+          "internal/oracle/testdata/scout_nullable_storage_refused/callable.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet"
+          },
+          "internal/oracle/testdata/scout_nullable_storage_refused/field.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet"
+          },
+          "internal/oracle/testdata/scout_nullable_storage_refused/lookup.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet"
+          },
+          "internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet"
+          },
+          "internal/oracle/testdata/scout_nullable_string_stale_field.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_nullable_strings.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_selector_optional_boolean.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_string_number_fields_locals.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_string_number_stale_field.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_tsc_nullish_content.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_tsc_source_content.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "internal/oracle/testdata/scout_values_optional_boolean.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          },
+          "cmd/adamic-meter/testdata/corpus/not_yet.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/cmd/adamic-meter/testdata/corpus/not_yet.a:4:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet"
+          },
+          "cmd/adamic-meter/testdata/compiled/main.a": {
+            "outcome": "checked",
+            "expected": "checked",
+            "first": ""
+          }
+        }
+      },
+      "exits": {
+        "a-check": 0
+      },
+      "seconds": 0.8,
+      "failure": null
+    },
+    {
+      "label": "control-header",
+      "result": {
+        "a_check": {
+          "internal/oracle/testdata/non_null_refused/initialized.a": {
+            "outcome": "refused",
+            "expected": "refused the non-null assertion !",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+          }
+        }
+      },
+      "exits": {
+        "a-check": 0
+      },
+      "seconds": 0.0,
+      "failure": null
+    },
+    {
+      "label": "removed-header",
+      "result": {
+        "a_check": {
+          "internal/oracle/testdata/non_null_refused/initialized.a": {
+            "outcome": "refused",
+            "expected": "checked",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:2:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+          }
+        }
+      },
+      "exits": {
+        "a-check": 1
+      },
+      "seconds": 0.0,
+      "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/non_null_refused/initialized.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:2:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the)"
+    },
+    {
+      "label": "wrong-reason",
+      "result": {
+        "a_check": {
+          "internal/oracle/testdata/non_null_refused/initialized.a": {
+            "outcome": "refused",
+            "expected": "refused impossible union header mutant reason",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+          }
+        }
+      },
+      "exits": {
+        "a-check": 1
+      },
+      "seconds": 0.0,
+      "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/non_null_refused/initialized.a: refused, expected refused impossible union header mutant reason (adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the)"
+    },
+    {
+      "label": "restored-header",
+      "result": {
+        "a_check": {
+          "internal/oracle/testdata/non_null_refused/initialized.a": {
+            "outcome": "refused",
+            "expected": "refused the non-null assertion !",
+            "first": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+          }
+        }
+      },
+      "exits": {
+        "a-check": 0
+      },
+      "seconds": 0.0,
+      "failure": null
+    }
+  ],
+  "compiler_observations": {
+    "changed-programs": [
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_boxed_scalar_fields.a"
+        ],
+        "exit": 0,
+        "seconds": 0.051,
+        "stderr": "",
+        "stdout_bytes": 25612
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_boxed_scalar_stale_field.a"
+        ],
+        "exit": 0,
+        "seconds": 0.038,
+        "stderr": "",
+        "stdout_bytes": 4114
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_class_boolean_fields.a"
+        ],
+        "exit": 0,
+        "seconds": 0.038,
+        "stderr": "",
+        "stdout_bytes": 24933
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_hir_optional_boolean.a"
+        ],
+        "exit": 0,
+        "seconds": 0.033,
+        "stderr": "",
+        "stdout_bytes": 1852
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_object_null_field.a"
+        ],
+        "exit": 0,
+        "seconds": 0.034,
+        "stderr": "",
+        "stdout_bytes": 6172
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_object_stale_field.a"
+        ],
+        "exit": 0,
+        "seconds": 0.034,
+        "stderr": "",
+        "stdout_bytes": 5113
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_object_stale_local.a"
+        ],
+        "exit": 0,
+        "seconds": 0.029,
+        "stderr": "",
+        "stdout_bytes": 3682
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_objects.a"
+        ],
+        "exit": 0,
+        "seconds": 0.038,
+        "stderr": "",
+        "stdout_bytes": 33826
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_storage_refused/array.a"
+        ],
+        "exit": 1,
+        "seconds": 0.03,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a"
+        ],
+        "exit": 1,
+        "seconds": 0.032,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_storage_refused/callable.a"
+        ],
+        "exit": 1,
+        "seconds": 0.039,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_storage_refused/field.a"
+        ],
+        "exit": 1,
+        "seconds": 0.03,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_storage_refused/lookup.a"
+        ],
+        "exit": 1,
+        "seconds": 0.032,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a"
+        ],
+        "exit": 1,
+        "seconds": 0.033,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_string_stale_field.a"
+        ],
+        "exit": 0,
+        "seconds": 0.032,
+        "stderr": "",
+        "stdout_bytes": 3991
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_nullable_strings.a"
+        ],
+        "exit": 0,
+        "seconds": 0.033,
+        "stderr": "",
+        "stdout_bytes": 22466
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_selector_optional_boolean.a"
+        ],
+        "exit": 0,
+        "seconds": 0.034,
+        "stderr": "",
+        "stdout_bytes": 5739
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_string_number_fields_locals.a"
+        ],
+        "exit": 0,
+        "seconds": 0.036,
+        "stderr": "",
+        "stdout_bytes": 24466
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_string_number_stale_field.a"
+        ],
+        "exit": 0,
+        "seconds": 0.032,
+        "stderr": "",
+        "stdout_bytes": 4380
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_tsc_nullish_content.a"
+        ],
+        "exit": 0,
+        "seconds": 0.03,
+        "stderr": "",
+        "stdout_bytes": 3016
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_tsc_source_content.a"
+        ],
+        "exit": 0,
+        "seconds": 0.031,
+        "stderr": "",
+        "stdout_bytes": 2321
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/scout_values_optional_boolean.a"
+        ],
+        "exit": 0,
+        "seconds": 0.03,
+        "stderr": "",
+        "stdout_bytes": 5242
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "cmd/adamic-meter/testdata/corpus/not_yet.a"
+        ],
+        "exit": 1,
+        "seconds": 0.034,
+        "stderr": "adamic: /workspace/adamic/cmd/adamic-meter/testdata/corpus/not_yet.a:4:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet\n",
+        "stdout_bytes": 0
+      },
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "cmd/adamic-meter/testdata/compiled/main.a"
+        ],
+        "exit": 0,
+        "seconds": 0.03,
+        "stderr": "",
+        "stdout_bytes": 3772
+      }
+    ],
+    "control-header": [
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/non_null_refused/initialized.a"
+        ],
+        "exit": 1,
+        "seconds": 0.033,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "stdout_bytes": 0
+      }
+    ],
+    "removed-header": [
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/non_null_refused/initialized.a"
+        ],
+        "exit": 1,
+        "seconds": 0.033,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:2:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "stdout_bytes": 0
+      }
+    ],
+    "wrong-reason": [
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/non_null_refused/initialized.a"
+        ],
+        "exit": 1,
+        "seconds": 0.034,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "stdout_bytes": 0
+      }
+    ],
+    "restored-header": [
+      {
+        "command": [
+          "/tmp/unions-m-adamic",
+          "c",
+          "internal/oracle/testdata/non_null_refused/initialized.a"
+        ],
+        "exit": 1,
+        "seconds": 0.033,
+        "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/non_null_refused/initialized.a:3:25: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+        "stdout_bytes": 0
+      }
+    ]
+  },
+  "control_path": "internal/oracle/testdata/non_null_refused/initialized.a",
+  "control_sha256": "90a85f817c96f4e44d6113351797b57193fecfef374a1030092a1d3d1ed83cc3",
+  "control_restored": true
+}

@@ -1,0 +1,26 @@
+path	status	code	reason	header
+cmd/adamic-meter/testdata/compiled/main.a	checked			
+cmd/adamic-meter/testdata/corpus/not_yet.a	NotYet		adamic: /workspace/adamic/cmd/adamic-meter/testdata/corpus/not_yet.a:4:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet	
+internal/oracle/testdata/scout_boxed_scalar_fields.a	checked			
+internal/oracle/testdata/scout_boxed_scalar_stale_field.a	checked			
+internal/oracle/testdata/scout_class_boolean_fields.a	checked			
+internal/oracle/testdata/scout_hir_optional_boolean.a	checked			
+internal/oracle/testdata/scout_nullable_object_null_field.a	checked			
+internal/oracle/testdata/scout_nullable_object_stale_field.a	checked			
+internal/oracle/testdata/scout_nullable_object_stale_local.a	checked			
+internal/oracle/testdata/scout_nullable_objects.a	checked			
+internal/oracle/testdata/scout_nullable_storage_refused/array.a	NotYet		adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet	
+internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a	refused		union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal	// a-check: refused union-typed array built from a narrower literal
+internal/oracle/testdata/scout_nullable_storage_refused/callable.a	NotYet		adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet	
+internal/oracle/testdata/scout_nullable_storage_refused/field.a	NotYet		adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet	
+internal/oracle/testdata/scout_nullable_storage_refused/lookup.a	NotYet		adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet	
+internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a	NotYet		adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet	
+internal/oracle/testdata/scout_nullable_string_stale_field.a	checked			
+internal/oracle/testdata/scout_nullable_strings.a	checked			
+internal/oracle/testdata/scout_selector_optional_boolean.a	checked			
+internal/oracle/testdata/scout_string_number_fields_locals.a	checked			
+internal/oracle/testdata/scout_string_number_stale_field.a	checked			
+internal/oracle/testdata/scout_tsc_nullish_content.a	checked			
+internal/oracle/testdata/scout_tsc_source_content.a	checked			
+internal/oracle/testdata/scout_values_optional_boolean.a	checked			
+internal/oracle/testdata/scout_nullable_storage_refused/array_callback.a	NotYet		adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_callback.a:3:23: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet	

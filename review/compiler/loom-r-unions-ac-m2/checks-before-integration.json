@@ -1,0 +1,24 @@
+[
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 1,
+    "seconds": 64.219
+  }
+]

@@ -1,0 +1,274 @@
+[
+  {
+    "label": "compiler-build",
+    "command": [
+      "go",
+      "build",
+      "-o",
+      "/tmp/unions-m-adamic",
+      "./cmd/adamic"
+    ],
+    "exit": 0,
+    "seconds": 7.946
+  },
+  {
+    "label": "stage3-all",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 68.854
+  },
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 52.357
+  },
+  {
+    "label": "meter-all",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 5.151
+  },
+  {
+    "label": "lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 54.483
+  },
+  {
+    "label": "lower-all-fixed",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 48.814
+  },
+  {
+    "label": "native-all-fixed",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 217.586
+  },
+  {
+    "label": "native-all-wasi",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 181.37
+  },
+  {
+    "label": "oracle-all-wasi",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 376.056
+  },
+  {
+    "label": "stage1-touched",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/values/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 56.93
+  },
+  {
+    "label": "stage1-touched-ready",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/values/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 36.049
+  },
+  {
+    "label": "flow-fresh",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 92.986
+  },
+  {
+    "label": "readers-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 19.425
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 2.58
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./cmd/adamic-meter/...",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/values/...",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./internal/ir/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": 7.022
+  }
+]

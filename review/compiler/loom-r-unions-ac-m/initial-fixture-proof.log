@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-unions-ac-m/fixture-proof.py", line 8, in <module>
+    node=run('meter-positive-node',['node','oracle/node.mjs',str(Path(positive).resolve())]);assert node.stdout==b'true\n' and not node.stderr
+                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

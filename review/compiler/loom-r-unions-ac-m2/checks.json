@@ -1,0 +1,311 @@
+[
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 55.682
+  },
+  {
+    "label": "cmd-adamic-meter-all",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 9.674
+  },
+  {
+    "label": "internal-lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 55.108
+  },
+  {
+    "label": "internal-native-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 231.125
+  },
+  {
+    "label": "internal-oracle-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 392.978
+  },
+  {
+    "label": "stage1-cohere-selector-oracles-all",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector/oracles/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 24.144
+  },
+  {
+    "label": "stage1-cohere-values-oracles-all",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values/oracles/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 8.04
+  },
+  {
+    "label": "stage1-cohere-selector-all",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 22.052
+  },
+  {
+    "label": "stage1-cohere-values-all",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 29.316
+  },
+  {
+    "label": "internal-flow-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 78.934
+  },
+  {
+    "label": "internal-fresh-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 19.666
+  },
+  {
+    "label": "stage3-fixtures-all",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 64.951
+  },
+  {
+    "label": "reader-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders.*|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 32.612
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.27
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./cmd/adamic-meter/...",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/values/...",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./internal/ir/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": 8.363
+  },
+  {
+    "label": "a-check",
+    "command": [
+      "python3",
+      "review/compiler/loom-r-unions-ac-m2/header-check.py"
+    ],
+    "exit": 0,
+    "seconds": 4.038
+  },
+  {
+    "label": "meter-node-witnesses",
+    "command": [
+      "python3",
+      "review/compiler/loom-r-unions-ac-m2/fixture-proof.py"
+    ],
+    "exit": 0,
+    "seconds": 1.217
+  },
+  {
+    "label": "integration-mutants",
+    "command": [
+      "python3",
+      "review/compiler/loom-r-unions-ac-m2/integration-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 37.778
+  },
+  {
+    "label": "count-mutants",
+    "command": [
+      "python3",
+      "review/compiler/loom-r-unions-ac-m2/count-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 23.657
+  }
+]

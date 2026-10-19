@@ -1,0 +1,7 @@
+=== RUN   TestJsxParserGapIsExplicit
+=== PAUSE TestJsxParserGapIsExplicit
+=== CONT  TestJsxParserGapIsExplicit
+    comments_test.go:89: build comments-native cf96242e1628 miss 12.47
+    comments_test.go:206: build go build cohere /workspace/adamic/cohere/adamic_comments_oracle.go go-oracle-owner-v1: settle the oracle owner first
+--- FAIL: TestJsxParserGapIsExplicit (15.59s)
+FAIL

@@ -1,0 +1,11 @@
+--- a/internal/lower/boxed_scalar_fields.go
++++ b/internal/lower/boxed_scalar_fields.go
+@@ -18,7 +18,7 @@
+ 	if parent != nil && parent.Kind == ast.KindBinaryExpression {
+ 		binary := parent.AsBinaryExpression()
+ 		switch binary.OperatorToken.Kind {
+-		case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
++		case ast.KindEqualsEqualsToken, ast.KindExclamationEqualsToken:
+ 			// Equality observes the actual tag, including a stale flow fact.
+ 			return read
+ 		}

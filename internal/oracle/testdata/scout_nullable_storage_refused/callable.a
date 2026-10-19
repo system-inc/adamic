@@ -1,0 +1,4 @@
+interface Item { readonly name: string; }
+function old(): Item | null { return null; }
+const view: () => Item | null | undefined = old;
+console.log(`${view() === null}`);

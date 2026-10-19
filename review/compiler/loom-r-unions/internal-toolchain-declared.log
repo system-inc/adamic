@@ -1,0 +1,8 @@
+{"Time":"2026-10-18T00:19:54.997452014Z","Action":"start","Package":"github.com/system-inc/adamic/internal/toolchain"}
+{"Time":"2026-10-18T00:19:54.998983814Z","Action":"run","Package":"github.com/system-inc/adamic/internal/toolchain","Test":"TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse"}
+{"Time":"2026-10-18T00:19:54.999027751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/toolchain","Test":"TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse","Output":"=== RUN   TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:54.999164687Z","Action":"output","Package":"github.com/system-inc/adamic/internal/toolchain","Test":"TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse","Output":"--- PASS: TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:54.999169184Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/toolchain","Test":"TestAToolsEnvironmentIsWhatTheKeyReadsAndNothingElse","Elapsed":0}
+{"Time":"2026-10-18T00:19:54.999179179Z","Action":"output","Package":"github.com/system-inc/adamic/internal/toolchain","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:54.999365129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/toolchain","Output":"ok  \tgithub.com/system-inc/adamic/internal/toolchain\t0.002s\n"}
+{"Time":"2026-10-18T00:19:54.999380813Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/toolchain","Elapsed":0.002}
