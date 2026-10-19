@@ -141,6 +141,12 @@ func reviewAgreement(t *testing.T, path string, expected *run) error {
 func reviewRefusal(t *testing.T, path string) error {
 	t.Helper()
 	_, err := lowered(t, path)
+	// reviewEach passes an absolute path to load.Load without a display mapper.
+	// Program.Where restores the .a extension and prints that full path unchanged.
+	return reviewRefusalDiagnostic(path, err)
+}
+
+func reviewRefusalDiagnostic(path string, err error) error {
 	var refused *lower.Refused
 	var notYet *lower.NotYet
 	if err == nil {
@@ -148,6 +154,16 @@ func reviewRefusal(t *testing.T, path string) error {
 	}
 	if (!errors.As(err, &refused) && !errors.As(err, &notYet)) || strings.TrimSpace(err.Error()) == "" {
 		return fmt.Errorf("want compiler refusal with diagnostic, got %v", err)
+	}
+	where := ""
+	if refused != nil {
+		where = refused.Where
+	} else {
+		where = notYet.Where
+	}
+	location := regexp.MustCompile(`^` + regexp.QuoteMeta(filepath.ToSlash(path)) + `:[1-9][0-9]*:[1-9][0-9]*$`)
+	if !location.MatchString(where) {
+		return fmt.Errorf("want refusal location %s:<positive line>:<positive column>, got %q: %w", path, where, err)
 	}
 	return nil
 }
@@ -285,6 +301,23 @@ func TestReviewProgramsSelfTest(t *testing.T) {
 		}
 		if err := reviewRefusal(t, path); err == nil || !strings.Contains(err.Error(), "accepted refused review program") {
 			t.Fatalf("accepted program was not caught: %v", err)
+		}
+	})
+	t.Run("refusal_location", func(t *testing.T) {
+		path := filepath.Join(t.TempDir(), "program[1].a")
+		for _, where := range []string{path + ":1:2", path + ":123:456"} {
+			for _, err := range []error{&lower.Refused{Where: where, What: "test", Fix: "test"}, &lower.NotYet{Where: where, What: "test"}} {
+				if got := reviewRefusalDiagnostic(path, err); got != nil {
+					t.Errorf("valid location rejected: %v", got)
+				}
+			}
+		}
+		for _, where := range []string{"", filepath.Base(path) + ":1:2", "/other" + path + ":1:2", path + ".ts:1:2", path + ":0:1", path + ":1:0", path + ":-1:2", path + ":1", path + ":1:2:3", path + ":line:2", path + ":1:2\n"} {
+			for _, err := range []error{&lower.Refused{Where: where, What: "test", Fix: "test"}, &lower.NotYet{Where: where, What: "test"}} {
+				if reviewRefusalDiagnostic(path, err) == nil {
+					t.Errorf("invalid location passed: %q", where)
+				}
+			}
 		}
 	})
 	t.Run("loose_file", func(t *testing.T) {

@@ -1,0 +1,1 @@
+intended: the checked-view ruling (docs/escape-hatches.md, October 7): a field read through a view finds the wrong kind, so Adamic stops with exit 70 where Node reads the value: after printing 3, value.name finds a number after its producer writes the union slot; Node prints undefined for its length
