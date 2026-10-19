@@ -27,11 +27,7 @@ func TestCommandHelper(t *testing.T) {
 	if err := json.Unmarshal([]byte(os.Getenv("ADMISSION_COMMAND_ARGS")), &args); err != nil {
 		os.Exit(2)
 	}
-	if err := run(args); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	os.Exit(0)
+	os.Exit(exitCode(run(args)))
 }
 
 // Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
@@ -109,6 +105,12 @@ func commandFixture(t *testing.T) (string, string, string, string) {
 }
 func invokeCommand(t *testing.T, dir string, args ...string) observation {
 	t.Helper()
+	return invokeCommandWith(t, dir, nil, args...)
+}
+
+// invokeCommandWith runs the command with environment appended to the test's, returning its own exit code.
+func invokeCommandWith(t *testing.T, dir string, environment []string, args ...string) observation {
+	t.Helper()
 	exe, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
@@ -130,14 +132,16 @@ func invokeCommand(t *testing.T, dir string, args ...string) observation {
 	defer cancel()
 	command := exec.CommandContext(ctx, exe, "-test.run=^TestCommandHelper$")
 	command.Dir = dir
-	command.Env = append(os.Environ(), "ADMISSION_COMMAND_HELPER=1", "ADMISSION_COMMAND_ARGS="+string(data))
+	command.Env = append(append(os.Environ(), "ADMISSION_COMMAND_HELPER=1", "ADMISSION_COMMAND_ARGS="+string(data)), environment...)
 	var out, errors bytes.Buffer
 	command.Stdout = &out
 	command.Stderr = &errors
 	err = command.Run()
 	code := 0
-	if err != nil {
-		code = 1
+	if exit, ok := err.(*exec.ExitError); ok {
+		code = exit.ExitCode()
+	} else if err != nil {
+		t.Fatal(err)
 	}
 	return observation{Exit: code, Stdout: out.String(), Stderr: errors.String()}
 }
@@ -149,8 +153,8 @@ func TestNewAdmissionMismatch(t *testing.T) {
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
 	}
-	if o.Exit == 0 || r.Verdict != "fail" || r.Admitted != 1 || r.SamplingSize != 1 || r.Omitted != 0 {
-		t.Fatalf("missed mismatch: %+v %s", r, o.Stderr)
+	if o.Exit != 1 || r.Verdict != "fail" || r.Void || r.Admitted != 1 || r.SamplingSize != 1 || r.Omitted != 0 {
+		t.Fatalf("missed mismatch, or charged it as other than a red: exit %d %+v %s", o.Exit, r, o.Stderr)
 	}
 	p := r.Programs[0]
 	if p.Agree == nil || *p.Agree || p.Node.Stdout != "42\n" || p.JavaScript.Stdout != "42\n" || p.Native.Stdout != "41\n" {
