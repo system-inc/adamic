@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate directly selectable tests for the original program globs."""
+import argparse
 import glob
 import hashlib
 import json
@@ -9,6 +10,15 @@ import re
 import subprocess
 
 root = Path(__file__).resolve().parents[2]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--out', type=Path, default=root, help='output directory (default: repository root)')
+output = parser.parse_args().out
+
+def write_output(relative, text):
+    destination = output / relative
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(text)
+
 patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts',
             'internal/load/testdata/0.1/compile/07_modules/main.ts', 'internal/oracle/testdata/*.a',
             'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
@@ -80,6 +90,6 @@ for package in ['flow', 'fresh']:
             text += 'func ' + name + '(t *testing.T) {\n\tt.Parallel()\n\tbegin' + package.title() + 'Unit(t)\n\t' + helper + '(t, ' + package + 'CorpusPaths[' + str(index) + '])\n}\n\n'
     # Written through gofmt, so the generated file is as gofmt -l expects it.
     formatted = subprocess.run(['gofmt'], input=text, capture_output=True, text=True, check=True).stdout
-    (root / 'internal' / package / 'corpus_units_test.go').write_text(formatted)
-(root/'review/test-split-flow/units.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    write_output(Path('internal') / package / 'corpus_units_test.go', formatted)
+write_output(Path('review/test-split-flow/units.json'), json.dumps(manifest,indent=2)+'\n')
 print('Generated', len(manifest), 'program units')
