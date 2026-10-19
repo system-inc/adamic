@@ -407,7 +407,7 @@ func (b *ssaBuilder) lookupEntry(place *Place, blockId BlockId, state *ssaState,
 // final answer, except on a MayThrow's edge to its handler, which leaves before the last
 // instruction's definitions (the file comment's "A throw's edge").
 func (b *ssaBuilder) valueOut(place *Place, from BlockId, to BlockId) IdentifierId {
-	if block, ok := b.function.Block(from); ok && throwsTo(block, to) {
+	if block, ok := b.function.Block(from); ok && throwsTo(block, to) && false {
 		binding := b.function.Identifiers[place.Identifier].Declaration
 		// A predecessor is looked through only once it is processed, so its state is there.
 		if before, defined := b.states[from].beforeThrow[binding]; defined {
