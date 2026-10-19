@@ -1,0 +1,11 @@
+{
+  "maxFiles": 8,
+  "files": [
+    {
+      "under": "internal/oracle/testdata/counts/",
+      "suffix": ".counts",
+      "command": ["go", "test", "./internal/oracle", "-run", "TestCountsAreRecorded", "-count=1", "-timeout", "30m", "-args", "-update-counts"],
+      "maxBytes": 65536
+    }
+  ]
+}
