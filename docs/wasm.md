@@ -266,7 +266,7 @@ Do not decode each callback separately if UTF-8 may span iovecs.
 | Every other `fd_*` and `path_*`, including `fd_read`, `fd_filestat_get`, `fd_readdir`, `path_open` | EBADF (8), without touching output memory or granting host file access. |
 | `args_sizes_get`, `environ_sizes_get` | Write zero count and zero buffer size, return 0: this host has an empty argument vector and environment. |
 | `args_get`, `environ_get` | Return 0 without writes: zero entries require zero bytes. |
-| `clock_time_get` | The host's real clocks as a 64-bit nanosecond count: realtime (0) from `Date.now()`, monotonic (1) from `performance.now()`; any other clock returns EINVAL (28). Every module reads both as it starts (the runtime's clock origin, since main 561aeb4b), so refusing it would refuse every module. Fake time is what would be wrong, not real time. `TestWASIShimClockReadsTheHost` holds it to node:wasi with a probe, and a shim that returns without writing the time fails it. |
+| `clock_time_get` | The host's real clocks as a 64-bit nanosecond count: realtime (0) from `Date.now()` in exact integer math, monotonic (1) from `performance.now()`; any other clock returns EINVAL (28). Every module reads both as it starts (the runtime's clock origin, since main 561aeb4b), so refusing it would refuse every module. Fake time is what would be wrong, not real time. `TestWASIShimClockReadsTheHost` holds it to node:wasi with a probe, and a shim that returns without writing the time, or serves monotonic from the wall clock, fails it. |
 | `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Predictable random bytes would not satisfy the service, and no file-free fixture calls it. |
 | Other imports | Throw `AdamicUnsupportedWASI` naming the import; no success stub. |
 
@@ -313,6 +313,7 @@ to the module's initialized globals. It passes. The earlier prototype's
 | `proc_exit` returns instead of throwing | `TestWASIShimContractsAndMutants/exit`, assertion `exit must terminate` |
 | `fd_prestat_get` returns success and a fake directory | `TestWASIShimContractsAndMutants/preopens`, assertion `no preopened directory` |
 | `clock_time_get` returns without writing the time | `TestWASIShimContractsAndMutants/clock`, assertion `realtime is the host clock in nanoseconds`; and `TestWASIShimClockReadsTheHost`, whose probe then prints 0 where node:wasi prints 1 |
+| monotonic served from the wall clock | `TestWASIShimContractsAndMutants/monotonic`, assertion `monotonic is not the wall clock`; and `TestWASIShimClockReadsTheHost`'s probe line of the same name |
 
 Every control passed; every isolated mutant process exited 1 with the named
 AssertionError. The test also checks empty environment/arguments, named traps,
