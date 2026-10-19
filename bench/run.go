@@ -8,8 +8,10 @@
 // run once untimed, so every row carries the allocations and the retain and release traffic that
 // explain it. The runs are interleaved, a round at a time (native, Node, Bun, native, ...), so a
 // machine that slows down part way through slows all three alike, and the best of the rounds is
-// reported, the run least disturbed by everything else on the machine. Peak memory is the
-// process's maximum resident set, from the operating system. The machine and its load, before and
+// reported, the run least disturbed by everything else on the machine. Beside its wall time, each
+// run reports its user time, the CPU time it spent in user mode across every thread, so a parallel
+// program shows what its speed cost. Peak memory is the process's maximum resident set, from the
+// operating system. The machine and its load, before and
 // after, are printed with the numbers, because numbers without them aren't worth reading.
 package main
 
@@ -47,9 +49,10 @@ type program struct {
 	adamic  bool
 }
 
-// A measurement is one run's wall time and peak resident memory, or why there isn't one.
+// A measurement is one run's wall time, user time and peak resident memory, or why there isn't one.
 type measurement struct {
 	elapsed time.Duration
+	user    time.Duration // CPU time in user mode, summed over every thread
 	peak    int64 // bytes
 	stdout  string
 	failure string
@@ -131,10 +134,10 @@ func main() {
 		}
 	}
 
-	fmt.Printf("best of %d interleaved rounds; time is wall clock, memory is peak resident\n\n", *rounds)
+	fmt.Printf("best of %d interleaved rounds; time is wall clock, user is that run's CPU time in user mode across every thread, memory is peak resident\n\n", *rounds)
 	header := []string{"benchmark"}
 	for _, kind := range runtimes {
-		header = append(header, kind.name+" time", kind.name+" memory")
+		header = append(header, kind.name+" time", kind.name+" user", kind.name+" memory")
 	}
 	header = append(header, runtimes[0].name+" vs node", "same answer")
 	fmt.Println("| " + strings.Join(header, " | ") + " |")
@@ -145,10 +148,10 @@ func main() {
 		for runtimeIndex := range runtimes {
 			best[runtimeIndex] = bestOf(results[programIndex][runtimeIndex])
 			if best[runtimeIndex].failure != "" {
-				row = append(row, best[runtimeIndex].failure, "")
+				row = append(row, best[runtimeIndex].failure, "", "")
 				continue
 			}
-			row = append(row, seconds(best[runtimeIndex].elapsed), megabytes(best[runtimeIndex].peak))
+			row = append(row, seconds(best[runtimeIndex].elapsed), seconds(best[runtimeIndex].user), megabytes(best[runtimeIndex].peak))
 		}
 		nodeIndex := 0
 		for index, kind := range runtimes {
@@ -271,7 +274,7 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	if err != nil {
 		return measurement{failure: fmt.Sprintf("failed: %v %s", err, firstLine(stderr.String()))}
 	}
-	return measurement{elapsed: elapsed, peak: peakResident(process.ProcessState), stdout: stdout.String()}
+	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: stdout.String()}
 }
 
 // environment is this process's, without what would change how a runtime runs: BUN_OPTIONS
@@ -438,7 +441,7 @@ func short(result measurement) string {
 	if result.failure != "" {
 		return result.failure
 	}
-	return seconds(result.elapsed) + ", " + megabytes(result.peak)
+	return seconds(result.elapsed) + ", user " + seconds(result.user) + ", " + megabytes(result.peak)
 }
 
 func firstLine(text string) string {
