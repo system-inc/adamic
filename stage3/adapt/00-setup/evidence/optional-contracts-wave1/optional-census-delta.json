@@ -1,0 +1,62 @@
+[
+  {
+    "run": "stock-no-prelude",
+    "before": 234,
+    "after": 233,
+    "mutant": 234,
+    "removed": [
+      "D4012d5810140"
+    ],
+    "added": []
+  },
+  {
+    "run": "stock-filtered-prelude",
+    "before": 235,
+    "after": 234,
+    "mutant": 235,
+    "removed": [
+      "D4012d5810140"
+    ],
+    "added": []
+  },
+  {
+    "run": "loader-no-prelude",
+    "before": 234,
+    "after": 233,
+    "mutant": 234,
+    "removed": [
+      "D4012d5810140"
+    ],
+    "added": []
+  },
+  {
+    "run": "loader-filtered-prelude",
+    "before": 235,
+    "after": 234,
+    "mutant": 235,
+    "removed": [
+      "D4012d5810140"
+    ],
+    "added": []
+  },
+  {
+    "run": "stock-no-unchecked-control",
+    "before": 135,
+    "after": 134,
+    "mutant": 135,
+    "removed": [
+      "D4012d5810140"
+    ],
+    "added": []
+  },
+  {
+    "run": "loader-original-prelude-mutant",
+    "before": 319,
+    "after": 318,
+    "mutant": 319,
+    "removed": [
+      "D4012d5810140"
+    ],
+    "added": []
+  }
+]
