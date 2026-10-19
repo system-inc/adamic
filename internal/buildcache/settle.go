@@ -1686,8 +1686,9 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 // nameKey again through the products it reads is one no runner can value, and it's refused as a cycle, never recorded
 // (#p80h8e6, #kfjqsnh: Eve's ab8e96b0's manifest recorded native-false reading native-true, then native-true reading
 // native-false, which it valued through the answer it held from before native-false's new set, and every runner missed
-// both). A product read whose newest set names nameKey is valued by an older set that doesn't, as a runner's lookup
-// values it, so only what a runner can't value is refused.
+// both). A set that reads a product whose recorded sets reach nameKey, nameKey itself included, is refused the same way
+// before it's valued: once recorded, the two would be one component, and no lookup uses a set reading its own
+// product's component (readComponents), so only what no lookup would use is refused.
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
@@ -1700,6 +1701,11 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 				continue
 			}
 			kept = append(kept, other)
+		}
+		for _, entry := range set.Entries {
+			if (entry.Kind == "product" || entry.Kind == productKeyKind) && readsBackTo(cache, entry.Path, nameKey) {
+				return fmt.Errorf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", entry.Path[:min(12, len(entry.Path))])
+			}
 		}
 		var err error
 		if evaluated, err = evaluate(root, cache, nameKey, set, 0, known); err != nil {
