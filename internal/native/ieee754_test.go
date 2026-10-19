@@ -240,9 +240,42 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	if len(native) != lines || len(oracle) != lines {
 		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
+	fused := fusedTwin(t, ieee754Harness, input.String())
+	fusion := readFusion(t, "ieee754")
+	for question := range fusion.cases {
+		if !approximatedIEEE754(question) {
+			t.Errorf("the ieee754 fusion list names %q, which isn't a function ECMAScript lets an engine approximate", question)
+		}
+	}
+	if *updateFusion && fused != nil {
+		// Audited by the fused twin: a difference it reproduces is listed, any other pending.
+		listed, pending := []string{}, []string{}
+		for index, question := range asked {
+			if native[index] == oracle[index] || !approximatedIEEE754(question) {
+				continue
+			}
+			line := question + "\t" + native[index] + "\t" + oracle[index] + "\n"
+			if fused[index] == oracle[index] && !slices.Contains(listed, line) {
+				listed = append(listed, line)
+			} else if fused[index] != oracle[index] && !slices.Contains(pending, line) {
+				pending = append(pending, line)
+			}
+		}
+		writeFusion(t, "ieee754", "IEEE 754 cases arm64 Node answers fused: the fused twin (fusedTwin) reproduces Node's answer, and native, unfused, gives the pinned one.", listed, pending)
+		return
+	}
 	mismatches := map[string]int{}
-	total := 0
+	total, held := 0, 0
 	for index := range asked {
+		if listed, audited := fusion.cases[asked[index]]; audited && fused != nil && fused[index] != listed.fused {
+			t.Errorf("%s: the fused twin gives %s, not the %s the ieee754 fusion list records for arm64 Node", asked[index], fused[index], listed.fused)
+		}
+		if fusion.handled(t, asked[index], native[index], oracle[index]) {
+			if native[index] != oracle[index] {
+				held++
+			}
+			continue
+		}
 		if native[index] == oracle[index] {
 			continue
 		}
@@ -259,8 +292,9 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 			t.Errorf("%s: native %s, Node %s", asked[index], native[index], oracle[index])
 		}
 	}
+	fusion.complete(t)
 	if total > 0 {
 		t.Errorf("%d of %d answers differ, by function: %v", total, lines, mismatches)
 	}
-	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches", lines, len(values), len(ieee754Unary), total)
+	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches, %d on the fusion list where arm64 Node fused", lines, len(values), len(ieee754Unary), total, held)
 }
