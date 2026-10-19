@@ -360,29 +360,6 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 	return onNode(t, path, arguments...)
 }
 
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
-}
-
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
@@ -472,7 +449,8 @@ func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, raw)
-	nativeRun, sanitized := natively(t, program)
+	sanitized := filepath.Join(programSanitized(t, "testdata/range_guard.ts"), "port")
+	nativeRun := sanitizedRun(t, sanitized)
 	for _, side := range []struct {
 		name   string
 		result run
@@ -489,7 +467,8 @@ func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
 		t.Fatal(err)
 	}
 	composedProgram := lowered(t, composed)
-	composedNative, composedBinary := natively(t, composedProgram)
+	composedBinary := filepath.Join(programSanitized(t, "testdata/composition_range_guard.ts"), "port")
+	composedNative := sanitizedRun(t, composedBinary)
 	for _, side := range []struct {
 		name   string
 		result run
