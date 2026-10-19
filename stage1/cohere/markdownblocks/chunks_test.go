@@ -14,7 +14,7 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
+// Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestMicromarkInputChunks(t *testing.T) {
 	parallelMarkdownMemory(t, 1)
 	root, err := filepath.Abs(repository)
@@ -98,7 +98,8 @@ func TestMicromarkInputChunks(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, main)
-	answer, binary := natively(t, program, cases)
+	binary := filepath.Join(probeNative(t, chunksProbe, native.Options{Sanitize: true}), "port")
+	answer := sanitizedRun(t, binary, cases)
 	for _, side := range []struct {
 		name   string
 		result run
@@ -154,10 +155,7 @@ func TestMicromarkInputChunks(t *testing.T) {
 			}
 		})
 	}
-	fast := filepath.Join(dir, "fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
+	fast := filepath.Join(probeNative(t, chunksProbe, native.Options{}), "port")
 	for _, side := range []struct {
 		name, command string
 		args          []string

@@ -17,23 +17,7 @@ func TestParserRepresentationProbes(t *testing.T) {
 	// The fifteen probes run one after another in this test's own slot, about 5 s of one core in all. As
 	// parallel subtests they queued behind the whole package for slots, and the parent ended only when
 	// the last one did (346 s on the house at 8 CPUs).
-	for _, gap := range []struct{ path, stdout, notYet, refused, refusedExact string }{
-		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n"},
-		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
-		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
-		{path: "gaps/14_missing_path_key.ts", stdout: "key=\"\" present=false\n"},
-		{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
-		{path: "gaps/5_conditional_panic.ts", stdout: "T\n"},
-		{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
-		{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},
-		{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "join on an array of objects, arrays, maps or functions"},
-		{path: "gaps/10_multiple_push.ts", stdout: "1,2\n", notYet: "push with other than one value"},
-		{path: "gaps/11_function_expression.ts", stdout: "value\n"},
-		{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n"},
-		{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n"},
-		{path: "gaps/16_array_shift.ts", stdout: "1\n2\n", refusedExact: ":2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"},
-		{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
-	} {
+	for _, gap := range representationProbes {
 		t.Run(gap.path, func(t *testing.T) {
 			path, err := filepath.Abs(gap.path)
 			if err != nil {
@@ -71,7 +55,8 @@ func TestParserRepresentationProbes(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			native, binary := natively(t, lowered)
+			binary := filepath.Join(gapSanitized(t, gap.path), "port")
+			native := sanitizedRun(t, binary)
 			for _, side := range []run{native, onJavaScriptBackend(t, lowered)} {
 				clean(t, "closed callable probe", side)
 				equal(t, "closed callable probe", side.stdout, source.stdout)
@@ -81,4 +66,32 @@ func TestParserRepresentationProbes(t *testing.T) {
 			}
 		})
 	}
+}
+
+// A representationProbe is a gap TestParserRepresentationProbes runs and what it answers: Node's stdout, and the NotYet
+// or refusal lowering gives while the gap stays open.
+type representationProbe struct{ path, stdout, notYet, refused, refusedExact string }
+
+// closed says the probe lowers, so it is built natively and run.
+func (probe representationProbe) closed() bool {
+	return probe.notYet == "" && probe.refused == "" && probe.refusedExact == ""
+}
+
+// representationProbes are the gaps TestParserRepresentationProbes runs, in order.
+var representationProbes = []representationProbe{
+	{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n"},
+	{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
+	{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
+	{path: "gaps/14_missing_path_key.ts", stdout: "key=\"\" present=false\n"},
+	{path: "gaps/4_structural_ranges.ts", stdout: "1\n", refused: "a cycle reference counting can't free"},
+	{path: "gaps/5_conditional_panic.ts", stdout: "T\n"},
+	{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
+	{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},
+	{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "join on an array of objects, arrays, maps or functions"},
+	{path: "gaps/10_multiple_push.ts", stdout: "1,2\n", notYet: "push with other than one value"},
+	{path: "gaps/11_function_expression.ts", stdout: "value\n"},
+	{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n"},
+	{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n"},
+	{path: "gaps/16_array_shift.ts", stdout: "1\n2\n", refusedExact: ":2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"},
+	{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
 }

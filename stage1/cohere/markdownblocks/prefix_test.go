@@ -13,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
-// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
+// Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
 func TestMarkdownParserPrefixes(t *testing.T) {
 	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
@@ -72,7 +72,8 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, main)
-	answer, binary := natively(t, program, cases)
+	binary := filepath.Join(probeNative(t, prefixProbe, native.Options{Sanitize: true}), "port")
+	answer := sanitizedRun(t, binary, cases)
 	for _, side := range []struct {
 		name   string
 		result run
@@ -126,10 +127,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 			t.Logf("output-only source Node mutant caught in %q at byte %d", inputs[index].Name, offset)
 		})
 	}
-	fast := filepath.Join(dir, "native-fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
+	fast := filepath.Join(probeNative(t, prefixProbe, native.Options{}), "port")
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name, command string
