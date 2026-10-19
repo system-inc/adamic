@@ -51,7 +51,8 @@ func TestClosedPrefixUpdateValueGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	native, binary := natively(t, program)
+	binary := filepath.Join(sourceSanitized(t, prefixUpdateValueSource), "port")
+	native := sanitizedRun(t, binary)
 	for _, result := range []oracles.Run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
 		if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != "2\n" {
 			t.Fatalf("prefix update value: %+v", result)
@@ -69,7 +70,8 @@ func TestNumberConstructor(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	native, binary := natively(t, program)
+	binary := filepath.Join(sourceSanitized(t, numberConstructorSource), "port")
+	native := sanitizedRun(t, binary)
 	for _, result := range []oracles.Run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
 		if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != "17\n" {
 			t.Fatalf("Number constructor: %+v", result)
