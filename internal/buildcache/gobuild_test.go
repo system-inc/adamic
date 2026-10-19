@@ -741,3 +741,21 @@ func TestABusyToolIsAskedAgain(t *testing.T) {
 		t.Fatalf("a tool busy for a moment reported %q", got)
 	}
 }
+
+// Every verb but build keys its packages' test files (Node's should on #mtvmz1w): a test binary, both export listings,
+// and a verb no product asks for yet, so a new verb starts keyed complete; build alone keys only what it compiles.
+// Mutant that fails it: -test asked for a list of verbs, a new one left off.
+func TestEveryVerbButBuildKeysItsTests(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	module := "internal/buildcache/testdata/module"
+	for _, verb := range []string{"build", "test -c", "list -export", "list -export direct", "a verb not yet asked for"} {
+		inputs, err := goRequest{verb: verb, module: module, output: "greet", pkg: "./greet", environment: []string{"GOWORK=off"}}.keyInputs(root, overlayKey{})
+		if err != nil {
+			t.Fatalf("%s: %v", verb, err)
+		}
+		if keyed := slices.Contains(inputs.Files, module+"/greet/greet_test.go"); keyed != (verb != "build") {
+			t.Errorf("%s keys greet's test file: %v, want %v", verb, keyed, verb != "build")
+		}
+	}
+}
