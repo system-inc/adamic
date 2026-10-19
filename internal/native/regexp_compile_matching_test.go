@@ -97,12 +97,20 @@ func runtimeCompilerMatching(t *testing.T, wasm bool) {
 		t.Fatal(err)
 	}
 	flags := append(Flags(options), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", compilerHeaders)
-	for _, name := range []string{"parser", "properties", "sets", "bytecode", "v8"} {
-		path, err := filepath.Abs(filepath.Join(runtimeDirectory, "regexp_compile_"+name+".c"))
-		if err != nil {
-			t.Fatal(err)
+	if os.Getenv("ADAMIC_REGEX_COMPILER_TEST_RUNTIME") != "" {
+		for _, name := range []string{"parser", "properties", "sets", "bytecode", "v8"} {
+			path, err := filepath.Abs(filepath.Join(runtimeDirectory, "regexp_compile_"+name+".c"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			flags = append(flags, path)
 		}
-		flags = append(flags, path)
+	} else {
+		// The ordinary comparison uses the separately cached compiler component.
+		// Explicit runtime overrides still compile their mutated sources directly.
+		sourceText := source.String()
+		source.Reset()
+		source.WriteString("#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n" + sourceText)
 	}
 	binary := filepath.Join(t.TempDir(), "compiler-matches")
 	if err := BuildFlags(source.String(), binary, options, flags); err != nil {
@@ -120,11 +128,11 @@ func runtimeCompilerMatching(t *testing.T, wasm bool) {
 	}
 	t.Logf("%d runtime-compiled matches agree with live Node (wasm=%v), plus one classified V8 refusal", len(cases)-1, wasm)
 }
-func TestRegExpRuntimeCompilerMatchesNode(t *testing.T) {
+func TestRegExpRuntimeCompilerMatchesNodeCached(t *testing.T) {
 	t.Parallel()
 	runtimeCompilerMatching(t, false)
 }
-func TestRegExpRuntimeCompilerMatchesNodeWASM(t *testing.T) {
+func TestRegExpRuntimeCompilerMatchesNodeWASMCached(t *testing.T) {
 	t.Parallel()
 	runtimeCompilerMatching(t, true)
 }
