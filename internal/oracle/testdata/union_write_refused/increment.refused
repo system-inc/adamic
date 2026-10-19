@@ -1,0 +1,1 @@
+internal/oracle/testdata/union_write_refused/increment.a:4:2: Adamic 0.1 refuses a write through a union of number into a slot that holds 1 | 2 in { step: 1 | 2; }; narrow to one member before writing, so the value fits the slot it lands in; a discriminant is written only after narrowing (union-write)
