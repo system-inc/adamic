@@ -269,6 +269,7 @@ void adamic_start(int count, char **values) {
 #endif
 	adamic_arguments_save(count, values);
 	adamic_host_start(count, values);
+	adamic_node_process_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);

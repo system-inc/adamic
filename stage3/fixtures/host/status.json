@@ -172,7 +172,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet"
+      "what": "stage3/fixtures/host/09_realpath.a:18:134: stage 0 can't lower observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented yet"
     }
   },
   {
@@ -295,7 +295,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:13:12: stage 0 can't lower node:process.Process.env yet"
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:19:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet"
     }
   },
   {
@@ -310,8 +310,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -412,8 +412,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/23_newLine.a:12:31: stage 0 can't lower node:os.EOL yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
