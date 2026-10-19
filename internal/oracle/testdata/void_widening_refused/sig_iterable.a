@@ -1,0 +1,7 @@
+// a-check: refused a void-returning function at the initializer site through [Symbol.iterator]().next().value seen as () => unknown
+const make: () => void = () => 42;
+const held: Set<() => void> = new Set([make]);
+const wide: Iterable<() => unknown> = held;
+for (const each of wide) {
+	console.log(typeof each());
+}
