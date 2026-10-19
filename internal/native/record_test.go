@@ -77,8 +77,9 @@ func recordCheckCounts(t *testing.T, stderr string) {
 // a release per operation fails here and names the count, even when every answer and leak check holds.
 // Linux is the gate of record: macOS's runtime takes other paths for the same fixture, so its rows aren't
 // pinned. A count that moves on purpose is re-pinned from the Linux failure, which prints all four.
+// Measured on Loom (Linux, internal/native#8/16) at 2b22b31c.
 var recordPinnedCounts = map[string]struct{ allocations, retains, releases, peak uint64 }{
-	"workload-1000000": {0, 0, 0, 0},
+	"workload-1000000": {allocations: 3500004, retains: 500001, releases: 3000002, peak: 1000003},
 }
 
 func recordCheckPin(t *testing.T, name, stderr string) {
