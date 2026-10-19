@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/fs"
+	"regexp"
 	"strings"
+	"sync"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
@@ -48,19 +50,66 @@ func usesNodeModules(program *compiler.Program) bool {
 			return true
 		}
 	}
-	for _, file := range program.GetSourceFiles() {
-		for _, statement := range file.Statements.Nodes {
-			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
-				continue
-			}
-			specifier := statement.ModuleSpecifier()
-			if specifier != nil && strings.HasPrefix(specifier.Text(), "node:") {
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		switch node.Kind {
+		case ast.KindImportDeclaration, ast.KindExportDeclaration:
+			if specifier := node.ModuleSpecifier(); specifier != nil && strings.HasPrefix(specifier.Text(), "node:") {
 				return true
 			}
+		case ast.KindCallExpression:
+			call := node.AsCallExpression()
+			if ast.IsIdentifier(call.Expression) && call.Expression.Text() == "require" && call.Arguments != nil && len(call.Arguments.Nodes) == 1 {
+				argument := call.Arguments.Nodes[0]
+				if argument.Kind == ast.KindStringLiteral && nodeBuiltinModules()[argument.Text()] {
+					return true
+				}
+			}
+		case ast.KindImportType:
+			argument := node.AsImportTypeNode().Argument
+			if argument.Kind == ast.KindLiteralType {
+				literal := argument.AsLiteralTypeNode().Literal
+				if literal.Kind == ast.KindStringLiteral && nodeBuiltinModules()[literal.Text()] {
+					return true
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, file := range program.GetSourceFiles() {
+		if file.AsNode().ForEachChild(visit) {
+			return true
 		}
 	}
 	return false
 }
+
+// Read module names from the pinned published declarations, so builtin subpaths
+// and prefix-only modules follow the bundled Node version rather than a hand list.
+var nodeBuiltinModules = sync.OnceValue(func() map[string]bool {
+	modules := map[string]bool{}
+	declaration := regexp.MustCompile(`(?m)^declare module "([^"]+)"`)
+	err := fs.WalkDir(embeddedNodeTypes, "node_types/node_modules/@types/node", func(name string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() || !strings.HasSuffix(name, ".d.ts") {
+			return nil
+		}
+		data, err := embeddedNodeTypes.ReadFile(name)
+		if err != nil {
+			return err
+		}
+		for _, match := range declaration.FindAllSubmatch(data, -1) {
+			modules[string(match[1])] = true
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err) // The embedded filesystem is fixed at build time.
+	}
+	return modules
+})
 
 // Unit lowerers use declaration identity, not the spelling of an imported name.
 func IsNodeLibrary(file *ast.SourceFile) bool {
