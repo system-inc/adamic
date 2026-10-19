@@ -1,5 +1,6 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
+#define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
 #define _DARWIN_C_SOURCE
 #include "adamic.h"
@@ -13,6 +14,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include "node_fs_wasi.h"
 
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
@@ -412,13 +414,9 @@ double adamic_fs_file_date_time(const adamic_object *date) {
     return adamic_object_field(date, "_fsFileTime", &cache)->number;
 }
 
-// Only realpath.native exposes these additional system-error fields. Existing
-// filesystem operations keep their original three-field error shape.
-void adamic_fs_file_realpath_error(const adamic_string *path) {
-    int error = errno;
-    char *name = path_bytes(path, true);
-    if (name == NULL) { return; }
-    system_error(error, "realpath", name);
+// Native and JS-walk realpath errors share one system-error variant.
+static void realpath_system_error(const adamic_string *path, char *name, int error, const char *operation) {
+    system_error(error, operation, name);
     static const char *const names[] = {"name", "message", "code", "syscall", "path", "errno"};
     static const bool references[] = {true, true, true, true, true, false};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_number};
@@ -426,13 +424,27 @@ void adamic_fs_file_realpath_error(const adamic_string *path) {
     adamic_object *original = adamic_thrown;
     adamic_object *result = adamic_object_new(&shape);
     for (size_t i = 0; i < 3; i++) { result->slots[i].reference = adamic_retain(original->slots[i].reference); }
-    result->slots[3].reference = text("realpath");
+    result->slots[3].reference = text(operation);
     // Node records the encoded path, including lone-surrogate replacement.
     result->slots[4].reference = memcmp(path->bytes, name, path->length) == 0 ? adamic_retain((adamic_string *)path) : adamic_decode_utf8((const unsigned char *)name, strlen(name));
     result->slots[5].number = -(double)error;
     free(name);
     adamic_release(original);
     adamic_thrown = result;
+}
+
+
+void adamic_fs_file_realpath_error(const adamic_string *path) {
+    int error = errno;
+    char *name = path_bytes(path, true);
+    if (name == NULL) { return; }
+    realpath_system_error(path, name, error, "realpath");
+}
+
+void adamic_fs_file_realpath_walk_error(const adamic_string *path, int error, const char *operation) {
+    char *name = path_bytes(path, true);
+    if (name == NULL) { return; }
+    realpath_system_error(path, name, error, operation);
 }
 
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
@@ -468,9 +480,28 @@ adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_miss
     return result;
 }
 
+bool adamic_fs_file_is_stats(const adamic_object *information) { return information->shape == &stat_shape; }
+
 static mode_t stat_mode(const adamic_object *information) {
     static adamic_slot_cache cache;
     return (mode_t)adamic_object_field(information, "_fsFileMode", &cache)->number;
+}
+bool adamic_fs_file_stat_is(const adamic_object *information, const char *method) {
+    mode_t mode = stat_mode(information);
+#ifdef ADAMIC_TARGET_WASI
+    // Preview 1, including Node's uvwasi host, represents FIFOs as sockets.
+    // The two predicates cannot distinguish them from this runtime mode.
+    if (S_ISSOCK(mode) && (strcmp(method, "isFIFO") == 0 || strcmp(method, "isSocket") == 0)) {
+        adamic_panic("wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets", sizeof "wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets" - 1);
+    }
+#endif
+    if (strcmp(method, "isFile") == 0) { return S_ISREG(mode); }
+    if (strcmp(method, "isDirectory") == 0) { return S_ISDIR(mode); }
+    if (strcmp(method, "isSymbolicLink") == 0) { return S_ISLNK(mode); }
+    if (strcmp(method, "isBlockDevice") == 0) { return S_ISBLK(mode); }
+    if (strcmp(method, "isCharacterDevice") == 0) { return S_ISCHR(mode); }
+    if (strcmp(method, "isFIFO") == 0) { return S_ISFIFO(mode); }
+    return S_ISSOCK(mode);
 }
 bool adamic_fs_file_is_file(const adamic_object *information) { return S_ISREG(stat_mode(information)); }
 bool adamic_fs_file_is_directory(const adamic_object *information) { return S_ISDIR(stat_mode(information)); }

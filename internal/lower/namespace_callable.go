@@ -18,6 +18,12 @@ func (l *lowering) namespaceMergedFunction(node *ast.Node) bool {
 // A closure represents the callable identity, but has no attached object storage.
 // Only uses that cannot observe that omitted container are admitted.
 func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
+	if l.nodeLibraryMember(node) == "node:fs.realpathSync" {
+		if node.Parent != nil && l.nodeRealpathNative(node.Parent) {
+			return true
+		}
+		return l.nodeRealpathReferenceRefusal(node) == nil
+	}
 	if called(node) {
 		return true
 	}

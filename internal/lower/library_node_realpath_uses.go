@@ -41,7 +41,7 @@ func realpathTruthiness(node *ast.Node) bool {
 
 func (l *lowering) realpathInitializer(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	if l.nodeRealpathNative(node) {
+	if l.nodeRealpathNative(node) || l.nodeLibraryMember(node) == "node:fs.realpathSync" {
 		return true
 	}
 	if node.Kind == ast.KindConditionalExpression {
@@ -65,7 +65,7 @@ func (l *lowering) realpathIdentity(node *ast.Node) bool {
 		other = binary.Right
 	}
 	other = ast.SkipParentheses(other)
-	if l.nodeRealpathNative(other) {
+	if l.nodeRealpathNative(other) || l.nodeLibraryMember(other) == "node:fs.realpathSync" {
 		return true
 	}
 	if !ast.IsIdentifier(other) {
@@ -133,11 +133,6 @@ func (l *lowering) nodeRealpathReferenceRefusal(node *ast.Node) error {
 		return l.realpathUseError(node, realpathUseName(use))
 	}
 	binding := declaration.AsVariableDeclaration()
-	// An unsupported plain-walk arm owns its diagnostic even if another use of
-	// this binding would also fail the native value boundary.
-	if plain := l.realpathPlainArm(binding.Initializer); plain != nil {
-		return l.notYet(plain, nodeRealpathWalkNotYet)
-	}
 	if declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
 		return l.realpathUseError(node, "is declared with let or var")
 	}
@@ -219,22 +214,4 @@ func (l *lowering) realpathConstUse(reference *ast.Node) error {
 		}
 	}
 	return l.realpathUseError(reference, realpathUseName(outer))
-}
-
-func (l *lowering) realpathPlainArm(node *ast.Node) *ast.Node {
-	node = ast.SkipParentheses(node)
-	if l.nodeRealpathNative(node) {
-		return nil
-	}
-	if l.nodeLibraryMember(node) == "node:fs.realpathSync" {
-		return node
-	}
-	if node.Kind == ast.KindConditionalExpression {
-		conditional := node.AsConditionalExpression()
-		if plain := l.realpathPlainArm(conditional.WhenTrue); plain != nil {
-			return plain
-		}
-		return l.realpathPlainArm(conditional.WhenFalse)
-	}
-	return nil
 }
