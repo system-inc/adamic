@@ -835,11 +835,12 @@ var readProducts sync.Map
 var productsLookedUp atomic.Int64
 
 // A productLookup is one product's answer in a pass; done is false while it is still being looked up, so meeting it
-// again then is a cycle.
+// again then is a cycle. The pass's entry under readComponents holds its components instead of an answer.
 type productLookup struct {
-	done   bool
-	result found
-	err    error
+	done       bool
+	result     found
+	err        error
+	components map[string]string
 }
 
 // freshLookups, a key in a productMemo, makes its pass look up every product afresh, never through readProducts or into
@@ -851,6 +852,144 @@ const freshLookups = ""
 // set it's about to record: a set that reaches nameKey again is a cycle.
 func freshMemo(nameKey string) productMemo {
 	return productMemo{freshLookups: &productLookup{done: true}, nameKey: &productLookup{}}
+}
+
+// readComponents, a key in a productMemo, holds the strongly connected component of each name key its pass has walked
+// through recorded sets (walkComponents), by the name key that roots it. Whether a recorded set may be used is a
+// property of the recorded files alone, never of the order a pass looked products up in (#kfjqsnh): 0ac52080's
+// markdown-list-layout-lowered and its canary each recorded a set reading the other, and lowered looked up alone took
+// its plain set while lowered looked up after the canary took the one reading it, so a runner and the tree disagreed
+// and a key moved. Sets that read each other are a fixpoint with two answers, so a set reading a product in its own
+// product's component is never used. No name key is a NUL.
+const readComponents = "\x00"
+
+// componentsFor is the component of each name key its pass has walked, nameKey and everything it reaches among them.
+func componentsFor(cache, nameKey string, known productMemo) map[string]string {
+	held, ok := known[readComponents]
+	if !ok {
+		held = &productLookup{done: true, components: map[string]string{}}
+		known[readComponents] = held
+	}
+	walkComponents(cache, nameKey, held.components)
+	return held.components
+}
+
+// walkComponents gives every name key start reaches through recorded sets its strongly connected component in
+// components, by Tarjan's algorithm, each name key's file read once. A name key an earlier walk of the pass gave one is
+// finished: everything it reaches was walked with it, so its component is whole. A component holding anything start
+// reaches is reached from start whole, so what start's walk gives it never depends on what else the pass walked.
+func walkComponents(cache, start string, components map[string]string) {
+	if _, done := components[start]; done {
+		return
+	}
+	// A visit is a name key the walk is under: what it reads, and the next of them to follow.
+	type visit struct {
+		nameKey string
+		edges   []string
+		next    int
+	}
+	order, lowest := map[string]int{}, map[string]int{}
+	var path []visit
+	var stack []string
+	enter := func(nameKey string) {
+		order[nameKey], lowest[nameKey] = len(order), len(order)
+		stack = append(stack, nameKey)
+		path = append(path, visit{nameKey: nameKey, edges: productEdges(cache, nameKey)})
+	}
+	enter(start)
+	for len(path) > 0 {
+		top := &path[len(path)-1]
+		if top.next < len(top.edges) {
+			next := top.edges[top.next]
+			top.next++
+			if _, done := components[next]; done {
+				continue
+			}
+			if _, entered := order[next]; entered {
+				// Entered and not yet given a component is still on the stack: a way back to a name key the walk is under.
+				lowest[top.nameKey] = min(lowest[top.nameKey], order[next])
+				continue
+			}
+			enter(next)
+			continue
+		}
+		finished := top.nameKey
+		path = path[:len(path)-1]
+		if len(path) > 0 {
+			parent := path[len(path)-1].nameKey
+			lowest[parent] = min(lowest[parent], lowest[finished])
+		}
+		if lowest[finished] != order[finished] {
+			continue
+		}
+		for {
+			member := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			components[member] = finished
+			if member == finished {
+				break
+			}
+		}
+	}
+}
+
+// productEdges is every product any of nameKey's recorded sets reads, by name key, each once. A file that can't be read
+// gives none, since what it reads is unknown: the cycle check of a lookup under way (productFor) guards that part.
+func productEdges(cache, nameKey string) []string {
+	file, err := loadReads(cache, nameKey)
+	if err != nil {
+		return nil
+	}
+	var edges []string
+	seen := map[string]bool{}
+	for _, set := range file.Sets {
+		for _, entry := range set.Entries {
+			if (entry.Kind == "product" || entry.Kind == productKeyKind) && !seen[entry.Path] {
+				seen[entry.Path] = true
+				edges = append(edges, entry.Path)
+			}
+		}
+	}
+	return edges
+}
+
+// readsBackTo says whether from reaches nameKey through recorded sets, from itself included: a set of nameKey reading
+// from would put the two in one component, so no lookup would ever use it (readComponents), and recordUnion refuses it.
+func readsBackTo(cache, from, nameKey string) bool {
+	seen := map[string]bool{from: true}
+	next := []string{from}
+	for len(next) > 0 {
+		at := next[len(next)-1]
+		next = next[:len(next)-1]
+		if at == nameKey {
+			return true
+		}
+		for _, edge := range productEdges(cache, at) {
+			if !seen[edge] {
+				seen[edge] = true
+				next = append(next, edge)
+			}
+		}
+	}
+	return false
+}
+
+// readBack is the first product set reads that is in nameKey's component (components), so reads nameKey back through
+// recorded sets, itself included: "" when set reads none.
+func readBack(set readSet, nameKey string, components map[string]string) string {
+	own, ok := components[nameKey]
+	if !ok {
+		return ""
+	}
+	for _, entry := range set.Entries {
+		if entry.Kind != "product" && entry.Kind != productKeyKind {
+			continue
+		}
+		if component, ok := components[entry.Path]; ok && component == own {
+			return entry.Path
+		}
+	}
+	return ""
 }
 
 // productFor is the product nameKey names on the tree at root, once per pass (known: nil starts one). A product read
@@ -895,12 +1034,20 @@ func lookupProduct(root, cache, nameKey string, depth int, known productMemo) (f
 	if len(file.Sets) == 0 {
 		return found{why: "no traced build has recorded what it reads"}, nil
 	}
+	components := componentsFor(cache, nameKey, known)
 	var result found
 	var newest evaluation
 	for index, set := range file.Sets {
 		if set.Lean && leanKeysOff() {
 			if index == 0 {
 				result.why = "lean keys are off (ADAMIC_BUILD_LEAN=off), so its newest read set, keyed by the lean recipe, isn't matched"
+			}
+			continue
+		}
+		// Never used, as a set whose evaluation fails isn't, whatever the pass looked up first (readComponents).
+		if back := readBack(set, nameKey, components); back != "" {
+			if index == 0 {
+				result.why = fmt.Sprintf("it reads product %s, which reads it back through recorded sets, a cycle no key can value", back[:min(12, len(back))])
 			}
 			continue
 		}
