@@ -198,7 +198,7 @@ func objectPrefixFlags() []string {
 func Build(source string, output string, options Options) error {
 	// Resolve the opt-in before forming runtime keys; Flags and lean builds read only Options.
 	options.ProgramRegion = options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
-	if err := ValidateOptions(options); err != nil {
+	if err := validateBuild(source, options); err != nil {
 		return err
 	}
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
@@ -214,7 +214,7 @@ func BuildFlags(source string, output string, options Options, flags []string) e
 	if options.ProgramRegion && !slices.Contains(flags, "-DADAMIC_PROGRAM_REGION") {
 		flags = append(slices.Clone(flags), "-DADAMIC_PROGRAM_REGION")
 	}
-	if err := ValidateOptions(options); err != nil {
+	if err := validateBuild(source, options); err != nil {
 		return err
 	}
 	return buildOne(source, output, options, flags)
