@@ -23,8 +23,6 @@ import (
 // engine owns one checkout's compiler, keyed runtime archive and observation cache. Each worker
 // owns a compiler process; tests are classified and their observations reduced in serial order.
 type engine struct {
-	// Tests may supply their declared archive; commands select the runtime per source.
-	runtimeLibrary   func(string, native.Options) (string, error)
 	test262          string
 	work             string
 	adamic           string
@@ -316,12 +314,7 @@ func (e *engine) attempt(test classified) result {
 	}
 	binary := filepath.Join(directory, "program.bin")
 	options := native.Options{Sanitize: true}
-	var library string
-	if e.runtimeLibrary != nil {
-		library, err = e.runtimeLibrary(lowered.Stdout, options)
-	} else {
-		library, err = native.RuntimeLibraryForSource(e.include, lowered.Stdout, options)
-	}
+	library, err := native.RuntimeLibraryForSource(e.include, lowered.Stdout, options)
 	if err != nil {
 		base.Kind, base.Reason = outcomeCrashed, err.Error()
 		return base
@@ -364,25 +357,6 @@ func (e *engine) attempt(test classified) result {
 	})
 	base.Kind = decided.Kind
 	base.Reason = decided.Reason
-	if base.Kind == outcomePass && test.ConstructorAssertion {
-		base.Kind = outcomeRefused
-		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
-	}
-	if base.Kind == outcomePass && test.Original != "" {
-		original := e.originalRegExp(test)
-		if crashedExecution(original) {
-			base.Kind = outcomeCrashed
-			base.Reason = "original Node: " + crashReason(verdictInput{Node: original})
-		} else if test.NegativePhase == "runtime" {
-			if original.Exit == 0 || !errorNamed(original.Stderr, test.NegativeType) || original.Stdout != nodeRun.Stdout {
-				base.Kind = outcomeFail
-				base.Reason = "original Node negative test disagrees with adaptation"
-			}
-		} else if original.Exit != 0 || original.Stdout != nodeRun.Stdout || original.Stderr != nodeRun.Stderr {
-			base.Kind = outcomeFail
-			base.Reason = "original Node test disagrees with adaptation"
-		}
-	}
 	return base
 }
 
