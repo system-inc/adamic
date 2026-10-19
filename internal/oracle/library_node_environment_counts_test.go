@@ -23,7 +23,7 @@ func processEnvironmentFixtureEnvironment(name string) []string {
 }
 
 func init() {
-	for _, name := range []string{"reads.a", "prototype.a", "nul.a"} {
+	for _, name := range []string{"reads.a", "prototype.a", "nul.a", "mutations.a", "mutation_values.a", "mutation_special_names.a"} {
 		key := "internal/oracle/testdata/process_env/" + name
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{key, func(t *testing.T) (string, func() string) {
 			path, err := filepath.Abs(filepath.Join(repository, key))

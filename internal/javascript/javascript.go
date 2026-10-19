@@ -276,8 +276,15 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if len(emitter.jsonDescriptors) != 0 {
 		code = code[:jsonDescriptorPosition] + strings.Join(emitter.jsonDescriptors, "") + code[jsonDescriptorPosition:]
 	}
+	if emitter.hostCalleeUsed {
+		const callee = "const adamicCallee = (object, name) => { "
+		code = strings.Replace(code, callee, callee+"if (object === performance || object === process.stdout._handle) return { code: (closure, values) => object[name](...values) }; ", 1)
+	}
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
+	}
+	if strings.Contains(code, "adamicNodeTmpdir()") {
+		code = "import { tmpdir as adamicNodeTmpdir } from 'node:os';\n" + code
 	}
 	if strings.Contains(code, "adamicNodeFS.") {
 		code = "import * as adamicNodeFS from 'node:fs';\n" + code
@@ -304,6 +311,7 @@ func classCountRuntime(runtime string, counted bool) string {
 }
 
 type emitter struct {
+	hostCalleeUsed      bool
 	program             *ir.Program
 	options             Options
 	function            *ir.Function
@@ -786,6 +794,19 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
+	case ir.ProcessCall:
+		if expression.Operation == "performance" || expression.Operation == "handle" {
+			e.hostCalleeUsed = true
+		}
+		if value, known := e.nodeProcessCall(expression); known {
+			return value
+		}
+		switch expression.Operation {
+		case "stdoutTTY":
+			return "process.stdout.isTTY"
+		case "stderrTTY":
+			return "process.stderr.isTTY"
+		}
 	case ir.NodeHostCall:
 		return e.nodeHostCall(expression)
 	case ir.NodeFSFile:

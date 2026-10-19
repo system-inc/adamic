@@ -77,17 +77,40 @@ func (l *lowering) nodeEnvironmentAccess(node *ast.Node) (*ast.Node, bool) {
 	return receiver, l.nodeLibraryMember(receiver) == "node:process.Process.env"
 }
 
+// String unions remain strings; an undefined or non-string arm is not admitted.
+func nodeEnvironmentString(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, part := range proven.Types() {
+			if !nodeEnvironmentString(part) {
+				return false
+			}
+		}
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if nodeEnvironmentString(part) {
+				return true
+			}
+		}
+		return false
+	}
+	return proven.Flags()&checker.TypeFlagsStringLike != 0
+}
+
 func (l *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
 	const member = "node:process.Process.env"
 	outer := node
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
-	if outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression {
-		return l.notYet(node, member+" deleted")
-	}
-	if ast.IsAssignmentTarget(outer) {
-		return l.notYet(node, member+" written")
+	var assigned *ast.Node
+	deleting := outer.Parent != nil && outer.Parent.Kind == ast.KindDeleteExpression
+	if ast.IsAssignmentTarget(outer) && !deleting {
+		if outer.Parent == nil || outer.Parent.Kind != ast.KindBinaryExpression || outer.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
+			return l.notYet(node, member+" written with compound assignment or update")
+		}
+		assigned = outer.Parent.AsBinaryExpression().Right
 	}
 	if node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return l.notYet(node, member+" used as a value (optional chain)")
@@ -102,6 +125,20 @@ func (l *lowering) nodeEnvironmentReadRefusal(node *ast.Node) error {
 			return l.notYet(node, member+" read with a non-string key")
 		}
 	}
+	if assigned != nil || deleting {
+		if node.Kind == ast.KindElementAccessExpression {
+			key := node.AsElementAccessExpression().ArgumentExpression
+			if !nodeEnvironmentString(l.checker.GetTypeAtLocation(key)) {
+				return l.notYet(key, member+" mutation with a non-string key")
+			}
+			if key.Kind == ast.KindStringLiteral && ir.IsNodeEnvironmentPrototypeKey(key.Text()) {
+				return l.notYet(key, member+" mutation with literal prototype key "+key.Text())
+			}
+		}
+		if assigned != nil && !nodeEnvironmentString(l.checker.GetTypeAtLocation(assigned)) {
+			return l.notYet(assigned, member+" written with a non-string value")
+		}
+	}
 	return nil
 }
 
@@ -112,6 +149,15 @@ func (l *lowering) nodeEnvironmentRead(node *ast.Node) (ir.Expression, bool, err
 	if err := l.nodeEnvironmentReadRefusal(node); err != nil {
 		return nil, true, err
 	}
+	name, err := l.nodeEnvironmentKey(node)
+	if err != nil {
+		return nil, true, err
+	}
+	return ir.NodeFSFile{Operation: "host_env", Arguments: []ir.Expression{name}, Of: ir.String}, true, nil
+}
+
+// One key conversion for reads, string assignments and deletes.
+func (l *lowering) nodeEnvironmentKey(node *ast.Node) (ir.Expression, error) {
 	var name ir.Expression
 	if node.Kind == ast.KindPropertyAccessExpression {
 		name = ir.StringConstant{Index: l.constant(node.Name().Text())}
@@ -119,13 +165,13 @@ func (l *lowering) nodeEnvironmentRead(node *ast.Node) (ir.Expression, bool, err
 		var err error
 		name, err = l.expression(node.AsElementAccessExpression().ArgumentExpression)
 		if err != nil {
-			return nil, true, err
+			return nil, err
 		}
 		if name.Type() != ir.String {
-			return nil, true, l.notYet(node, "node:process.Process.env read with a non-string key")
+			return nil, l.notYet(node, "node:process.Process.env read with a non-string key")
 		}
 	}
-	return ir.NodeFSFile{Operation: "host_env", Arguments: []ir.Expression{name}, Of: ir.String}, true, nil
+	return name, nil
 }
 
 // The refusal visitor sees both process.env and its env name. Exempt them only
@@ -145,7 +191,10 @@ func (l *lowering) nodeEnvironmentUseRefusal(node *ast.Node) (bool, error) {
 	}
 	if node.Kind == ast.KindDeleteExpression {
 		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
-		if _, found := l.nodeEnvironmentAccess(target); found || l.nodeLibraryMember(target) == "node:process.Process.env" {
+		if _, found := l.nodeEnvironmentAccess(target); found {
+			return true, l.nodeEnvironmentReadRefusal(target)
+		}
+		if l.nodeLibraryMember(target) == "node:process.Process.env" {
 			return true, l.notYet(node, "node:process.Process.env deleted")
 		}
 	}
