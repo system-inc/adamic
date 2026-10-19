@@ -5066,6 +5066,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -5158,6 +5166,14 @@
     "program": "internal/oracle/testdata/regions_throw.a",
     "path": "../oracle/testdata/regions_throw.a",
     "sha256": "82219fef37253ebea4e95774698befb8f9cb47e22a9b84e76a55368ba717dc5e"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_release_fma_a_bad80ff781e0",
+    "program": "internal/oracle/testdata/release_fma.a",
+    "path": "../oracle/testdata/release_fma.a",
+    "sha256": "69c6e4d32187054158309ca68f1466374d8c9503af90e38e996a60a8f65cbcad"
   },
   {
     "package": "flow",
@@ -5766,6 +5782,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "flow",
@@ -11890,6 +11914,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -11982,6 +12014,14 @@
     "program": "internal/oracle/testdata/regions_throw.a",
     "path": "../oracle/testdata/regions_throw.a",
     "sha256": "82219fef37253ebea4e95774698befb8f9cb47e22a9b84e76a55368ba717dc5e"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_release_fma_a_bad80ff781e0",
+    "program": "internal/oracle/testdata/release_fma.a",
+    "path": "../oracle/testdata/release_fma.a",
+    "sha256": "69c6e4d32187054158309ca68f1466374d8c9503af90e38e996a60a8f65cbcad"
   },
   {
     "package": "flow",
@@ -12590,6 +12630,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "flow",
@@ -18714,6 +18762,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -18806,6 +18862,14 @@
     "program": "internal/oracle/testdata/regions_throw.a",
     "path": "../oracle/testdata/regions_throw.a",
     "sha256": "82219fef37253ebea4e95774698befb8f9cb47e22a9b84e76a55368ba717dc5e"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_release_fma_a_bad80ff781e0",
+    "program": "internal/oracle/testdata/release_fma.a",
+    "path": "../oracle/testdata/release_fma.a",
+    "sha256": "69c6e4d32187054158309ca68f1466374d8c9503af90e38e996a60a8f65cbcad"
   },
   {
     "package": "flow",
@@ -19414,6 +19478,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "flow",
@@ -25538,6 +25610,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -25630,6 +25710,14 @@
     "program": "internal/oracle/testdata/regions_throw.a",
     "path": "../oracle/testdata/regions_throw.a",
     "sha256": "82219fef37253ebea4e95774698befb8f9cb47e22a9b84e76a55368ba717dc5e"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_release_fma_a_bad80ff781e0",
+    "program": "internal/oracle/testdata/release_fma.a",
+    "path": "../oracle/testdata/release_fma.a",
+    "sha256": "69c6e4d32187054158309ca68f1466374d8c9503af90e38e996a60a8f65cbcad"
   },
   {
     "package": "flow",
@@ -26238,6 +26326,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "flow",
@@ -32770,6 +32866,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_regexp_native_input_cache_a_5c4973fd5ba7",
+    "program": "internal/oracle/testdata/regexp_native_input_cache.a",
+    "path": "../oracle/testdata/regexp_native_input_cache.a",
+    "sha256": "d1343a6f2f98e14689ae8b934495849fa5197c7fa26fb0643c6327b55774a2d6"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_regexp_null_narrowed_a_4ec2434b2575",
     "program": "internal/oracle/testdata/regexp_null_narrowed.a",
     "path": "../oracle/testdata/regexp_null_narrowed.a",
@@ -32862,6 +32966,14 @@
     "program": "internal/oracle/testdata/regions_throw.a",
     "path": "../oracle/testdata/regions_throw.a",
     "sha256": "82219fef37253ebea4e95774698befb8f9cb47e22a9b84e76a55368ba717dc5e"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_release_fma_a_bad80ff781e0",
+    "program": "internal/oracle/testdata/release_fma.a",
+    "path": "../oracle/testdata/release_fma.a",
+    "sha256": "69c6e4d32187054158309ca68f1466374d8c9503af90e38e996a60a8f65cbcad"
   },
   {
     "package": "fresh",
@@ -33478,6 +33590,14 @@
     "program": "internal/oracle/testdata/string_build_repeat.a",
     "path": "../oracle/testdata/string_build_repeat.a",
     "sha256": "ed530dd35f623d91f4b6a9b92f9c4cd72640bad99efd17602b938f3680ae8124"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_string_destructuring_a_1c84487cced0",
+    "program": "internal/oracle/testdata/string_destructuring.a",
+    "path": "../oracle/testdata/string_destructuring.a",
+    "sha256": "05a157275a539542e3fe60eb4902df47a101b269ba837460db9affdd29493a3e"
   },
   {
     "package": "fresh",
