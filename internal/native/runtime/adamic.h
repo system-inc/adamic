@@ -12,6 +12,42 @@
 
 #include <math.h>
 
+// A unit must link to the runtime built with these same layout and callback features.
+// Definedness matches the #ifdef decisions below, including a macro defined as 0.
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define ADAMIC_FEATURE_CLOSURE_CONVENTION _closure_convention
+#else
+#define ADAMIC_FEATURE_CLOSURE_CONVENTION
+#endif
+#ifdef ADAMIC_CANONICAL_CLOSURES
+#define ADAMIC_FEATURE_CANONICAL_CLOSURES _canonical_closures
+#else
+#define ADAMIC_FEATURE_CANONICAL_CLOSURES
+#endif
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+#define ADAMIC_FEATURE_CLOSURE_RECEIVERS _closure_receivers
+#else
+#define ADAMIC_FEATURE_CLOSURE_RECEIVERS
+#endif
+#ifdef ADAMIC_REGEXP_REPLACE_CALLBACK
+#define ADAMIC_FEATURE_REGEXP_REPLACE_CALLBACK _regexp_replace_callback
+#else
+#define ADAMIC_FEATURE_REGEXP_REPLACE_CALLBACK
+#endif
+#ifdef ADAMIC_NODE_HOST
+#define ADAMIC_FEATURE_NODE_HOST _node_host
+#else
+#define ADAMIC_FEATURE_NODE_HOST
+#endif
+
+#define ADAMIC_FEATURE_NAME_PARTS(a, b, c, d, e) adamic_runtime_features##a##b##c##d##e
+#define ADAMIC_FEATURE_NAME(a, b, c, d, e) ADAMIC_FEATURE_NAME_PARTS(a, b, c, d, e)
+#define ADAMIC_RUNTIME_FEATURES ADAMIC_FEATURE_NAME(ADAMIC_FEATURE_CLOSURE_CONVENTION, ADAMIC_FEATURE_CANONICAL_CLOSURES, ADAMIC_FEATURE_CLOSURE_RECEIVERS, ADAMIC_FEATURE_REGEXP_REPLACE_CALLBACK, ADAMIC_FEATURE_NODE_HOST)
+extern const unsigned char ADAMIC_RUNTIME_FEATURES;
+// used keeps the relocation through optimization; retain keeps it through linker section removal.
+// This is a link requirement only: it allocates nothing and executes no runtime check.
+static const void *const adamic_runtime_feature_reference __attribute__((used, retain)) = &ADAMIC_RUNTIME_FEATURES;
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
@@ -1038,10 +1074,20 @@ typedef struct adamic_primitive_method {
 typedef adamic_primitive_method (*adamic_primitive_get)(adamic_heap *receiver, const char *name);
 adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic_primitive_hint hint, adamic_primitive_get get);
 
-// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
-// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
-// Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern _Thread_local adamic_object *adamic_thrown;
+// adamic_thrown owns a tagged union payload (NULL is undefined). The separate pending flag
+// distinguishes a thrown undefined from no exception. Every throwing call tests the flag.
+// A catch takes ownership; adamic_uncaught flushes stdout, writes one diagnostic line, releases the payload and exits 1.
+extern _Thread_local adamic_heap *adamic_thrown;
+extern _Thread_local bool adamic_exception_pending;
+extern const adamic_class adamic_error_class;
+extern const adamic_class adamic_host_error_class;
+extern const adamic_class adamic_host_type_error_class;
+extern const adamic_class adamic_host_range_error_class;
+extern const adamic_class adamic_range_error_class;
+extern const adamic_class adamic_type_error_class;
+extern const adamic_class adamic_reference_error_class;
+adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind);
+adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code);
 // NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
 const char *adamic_error_field_name(const adamic_object *object, const char *name);

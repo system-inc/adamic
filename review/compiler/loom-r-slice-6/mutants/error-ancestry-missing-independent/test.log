@@ -1,0 +1,11 @@
+=== RUN   TestErrorSubclassAncestryAgreesWithNode
+=== PAUSE TestErrorSubclassAncestryAgreesWithNode
+=== CONT  TestErrorSubclassAncestryAgreesWithNode
+    step21_error_ancestry_test.go:29: sanitized ancestry: stdout differs
+--- FAIL: TestErrorSubclassAncestryAgreesWithNode (7.93s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	7.947s
+FAIL

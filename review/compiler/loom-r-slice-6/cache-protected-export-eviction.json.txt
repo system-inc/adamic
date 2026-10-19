@@ -1,0 +1,860 @@
+{
+  "protected": [
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/00/001a9213f1dddf0d618f2ea1dc86cfc8cab52248cd1c4ee4c6631149e3357eeb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/00/003f1f2cb67566b4a29b05e82b8a7fadfbbc09dd68498fae0b6cc5b1f77aae4f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/00/004b0b56312f1f6d293e30a219a05eeeacbfa4ece57e3a0897c1d23001738dd0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/00/00849dadd244e4d825a1b7642d0b110a537e5b4559b9c227b456c8ad9b8a805b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/01/01fc0ba7e1763d742a7fcfa18247b83823eeaa67842377f33cc8b6d6079c94b3-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/03/03dd5e83a0177f19bdec167d393296fea067e0b5fc81f0525af2fed7fd8d6a4d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/04/043bbc6177596111f6da7532488724b90dd64effa2fcd219dbbae0741a489d34-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/04/04f4c8610d11637b8090892077032c92f3564bfaeac182c054cffef1f20c4b70-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/05/05cc04c0ea7fe0df5357ff911aeb47fb7ffd49ad25acb72b73e07ef4bc3ce428-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/06/06c60e038d623090138769b42bf5db3afe15af58ef9e68402d2ad1fe4506a788-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/07/07d5194d5197d20cb1144a814a0afe3abdd8f4ebee4d5a5af70b9b7aa08cab4d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/08/0867056aa4c4a2d8a3f0727ce209f1c272555ac3a5e59dafc6aefde65cd9bc3a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/08/086a021ee493ddff458e74c51e138269ea42d97a9e8b7ed2a62c297dd34c86e5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/09/09100db552b4c24ebea4605a68acaf51c2a2452f385183906a60e5d4268285a1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/09/09b94745301437d323944a4865fa5cef3e74a8806ee9503ec1d3e1972a23b6f2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/0a/0a341732e44ee7249f72d83f8888e1ac9bf28346a3424289b3274836b6bd1705-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/0b/0bda07f5fc5803da6c1e4823055d985f694d4395fa05a1d3afb646cde1b362b9-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/0d/0d6398ba9a6473fc341a198554ce7fbf40946832402bb9f4088a978e4ceceb85-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/0d/0dacadebba1f0946905f7c6ed2353bd6ee6affc7dd068b5d2bf77d9872b84829-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/0e/0e4ea9a2a868e7460f72e50aca0a3551f92391f6d930d7f47d4bf029ff4c736d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/10/105e58607c7c13789c4faa1ba4d92edd162e99ea954b7f45779e49ef50d474f3-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/10/10b02973c0b1b865c2b3885a328161742a0c83dc70ea560054be6a13f8233f31-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/11/11fff41fdf495ceca0d75c69697d0015aaeb24e7c859fa17e0075ef778925158-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/12/12befd34a1e1ad3f92eb420e9b943300fa0151a0b86a0bf3ba62f78e4b4bcc0b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/13/1305ed3d96d15ee777793048283300857c8c883776a107f1dd8f8ff40a978165-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/14/148cb5eb12439e0c7cf7f1fccafceca7a7767d66a5a5810403302c6bc08c2ab2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/16/164e7536604cde96aa629fd7535a0fad4551f4d8897d614efffc5e06b3c3f9e8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/17/1776796159c12995b13f848874dca81311b55b97e94cdb03c04974b0a016b40d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/17/17b0d4e8b82a09544ecea143fe02962aee8a174ec76b77bae0c2346fc8b5f2fb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/18/180dac62d2ccec376138542111135b4fdfaaad2fdfa874f7090b048578bff853-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/18/1869ced129834dd648aa97603cdafb629b5a541a5d8e1d94ada3dce9d1d60504-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/18/18a26bfdffaa6ebe4224e78538949feebcdd40845643cf2517d86178335d5f1c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/18/18c69cc78e740f94b5bfc62ec26f7bd3575aa37d3277e8eef29e40008f62444b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1a/1a2e8e5228f33e95b5dc7ea4d874b1d1a3abefc9791efa8533b167a248a89e14-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1a/1a409bfd04339dcbd45f6bb9cf74ca8d07199df9d5de5cdc8422377be2cc0502-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1b/1b5d98e25f1cd96b9e3450cc4966adf1c401583927334944d8a2acb2c9eef941-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1c/1c062bff97e7259751e7546bfe25c2920bc53f42a42305b28675fc640895c43b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1e/1e1c021e8fbf6f3fbf037fe5a0a4114d39e1a9430af6eb33172e349c6de1b5dd-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1e/1e28a0840573481f6538bb78340cf88a31471609866ed521f6d70e7ffc08ee0e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1e/1e7acf39cbe6dc1ef91ae70fc1338727cc5df12a4fcf58a1b21bdef74ce7a8d9-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1f/1f5e3e5df4f1b7f508f50283dac9cefe6e5722646c5e1b13a81c0a3693d4aeab-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1f/1f7d38f629f452e1f59bb4c90a2f9c5d64cf2f866b73bea0743169e792e50191-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1f/1fb8f4b763638c0d889a9f8690203550142313b51e7b14e0b2588f348a9ac5d2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/20/20224557b641dfeb88025bb86cae76a9b5e4002c25dbf57bf76b95b7ada62fd8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/20/207488e38bb997d56f3e586f2b2988da4dd0959999d53101739b23f39f941117-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/20/20763e25737c78788d29dbc357fd088b17071dcb5698eab60a6812c97e187774-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/20/2084fd0d68d3c54ab0b35d66d7d041a9ecc0101108a6289f6c1125b92ad0ab4a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/20/20b3d9fb2884ea5f6be21dbdea53f81e5fb8504f902d3a02cb4f82a50f0d31d0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/24/2487561993ae8ef593d1469041a1510d25e2e47a387c45ea3ef5b459b27dda44-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/24/24d6bd3ece89e4ea6c29015a4867b725c651eff2946f15a9e2e611a09c017f79-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/25/25ca37e1c2265454a01dde6d47556893311a042fc30e2f75def762de1d811602-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/26/266f315760f33d46f42fd357c03ce354f993bb16866a883603cf61d5fe6397a8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/29/29f67797eb0f6f7a7bc0421f6604d035002a2fef30efa6a96571acc2fd0921aa-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2a/2ac494ef7ff5a88f1894b2ac6728207b713e3cd5fbeaba94dcb401c9a23c9c53-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2b/2bb425adcc13bb863a10ee479dfc0d6eaed05a29ad11e5670cd5aa8b237b8996-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2b/2bc120b1638f824d9bf42946a8d096b90053e61fcabd0b96eae82a4e355691b2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2c/2c76757ae6385052db396d551c32f50ea1f5d2dde6a1ef260ebaa4e9d378facb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2c/2cee6a203c1de645fc57ce85365bb37a6b3abfa2245268ec2ce97b46660df1ec-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2d/2d22c340de743fc9cfdb57cb678628b90ba438ab30d980c62ea9a469c29dca66-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2d/2d8a50b6092f8751015ad7e9ed58dfc11a844ce1a80910c561fabc1451bcbb04-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2d/2d8ae61577ca87a11be9966b524af8837654e53bed27f586af9cd2b9ecebe72d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2e/2e8b96bb8acde39cb24792e551a47c77ee722994782ce283cffc31cdfc853c9f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/2f/2f900fbfe7fa41418bdce17a1e6478c3527b1c88e69d0d431d189b4c711a13b1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/31/31a563573a5ac10a5549f91caebb1e1993edb63e54734c03085f66bea9c1a981-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/31/31a99fe44f9333e7a25656382afd7feb2f6283c61fff649ca575f70d96ba9bc4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/32/32205bba0a78cec3dfc67873a18fcc569b35a77d68f7220ac9cb3c1dfe068aa9-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/32/3254c42094c6639f111676718a629361c412b03fcdc8e6f13beb0c97516a0ab4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/34/34ddb9d92c60dd0469f5461997e9c5f8c7abc138915ea4c6ee4bb50bfbe3146e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/35/354e99f8316615fc03c9b056a754a232b8a1acf56a8be980f44cd34675bd55f6-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/36/36c0a1d368a2d335fc269c34c4870c36897da2613570a0738a6e126954a6ae17-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/38/381451caa9e1a2db4d79db6bce4f9061035c2314bbe3cbba5ca96046feec6c21-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/38/38787c2da90aef7a450c4dbf41b1108f3762ea04b597f1d542b85b31cebffaaf-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/38/3887f33a65a03e7c222197a0f4de5276396efffbf1af48cc1f3af23619f9165c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/39/39809728a5543cd83f9bb9d14fdbb1a89c6c132d693dc8f8b0c09b87a9763def-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3a/3a19767c8fdf121d4b4793b9ea4b5b606ff93e544ccc1a8facca096728002668-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3a/3a3c48f97f6b9bd11a593e206d1aa5de398e1512fe7851779e3e68e0beef71ee-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3a/3aca59aaebb8964c98cee1e8822306f6118e345ae4bd300ed004b97123152b5f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3b/3b46fb2fea544aea40ca55c02be2048bde871d5cd3e3f6aada623d30e813a46f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3d/3d541a4dbf738283c56dd15760a327945b9b38aec74e1b05326bec4bbeb0bc2a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3f/3f521d0b7bb4dbc2ff80e150f82747069ac1ba0e34750444e8c3cefb399241d8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/40/40736a0c4c091da08ce4288aa161ffe6b1a23ba247f3cbf20d156e9595db49d0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/41/411e7ff9bcfe4b965579fe1ed33cbda78738612ca46d3e6c384e81c18ee41217-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/42/4203137b23899d7010e83021720b40407bf6bc3df0acf873afc8728243bff52b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/42/42a4a89f01409deb403dda4925eaec7c608720e29b118c9405f8609d41245c5b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/44/446ae7701dc88a415573efc4394988287309ca030aa67895ce5fc98314c6e416-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/44/449dd31bf81230a9a9bd7c01efa55eadc7d3c0f0a6f063646d7b043a5dff55ea-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/44/44ad9433d539d11f45405de8593af43e3f5ca70777fe3c4e4ec1c1a096b10548-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/45/45978b2a4852c9f30bf9ec7ed6ab34af24fecc81607df5e8eeae8f2c12bb8b6e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/46/469f33213b2cf2fe4dfb77f325d4748bb165e73cdd42baedbc51a89138593cb5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/46/46fcd2a46dff7cdda213080b303113e234100a9a85f3258b02ee6c7dde67bcb5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/47/475136a59dcb5b9d4e6702f1152cb0eaff73bb9f497c7961c09e92bb109f3b2a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/47/47ab869114464c1d9f20725477fc8744f93e80596ae3ae1aadbe7701ba5d2c55-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/47/47bfb6a67e0e03be46864d6dafe92a8c2929087298b96535320b0ed662b199e9-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/49/499ec9cf75f8283ae3561a4edc84c837cccc97c67f5aa442ab179538ead3b22f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4a/4a20f4b0ef8d26489510d92da40a166c35da55d90714bc91632df312c96e8f06-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4a/4a598e266c94f51beed651a8536a0992cfa662992a9a1e0dce00c9aad153b92d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4b/4b44f52c8209345cc462eafadf57a2720b83f1812e0ab4fb50a096b7ba976f74-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4b/4bab0539eeec7adf29fa34ad9ba839b411fabed7614506091f94649ff52049ec-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4b/4bb760001a2a5861828ce9a6ca8b437715220bb09afd2ddc4865779d64517fa7-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4f/4f3eda4537e2dd17f84e5202bba9617cfad5bc9e3b7659200eb554ca6a81faf5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4f/4fb854fad505daac535c13bbb6173030a9f4088109fa0ba2156a4a0bb777e4a2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/50/5004dd27e0527cc0282c406525780f5fadd3e3a1b6a78a127fda68d5aae3769f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/50/505c881a63495364887ba3ad9ba9c6fd2b013283f6132eb54cfaea97daa529d8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/50/50cb59283e454734924474fc610f1389679b6fc9a8bf756a8d46cb3fd675338f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/50/50e87d237c99a0d1f0e471e6f3bc32f7a6279faa316aee25b97a5fe28cbe7025-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/52/52dd4419723cf2d5687c81bb739cb0168b364da024a717ac80a084a5c78561ba-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/55/5501be72ac3ae6553e49ebc47ca6e9c3ba914e866f11ab79f3537fc39962ca56-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/55/55367e73cd22998fd662d1e3bec886d28ab0cb27ea39043117dc669ac7ef9183-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/55/554bb7e8cbe5122be9c348fa7d896030c65f5e547b75b20fa8549bba4d611dda-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/55/55d71efc446862f49c978c461b9c1245f40bfde8bbe98f20b74f8f1ae5c498de-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/56/56f6abd25b805cba155085d3b7bebd0abafc08e5156f8ba2157c9a72364cc57d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/57/578f7ae2d00269373f536a890a3ee60e82d861061ae43eb160bb07f4828ac496-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/57/57be6e0ed58061ccf7d15bf19798bb8d5a610488d5940fdafecdc09400b0f5d2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/58/5835d37388192e104ec561c6d9c6de94bb63d77cf6c120e5bc455f37bfb7db8d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/58/585cc78371d7f8b9963350216f3e20b817ba1f36e0f887763665daabbd969cd1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/59/591fe50be1fbd4180c9fc3e470b1fa39d28a8e8cc3a6575b651ea08b11ec9e33-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/59/599dcb029531b3774f8a6cee92dff99a4c1628d501cba8869956a055ecae946b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/59/59ba10571442bc54c38bebc464be6b8dabdb39fdcabde1fb69ef301b2e64793b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/59/59d9254cb587abcd478848d21229df0ab6e6f17194d4a48ae30b8ba5efdcb9be-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5b/5b0e936d97f325209164b95b4acf8c007cb8734e2f9776b2c498dc61169bad41-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5c/5c1d96c5851b999689c9373881abe0cd71082169145cdca0aa0f5e7e4362ddff-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5c/5c97e2a2ae238444efa04515444763a2306699708ee46546ee43b6fce0669d8b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5d/5d056b1baaced6892d7da5c0812edf1e86d0045ccb70c9d4c7949024d688f16b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5d/5db86b7f1f71b48288a66cff0077cbe43ddb05b72179063ee945eeda597d9765-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5f/5f16006892229951ca8692a7de75a9ccc19461c5e2619034c1b28193c3f6dca3-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5f/5f4c2ff3cb7f405c6e88295da8002f104e70c1a882e38a03f56e87528398a688-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5f/5f6d5e8ed9d8cdabc9ee14ae85abd455a06d57397dee5d9411efbbc117543dda-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/61/61825c69d3c235c0be36480af64f4227eec03117668eda6428d49413618ba115-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/62/62b66359e33e6def633ad916bf6d9630346ac0dc69220cdcf369c0eb04cafdc1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/65/65a1cf0a1e4dda7b9c4cb9edefde23e1c3149c04981a336ac911e34539596389-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/66/66a2423c954e026601745398c4705da35d9605a8868db10121f09fec4d694398-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/66/66ea25d692065f8c8d64d2dcb84a7da04cba6b73d6d1ce7e4a546d9a40dd2b10-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/67/6757627337a664ce6d9d2efe9155d8a07ab6a62908e52d2340deb073ad7f982e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/67/67b8932f6e609786da404013f5feab909920f4d077108b07b89f6673e67c9093-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/67/67f159077b7c041a52a3a29d960cfefa0b7c638420816866009275bd83fa7a2d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/68/68d8ac51f3b01f486567db64d19fef77586e6a77d0618e19a0df284c9269eb4a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6a/6a12710ed96a59aab3361bb0c80165779c985432f5bb7308aa61f8e6cf9c352b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6a/6a9d86ce6dc77d48d2cfd14fd8a88a66e264160faf86e9ad0d17a3593a11f70d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6a/6aa620965f4ba518a0b8beca8929598d241c330346bb0a153130f37920b153ea-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6a/6ad37d46a66dfd3bb1df1840662af7090df3973641ddf256416ddea3d60fdecc-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6a/6ae34016ce9acb4db07e225d9067c3949e55aec4b714a9aedf0eb681aa8cbe20-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6b/6b9d736d354c0ad303fd6476ff3d34a9f2e74382e62249776aa453eaf91dcbeb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6c/6c9d8483d8b5df0c7cfe7be0dbd3afc44a2ab17bf3631700825125b8de8eb59b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6d/6d15251ffc3aab79e32539fe7ab6292db384c840c3d1f29ce27b4b159d9f95b1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6d/6dc60680408a5b89fcf5d23d6fa80298557163339e08c59978e491bf144ac45c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6e/6e9824436353813635539be5992f6f68106c695f1adda5f3186d92716fc40408-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6f/6faee4af56f2c629881534537e9d1e7cfb4456486b027fa8588d737b5e1e7c65-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/70/700a809d63744903f838eba21e65556921f8af99aa57f27f5e1a290bce49bd57-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/70/700d9a4b21a41090b462d6c5bc2c9e88db2d15fc10673dade60236d7aa8172d3-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/72/722c5068bad605fa13b8f9fc73aa4871a038920cb411a99e955a022ca7ac5178-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/72/723f7de3ec3472e3305a666191ac0f12e1aff39ae888374856b39020963a470d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/72/72d89531f3a40b87e5f2cb2103e613407e576e6be27d2c2de9a01634b01427c6-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/76/7603ee74648d970d9618aca8319e2a66dc5f83ad5551e28b197cac5b622bdfdd-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/78/7898212a5465d9157c4171bae95d2016bb1e7002b061600aa9bf64d3db9cace5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/79/79cc0cabce091d5af67a5a85618da0ea4f967f1484a0315b4f99b81502f9cd09-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7c/7cb60df7c90d3c52efc1f2aa16b63226802553d150848a3f0438a8ef1177a147-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7d/7d68a216beeea11af5d5ff719d8d3af7974ddb34360de9e5ea4c996a5b6b328b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7d/7dd2188053f732571af9ff018ea951002d69f2b6d9e24df9dddef6f6b1739032-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7e/7e8fae89c8c0f191a238c6e5f64c0d3a8bb7f77289c8994bbda29f978a8904c4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7e/7eae0a3672806190d9bd1c7c84b257e5518ace133f0f313e95943f36719480d4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7f/7f7aecdd7d4ff258b76d8d89ce3158b4d37ccefb61bd8a75933a83d066931801-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7f/7fb5a396ea471fdf8ab70427baf6b2907924068caa980fc54d2b118188827a46-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/80/805415a884ed350412fc1c56d099da639c469fdba26fabe49fe68c2a19336300-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/81/81e0248b5424eb7c952183ef8eb94fa213b1bc1c76067305e22ef18647382c24-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/82/824d9e5ed8c3bf9e3376381effb07f9023a8d3b60303f6be8e5f13ad4f98fbf0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/82/828b42d4d5cdc9e85cc9d936dc2df4d26d15639319ccc9fb870db43aba560dca-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/83/835bba0eb636bda139dfdce21219d210d479d1c309decd6e2ac712bbdf43cfdc-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/83/838f79f610491d8b991e6830197985644f973b84a33e6cba11699a041d582412-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/83/83babcebf4e1c0fc8435ebc48d79faf1cd234e4d454f997676c41341352112dc-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/83/83c31eb0335efc4332f38dcfabeb4215b04a8ab9c9df6103d8016c18503a715c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/85/8526e93970b535b078a4ed102b980cc4e86812efdbd2242b45553fbd03a9a24f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/86/86b39878dc37bfbd27003be21e668b75d11380d65c2b04f66bb639e331a78bc4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/88/88b5e23569a6a57669612c078d181f9d823b92f8c2e63ef69ecc277114529d41-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/88/88f114125aef6b1a0d0d8d79834d8e28feb448c67308626d29f5e140738cbd0d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8b/8b38484e532bdf368a53b6bb86f838ea32b3d45315d2b39ae30f6eb3a2059dc0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8b/8b7eda87a5c775d302a6d5c38c1593fabe623b75f8617c9dc109874fc986e3e0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8b/8bd2a5688fa6429e20bea91fc8704df08f1c658c6b5bc80d196610d3861b3bb5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8c/8cfd3540e1ff586aa4825e20183f32789053d5b1308466b41c7708de0e58cc24-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8d/8d398960a0cd7df196d9bf5b796a1c3efd3f1650591644917e2fabc95afe7804-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8e/8e668ce01963451ad695068ec8b2acc28e04c922b19ca93c8267f2df0b729f7b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8e/8e8cf2d3e3e6deab1142e53f0bdd9dfc11eaf1caaa55f514b63cfcf86589ae86-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8e/8eb050a03b0db7c23f1fe511ae0bd670935c0930d3f337055c5ba8247b5d4348-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8f/8f23bcc3a6b47862b70d9b6791072391780d25d2e4865a368b06794ff1c3dbff-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/91/91cf23d023b568596b7ff6f21f8013c1b02dbf437c7775d5c0f6499000974d48-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/92/92b4ea087871320eb8dd028b4636cc8c72306cad12b2f94cee62f824df1ef9b4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/93/932599eb8fe6c187cbcd341c027ba0df97d1eb5c19707a7cdf92e4400a6a9fed-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/93/934f1f874c9a85438720a0a99b8f49232d55395a7a883f2f62a78e7a390444df-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/93/9370fdf6ebf7902768d2f2d24336b28ef479d28b46a94bf884692d86941927c1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/95/954924a10f849cbe4aea81498f9ae4392077fc560f247159f6face54605d2f48-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/96/961746465a423bdbbd9bef6e07c8218ee12b01f9b9fe60310fcbd05a6909f36e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/97/970b7cbece0a4c4ef4330603ba67332bb7152622d28f29bf5a62e4ca5cb52048-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/97/97528b3fa4953ba07762cf5ed2af5700360ca0cc68787ca04ae55edd92d0d2fb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/97/97f420b733b50fa98a6a362f6b40ff09a579b20d5e5b1b4907a7e04b084cdb6e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/99/99d0e39ee930847f9477a7bb450a1352442b3cf9c121db0ffad23d60e1bbe09a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9b/9b83173915f4bcfadd3ef96b127c2a9cb67452c3ef60d77b7b63d773d339f2f4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9d/9db79a7229acd07336602a6f50fee47498e514ee6eed1bcac877940d224b40fe-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9d/9dbd8ecf4c89e043790b1c991cc5795f1498453f5f5650761a62042fae924999-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9d/9dea832cb11ff9311372af8ab9b564c1e756b46e0063528968e6da4bb240cb7a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9e/9e23f57afceffc0ec6c61fbd576e89603306a055e641ed6c78586ca1782ec38b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9f/9f26b957581fa6eaa80363de7e5811f5a60d132e07e45396e92cdc2e454abc64-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9f/9fbb6b687a0c4ce22fca21c1d1c04b961c4574a3f31258736e367bab660054cc-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a0/a0953c87f361438b5ca87fd63c3ae356d21e791f77ff3ca215657cc7f2fde963-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a0/a0c50271ae15ab63a0a1e99cee80527f5bb3048b7416867f0af3cd05210d61a4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a1/a1dcecd5de25d5e22169d6edc8a26857e2f2b3be50aa644ac2bfee26a93c0269-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a2/a2383dac56f0d781bce4d347e4f54a571dc6f4c5674229dbd6787dabb734f5cf-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a2/a24fce6cd4378f12b0773518efeff46dcace41069b64b73f6476947f4e1504b4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a3/a38860498951441adc9afcbb500c7bf583e3b52a9419c4b8962fc6ed5c23263e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a4/a42685e1cc7e32df5ce2204fe4ed918e7afdcc960c0464c4d3f3992512729031-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a4/a42818e9c499fcf5fc7be415fe897ec9432c98f50948d97fba73814602f1fed1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a5/a5b0121fc63482e9b71864fbec3d12e0e8cd8f9986a10e4e672f7489d927ed23-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a6/a6782fde64843307ef97f97e12099cca765c13fad5a3b475b4e6ad391385deba-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a6/a691460d71f5a9c74f49ba5de9093525ef7456ff2aa2f40710e258b3a27f8367-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a6/a69ec2246c7ff42b2d4992206a875d2113c3d59d770c15b23a858b293c3090c9-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a6/a6c839809d73400fc159c06764a0a657b480fe36266fa5a3ff9b577bf69bf443-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a8/a81a7242044b37c4bae03748d951b117de29b4fb04c2fdc40e5d4a901ce3aa66-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a8/a8d10a6da87e47bf5445dba1922d167eb368202694a4f909c373d49f63997c6a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a8/a8f99efcd8f6f96800dfc94751b58e480b28530e08eea6487642c8cb73e3ee51-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a9/a9225b9b0c8c4c19aaaffd1348ec12a3fd405a77073418e060f3855264817db6-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/aa/aa031d441b8fa2dc7af2c633c4690b142d93676e39c556d8794ca87fd2c9600a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/aa/aa943823a2d36c2bc88faba4146860a8d31643f175fb15662b68deda739dbda7-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ab/ab849a4a6b7b9b1b6acddea0361121db2112c1e9e686da5d0b512d0d2bb951bb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ab/abf8137c8200298f3dd94efcbc18d911f41cb404453cb2e67bc60c5eb9f7dfdb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ac/ac66db6ecd9c1294f14f6df986bdaf5022385e7241296818928469412934a675-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ac/ace3371ef69346a6de33f9e9838961f8f93997c57264ca26c7d13be079310b1b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ac/acfb7a888b6e460bf82fb060147db22c2081fb53692e950768f96112bf4bedd0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ad/adba475be6feec3d3884ca8c1f1e7a5238386439e8ed38334fde51322fc1c104-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ad/addf76bbd70d4de3458f65f44d521bf8dc1df54d255fffbeb0b55aca4a02bb73-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/af/af2a0eed6002de8026da475ecfa4b28c85d9d2dacb74bdcd66b71335fc2a968e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b0/b052c9f4e74421e636e7e3dc38bed959295de2964ff19c74a0c7362dcf4c37b8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b1/b171ba4b0c5fd2442ce74ca795859b6348c6ac6444760079d2b761d4ebf2aa96-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b1/b1e54af35c38dab6a639a33109130daa4d8a79d5ecb1beea1ff3a2fde79dd97a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b2/b2f02ba76cfb2e0b16b00f8b03f959908219231a3eec3ce2c99b9b5d83ed8e68-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b3/b34cb2c119e5dea207cdb5900116bad5f11e942da3cda5172a217550bc84eece-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b3/b390829a5f9b9537e346525841a1c3d94761212b9fb8991b39e29e3800e86e92-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b5/b50ef3aa93bd886b2d72c8384fe1bd25cdd30f86dc415f5553011d7b6519cd14-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b7/b784d174ae468ec4da73042e7a93e8f9f1c814b76fbb4a5404136827d75877e8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b7/b79e717da2de9751153cd5e06117013b32b717640751e22abfa65ca32eb73c3e-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b8/b85a773cfc797e447874ab7ee9e9ca10506aa3a8ee1445359edec549d9c6defb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b8/b861f4516dfa3e582002653de102cb2a56a8d40b5b1b14b53b52fbf642c607ee-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ba/ba30b310d2cc0b9cca9f9349164b3e8c2c5789e7920d81320f0a1ec0b8d9b227-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ba/bad585d1a8036a13f51928a37298fe5341ee06485a5ad52e6f7f503530dc72c2-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bb/bb09ab4cd4cf667bc2652214a3cc5c7510fc2124d9b5f046247e4e8a85bc042b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bc/bc09a482e4de79716df84395d545927bfb9b391be30447687cba76a6fb36f5e6-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bc/bcef23239d31aabf41827805a3c26fef1a87886359ad17675724277dbf2a896a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bd/bdca8ceb181b9ccf4ced51c0cc65aac4f93c03f5305fcdacdbc2b356f81cfbcd-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/be/bea54fd091badf2c272049e3d6c454639d050d57dfdc914645f420120947ea15-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c0/c028919d9e8aa7c189d051e1b172c57132b4e1a3a3ed55c596fd2ca8547119f7-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c1/c17280e15bac1ff3732befc600ab87fbf8b01b5d5e9ed4e8f8c2027e7585542c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c1/c19e7c30c5f817019ad717537a7d8cab78bb07f4fdc663ac99f09d0f9280c3c4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c1/c1a0f1462e1be5a348a3956972298463611a1e32322c0865b3c1b685c13a2707-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c1/c1ba7db0f8ffda66adee11065cd872effe3128a3318bde7e59d5119b53d2e9fa-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c1/c1ef3f7ce19bad578e42e7a1a48f72ec0af2cb549097ba24809baacd0c8368cd-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c2/c222fc703db5fa5203baa7fe8b667ad2a5cab1a7d6ab7cd00646171ae67cc139-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c3/c32c62297071a40a8f7285448f7a1fa2c8fc5e9d4fd304cf621bba6cdbdcd463-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c3/c34221572ce5e16fc2693151bd9584dc46a4196de5fb4cb9a6ea5cb9048a7c66-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c4/c4aad56d0f44350809aef9ae1232193234e08616530b7cc29b386543a34a1c54-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c7/c77d13f91b97d045edc20e35ba99676a895516a6b98398676a7a7c60d9778a60-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c7/c792d8d146feecfbcf373c3b9d07f80d6d300807ec1acf4f5a9ea32ca0253cde-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c8/c8760167339a302f27479ea140557aac6182e3bbd6e71881cfdf06a4764f585d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c8/c8a1707e3d0ee82625e04e140609f24267756969d76dc1bdecbcd4925a75f216-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c8/c8ca5568b1dfec2eecb01c1afc17a258e53a93c7de4e23dc4b7002d198b14074-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c9/c9730b0c1991c0da88eccf13ca5d61b10bbe7b3c819e7bd4202afa67e0f0d4a6-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c9/c9a05c0d67df9c8254840b525b40df34a475cadfc9560bf5fa6cd2ff8ec2f8f7-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ca/ca18a85a99c471e63592f962ad46924539cd0c1dfa70ab0af4bf5315b2b8a691-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ca/ca4d200ba93517cb3281b6a91432bb8867c48c1db3e826f65defb069840ebc89-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cb/cb5915afe812055393689b03c2d86aa1a6cf3406cfa689d09481235102fb313c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cb/cb9ef7a858edf5d49c67152cfe8a9d0d32945b0cac9b8fa411bdc69954f3cd6d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cb/cbb208b82fb5539c6385e755e90e68af2c7d2e071ce417b321fccc4db9a25af5-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cb/cbe47a9e518c7ed81540063d4a02db3b246c06e6aea269ae7e7119a9961ca893-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d3/d374f42302a1ec35717204f3387135320e9d0720c1ce38ab9682b41c072d9890-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d4/d41ecab93f474fdb5e00027d20c82b36ea0690866e2e77c4ef6e38f1e5f98a31-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d4/d46e059660c0483e3c131d0459e475214bf83518956271e4add994e9258b8363-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d4/d4754d26dfe862e80eed33f5400076f8f08c51f603d4ddb9c7a843868d618859-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d4/d4a8dcbee2ee9936226f8fcfa6181ec2a6220bcbbbb5807f308cfadb778de982-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d5/d549522c7e336da0aaf24612940f86fd8f4774d5962958ecec82a955e23f8f2a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d5/d5fd8334008423503505953fc56cf8b17a17d74dddc2bbe97b17f7144a4f94e7-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d6/d6a6a8016a0c4d999dc731421ff39556f4cbc7efbadb285adb00e8ed4367e947-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d6/d6f23f62244d09196583374d5fe38e6ada2781a3c2c8b082cd0941bf82945945-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d7/d7b1f95230799406bab6ba9c7de97024a752477a4ec1045f8a6295f9dc8600d4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d8/d806656ce37a3b6ebf0bc06e9684954730beaf7b27f8ec0fbcce3693b1a3996a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d8/d860b0e7b7ecc77248116021404d59dd41d89456f900df2687902f29ad0130c4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d8/d8a84ef0d4da9e1dfc7b175ab9799bbcfd35f66a106faaf68bbbc9a6d64e8394-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d9/d92e9c420d774e1a6962ba55f991f89025796c5d2f46764d1da978ef97d6c54f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d9/d979a25f6dcbe47e69b75d1fa34ee1f5636cdd8aadd897aa069437f65950f342-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d9/d993d6c3a168193847a485610f3752e084aa190d0fb8f7c73e616dd215377d1f-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d9/d9d0a8c2f58a454e9064daa73ed148cfd3e04dd4533f9d69fbc352320864bf95-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/db/db60547d22d0715fa923112f93b734a0de9d40c8485bdd895055a0a60a8d0cad-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/dc/dc13db0c2107dfb2f069cc79aff5ea3ba2a2526abee55481ef61c9c1f8775326-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/dc/dc709540c5e0796a86af10856ec641f2d70ba4c2cc9c12da12b37c3634a0f347-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/dd/dd7cbf2f8580664a6c5e9a0f26029b46b251017a1e5d9c07a221b30e0c014bac-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/de/deb32d3e10bdf8a1693fdbf9c15651b027f43eeaf91997fa90b3fa337d835dc8-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/df/df0fc097f6b44aa6e1dc1fc592dffbda44d2f364b6215921e2950a4fb6963795-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/df/df990662efa00353a837401dc842f8b279b942a9feedf0d5ad8287ef8430aa4d-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/df/dfa377eebd27b9ea0280a893bff6620e4bebbbb8a480573933ccb3063e881751-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e0/e083e1e1109708826f0224da99cd318b8040964d3d32671f7ce00873005cd323-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e3/e38ada5527f1427f7d5b942e22d9ecd36fa083449470aa492bc2fb9a59bd6c8c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e3/e3a21f671e9db260fcc6a92a4c0abc18f2a0d4df74594f58bd4b0ff056b881e9-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e5/e5984c98357c786447767de101cd63ac1474dee2efd8fc7abb969398a46a10b0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e6/e6418a29c23caafb82f5dcd32e151382a92b43edcf94542bc3a3d5fb192f59df-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e6/e6f66a427802ca444b53cabf6e8774d6557b7fe8492b08f4bb76ea046cb09888-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e7/e7c7d75fd6fd35ed91442b4db950e08bc496d3811bf989305fffeab9d880bd03-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e8/e8b5a9ca04cc9013274b9a93d496225248a33ef2ba685479a265527610d4fa53-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e9/e9f80524cbc9ca2c451b5a007a3f76692a372353ff603849218fbd9d41beb4d4-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ea/ea17a55bd1f17fd86faccc6e08801c131c28134bd031105313c35a1673343827-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ea/eaaa00b708e0a769b336364db1e56351a04d948a0e58157f2c90064f8221a379-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ea/eac01a67225b726e80057a4ef0da7c7eff9ba3b61e9982b554ca7ced01285b75-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/eb/eba712668784e7997181adc2e9870773ac060476d873f81cca218078a469ffa1-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/eb/ebf1fad9eb4a31c5fae41a6fbb652708835b44963041a086c059f462c9e4dd41-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ec/ecf65e30e3024bdb462ffc53c0b1f9e547d9fb9b87d980c1ae6eae46699d1193-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ef/efc056cdef49a9dfcc4d5992ec7350bb3ab2bb6721a1e4a9336152eca6a5ea51-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f0/f0ffdba7e8cafd78765245e85884863857af5ff745471dec32a79155e7a3725a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f1/f17cd08fbf1cdea84dcb2f1a9f573abdfca5cbb060f739d8f0e753db1e155d4b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f2/f21beb4040ccf264a624e4a6d55b17e91709d0af25e0af39b5747f5ac479998a-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f2/f2a6bda5097cc8155d78d452f8b36a3096dd534af61a0fd83e8ed9ad20e958eb-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f4/f452b53507b4725e6f0041b20d660208318ed0419181fc885835e18aa2ae795c-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f7/f7e37921e26cdbdb049ce77f89a280ac32c252917caec5e1adcc5bc4701056e0-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f8/f8f1e351e0318afd32fff5270b6c6e98e63757b94826f5bbe7701b959a200df6-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f9/f9e9317ab880106b41ea22f2a7b30c1b62096ab99c908027dc3329c931768659-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/fb/fb0066dc8b4f7b18637ec69b0f9bc019861a76d3669a477e8d5b5a6d9abeff27-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/fb/fbf4896ddec635edde7113e460bcf88a8e4d7523b82c5f0411e9be735dc9200b-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/fc/fc48e5637d3de76acd9e8f5f46428510994ff6a66c2e8355bb1f41329a3028fc-d",
+    "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ff/ffe765b306eaaec3ae198a9f0081012895bbc224d566288b80e27ad9d1ba486d-d"
+  ],
+  "removed": [
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/fc/fc4cdd69d342462091206199df3cded088526d60bfefb784bf47a8cf01bd1b4a-d",
+      "bytes": 2017210
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f7/f798a67fb25ca300e73a8ca1793b2222bfe8cdc4bc542112d0810cb4d2d3bc07-d",
+      "bytes": 3770008
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e3/e328cd5e2144a9e7c89f6b9ced43d5e45380da1d64ee26ae9c318e9f94bc4061-d",
+      "bytes": 5940414
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e1/e144427c7bbfecfb8ca66c7ddafe51ddbc4a4ed36da59381fd05ad4cdd5da554-d",
+      "bytes": 1902802
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/db/db6f9f45eb2450b9f0aa93d430787434c4ba00d85b5b5f079d4f94e7038287f5-d",
+      "bytes": 2502364
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/db/db15a97810a0689b31799a2702770003c9d8e78ee5e16e5aa3c0e1fbe1910f38-d",
+      "bytes": 4100218
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d3/d3176a9d23a96949bcb0f84b2c1abc5407a37686d90d9abe98d88277e5226d87-d",
+      "bytes": 5939382
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d1/d189e9d70203b800643b4c4be2fe36b069ff83bf39152790f5e55477243f3b40-d",
+      "bytes": 1577128
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cd/cd80b7a7266722e28514dec44ff6708a525161a0acd65893e567b5268afb8053-d",
+      "bytes": 4708752
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cc/ccc608dce2d3084464243c7a73287611fe37226923ace4bc25f3c09e375f36b6-d",
+      "bytes": 1272288
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/cb/cba66e0684e313864c04a39bd68b68fca58be049220996f21e60d137c64b86b7-d",
+      "bytes": 1915196
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b4/b458e8ae20d04a1e530a2d6beb6480ec860ac80d3b300fab485baf88c2dfda41-d",
+      "bytes": 1076234
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a0/a083b5b407cf8d3d03d00cc9e5f1dc05fee69c29ec0f24e2950248b640ff258a-d",
+      "bytes": 3996854
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9e/9eaf0e3db789da2a094ab5ed8afd648a0c47a379baf14fa323444eb32dd0723d-d",
+      "bytes": 52906060
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/9d/9d7e6f57e9eddaf9b423a14196ab4950573fa9327e79fe1a72a8723e2ac8d91d-d",
+      "bytes": 5941326
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b1/b1c5d9afb331e45e38eb4822272dc1c6bf97e51ff4c77242568f13341402def8-d",
+      "bytes": 5941208
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b1/b1ea31d6c62b36597a5b0eb6badfe69a3e04c51c27591f82f85ab0d931af17b7-d",
+      "bytes": 1601188
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b0/b0c17f8738a2818820dd99e1d6e0714183fa6b0b8952069eaff50622b5ea7646-d",
+      "bytes": 2179628
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/af/af71befd89a67423a2d34e56363865bdbe594180fdab26571f22356e6061f6a2-d",
+      "bytes": 5941306
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/99/9902f0cc21c509c5a61e7071ef71c92eda7ed160989fabdf6213092a8ba2353a-d",
+      "bytes": 1137040
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/f2/f20d28ca3abea6306884073f09cd84108d0aae0bfc68e157787b2f4920720f3d-d",
+      "bytes": 49360172
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ef/ef25854f64cb21a023202d8a803d8239ce21c16db78e28af9422fe5d628ccbe6-d",
+      "bytes": 1536390
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d7/d71a7cab405af97009dd4065c7dea051d11bd80cd6ab996bbab2000bf083d5cd-d",
+      "bytes": 4901712
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/d6/d61a8eb100624957288b222f0c8cd69c80ac7d16aeba24edf323bf309144a2a4-d",
+      "bytes": 5941250
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c4/c440bf8dd6570ed77c57d7a8b004e1f0f827f8e296088e4e14a1c972bc505153-d",
+      "bytes": 1468434
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c4/c42b29b0c4fbd999b13668681f2e59ccdb33816007fdbbbfe545437e9afb9d45-d",
+      "bytes": 1276010
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c3/c3345105afb5f5fc519ba6c3ee3efd9b3c50566289b134434e4e1bf47bf07e9f-d",
+      "bytes": 33239848
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/c3/c3beca8e80d518b9d575a82fecc6a05470acc51e86e94b88bc41d5dbe2c065b0-d",
+      "bytes": 1074976
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/94/94593ffab2a26c6fabacd2a1977d71d081dd602739e0a05c2407801fe6f2f51b-d",
+      "bytes": 2881078
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/93/93dbea669973371fb2153e3c414d359914008c3a47ee49211973ea5969bf11f4-d",
+      "bytes": 2274136
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/91/9132ae36ddf8b9471be5ddc56801408d768bbfe8857cac703983df680dfc07c8-d",
+      "bytes": 5941364
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/91/9138373e7755f68898bcaea79ff559afe974a56c73af56217287f0f083b7db41-d",
+      "bytes": 1058088
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/90/90fc7f8dd3e5317c39959f4211d34c505824da19103091081bd77fc89bbed806-d",
+      "bytes": 3796196
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8e/8ea745706e8d191e20cbff671d2a7b009483c42507e747a5a11aabed73db7b5f-d",
+      "bytes": 1203546
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/86/86b0577d34275e7f522058b1abab8b3b04a227ef269ae138f7d5ea82c43d1a15-d",
+      "bytes": 1905328
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/83/83193f52821986ae9e96a8437e2417594a38f14903c7036608faf5c64187a3df-d",
+      "bytes": 33209802
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7f/7f93a52d7a80c35ed0892562e73778e4d6c0b97a16821f3e63a8b9b0b6fdfc47-d",
+      "bytes": 1527832
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7f/7fde9dda6606ce3cdc94b74c4cf29e20cd2f8aae1d3579aa2b00d4fb494150b0-d",
+      "bytes": 1512794
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7d/7d060a566494d7b72c0afed611c491e7c9cf64176c8ac411acc59f5f25322e12-d",
+      "bytes": 1203546
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7c/7cbfd1d11bce23615f8aab35f9e6d2cce7c2bcdae5af70c703835f3a814d710b-d",
+      "bytes": 2126218
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7c/7cef5b585f3e96ad6832535d36836cc63e2a8418ec0ce0a629adb287de550b7a-d",
+      "bytes": 1597194
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/7a/7a3c7cf9f10d3078b6bab93ddcb85d1f9ecb933239c5635feebd47b38acfca8a-d",
+      "bytes": 5941310
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/78/78e360cfdc581153248618f8fe96f8c7330b11971dcc5b0eb1e6229f29bf4c5b-d",
+      "bytes": 1071134
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/77/7714df99f069bb0893edfec32f546075d3bc94265a87d2d1a807107fb5550df3-d",
+      "bytes": 3676074
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/66/664a8118f0d0ed91e0814183aca2ad151d627719c5c6a348389814d274fdd6ba-d",
+      "bytes": 1148654
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/66/66f14b8378e4a7b178b9d8080469b037fded3cd56dbeb471838b227a28b9b5b0-d",
+      "bytes": 2156904
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/75/75dd62d309a45bfded0ea38bdc56a393c2a4a0b953c7822bb10e514da2bb9ee1-d",
+      "bytes": 42707826
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/72/72f678dcaaac6a459f720209c6d5839c52f57b25d28e230eeed5d48f5eb53926-d",
+      "bytes": 1070952
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/71/7136ec702be69e9fd1e960580855545ecb43ddbd5d2b33992876ee6d35eca79e-d",
+      "bytes": 33199782
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/70/700ce8d4636beac9948e57735ccd4cf34498db8767ae4963165860f3e71f0360-d",
+      "bytes": 50470946
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/70/701049f105759c94ae476a4752f32b54b05751718180ba96692e1724211c5417-d",
+      "bytes": 1765466
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6c/6c2ad88fd657a72f85edf3a14de87b39045ee3ff58ce4b3f60d1b525b26cb289-d",
+      "bytes": 1346452
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/6a/6a87e7d3ec84016d428349ad86872a936536398fb1291e2cd16dfa95d500120a-d",
+      "bytes": 5941308
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/64/6472f01b69a3ff27dd46a22c483bedea866738207fbbd35356ea0a1f1640ea7d-d",
+      "bytes": 2246462
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/62/622045f6a6efd3ca3b7a60c8f1144c40a8605dc65ceec4f9f071aec631be3571-d",
+      "bytes": 1527834
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4d/4d9707f8c816b748b370b3e5e83d313f139c4543d9040991b960d38bcea9fc51-d",
+      "bytes": 1348950
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4c/4c69f3d5076a78919fe5cc975f0e43e485d91160bd7227b8970b53228ef36849-d",
+      "bytes": 1303146
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4a/4ab654a33b47cef5d9589314c0ed6a220b3f1eca147a264daf6577f06436dffe-d",
+      "bytes": 3796196
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ed/eddc80c05d929afe2b555105c6f37bd7c9456ecd47c6c4e0bc8bf20b00cf14b6-d",
+      "bytes": 1134350
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ec/ec16f7eeb833d7d9c63ef80de6e05a3ffe81dd93d2c836db3e37b788da9dad58-d",
+      "bytes": 1652636
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/eb/eb1beaaf84746e7bf8c3ff0ec469af926a7b828e535f9b9083f7fa7d5265ff84-d",
+      "bytes": 5941352
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/eb/ebddad25cda3d27dc8b560b5c7e038ebe7c504572b8a55c602da5548c87406d2-d",
+      "bytes": 1058482
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/eb/eb2e195f1a809b095390515fcce0163b7e661efcc20719c53921c857b60e0a83-d",
+      "bytes": 1272042
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/e8/e8cdc3233f90f4abec27eb91a5f02fa4041e223e140be96d1b31407b98a2838d-d",
+      "bytes": 42350674
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/60/600caad4124857ed8b39b9e640abe8d2a65216e4eb04caf5e79b3b28f1946cf3-d",
+      "bytes": 1902802
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5f/5f98dae41e0d3a510843da4ceb29e87ba60bb822e9d433571e0127c9719cca6d-d",
+      "bytes": 1851256
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5e/5e7f3fc6bf6b4d36603308324dfbd96569b6d286875cc6869d61ba4c68585ec8-d",
+      "bytes": 1134558
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5d/5daa6b4331cc4b77250ef2cf5e488be3e26e654d4d20c53951259a1ada7101da-d",
+      "bytes": 5941336
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/5d/5d14a37ecf63dc56b9c0fc900d204ac359d26f4c7bfe21f9f4c91597c9f06793-d",
+      "bytes": 5941290
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4e/4e45f0ec4d34758f64a4f38874dc779d6a848e63b9a38b62764c8460096c7c35-d",
+      "bytes": 2502700
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/4e/4e182e9fd614b70225d779d5955c24cd8d7df6e95c41648e01aabecb8f4d3d71-d",
+      "bytes": 2090926
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/44/448fbd7a15c0a6774ebbfd9bec1b343e877993f67ed2c952ea97077ee29ed10d-d",
+      "bytes": 2678964
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/44/44ef1beb27f5f922a75448ec5878af1225c3a2e3ed7d6b7d9fd9eda74cb86ca6-d",
+      "bytes": 1157066
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/42/421c8113b16798e4c2c875289504a0609b741cbb3867a721fbe41545c49250b9-d",
+      "bytes": 5942172
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/40/40193962a8922fe56a8f2bfec3fc7d240aaa974bedb2bba5bf2c4976c6e89b24-d",
+      "bytes": 33141568
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3b/3b70958b687a8f8e624118a4629d288ffd6b5f212575b2caa1d479a0b3738395-d",
+      "bytes": 5941472
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/3a/3af1a1075cab5c6a67df83a76ff05582ebacdf825ebdd91bba5d3d1b09368136-d",
+      "bytes": 3669308
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/39/3984b5097e9a77c2350212033e8135d23d9c1210891f80a50aede9ce2927fa39-d",
+      "bytes": 2088416
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/37/376fd0a6e6b7431e5ce79144ff5a657e361828365c6862e9b4265143cb5c9d82-d",
+      "bytes": 1529854
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/37/37129d2fdc1286f015e4844597a643d6d2dd2cbe5d89970eb9022bcc6c043750-d",
+      "bytes": 2506432
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/37/37d9cdb38bc583f6af897f7aab9bdd57752e57a4a76484bf0ad103fc7aa97d01-d",
+      "bytes": 1212588
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ab/ab8a51caf1300b3ed15108959d3614ec966f14e8a897918e7b1ff25e77696c34-d",
+      "bytes": 51532264
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8b/8bfe3ab55d05ba0a1334421f281bb389d99ef1be49d2fd956f014835f827d5cf-d",
+      "bytes": 42491490
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/8b/8b40ff471a3331346d803dddd85a787b1f2f6ff4e207dad5d4c2ce065ec6bb09-d",
+      "bytes": 1848218
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/59/59a8c13ec4655775e3f1042c2055a6425fc3e3e44e238287c0eaf6591d14843d-d",
+      "bytes": 4709222
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/58/58a860243c497f1b66d9622b236677bce451387b96ab6060199133cacd464166-d",
+      "bytes": 3298394
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/56/56c263e6963011bcd9ffa471d0d362eef1a68dd95d1aa6891fd081d3ef6661fe-d",
+      "bytes": 5941310
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/56/56bd63e30e1c89585cd2b1d6b0514ff23abc48293cafa5f46f5fab4a676ee387-d",
+      "bytes": 1527832
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/56/56452e3133edd69f11c00c744cd37215431f401dec2b9d3c4cf2366f3d96406a-d",
+      "bytes": 1902450
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/55/5516a00788882fcd18c3ba333ce399aab3f512e29b5efa45fd3776b0c3030176-d",
+      "bytes": 33156752
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/30/305dcc2984ead8c1ee7ca1a6db7cd91a003136e46d0125d903799b782bc3a173-d",
+      "bytes": 5942164
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bd/bdb6592c1d0fd81c26e2bd0c1018750b9384c0b38d59c88d2c97ab663b8ca7f7-d",
+      "bytes": 2092442
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bc/bcb85919c21162a2bd0362ec4898c796b797838f746179c7d5f93467b9b90a81-d",
+      "bytes": 5941310
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bb/bb4015623bf9935d9adb193bfadb0be54bd9c816b85285eeee7d23bdb03fd9de-d",
+      "bytes": 1652724
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/bb/bb1467fb1ce75e2110f343d01df5565605094379150e30d0534e01ef217bf681-d",
+      "bytes": 1212952
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ba/bacbf9e4f2f9298ace690f3a901a0ff9da228f99b1f4d82a611ce4c9c134274d-d",
+      "bytes": 33179500
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b9/b93eb912fa14f2f78cf39949d2a972b2e79ecec46297e70de592bde9e210c1b6-d",
+      "bytes": 5941424
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/b6/b6ebd0759deee507484bdb576e7202cd7dc8e35b351071ca41cd76cf70bb6047-d",
+      "bytes": 33322808
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/25/259d5b2f975916e6920c18e0d02471865650c78a62d1776c8d59d29f902b5fa0-d",
+      "bytes": 1652934
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/25/25dc7ac125c42c3376dd51f06a95a8803d2fee5822d2a8e6b27136dab92c5cb3-d",
+      "bytes": 3698040
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/24/245fdf5b03ff6025849363c737e21e4e241e0cd7c7ab2d8d4fa56fdea3cd0169-d",
+      "bytes": 42772378
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/22/22f01f9774d7ca84994d9b7d4b4bbd4da89f3b80ecf5ff2d89edefd217dc7b8c-d",
+      "bytes": 5941304
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/22/229e341b406f9f8000db5e979e7507e9d32fff565b5f195d8ebad14358749cad-d",
+      "bytes": 1904976
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/20/20af9e381f7b7264746b9a444e7cedb0e1830581947cbe203a43f1a2c54137e5-d",
+      "bytes": 1102312
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1e/1e16472f6b731e9c6ddace6b4127b017d73cbc7b2c3f5ff9db27929f66d63d1f-d",
+      "bytes": 5917610
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1d/1db4e3f01ed28e536bdf966af957d576720312b50ace057500988a93fdbe7e9c-d",
+      "bytes": 1829862
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1c/1cc543ea3510fe76e48ae886e743c025140a2dc0203473b2e3ce4dc8401ad395-d",
+      "bytes": 1700704
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/1c/1ce19f7fac297716eedd06f9ca790a4440d8d37b32d20b550cad33df33ccb4f4-d",
+      "bytes": 5941114
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/16/16a58b7693b2a07a780481a4e45cbf61725fefbbd459a8cca5b8e18d4d89b8af-d",
+      "bytes": 2089042
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/14/14b64911608b114d61fbfed6c3e6710f5957edfb6c825ca0c4a56d747aa820cc-d",
+      "bytes": 42524368
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/14/14c71d8cb52abba535b83964d18368b8b19e015117e0564091fc58e2ba9f3b8c-d",
+      "bytes": 1487654
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/14/14734ecab175a85950141581fe942fcb9e8093b7585fdf3d5cb38126fa874c76-d",
+      "bytes": 1606740
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/13/137447676c393ba752cbb4cd2e2dc4be447bd383363b07ba8e2fbe892cc769d2-d",
+      "bytes": 2261710
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/54/54df13883da1ce2d321fafa2abb81e8a8dad038a747825ce7127d6b80a537caa-d",
+      "bytes": 1528118
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/51/51bbf49b3e2c19b30b2c0f0624823efa0297195faee2dd91aa3ec885e4a72325-d",
+      "bytes": 1602946
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/12/12a5e2c886934e20cd04ebc0be988bc72c9913a3a118f9cac54efe95b6ce72ac-d",
+      "bytes": 33307392
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/10/1039e9e03bf43575f80d7ffa39290bc7d5ebdaa34634471cdf6828e2226e90e1-d",
+      "bytes": 3668812
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/10/10324fe903f6bfa175e69e1dce52fcb522b2efecb7117264ea4e73d01e29b606-d",
+      "bytes": 1136900
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/0c/0c1b1f93aed28149b5949e0a7932309c25ad9eb878348f1bc1fa285afcf5a4de-d",
+      "bytes": 33152150
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/07/075f9a290aa50ef84dc1711077dcc21a4b3f1505149664ce6a7bd32af45e3c40-d",
+      "bytes": 5941294
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/05/05459b609d8411e0cc2447879d9115e487519041b0d02ee4046e8263e63c3c23-d",
+      "bytes": 3735348
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/04/046a42cda5006e4504c4f9c9f667af4fe8d41be76c35cf291446e1cc8174169d-d",
+      "bytes": 1644926
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/ad/adf78e8bd5431ee32244f8d1a54c6d9bb97e51b40aa0153f528ec9b705ecb355-d",
+      "bytes": 5941270
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/aa/aa1dd634b89ec4d43f5275ee8c420d56b153afb4d51043ec4aea73c733ab10f4-d",
+      "bytes": 1602880
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/aa/aad7c1b19c4e3ba6bd19dc49991f68228ce4d4ea522baab2bb572d3dbbb73064-d",
+      "bytes": 6731464
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a9/a9801d33e2efba15a3f103ab0124bad21fd95c2550baf1254a5dbec70eafb8f3-d",
+      "bytes": 3704588
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a6/a660074a01be1f8c4bbe7d92e271d8854abc77d98ddb4eb369baf1a57021ea41-d",
+      "bytes": 33148454
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a5/a5d2ec5756c0199fd7d07d4712200b1520a54f8f55e64125e1cd6e8869cee17e-d",
+      "bytes": 5941310
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a4/a42b2d00c56180d57c197b349af0295ea5f4ba38c3289877ab7b323980dd75f9-d",
+      "bytes": 5941126
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a3/a39d6c0babc3d46809c0f1fb14943e46edc71cb1624f59793191684290621336-d",
+      "bytes": 1303146
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/a2/a295fc2cf74691749cdd3edce121e09367e90417b6a24dd249bc0f2abfc37eed-d",
+      "bytes": 1914848
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/02/02223bc58a846e7106e947eebdf591fce4c967015a97e9d4a970e5f9b90da87e-d",
+      "bytes": 5615276
+    },
+    {
+      "path": "/tmp/adamic-gate/loom-r-slice-3-ac-m-work/go-cache/00/0004285160780f558abb1ad1c3a78308dc1b7b7bf71e56ba565aa4dcf91b354a-d",
+      "bytes": 5941310
+    }
+  ]
+}

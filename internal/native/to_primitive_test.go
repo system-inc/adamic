@@ -95,10 +95,10 @@ type primitiveMutation struct{ name, before, after string }
 // TestOrdinaryToPrimitiveProtocolGuards' two. A test reaches its binary by the mutant's name.
 var primitiveMutations = []primitiveMutation{
 	{"wrong-order", "if (hint == adamic_hint_string)", "if (hint != adamic_hint_string)"},
-	{"missing-TypeError", "adamic_thrown = error;", "adamic_release(error);"},
+	{"missing-TypeError", "adamic_thrown = (adamic_heap *)error;\n\tadamic_exception_pending = true;", "adamic_release(error);"},
 	{"leaked-object-result", "adamic_release(result.value.reference);", "adamic_release(NULL);"},
 	{"terminal-invalid-hint", "if (hint != adamic_hint_default && hint != adamic_hint_number && hint != adamic_hint_string)", "if (false)"},
-	{"preserve-pending-error", "if (adamic_thrown != NULL) { return empty; }\n\tif (hint", "if (hint"},
+	{"preserve-pending-error", "if (adamic_exception_pending) { return empty; }\n\tif (hint", "if (hint"},
 }
 
 // primitiveMutant is testdata/to-primitive/runtime.c linked against the named mutant's runtime, from the

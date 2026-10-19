@@ -1,0 +1,4 @@
+class A { readonly x = 1; }
+class B extends A { readonly y = 2; }
+const b = new B();
+console.log(b.x.toString());

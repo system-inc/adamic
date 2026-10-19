@@ -1,0 +1,120 @@
+=== RUN   TestOrdinaryToPrimitive
+=== PAUSE TestOrdinaryToPrimitive
+=== CONT  TestOrdinaryToPrimitive
+    to_primitive_test.go:71: clang flags: -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+=== RUN   TestOrdinaryToPrimitive/slabs-false/version-template
+=== RUN   TestOrdinaryToPrimitive/slabs-false/version-add
+=== RUN   TestOrdinaryToPrimitive/slabs-false/declaration-array
+=== RUN   TestOrdinaryToPrimitive/slabs-false/valueOf-first
+=== RUN   TestOrdinaryToPrimitive/slabs-false/string-fallback
+=== RUN   TestOrdinaryToPrimitive/slabs-false/objects-throw
+    to_primitive_test.go:77: C differs from Node: exit -1
+        
+        Node: TypeError: Cannot convert object to primitive value
+        get valueOf|call valueOf|get toString|call toString
+        after catch
+=== RUN   TestOrdinaryToPrimitive/slabs-false/noncallable-skipped
+=== RUN   TestOrdinaryToPrimitive/slabs-false/absent-throw
+    to_primitive_test.go:77: C differs from Node: exit -1
+        
+        Node: TypeError: Cannot convert object to primitive value
+        get valueOf|get toString
+        after catch
+=== RUN   TestOrdinaryToPrimitive/slabs-false/call-throws
+=== RUN   TestOrdinaryToPrimitive/slabs-false/get-throws
+=== RUN   TestOrdinaryToPrimitive/slabs-false/lookup-after-mutation
+=== RUN   TestOrdinaryToPrimitive/slabs-false/undefined-result
+=== RUN   TestOrdinaryToPrimitive/slabs-false/null-result
+=== RUN   TestOrdinaryToPrimitive/slabs-false/boolean-result
+=== RUN   TestOrdinaryToPrimitive/slabs-false/negative-zero-result
+=== RUN   TestOrdinaryToPrimitive/slabs-false/string-result
+=== RUN   TestOrdinaryToPrimitive/slabs-false/number-hint
+=== RUN   TestOrdinaryToPrimitive/slabs-false/function-results-throw
+    to_primitive_test.go:77: C differs from Node: exit -1
+        
+        Node: TypeError: Cannot convert object to primitive value
+        get valueOf|call valueOf|get toString|call toString
+        after catch
+=== RUN   TestOrdinaryToPrimitive/slabs-false/getter-mutates-next
+=== RUN   TestOrdinaryToPrimitive/slabs-false/second-get-throws
+=== NAME  TestOrdinaryToPrimitive
+    to_primitive_test.go:71: clang flags: -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread -DADAMIC_COUNT -DADAMIC_SLABS -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+=== RUN   TestOrdinaryToPrimitive/slabs-true/version-template
+=== RUN   TestOrdinaryToPrimitive/slabs-true/version-add
+=== RUN   TestOrdinaryToPrimitive/slabs-true/declaration-array
+=== RUN   TestOrdinaryToPrimitive/slabs-true/valueOf-first
+=== RUN   TestOrdinaryToPrimitive/slabs-true/string-fallback
+=== RUN   TestOrdinaryToPrimitive/slabs-true/objects-throw
+    to_primitive_test.go:77: C differs from Node: exit -1
+        
+        Node: TypeError: Cannot convert object to primitive value
+        get valueOf|call valueOf|get toString|call toString
+        after catch
+=== RUN   TestOrdinaryToPrimitive/slabs-true/noncallable-skipped
+=== RUN   TestOrdinaryToPrimitive/slabs-true/absent-throw
+    to_primitive_test.go:77: C differs from Node: exit -1
+        
+        Node: TypeError: Cannot convert object to primitive value
+        get valueOf|get toString
+        after catch
+=== RUN   TestOrdinaryToPrimitive/slabs-true/call-throws
+=== RUN   TestOrdinaryToPrimitive/slabs-true/get-throws
+=== RUN   TestOrdinaryToPrimitive/slabs-true/lookup-after-mutation
+=== RUN   TestOrdinaryToPrimitive/slabs-true/undefined-result
+=== RUN   TestOrdinaryToPrimitive/slabs-true/null-result
+=== RUN   TestOrdinaryToPrimitive/slabs-true/boolean-result
+=== RUN   TestOrdinaryToPrimitive/slabs-true/negative-zero-result
+=== RUN   TestOrdinaryToPrimitive/slabs-true/string-result
+=== RUN   TestOrdinaryToPrimitive/slabs-true/number-hint
+=== RUN   TestOrdinaryToPrimitive/slabs-true/function-results-throw
+    to_primitive_test.go:77: C differs from Node: exit -1
+        
+        Node: TypeError: Cannot convert object to primitive value
+        get valueOf|call valueOf|get toString|call toString
+        after catch
+=== RUN   TestOrdinaryToPrimitive/slabs-true/getter-mutates-next
+=== RUN   TestOrdinaryToPrimitive/slabs-true/second-get-throws
+--- FAIL: TestOrdinaryToPrimitive (6.65s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/version-template (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/version-add (0.09s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/declaration-array (0.09s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/valueOf-first (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/string-fallback (0.08s)
+    --- FAIL: TestOrdinaryToPrimitive/slabs-false/objects-throw (0.04s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/noncallable-skipped (0.08s)
+    --- FAIL: TestOrdinaryToPrimitive/slabs-false/absent-throw (0.06s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/call-throws (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/get-throws (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/lookup-after-mutation (0.07s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/undefined-result (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/null-result (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/boolean-result (0.07s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/negative-zero-result (0.09s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/string-result (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/number-hint (0.07s)
+    --- FAIL: TestOrdinaryToPrimitive/slabs-false/function-results-throw (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/getter-mutates-next (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-false/second-get-throws (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/version-template (0.05s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/version-add (0.10s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/declaration-array (0.09s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/valueOf-first (0.07s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/string-fallback (0.05s)
+    --- FAIL: TestOrdinaryToPrimitive/slabs-true/objects-throw (0.03s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/noncallable-skipped (0.04s)
+    --- FAIL: TestOrdinaryToPrimitive/slabs-true/absent-throw (0.04s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/call-throws (0.04s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/get-throws (0.05s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/lookup-after-mutation (0.06s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/undefined-result (0.06s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/null-result (0.05s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/boolean-result (0.07s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/negative-zero-result (0.06s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/string-result (0.05s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/number-hint (0.07s)
+    --- FAIL: TestOrdinaryToPrimitive/slabs-true/function-results-throw (0.07s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/getter-mutates-next (0.08s)
+    --- PASS: TestOrdinaryToPrimitive/slabs-true/second-get-throws (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	6.654s
+FAIL

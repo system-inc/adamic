@@ -112,7 +112,7 @@ func TestNodeFSRmForceUndefinedReproducer(t *testing.T) {
 	}
 	root := t.TempDir()
 	result := onNodeWith(t, inputRun{arguments: []string{root}}, path)
-	if result.exitCode != 70 || string(result.stdout) != "" || !strings.Contains(string(result.stderr), `"options.force"`) || !strings.Contains(string(result.stderr), "Received undefined") {
+	if result.exitCode != 1 || string(result.stdout) != "" || !strings.Contains(string(result.stderr), `"options.force"`) || !strings.Contains(string(result.stderr), "Received undefined") {
 		t.Fatalf("Node reproducer: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
 	entries, err := os.ReadDir(root)

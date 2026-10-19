@@ -1,0 +1,354 @@
+{
+  "removed_from_main": [
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementNodeMutants"
+    },
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementTypeGuardMutants"
+    }
+  ],
+  "added": [
+    {
+      "file": "cmd/adamic-test262/features_test.go",
+      "test": "TestRunnerRestArgumentFeatureSetAgrees"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_inherited_fields_guard_a_91820dc8786e"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_lowering_chain_tdz_catch_a_48308e661673"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_release_fma_a_bad80ff781e0"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_catch_callback_a_47ad27e180ed"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_dynamic_a_ed75404893df"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_dynamic_uncaught_a_49a5f2231db8"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_error_subclasses_a_0975ec294701"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_finally_callback_a_aa509020cf49"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_finally_completion_a_010d48a7ceb8"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_library_failures_a_7263b14b0902"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_library_host_a_79e70acdcf6f"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_library_types_a_411eb88a6485"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_liveness_a_070cbe481273"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_object_uncaught_a_5cfbe33955f3"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_region_payload_a_4bc2c598548e"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_rethrow_a_7bbae217e64b"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_step21_saved_error_a_18d8dd7d556e"
+    },
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "test": "TestFlowProgram____oracle_testdata_string_destructuring_a_1c84487cced0"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_inherited_fields_guard_a_91820dc8786e"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_lowering_chain_tdz_catch_a_48308e661673"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_release_fma_a_bad80ff781e0"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_catch_callback_a_47ad27e180ed"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_dynamic_a_ed75404893df"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_dynamic_uncaught_a_49a5f2231db8"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_error_subclasses_a_0975ec294701"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_finally_callback_a_aa509020cf49"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_finally_completion_a_010d48a7ceb8"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_library_failures_a_7263b14b0902"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_library_host_a_79e70acdcf6f"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_library_types_a_411eb88a6485"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_liveness_a_070cbe481273"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_object_uncaught_a_5cfbe33955f3"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_region_payload_a_4bc2c598548e"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_rethrow_a_7bbae217e64b"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_step21_saved_error_a_18d8dd7d556e"
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "test": "TestFreshWrites____oracle_testdata_string_destructuring_a_1c84487cced0"
+    },
+    {
+      "file": "internal/fuzz/features_test.go",
+      "test": "TestFuzzerFeatureMismatchStopsAtLink"
+    },
+    {
+      "file": "internal/lower/inherited_fields_guard_test.go",
+      "test": "TestInheritanceDerivedFieldOrder"
+    },
+    {
+      "file": "internal/lower/inherited_fields_guard_test.go",
+      "test": "TestInheritanceVoidBooleanOverrideReason"
+    },
+    {
+      "file": "internal/lower/narrowing_calls_test.go",
+      "test": "TestStep21NarrowAgainAfterWritingCall"
+    },
+    {
+      "file": "internal/lower/narrowing_calls_test.go",
+      "test": "TestStep21NonWritingCallControl"
+    },
+    {
+      "file": "internal/lower/narrowing_calls_test.go",
+      "test": "TestStep21TransitiveWritingCallRefusal"
+    },
+    {
+      "file": "internal/lower/narrowing_calls_test.go",
+      "test": "TestStep21WritingCallRefusal"
+    },
+    {
+      "file": "internal/lower/regexp_test.go",
+      "test": "TestRegExpHugeRepeatAgreesWithNodeNative"
+    },
+    {
+      "file": "internal/lower/step21_library_admission_test.go",
+      "test": "TestStep21LibraryAdmission"
+    },
+    {
+      "file": "internal/native/features_test.go",
+      "test": "TestRuntimeFeatureMismatchProgramFeature"
+    },
+    {
+      "file": "internal/native/features_test.go",
+      "test": "TestRuntimeFeatureMismatchRuntimeFeature"
+    },
+    {
+      "file": "internal/native/features_test.go",
+      "test": "TestRuntimeFeatureSetsNative"
+    },
+    {
+      "file": "internal/native/features_test.go",
+      "test": "TestRuntimeFeatureSetsWASI"
+    },
+    {
+      "file": "internal/native/features_test.go",
+      "test": "TestSplitTSGoRuntimeFeatures"
+    },
+    {
+      "file": "internal/native/wasm_test.go",
+      "test": "TestWASIUnit36"
+    },
+    {
+      "file": "internal/native/wasm_test.go",
+      "test": "TestWASIUnit37"
+    },
+    {
+      "file": "internal/native/wasm_test.go",
+      "test": "TestWASIUnit38"
+    },
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementNodeMutantsGroupOrder"
+    },
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementNodeMutantsNamedGroups"
+    },
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementNodeMutantsOffset"
+    },
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementTypeGuardMutantsArgument"
+    },
+    {
+      "file": "internal/oracle/regexp_replace_test.go",
+      "test": "TestRegExpReplacementTypeGuardMutantsGroup"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21ErrorBoundaries"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21FixtureMutants"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21ProposalOutcomes"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21ThrowPathLiveness"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21TypeScriptExtension"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21Uncaught"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21UncaughtKinds"
+    },
+    {
+      "file": "internal/oracle/step21_exceptions_test.go",
+      "test": "TestStep21UnknownAssertions"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21LiteralPropertyUseStops"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21NarrowedFlagsUseAgrees"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21NarrowedMemberUseStops"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21NarrowedParameterUseStops"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21NullPropertyUseStops"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21StoredPrimitiveLengthUseAgrees"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_uses_test.go",
+      "test": "TestStep21WiderParameterUseAgrees"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_witness_test.go",
+      "test": "TestStep21NonWritingControlAgreement"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_witness_test.go",
+      "test": "TestStep21PrimitiveWritingCallRefusal"
+    },
+    {
+      "file": "internal/oracle/step21_narrowing_witness_test.go",
+      "test": "TestStep21WritingCallTypeScriptAgreement"
+    },
+    {
+      "file": "internal/oracle/step21_terminal_test.go",
+      "test": "TestStep21ReadinessIsCatchable"
+    },
+    {
+      "file": "internal/oracle/step21_terminal_test.go",
+      "test": "TestStep21TerminalOracleDependencyHash"
+    },
+    {
+      "file": "internal/oracle/step21_terminal_test.go",
+      "test": "TestStep21TerminalOracleSourceHash"
+    },
+    {
+      "file": "internal/oracle/step21_writing_call_refusals_test.go",
+      "test": "TestStep21ExistingWritingCallRefusals"
+    },
+    {
+      "file": "stage1/cohere/css/gaps_test.go",
+      "test": "TestCSSClosedRepeatInTryGap"
+    },
+    {
+      "file": "stage1/cohere/json/gaps_test.go",
+      "test": "TestJSONClosedRepeatInTryGap"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_runtime_features_test.go",
+      "test": "TestProfileRuntimeFeaturesMatchNode"
+    },
+    {
+      "file": "stage1/cohere/markdownblocks/support_test.go",
+      "test": "TestNativeMutantUsesProgramsFeatures"
+    }
+  ]
+}

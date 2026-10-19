@@ -42,7 +42,7 @@ static adamic_json_result element(const adamic_array *array, size_t index) {
 static adamic_json_result to_json(adamic_object *receiver,const adamic_string *key) {
  if (receiver!=hook_receiver || key->length!=strlen(expected_key) || memcmp(key->bytes,expected_key,key->length)!=0) { adamic_panic("wrong hook receiver or key",26); }
  hook_calls++;
- if (throwing_hook) {adamic_thrown=adamic_retain(receiver);return (adamic_json_result){{.reference=NULL},&absent};}
+ if (throwing_hook) {adamic_thrown=adamic_retain(receiver);adamic_exception_pending=true;return (adamic_json_result){{.reference=NULL},&absent};}
  if (returned.schema != NULL && (returned.schema->kind==adamic_json_string || returned.schema->kind==adamic_json_array || returned.schema->kind==adamic_json_object || returned.schema->kind==adamic_json_union || returned.schema->kind==adamic_json_toJSON)) adamic_retain(returned.value.reference);
  return returned;
 }
@@ -50,7 +50,7 @@ static const adamic_json_runtime runtime = {describe,element,to_json};
 static void print_json(adamic_json_result value,const adamic_json_runtime *provider) {
  adamic_value empty = {.reference=NULL};
  adamic_string *text=adamic_json_stringify_runtime(value.value,value.schema,empty,NULL,empty,NULL,provider);
- if(adamic_thrown!=NULL) {adamic_release(adamic_thrown);adamic_thrown=NULL;puts("thrown");return;}
+ if(adamic_exception_pending) {adamic_release(adamic_thrown);adamic_thrown=NULL;adamic_exception_pending=false;puts("thrown");return;}
  if (text==NULL) puts("undefined"); else { fwrite(text->bytes,1,text->length,stdout); puts(""); adamic_release(text); }
 }
 int main(int argc,char **argv) {

@@ -1,0 +1,15 @@
+// Callback assignment from commandLineParser.ts:2297, retaining its old value on failure.
+// The extra consuming call pins #zm26nev's throw-path lifetime obligation.
+function grow(items: string[]): string[] { return [...items, `added${2}`]; }
+function fail(): string[] { throw new Error(`failure${3}`); }
+function read(): void {
+    let text = [`original${1}`];
+    try {
+        console.log(grow(text).join(','));
+        text = fail();
+    } catch (error) {
+        console.log(text.join(','));
+        if (error instanceof Error) console.log(error.message);
+    } finally { console.log(text.join(',')); }
+}
+read();

@@ -477,7 +477,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 				t.Fatal(err)
 			}
 			sum := sha256.Sum256(source)
-			flags := native.Flags(native.Options{Sanitize: true})
+			flags := native.SourceFlags(string(source), native.Options{Sanitize: true})
 			for index, flag := range flags {
 				if flag == "-O1" {
 					flags[index] = "-O0"

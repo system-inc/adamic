@@ -1,0 +1,9 @@
+=== RUN   TestFuzzerChoosesProgramRuntimeFeatures
+=== PAUSE TestFuzzerChoosesProgramRuntimeFeatures
+=== CONT  TestFuzzerChoosesProgramRuntimeFeatures
+    features_test.go:14: build go_build_./cmd/adamic_adamic b8f08f47b6d8 hit 0.34
+    features_test.go:27: program runtime features did not agree: fuzz.Outcome{Verdict:"finding", Key:"clang refused the C", Detail:"first attempt: finding clang refused the C\n/usr/bin/ld: /tmp/adamic-gate/main-bb3322.o:(.data.rel.ro.adamic_runtime_feature_reference[adamic_runtime_feature_reference.21576b91ab9b15712202e1b4a494877f]+0x0): undefined reference to `adamic_runtime_features_closure_convention'\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\nexclusive rerun: finding clang refused the C\n/usr/bin/ld: /tmp/adamic-gate/main-ef1b4a.o:(.data.rel.ro.adamic_runtime_feature_reference[adamic_runtime_feature_reference.21576b91ab9b15712202e1b4a494877f]+0x0): undefined reference to `adamic_runtime_features_closure_convention'\nclang: error: linker command failed with exit code 1 (use -v to see invocation)", Node:fuzz.Run{Stdout:[]uint8(nil), Stderr:[]uint8(nil), ExitCode:0, TimedOut:false}, Native:fuzz.Run{Stdout:[]uint8(nil), Stderr:[]uint8(nil), ExitCode:0, TimedOut:false}, Backend:fuzz.Run{Stdout:[]uint8(nil), Stderr:[]uint8(nil), ExitCode:0, TimedOut:false}, retry:true}
+--- FAIL: TestFuzzerChoosesProgramRuntimeFeatures (2.57s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fuzz	2.578s
+FAIL

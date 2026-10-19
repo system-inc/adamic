@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]","Action":"build-output","Output":"internal/lower/agree_test.go:451:31: cannot use entry.source (variable of type string) as nativeAgreementProgram value in argument to agreeSourceNative\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]","Action":"build-fail"}
+{"Time":"2026-10-19T00:03:00.110217634Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-19T00:03:00.110304493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:03:00.110320727Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/internal/lower [github.com/system-inc/adamic/internal/lower.test]"}

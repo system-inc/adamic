@@ -140,8 +140,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
 			e.line("if (!%s_declared) {", readyName(statement.Local))
-			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
-			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+			e.readinessError("Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization")
 			e.line("}")
 		}
 		if statement.Checked {

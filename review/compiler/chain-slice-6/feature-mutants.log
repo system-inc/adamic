@@ -1,0 +1,7 @@
+fixed-symbol: caught by mismatched runtime linked successfully; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/fixed-symbol/test.log
+drop-reference: caught by mismatched runtime linked successfully; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/drop-reference/test.log
+drop-retain: caught by mismatched runtime linked successfully; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/drop-retain/test.log
+header-forces-runtime-features: caught by mismatched runtime linked successfully; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/header-forces-runtime-features/test.log
+split-runtime-default-flags: unsanitized link rejection verified; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/split-runtime-default-flags/test.log
+split-runtime-default-flags: ordinary matching-build test catches mutant; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/split-runtime-default-flags-positive-control/test.log
+split-original-checker-default-flags: original checker fixture fails at unsanitized link; /workspace/adamic/review/compiler/chain-slice-6/feature-mutants/split-original-checker-default-flags/test.log

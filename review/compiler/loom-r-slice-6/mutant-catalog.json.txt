@@ -1,0 +1,833 @@
+[
+  {
+    "name": "missing-exception-edge",
+    "changes": [
+      [
+        "internal/flow/build.go",
+        "if CanThrow(b.program, instruction) {",
+        "if false && CanThrow(b.program, instruction) {"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness[.]a$",
+    "catcher": "runtime error:",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "assignment-kills-handler-value",
+    "changes": [
+      [
+        "internal/flow/liveness.go",
+        "ok && position == len(block.Instructions)-1",
+        "false && ok && position == len(block.Instructions)-1"
+      ]
+    ],
+    "selection": "^TestStep21ThrowPathLiveness$",
+    "catcher": "old text is dead",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "throw-temporaries-leak",
+    "changes": [
+      [
+        "internal/native/exceptions.go",
+        "e.line(\"adamic_release(%s);\", e.owned[index])",
+        "e.line(\"adamic_retain(%s);\", e.owned[index])"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/exceptions[.]a$",
+    "catcher": "leaks:",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "pending-finally-leak",
+    "changes": [
+      [
+        "internal/native/exceptions.go",
+        "e.hold(pending)",
+        "// mutant: pending completion has no owner"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion[.]a$",
+    "catcher": "leaks:",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "error-message-not-retained",
+    "changes": [
+      [
+        "internal/native/runtime/exceptions.c",
+        "error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);",
+        "error->slots[1].reference = message == NULL ? &empty_message : message;"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback[.]a$",
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "range-error-is-error",
+    "changes": [
+      [
+        "internal/lower/library_exceptions.go",
+        "Constructor: \"RangeError\"",
+        "Constructor: \"Error\""
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "wrong-range-message",
+    "changes": [
+      [
+        "internal/lower/library_exceptions.go",
+        "Invalid count value: ",
+        "Wrong count: "
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "type-error-is-error",
+    "changes": [
+      [
+        "internal/lower/library_exceptions.go",
+        "Constructor: \"TypeError\"",
+        "Constructor: \"Error\""
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_types[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "hash-failure-is-panic",
+    "changes": [
+      [
+        "internal/native/runtime/node_crypto.c",
+        "adamic_thrown = &error->heap;",
+        "adamic_panic(\"Digest already called\", 21); adamic_thrown = &error->heap;"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host[.]a$",
+    "catcher": "exit codes differ",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "host-type-error-is-error",
+    "changes": [
+      [
+        "internal/native/runtime/node_fs_file.c",
+        "strcmp(name, \"TypeError\") == 0 ? &adamic_host_type_error_class",
+        "strcmp(name, \"TypeError\") == 0 ? &adamic_host_error_class"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "soundness-check-is-catchable",
+    "changes": [
+      [
+        "internal/lower/locals.go",
+        "ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}",
+        "ir.Throw{Value: ir.Box{Value: ir.MakeError{Message: ir.StringConstant{Index: l.constant(message)}}}}"
+      ]
+    ],
+    "selection": "^TestStep21NarrowedParameterUseStops$",
+    "catcher": "per-use stop",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "error-ancestry-missing",
+    "changes": [
+      [
+        "internal/native/class_inheritance.go",
+        "base = \"&adamic_\" + map[string]string{\"Error\": \"error\", \"RangeError\": \"range_error\", \"TypeError\": \"type_error\", \"ReferenceError\": \"reference_error\"}[class.BuiltinError] + \"_class\"",
+        "base = \"NULL\""
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "error-default-name-wrong",
+    "changes": [
+      [
+        "internal/lower/error_subclasses.go",
+        "l.constant(name)",
+        "l.constant(\"Subclass\")"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "error-prefix-released-twice",
+    "changes": [
+      [
+        "internal/lower/error_subclasses.go",
+        "OwnStart: 2",
+        "OwnStart: 0"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "error-fields-out-of-order",
+    "changes": [
+      [
+        "internal/lower/class_inheritance.go",
+        "append(l.result.Functions[initializer].Body, initialized...)",
+        "append(initialized, l.result.Functions[initializer].Body...)"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "implicit-string-conversion",
+    "changes": [
+      [
+        "internal/native/runtime/exceptions.c",
+        "adamic_output_flush();",
+        "adamic_release(adamic_union_to_string(adamic_thrown)); adamic_output_flush();"
+      ]
+    ],
+    "selection": "^TestStep21Uncaught/step21_object_uncaught$",
+    "catcher": "uncaught diagnostic",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "pending-undefined-lost",
+    "changes": [
+      [
+        "internal/native/exceptions.go",
+        "e.line(\"adamic_exception_pending = true;\")\n\te.end()",
+        "e.line(\"adamic_exception_pending = (adamic_thrown != NULL);\")\n\te.end()"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "catch-assumes-error",
+    "changes": [
+      [
+        "internal/lower/exceptions.go",
+        "return ir.InstanceOf{Value: value, Class: identity}, true",
+        "_ = value; return ir.BooleanConstant{Value: true}, true"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+    "catcher": "exit codes differ",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "typeof-boolean-is-number",
+    "changes": [
+      [
+        "internal/native/runtime/union.c",
+        "case adamic_kind_boolean:\n\t\treturn &adamic_typeof_boolean;",
+        "case adamic_kind_boolean:\n\t\treturn &adamic_typeof_number;"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "null-is-undefined",
+    "changes": [
+      [
+        "internal/native/union.go",
+        "return \"&adamic_null\"",
+        "return \"NULL\""
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "finally-releases-twice",
+    "changes": [
+      [
+        "internal/native/exceptions.go",
+        "e.hold(pending)",
+        "e.hold(pending)\n\t\te.hold(pending)"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$",
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "region-payload-freed",
+    "changes": [
+      [
+        "internal/native/region.go",
+        "case ir.Box:\n\t\t\t// Boxing preserves reachability. A thrown object must escape the statement arena.\n\t\t\treturn derived(expression.Value)",
+        "case ir.Box:\n\t\t\treturn false"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_region_payload[.]a$",
+    "catcher": "AddressSanitizer: heap-use-after-free",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "uncaught-is-panic",
+    "changes": [
+      [
+        "internal/native/runtime/exceptions.c",
+        "exit(1);",
+        "exit(70);"
+      ]
+    ],
+    "selection": "^TestStep21Uncaught$",
+    "catcher": "stdout/exit differ",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "changed-source-keeps-terminal-mode",
+    "changes": [
+      [
+        "oracle/node.mjs",
+        ".digest('hex') === expectedHash",
+        ".digest('hex') !== undefined"
+      ]
+    ],
+    "selection": "^TestStep21TerminalOracleSourceHash$",
+    "catcher": "changed source borrowed terminal convention",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "changed-dependency-keeps-terminal-mode",
+    "changes": [
+      [
+        "oracle/node.mjs",
+        "(terminalDependencies.get(key) ?? [])",
+        "[]"
+      ]
+    ],
+    "selection": "^TestStep21TerminalOracleDependencyHash$",
+    "catcher": "changed dependency borrowed terminal convention",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "backend-drops-entry-source",
+    "changes": [
+      [
+        "internal/oracle/oracle_test.go",
+        "onJavaScriptBackend(t, program, path)",
+        "onJavaScriptBackend(t, program)"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails[.]a$",
+    "catcher": "JavaScript backend: exit codes differ",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "readiness-old-panic",
+    "changes": [
+      [
+        "internal/javascript/javascript.go",
+        "throw new ReferenceError(`Cannot access '${name}' before initialization`);",
+        "panic(`ReferenceError: Cannot access '${name}' before initialization`);"
+      ]
+    ],
+    "selection": "^TestStep21ReadinessIsCatchable$",
+    "catcher": "JavaScript language TDZ",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "rethrow-wrapped",
+    "changes": [
+      [
+        "internal/native/exceptions.go",
+        "e.line(\"adamic_thrown = adamic_retain(%s);\", value)",
+        "if read, ok := statement.Value.(ir.Read); ok && e.program.Locals[read.Local].Name == \"error\" { e.line(\"adamic_thrown = (adamic_heap *)adamic_error_new(((adamic_object *)%s)->slots[1].reference);\", value) } else { e.line(\"adamic_thrown = adamic_retain(%s);\", value) }"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "builtin-narrow-forgets-subtype",
+    "changes": [
+      [
+        "internal/lower/locals.go",
+        "matches = ir.InstanceOf{Value: held, Class: identity}",
+        "_ = identity; matches = ir.InstanceOf{Value: held, Class: -1}"
+      ]
+    ],
+    "selection": "^TestStep21NarrowedParameterUseStops$",
+    "catcher": "per-use stop",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "saved-error-wrapped",
+    "changes": [
+      [
+        "internal/native/exceptions.go",
+        "e.line(\"adamic_thrown = adamic_retain(%s);\", value)",
+        "e.line(\"adamic_thrown = (adamic_heap *)adamic_error_new(((adamic_object *)%s)->slots[1].reference);\", value)"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "backend-renders-stack",
+    "changes": [
+      [
+        "internal/javascript/javascript.go",
+        "builder.WriteString(uncaughtRuntime)",
+        "// mutant: use Node uncaught stack"
+      ]
+    ],
+    "selection": "^TestStep21Uncaught$",
+    "catcher": "uncaught diagnostic",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "backend-drops-line",
+    "changes": [
+      [
+        "internal/javascript/javascript.go",
+        "\tadamicUncaughtWrite(2, line.replace(/\\r/g, '\\\\r').replace(/\\n/g, '\\\\n') + '\\n');",
+        "\tvoid line;"
+      ]
+    ],
+    "selection": "^TestStep21Uncaught$",
+    "catcher": "uncaught diagnostic",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "native-renders-stack",
+    "changes": [
+      [
+        "internal/native/runtime/exceptions.c",
+        "\tfflush(stderr);",
+        "\tfputs(\"frame\\n\", stderr);\n\tfflush(stderr);"
+      ]
+    ],
+    "selection": "^TestStep21Uncaught$",
+    "catcher": "uncaught diagnostic",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "native-drops-line",
+    "changes": [
+      [
+        "internal/native/runtime/exceptions.c",
+        "\tfputs(\"Uncaught \", stderr);",
+        "\tif (false) {\n\tfputs(\"Uncaught \", stderr);"
+      ]
+    ],
+    "selection": "^TestStep21Uncaught$",
+    "catcher": "uncaught diagnostic",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "drop-write-set-test",
+    "changes": [
+      [
+        "internal/lower/narrowing_calls.go",
+        "if len(writes) != 0 {",
+        "if true {"
+      ]
+    ],
+    "selection": "^TestStep21NonWritingCallControl$",
+    "catcher": "narrow again after the call",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "admit-writing-call",
+    "changes": [
+      [
+        "internal/lower/refusals.go",
+        "if strings.HasSuffix(l.program.FileName(module), \".a\") {",
+        "if false {"
+      ]
+    ],
+    "selection": "^TestStep21WritingCallRefusal$",
+    "catcher": "writing-call refusal: got <nil>",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "whole-narrowed-type",
+    "changes": [
+      [
+        "internal/lower/locals.go",
+        "if l.narrowingPropertyReceiver(node) || l.narrowingWiderCall(node) {",
+        "if l.narrowingWiderCall(node) {"
+      ]
+    ],
+    "selection": "^TestStep21WritingCallTypeScriptAgreement$",
+    "catcher": ".name agreement",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "native-string-length",
+    "changes": [
+      [
+        "internal/native/runtime/union.c",
+        "return strcmp(name, \"length\") == 0 ? adamic_box_number(adamic_string_length((const adamic_string *)value)) : NULL;",
+        "return NULL;"
+      ]
+    ],
+    "selection": "^TestStep21StoredPrimitiveLengthUseAgrees$",
+    "catcher": "primitive length",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "native-scalar-properties",
+    "changes": [
+      [
+        "internal/native/runtime/union.c",
+        "if (value->kind == adamic_kind_number || value->kind == adamic_kind_boolean) return NULL;",
+        "// mutant: omit scalar absence"
+      ]
+    ],
+    "selection": "^TestNarrowedUnionMemberCheck$",
+    "catcher": "stale narrowing use failed",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "numeric-enum-as-finite",
+    "changes": [
+      [
+        "internal/lower/narrowing_uses.go",
+        " && !l.openNumericEnumType(l.checker.GetTypeAtLocation(node))",
+        ""
+      ]
+    ],
+    "selection": "^TestStep21NarrowedFlagsUseAgrees$",
+    "catcher": "stored flags",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "M02",
+    "changes": [
+      [
+        "internal/lower/class.go",
+        "metadata.Fields = append(metadata.Fields, l.result.Classes[base.class-1].Fields...)",
+        "// mutant: omitted inherited prefix"
+      ]
+    ],
+    "selection": "^TestInheritanceDerivedFieldOrder$",
+    "catcher": "B.Fields",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "M07",
+    "changes": [
+      [
+        "internal/lower/class_inheritance.go",
+        "return 0, true",
+        "return ir.Boolean, true"
+      ]
+    ],
+    "selection": "^TestInheritanceVoidBooleanOverrideReason$",
+    "catcher": "want NotYet",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "P_LOWER",
+    "changes": [
+      [
+        "internal/lower/lower.go",
+        "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+        "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) { if true { return nil, nil }"
+      ]
+    ],
+    "selection": "^TestInheritance(AllowsSoundOverrides|KeepsNominalTupleDestructuring|NativeSignatureNeighbors)$",
+    "catcher": "accepted inheritance must produce",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "readiness-old-effects",
+    "changes": [
+      [
+        "internal/lower/readiness.go",
+        "defer readinessExceptions(program)",
+        "// mutant: omit readiness exception propagation"
+      ]
+    ],
+    "selection": "TestNativeAgreesWithNode/internal/oracle/testdata/lowering_chain_tdz_catch[.]a$",
+    "catcher": "stdout differs",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "unknown-authorizes-assertion",
+    "changes": [
+      [
+        "internal/lower/cast_proof.go",
+        "as := node.AsAsExpression()",
+        "as := node.AsAsExpression(); if l.checker.GetTypeAtLocation(as.Expression).Flags() & checker.TypeFlagsUnknown != 0 { return castProof{}, nil }"
+      ],
+      [
+        "internal/lower/cast.go",
+        "as := node.AsAsExpression()",
+        "as := node.AsAsExpression(); if l.checker.GetTypeAtLocation(as.Expression).Flags() & checker.TypeFlagsUnknown != 0 { value, err := l.expression(as.Expression); if err != nil { return nil, err }; return ir.Narrow{Value: value, To: ir.Object}, nil }"
+      ]
+    ],
+    "selection": "^TestStep21UnknownAssertions$",
+    "catcher": "want Refused, got <nil>",
+    "package": "internal/oracle",
+    "replace_all": false
+  },
+  {
+    "name": "fixed-symbol",
+    "changes": [
+      [
+        "internal/native/runtime/adamic.h",
+        "#define ADAMIC_FEATURE_NAME_PARTS(a, b, c, d, e) adamic_runtime_features##a##b##c##d##e",
+        "#define ADAMIC_FEATURE_NAME_PARTS(a, b, c, d, e) adamic_runtime_features"
+      ]
+    ],
+    "selection": "^TestRuntimeFeatureMismatchProgramFeature$",
+    "catcher": "mismatched runtime linked successfully",
+    "package": "internal/native",
+    "replace_all": false
+  },
+  {
+    "name": "drop-reference",
+    "changes": [
+      [
+        "internal/native/runtime/adamic.h",
+        "static const void *const adamic_runtime_feature_reference __attribute__((used, retain)) = &ADAMIC_RUNTIME_FEATURES;",
+        "/* mutant: no unit reference */"
+      ]
+    ],
+    "selection": "^TestRuntimeFeatureMismatchProgramFeature$",
+    "catcher": "mismatched runtime linked successfully",
+    "package": "internal/native",
+    "replace_all": false
+  },
+  {
+    "name": "drop-retain",
+    "changes": [
+      [
+        "internal/native/runtime/adamic.h",
+        "__attribute__((used, retain))",
+        "__attribute__((used))"
+      ]
+    ],
+    "selection": "^TestRuntimeFeatureMismatchProgramFeature$",
+    "catcher": "mismatched runtime linked successfully",
+    "package": "internal/native",
+    "replace_all": false
+  },
+  {
+    "name": "header-forces-runtime-features",
+    "changes": [
+      [
+        "internal/native/library.go",
+        "\t// Keep header bytes unchanged.",
+        " for _, feature := range runtimeFeatures {\n if slicesContain(flags, \"-D\"+feature+\"=1\") {for i:=range files {if files[i].name==\"adamic.h\" {files[i].contents=append([]byte(\"#define \"+feature+\" 1\\n\"),files[i].contents...)}}}\n }\n // Keep header bytes unchanged."
+      ]
+    ],
+    "selection": "^TestRuntimeFeatureMismatchRuntimeFeature$",
+    "catcher": "mismatched runtime linked successfully",
+    "package": "internal/native",
+    "replace_all": false
+  },
+  {
+    "name": "split-runtime-default-flags",
+    "changes": [
+      [
+        "internal/native/units_tsgo.go",
+        "flags := append(sourceFlags(source, options), \"-DADAMIC_TSGO\")",
+        "flags := append(Flags(options), \"-DADAMIC_TSGO\")"
+      ]
+    ],
+    "selection": "^TestSplitTSGoRuntimeFeatures$",
+    "catcher": "undefined reference",
+    "package": "internal/native",
+    "replace_all": false
+  },
+  {
+    "name": "lint-profile-default-runtime",
+    "changes": [
+      [
+        "stage1/cohere/lint/profile_compilation_main_test.go",
+        "return native.Build(source, output, options)",
+        "library, err := native.RuntimeLibrary(\"\",options)\n if err != nil {return err}\n path := filepath.Join(filepath.Dir(output),\"main.c\")\n if err:=os.WriteFile(path,[]byte(source),0644);err!=nil{return err}\n flags:=append(native.SourceFlags(source,options),\"-I\",filepath.Dir(library),\"-o\",output,path)\n flags=append(flags,native.RuntimeLinkFlags(library)...);flags=append(flags,\"-lm\")\n if output,err:=toolchain.Command(\"clang\",flags...).CombinedOutput();err!=nil{return fmt.Errorf(\"profile clang: %w\\n%s\",err,output)}\n return nil"
+      ]
+    ],
+    "selection": "^TestProfileRuntimeFeaturesMatchNode$",
+    "catcher": "undefined reference",
+    "package": "stage1/cohere/lint",
+    "replace_all": false
+  },
+  {
+    "name": "parallel-undefined-winner-lost",
+    "changes": [
+      [
+        "internal/native/runtime/parallel.c",
+        "if (state.exception_index != SIZE_MAX) {",
+        "if (state.exception != NULL) {"
+      ]
+    ],
+    "selection": "^TestParallelUndefinedExceptionSanitized$",
+    "catcher": "signal: aborted",
+    "package": "internal/native",
+    "replace_all": false
+  },
+  {
+    "name": "error-ancestry-missing-independent",
+    "changes": [
+      [
+        "internal/native/class_inheritance.go",
+        "base = \"&adamic_\" + map[string]string{\"Error\": \"error\", \"RangeError\": \"range_error\", \"TypeError\": \"type_error\", \"ReferenceError\": \"reference_error\"}[class.BuiltinError] + \"_class\"",
+        "base = \"NULL\""
+      ]
+    ],
+    "selection": "^TestErrorSubclassAncestryAgreesWithNode$",
+    "catcher": "ancestry:",
+    "package": "internal/oracle",
+    "replace_all": true
+  },
+  {
+    "name": "drop-fresh-nullish-proof",
+    "changes": [
+      [
+        "internal/lower/narrowing_calls.go",
+        "if a.nullishProof(flow, symbol, observed) {",
+        "if false {"
+      ]
+    ],
+    "selection": "^TestStep21NullishNarrowingAfterWritingCall$",
+    "catcher": "Lower refused acceptance row",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "nullish-guard-claims-other-narrowings",
+    "changes": [
+      [
+        "internal/lower/narrowing_calls.go",
+        "if !a.checker.IsTypeAssignableTo(member, observed) || nominalNarrowingChanged(member, observed) {",
+        "if false {"
+      ]
+    ],
+    "selection": "^TestStep21NullishGuardDoesNotRestoreOtherNarrowings$",
+    "catcher": "nullish guard restored an unsupported narrowing",
+    "package": "internal/lower",
+    "replace_all": false
+  },
+  {
+    "name": "builtin-error-write-unrecorded",
+    "changes": [
+      [
+        "internal/lower/error_subclasses.go",
+        "Site: nameSite",
+        "Site: nameSite - nameSite"
+      ]
+    ],
+    "selection": "^TestFreshWrites____oracle_testdata_step21_error_subclasses_",
+    "catcher": "a write lowering didn't record",
+    "package": "internal/fresh",
+    "replace_all": false
+  },
+  {
+    "name": "builtin-error-write-unrecorded-replay",
+    "changes": [
+      [
+        "internal/lower/error_subclasses.go",
+        "Site: nameSite",
+        "Site: nameSite - nameSite"
+      ]
+    ],
+    "selection": "^TestFreshWrites____oracle_testdata_step21_error_subclasses_",
+    "catcher": "a write lowering didn't record",
+    "package": "internal/fresh",
+    "replace_all": false
+  },
+  {
+    "name": "fuzzer-reuses-featureless-runtime",
+    "changes": [
+      [
+        "internal/fuzz/run.go",
+        "if prebuilt != \"\" && len(native.Features(string(source))) == 0 {",
+        "if prebuilt != \"\" {"
+      ]
+    ],
+    "selection": "^TestFuzzerChoosesProgramRuntimeFeatures$",
+    "catcher": "program runtime features did not agree",
+    "package": "internal/fuzz",
+    "replace_all": false
+  },
+  {
+    "name": "unconditional-wider-storage-read",
+    "changes": [
+      [
+        "internal/lower/narrowing_uses.go",
+        "\tfor _, site := range writingCallNarrowings(l.checker, []*ast.SourceFile{ast.GetSourceFileOfNode(node).AsSourceFile()}, true) {\n\t\tif site.Read == node {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n",
+        "\tfor _, site := range writingCallNarrowings(l.checker, []*ast.SourceFile{ast.GetSourceFileOfNode(node).AsSourceFile()}, true) {\n\t\tif site.Read == node {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn true\n"
+      ]
+    ],
+    "selection": "^TestStep21FreshNumberObservation$",
+    "catcher": "Lower refused acceptance row",
+    "package": "internal/lower",
+    "replace_all": false
+  }
+]

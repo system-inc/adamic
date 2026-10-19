@@ -1,0 +1,19 @@
+{"Time":"2026-10-18T22:39:07.375020896Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T22:39:07.381373315Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode"}
+{"Time":"2026-10-18T22:39:07.381465993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"=== RUN   TestErrorSubclassAncestryAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:39:07.381491781Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"=== PAUSE TestErrorSubclassAncestryAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:39:07.381494145Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode"}
+{"Time":"2026-10-18T22:39:07.381499312Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode"}
+{"Time":"2026-10-18T22:39:07.381500875Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"=== CONT  TestErrorSubclassAncestryAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:39:10.132177977Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"    step21_error_ancestry_test.go:18: gate cache node miss\n"}
+{"Time":"2026-10-18T22:39:10.389758161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"    oracle_test.go:619: gate cache native miss\n"}
+{"Time":"2026-10-18T22:39:10.484288032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"    step21_error_ancestry_test.go:27: gate cache node miss\n"}
+{"Time":"2026-10-18T22:39:10.521574199Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"    oracle_test.go:633: gate cache native miss\n"}
+{"Time":"2026-10-18T22:39:10.691720449Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Output":"--- PASS: TestErrorSubclassAncestryAgreesWithNode (3.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:39:10.691756362Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestErrorSubclassAncestryAgreesWithNode","Elapsed":3.31}
+{"Time":"2026-10-18T22:39:10.691779056Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T22:39:10.691783152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-18T22:39:10.691785445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-18T22:39:10.691787078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-18T22:39:10.694126046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t3.319s\n"}
+{"Time":"2026-10-18T22:39:10.694176481Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":3.319}

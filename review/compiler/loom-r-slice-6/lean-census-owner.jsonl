@@ -1,0 +1,13 @@
+{"Time":"2026-10-18T23:46:45.507428955Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts"}
+{"Time":"2026-10-18T23:46:45.511803387Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports"}
+{"Time":"2026-10-18T23:46:45.512035552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports","Output":"=== RUN   TestProduct_LeanCensusExports\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:45.51206091Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports","Output":"=== PAUSE TestProduct_LeanCensusExports\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:45.512063263Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports"}
+{"Time":"2026-10-18T23:46:45.512065647Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports"}
+{"Time":"2026-10-18T23:46:45.512067109Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports","Output":"=== CONT  TestProduct_LeanCensusExports\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:59.479661075Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports","Output":"    census_test.go:60: build go_list_-export__./internal/native_listing.json 66d32002fe83 miss 13.78\n"}
+{"Time":"2026-10-18T23:46:59.479722116Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports","Output":"--- PASS: TestProduct_LeanCensusExports (13.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:59.47972523Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Test":"TestProduct_LeanCensusExports","Elapsed":13.97}
+{"Time":"2026-10-18T23:46:59.479748194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:46:59.488143616Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Output":"ok  \tgithub.com/system-inc/adamic/internal/native/runtimeproducts\t13.980s\n"}
+{"Time":"2026-10-18T23:46:59.488203786Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native/runtimeproducts","Elapsed":13.981}

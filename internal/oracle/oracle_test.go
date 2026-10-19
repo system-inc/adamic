@@ -251,11 +251,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/method_closures.a", true, false},
 	{"internal/oracle/testdata/splice_empty.a", true, false},
 	// A narrowing outlives a call that assigns the variable again: what was narrowed away is checked.
-	{"internal/oracle/testdata/narrowed_reads.a", true, false},
-	{"internal/oracle/testdata/narrowed_writes.a", true, false},
-	{"internal/oracle/testdata/narrowed_methods.a", true, false},
+	{"internal/oracle/testdata/step21_refused/narrowed_reads.a", true, false},
+	{"internal/oracle/testdata/step21_refused/narrowed_writes.a", true, false},
+	{"internal/oracle/testdata/step21_refused/narrowed_methods.a", true, false},
 	{"internal/oracle/testdata/narrowed_fields.a", true, false},
-	{"internal/oracle/testdata/narrowed_numbers.a", true, true},
+	{"internal/oracle/testdata/step21_refused/narrowed_numbers.a", true, true},
 	{"internal/oracle/testdata/narrowed_compared.a", true, false},
 	// The same sorts at the top level, where only the globals' release at exit lets the leak check see.
 	{"internal/oracle/testdata/sort_top_level.a", true, false},
@@ -485,7 +485,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/sweeps/regexp_methods.a", true, false},
 	{"internal/oracle/testdata/regexp_matchall_nonglobal.a", true, false},
 	{"internal/oracle/testdata/regexp_replaceall_nonglobal.a", true, false},
-	{"internal/oracle/testdata/regexp_null_narrowed.a", true, false},
+	{"internal/oracle/testdata/step21_refused/regexp_null_narrowed.a", true, false},
 	{"internal/oracle/testdata/regexp_replace.a", true, false},
 	{"internal/oracle/testdata/regexp_split.a", true, false},
 	{"internal/oracle/testdata/regexp_exec.a", true, false},
@@ -562,13 +562,29 @@ func onNode(t *testing.T, path string) run {
 }
 
 // onJavaScriptBackend runs a lowered program through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program) run {
+// An explicit source path carries a pinned terminal-check convention; Program.Source is only a display name.
+func onJavaScriptBackend(t *testing.T, program *ir.Program, source ...string) run {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+	code := javascript.JavaScript(program)
+	if len(source) != 0 {
+		// The convention depends on the original entry and its import graph, so both
+		// participate in the JavaScript observation's cache key through this comment.
+		label, err := filepath.Rel(repository, source[0])
+		if err != nil || !filepath.IsLocal(label) {
+			label = filepath.Base(source[0])
+		}
+		code = fmt.Sprintf("// Source oracle: %q %s\n", filepath.ToSlash(label), sourceIdentity(t, source[0])) + code
+	}
+	if err := os.WriteFile(path, []byte(code), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	return onNode(t, path)
+	if len(source) == 0 {
+		return onNode(t, path)
+	}
+	return cachedNode(t, path, func() run {
+		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), "--terminal-source", source[0], path)
+	})
 }
 
 // lowered checks and lowers a program, or returns stage 0's refusal.
@@ -677,6 +693,12 @@ func disagreement(oracle run, native run) string {
 		return "exit codes differ"
 	case !bytes.Equal(oracle.stdout, native.stdout):
 		return "stdout differs"
+	case bytes.Contains(native.stderr, []byte("Sanitizer")) || bytes.Contains(native.stderr, []byte("runtime error:")):
+		return "sanitizer failure"
+	case oracle.exitCode == 1:
+		// The adopted exception contract excludes Node's renderer and stack text.
+		// Panics remain exit 70 and retain their owned stderr comparison.
+		return ""
 	case !bytes.Equal(oracle.stderr, native.stderr):
 		return "stderr differs"
 	}
@@ -716,7 +738,7 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 				// TestFamiliesCatchAPlantedCase's mutant: TestTheOracleCatchesOneByte's byte, after lowering.
 				program.Strings[0] += "!"
 			}
-			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program, path)
 			// A program that panicked stopped where it stood, as Node's does, so what it held then
 			// isn't a leak; every program that finishes must have let go of everything.
 			native, leaked, comparable := nativelyCheckingLeaks(t, program, !fixture.checked && oracle.exitCode == 0)

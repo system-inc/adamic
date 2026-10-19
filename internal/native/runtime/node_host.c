@@ -146,10 +146,13 @@ static void host_directory_error(int error, const char *operation, const adamic_
         adamic_release(message);
         message = closed;
     }
-    adamic_thrown = adamic_object_new(&shape);
-    adamic_thrown->slots[0].reference = &error_name;
-    adamic_thrown->slots[1].reference = message;
-    adamic_thrown->slots[2].reference = prefix;
+    adamic_object *raised = adamic_object_new(&shape);
+    raised->class = &adamic_host_error_class;
+    adamic_thrown = &raised->heap;
+    adamic_exception_pending = true;
+    raised->slots[0].reference = &error_name;
+    raised->slots[1].reference = message;
+    raised->slots[2].reference = prefix;
     adamic_release(reason);
     adamic_release(syscall);
 }
@@ -200,7 +203,7 @@ double adamic_fs_file_host_chdir(const adamic_string *directory) {
     adamic_string *target = adamic_decode_utf8((const unsigned char *)path, strlen(path));
     free(path);
     adamic_string *from = adamic_fs_file_host_cwd();
-    if (adamic_thrown != NULL) { adamic_release(target); return 0; }
+    if (adamic_exception_pending) { adamic_release(target); return 0; }
     host_directory_error(error, "chdir", from, target);
     adamic_release(target);
     adamic_release(from);

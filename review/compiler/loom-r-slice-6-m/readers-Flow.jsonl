@@ -1,0 +1,18 @@
+{"Time":"2026-10-19T00:38:59.25653351Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-19T00:38:59.261426488Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow"}
+{"Time":"2026-10-19T00:38:59.261489852Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Output":"=== RUN   TestCallTargetExportInputsFlow\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:03.425840731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Output":"    call_targets_guard_test.go:209: build go list -export  ./internal/flow ./internal/leakcheck listing.json: write /tmp/adamic-gate/loom-r-slice-6/products/local/.building-c3814429703f-1438051388/exports/227.a: no space left on device\n","OutputType":"error"}
+{"Time":"2026-10-19T00:39:03.425909604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Output":"--- FAIL: TestCallTargetExportInputsFlow (4.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:03.425912848Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetExportInputsFlow","Elapsed":4.16}
+{"Time":"2026-10-19T00:39:03.425946038Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow"}
+{"Time":"2026-10-19T00:39:03.425950765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow","Output":"=== RUN   TestCallTargetReadersFlow\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:03.425960269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow","Output":"=== PAUSE TestCallTargetReadersFlow\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:03.425961731Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow"}
+{"Time":"2026-10-19T00:39:03.425963514Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow"}
+{"Time":"2026-10-19T00:39:03.425964816Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow","Output":"=== CONT  TestCallTargetReadersFlow\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:04.330025437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow","Output":"    call_targets_guard_test.go:249: build go list -export  ./internal/flow ./internal/leakcheck listing.json: write /tmp/adamic-gate/loom-r-slice-6/products/local/.building-c3814429703f-4030967446/exports/227.a: no space left on device\n","OutputType":"error"}
+{"Time":"2026-10-19T00:39:04.330100138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow","Output":"--- FAIL: TestCallTargetReadersFlow (0.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:04.330102852Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallTargetReadersFlow","Elapsed":0.9}
+{"Time":"2026-10-19T00:39:04.330111054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:04.339502146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\tgithub.com/system-inc/adamic/internal/ir\t5.083s\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:39:04.339577418Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":5.083}

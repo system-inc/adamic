@@ -1,0 +1,98 @@
+[
+  {
+    "path": "internal/oracle/testdata/review/agree/step21_refused/fxspptb_047cb0d_n_arrayindex.a",
+    "before": "// a-check: refused a narrowed read of list after drop() can write it",
+    "after": "// a-check: refused a narrowed read of list after drop() can write it; narrow again after the call",
+    "body_sha256": "b7e22bf1e20ff18644490b57789c40afc99b9ad938e63d276421f529e8c63dac"
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/step21_refused/fxspptb_047cb0d_n_try.a",
+    "before": "// a-check: refused a narrowed read of chain after drop() can write it",
+    "after": "// a-check: refused a narrowed read of chain after drop() can write it; narrow again after the call",
+    "body_sha256": "31964214b98fa7e544ab3014a050c35531af242a92c595e61b563e262d6cba79"
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/step21_refused/fxspptb_9984394_defined_in_try.a",
+    "before": "// a-check: refused a narrowed read of current after clear() can write it",
+    "after": "// a-check: refused a narrowed read of current after clear() can write it; narrow again after the call",
+    "body_sha256": "3e5788e3ee8f6c1677978ac51d10804ee26a1d9cfd5259cceef76514ecaf3982"
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/step21_refused/fxspptb_e4eec87_f2_union_narrow_call.a",
+    "before": "// a-check: refused a narrowed read of shared after toNumber() can write it",
+    "after": "// a-check: refused a narrowed read of shared after toNumber() can write it; narrow again after the call",
+    "body_sha256": "7f0c8dde0cf37ce0b57240096ad62a8a8d506d8cde14c204f22c5f2208faee18"
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/step21_refused/fxspptb_e4eec87_f2b_union_narrow_number.a",
+    "before": "// a-check: refused a narrowed read of shared after toText() can write it",
+    "after": "// a-check: refused a narrowed read of shared after toText() can write it; narrow again after the call",
+    "body_sha256": "2c95ad546e11f3a46627e9eb730bdc63aa39ce889f44d97dea0b3e365bcce33b"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/047cb0d_n_arrayindex.a",
+    "before": "// a-check: refused a narrowed read of list after drop() can write it",
+    "after": "// a-check: refused a narrowed read of list after drop() can write it; narrow again after the call",
+    "body_sha256": "b7e22bf1e20ff18644490b57789c40afc99b9ad938e63d276421f529e8c63dac"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/builtin_narrow_terminal.a",
+    "before": "// a-check: refused a narrowed read of value after change() can write it",
+    "after": "// a-check: refused a narrowed read of value after change() can write it; narrow again after the call",
+    "body_sha256": "c6273c04f4e421e248443ab2c5b27196332d89409f2c54fb123b8a901054513b"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/e4eec87_f2_union_narrow_call.a",
+    "before": "// a-check: refused a narrowed read of shared after toNumber() can write it",
+    "after": "// a-check: refused a narrowed read of shared after toNumber() can write it; narrow again after the call",
+    "body_sha256": "62bfda0da5d586703960e492f762f8a9740c88fdaef45b227b6db8126d876f6f"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/e4eec87_f2b_union_narrow_number.a",
+    "before": "// a-check: refused a narrowed read of shared after toText() can write it",
+    "after": "// a-check: refused a narrowed read of shared after toText() can write it; narrow again after the call",
+    "body_sha256": "6c739899ab277d35ab3fda40a500184ce74fd9943ebb958d36e95d4b1b226e68"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/narrowed_methods.a",
+    "before": "// a-check: refused a narrowed read of box after drop() can write it",
+    "after": "// a-check: refused a narrowed read of box after drop() can write it; narrow again after the call",
+    "body_sha256": "59741aecd02b4fafd8aae1fdb0d329a703b97d520840a8b527d92e7c4e1f127f"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/narrowed_numbers.a",
+    "before": "// a-check: refused a narrowed read of count after drop() can write it",
+    "after": "// a-check: refused a narrowed read of count after drop() can write it; narrow again after the call",
+    "body_sha256": "c4a333144b42125b9eb4077a21994b3982f3b6d02be2e36bbe1fa0351a8e5fb7"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/narrowed_reads.a",
+    "before": "// a-check: refused a narrowed read of chain after drop() can write it",
+    "after": "// a-check: refused a narrowed read of chain after drop() can write it; narrow again after the call",
+    "body_sha256": "d689a2ac70535e33bd9f14e943a57577647594e74806d92d9934c3bc7feb802c"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/narrowed_union_valid.a",
+    "before": "// a-check: refused a narrowed read of shared after keep() can write it",
+    "after": "// a-check: refused a narrowed read of shared after keep() can write it; narrow again after the call",
+    "body_sha256": "d7c2db25f044a7cfd377323fc6b6181a9c4e20cda73e179b275056a9e8affdc4"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/narrowed_writes.a",
+    "before": "// a-check: refused a narrowed read of chain after drop() can write it",
+    "after": "// a-check: refused a narrowed read of chain after drop() can write it; narrow again after the call",
+    "body_sha256": "4e8450502bf85e23b563f115090a66b58acc5450984bc32a890b2b5c244c2057"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/regexp_null_narrowed.a",
+    "before": "// a-check: refused a narrowed read of result after lose() can write it",
+    "after": "// a-check: refused a narrowed read of result after lose() can write it; narrow again after the call",
+    "body_sha256": "691a4afae5803416ec4bd0b8fb142c5e3fad934f0060d4b49df1035f75c7f846"
+  },
+  {
+    "path": "internal/oracle/testdata/step21_refused/step21_soundness_terminal.a",
+    "before": "// a-check: refused a narrowed read of value after change() can write it",
+    "after": "// a-check: refused a narrowed read of value after change() can write it; narrow again after the call",
+    "body_sha256": "8def24de4d59fa49952fb5c45eb08d2fd592a165a57af10b7a9f759ae6efbc94"
+  }
+]

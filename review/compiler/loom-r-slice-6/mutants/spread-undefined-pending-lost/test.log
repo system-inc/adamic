@@ -1,0 +1,11 @@
+=== RUN   TestSpreadUndefinedThrowStopsBeforeNextGetter
+=== PAUSE TestSpreadUndefinedThrowStopsBeforeNextGetter
+=== CONT  TestSpreadUndefinedThrowStopsBeforeNextGetter
+    step21_spread_pending_test.go:35: sanitized spread: stdout differs
+--- FAIL: TestSpreadUndefinedThrowStopsBeforeNextGetter (42.26s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	42.280s
+FAIL

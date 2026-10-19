@@ -14,7 +14,6 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 	t.Parallel()
 	for _, gap := range []struct{ path, stdout, refusal string }{
 		{"gaps/2_array_shift.ts", "a\n1\n", "inherited library member shift read as an own field"},
-		{"gaps/5_repeat_in_try.ts", "a\n", "a try around repeat"},
 	} {
 		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and that wait
 		// counts as the parent's own time (212.2 s in the package on Home, for two gaps of 0.15 s each alone on one core).
@@ -100,6 +99,30 @@ func TestClosedOptionalBooleanConditionGap(t *testing.T) {
 		{"Node", onNode(t, path)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program)},
 	} {
 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "important\n" {
+			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+// Step 21 makes the dynamic library failure catchable in both backends.
+func TestCSSClosedRepeatInTryGap(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("gaps/5_repeat_in_try.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	nativeRun, binary := natively(t, program)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"Node", onNode(t, path)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "a\n" {
 			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
 		}
 	}

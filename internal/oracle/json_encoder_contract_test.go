@@ -62,7 +62,7 @@ func jsonEncoderContract(t *testing.T, backend int) {
 		{"array_descriptor", "case adamic_json_boolean: ascii(w, s.value.boolean ? \"true\" : \"false\");", "case adamic_json_boolean: ascii(w, s.value.boolean ? \"1\" : \"0\");"},
 		{"tagged_null", "case adamic_json_null: ascii(w, \"null\"); return true;", "case adamic_json_null: return false;"},
 		{"union_tag", "value.boolean = ((adamic_boolean_box *)reference)->boolean", "value.boolean = !((adamic_boolean_box *)reference)->boolean"},
-		{"absent_element", "if (!present && adamic_thrown == NULL) { ascii(w, \"null\"); }", "if (!present && adamic_thrown == NULL) { ascii(w, \"false\"); }"},
+		{"absent_element", "if (!present && !adamic_exception_pending) { ascii(w, \"null\"); }", "if (!present && !adamic_exception_pending) { ascii(w, \"false\"); }"},
 	}
 	for _, mutation := range mutations[backend-2 : backend-1] {
 		t.Run(mutation.name, func(t *testing.T) {

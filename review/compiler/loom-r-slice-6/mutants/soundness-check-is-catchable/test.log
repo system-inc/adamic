@@ -1,0 +1,11 @@
+=== RUN   TestStep21NarrowedParameterUseStops
+=== PAUSE TestStep21NarrowedParameterUseStops
+=== CONT  TestStep21NarrowedParameterUseStops
+    step21_narrowing_uses_test.go:16: sanitized native per-use stop: exit codes differ; got exit 1 stdout "" stderr "Uncaught Error: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+--- FAIL: TestStep21NarrowedParameterUseStops (3.09s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.099s
+FAIL

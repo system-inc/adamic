@@ -1,0 +1,92 @@
+--- main/internal/oracle/testdata/step21_liveness.a
++++ slice/internal/oracle/testdata/step21_liveness.a
+@@ -10,10 +10,13 @@
+ static adamic_string adamic_string_2 = ADAMIC_STRING("failure");
+ static adamic_string adamic_string_3 = ADAMIC_STRING("original");
+ static adamic_string adamic_string_4 = ADAMIC_STRING(",");
++static adamic_string adamic_string_5 = ADAMIC_STRING("object");
++static adamic_string adamic_string_6 = ADAMIC_STRING("union member where the checker narrowed it away: a call since the narrowing put it back");
+ 
+ static adamic_array * adamic_function_0_grow(adamic_array * adamic_local_0_items);
+ static adamic_array * adamic_function_1_fail(void);
+ static void adamic_function_2_read(void);
++static adamic_object * adamic_function_3_narrowed_union_member(adamic_heap * adamic_local_3_argument);
+ 
+ static adamic_array * adamic_function_0_grow(adamic_array * adamic_local_0_items) {
+ 	ADAMIC_CHECK_STACK();
+@@ -37,8 +40,9 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_string * adamic_temporary_6 = adamic_string_from_number((0x1.8p+01));
+ 	adamic_string * adamic_temporary_7 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_2, adamic_temporary_6});
+-	adamic_object * adamic_temporary_8 = adamic_error_new(adamic_temporary_7);
+-	adamic_thrown = adamic_retain(adamic_temporary_8);
++	adamic_object * adamic_temporary_8 = adamic_error_new_kind(adamic_temporary_7, "Error");
++	adamic_thrown = adamic_retain(((adamic_heap *)(adamic_temporary_8)));
++	adamic_exception_pending = true;
+ 	adamic_release(adamic_temporary_8);
+ 	adamic_release(adamic_temporary_7);
+ 	adamic_release(adamic_temporary_6);
+@@ -62,7 +66,7 @@
+ 		adamic_release(adamic_temporary_14);
+ 		adamic_release(adamic_temporary_13);
+ 		adamic_array * adamic_temporary_15 = adamic_function_1_fail();
+-		if (adamic_thrown != NULL) {
++		if (adamic_exception_pending) {
+ 			adamic_release(adamic_temporary_15);
+ 			goto adamic_landing_12;
+ 		}
+@@ -78,23 +82,27 @@
+ 	goto adamic_done_12;
+ 	adamic_landing_12:;
+ 	{
+-		adamic_object *adamic_temporary_18 = adamic_thrown;
++		adamic_heap *adamic_temporary_18 = adamic_thrown;
+ 		adamic_thrown = NULL;
+-		adamic_object * adamic_local_2_error = adamic_temporary_18;
++		adamic_exception_pending = false;
++		adamic_heap * adamic_local_2_error = ((adamic_heap *)adamic_temporary_18);
+ 		adamic_string * adamic_temporary_19 = adamic_array_join(adamic_local_1_text, &adamic_string_4, adamic_join_strings);
+ 		adamic_write_line(adamic_stdout, adamic_temporary_19);
+ 		adamic_release(adamic_temporary_19);
+-		if (true) {
+-			adamic_string * adamic_temporary_20 = adamic_retain(((adamic_string *)(&adamic_local_2_error->slots[1])->reference));
+-			adamic_write_line(adamic_stdout, adamic_temporary_20);
+-			adamic_release(adamic_temporary_20);
++		bool adamic_temporary_20 = adamic_instanceof(adamic_local_2_error, &adamic_error_class);
++		if (adamic_temporary_20) {
++			adamic_object * adamic_temporary_21 = adamic_function_3_narrowed_union_member(adamic_local_2_error);
++			adamic_string * adamic_temporary_22 = adamic_retain(((adamic_string *)(&adamic_temporary_21->slots[1])->reference));
++			adamic_write_line(adamic_stdout, adamic_temporary_22);
++			adamic_release(adamic_temporary_22);
++			adamic_release(adamic_temporary_21);
+ 		}
+ 		adamic_release(adamic_local_2_error);
+ 	}
+ 	{
+-		adamic_string * adamic_temporary_21 = adamic_array_join(adamic_local_1_text, &adamic_string_4, adamic_join_strings);
+-		adamic_write_line(adamic_stdout, adamic_temporary_21);
+-		adamic_release(adamic_temporary_21);
++		adamic_string * adamic_temporary_23 = adamic_array_join(adamic_local_1_text, &adamic_string_4, adamic_join_strings);
++		adamic_write_line(adamic_stdout, adamic_temporary_23);
++		adamic_release(adamic_temporary_23);
+ 	}
+ 	goto adamic_done_12;
+ 	adamic_done_12:;
+@@ -103,6 +111,17 @@
+ 	adamic_release(adamic_local_1_text);
+ }
+ 
++static adamic_object * adamic_function_3_narrowed_union_member(adamic_heap * adamic_local_3_argument) {
++	ADAMIC_CHECK_STACK();
++	bool adamic_temporary_24 = adamic_instanceof(adamic_local_3_argument, &adamic_error_class);
++	if (!adamic_temporary_24) {
++		adamic_panic((&adamic_string_6)->bytes, (&adamic_string_6)->length);
++	}
++	adamic_object * adamic_temporary_25 = adamic_retain(((adamic_object *)adamic_local_3_argument));
++	return adamic_temporary_25;
++	adamic_unreachable();
++}
++
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+ 	adamic_function_2_read();

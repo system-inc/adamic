@@ -14,7 +14,7 @@ void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic
 	}
 	// The comparator may change the array it sorts; what it sorts is this copy, which nothing else sees.
 	adamic_array_sort(defined, compare, context);
-	if (adamic_thrown != NULL) {
+	if (adamic_exception_pending) {
 		// A comparator threw: nothing is written back, as V8 writes nothing back then.
 		adamic_release(defined);
 		return;

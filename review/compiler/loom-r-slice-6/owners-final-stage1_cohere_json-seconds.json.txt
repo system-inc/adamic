@@ -1,0 +1,68 @@
+[
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsUpstreamParityVerdict",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsPrinterMutant_0",
+    "Elapsed": 0.87
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsUpstreamOracle",
+    "Elapsed": 0.89
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsGoOracle",
+    "Elapsed": 0.89
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsClassOrderAnswer",
+    "Elapsed": 1.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JSONPinnedCorpus",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsPrinterMutant_2",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JsonFindsPrinterMutant_1",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JSONLoweredPort",
+    "Elapsed": 0.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JSONNativeSanitized",
+    "Elapsed": 13.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "Test": "TestProduct_JSONNativeRelease",
+    "Elapsed": 20.12
+  }
+]

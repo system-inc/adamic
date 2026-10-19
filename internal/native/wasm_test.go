@@ -50,6 +50,9 @@ var wasiFixtures = []string{
 	"internal/oracle/testdata/closures_throw.a",
 	"internal/oracle/testdata/write_stdout_order.a",
 	"internal/oracle/testdata/write_stderr_order.a",
+	"internal/oracle/testdata/arguments_length_extended.a",
+	"internal/oracle/testdata/closure_convention_regexp_count.a",
+	"internal/oracle/testdata/closure_convention_nested.a",
 }
 
 // wasiCompiler is the clang every WASI build in this file runs and keys its products by: the WASI SDK's, beside
@@ -116,11 +119,13 @@ func runWASIUnit(t *testing.T, unit int) {
 		defer func() { t.Logf("WASI generate phase %.3fs", time.Since(started).Seconds()) }()
 		return string(wasiCommand(t, repository, compiler, "c", fixture))
 	}
-	link := func(t *testing.T, source, output string, extra ...string) {
+	link := func(t *testing.T, source, output, features string, counted bool, extra ...string) {
+		variant := strictWASISourceVariant(t, features, counted)
+		directory, objects := runtimeVariant(t, variant)
 		t.Helper()
 		started := time.Now()
 		defer func() { t.Logf("WASI link phase %.3fs", time.Since(started).Seconds()) }()
-		arguments := append(append([]string{}, flags...), "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign",
+		arguments := append(append(append([]string{}, flags...), featureFlags(features)...), "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign",
 			"-I", directory, "-Wl,-z,stack-size=131072", "-Wl,--export=__stack_low", "-o", output, source)
 		arguments = append(arguments, extra...)
 		arguments = append(arguments, objects...)
@@ -132,7 +137,7 @@ func runWASIUnit(t *testing.T, unit int) {
 	}
 
 	passed := 0
-	shard := testShard{unit, 36}
+	shard := testShard{unit, 39}
 	for index, fixture := range wasiFixtures {
 		if !shard.owns(index) {
 			continue
@@ -140,9 +145,10 @@ func runWASIUnit(t *testing.T, unit int) {
 		t.Run(fixture, func(t *testing.T) {
 			scratch := t.TempDir()
 			source := filepath.Join(scratch, "main.c")
-			writeWASIFile(t, source, generate(t, fixture))
+			code := generate(t, fixture)
+			writeWASIFile(t, source, code)
 			module := filepath.Join(scratch, "main.wasm")
-			link(t, source, module)
+			link(t, source, module, code, false)
 			working := repository
 			if strings.HasSuffix(fixture, "read_files.a") {
 				working = filepath.Join(repository, "internal/oracle/testdata")
@@ -172,7 +178,6 @@ func runWASIUnit(t *testing.T, unit int) {
 	}
 	t.Run("requests", func(t *testing.T) {
 		// Counters are for the memory probe only; oracle command stderr stays untouched.
-		directory, objects = runtimeVariant(t, "counted")
 		scratch := t.TempDir()
 		code := generate(t, "internal/native/wasm/request.a")
 		if !strings.Contains(code, "adamic_region_end(") {
@@ -184,7 +189,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		}
 		writeWASIFile(t, filepath.Join(scratch, "program.c"), code)
 		module := filepath.Join(scratch, "request.wasm")
-		link(t, filepath.Join(repository, "internal/native/wasm/request-abi.c"), module, "-I", scratch,
+		link(t, filepath.Join(repository, "internal/native/wasm/request-abi.c"), module, code, true, "-I", scratch,
 			"-DADAMIC_HANDLER="+handler[1], "-mexec-model=reactor", "-Wl,--export=malloc", "-Wl,--export=free", "-Wl,--export=adamic_release")
 		output := wasiCommand(t, repository, "node", "--disable-warning=ExperimentalWarning", "internal/native/wasm/request-host.mjs", module, "internal/native/wasm/request.a")
 		t.Logf("request benchmark: %s", output)
@@ -257,9 +262,33 @@ func wasiFlags(sysroot string) []string {
 		"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls"}
 }
 
-// strictWASIRuntimeVariants are the strict runtime's two builds: plain, which every fixture's module links, and
-// counted (-DADAMIC_COUNT), which only the request benchmark's memory probe links.
-var strictWASIRuntimeVariants = map[string][]string{"plain": nil, "counted": {"-DADAMIC_COUNT"}}
+// strictWASIRuntimeVariants are exactly the feature sets of wasiFixtures, plus the
+// counted request benchmark. Its five feature sets are recorded by the slice 6 census.
+var strictWASIRuntimeVariants = map[string][]string{
+	"plain":      nil,
+	"counted":    {"-DADAMIC_COUNT"},
+	"convention": {"-DADAMIC_CLOSURE_CONVENTION=1"},
+	"receivers":  {"-DADAMIC_CLOSURE_CONVENTION=1", "-DADAMIC_CLOSURE_RECEIVERS=1"},
+	"regexp":     {"-DADAMIC_CLOSURE_CONVENTION=1", "-DADAMIC_REGEXP_REPLACE_CALLBACK=1"},
+	"canonical":  {"-DADAMIC_CLOSURE_CONVENTION=1", "-DADAMIC_CANONICAL_CLOSURES=1"},
+}
+
+// Every declared set has an executable witness in wasiFixtures (the counted set
+// is the request benchmark). Unknown sets fail instead of compiling in a runner.
+func strictWASISourceVariant(t *testing.T, source string, counted bool) string {
+	t.Helper()
+	flags := featureFlags(source)
+	if counted {
+		flags = append(flags, "-DADAMIC_COUNT")
+	}
+	for name, declared := range strictWASIRuntimeVariants {
+		if slices.Equal(flags, declared) {
+			return name
+		}
+	}
+	t.Fatalf("no strict WASI runtime for %v", flags)
+	return ""
+}
 
 // strictWASIRuntime is every translation unit of the runtime compiled with wasiFlags, plain and counted, a product
 // built ahead by TestProduct_StrictWASIRuntime: a directory per variant holding the runtime's files beside their
@@ -555,3 +584,12 @@ func TestTheWASIBuildsNameNoBareClang(t *testing.T) {
 		return true
 	})
 }
+
+// Not parallel: this unit uses the WASI toolchain and shared build cache.
+func TestWASIUnit36(t *testing.T) { runWASIUnit(t, 36) }
+
+// Not parallel: this unit uses the WASI toolchain and shared build cache.
+func TestWASIUnit37(t *testing.T) { runWASIUnit(t, 37) }
+
+// Not parallel: this unit uses the WASI toolchain and shared build cache.
+func TestWASIUnit38(t *testing.T) { runWASIUnit(t, 38) }

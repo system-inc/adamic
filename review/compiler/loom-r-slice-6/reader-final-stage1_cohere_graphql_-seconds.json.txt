@@ -1,0 +1,386 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/oracles",
+    "Test": "TestProduct_GraphQLGoOracle",
+    "Elapsed": 3.62
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterConstructorGap",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_003",
+    "Elapsed": 9.84
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_001",
+    "Elapsed": 9.69
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_Union",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterFindsTabs",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterFindsTight",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterFindsNarrow",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterFindsDefaults",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterRelease",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterSanitized",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterLowered",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterSource",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterWhitespaceShardGrowth",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterWhitespacePlantedDisagreement",
+    "Elapsed": 0.95
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterCopyNative",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterUpstreamPreflight_003",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterUpstreamPreflight_002",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterUpstreamPreflight_001",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterUpstreamPreflight_000",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterUpstreamPreflight_Setup",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterShardSelection",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterShardUnionRejectsMissingAndRepeated",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterPortFilesAreMainsImports",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterLoweredKeysOnlyTheCompilerAndThePort",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterLoweredKeyFollowsALinkedSource",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_002",
+    "Elapsed": 12.45
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterPreflightPlantedDisagreement",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterFindsGoOracle",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterMutants_001",
+    "Elapsed": 12.45
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterInTreeNative",
+    "Elapsed": 2.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLPrinterInTreeLowered",
+    "Elapsed": 0.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterFileDriver",
+    "Elapsed": 4.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterMutantPlantedSurvivor",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantSanitized001",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantLowered002",
+    "Elapsed": 3.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantSanitized002",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantSanitized000",
+    "Elapsed": 3.71
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoShardGrowth",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_000",
+    "Elapsed": 9.84
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoRunReadsPastADescendant",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohereWrappers",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterShardPlantedDisagreement",
+    "Elapsed": 1.68
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantSource001",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantLowered001",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantLowered000",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantSource002",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_010",
+    "Elapsed": 10.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_011",
+    "Elapsed": 7.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_007",
+    "Elapsed": 7.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterMutants_000",
+    "Elapsed": 12.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_009",
+    "Elapsed": 3.9
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_008",
+    "Elapsed": 3.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterMutantUnion",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestProduct_GraphQLMutantSource000",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_005",
+    "Elapsed": 3.53
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_006",
+    "Elapsed": 3.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterAsGoCohere_004",
+    "Elapsed": 3.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "Test": "TestPrinterMutants_002",
+    "Elapsed": 3.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles",
+    "Test": "TestProduct_GraphQLPrinterGoOracle",
+    "Elapsed": 0.52
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles",
+    "Test": "TestProduct_GraphQLPrinterDefaults",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles",
+    "Test": "TestProduct_GraphQLPrinterTight",
+    "Elapsed": 0.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles",
+    "Test": "TestProduct_GraphQLPrinterTabs",
+    "Elapsed": 0.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles",
+    "Test": "TestProduct_GraphQLPrinterNarrow",
+    "Elapsed": 0.58
+  }
+]

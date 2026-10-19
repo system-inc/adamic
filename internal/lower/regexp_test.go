@@ -13,7 +13,6 @@ func TestRegExpNativeRefusals(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
-		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {
@@ -77,4 +76,10 @@ func TestRegExpV8QuantifierBoundsLower(t *testing.T) {
 	if _, err := lowerSource(t, "const matches = /a{18446744073709551616}/.test('a');"); err != nil {
 		t.Fatal(err)
 	}
+}
+
+// Main admits the huge repeat; hold its unreachable match to Node and native.
+func TestRegExpHugeRepeatAgreesWithNodeNative(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNodeNative(t, "RegExpHugeRepeat")
 }

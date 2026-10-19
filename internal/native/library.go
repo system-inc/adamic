@@ -435,16 +435,8 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 // compileRuntime compiles the runtime's files with flags into directory, up to workers translation units at once, and
 // archives them as runtime.a there, in the files' order whatever order they finished in.
 func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int) error {
-	for _, feature := range runtimeFeatures {
-		if slicesContain(flags, "-D"+feature+"=1") {
-			files = append([]runtimeFile(nil), files...)
-			for i := range files {
-				if files[i].name == "adamic.h" {
-					files[i].contents = append([]byte("#define "+feature+" 1\n"), files[i].contents...)
-				}
-			}
-		}
-	}
+	// Keep header bytes unchanged. Inserting the runtime's feature defines here would
+	// silently override a program requesting fewer features and hide a link mismatch.
 
 	// Headers live beside the archive, from the same snapshot that produced its objects.
 	var sources []string

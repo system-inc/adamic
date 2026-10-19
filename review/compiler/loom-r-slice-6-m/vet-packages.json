@@ -1,0 +1,19 @@
+[
+  "./cmd/adamic",
+  "./cmd/adamic-test262",
+  "./internal/flow",
+  "./internal/fresh",
+  "./internal/fuzz",
+  "./internal/ir",
+  "./internal/javascript",
+  "./internal/lower",
+  "./internal/native",
+  "./internal/oracle",
+  "./stage1/cohere/css",
+  "./stage1/cohere/graphql",
+  "./stage1/cohere/json",
+  "./stage1/cohere/lint",
+  "./stage1/cohere/markdownblocks",
+  "./stage1/typescript/scanner",
+  "./stage3/drivers/scanner"
+]

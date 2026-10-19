@@ -1,0 +1,11 @@
+=== RUN   TestStep21StoredPrimitiveLengthUseAgrees
+=== PAUSE TestStep21StoredPrimitiveLengthUseAgrees
+=== CONT  TestStep21StoredPrimitiveLengthUseAgrees
+    step21_narrowing_uses_test.go:144: sanitized native primitive length: exit codes differ
+--- FAIL: TestStep21StoredPrimitiveLengthUseAgrees (16.40s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.411s
+FAIL

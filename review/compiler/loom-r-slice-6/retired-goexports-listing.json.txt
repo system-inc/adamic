@@ -1,0 +1,7236 @@
+[
+	{
+		"ImportPath": "internal/goarch",
+		"Dir": "",
+		"Export": "exports/0.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"goarch.go",
+			"goarch_amd64.go",
+			"zgoarch_amd64.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "unsafe",
+		"Dir": "",
+		"Export": "",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"unsafe.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/abi",
+		"Dir": "",
+		"Export": "exports/2.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"abi.go",
+			"abi_amd64.go",
+			"bounds.go",
+			"compiletype.go",
+			"escape.go",
+			"funcpc.go",
+			"iface.go",
+			"map.go",
+			"rangefuncconsts.go",
+			"runtime.go",
+			"stack.go",
+			"switch.go",
+			"symtab.go",
+			"type.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"abi_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/unsafeheader",
+		"Dir": "",
+		"Export": "exports/3.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"unsafeheader.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"unsafeheader_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/cpu",
+		"Dir": "",
+		"Export": "exports/4.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cpu.go",
+			"cpu_x86.go",
+			"cpu_x86_other.go",
+			"datacache_x86.go"
+		],
+		"TestGoFiles": [
+			"export_test.go",
+			"export_x86_test.go"
+		],
+		"XTestGoFiles": [
+			"cpu_test.go",
+			"cpu_x86_test.go",
+			"datacache_x86_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/bytealg",
+		"Dir": "",
+		"Export": "exports/5.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bytealg.go",
+			"compare_native.go",
+			"count_native.go",
+			"equal_generic.go",
+			"equal_native.go",
+			"index_amd64.go",
+			"index_native.go",
+			"indexbyte_native.go",
+			"lastindexbyte_generic.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/byteorder",
+		"Dir": "",
+		"Export": "exports/6.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"byteorder.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/chacha8rand",
+		"Dir": "",
+		"Export": "exports/7.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"chacha8.go",
+			"chacha8_generic.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"rand_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/coverage/rtcov",
+		"Dir": "",
+		"Export": "exports/8.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"rtcov.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/godebugs",
+		"Dir": "",
+		"Export": "exports/9.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"table.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"godebugs_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/goexperiment",
+		"Dir": "",
+		"Export": "exports/10.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"exp_arenas_off.go",
+			"exp_boringcrypto_off.go",
+			"exp_cgocheck2_off.go",
+			"exp_dwarf5_on.go",
+			"exp_fieldtrack_off.go",
+			"exp_greenteagc_on.go",
+			"exp_heapminimum512kib_off.go",
+			"exp_jsonv2_on.go",
+			"exp_loopvar_off.go",
+			"exp_mapsplitgroup_off.go",
+			"exp_newinliner_off.go",
+			"exp_preemptibleloops_off.go",
+			"exp_randomizedheapbase64_on.go",
+			"exp_regabiargs_on.go",
+			"exp_regabiwrappers_on.go",
+			"exp_runtimefreegc_off.go",
+			"exp_runtimesecret_off.go",
+			"exp_simd_off.go",
+			"exp_sizespecializedmalloc_on.go",
+			"exp_staticlockranking_off.go",
+			"flags.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/goos",
+		"Dir": "",
+		"Export": "exports/11.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"goos.go",
+			"unix.go",
+			"zgoos_linux.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/profilerecord",
+		"Dir": "",
+		"Export": "exports/12.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"profilerecord.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/runtime/atomic",
+		"Dir": "",
+		"Export": "exports/13.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"atomic_amd64.go",
+			"doc.go",
+			"linkname.go",
+			"stubs.go",
+			"types.go",
+			"types_64bit.go",
+			"unaligned.go",
+			"xchg8.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"atomic_andor_test.go",
+			"atomic_test.go",
+			"bench_test.go",
+			"xchg8_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/runtime/syscall/linux",
+		"Dir": "",
+		"Export": "exports/14.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"defs_linux.go",
+			"defs_linux_amd64.go",
+			"syscall_linux.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"syscall_linux_test.go"
+		]
+	},
+	{
+		"ImportPath": "math/bits",
+		"Dir": "",
+		"Export": "exports/15.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bits.go",
+			"bits_errors.go",
+			"bits_tables.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"bits_test.go",
+			"example_math_test.go",
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/strconv",
+		"Dir": "",
+		"Export": "exports/16.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"atob.go",
+			"atoc.go",
+			"atof.go",
+			"atoi.go",
+			"ctoa.go",
+			"decimal.go",
+			"deps.go",
+			"ftoa.go",
+			"itoa.go",
+			"pow10tab.go",
+			"uscale.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"atob_test.go",
+			"atoc_test.go",
+			"atof_test.go",
+			"atoi_test.go",
+			"ctoa_test.go",
+			"decimal_test.go",
+			"fp_test.go",
+			"ftoa_test.go",
+			"import_test.go",
+			"itoa_test.go",
+			"math_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/runtime/cgroup",
+		"Dir": "",
+		"Export": "exports/17.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cgroup.go",
+			"cgroup_linux.go",
+			"line_reader.go",
+			"runtime.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"cgroup_test.go",
+			"line_reader_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/runtime/exithook",
+		"Dir": "",
+		"Export": "exports/18.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hooks.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/runtime/gc",
+		"Dir": "",
+		"Export": "exports/19.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"malloc.go",
+			"scan.go",
+			"sizeclasses.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/runtime/sys",
+		"Dir": "",
+		"Export": "exports/20.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"consts.go",
+			"consts_norace.go",
+			"intrinsics.go",
+			"nih.go",
+			"no_dit.go",
+			"sys.go",
+			"zversion.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"intrinsics_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/runtime/gc/scan",
+		"Dir": "",
+		"Export": "exports/21.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"expand_amd64.go",
+			"expand_reference.go",
+			"filter.go",
+			"filter_amd64.go",
+			"scan_amd64.go",
+			"scan_go.go",
+			"scan_reference.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"expand_amd64_test.go",
+			"expand_test.go",
+			"filter_amd64_test.go",
+			"filter_test.go",
+			"mem_unix_test.go",
+			"scan_amd64_test.go",
+			"scan_generic_test.go",
+			"scan_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/asan",
+		"Dir": "",
+		"Export": "exports/22.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"noasan.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/msan",
+		"Dir": "",
+		"Export": "exports/23.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"nomsan.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/race",
+		"Dir": "",
+		"Export": "exports/24.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"norace.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/runtime/math",
+		"Dir": "",
+		"Export": "exports/25.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"math.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"math_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/runtime/maps",
+		"Dir": "",
+		"Export": "exports/26.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"group.go",
+			"map.go",
+			"memhash_aes.go",
+			"memhash_aes_asm.go",
+			"memhash_align_check.go",
+			"runtime.go",
+			"runtime_alg.go",
+			"runtime_fast32.go",
+			"runtime_fast64.go",
+			"runtime_faststr.go",
+			"runtime_hash64.go",
+			"table.go",
+			"table_debug.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"fuzz_test.go",
+			"map_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/runtime/pprof/label",
+		"Dir": "",
+		"Export": "exports/27.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"labelset.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/stringslite",
+		"Dir": "",
+		"Export": "exports/28.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"strings.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/trace/tracev2",
+		"Dir": "",
+		"Export": "exports/29.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"events.go",
+			"spec.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"events_test.go"
+		]
+	},
+	{
+		"ImportPath": "runtime",
+		"Dir": "",
+		"Export": "exports/30.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"alg.go",
+			"arena.go",
+			"asan0.go",
+			"atomic_pointer.go",
+			"badlinkname.go",
+			"badlinkname_linux.go",
+			"cgo.go",
+			"cgo_mmap.go",
+			"cgo_sigaction.go",
+			"cgocall.go",
+			"cgocallback.go",
+			"cgocheck.go",
+			"cgroup_linux.go",
+			"chan.go",
+			"checkptr.go",
+			"compiler.go",
+			"complex.go",
+			"coro.go",
+			"covercounter.go",
+			"covermeta.go",
+			"cpuflags.go",
+			"cpuflags_amd64.go",
+			"cpuprof.go",
+			"cputicks.go",
+			"create_file_unix.go",
+			"debug.go",
+			"debugcall.go",
+			"debuglog.go",
+			"debuglog_off.go",
+			"defs_linux_amd64.go",
+			"dit.go",
+			"env_posix.go",
+			"error.go",
+			"extern.go",
+			"fastlog2.go",
+			"fastlog2table.go",
+			"fds_unix.go",
+			"fipsbypass.go",
+			"float.go",
+			"heapdump.go",
+			"hexdump.go",
+			"histogram.go",
+			"iface.go",
+			"lfstack.go",
+			"libinit.go",
+			"linkname.go",
+			"linkname_shim.go",
+			"linkname_unix.go",
+			"list.go",
+			"list_manual.go",
+			"lock_futex.go",
+			"lock_spinbit.go",
+			"lockrank.go",
+			"lockrank_off.go",
+			"malloc.go",
+			"malloc_generated.go",
+			"malloc_stubs.go",
+			"malloc_tables_generated.go",
+			"map.go",
+			"map_fast32.go",
+			"map_fast64.go",
+			"map_faststr.go",
+			"mbarrier.go",
+			"mbitmap.go",
+			"mcache.go",
+			"mcentral.go",
+			"mcheckmark.go",
+			"mcleanup.go",
+			"mem.go",
+			"mem_linux.go",
+			"mem_nonsbrk.go",
+			"metrics.go",
+			"mfinal.go",
+			"mfixalloc.go",
+			"mgc.go",
+			"mgclimit.go",
+			"mgcmark.go",
+			"mgcmark_greenteagc.go",
+			"mgcpacer.go",
+			"mgcscavenge.go",
+			"mgcstack.go",
+			"mgcsweep.go",
+			"mgcwork.go",
+			"mheap.go",
+			"minmax.go",
+			"mpagealloc.go",
+			"mpagealloc_64bit.go",
+			"mpagecache.go",
+			"mpallocbits.go",
+			"mprof.go",
+			"mranges.go",
+			"msan0.go",
+			"msize.go",
+			"mspanset.go",
+			"mstats.go",
+			"mwbbuf.go",
+			"nbpipe_pipe2.go",
+			"netpoll.go",
+			"netpoll_epoll.go",
+			"nonwindows_stub.go",
+			"note_other.go",
+			"os_linux.go",
+			"os_linux64.go",
+			"os_linux_generic.go",
+			"os_linux_noauxv.go",
+			"os_nonopenbsd.go",
+			"os_unix.go",
+			"panic.go",
+			"pinner.go",
+			"plugin.go",
+			"preempt.go",
+			"preempt_amd64.go",
+			"preempt_nonwindows.go",
+			"preempt_xreg.go",
+			"print.go",
+			"proc.go",
+			"profbuf.go",
+			"proflabel.go",
+			"race0.go",
+			"rand.go",
+			"rdebug.go",
+			"retry.go",
+			"runtime.go",
+			"runtime1.go",
+			"runtime2.go",
+			"runtime_boring.go",
+			"runtime_clearenv.go",
+			"rwmutex.go",
+			"secret.go",
+			"secret_asm.go",
+			"security_linux.go",
+			"security_unix.go",
+			"select.go",
+			"sema.go",
+			"set_vma_name_linux.go",
+			"signal_amd64.go",
+			"signal_linux_amd64.go",
+			"signal_unix.go",
+			"sigqueue.go",
+			"sigqueue_note.go",
+			"sigtab_linux_generic.go",
+			"slice.go",
+			"softfloat64.go",
+			"stack.go",
+			"stkframe.go",
+			"string.go",
+			"stubs.go",
+			"stubs2.go",
+			"stubs3.go",
+			"stubs_amd64.go",
+			"stubs_linux.go",
+			"stubs_nonwasm.go",
+			"symtab.go",
+			"symtabinl.go",
+			"synctest.go",
+			"sys_nonppc64x.go",
+			"sys_x86.go",
+			"tagptr.go",
+			"tagptr_64bit.go",
+			"test_amd64.go",
+			"time.go",
+			"time_nofake.go",
+			"timeasm.go",
+			"tls_stub.go",
+			"trace.go",
+			"traceallocfree.go",
+			"traceback.go",
+			"tracebuf.go",
+			"tracecpu.go",
+			"traceevent.go",
+			"tracemap.go",
+			"traceregion.go",
+			"traceruntime.go",
+			"tracestack.go",
+			"tracestatus.go",
+			"tracestring.go",
+			"tracetime.go",
+			"tracetype.go",
+			"type.go",
+			"unsafe.go",
+			"utf8.go",
+			"valgrind0.go",
+			"vdso_elf64.go",
+			"vdso_linux.go",
+			"vdso_linux_amd64.go",
+			"vgetrandom_linux.go",
+			"write_err.go"
+		],
+		"TestGoFiles": [
+			"align_runtime_test.go",
+			"export_debug_amd64_test.go",
+			"export_debug_test.go",
+			"export_debuglog_test.go",
+			"export_linux_test.go",
+			"export_mmap_test.go",
+			"export_pipe2_test.go",
+			"export_test.go",
+			"export_unix_test.go",
+			"export_vdso_linux_test.go",
+			"importx_test.go",
+			"proc_runtime_test.go",
+			"symtabinl_test.go",
+			"tracebackx_test.go"
+		],
+		"XTestGoFiles": [
+			"abi_test.go",
+			"align_test.go",
+			"arena_test.go",
+			"bitcursor_test.go",
+			"callers_test.go",
+			"cgroup_linux_test.go",
+			"chan_test.go",
+			"chanbarrier_test.go",
+			"checkptr_test.go",
+			"closure_test.go",
+			"complex_test.go",
+			"coro_test.go",
+			"cpuflags_amd64_test.go",
+			"crash_cgo_test.go",
+			"crash_test.go",
+			"crash_unix_test.go",
+			"debug_test.go",
+			"debuglog_test.go",
+			"decoratemappings_test.go",
+			"defer_test.go",
+			"ehooks_test.go",
+			"env_test.go",
+			"example_test.go",
+			"fastlog2_test.go",
+			"fds_test.go",
+			"float_test.go",
+			"gc_test.go",
+			"gcinfo_test.go",
+			"goroutineleakprofile_test.go",
+			"hash_test.go",
+			"heap_test.go",
+			"hexdump_test.go",
+			"histogram_test.go",
+			"iface_test.go",
+			"import_test.go",
+			"lfstack_test.go",
+			"list_manual_test.go",
+			"list_test.go",
+			"lockrank_test.go",
+			"malloc_bench_generated_test.go",
+			"malloc_stubs_test.go",
+			"malloc_test.go",
+			"map_benchmark_test.go",
+			"map_test.go",
+			"mcleanup_test.go",
+			"memmove_linux_amd64_test.go",
+			"memmove_test.go",
+			"metrics_cgo_test.go",
+			"metrics_test.go",
+			"mfinal_test.go",
+			"mgclimit_test.go",
+			"mgcpacer_test.go",
+			"mgcscavenge_test.go",
+			"minmax_test.go",
+			"mpagealloc_test.go",
+			"mpagecache_test.go",
+			"mpallocbits_test.go",
+			"mprof_test.go",
+			"mranges_test.go",
+			"nbpipe_test.go",
+			"netpoll_os_test.go",
+			"norace_test.go",
+			"nosan_linux_test.go",
+			"panic_test.go",
+			"panicnil_test.go",
+			"pinner_test.go",
+			"print_quoted_test.go",
+			"print_test.go",
+			"proc_test.go",
+			"profbuf_test.go",
+			"rand_test.go",
+			"runtime-gdb_test.go",
+			"runtime-gdb_unix_test.go",
+			"runtime-lldb_test.go",
+			"runtime_linux_test.go",
+			"runtime_mmap_test.go",
+			"runtime_test.go",
+			"runtime_unix_test.go",
+			"rwmutex_test.go",
+			"security_test.go",
+			"sema_test.go",
+			"semasleep_test.go",
+			"signal_linux_test.go",
+			"signal_test.go",
+			"sizeof_test.go",
+			"slice_test.go",
+			"softfloat64_test.go",
+			"stack_test.go",
+			"start_line_amd64_test.go",
+			"start_line_test.go",
+			"string_test.go",
+			"symtab_test.go",
+			"synctest_test.go",
+			"syscall_test.go",
+			"syscall_unix_test.go",
+			"time_test.go",
+			"trace2map_test.go",
+			"trace_cgo_test.go",
+			"traceback_system_test.go",
+			"traceback_test.go",
+			"tracestack_test.go",
+			"typelinksrace_test.go",
+			"unsafepoint_test.go",
+			"vdso_linux_test.go",
+			"vdso_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/reflectlite",
+		"Dir": "",
+		"Export": "exports/31.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"swapper.go",
+			"type.go",
+			"value.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"all_test.go",
+			"reflect_mirror_test.go",
+			"set_test.go",
+			"tostring_test.go"
+		]
+	},
+	{
+		"ImportPath": "errors",
+		"Dir": "",
+		"Export": "exports/32.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"errors.go",
+			"join.go",
+			"wrap.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"errors_test.go",
+			"example_test.go",
+			"join_test.go",
+			"wrap_test.go"
+		]
+	},
+	{
+		"ImportPath": "sync/atomic",
+		"Dir": "",
+		"Export": "exports/33.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"doc_64.go",
+			"type.go",
+			"value.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"atomic_test.go",
+			"example_test.go",
+			"value_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/sync",
+		"Dir": "",
+		"Export": "exports/34.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hashtriemap.go",
+			"mutex.go",
+			"runtime.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"hashtriemap_bench_test.go",
+			"hashtriemap_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/synctest",
+		"Dir": "",
+		"Export": "exports/35.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"synctest.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"synctest_test.go"
+		]
+	},
+	{
+		"ImportPath": "sync",
+		"Dir": "",
+		"Export": "exports/36.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cond.go",
+			"map.go",
+			"mutex.go",
+			"once.go",
+			"oncefunc.go",
+			"pool.go",
+			"poolqueue.go",
+			"runtime.go",
+			"runtime2.go",
+			"rwmutex.go",
+			"waitgroup.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"cond_test.go",
+			"example_pool_test.go",
+			"example_test.go",
+			"map_bench_test.go",
+			"map_reference_test.go",
+			"map_test.go",
+			"mutex_test.go",
+			"once_test.go",
+			"oncefunc_test.go",
+			"pool_test.go",
+			"runtime_sema_test.go",
+			"rwmutex_test.go",
+			"waitgroup_test.go"
+		]
+	},
+	{
+		"ImportPath": "io",
+		"Dir": "",
+		"Export": "exports/37.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"io.go",
+			"multi.go",
+			"pipe.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"io_test.go",
+			"multi_test.go",
+			"pipe_test.go"
+		]
+	},
+	{
+		"ImportPath": "hash",
+		"Dir": "",
+		"Export": "exports/38.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hash.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"marshal_test.go"
+		]
+	},
+	{
+		"ImportPath": "unicode/utf8",
+		"Dir": "",
+		"Export": "exports/39.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"utf8.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"utf8_test.go"
+		]
+	},
+	{
+		"ImportPath": "strconv",
+		"Dir": "",
+		"Export": "exports/40.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bytealg.go",
+			"doc.go",
+			"isprint.go",
+			"number.go",
+			"quote.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"import_test.go",
+			"number_test.go",
+			"quote_test.go",
+			"strconv_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto",
+		"Dir": "",
+		"Export": "exports/41.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"crypto.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"crypto_test.go",
+			"issue21104_test.go",
+			"purego_test.go"
+		]
+	},
+	{
+		"ImportPath": "iter",
+		"Dir": "",
+		"Export": "exports/42.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"iter.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"pull_test.go"
+		]
+	},
+	{
+		"ImportPath": "unicode",
+		"Dir": "",
+		"Export": "exports/43.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"casetables.go",
+			"digit.go",
+			"graphic.go",
+			"letter.go",
+			"tables.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"digit_test.go",
+			"example_test.go",
+			"graphic_test.go",
+			"letter_test.go",
+			"script_test.go"
+		]
+	},
+	{
+		"ImportPath": "bytes",
+		"Dir": "",
+		"Export": "exports/44.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"buffer.go",
+			"bytes.go",
+			"iter.go",
+			"reader.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"boundary_test.go",
+			"buffer_test.go",
+			"bytes_test.go",
+			"compare_test.go",
+			"example_test.go",
+			"iter_test.go",
+			"reader_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/bisect",
+		"Dir": "",
+		"Export": "exports/45.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bisect.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/godebug",
+		"Dir": "",
+		"Export": "exports/46.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"godebug.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"godebug_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140deps/godebug",
+		"Dir": "",
+		"Export": "exports/47.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"godebug.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "strings",
+		"Dir": "",
+		"Export": "exports/48.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"builder.go",
+			"clone.go",
+			"compare.go",
+			"iter.go",
+			"reader.go",
+			"replace.go",
+			"search.go",
+			"strings.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"builder_test.go",
+			"clone_test.go",
+			"compare_test.go",
+			"example_test.go",
+			"iter_test.go",
+			"reader_test.go",
+			"replace_test.go",
+			"search_test.go",
+			"strings_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140",
+		"Dir": "",
+		"Export": "exports/49.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"fips140.go",
+			"indicator.go",
+			"notasan.go",
+			"notboring.go",
+			"notpurego.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"compile_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/alias",
+		"Dir": "",
+		"Export": "exports/50.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"alias.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140deps/byteorder",
+		"Dir": "",
+		"Export": "exports/51.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"byteorder.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140deps/cpu",
+		"Dir": "",
+		"Export": "exports/52.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cpu.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/impl",
+		"Dir": "",
+		"Export": "exports/53.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"impl.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/sha256",
+		"Dir": "",
+		"Export": "exports/54.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"sha256.go",
+			"sha256block.go",
+			"sha256block_amd64.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/constanttime",
+		"Dir": "",
+		"Export": "exports/55.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"constant_time.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/subtle",
+		"Dir": "",
+		"Export": "exports/56.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"constant_time.go",
+			"xor.go",
+			"xor_asm.go"
+		],
+		"TestGoFiles": [
+			"constant_time_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/sha3",
+		"Dir": "",
+		"Export": "exports/57.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"hashes.go",
+			"keccakf.go",
+			"sha3.go",
+			"sha3_amd64.go",
+			"shake.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/sha512",
+		"Dir": "",
+		"Export": "exports/58.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"sha512.go",
+			"sha512block.go",
+			"sha512block_amd64.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/hmac",
+		"Dir": "",
+		"Export": "exports/59.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"hmac.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/check",
+		"Dir": "",
+		"Export": "exports/60.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"check.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/aes",
+		"Dir": "",
+		"Export": "exports/61.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"aes.go",
+			"aes_asm.go",
+			"aes_generic.go",
+			"cast.go",
+			"cbc.go",
+			"cbc_noasm.go",
+			"const.go",
+			"ctr.go",
+			"ctr_asm.go"
+		],
+		"TestGoFiles": [
+			"aes_test.go"
+		],
+		"XTestGoFiles": [
+			"interface_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140deps/time",
+		"Dir": "",
+		"Export": "exports/62.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"time.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/entropy/v1.0.0",
+		"Dir": "",
+		"Export": "exports/63.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"entropy.go",
+			"sha384.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/oserror",
+		"Dir": "",
+		"Export": "exports/64.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"errors.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "cmp",
+		"Dir": "",
+		"Export": "exports/65.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cmp.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"cmp_test.go"
+		]
+	},
+	{
+		"ImportPath": "slices",
+		"Dir": "",
+		"Export": "exports/66.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"iter.go",
+			"slices.go",
+			"sort.go",
+			"zsortanyfunc.go",
+			"zsortordered.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"iter_test.go",
+			"slices_test.go",
+			"sort_benchmark_test.go",
+			"sort_test.go"
+		]
+	},
+	{
+		"ImportPath": "syscall",
+		"Dir": "",
+		"Export": "exports/67.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"badlinkname_unix.go",
+			"dirent.go",
+			"env_unix.go",
+			"exec_linux.go",
+			"exec_unix.go",
+			"flock_linux.go",
+			"forkpipe2.go",
+			"linkname_unix.go",
+			"lsf_linux.go",
+			"net.go",
+			"netlink_linux.go",
+			"rlimit.go",
+			"rlimit_stub.go",
+			"setuidgid_linux.go",
+			"sockcmsg_linux.go",
+			"sockcmsg_unix.go",
+			"sockcmsg_unix_other.go",
+			"syscall.go",
+			"syscall_linux.go",
+			"syscall_linux_amd64.go",
+			"syscall_unix.go",
+			"time_nofake.go",
+			"timestruct.go",
+			"zerrors_linux_amd64.go",
+			"zsyscall_linux_amd64.go",
+			"zsysnum_linux_amd64.go",
+			"ztypes_linux_amd64.go"
+		],
+		"TestGoFiles": [
+			"export_linux_test.go",
+			"export_rlimit_test.go"
+		],
+		"XTestGoFiles": [
+			"creds_test.go",
+			"dirent_test.go",
+			"env_unix_test.go",
+			"exec_linux_test.go",
+			"exec_pdeathsig_test.go",
+			"exec_unix_test.go",
+			"mmap_unix_test.go",
+			"rlimit_test.go",
+			"syscall_linux_test.go",
+			"syscall_ptrace_test.go",
+			"syscall_test.go",
+			"syscall_unix_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/syscall/unix",
+		"Dir": "",
+		"Export": "exports/68.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"at.go",
+			"at_fstatat.go",
+			"at_sysnum_linux.go",
+			"at_sysnum_newfstatat_linux.go",
+			"constants.go",
+			"copy_file_range_unix.go",
+			"eaccess.go",
+			"faccessat_syscall.go",
+			"fchmodat_linux.go",
+			"fcntl_unix.go",
+			"getrandom.go",
+			"getrandom_linux.go",
+			"kernel_version_ge.go",
+			"kernel_version_linux.go",
+			"net.go",
+			"nofollow_posix.go",
+			"nonblocking_unix.go",
+			"pidfd_linux.go",
+			"renameat_sysnum_linux.go",
+			"siginfo_linux.go",
+			"siginfo_linux_other.go",
+			"syscall.go",
+			"sysnum_linux_amd64.go",
+			"tcsetpgrp_linux.go",
+			"utimes.go",
+			"waitid_linux.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"fchmodat_test.go",
+			"getrandom_linux_test.go",
+			"kernel_version_ge_test.go",
+			"siginfo_linux_test.go"
+		]
+	},
+	{
+		"ImportPath": "math",
+		"Dir": "",
+		"Export": "exports/69.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"abs.go",
+			"acosh.go",
+			"asin.go",
+			"asinh.go",
+			"atan.go",
+			"atan2.go",
+			"atanh.go",
+			"bits.go",
+			"cbrt.go",
+			"const.go",
+			"copysign.go",
+			"dim.go",
+			"dim_asm.go",
+			"erf.go",
+			"erfinv.go",
+			"exp.go",
+			"exp2_noasm.go",
+			"exp_amd64.go",
+			"exp_asm.go",
+			"expm1.go",
+			"floor.go",
+			"floor_asm.go",
+			"fma.go",
+			"frexp.go",
+			"gamma.go",
+			"hypot.go",
+			"hypot_asm.go",
+			"j0.go",
+			"j1.go",
+			"jn.go",
+			"ldexp.go",
+			"lgamma.go",
+			"log.go",
+			"log10.go",
+			"log1p.go",
+			"log_asm.go",
+			"logb.go",
+			"mod.go",
+			"modf.go",
+			"nextafter.go",
+			"pow.go",
+			"pow10.go",
+			"remainder.go",
+			"signbit.go",
+			"sin.go",
+			"sincos.go",
+			"sinh.go",
+			"sqrt.go",
+			"stubs.go",
+			"tan.go",
+			"tanh.go",
+			"trig_reduce.go",
+			"unsafe.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"all_test.go",
+			"const_test.go",
+			"example_test.go",
+			"huge_test.go"
+		]
+	},
+	{
+		"ImportPath": "path",
+		"Dir": "",
+		"Export": "exports/70.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"match.go",
+			"path.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"match_test.go",
+			"path_test.go"
+		]
+	},
+	{
+		"ImportPath": "time",
+		"Dir": "",
+		"Export": "exports/71.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"format.go",
+			"format_rfc3339.go",
+			"sleep.go",
+			"sys_unix.go",
+			"tick.go",
+			"time.go",
+			"zoneinfo.go",
+			"zoneinfo_goroot.go",
+			"zoneinfo_read.go",
+			"zoneinfo_unix.go"
+		],
+		"TestGoFiles": [
+			"abs_test.go",
+			"export_test.go",
+			"internal_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"format_test.go",
+			"linkname_test.go",
+			"mono_test.go",
+			"sleep_test.go",
+			"tick_test.go",
+			"time_test.go",
+			"tzdata_test.go",
+			"zoneinfo_test.go",
+			"zoneinfo_unix_test.go"
+		]
+	},
+	{
+		"ImportPath": "io/fs",
+		"Dir": "",
+		"Export": "exports/72.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"format.go",
+			"fs.go",
+			"glob.go",
+			"readdir.go",
+			"readfile.go",
+			"readlink.go",
+			"stat.go",
+			"sub.go",
+			"walk.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"format_test.go",
+			"fs_test.go",
+			"glob_test.go",
+			"readdir_test.go",
+			"readfile_test.go",
+			"readlink_test.go",
+			"stat_test.go",
+			"sub_test.go",
+			"walk_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/filepathlite",
+		"Dir": "",
+		"Export": "exports/73.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"path.go",
+			"path_nonwindows.go",
+			"path_unix.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/poll",
+		"Dir": "",
+		"Export": "exports/74.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"copy_file_range_linux.go",
+			"copy_file_range_unix.go",
+			"errno_unix.go",
+			"fd.go",
+			"fd_fsync_posix.go",
+			"fd_mutex.go",
+			"fd_poll_runtime.go",
+			"fd_posix.go",
+			"fd_unix.go",
+			"fd_unixjs.go",
+			"fd_writev_unix.go",
+			"fstatat_unix.go",
+			"hook_cloexec.go",
+			"hook_unix.go",
+			"iovec_unix.go",
+			"sendfile.go",
+			"sendfile_unix.go",
+			"sock_cloexec.go",
+			"sockopt.go",
+			"sockopt_linux.go",
+			"sockopt_unix.go",
+			"sockoptip.go",
+			"splice_linux.go",
+			"writev.go"
+		],
+		"TestGoFiles": [
+			"export_linux_test.go",
+			"export_posix_test.go",
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"error_linux_test.go",
+			"error_test.go",
+			"fd_mutex_test.go",
+			"fd_posix_test.go",
+			"read_test.go",
+			"splice_linux_test.go",
+			"writev_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/syscall/execenv",
+		"Dir": "",
+		"Export": "exports/75.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"execenv_default.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/testlog",
+		"Dir": "",
+		"Export": "exports/76.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"exit.go",
+			"log.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "os",
+		"Dir": "",
+		"Export": "exports/77.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"dir.go",
+			"dir_unix.go",
+			"dirent_linux.go",
+			"eloop_other.go",
+			"env.go",
+			"error.go",
+			"error_errno.go",
+			"exec.go",
+			"exec_linux.go",
+			"exec_posix.go",
+			"exec_unix.go",
+			"executable.go",
+			"executable_procfs.go",
+			"file.go",
+			"file_open_unix.go",
+			"file_posix.go",
+			"file_unix.go",
+			"getwd.go",
+			"path.go",
+			"path_unix.go",
+			"pidfd_linux.go",
+			"pipe2_unix.go",
+			"proc.go",
+			"rawconn.go",
+			"removeall_at.go",
+			"removeall_unix.go",
+			"root.go",
+			"root_nonwindows.go",
+			"root_openat.go",
+			"root_unix.go",
+			"stat.go",
+			"stat_linux.go",
+			"stat_unix.go",
+			"statat.go",
+			"statat_unix.go",
+			"sticky_notbsd.go",
+			"sys.go",
+			"sys_linux.go",
+			"sys_unix.go",
+			"tempfile.go",
+			"types.go",
+			"types_unix.go",
+			"wait_waitid.go",
+			"zero_copy_linux.go",
+			"zero_copy_posix.go"
+		],
+		"TestGoFiles": [
+			"export_linux_test.go",
+			"export_test.go",
+			"export_unix_test.go"
+		],
+		"XTestGoFiles": [
+			"copy_test.go",
+			"env_test.go",
+			"env_unix_test.go",
+			"error_test.go",
+			"error_unix_test.go",
+			"example_other_test.go",
+			"example_test.go",
+			"exec_test.go",
+			"exec_unix_test.go",
+			"executable_test.go",
+			"fifo_test.go",
+			"file_test.go",
+			"getwd_unix_test.go",
+			"os_test.go",
+			"os_unix_test.go",
+			"path_test.go",
+			"pidfd_linux_test.go",
+			"pipe_test.go",
+			"rawconn_test.go",
+			"read_test.go",
+			"readfrom_linux_test.go",
+			"readfrom_unix_test.go",
+			"removeall_test.go",
+			"root_test.go",
+			"root_unix_test.go",
+			"stat_test.go",
+			"tempfile_test.go",
+			"timeout_test.go",
+			"timeout_unix_test.go",
+			"writeto_linux_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/sysrand",
+		"Dir": "",
+		"Export": "exports/78.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"rand.go",
+			"rand_getrandom.go"
+		],
+		"TestGoFiles": [
+			"rand_test.go"
+		],
+		"XTestGoFiles": [
+			"rand_linux_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/drbg",
+		"Dir": "",
+		"Export": "exports/79.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"ctrdrbg.go",
+			"entropy_fips140.go",
+			"rand.go"
+		],
+		"TestGoFiles": [
+			"rand_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/aes/gcm",
+		"Dir": "",
+		"Export": "exports/80.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"cmac.go",
+			"ctrkdf.go",
+			"gcm.go",
+			"gcm_asm.go",
+			"gcm_generic.go",
+			"gcm_nonces.go",
+			"ghash.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"interface_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/fips140",
+		"Dir": "",
+		"Export": "exports/81.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"enforcement.go",
+			"fips140.go"
+		],
+		"TestGoFiles": [
+			"fips140_test.go"
+		],
+		"XTestGoFiles": [
+			"enforcement_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140only",
+		"Dir": "",
+		"Export": "exports/82.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"fips140only.go",
+			"random_fips140v1.28.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"fips140only_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/subtle",
+		"Dir": "",
+		"Export": "exports/83.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"constant_time.go",
+			"dit.go",
+			"xor.go"
+		],
+		"TestGoFiles": [
+			"constant_time_test.go",
+			"dit_test.go"
+		],
+		"XTestGoFiles": [
+			"xor_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/cipher",
+		"Dir": "",
+		"Export": "exports/84.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cbc.go",
+			"cfb.go",
+			"cipher.go",
+			"ctr.go",
+			"gcm.go",
+			"io.go",
+			"ofb.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"benchmark_test.go",
+			"cbc_aes_test.go",
+			"cbc_aes_wycheproof_test.go",
+			"cbc_test.go",
+			"cfb_test.go",
+			"common_test.go",
+			"ctr_aes_test.go",
+			"ctr_test.go",
+			"example_test.go",
+			"gcm_fips140v1.26_test.go",
+			"gcm_test.go",
+			"gcm_wycheproof_test.go",
+			"modes_test.go",
+			"ofb_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/boring/sig",
+		"Dir": "",
+		"Export": "exports/85.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"sig.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/boring",
+		"Dir": "",
+		"Export": "exports/86.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"notboring.go"
+		],
+		"TestGoFiles": [
+			"boring_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/sha256",
+		"Dir": "",
+		"Export": "exports/87.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"sha256.go"
+		],
+		"TestGoFiles": [
+			"sha256_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "embed",
+		"Dir": "",
+		"Export": "exports/88.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"embed.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "reflect",
+		"Dir": "",
+		"Export": "exports/89.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"abi.go",
+			"badlinkname.go",
+			"deepequal.go",
+			"float32reg_generic.go",
+			"iter.go",
+			"makefunc.go",
+			"map.go",
+			"swapper.go",
+			"type.go",
+			"value.go",
+			"visiblefields.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"abi_test.go",
+			"all_test.go",
+			"benchmark_test.go",
+			"example_test.go",
+			"iter_test.go",
+			"map_test.go",
+			"nih_test.go",
+			"set_test.go",
+			"tostring_test.go",
+			"type_test.go",
+			"visiblefields_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/fmtsort",
+		"Dir": "",
+		"Export": "exports/90.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"sort.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"sort_test.go"
+		]
+	},
+	{
+		"ImportPath": "fmt",
+		"Dir": "",
+		"Export": "exports/91.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"errors.go",
+			"format.go",
+			"print.go",
+			"scan.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"errors_test.go",
+			"example_test.go",
+			"fmt_test.go",
+			"gostringer_example_test.go",
+			"scan_test.go",
+			"state_test.go",
+			"stringer_example_test.go",
+			"stringer_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/bridge/tsgo",
+		"Dir": "bridge/tsgo",
+		"Export": "exports/92.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"header.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"bridge_test.go",
+			"coverage_test.go",
+			"product_cache_test.go",
+			"product_inputs_test.go",
+			"product_units_test.go",
+			"products_test.go",
+			"registered_units_test.go",
+			"units_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/bridge/tsgo/spec",
+		"Dir": "bridge/tsgo/spec",
+		"Export": "exports/93.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"spec.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "context",
+		"Dir": "",
+		"Export": "exports/94.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"context.go"
+		],
+		"TestGoFiles": [
+			"context_test.go"
+		],
+		"XTestGoFiles": [
+			"afterfunc_test.go",
+			"benchmark_test.go",
+			"example_test.go",
+			"net_test.go",
+			"x_test.go"
+		]
+	},
+	{
+		"ImportPath": "path/filepath",
+		"Dir": "",
+		"Export": "exports/95.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"match.go",
+			"path.go",
+			"path_unix.go",
+			"symlink.go",
+			"symlink_unix.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"example_unix_test.go",
+			"example_unix_walk_test.go",
+			"match_test.go",
+			"path_test.go"
+		]
+	},
+	{
+		"ImportPath": "os/exec",
+		"Dir": "",
+		"Export": "exports/96.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"exec.go",
+			"exec_unix.go",
+			"lookpath.go",
+			"lp_unix.go"
+		],
+		"TestGoFiles": [
+			"bench_test.go",
+			"env_test.go",
+			"internal_test.go",
+			"lp_test.go"
+		],
+		"XTestGoFiles": [
+			"dot_test.go",
+			"example_test.go",
+			"exec_linux_test.go",
+			"exec_posix_test.go",
+			"exec_test.go",
+			"exec_unix_test.go",
+			"lp_linux_test.go",
+			"lp_unix_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/toolchain",
+		"Dir": "internal/toolchain",
+		"Export": "exports/97.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"toolchain.go"
+		],
+		"TestGoFiles": [
+			"toolchain_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/buildcache/location",
+		"Dir": "internal/buildcache/location",
+		"Export": "exports/98.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"location.go"
+		],
+		"TestGoFiles": [
+			"location_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "bufio",
+		"Dir": "",
+		"Export": "exports/99.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bufio.go",
+			"scan.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"bufio_test.go",
+			"example_test.go",
+			"net_test.go",
+			"scan_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding",
+		"Dir": "",
+		"Export": "exports/100.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"encoding.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "encoding/binary",
+		"Dir": "",
+		"Export": "exports/101.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"binary.go",
+			"native_endian_little.go",
+			"varint.go"
+		],
+		"TestGoFiles": [
+			"binary_test.go",
+			"varint_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/saferio",
+		"Dir": "",
+		"Export": "exports/102.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"io.go"
+		],
+		"TestGoFiles": [
+			"io_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "maps",
+		"Dir": "",
+		"Export": "exports/103.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"iter.go",
+			"maps.go"
+		],
+		"TestGoFiles": [
+			"iter_test.go",
+			"maps_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/gob",
+		"Dir": "",
+		"Export": "exports/104.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"dec_helpers.go",
+			"decode.go",
+			"decoder.go",
+			"doc.go",
+			"enc_helpers.go",
+			"encode.go",
+			"encoder.go",
+			"error.go",
+			"type.go"
+		],
+		"TestGoFiles": [
+			"codec_test.go",
+			"encoder_test.go",
+			"gobencdec_test.go",
+			"timing_test.go",
+			"type_test.go"
+		],
+		"XTestGoFiles": [
+			"example_encdec_test.go",
+			"example_interface_test.go",
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/ir",
+		"Dir": "internal/ir",
+		"Export": "exports/105.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"accessor_spread.go",
+			"argument_slots.go",
+			"array_is_array.go",
+			"async.go",
+			"call_targets.go",
+			"debugger.go",
+			"gob_map.go",
+			"ir.go",
+			"library_json_stringify.go",
+			"library_language.go",
+			"library_map_set.go",
+			"library_object.go",
+			"node_buffer.go",
+			"node_fs_file.go",
+			"readiness.go",
+			"regexp.go",
+			"shape_conformance.go",
+			"taste.go",
+			"typed_arrays.go",
+			"unknown.go",
+			"view_primitives.go",
+			"view_unions_untagged.go",
+			"views.go"
+		],
+		"TestGoFiles": [
+			"argument_slots_test.go",
+			"arguments_length_test.go",
+			"callback_adapter_test.go",
+			"gob_map_test.go",
+			"view_primitives_test.go",
+			"view_unions_untagged_test.go"
+		],
+		"XTestGoFiles": [
+			"accessor_spread_test.go",
+			"argument_slots_guard_test.go",
+			"call_targets_effects_test.go",
+			"call_targets_guard_test.go",
+			"call_targets_test.go"
+		]
+	},
+	{
+		"ImportPath": "sort",
+		"Dir": "",
+		"Export": "exports/106.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"search.go",
+			"slice.go",
+			"sort.go",
+			"zsortfunc.go",
+			"zsortinterface.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"example_interface_test.go",
+			"example_keys_test.go",
+			"example_multi_test.go",
+			"example_search_test.go",
+			"example_test.go",
+			"example_wrapper_test.go",
+			"search_test.go",
+			"sort_slices_benchmark_test.go",
+			"sort_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/flow",
+		"Dir": "internal/flow",
+		"Export": "exports/107.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"build.go",
+			"effects.go",
+			"flow.go",
+			"graph.go",
+			"infer.go",
+			"liveness.go",
+			"ranges.go",
+			"ssa.go",
+			"ssa_eliminate.go",
+			"ssa_verify.go"
+		],
+		"TestGoFiles": [
+			"callback_widening_test.go",
+			"corpus_coverage_test.go",
+			"corpus_units_test.go",
+			"debugger_test.go",
+			"flow_test.go",
+			"ranges_test.go",
+			"step21_corpus_refusals_test.go",
+			"trace_test.go"
+		],
+		"XTestGoFiles": [
+			"lower_test.go"
+		]
+	},
+	{
+		"ImportPath": "regexp/syntax",
+		"Dir": "",
+		"Export": "exports/108.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"compile.go",
+			"doc.go",
+			"op_string.go",
+			"parse.go",
+			"perl_groups.go",
+			"prog.go",
+			"regexp.go",
+			"simplify.go"
+		],
+		"TestGoFiles": [
+			"parse_test.go",
+			"prog_test.go",
+			"simplify_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "regexp",
+		"Dir": "",
+		"Export": "exports/109.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"backtrack.go",
+			"exec.go",
+			"onepass.go",
+			"regexp.go"
+		],
+		"TestGoFiles": [
+			"all_test.go",
+			"exec2_test.go",
+			"exec_test.go",
+			"find_test.go",
+			"onepass_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/native",
+		"Dir": "internal/native",
+		"Export": "exports/110.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"arguments_length.go",
+			"async.go",
+			"borrow.go",
+			"build_runtime.go",
+			"case.go",
+			"census_optional_values.go",
+			"census_small.go",
+			"class_accessors.go",
+			"class_errors.go",
+			"class_features.go",
+			"class_inheritance.go",
+			"devirtualize.go",
+			"element_borrow.go",
+			"emit.go",
+			"emit_arrays.go",
+			"emit_branches.go",
+			"emit_expressions.go",
+			"emit_functions.go",
+			"emit_locals.go",
+			"emit_maps.go",
+			"emit_numbers.go",
+			"emit_objects.go",
+			"emit_ownership.go",
+			"emit_slots.go",
+			"emit_statements.go",
+			"emit_strings.go",
+			"emit_values.go",
+			"entries_records.go",
+			"exceptions.go",
+			"fields.go",
+			"from.go",
+			"jobserver.go",
+			"labels.go",
+			"library.go",
+			"library_array.go",
+			"library_json_stringify.go",
+			"library_language.go",
+			"library_map_set.go",
+			"library_math_number.go",
+			"library_node_buffer.go",
+			"library_node_fs_file.go",
+			"library_object.go",
+			"library_regexp_replace.go",
+			"logical_assignment.go",
+			"maybe.go",
+			"native.go",
+			"parallel.go",
+			"readiness_error.go",
+			"regexp.go",
+			"region.go",
+			"request.go",
+			"reuse.go",
+			"self_compare.go",
+			"slots.go",
+			"switch_tests.go",
+			"target.go",
+			"taste.go",
+			"tsgo.go",
+			"typed_arrays.go",
+			"union.go",
+			"units.go",
+			"units_tsgo.go",
+			"view_fields.go",
+			"view_unions_callable_producers.go",
+			"view_unions_mixed.go",
+			"view_unions_read.go",
+			"view_unions_untagged.go"
+		],
+		"TestGoFiles": [
+			"arguments_length_test.go",
+			"async_host_test.go",
+			"borrow_chain_test.go",
+			"borrow_consumes_test.go",
+			"c_portability_oracle_test.go",
+			"case_test.go",
+			"class_inheritance_test.go",
+			"closure_convention_test.go",
+			"constants_portability_test.go",
+			"contract_test.go",
+			"decode_ascii_cache_test.go",
+			"decode_ascii_test.go",
+			"devirtualize_test.go",
+			"dtoa_test.go",
+			"element_borrow_test.go",
+			"error_message_test.go",
+			"features_test.go",
+			"fields_test.go",
+			"heap_remote_scan_test.go",
+			"heap_test.go",
+			"ieee754_test.go",
+			"jobserver_test.go",
+			"json_encoder_record_test.go",
+			"library_array_test.go",
+			"library_map_set_iterator_test.go",
+			"library_test.go",
+			"limit_test.go",
+			"loop_borrow_test.go",
+			"machine_paths_test.go",
+			"map_hash_test.go",
+			"math_test.go",
+			"maybe_test.go",
+			"node_buffer_test.go",
+			"normalize_benchmark_test.go",
+			"normalize_random_test.go",
+			"normalize_test.go",
+			"number_test.go",
+			"object_metadata_test.go",
+			"parallel_compiler_test.go",
+			"parallel_test.go",
+			"parse_test.go",
+			"power_of_two_test.go",
+			"product_compile_test.go",
+			"programs_test.go",
+			"radix_test.go",
+			"record_test.go",
+			"regexp_search_test.go",
+			"regexp_test.go",
+			"regexp_v8_test.go",
+			"release_build_test.go",
+			"release_fma_test.go",
+			"release_test.go",
+			"reproducible_test.go",
+			"runtime_profile_test.go",
+			"runtime_statics_parallel_test.go",
+			"runtime_statics_steady_test.go",
+			"runtime_statics_test.go",
+			"scaling_test.go",
+			"slab_quarantine_test.go",
+			"split_units_test.go",
+			"step21_parallel_test.go",
+			"string_build_test.go",
+			"string_index_test.go",
+			"string_test.go",
+			"string_units_test.go",
+			"string_views_test.go",
+			"target_test.go",
+			"to_primitive_test.go",
+			"tsgo_features_test.go",
+			"typed_array_test.go",
+			"units_measure_test.go",
+			"units_self_compare_test.go",
+			"units_test.go",
+			"units_tsgo_test.go",
+			"view_unions_mixed_test.go",
+			"wasi_async_test.go",
+			"wasm_test.go",
+			"whole_build_paths_test.go"
+		],
+		"XTestGoFiles": [
+			"async_test.go",
+			"prototype_contract_probe_test.go"
+		]
+	},
+	{
+		"ImportPath": "flag",
+		"Dir": "",
+		"Export": "exports/111.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"flag.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"example_flagset_test.go",
+			"example_func_test.go",
+			"example_test.go",
+			"example_textvar_test.go",
+			"example_value_test.go",
+			"flag_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/sysinfo",
+		"Dir": "",
+		"Export": "exports/112.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cpuinfo_linux.go",
+			"sysinfo.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"sysinfo_test.go"
+		]
+	},
+	{
+		"ImportPath": "math/rand",
+		"Dir": "",
+		"Export": "exports/113.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"exp.go",
+			"normal.go",
+			"rand.go",
+			"rng.go",
+			"zipf.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"auto_test.go",
+			"default_test.go",
+			"example_test.go",
+			"race_test.go",
+			"rand_test.go",
+			"regress_test.go"
+		]
+	},
+	{
+		"ImportPath": "runtime/debug",
+		"Dir": "",
+		"Export": "exports/114.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"garbage.go",
+			"mod.go",
+			"stack.go",
+			"stubs.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_monitor_test.go",
+			"garbage_test.go",
+			"heapdump_test.go",
+			"mod_test.go",
+			"panic_test.go",
+			"stack_test.go"
+		]
+	},
+	{
+		"ImportPath": "runtime/trace",
+		"Dir": "",
+		"Export": "exports/115.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"annotation.go",
+			"batch.go",
+			"encoding.go",
+			"flightrecorder.go",
+			"recorder.go",
+			"subscribe.go",
+			"trace.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"annotation_test.go",
+			"example_test.go",
+			"flightrecorder_test.go",
+			"subscribe_test.go",
+			"trace_test.go"
+		]
+	},
+	{
+		"ImportPath": "testing",
+		"Dir": "",
+		"Export": "exports/116.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"allocs.go",
+			"benchmark.go",
+			"cover.go",
+			"example.go",
+			"fuzz.go",
+			"match.go",
+			"newcover.go",
+			"run_example.go",
+			"testing.go",
+			"testing_other.go"
+		],
+		"TestGoFiles": [
+			"export_test.go",
+			"loop_test.go",
+			"match_test.go",
+			"sub_test.go"
+		],
+		"XTestGoFiles": [
+			"allocs_test.go",
+			"benchmark_test.go",
+			"example_loop_test.go",
+			"flag_test.go",
+			"helper_test.go",
+			"helperfuncs_test.go",
+			"panic_test.go",
+			"testing_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/json/internal",
+		"Dir": "",
+		"Export": "exports/117.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"internal.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "encoding/json/internal/jsonflags",
+		"Dir": "",
+		"Export": "exports/118.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"flags.go"
+		],
+		"TestGoFiles": [
+			"flags_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "encoding/json/internal/jsonopts",
+		"Dir": "",
+		"Export": "exports/119.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"options.go",
+			"options_format.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"options_test.go"
+		]
+	},
+	{
+		"ImportPath": "unicode/utf16",
+		"Dir": "",
+		"Export": "exports/120.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"utf16.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"utf16_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/json/internal/jsonwire",
+		"Dir": "",
+		"Export": "exports/121.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"decode.go",
+			"encode.go",
+			"wire.go"
+		],
+		"TestGoFiles": [
+			"decode_test.go",
+			"encode_test.go",
+			"wire_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "encoding/json/jsontext",
+		"Dir": "",
+		"Export": "exports/122.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"decode.go",
+			"doc.go",
+			"encode.go",
+			"errors.go",
+			"export.go",
+			"options.go",
+			"pools.go",
+			"quote.go",
+			"state.go",
+			"token.go",
+			"value.go"
+		],
+		"TestGoFiles": [
+			"coder_test.go",
+			"decode_test.go",
+			"encode_test.go",
+			"fuzz_test.go",
+			"state_test.go",
+			"token_test.go",
+			"value_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/base32",
+		"Dir": "",
+		"Export": "exports/123.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"base32.go"
+		],
+		"TestGoFiles": [
+			"base32_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/base64",
+		"Dir": "",
+		"Export": "exports/124.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"base64.go"
+		],
+		"TestGoFiles": [
+			"base64_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/hex",
+		"Dir": "",
+		"Export": "exports/125.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hex.go"
+		],
+		"TestGoFiles": [
+			"hex_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/json/v2",
+		"Dir": "",
+		"Export": "exports/126.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"arshal.go",
+			"arshal_any.go",
+			"arshal_default.go",
+			"arshal_embedded.go",
+			"arshal_funcs.go",
+			"arshal_methods.go",
+			"arshal_time.go",
+			"doc.go",
+			"errors.go",
+			"fields.go",
+			"fold.go",
+			"intern.go",
+			"options.go"
+		],
+		"TestGoFiles": [
+			"arshal_test.go",
+			"arshal_time_test.go",
+			"errors_test.go",
+			"fields_test.go",
+			"fold_test.go",
+			"fuzz_test.go",
+			"inline_test.go",
+			"intern_test.go"
+		],
+		"XTestGoFiles": [
+			"bench_test.go",
+			"example_marshaljson_test.go",
+			"example_orderedobject_test.go",
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "encoding/json",
+		"Dir": "",
+		"Export": "exports/127.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"v2_decode.go",
+			"v2_encode.go",
+			"v2_indent.go",
+			"v2_inject.go",
+			"v2_options.go",
+			"v2_scanner.go",
+			"v2_stream.go"
+		],
+		"TestGoFiles": [
+			"v2_bench_test.go",
+			"v2_decode_test.go",
+			"v2_encode_test.go",
+			"v2_fuzz_test.go",
+			"v2_scanner_test.go",
+			"v2_stream_test.go",
+			"v2_tagkey_test.go"
+		],
+		"XTestGoFiles": [
+			"v2_diff_test.go",
+			"v2_example_marshaling_test.go",
+			"v2_example_test.go",
+			"v2_example_text_marshaling_test.go"
+		]
+	},
+	{
+		"ImportPath": "go/token",
+		"Dir": "",
+		"Export": "exports/128.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"position.go",
+			"serialize.go",
+			"token.go",
+			"tree.go"
+		],
+		"TestGoFiles": [
+			"export_test.go",
+			"position_test.go",
+			"serialize_test.go",
+			"token_test.go",
+			"tree_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"position_bench_test.go"
+		]
+	},
+	{
+		"ImportPath": "go/scanner",
+		"Dir": "",
+		"Export": "exports/129.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"errors.go",
+			"scanner.go"
+		],
+		"TestGoFiles": [
+			"scanner_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "go/ast",
+		"Dir": "",
+		"Export": "exports/130.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"ast.go",
+			"commentmap.go",
+			"directive.go",
+			"filter.go",
+			"import.go",
+			"print.go",
+			"resolve.go",
+			"scope.go",
+			"walk.go"
+		],
+		"TestGoFiles": [
+			"ast_test.go",
+			"directive_test.go",
+			"print_test.go"
+		],
+		"XTestGoFiles": [
+			"commentmap_test.go",
+			"example_test.go",
+			"filter_test.go",
+			"import_test.go",
+			"issues_test.go",
+			"walk_test.go"
+		]
+	},
+	{
+		"ImportPath": "go/build/constraint",
+		"Dir": "",
+		"Export": "exports/131.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"expr.go",
+			"vers.go"
+		],
+		"TestGoFiles": [
+			"expr_test.go",
+			"vers_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "go/parser",
+		"Dir": "",
+		"Export": "exports/132.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"interface.go",
+			"parser.go",
+			"resolver.go"
+		],
+		"TestGoFiles": [
+			"error_test.go",
+			"parser_test.go",
+			"performance_test.go",
+			"resolver_test.go",
+			"short_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "internal/fuzz",
+		"Dir": "",
+		"Export": "exports/133.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"counters_supported.go",
+			"coverage.go",
+			"encoding.go",
+			"fuzz.go",
+			"mem.go",
+			"minimize.go",
+			"mutator.go",
+			"mutators_byteslice.go",
+			"pcg.go",
+			"queue.go",
+			"sys_posix.go",
+			"trace.go",
+			"worker.go"
+		],
+		"TestGoFiles": [
+			"encoding_test.go",
+			"minimize_test.go",
+			"mutator_test.go",
+			"mutators_byteslice_test.go",
+			"queue_test.go",
+			"worker_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "os/signal",
+		"Dir": "",
+		"Export": "exports/134.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"signal.go",
+			"signal_unix.go"
+		],
+		"TestGoFiles": [
+			"signal_linux_test.go",
+			"signal_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"example_unix_test.go",
+			"signal_cgo_test.go"
+		]
+	},
+	{
+		"ImportPath": "compress/flate",
+		"Dir": "",
+		"Export": "exports/135.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"deflate.go",
+			"deflatefast.go",
+			"dict_decoder.go",
+			"huffman_bit_writer.go",
+			"huffman_code.go",
+			"inflate.go",
+			"level1.go",
+			"level2.go",
+			"level3.go",
+			"level4.go",
+			"level5.go",
+			"level6.go",
+			"load_store.go",
+			"regmask_amd64.go",
+			"token.go"
+		],
+		"TestGoFiles": [
+			"deflate_test.go",
+			"dict_decoder_test.go",
+			"flate_test.go",
+			"fuzz_test.go",
+			"huffman_bit_writer_test.go",
+			"inflate_test.go",
+			"reader_test.go",
+			"writer_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "hash/crc32",
+		"Dir": "",
+		"Export": "exports/136.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"crc32.go",
+			"crc32_amd64.go",
+			"crc32_generic.go",
+			"gen.go"
+		],
+		"TestGoFiles": [
+			"crc32_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "compress/gzip",
+		"Dir": "",
+		"Export": "exports/137.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"gunzip.go",
+			"gzip.go"
+		],
+		"TestGoFiles": [
+			"fuzz_test.go",
+			"gunzip_test.go",
+			"gzip_test.go",
+			"issue14937_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "text/tabwriter",
+		"Dir": "",
+		"Export": "exports/138.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"tabwriter.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"tabwriter_test.go"
+		]
+	},
+	{
+		"ImportPath": "runtime/pprof",
+		"Dir": "",
+		"Export": "exports/139.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"elf.go",
+			"label.go",
+			"map.go",
+			"pe.go",
+			"pprof.go",
+			"pprof_rusage.go",
+			"proto.go",
+			"proto_other.go",
+			"protobuf.go",
+			"protomem.go",
+			"runtime.go"
+		],
+		"TestGoFiles": [
+			"label_test.go",
+			"mprof_test.go",
+			"pprof_test.go",
+			"proto_test.go",
+			"protomem_test.go",
+			"runtime_test.go",
+			"rusage_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "testing/internal/testdeps",
+		"Dir": "",
+		"Export": "exports/140.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"deps.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/md5",
+		"Dir": "",
+		"Export": "exports/141.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"md5.go",
+			"md5block.go",
+			"md5block_decl.go"
+		],
+		"TestGoFiles": [
+			"md5_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/sha1",
+		"Dir": "",
+		"Export": "exports/142.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"sha1.go",
+			"sha1block.go",
+			"sha1block_amd64.go"
+		],
+		"TestGoFiles": [
+			"sha1_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "container/list",
+		"Dir": "",
+		"Export": "exports/143.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"list.go"
+		],
+		"TestGoFiles": [
+			"list_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/aes",
+		"Dir": "",
+		"Export": "exports/144.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"aes.go"
+		],
+		"TestGoFiles": [
+			"aes_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/des",
+		"Dir": "",
+		"Export": "exports/145.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"block.go",
+			"cipher.go",
+			"const.go"
+		],
+		"TestGoFiles": [
+			"internal_test.go"
+		],
+		"XTestGoFiles": [
+			"des_test.go",
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/nistec/fiat",
+		"Dir": "",
+		"Export": "exports/146.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"p224.go",
+			"p224_fiat64.go",
+			"p224_invert.go",
+			"p256.go",
+			"p256_fiat64.go",
+			"p256_invert.go",
+			"p384.go",
+			"p384_fiat64.go",
+			"p384_invert.go",
+			"p521.go",
+			"p521_fiat64.go",
+			"p521_invert.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"benchmark_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/nistec",
+		"Dir": "",
+		"Export": "exports/147.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"nistec.go",
+			"p224.go",
+			"p224_sqrt.go",
+			"p256_asm.go",
+			"p256_ordinv.go",
+			"p256_table.go",
+			"p384.go",
+			"p521.go"
+		],
+		"TestGoFiles": [
+			"p256_asm_test.go"
+		],
+		"XTestGoFiles": [
+			"benchmark_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/ecdh",
+		"Dir": "",
+		"Export": "exports/148.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"ecdh.go"
+		],
+		"TestGoFiles": [
+			"order_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/edwards25519/field",
+		"Dir": "",
+		"Export": "exports/149.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"fe.go",
+			"fe_amd64.go",
+			"fe_generic.go"
+		],
+		"TestGoFiles": [
+			"fe_alias_test.go",
+			"fe_bench_test.go",
+			"fe_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "math/rand/v2",
+		"Dir": "",
+		"Export": "exports/150.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"chacha8.go",
+			"exp.go",
+			"normal.go",
+			"pcg.go",
+			"rand.go",
+			"zipf.go"
+		],
+		"TestGoFiles": [
+			"export_test.go"
+		],
+		"XTestGoFiles": [
+			"auto_test.go",
+			"chacha8_test.go",
+			"example_test.go",
+			"pcg_test.go",
+			"race_test.go",
+			"rand_test.go",
+			"regress_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/randutil",
+		"Dir": "",
+		"Export": "exports/151.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"randutil.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/rand",
+		"Dir": "",
+		"Export": "exports/152.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"rand.go",
+			"rand_fips140v1.26.go",
+			"random_fips140v1.28.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/ecdh",
+		"Dir": "",
+		"Export": "exports/153.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"ecdh.go",
+			"nist.go",
+			"x25519.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"ecdh_test.go",
+			"ecdh_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "math/big",
+		"Dir": "",
+		"Export": "exports/154.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"accuracy_string.go",
+			"arith.go",
+			"arith_amd64.go",
+			"arith_decl.go",
+			"decimal.go",
+			"doc.go",
+			"float.go",
+			"floatconv.go",
+			"floatmarsh.go",
+			"ftoa.go",
+			"int.go",
+			"intconv.go",
+			"intmarsh.go",
+			"nat.go",
+			"natconv.go",
+			"natdiv.go",
+			"natmul.go",
+			"prime.go",
+			"rat.go",
+			"ratconv.go",
+			"ratmarsh.go",
+			"roundingmode_string.go",
+			"sqrt.go"
+		],
+		"TestGoFiles": [
+			"arith_amd64_test.go",
+			"arith_test.go",
+			"bits_test.go",
+			"calibrate_test.go",
+			"decimal_test.go",
+			"escape_test.go",
+			"float_test.go",
+			"floatconv_test.go",
+			"floatmarsh_test.go",
+			"gcd_test.go",
+			"hilbert_test.go",
+			"int_test.go",
+			"intconv_test.go",
+			"intmarsh_test.go",
+			"link_test.go",
+			"nat_test.go",
+			"natconv_test.go",
+			"prime_test.go",
+			"rat_test.go",
+			"ratconv_test.go",
+			"ratmarsh_test.go",
+			"sqrt_test.go"
+		],
+		"XTestGoFiles": [
+			"alias_test.go",
+			"example_rat_test.go",
+			"example_test.go",
+			"floatexample_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/elliptic",
+		"Dir": "",
+		"Export": "exports/155.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"elliptic.go",
+			"nistec.go",
+			"params.go"
+		],
+		"TestGoFiles": [
+			"elliptic_test.go",
+			"p224_test.go",
+			"p256_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/boring/bbig",
+		"Dir": "",
+		"Export": "exports/156.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"big.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/bigmod",
+		"Dir": "",
+		"Export": "exports/157.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"nat.go",
+			"nat_asm.go"
+		],
+		"TestGoFiles": [
+			"nat_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/ecdsa",
+		"Dir": "",
+		"Export": "exports/158.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"ecdsa.go",
+			"ecdsa_noasm.go",
+			"hmacdrbg.go"
+		],
+		"TestGoFiles": [
+			"ecdsa_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "weak",
+		"Dir": "",
+		"Export": "exports/159.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"pointer.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"pointer_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140cache",
+		"Dir": "",
+		"Export": "exports/160.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cache.go"
+		],
+		"TestGoFiles": [
+			"cache_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/sha3",
+		"Dir": "",
+		"Export": "exports/161.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"sha3.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"sha3_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140hash",
+		"Dir": "",
+		"Export": "exports/162.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hash.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/sha512",
+		"Dir": "",
+		"Export": "exports/163.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"sha512.go"
+		],
+		"TestGoFiles": [
+			"sha512_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "encoding/asn1",
+		"Dir": "",
+		"Export": "exports/164.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"asn1.go",
+			"common.go",
+			"marshal.go"
+		],
+		"TestGoFiles": [
+			"asn1_test.go",
+			"marshal_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/crypto/cryptobyte/asn1",
+		"Dir": "",
+		"Export": "exports/165.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"asn1.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/crypto/cryptobyte",
+		"Dir": "",
+		"Export": "exports/166.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"asn1.go",
+			"builder.go",
+			"string.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/ecdsa",
+		"Dir": "",
+		"Export": "exports/167.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"ecdsa.go",
+			"ecdsa_legacy.go",
+			"notboring.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"ecdsa_test.go",
+			"ecdsa_wycheproof_test.go",
+			"equal_test.go",
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/edwards25519",
+		"Dir": "",
+		"Export": "exports/168.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"doc.go",
+			"edwards25519.go",
+			"scalar.go",
+			"scalar_fiat.go",
+			"scalarmult.go",
+			"tables.go"
+		],
+		"TestGoFiles": [
+			"edwards25519_test.go",
+			"scalar_alias_test.go",
+			"scalar_test.go",
+			"scalarmult_test.go",
+			"tables_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/ed25519",
+		"Dir": "",
+		"Export": "exports/169.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"ed25519.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/rand",
+		"Dir": "",
+		"Export": "exports/170.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"rand.go",
+			"text.go",
+			"util.go"
+		],
+		"TestGoFiles": [
+			"rand_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"text_test.go",
+			"util_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/ed25519",
+		"Dir": "",
+		"Export": "exports/171.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"ed25519.go"
+		],
+		"TestGoFiles": [
+			"ed25519_test.go"
+		],
+		"XTestGoFiles": [
+			"ed25519_wycheproof_test.go",
+			"ed25519vectors_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/hkdf",
+		"Dir": "",
+		"Export": "exports/172.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"hkdf.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/hkdf",
+		"Dir": "",
+		"Export": "exports/173.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hkdf.go"
+		],
+		"TestGoFiles": [
+			"hkdf_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"hkdf_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/hmac",
+		"Dir": "",
+		"Export": "exports/174.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"hmac.go"
+		],
+		"TestGoFiles": [
+			"hmac_test.go"
+		],
+		"XTestGoFiles": [
+			"hmac_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/mlkem",
+		"Dir": "",
+		"Export": "exports/175.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"field.go",
+			"mlkem1024.go",
+			"mlkem768.go"
+		],
+		"TestGoFiles": [
+			"field_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/mlkem",
+		"Dir": "",
+		"Export": "exports/176.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"mlkem.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"mlkem_test.go",
+			"mlkem_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/crypto/internal/alias",
+		"Dir": "",
+		"Export": "exports/177.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"alias.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/crypto/chacha20",
+		"Dir": "",
+		"Export": "exports/178.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"chacha_generic.go",
+			"chacha_noasm.go",
+			"xor.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/crypto/internal/poly1305",
+		"Dir": "",
+		"Export": "exports/179.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"poly1305.go",
+			"sum_asm.go",
+			"sum_generic.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/sys/cpu",
+		"Dir": "",
+		"Export": "exports/180.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"byteorder.go",
+			"cpu.go",
+			"cpu_gc_x86.go",
+			"cpu_linux_noinit.go",
+			"cpu_other_x86.go",
+			"cpu_x86.go",
+			"endian_little.go",
+			"hwcap_linux.go",
+			"parse.go",
+			"runtime_auxv.go",
+			"runtime_auxv_go121.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/crypto/chacha20poly1305",
+		"Dir": "",
+		"Export": "exports/181.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"chacha20poly1305.go",
+			"chacha20poly1305_amd64.go",
+			"chacha20poly1305_generic.go",
+			"fips140only_go1.26.go",
+			"xchacha20poly1305.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/hpke",
+		"Dir": "",
+		"Export": "exports/182.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"aead.go",
+			"aead_fips140v1.26.go",
+			"hpke.go",
+			"kdf.go",
+			"kem.go",
+			"pq.go"
+		],
+		"TestGoFiles": [
+			"hpke_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/tls12",
+		"Dir": "",
+		"Export": "exports/183.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"tls12.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/tls13",
+		"Dir": "",
+		"Export": "exports/184.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"tls13.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/mldsa",
+		"Dir": "",
+		"Export": "exports/185.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"field.go",
+			"mldsa.go",
+			"semiexpanded.go"
+		],
+		"TestGoFiles": [
+			"field_test.go",
+			"mldsa_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/mldsa",
+		"Dir": "",
+		"Export": "exports/186.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"mldsa.go",
+			"mldsa_fips140v1.26.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"example_test.go",
+			"mldsa_test.go",
+			"mldsa_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/rc4",
+		"Dir": "",
+		"Export": "exports/187.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"rc4.go"
+		],
+		"TestGoFiles": [
+			"rc4_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/internal/fips140/rsa",
+		"Dir": "",
+		"Export": "exports/188.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cast.go",
+			"keygen.go",
+			"largeexponent.go",
+			"pkcs1v15.go",
+			"pkcs1v22.go",
+			"rsa.go"
+		],
+		"TestGoFiles": [
+			"keygen_test.go",
+			"pkcs1v15_test.go",
+			"pkcs1v22_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/rsa",
+		"Dir": "",
+		"Export": "exports/189.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"fips.go",
+			"notboring.go",
+			"pkcs1v15.go",
+			"rsa.go"
+		],
+		"TestGoFiles": [
+			"rsa_export_test.go"
+		],
+		"XTestGoFiles": [
+			"equal_test.go",
+			"example_test.go",
+			"pkcs1v15_test.go",
+			"pss_test.go",
+			"rsa_test.go",
+			"rsa_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/tls/internal/fips140tls",
+		"Dir": "",
+		"Export": "exports/190.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"fipstls.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "crypto/dsa",
+		"Dir": "",
+		"Export": "exports/191.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"dsa.go"
+		],
+		"TestGoFiles": [
+			"dsa_test.go"
+		],
+		"XTestGoFiles": [
+			"dsa_wycheproof_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/x509/pkix",
+		"Dir": "",
+		"Export": "exports/192.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"pkix.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "encoding/pem",
+		"Dir": "",
+		"Export": "exports/193.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"pem.go"
+		],
+		"TestGoFiles": [
+			"pem_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/net/dns/dnsmessage",
+		"Dir": "",
+		"Export": "exports/194.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"message.go",
+			"svcb.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/nettrace",
+		"Dir": "",
+		"Export": "exports/195.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"nettrace.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "internal/singleflight",
+		"Dir": "",
+		"Export": "exports/196.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"singleflight.go"
+		],
+		"TestGoFiles": [
+			"singleflight_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "unique",
+		"Dir": "",
+		"Export": "exports/197.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"canonmap.go",
+			"clone.go",
+			"doc.go",
+			"handle.go"
+		],
+		"TestGoFiles": [
+			"canonmap_test.go",
+			"clone_test.go",
+			"handle_bench_test.go",
+			"handle_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net/netip",
+		"Dir": "",
+		"Export": "exports/198.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"netip.go",
+			"uint128.go"
+		],
+		"TestGoFiles": [
+			"export_test.go",
+			"inlining_test.go",
+			"netip_pkg_test.go",
+			"uint128_test.go"
+		],
+		"XTestGoFiles": [
+			"fuzz_test.go",
+			"netip_test.go",
+			"slow_test.go"
+		]
+	},
+	{
+		"ImportPath": "runtime/cgo",
+		"Dir": "",
+		"Export": "exports/199.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"callbacks.go",
+			"callbacks_traceback.go",
+			"callbacks_unix.go",
+			"clearenv.go",
+			"handle.go",
+			"iscgo.go",
+			"linux.go",
+			"mmap.go",
+			"setenv.go",
+			"sigaction.go"
+		],
+		"TestGoFiles": [
+			"handle_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net",
+		"Dir": "",
+		"Export": "exports/200.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"addrselect.go",
+			"cgo_unix.go",
+			"conf.go",
+			"dial.go",
+			"dnsclient.go",
+			"dnsclient_unix.go",
+			"dnsconfig.go",
+			"dnsconfig_unix.go",
+			"error_posix.go",
+			"error_unix.go",
+			"fd_posix.go",
+			"fd_unix.go",
+			"file.go",
+			"file_posix.go",
+			"file_unix.go",
+			"hook.go",
+			"hook_unix.go",
+			"hosts.go",
+			"interface.go",
+			"interface_linux.go",
+			"ip.go",
+			"iprawsock.go",
+			"iprawsock_posix.go",
+			"ipsock.go",
+			"ipsock_posix.go",
+			"lookup.go",
+			"lookup_unix.go",
+			"mac.go",
+			"mptcpsock_linux.go",
+			"net.go",
+			"netcgo_off.go",
+			"netgo_off.go",
+			"nss.go",
+			"parse.go",
+			"pipe.go",
+			"port.go",
+			"port_unix.go",
+			"rawconn.go",
+			"rlimit_unix.go",
+			"sendfile.go",
+			"sendfile_nonwindows.go",
+			"sock_cloexec.go",
+			"sock_linux.go",
+			"sock_posix.go",
+			"sockaddr_posix.go",
+			"sockopt_linux.go",
+			"sockopt_posix.go",
+			"sockoptip4_linux.go",
+			"sockoptip6_posix.go",
+			"splice_linux.go",
+			"tcpsock.go",
+			"tcpsock_posix.go",
+			"tcpsock_unix.go",
+			"tcpsockopt_posix.go",
+			"tcpsockopt_unix.go",
+			"udpsock.go",
+			"udpsock_posix.go",
+			"unixsock.go",
+			"unixsock_posix.go",
+			"unixsock_readmsg_cmsg_cloexec.go",
+			"writev_unix.go"
+		],
+		"TestGoFiles": [
+			"addrselect_test.go",
+			"cgo_unix_test.go",
+			"conf_test.go",
+			"conn_test.go",
+			"dial_test.go",
+			"dial_unix_test.go",
+			"dnsclient_test.go",
+			"dnsclient_unix_test.go",
+			"dnsconfig_unix_test.go",
+			"dnsname_test.go",
+			"error_posix_test.go",
+			"error_test.go",
+			"error_unix_test.go",
+			"external_test.go",
+			"file_test.go",
+			"file_unix_test.go",
+			"hosts_test.go",
+			"interface_linux_test.go",
+			"interface_test.go",
+			"interface_unix_test.go",
+			"ip_test.go",
+			"iprawsock_test.go",
+			"ipsock_test.go",
+			"listen_test.go",
+			"lookup_test.go",
+			"mac_test.go",
+			"main_cloexec_test.go",
+			"main_conf_test.go",
+			"main_posix_test.go",
+			"main_test.go",
+			"main_unix_test.go",
+			"mockserver_test.go",
+			"mptcpsock_linux_test.go",
+			"net_test.go",
+			"nss_test.go",
+			"packetconn_test.go",
+			"parse_test.go",
+			"platform_test.go",
+			"platform_unix_test.go",
+			"port_test.go",
+			"protoconn_test.go",
+			"rawconn_test.go",
+			"rawconn_unix_test.go",
+			"resolverdialfunc_test.go",
+			"sendfile_test.go",
+			"sendfile_unix_test.go",
+			"server_test.go",
+			"sock_linux_test.go",
+			"splice_linux_test.go",
+			"tcpconn_keepalive_conf_posix_test.go",
+			"tcpconn_keepalive_conf_unix_test.go",
+			"tcpconn_keepalive_posix_test.go",
+			"tcpconn_keepalive_test.go",
+			"tcpsock_test.go",
+			"tcpsock_unix_test.go",
+			"timeout_test.go",
+			"udpsock_test.go",
+			"unixsock_linux_test.go",
+			"unixsock_readmsg_test.go",
+			"unixsock_test.go",
+			"write_unix_test.go",
+			"writev_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"pipe_test.go"
+		]
+	},
+	{
+		"ImportPath": "net/url",
+		"Dir": "",
+		"Export": "exports/201.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"encoding_table.go",
+			"url.go"
+		],
+		"TestGoFiles": [
+			"url_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/x509",
+		"Dir": "",
+		"Export": "exports/202.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"cert_pool.go",
+			"constraints.go",
+			"oid.go",
+			"parser.go",
+			"pem_decrypt.go",
+			"pkcs1.go",
+			"pkcs8.go",
+			"root.go",
+			"root_linux.go",
+			"root_unix.go",
+			"sec1.go",
+			"verify.go",
+			"x509.go",
+			"x509_string.go"
+		],
+		"TestGoFiles": [
+			"cert_pool_test.go",
+			"name_constraints_test.go",
+			"oid_test.go",
+			"parser_test.go",
+			"pem_decrypt_test.go",
+			"pkcs8_test.go",
+			"pkits_test.go",
+			"platform_test.go",
+			"root_linux_test.go",
+			"root_test.go",
+			"sec1_test.go",
+			"verify_test.go",
+			"x509_test.go",
+			"x509limbo_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go",
+			"hybrid_pool_test.go"
+		]
+	},
+	{
+		"ImportPath": "crypto/tls",
+		"Dir": "",
+		"Export": "exports/203.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"alert.go",
+			"auth.go",
+			"cache.go",
+			"cipher_suites.go",
+			"common.go",
+			"common_string.go",
+			"conn.go",
+			"defaults.go",
+			"defaults_fips140.go",
+			"ech.go",
+			"handshake_client.go",
+			"handshake_client_tls13.go",
+			"handshake_messages.go",
+			"handshake_server.go",
+			"handshake_server_tls13.go",
+			"key_agreement.go",
+			"key_schedule.go",
+			"prf.go",
+			"quic.go",
+			"ticket.go",
+			"tls.go"
+		],
+		"TestGoFiles": [
+			"auth_test.go",
+			"bogo_shim_test.go",
+			"bogo_shim_unix_test.go",
+			"cache_test.go",
+			"certificates_generator_test.go",
+			"certificates_test.go",
+			"conn_test.go",
+			"ech_test.go",
+			"fips140_test.go",
+			"handshake_client_test.go",
+			"handshake_messages_test.go",
+			"handshake_server_test.go",
+			"handshake_test.go",
+			"handshake_unix_test.go",
+			"key_schedule_test.go",
+			"link_test.go",
+			"prf_test.go",
+			"quic_test.go",
+			"ticket_test.go",
+			"tls_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/buildcache/goplan",
+		"Dir": "internal/buildcache/goplan",
+		"Export": "exports/204.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"goplan.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/text/transform",
+		"Dir": "",
+		"Export": "exports/205.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"transform.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "log/internal",
+		"Dir": "",
+		"Export": "exports/206.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"internal.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "log",
+		"Dir": "",
+		"Export": "exports/207.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"log.go"
+		],
+		"TestGoFiles": [
+			"log_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/text/unicode/bidi",
+		"Dir": "",
+		"Export": "exports/208.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bidi.go",
+			"bracket.go",
+			"core.go",
+			"prop.go",
+			"tables17.0.0.go",
+			"trieval.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/text/secure/bidirule",
+		"Dir": "",
+		"Export": "exports/209.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"bidirule.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/text/unicode/norm",
+		"Dir": "",
+		"Export": "exports/210.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"composition.go",
+			"forminfo.go",
+			"input.go",
+			"iter.go",
+			"normalize.go",
+			"readwriter.go",
+			"tables17.0.0.go",
+			"transform.go",
+			"trie.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/net/idna",
+		"Dir": "",
+		"Export": "exports/211.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"idna.go",
+			"punycode.go",
+			"tables17.0.0.go",
+			"trie.go",
+			"trieval.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net/textproto",
+		"Dir": "",
+		"Export": "exports/212.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"header.go",
+			"pipeline.go",
+			"reader.go",
+			"textproto.go",
+			"writer.go"
+		],
+		"TestGoFiles": [
+			"header_test.go",
+			"reader_test.go",
+			"writer_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/net/http/httpguts",
+		"Dir": "",
+		"Export": "exports/213.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"guts.go",
+			"httplex.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/net/http/httpproxy",
+		"Dir": "",
+		"Export": "exports/214.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"proxy.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "mime",
+		"Dir": "",
+		"Export": "exports/215.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"encodedword.go",
+			"grammar.go",
+			"mediatype.go",
+			"type.go",
+			"type_unix.go"
+		],
+		"TestGoFiles": [
+			"encodedword_test.go",
+			"mediatype_test.go",
+			"type_test.go",
+			"type_unix_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "mime/quotedprintable",
+		"Dir": "",
+		"Export": "exports/216.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"reader.go",
+			"writer.go"
+		],
+		"TestGoFiles": [
+			"reader_test.go",
+			"writer_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "mime/multipart",
+		"Dir": "",
+		"Export": "exports/217.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"formdata.go",
+			"multipart.go",
+			"readmimeheader.go",
+			"writer.go"
+		],
+		"TestGoFiles": [
+			"formdata_test.go",
+			"multipart_test.go",
+			"writer_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "net/http/httptrace",
+		"Dir": "",
+		"Export": "exports/218.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"trace.go"
+		],
+		"TestGoFiles": [
+			"trace_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "net/http/internal",
+		"Dir": "",
+		"Export": "exports/219.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"chunked.go",
+			"common.go",
+			"sniff.go"
+		],
+		"TestGoFiles": [
+			"chunked_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net/http/internal/ascii",
+		"Dir": "",
+		"Export": "exports/220.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"print.go"
+		],
+		"TestGoFiles": [
+			"print_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "vendor/golang.org/x/net/http2/hpack",
+		"Dir": "",
+		"Export": "exports/221.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"encode.go",
+			"hpack.go",
+			"huffman.go",
+			"static_table.go",
+			"tables.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net/http/internal/httpcommon",
+		"Dir": "",
+		"Export": "exports/222.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"httpcommon.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net/http/internal/httpsfv",
+		"Dir": "",
+		"Export": "exports/223.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"httpsfv.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "net/http/internal/http2",
+		"Dir": "",
+		"Export": "exports/224.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"api.go",
+			"ascii.go",
+			"ciphers.go",
+			"client_conn_pool.go",
+			"config.go",
+			"databuffer.go",
+			"errors.go",
+			"flow.go",
+			"frame.go",
+			"gotrack.go",
+			"http2.go",
+			"pipe.go",
+			"server.go",
+			"transport.go",
+			"write.go",
+			"writesched.go",
+			"writesched_priority_rfc9218.go",
+			"writesched_roundrobin.go"
+		],
+		"TestGoFiles": [
+			"ascii_test.go",
+			"ciphers_test.go",
+			"databuffer_test.go",
+			"errors_test.go",
+			"export_test.go",
+			"flow_test.go",
+			"frame_test.go",
+			"gotrack_test.go",
+			"http2_test.go",
+			"pipe_test.go",
+			"server_internal_test.go",
+			"transport_internal_test.go",
+			"writesched_benchmarks_test.go",
+			"writesched_priority_rfc9218_test.go",
+			"writesched_roundrobin_test.go",
+			"writesched_test.go"
+		],
+		"XTestGoFiles": [
+			"clientconn_test.go",
+			"config_test.go",
+			"connframes_test.go",
+			"netconn_test.go",
+			"server_push_test.go",
+			"server_test.go",
+			"synctest_test.go",
+			"transport_test.go"
+		]
+	},
+	{
+		"ImportPath": "net/http",
+		"Dir": "",
+		"Export": "exports/225.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"client.go",
+			"clientconn.go",
+			"clone.go",
+			"cookie.go",
+			"csrf.go",
+			"doc.go",
+			"filetransport.go",
+			"fs.go",
+			"header.go",
+			"http.go",
+			"http2.go",
+			"jar.go",
+			"mapping.go",
+			"method.go",
+			"pattern.go",
+			"request.go",
+			"response.go",
+			"responsecontroller.go",
+			"roundtrip.go",
+			"routing_index.go",
+			"routing_tree.go",
+			"servemux121.go",
+			"server.go",
+			"sniff.go",
+			"socks_bundle.go",
+			"status.go",
+			"transfer.go",
+			"transport.go",
+			"transport_default_other.go"
+		],
+		"TestGoFiles": [
+			"cookie_test.go",
+			"export_test.go",
+			"filetransport_test.go",
+			"h2_error_test.go",
+			"header_test.go",
+			"http_test.go",
+			"mapping_test.go",
+			"pattern_test.go",
+			"proxy_test.go",
+			"range_test.go",
+			"readrequest_test.go",
+			"requestwrite_test.go",
+			"response_test.go",
+			"responsewrite_test.go",
+			"routing_index_test.go",
+			"routing_tree_test.go",
+			"server_test.go",
+			"transfer_test.go",
+			"transport_internal_test.go"
+		],
+		"XTestGoFiles": [
+			"alpn_test.go",
+			"async_test.go",
+			"client_test.go",
+			"clientconn_test.go",
+			"clientserver_test.go",
+			"csrf_test.go",
+			"example_filesystem_test.go",
+			"example_handle_test.go",
+			"example_test.go",
+			"fs_test.go",
+			"http1_server_test.go",
+			"main_test.go",
+			"netconn_test.go",
+			"request_test.go",
+			"responsecontroller_test.go",
+			"serve_test.go",
+			"sniff_test.go",
+			"transport_dial_test.go",
+			"transport_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/buildcache",
+		"Dir": "internal/buildcache",
+		"Export": "exports/226.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"artifacts.go",
+			"buildcache.go",
+			"changed_linux.go",
+			"find.go",
+			"gobuild.go",
+			"make_go.go",
+			"make_inputs.go",
+			"make_relative.go",
+			"pinned.go",
+			"reads.go",
+			"relative.go",
+			"settle.go",
+			"store.go",
+			"strace.go",
+			"system.go",
+			"trace.go"
+		],
+		"TestGoFiles": [
+			"artifacts_test.go",
+			"buildcache_test.go",
+			"environment_test.go",
+			"find_test.go",
+			"gobuild_test.go",
+			"gomod_test.go",
+			"identity_test.go",
+			"ldcache_test.go",
+			"makecensus_test.go",
+			"nodeinstall_test.go",
+			"output_test.go",
+			"pinned_test.go",
+			"precise_test.go",
+			"relative_test.go",
+			"settle_bench_test.go",
+			"settle_calls_test.go",
+			"stability_test.go",
+			"store_test.go",
+			"storeresolved_test.go",
+			"strace_test.go",
+			"testreads_test.go",
+			"tracked_manifest_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/javascript",
+		"Dir": "internal/javascript",
+		"Export": "exports/227.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"arguments_length.go",
+			"async.go",
+			"entries_provenance.go",
+			"javascript.go",
+			"library_json_stringify.go",
+			"library_map_set.go",
+			"library_node_buffer.go",
+			"library_node_fs_file.go",
+			"library_regexp_replace.go",
+			"readiness.go",
+			"taste.go",
+			"typed_arrays.go",
+			"view_fields.go",
+			"view_unions_callable_contract.go",
+			"view_unions_callable_producers.go",
+			"view_unions_mixed.go",
+			"view_unions_read.go",
+			"view_unions_untagged.go"
+		],
+		"TestGoFiles": [
+			"view_test_runtime_test.go",
+			"view_unions_mixed_selection_test.go",
+			"view_unions_mixed_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/json",
+		"Dir": "cohere/TypeScript/tsc/internal/json",
+		"Export": "exports/228.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"json.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/collections",
+		"Dir": "cohere/TypeScript/tsc/internal/collections",
+		"Export": "exports/229.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"cow.go",
+			"multimap.go",
+			"ordered_map.go",
+			"ordered_set.go",
+			"set.go",
+			"syncmap.go",
+			"syncset.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"ordered_map_test.go",
+			"ordered_set_test.go",
+			"syncmap_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/debug",
+		"Dir": "cohere/TypeScript/tsc/internal/debug",
+		"Export": "exports/230.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"debug.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"debug_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/stringutil",
+		"Dir": "cohere/TypeScript/tsc/internal/stringutil",
+		"Export": "exports/231.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"compare.go",
+			"generate.go",
+			"identifier.go",
+			"identifier_parts_generated.go",
+			"js_case.go",
+			"js_case_generated.go",
+			"util.go"
+		],
+		"TestGoFiles": [
+			"js_case_test.go",
+			"util_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/tspath",
+		"Dir": "cohere/TypeScript/tsc/internal/tspath",
+		"Export": "exports/232.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"doc.go",
+			"dynamic.go",
+			"extension.go",
+			"file_spec.go",
+			"ignoredpaths.go",
+			"module_specifier.go",
+			"path.go",
+			"pathkey.go",
+			"relative_path.go",
+			"rooted_path.go",
+			"source_map_location.go"
+		],
+		"TestGoFiles": [
+			"ignoredpaths_test.go",
+			"path_test.go",
+			"startsWithDirectory_test.go",
+			"typed_paths_test.go"
+		],
+		"XTestGoFiles": [
+			"untitled_test.go"
+		]
+	},
+	{
+		"ImportPath": "golang.org/x/sync/errgroup",
+		"Dir": "",
+		"Export": "exports/233.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"errgroup.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"errgroup_example_md5all_test.go",
+			"errgroup_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/core",
+		"Dir": "cohere/TypeScript/tsc/internal/core",
+		"Export": "exports/234.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"arena.go",
+			"bfs.go",
+			"binarysearch.go",
+			"compileroptions.go",
+			"context.go",
+			"core.go",
+			"languagevariant.go",
+			"languagevariant_stringer_generated.go",
+			"linkstore.go",
+			"modulekind_stringer_generated.go",
+			"nodemodules.go",
+			"options_generated.go",
+			"pattern.go",
+			"projectreference.go",
+			"scriptkind.go",
+			"scriptkind_stringer_generated.go",
+			"scripttarget_stringer_generated.go",
+			"semaphore.go",
+			"stack.go",
+			"text.go",
+			"textchange.go",
+			"tristate.go",
+			"tristate_stringer_generated.go",
+			"typeacquisition.go",
+			"version.go",
+			"workgroup.go"
+		],
+		"TestGoFiles": [
+			"pattern_test.go"
+		],
+		"XTestGoFiles": [
+			"bfs_test.go"
+		]
+	},
+	{
+		"ImportPath": "golang.org/x/text/internal/tag",
+		"Dir": "",
+		"Export": "exports/235.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"tag.go"
+		],
+		"TestGoFiles": [
+			"tag_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "golang.org/x/text/internal/language",
+		"Dir": "",
+		"Export": "exports/236.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"common.go",
+			"compact.go",
+			"compose.go",
+			"coverage.go",
+			"language.go",
+			"lookup.go",
+			"match.go",
+			"parse.go",
+			"tables.go",
+			"tags.go"
+		],
+		"TestGoFiles": [
+			"compose_test.go",
+			"language_test.go",
+			"lookup_test.go",
+			"match_test.go",
+			"parse_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "golang.org/x/text/internal/language/compact",
+		"Dir": "",
+		"Export": "exports/237.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"compact.go",
+			"language.go",
+			"parents.go",
+			"tables.go",
+			"tags.go"
+		],
+		"TestGoFiles": [
+			"gen_test.go",
+			"language_test.go",
+			"parse_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "golang.org/x/text/language",
+		"Dir": "",
+		"Export": "exports/238.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"coverage.go",
+			"doc.go",
+			"language.go",
+			"match.go",
+			"parse.go",
+			"tables.go",
+			"tags.go"
+		],
+		"TestGoFiles": [
+			"coverage_test.go",
+			"language_test.go",
+			"lookup_test.go",
+			"match_test.go",
+			"parse_test.go"
+		],
+		"XTestGoFiles": [
+			"examples_test.go",
+			"httpexample_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/locale",
+		"Dir": "cohere/TypeScript/tsc/internal/locale",
+		"Export": "exports/239.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"locale.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/diagnostics",
+		"Dir": "cohere/TypeScript/tsc/internal/diagnostics",
+		"Export": "exports/240.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"diagnostics.go",
+			"diagnostics_generated.go",
+			"loc_generated.go",
+			"stringer_generated.go"
+		],
+		"TestGoFiles": [
+			"diagnostics_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/spanmap",
+		"Dir": "cohere/TypeScript/tsc/internal/spanmap",
+		"Export": "exports/241.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"spanmap.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"spanmap_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/klauspost/cpuid/v2",
+		"Dir": "",
+		"Export": "exports/242.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"cpuid.go",
+			"detect_x86.go",
+			"featureid_string.go"
+		],
+		"TestGoFiles": [
+			"cpuid_test.go",
+			"mockcpu_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/zeebo/xxh3",
+		"Dir": "",
+		"Export": "exports/243.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"accum_generic.go",
+			"accum_stubs_amd64.go",
+			"consts.go",
+			"hash128.go",
+			"hash128_seed.go",
+			"hash64.go",
+			"hash64_seed.go",
+			"hasher.go",
+			"hasher128.go",
+			"utils.go"
+		],
+		"TestGoFiles": [
+			"compat_test.go",
+			"compat_vector_test.go",
+			"escape_test.go",
+			"hash128_test.go",
+			"hash64_test.go",
+			"hasher_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/ast",
+		"Dir": "cohere/TypeScript/tsc/internal/ast",
+		"Export": "exports/244.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"ast.go",
+			"ast_generated.go",
+			"checkflags.go",
+			"deepclone.go",
+			"diagnostic.go",
+			"flow.go",
+			"functionflags.go",
+			"ids.go",
+			"kind_generated.go",
+			"kind_stringer_generated.go",
+			"modifierflags.go",
+			"nodeflags.go",
+			"parseoptions.go",
+			"positionmap.go",
+			"precedence.go",
+			"subtreefacts.go",
+			"symbol.go",
+			"symbolflags.go",
+			"tokenflags.go",
+			"utilities.go",
+			"visitor.go"
+		],
+		"TestGoFiles": [
+			"diagnostic_test.go"
+		],
+		"XTestGoFiles": [
+			"deepclone_test.go",
+			"positionmap_test.go",
+			"utilities_bench_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/ast",
+		"Dir": "cohere/TypeScript-shim/ast",
+		"Export": "exports/245.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/vfs",
+		"Dir": "cohere/TypeScript/tsc/internal/vfs",
+		"Export": "exports/246.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"vfs.go",
+			"walkdir.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"vfs_test.go",
+			"walkdir_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/bundled",
+		"Dir": "cohere/TypeScript/tsc/internal/bundled",
+		"Export": "exports/247.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"bundled.go",
+			"embed.go",
+			"embed_generated.go",
+			"libs_generated.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"bundled_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/bundled",
+		"Dir": "cohere/TypeScript-shim/bundled",
+		"Export": "exports/248.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/jsnum",
+		"Dir": "cohere/TypeScript/tsc/internal/jsnum",
+		"Export": "exports/249.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"jsnum.go",
+			"pseudobigint.go",
+			"string.go"
+		],
+		"TestGoFiles": [
+			"jsnum_test.go",
+			"pseudobigint_test.go",
+			"ryu_test.go",
+			"string_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/scanner",
+		"Dir": "cohere/TypeScript/tsc/internal/scanner",
+		"Export": "exports/250.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"regexp.go",
+			"scanner.go",
+			"unicodeproperties.go",
+			"utilities.go"
+		],
+		"TestGoFiles": [
+			"scanner_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/astnav",
+		"Dir": "cohere/TypeScript/tsc/internal/astnav",
+		"Export": "exports/251.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"tokens.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"testmain_test.go",
+			"tokens_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/binder",
+		"Dir": "cohere/TypeScript/tsc/internal/binder",
+		"Export": "exports/252.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"binder.go",
+			"nameresolver.go",
+			"referenceresolver.go"
+		],
+		"TestGoFiles": [
+			"binder_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/evaluator",
+		"Dir": "cohere/TypeScript/tsc/internal/evaluator",
+		"Export": "exports/253.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"evaluator.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/semver",
+		"Dir": "cohere/TypeScript/tsc/internal/semver",
+		"Export": "exports/254.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"version.go",
+			"version_range.go"
+		],
+		"TestGoFiles": [
+			"version_range_test.go",
+			"version_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/packagejson",
+		"Dir": "cohere/TypeScript/tsc/internal/packagejson",
+		"Export": "exports/255.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"cache.go",
+			"expected.go",
+			"exportsorimports.go",
+			"jsonvalue.go",
+			"packagejson.go",
+			"validated.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"expected_test.go",
+			"exportsorimports_test.go",
+			"jsonvalue_test.go",
+			"packagejson_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/vfs/vfsmatch",
+		"Dir": "cohere/TypeScript/tsc/internal/vfs/vfsmatch",
+		"Export": "exports/256.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"stringer_generated.go",
+			"vfsmatch.go"
+		],
+		"TestGoFiles": [
+			"bench_test.go",
+			"vfsmatch_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/module",
+		"Dir": "cohere/TypeScript/tsc/internal/module",
+		"Export": "exports/257.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"cache.go",
+			"resolver.go",
+			"staticresolver.go",
+			"types.go",
+			"util.go"
+		],
+		"TestGoFiles": [
+			"resolver_internal_test.go",
+			"resolver_test.go",
+			"staticresolver_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/outputpaths",
+		"Dir": "cohere/TypeScript/tsc/internal/outputpaths",
+		"Export": "exports/258.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"commonsourcedirectory.go",
+			"outputpaths.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"outputpaths_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/symlinks",
+		"Dir": "cohere/TypeScript/tsc/internal/symlinks",
+		"Export": "exports/259.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"knownsymlinks.go"
+		],
+		"TestGoFiles": [
+			"knownsymlinks_bench_test.go",
+			"knownsymlinks_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/jsonrpc",
+		"Dir": "cohere/TypeScript/tsc/internal/jsonrpc",
+		"Export": "exports/260.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"baseproto.go",
+			"jsonrpc.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/ipc",
+		"Dir": "cohere/TypeScript/tsc/internal/ipc",
+		"Export": "exports/261.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"conn.go",
+			"conn_async.go",
+			"conn_sync.go",
+			"protocol.go",
+			"protocol_jsonrpc.go",
+			"timing.go",
+			"transport.go",
+			"transport_unix.go"
+		],
+		"TestGoFiles": [
+			"timing_test.go"
+		],
+		"XTestGoFiles": [
+			"conn_async_test.go",
+			"conn_sync_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/parser",
+		"Dir": "cohere/TypeScript/tsc/internal/parser",
+		"Export": "exports/262.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"jsdoc.go",
+			"parser.go",
+			"references.go",
+			"reparser.go",
+			"types.go",
+			"utilities.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"parser_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/contentmapper",
+		"Dir": "cohere/TypeScript/tsc/internal/contentmapper",
+		"Export": "exports/263.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"contentmapper.go",
+			"host.go",
+			"hostimpl.go",
+			"transform.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"host_test.go",
+			"transform_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/glob",
+		"Dir": "cohere/TypeScript/tsc/internal/glob",
+		"Export": "exports/264.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"glob.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/tsoptions",
+		"Dir": "cohere/TypeScript/tsc/internal/tsoptions",
+		"Export": "exports/265.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"commandlineoption.go",
+			"commandlineparser.go",
+			"contentmappers.go",
+			"declarations_generated.go",
+			"diagnostics.go",
+			"enummaps.go",
+			"errors.go",
+			"namemap.go",
+			"options_generated.go",
+			"parsedbuildcommandline.go",
+			"parsedcommandline.go",
+			"parsedoptions.go",
+			"parsinghelpers.go",
+			"rawcompileroptions.go",
+			"showconfig.go",
+			"tsconfigparsing.go",
+			"wildcarddirectories.go"
+		],
+		"TestGoFiles": [
+			"compileroptions_test.go",
+			"contentmappers_test.go",
+			"export_test.go",
+			"parsedoptions_test.go",
+			"parsinghelpers_test.go",
+			"showconfig_test.go",
+			"wildcarddirectories_test.go"
+		],
+		"XTestGoFiles": [
+			"commandlineparser_test.go",
+			"decls_test.go",
+			"parsedcommandline_test.go",
+			"rawcompileroptions_test.go",
+			"testmain_test.go",
+			"tsconfigparsing_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/modulespecifiers",
+		"Dir": "cohere/TypeScript/tsc/internal/modulespecifiers",
+		"Export": "exports/266.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"compare.go",
+			"preferences.go",
+			"specifiers.go",
+			"types.go",
+			"util.go"
+		],
+		"TestGoFiles": [
+			"specifiers_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/nodebuilder",
+		"Dir": "cohere/TypeScript/tsc/internal/nodebuilder",
+		"Export": "exports/267.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"types.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/sourcemap",
+		"Dir": "cohere/TypeScript/tsc/internal/sourcemap",
+		"Export": "exports/268.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"decoder.go",
+			"generator.go",
+			"lineinfo.go",
+			"source.go",
+			"source_mapper.go",
+			"util.go"
+		],
+		"TestGoFiles": [
+			"generator_test.go",
+			"source_mapper_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/printer",
+		"Dir": "cohere/TypeScript/tsc/internal/printer",
+		"Export": "exports/269.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"changetrackerwriter.go",
+			"emitcontext.go",
+			"emitflags.go",
+			"emithost.go",
+			"emitresolver.go",
+			"emittextwriter.go",
+			"factory.go",
+			"generatedidentifierflags.go",
+			"helpers.go",
+			"namegenerator.go",
+			"printer.go",
+			"semicolon_writer.go",
+			"singlelinestringwriter.go",
+			"sourcefilemetadataprovider.go",
+			"syntheticfile.go",
+			"textwriter.go",
+			"utilities.go"
+		],
+		"TestGoFiles": [
+			"utilities_test.go"
+		],
+		"XTestGoFiles": [
+			"namegenerator_test.go",
+			"printer_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/pseudochecker",
+		"Dir": "cohere/TypeScript/tsc/internal/pseudochecker",
+		"Export": "exports/270.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"checker.go",
+			"lookup.go",
+			"type.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/tracing",
+		"Dir": "cohere/TypeScript/tsc/internal/tracing",
+		"Export": "exports/271.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"tracing.go"
+		],
+		"TestGoFiles": [
+			"tracing_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/checker",
+		"Dir": "cohere/TypeScript/tsc/internal/checker",
+		"Export": "exports/272.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"checker.go",
+			"emitresolver.go",
+			"exports.go",
+			"flow.go",
+			"grammarchecks.go",
+			"inference.go",
+			"jsdoc.go",
+			"jsx.go",
+			"links.go",
+			"mapper.go",
+			"nodebuilder.go",
+			"nodebuilder_hover.go",
+			"nodebuilderimpl.go",
+			"nodebuilderscopes.go",
+			"nodecopy.go",
+			"printer.go",
+			"pseudotypenodebuilder.go",
+			"relater.go",
+			"services.go",
+			"stringer_generated.go",
+			"symbolaccessibility.go",
+			"symboltracker.go",
+			"tracer.go",
+			"types.go",
+			"utilities.go"
+		],
+		"TestGoFiles": [
+			"tracer_test.go"
+		],
+		"XTestGoFiles": [
+			"checker_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/checker",
+		"Dir": "cohere/TypeScript-shim/checker",
+		"Export": "exports/273.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers",
+		"Export": "exports/274.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"chain.go",
+			"destructuring.go",
+			"modifiervisitor.go",
+			"transformer.go",
+			"utilities.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers/declarations",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers/declarations",
+		"Export": "exports/275.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"diagnostics.go",
+			"supplementalreferences.go",
+			"tracker.go",
+			"transform.go",
+			"util.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers/estransforms",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers/estransforms",
+		"Export": "exports/276.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"async.go",
+			"classfields.go",
+			"classthis.go",
+			"definitions.go",
+			"esdecorator.go",
+			"exponentiation.go",
+			"forawait.go",
+			"logicalassignment.go",
+			"namedevaluation.go",
+			"nullishcoalescing.go",
+			"objectrestspread.go",
+			"optionalcatch.go",
+			"optionalchain.go",
+			"taggedtemplate.go",
+			"usestrict.go",
+			"using.go",
+			"utilities.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers/inliners",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers/inliners",
+		"Export": "exports/277.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"constenum.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers/jsxtransforms",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers/jsxtransforms",
+		"Export": "exports/278.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"jsx.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers/moduletransforms",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers/moduletransforms",
+		"Export": "exports/279.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"commonjsmodule.go",
+			"esmodule.go",
+			"externalmoduleinfo.go",
+			"impliedmodule.go",
+			"utilities.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/transformers/tstransforms",
+		"Dir": "cohere/TypeScript/tsc/internal/transformers/tstransforms",
+		"Export": "exports/280.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"importelision.go",
+			"legacydecorators.go",
+			"metadata.go",
+			"runtimesyntax.go",
+			"typeeraser.go",
+			"typeserializer.go",
+			"utilities.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"importelision_test.go",
+			"typeeraser_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs",
+		"Dir": "cohere/TypeScript/tsc/internal/vfs/cachedvfs",
+		"Export": "exports/281.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"cachedvfs.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"cachedvfs_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/compiler",
+		"Dir": "cohere/TypeScript/tsc/internal/compiler",
+		"Export": "exports/282.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"checkerpool.go",
+			"emitHost.go",
+			"emitter.go",
+			"fileInclude.go",
+			"fileloader.go",
+			"filesparser.go",
+			"host.go",
+			"includeprocessor.go",
+			"pkg.go",
+			"processingDiagnostic.go",
+			"program.go",
+			"projectreferencedtsfakinghost.go",
+			"projectreferencefilemapper.go",
+			"projectreferenceparser.go"
+		],
+		"TestGoFiles": [
+			"checkerpool_test.go",
+			"program_test.go",
+			"sourceextensions_test.go"
+		],
+		"XTestGoFiles": [
+			"contentmapper_test.go",
+			"emit_test.go",
+			"test_helpers_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/compiler",
+		"Dir": "cohere/TypeScript-shim/compiler",
+		"Export": "exports/283.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/core",
+		"Dir": "cohere/TypeScript-shim/core",
+		"Export": "exports/284.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/locale",
+		"Dir": "cohere/TypeScript-shim/locale",
+		"Export": "exports/285.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/scanner",
+		"Dir": "cohere/TypeScript-shim/scanner",
+		"Export": "exports/286.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"position.go",
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/tsoptions",
+		"Dir": "cohere/TypeScript-shim/tsoptions",
+		"Export": "exports/287.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/tspath",
+		"Dir": "cohere/TypeScript-shim/tspath",
+		"Export": "exports/288.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/vfs",
+		"Dir": "cohere/TypeScript-shim/vfs",
+		"Export": "exports/289.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs",
+		"Dir": "cohere/TypeScript-shim/vfs/cachedvfs",
+		"Export": "exports/290.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "golang.org/x/sys/unix",
+		"Dir": "",
+		"Export": "exports/291.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"affinity_linux.go",
+			"aliases.go",
+			"auxv.go",
+			"bluetooth_linux.go",
+			"constants.go",
+			"dev_linux.go",
+			"dirent.go",
+			"endian_little.go",
+			"env_unix.go",
+			"fcntl.go",
+			"fdset.go",
+			"ifreq_linux.go",
+			"ioctl_linux.go",
+			"ioctl_unsigned.go",
+			"mremap.go",
+			"pagesize_unix.go",
+			"race0.go",
+			"readdirent_getdents.go",
+			"readv_unix.go",
+			"sockcmsg_linux.go",
+			"sockcmsg_unix.go",
+			"sockcmsg_unix_other.go",
+			"syscall.go",
+			"syscall_linux.go",
+			"syscall_linux_alarm.go",
+			"syscall_linux_amd64.go",
+			"syscall_linux_amd64_gc.go",
+			"syscall_linux_gc.go",
+			"syscall_unix.go",
+			"syscall_unix_gc.go",
+			"sysvshm_linux.go",
+			"sysvshm_unix.go",
+			"timestruct.go",
+			"vgetrandom_linux.go",
+			"zerrors_linux.go",
+			"zerrors_linux_amd64.go",
+			"zptrace_x86_linux.go",
+			"zsyscall_linux.go",
+			"zsyscall_linux_amd64.go",
+			"zsysnum_linux_amd64.go",
+			"ztypes_linux.go",
+			"ztypes_linux_amd64.go"
+		],
+		"TestGoFiles": [
+			"export_mremap_test.go",
+			"ifreq_linux_test.go",
+			"syscall_internal_linux_test.go"
+		],
+		"XTestGoFiles": [
+			"auxv_linux_test.go",
+			"creds_test.go",
+			"dev_linux_test.go",
+			"dirent_test.go",
+			"dup3_test.go",
+			"example_exec_test.go",
+			"example_flock_test.go",
+			"example_sysvshm_test.go",
+			"fdset_test.go",
+			"mmap_unix_test.go",
+			"mremap_test.go",
+			"pipe2_test.go",
+			"readv_unix_test.go",
+			"sendfile_test.go",
+			"syscall_linux_test.go",
+			"syscall_test.go",
+			"syscall_unix_test.go",
+			"sysvshm_unix_test.go",
+			"timestruct_test.go",
+			"xattr_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/nativepath",
+		"Dir": "cohere/TypeScript/tsc/internal/nativepath",
+		"Export": "exports/292.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"eintr_unix.go",
+			"realpath_linux.go",
+			"symlink_other.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/osutil",
+		"Dir": "cohere/TypeScript/tsc/internal/osutil",
+		"Export": "exports/293.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"os_other.go",
+			"osutil.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/vfs/internal",
+		"Dir": "cohere/TypeScript/tsc/internal/vfs/internal",
+		"Export": "exports/294.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"internal.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/internal/vfs/osvfs",
+		"Dir": "cohere/TypeScript/tsc/internal/vfs/osvfs",
+		"Export": "exports/295.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"os.go"
+		],
+		"TestGoFiles": [
+			"helpers_test.go",
+			"realpath_test.go"
+		],
+		"XTestGoFiles": [
+			"os_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs",
+		"Dir": "cohere/TypeScript-shim/vfs/osvfs",
+		"Export": "exports/296.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"shim.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/load",
+		"Dir": "internal/load",
+		"Export": "exports/297.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"declarations.go",
+			"export_collision.go",
+			"load.go",
+			"node_library.go",
+			"node_library_fs.go",
+			"regexp_library.go",
+			"source_fs.go",
+			"tsgo.go"
+		],
+		"TestGoFiles": [
+			"export_collision_test.go",
+			"load_test.go",
+			"node_library_integrity_test.go",
+			"node_library_test.go",
+			"pin_test.go",
+			"regexp_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/fresh",
+		"Dir": "internal/fresh",
+		"Export": "exports/298.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"async.go",
+			"fresh.go",
+			"library_language.go",
+			"library_node_buffer.go",
+			"library_object.go",
+			"node_fs_file.go",
+			"regexp.go",
+			"typed_arrays.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": [
+			"callback_widening_test.go",
+			"corpus_coverage_test.go",
+			"corpus_units_test.go",
+			"fresh_test.go",
+			"guards_test.go",
+			"library_node_buffer_test.go",
+			"node_fs_file_test.go",
+			"regexp_test.go",
+			"step21_corpus_refusals_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/unicodeproperties",
+		"Dir": "internal/unicodeproperties",
+		"Export": "exports/299.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"canonicalize.go",
+			"canonicalize_tables.go",
+			"tables.go",
+			"unicodeproperties.go"
+		],
+		"TestGoFiles": [
+			"alias_test.go",
+			"canonicalize_test.go",
+			"node_test.go",
+			"shards_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/regexp",
+		"Dir": "internal/regexp",
+		"Export": "exports/300.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"canonicalize.go",
+			"capture_facts.go",
+			"matcher.go",
+			"native.go",
+			"native_search.go",
+			"parser.go",
+			"properties.go",
+			"properties_standin.go",
+			"property.go",
+			"regular.go",
+			"script_aliases.go",
+			"sets.go",
+			"syntax.go",
+			"v8.go",
+			"v8_literal_input.go"
+		],
+		"TestGoFiles": [
+			"capture_facts_compiler_test.go",
+			"capture_facts_test.go",
+			"decimal_escape_test.go",
+			"matcher_oracle_test.go",
+			"matcher_step_limit_test.go",
+			"native_fixes_test.go",
+			"oct6_mutant_test.go",
+			"oct6_oracle_test.go",
+			"oracle_test.go",
+			"parser_test.go",
+			"properties_test.go",
+			"regular_test.go",
+			"runtime_reference_test.go",
+			"shards_test.go",
+			"v8_cost_test.go",
+			"v8_literal_input_test.go",
+			"v8_recheck_test.go",
+			"v8_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/lower",
+		"Dir": "internal/lower",
+		"Export": "exports/301.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"arguments_length.go",
+			"assignment_value.go",
+			"assignments.go",
+			"async.go",
+			"borrow.go",
+			"callback_widening.go",
+			"case_label.go",
+			"cast.go",
+			"cast_proof.go",
+			"census_coercion.go",
+			"census_overload_proof.go",
+			"census_predicate_marker.go",
+			"census_small.go",
+			"class.go",
+			"class_accessors.go",
+			"class_features.go",
+			"class_generic_calls.go",
+			"class_inheritance.go",
+			"class_static.go",
+			"class_static_private.go",
+			"class_super.go",
+			"clock_generic_returns_t_01.go",
+			"closed_frame_inputs.go",
+			"collections.go",
+			"comma.go",
+			"control.go",
+			"counters.go",
+			"cycles.go",
+			"diagnostics.go",
+			"element_access_fields.go",
+			"element_access_tuples.go",
+			"empty_literal.go",
+			"entries_provenance.go",
+			"entries_records.go",
+			"enum_flags.go",
+			"enum_initialization.go",
+			"enum_never.go",
+			"enums.go",
+			"error_subclasses.go",
+			"evolving_local.go",
+			"exceptions.go",
+			"expression.go",
+			"fresh.go",
+			"from.go",
+			"functions.go",
+			"generic.go",
+			"input.go",
+			"instantiate.go",
+			"interface_cast.go",
+			"invariance.go",
+			"iteration.go",
+			"iteration_consume.go",
+			"iteration_origin.go",
+			"known_lowering_gaps.go",
+			"labels.go",
+			"library_array.go",
+			"library_array_predicate.go",
+			"library_exceptions.go",
+			"library_for_in.go",
+			"library_function_expressions.go",
+			"library_globals.go",
+			"library_json_stringify.go",
+			"library_map_set.go",
+			"library_math_number.go",
+			"library_method_values.go",
+			"library_node.go",
+			"library_node_buffer.go",
+			"library_node_fs_buffer.go",
+			"library_node_fs_file.go",
+			"library_node_host.go",
+			"library_node_options.go",
+			"library_object.go",
+			"library_regex_callback_shape.go",
+			"library_regexp_replace.go",
+			"library_spread.go",
+			"library_string.go",
+			"literal_callable_branch.go",
+			"load_time_reads.go",
+			"locals.go",
+			"logical_assignment.go",
+			"lower.go",
+			"module_namespace.go",
+			"modules.go",
+			"moves.go",
+			"namespace_callable.go",
+			"namespace_receiver_scope.go",
+			"namespaces.go",
+			"namespaces_call_graph.go",
+			"namespaces_returns.go",
+			"narrowed.go",
+			"narrowing_calls.go",
+			"narrowing_uses.go",
+			"nested_functions.go",
+			"nested_references.go",
+			"never_branch.go",
+			"new_class_value.go",
+			"non_null.go",
+			"object.go",
+			"optional.go",
+			"optional_indexing.go",
+			"optional_indexing_chain.go",
+			"optional_indexing_map.go",
+			"optional_intrinsic.go",
+			"optional_join.go",
+			"optional_widening.go",
+			"parallel.go",
+			"parameter_properties.go",
+			"predicates.go",
+			"predicates_proof.go",
+			"prelude.go",
+			"prototype.go",
+			"prototype_own.go",
+			"proven_relations.go",
+			"readiness.go",
+			"readiness_exceptions.go",
+			"refusals.go",
+			"regexp.go",
+			"regexp_literal_input.go",
+			"set.go",
+			"shape_flow.go",
+			"shareable.go",
+			"statements.go",
+			"string_substr.go",
+			"switch.go",
+			"switch_bindings.go",
+			"tsgo.go",
+			"typed_arrays.go",
+			"typeof.go",
+			"unknown.go",
+			"view_adapters.go",
+			"view_contracts.go",
+			"view_flow.go",
+			"view_interfaces.go",
+			"view_lazy.go",
+			"view_objects.go",
+			"view_unions_callable_members.go",
+			"view_unions_dispatch.go",
+			"view_unions_mixed.go",
+			"view_unions_primitive_brands.go",
+			"view_unions_untagged.go",
+			"void.go",
+			"weak_representations.go"
+		],
+		"TestGoFiles": [
+			"agree_test.go",
+			"arguments_length_test.go",
+			"array_narrowing_test.go",
+			"array_predicate_test.go",
+			"async_test.go",
+			"cast_test.go",
+			"census_marker_test.go",
+			"census_optional_values_test.go",
+			"census_overload_binders_test.go",
+			"census_overload_proof_test.go",
+			"census_predicate_interaction_test.go",
+			"census_predicate_marker_test.go",
+			"census_small_test.go",
+			"check_pragmas_test.go",
+			"class_features_test.go",
+			"class_inheritance_test.go",
+			"class_instance_key_test.go",
+			"class_static_guard_test.go",
+			"class_wrong_output_test.go",
+			"clock_generic_returns_t_01_test.go",
+			"constructor_cache_guard_test.go",
+			"cycle_scalar_shapes_test.go",
+			"definite_assignment_test.go",
+			"empty_literal_test.go",
+			"entries_provenance_test.go",
+			"enum_flags_test.go",
+			"enum_guards_test.go",
+			"enum_initialization_reach_test.go",
+			"enums_open_test.go",
+			"enums_test.go",
+			"fresh_test.go",
+			"fs_method_guards_test.go",
+			"function_values_test.go",
+			"fx5_literal_test.go",
+			"generic_instance_key_test.go",
+			"implied_target_test.go",
+			"import_cycle_ready_test.go",
+			"inherited_fields_guard_test.go",
+			"input_test.go",
+			"interface_cast_test.go",
+			"iteration_test.go",
+			"library_language_test.go",
+			"library_map_set_test.go",
+			"library_method_values_test.go",
+			"library_node_buffer_test.go",
+			"library_node_fs_file_test.go",
+			"library_node_options_test.go",
+			"library_node_test.go",
+			"library_object_test.go",
+			"library_regex_callback_shape_test.go",
+			"library_spread_test.go",
+			"library_string_test.go",
+			"lower_test.go",
+			"module_namespace_test.go",
+			"moves_test.go",
+			"namespace_callable_test.go",
+			"namespace_class_test.go",
+			"namespace_receiver_scope_test.go",
+			"namespaces_ambient_test.go",
+			"namespaces_call_graph_test.go",
+			"namespaces_factory_test.go",
+			"namespaces_shapes_test.go",
+			"namespaces_test.go",
+			"narrowing_calls_test.go",
+			"nested_functions_test.go",
+			"non_null_test.go",
+			"optional_indexing_boundary_test.go",
+			"optional_indexing_test.go",
+			"optional_widening_test.go",
+			"overload_inference_test.go",
+			"override_representation_test.go",
+			"parallel_test.go",
+			"parameter_properties_test.go",
+			"parameter_property_guard_test.go",
+			"predicate_refusals_test.go",
+			"predicates_overload_test.go",
+			"predicates_proof_test.go",
+			"predicates_test.go",
+			"primitive_slots_test.go",
+			"prototype_test.go",
+			"proven_relations_test.go",
+			"readiness_test.go",
+			"regexp_literal_input_test.go",
+			"regexp_test.go",
+			"regexp_v8_test.go",
+			"representation_clock_source_test.go",
+			"statics_guards_test.go",
+			"step21_library_admission_test.go",
+			"string_destructuring_test.go",
+			"suppression_directives_test.go",
+			"switch_test.go",
+			"taste_representation_test.go",
+			"typed_arrays_test.go",
+			"unknown_test.go",
+			"view_objects_test.go",
+			"view_unions_mixed_test.go",
+			"view_unions_untagged_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/tracked",
+		"Dir": "internal/tracked",
+		"Export": "exports/302.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"tracked.go"
+		],
+		"TestGoFiles": [
+			"adversarial_test.go",
+			"tracked_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "hash/fnv",
+		"Dir": "",
+		"Export": "exports/303.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"fnv.go"
+		],
+		"TestGoFiles": [
+			"fnv_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "testing/iotest",
+		"Dir": "",
+		"Export": "exports/304.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"logger.go",
+			"reader.go",
+			"writer.go"
+		],
+		"TestGoFiles": [
+			"logger_test.go",
+			"reader_test.go",
+			"writer_test.go"
+		],
+		"XTestGoFiles": [
+			"example_test.go"
+		]
+	},
+	{
+		"ImportPath": "testing/fstest",
+		"Dir": "",
+		"Export": "exports/305.a",
+		"ForTest": "",
+		"Standard": true,
+		"GoFiles": [
+			"mapfs.go",
+			"testfs.go"
+		],
+		"TestGoFiles": [
+			"mapfs_test.go",
+			"testfs_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/native [github.com/system-inc/adamic/internal/native.test]",
+		"Dir": "internal/native",
+		"Export": "exports/306.a",
+		"ForTest": "github.com/system-inc/adamic/internal/native",
+		"Standard": false,
+		"GoFiles": [
+			"arguments_length.go",
+			"async.go",
+			"borrow.go",
+			"build_runtime.go",
+			"case.go",
+			"census_optional_values.go",
+			"census_small.go",
+			"class_accessors.go",
+			"class_errors.go",
+			"class_features.go",
+			"class_inheritance.go",
+			"devirtualize.go",
+			"element_borrow.go",
+			"emit.go",
+			"emit_arrays.go",
+			"emit_branches.go",
+			"emit_expressions.go",
+			"emit_functions.go",
+			"emit_locals.go",
+			"emit_maps.go",
+			"emit_numbers.go",
+			"emit_objects.go",
+			"emit_ownership.go",
+			"emit_slots.go",
+			"emit_statements.go",
+			"emit_strings.go",
+			"emit_values.go",
+			"entries_records.go",
+			"exceptions.go",
+			"fields.go",
+			"from.go",
+			"jobserver.go",
+			"labels.go",
+			"library.go",
+			"library_array.go",
+			"library_json_stringify.go",
+			"library_language.go",
+			"library_map_set.go",
+			"library_math_number.go",
+			"library_node_buffer.go",
+			"library_node_fs_file.go",
+			"library_object.go",
+			"library_regexp_replace.go",
+			"logical_assignment.go",
+			"maybe.go",
+			"native.go",
+			"parallel.go",
+			"readiness_error.go",
+			"regexp.go",
+			"region.go",
+			"request.go",
+			"reuse.go",
+			"self_compare.go",
+			"slots.go",
+			"switch_tests.go",
+			"target.go",
+			"taste.go",
+			"tsgo.go",
+			"typed_arrays.go",
+			"union.go",
+			"units.go",
+			"units_tsgo.go",
+			"view_fields.go",
+			"view_unions_callable_producers.go",
+			"view_unions_mixed.go",
+			"view_unions_read.go",
+			"view_unions_untagged.go",
+			"arguments_length_test.go",
+			"async_host_test.go",
+			"borrow_chain_test.go",
+			"borrow_consumes_test.go",
+			"c_portability_oracle_test.go",
+			"case_test.go",
+			"class_inheritance_test.go",
+			"closure_convention_test.go",
+			"constants_portability_test.go",
+			"contract_test.go",
+			"decode_ascii_cache_test.go",
+			"decode_ascii_test.go",
+			"devirtualize_test.go",
+			"dtoa_test.go",
+			"element_borrow_test.go",
+			"error_message_test.go",
+			"features_test.go",
+			"fields_test.go",
+			"heap_remote_scan_test.go",
+			"heap_test.go",
+			"ieee754_test.go",
+			"jobserver_test.go",
+			"json_encoder_record_test.go",
+			"library_array_test.go",
+			"library_map_set_iterator_test.go",
+			"library_test.go",
+			"limit_test.go",
+			"loop_borrow_test.go",
+			"machine_paths_test.go",
+			"map_hash_test.go",
+			"math_test.go",
+			"maybe_test.go",
+			"node_buffer_test.go",
+			"normalize_benchmark_test.go",
+			"normalize_random_test.go",
+			"normalize_test.go",
+			"number_test.go",
+			"object_metadata_test.go",
+			"parallel_compiler_test.go",
+			"parallel_test.go",
+			"parse_test.go",
+			"power_of_two_test.go",
+			"product_compile_test.go",
+			"programs_test.go",
+			"radix_test.go",
+			"record_test.go",
+			"regexp_search_test.go",
+			"regexp_test.go",
+			"regexp_v8_test.go",
+			"release_build_test.go",
+			"release_fma_test.go",
+			"release_test.go",
+			"reproducible_test.go",
+			"runtime_profile_test.go",
+			"runtime_statics_parallel_test.go",
+			"runtime_statics_steady_test.go",
+			"runtime_statics_test.go",
+			"scaling_test.go",
+			"slab_quarantine_test.go",
+			"split_units_test.go",
+			"step21_parallel_test.go",
+			"string_build_test.go",
+			"string_index_test.go",
+			"string_test.go",
+			"string_units_test.go",
+			"string_views_test.go",
+			"target_test.go",
+			"to_primitive_test.go",
+			"tsgo_features_test.go",
+			"typed_array_test.go",
+			"units_measure_test.go",
+			"units_self_compare_test.go",
+			"units_test.go",
+			"units_tsgo_test.go",
+			"view_unions_mixed_test.go",
+			"wasi_async_test.go",
+			"wasm_test.go",
+			"whole_build_paths_test.go"
+		],
+		"TestGoFiles": [
+			"arguments_length_test.go",
+			"async_host_test.go",
+			"borrow_chain_test.go",
+			"borrow_consumes_test.go",
+			"c_portability_oracle_test.go",
+			"case_test.go",
+			"class_inheritance_test.go",
+			"closure_convention_test.go",
+			"constants_portability_test.go",
+			"contract_test.go",
+			"decode_ascii_cache_test.go",
+			"decode_ascii_test.go",
+			"devirtualize_test.go",
+			"dtoa_test.go",
+			"element_borrow_test.go",
+			"error_message_test.go",
+			"features_test.go",
+			"fields_test.go",
+			"heap_remote_scan_test.go",
+			"heap_test.go",
+			"ieee754_test.go",
+			"jobserver_test.go",
+			"json_encoder_record_test.go",
+			"library_array_test.go",
+			"library_map_set_iterator_test.go",
+			"library_test.go",
+			"limit_test.go",
+			"loop_borrow_test.go",
+			"machine_paths_test.go",
+			"map_hash_test.go",
+			"math_test.go",
+			"maybe_test.go",
+			"node_buffer_test.go",
+			"normalize_benchmark_test.go",
+			"normalize_random_test.go",
+			"normalize_test.go",
+			"number_test.go",
+			"object_metadata_test.go",
+			"parallel_compiler_test.go",
+			"parallel_test.go",
+			"parse_test.go",
+			"power_of_two_test.go",
+			"product_compile_test.go",
+			"programs_test.go",
+			"radix_test.go",
+			"record_test.go",
+			"regexp_search_test.go",
+			"regexp_test.go",
+			"regexp_v8_test.go",
+			"release_build_test.go",
+			"release_fma_test.go",
+			"release_test.go",
+			"reproducible_test.go",
+			"runtime_profile_test.go",
+			"runtime_statics_parallel_test.go",
+			"runtime_statics_steady_test.go",
+			"runtime_statics_test.go",
+			"scaling_test.go",
+			"slab_quarantine_test.go",
+			"split_units_test.go",
+			"step21_parallel_test.go",
+			"string_build_test.go",
+			"string_index_test.go",
+			"string_test.go",
+			"string_units_test.go",
+			"string_views_test.go",
+			"target_test.go",
+			"to_primitive_test.go",
+			"tsgo_features_test.go",
+			"typed_array_test.go",
+			"units_measure_test.go",
+			"units_self_compare_test.go",
+			"units_test.go",
+			"units_tsgo_test.go",
+			"view_unions_mixed_test.go",
+			"wasi_async_test.go",
+			"wasm_test.go",
+			"whole_build_paths_test.go"
+		],
+		"XTestGoFiles": [
+			"async_test.go",
+			"prototype_contract_probe_test.go"
+		]
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/boundedrun",
+		"Dir": "internal/boundedrun",
+		"Export": "exports/307.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [
+			"identity.go",
+			"run.go"
+		],
+		"TestGoFiles": [
+			"run_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/leakcheck [github.com/system-inc/adamic/internal/native.test]",
+		"Dir": "internal/leakcheck",
+		"Export": "exports/308.a",
+		"ForTest": "github.com/system-inc/adamic/internal/native",
+		"Standard": false,
+		"GoFiles": [
+			"leakcheck.go"
+		],
+		"TestGoFiles": [
+			"leakcheck_test.go"
+		],
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/native_test [github.com/system-inc/adamic/internal/native.test]",
+		"Dir": "internal/native",
+		"Export": "exports/309.a",
+		"ForTest": "github.com/system-inc/adamic/internal/native",
+		"Standard": false,
+		"GoFiles": [
+			"async_test.go",
+			"prototype_contract_probe_test.go"
+		],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	},
+	{
+		"ImportPath": "github.com/system-inc/adamic/internal/native.test",
+		"Dir": "internal/native",
+		"Export": "exports/310.a",
+		"ForTest": "",
+		"Standard": false,
+		"GoFiles": [],
+		"TestGoFiles": null,
+		"XTestGoFiles": null
+	}
+]

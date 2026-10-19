@@ -1,0 +1,28 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses.a
+    oracle_test.go:793: stdout differs
+        node:   exit 0, stdout "before super\nfield1\nError: message3 field1\nreason2\ntrue true true false\nCancelled: message3 field1\ntrue\nreason2\nRangeError:  true\nmessage4\nmessage4\n", stderr ""
+        native: exit 0, stdout "before super\nfield1\nError: message3 field1\nreason2\nfalse true true false\nCancelled: message3 field1\ntrue\nreason2\nmessage4\n", stderr ""
+    oracle_test.go:806: leaks:
+        exit 1
+        
+        =================================================================
+        ==55964==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 144 byte(s) in 2 object(s) allocated from:
+            #0 0x557ac234c2d4 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x557ac23a3e1f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1819567707/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 144 byte(s) leaked in 2 allocation(s).
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses.a (0.68s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.718s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeFeatureMismatchProgramFeature
+=== PAUSE TestRuntimeFeatureMismatchProgramFeature
+=== CONT  TestRuntimeFeatureMismatchProgramFeature
+    features_test.go:102: mismatched runtime linked successfully
+--- FAIL: TestRuntimeFeatureMismatchProgramFeature (10.58s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	10.628s
+FAIL

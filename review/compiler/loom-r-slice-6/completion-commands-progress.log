@@ -1,0 +1,4 @@
+cmd/adamic/... 0 27.524 failed []
+cmd/adamic-test262/... 0 35.532 failed []
+stage3/fixtures/... 0 114.907 failed []
+internal/ir/... 1 63.656 failed ['TestCallTargetExportInputsNative', 'TestCallTargetExportInputsLower', 'TestCallTargetExportInputsFresh', 'TestCallTargetExportInputsFlow', 'TestProduct_CallTargetReaderArchivesNative', 'TestProduct_CallTargetReaderArchivesLower', 'TestCallTargetReadersLower', 'TestProduct_CallTargetReaderArchivesFresh', 'TestCallTargetReadersFlow', 'TestCallTargetReadersNative', 'TestProduct_CallTargetReaderArchivesFlow', 'TestCallTargetReadersFresh']

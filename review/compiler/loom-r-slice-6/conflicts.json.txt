@@ -1,0 +1,18 @@
+{
+ "internal/lower/exceptions.go": "Keep main ObjectSpreadMayThrow and add slice 6 NodeBufferCall.MayThrow; preserve readiness-specific propagation.",
+ "internal/lower/import_cycle_ready_test.go": "Keep main cycle fixtures and native TDZ checks; apply source Node/JavaScript/native exit-1 and one-line uncaught comparisons, removing obsolete imports.",
+ "internal/lower/lower_test.go": "Keep main async support and unawaited-task refusal. Primitive throws move from old refusal rows to step 21's Node-held dynamic throw tests.",
+ "internal/lower/refusals.go": "Run main parallelPreflight and then the .a writing-call narrowing refusal; neither check replaces the other.",
+ "internal/lower/regexp_test.go": "Move the now-catchable replaceAll case to TestStep21LibraryAdmission. Main also admits huge repeat counts, so retain that admission in a registered Node/native agreement rather than restoring the old refusal.",
+ "internal/native/library.go": "Retain RuntimeRequest, suppliers, portable keys, cache publication and parallel compilation. Export SourceFlags, share main runtimeFeatures, and remove only compileRuntime's header feature injection.",
+ "internal/native/native.go": "Retain main buildOneWithRuntime, runtime symlinks, prefix maps, platform linker handling and deterministic timestamps. Add source feature flags at its actual compile-flags seam.",
+ "internal/native/runtime/adamic.h": "Retain main OrdinaryToPrimitive ABI and undefined-message declaration. Use a thread-local heap payload plus thread-local pending bit and source builtin Error class declarations.",
+ "internal/native/runtime/exceptions.c": "Combine source payload/classes/exact uncaught renderer with main absent-message shapes, stored field tags and lazy OrdinaryToPrimitive. Keep both pending words thread-local; use packed-cache zero initializers; give conversion failures nominal TypeError identity and pending=true.",
+ "internal/native/wasm_test.go": "Retain main ahead-built, relocated strict-WASI products and SDK compiler identity. Add source's three closure-feature fixtures and three selectable units; key and select six runtime variants from the five observed feature sets plus counted request.",
+ "internal/oracle/counts.md": "Discard merge contents, take origin/main, then regenerate once on Linux with house clang 20.1.8. No hand merge.",
+ "internal/oracle/oracle_test.go": "Keep main planted-family and leak-check harness. Pass original source identity to the JavaScript backend for terminal conventions; its generated cache comment uses a portable source label.",
+ "internal/oracle/wasi_test.go": "Keep main's newer split fixture emission. Its native.Build path already supplies source feature flags; do not restore the removed aggregate TestWASIEmission or absolute-path clang invocation.",
+ "stage1/cohere/lint/profile_compilation_main_test.go": "Keep main full-registry oracle and product/relocation infrastructure, including ADAMIC_NATIVE_SPLIT in keys. Use SourceFlags in identity and profiled compilation. The dedicated source-aware profile helper delegates to native.Build.",
+ "stage1/cohere/markdownblocks/list_layout_shards_test.go": "Keep main native.Build/BuildFlags portable recipes and v2 canary identity. Preserve source-aware flags without reinstating raw absolute-path clang commands.",
+ "stage1/cohere/markdownblocks/malformed_events_independent_test.go": "Keep main native.Build recipe, which already preserves source features and portable output. Source's older raw-clang replacement is superseded; final file equals main."
+}

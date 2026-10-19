@@ -1,0 +1,8 @@
+stage1/cohere/css/oracles 0 2.708 failed []
+stage1/cohere/graphql/oracles 0 0.88 failed []
+stage1/cohere/json/oracles 0 2.262 failed []
+stage1/cohere/json 0 36.38 failed []
+stage1/cohere/markdownblocks/oracles 0 20.583 failed []
+stage1/cohere/css/... 1 319.752 failed ['TestCSSPrinterPreflightCostMutant']
+stage1/cohere/graphql/... 1 92.555 failed []
+stage1/cohere/json/... 1 136.306 failed ['TestPortMatchesGoCohereClassOrder_001', 'TestPortMatchesGoCohereInventory', 'TestPortMatchesGoCohere_1643', 'TestPortMatchesGoCohere_1396']

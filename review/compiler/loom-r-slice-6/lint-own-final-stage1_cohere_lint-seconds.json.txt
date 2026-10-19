@@ -1,0 +1,74 @@
+[
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileArtifacts",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileSnapshotsAgree",
+    "Elapsed": 0
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestCommentFoldMutant",
+    "Elapsed": 1.4
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestPositionIndexMutant",
+    "Elapsed": 1.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilationUnion",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileRuntimeFeaturesMatchNode",
+    "Elapsed": 2.54
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilation_000",
+    "Elapsed": 125.35
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilationPlantedFailure",
+    "Elapsed": 123.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilationBuildNative",
+    "Elapsed": 121.43
+  },
+  {
+    "Action": "fail",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilation_Setup",
+    "Elapsed": 125.38
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilationBuildC",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestProfileCompilationBuildJavaScript",
+    "Elapsed": 0.41
+  }
+]

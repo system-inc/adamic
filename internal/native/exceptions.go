@@ -7,11 +7,11 @@ import (
 )
 
 // Exceptions by cleanup paths (docs/memory.md, "Exceptions, designed into counting"). The runtime
-// has one pending-exception word, adamic_thrown. A throw sets it and jumps to its handler: the
+// holds an owned tagged payload and a separate pending flag. A throw sets both and jumps to its handler: the
 // innermost try around it in this function, letting go of what the statement and every scope between
 // hold, or the function's way out, letting go of everything the frame holds and returning a zero
 // value. After a call to a function that can throw, the word is tested and the same jump made. Out of
-// main, an error is a panic. A finally is emitted at every way out of its try.
+// main, an uncaught exception exits 1. A finally is emitted at every way out of its try.
 
 // handler is one try being emitted: where a throw inside it lands, the scope depth its body starts
 // at, and its finally, which every way out of it runs.
@@ -26,7 +26,7 @@ type handler struct {
 }
 
 // jumpThrown emits the jump for a pending exception, once the statement's temporaries are let go: to
-// the innermost handler, or out of the function, or, out of main, the panic.
+// the innermost handler, or out of the function, or, out of main, exit 1.
 func (e *emitter) jumpThrown() {
 	if len(e.handlers) > 0 {
 		inner := e.handlers[len(e.handlers)-1]
@@ -36,8 +36,9 @@ func (e *emitter) jumpThrown() {
 		return
 	}
 	if e.function == nil {
-		// Out of main: String(error) as a panic, stdout flushed first. What the program holds then
-		// isn't let go, as with any panic.
+		// Out of main, unwind owners and flush stdout without converting the payload.
+		e.releaseScopes(0)
+		e.releaseGlobals()
 		e.line("adamic_uncaught();")
 		return
 	}
@@ -57,7 +58,7 @@ func (e *emitter) jumpThrown() {
 // the release of what holds names (what a loop around the call holds), then of every temporary the
 // statement owns so far, and the jump.
 func (e *emitter) checkThrown(holds ...string) {
-	e.line("if (adamic_thrown != NULL) {")
+	e.line("if (adamic_exception_pending) {")
 	e.indent++
 	for _, hold := range holds {
 		e.line("adamic_release(%s);", hold)
@@ -91,8 +92,9 @@ func (e *emitter) closureThrown(holds ...string) {
 
 // throwStatement emits throw: the error is the pending word's, and the jump is made.
 func (e *emitter) throwStatement(statement ir.Throw) {
-	value := e.value(statement.Value)
+	value := e.box(statement.Value)
 	e.line("adamic_thrown = adamic_retain(%s);", value)
+	e.line("adamic_exception_pending = true;")
 	e.end()
 	e.jumpThrown()
 }
@@ -170,10 +172,11 @@ func (e *emitter) tryStatement(statement ir.Try) {
 		e.scopes = append(e.scopes, nil)
 		caught := e.temporary()
 		// What was thrown is the catch's now; with nothing bound to it, it's let go at once.
-		e.line("adamic_object *%s = adamic_thrown;", caught)
+		e.line("adamic_heap *%s = adamic_thrown;", caught)
 		e.line("adamic_thrown = NULL;")
+		e.line("adamic_exception_pending = false;")
 		if statement.CatchLocal >= 0 {
-			e.declareLocal(statement.CatchLocal, caught, true)
+			e.declareLocal(statement.CatchLocal, fmt.Sprintf("((%s)%s)", cType(e.program.Locals[statement.CatchLocal].Type), caught), true)
 		} else {
 			e.line("adamic_release(%s);", caught)
 		}
@@ -202,13 +205,15 @@ func (e *emitter) tryStatement(statement ir.Try) {
 		// The pending error waits in a scope of the finally's while it runs, so a throw from the
 		// finally, which replaces it, lets go of it on the way out.
 		pending := e.temporary()
-		e.line("adamic_object *%s = adamic_thrown;", pending)
+		e.line("adamic_heap *%s = adamic_thrown;", pending)
 		e.line("adamic_thrown = NULL;")
+		e.line("adamic_exception_pending = false;")
 		e.hold(pending)
 		e.line("{")
 		e.nested(statement.Finally, nil)
 		e.line("}")
 		e.line("adamic_thrown = %s;", pending)
+		e.line("adamic_exception_pending = true;")
 		e.line("%s = NULL;", pending)
 		e.jumpThrown()
 		e.scopes = e.scopes[:len(e.scopes)-1]

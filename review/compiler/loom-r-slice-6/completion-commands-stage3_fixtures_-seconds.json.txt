@@ -1,0 +1,4412 @@
+[
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestExecuteGivesChildrenTheToolchainsCompiler",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixtureShardManifest",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestProduct_FixtureOracleHook",
+    "Elapsed": 14.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestNodeRunnerModeGuardRejectsNeitherCall",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestNodeRunnerModeGuardRejectsBothCalls",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestNodeRunnerModeGuardHook",
+    "Elapsed": 0
+  },
+  {
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuardHook",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTheFixtureOracleHooksPythonReadsNoSiteDirectory",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTheFixtureOracleHookWritesNoBytecode",
+    "Elapsed": 0.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixtureOracleProductTracksInputs",
+    "Elapsed": 0.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixtureOracleProductIgnoresGoCacheLocation",
+    "Elapsed": 4.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/01_value.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/C:/main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/#00",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/main.ts",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/01_case//main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/./main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/01_case\\main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/../main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths//tmp/main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/01_case/../main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/01_call_time/_namespaces/main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths/01_call_time/main.a",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturePaths",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/erasable",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/duplicate_URL",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/missing_URL",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/mixed_calls",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/duplicate_transformed",
+    "Elapsed": 0.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/duplicate_erasable",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/unknown_call",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/missing_call",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard/transformed",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestTransformedNodeRunnerGuard",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/01_queue_empty.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/01_queue_empty.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/01_queue_empty.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/01_queue_empty.a",
+    "Elapsed": 3.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/03_return_true.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestProduct_FixtureRuntimesSanitized2",
+    "Elapsed": 8.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/02_is_string.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestProduct_FixtureRuntimesSanitized0",
+    "Elapsed": 8.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/01_identifier.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestProduct_FixtureRuntimesSanitized1",
+    "Elapsed": 8.85
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/07_typeof.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/07_typeof.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/07_typeof.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/11_empty_assert.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/11_empty_assert.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/11_empty_assert.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/10_nullish.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/10_nullish.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/10_nullish.a",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/09_assert_defined.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/09_assert_defined.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/09_assert_defined.a",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/08_flags.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/08_flags.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/08_flags.a",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/03_void_zero.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/03_return_true.a/native",
+    "Elapsed": 2.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/03_return_true.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/03_return_true.a",
+    "Elapsed": 2.95
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/06_signed_numeric.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/06_signed_numeric.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/06_signed_numeric.a",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/02_module_name.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/02_is_string.a/native",
+    "Elapsed": 2.97
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/02_is_string.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner/02_is_string.a",
+    "Elapsed": 3.1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner/runner",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRunner",
+    "Elapsed": 14.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/04_literal_or.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/04_literal_or.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/04_literal_or.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/01_identifier.a/native",
+    "Elapsed": 2.9
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/01_identifier.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/01_identifier.a",
+    "Elapsed": 3.12
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/05_kind_switch.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/05_kind_switch.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/05_kind_switch.a",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/01_map_call.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/01_map_call.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/01_map_call.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/10_union_kind.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/03_void_zero.a/native",
+    "Elapsed": 2.92
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/03_void_zero.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/03_void_zero.a",
+    "Elapsed": 3.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/09_interface_kind.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/09_interface_kind.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/09_interface_kind.a",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/02_module_name.a/native",
+    "Elapsed": 2.85
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/02_module_name.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates/02_module_name.a",
+    "Elapsed": 3.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates/predicates",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesPredicates",
+    "Elapsed": 14.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/08_optional_start.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/08_optional_start.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/08_optional_start.a",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/07_indexed_operation.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/07_indexed_operation.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/07_indexed_operation.a",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/06_memoize_clear.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/05_regex_call_index.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/06_memoize_clear.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/06_memoize_clear.a",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/05_regex_call_index.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/05_regex_call_index.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/04_field_then_call.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/04_field_then_call.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/04_field_then_call.a",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/03_exports_field.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/03_exports_field.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/03_exports_field.a",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/02_code_point_call.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/02_code_point_call.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/02_code_point_call.a",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/17_brand_upcast.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/17_brand_upcast.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/17_brand_upcast.a",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a",
+    "Elapsed": 0.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/18_const_tuple.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/10_union_kind.a/native",
+    "Elapsed": 2.77
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/10_union_kind.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/10_union_kind.a",
+    "Elapsed": 2.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/15_mutable_view.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/15_mutable_view.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/15_mutable_view.a",
+    "Elapsed": 0.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/16_unknown_chain.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/16_unknown_chain.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/16_unknown_chain.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a/native",
+    "Elapsed": 3.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/11_parenthesized_kind.a",
+    "Elapsed": 3.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/14_structural_cache.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/14_structural_cache.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/14_structural_cache.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/12_union_target.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/12_union_target.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/12_union_target.a",
+    "Elapsed": 0.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/01_diagnostic_code.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a/native",
+    "Elapsed": 2.73
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/20_type_flag_mask.a",
+    "Elapsed": 2.93
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/01_reference_spreads.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/01_reference_spreads.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/01_reference_spreads.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/24_proportional_conditions.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/18_const_tuple.a/native",
+    "Elapsed": 2.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/18_const_tuple.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/18_const_tuple.a",
+    "Elapsed": 3.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/23_labels_finally.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a/native",
+    "Elapsed": 2.8
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions/13_flag_downcast.a",
+    "Elapsed": 3.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions/assertions",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesAssertions",
+    "Elapsed": 14.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/22_assignment_once.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/01_diagnostic_code.a/native",
+    "Elapsed": 3.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/01_diagnostic_code.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/01_diagnostic_code.a",
+    "Elapsed": 3.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/refused/21_truthy_loops.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/24_proportional_conditions.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/24_proportional_conditions.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/24_proportional_conditions.a",
+    "Elapsed": 3.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/20_jsdoc_terminate.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/23_labels_finally.a/native",
+    "Elapsed": 2.79
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/23_labels_finally.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/23_labels_finally.a",
+    "Elapsed": 2.98
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/19_deprecated_flags.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/22_assignment_once.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/22_assignment_once.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/22_assignment_once.a",
+    "Elapsed": 3.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/18_named_export.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/refused/21_truthy_loops.a/native",
+    "Elapsed": 2.85
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/refused/21_truthy_loops.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/refused/21_truthy_loops.a",
+    "Elapsed": 3.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/17_binder_flow.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/17_binder_flow.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/17_binder_flow.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/16_scan_exclamation.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/20_jsdoc_terminate.a/native",
+    "Elapsed": 3.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/20_jsdoc_terminate.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/20_jsdoc_terminate.a",
+    "Elapsed": 3.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/15_barrel.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/19_deprecated_flags.a/native",
+    "Elapsed": 2.95
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/19_deprecated_flags.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/19_deprecated_flags.a",
+    "Elapsed": 3.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/14_relative_complement.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/18_named_export.a/native",
+    "Elapsed": 2.86
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/18_named_export.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/18_named_export.a",
+    "Elapsed": 3.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/13_void_callback.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/16_scan_exclamation.a/native",
+    "Elapsed": 3.08
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/16_scan_exclamation.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/16_scan_exclamation.a",
+    "Elapsed": 3.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/12_symbol_links.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/15_barrel.a/native",
+    "Elapsed": 2.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/15_barrel.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/15_barrel.a",
+    "Elapsed": 3.13
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/11_build_info_pending.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/11_build_info_pending.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/11_build_info_pending.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/10_global_import_meta.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/14_relative_complement.a/native",
+    "Elapsed": 3.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/14_relative_complement.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/14_relative_complement.a",
+    "Elapsed": 3.49
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/09_literal_cache.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/13_void_callback.a/native",
+    "Elapsed": 2.95
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/13_void_callback.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/13_void_callback.a",
+    "Elapsed": 3.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/08_for_each.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/08_for_each.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/08_for_each.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/07_compact.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/12_symbol_links.a/native",
+    "Elapsed": 2.89
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/12_symbol_links.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/12_symbol_links.a",
+    "Elapsed": 3.12
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/06_localized_message.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/06_localized_message.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/06_localized_message.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/05_this_type.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/10_global_import_meta.a/native",
+    "Elapsed": 2.86
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/10_global_import_meta.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/10_global_import_meta.a",
+    "Elapsed": 3.08
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/04_jsx_runtime.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/09_literal_cache.a/native",
+    "Elapsed": 2.81
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/09_literal_cache.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/09_literal_cache.a",
+    "Elapsed": 3.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/03_diagnostic_file.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/07_compact.a/native",
+    "Elapsed": 3.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/07_compact.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/07_compact.a",
+    "Elapsed": 3.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/02_diagnostic_message.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/02_diagnostic_message.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/02_diagnostic_message.a",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/17_container_rest.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/17_container_rest.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/17_container_rest.a",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/30_host_optional_method.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/30_host_optional_method.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/30_host_optional_method.a",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/05_this_type.a/native",
+    "Elapsed": 3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/05_this_type.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/05_this_type.a",
+    "Elapsed": 3.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/29_parameter_default.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/28_debugger.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/29_parameter_default.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/29_parameter_default.a",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/27_delete_substitution.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/27_delete_substitution.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/27_delete_substitution.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/26_diagnostic_in.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/26_diagnostic_in.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/26_diagnostic_in.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/25_map_generator.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/25_map_generator.a",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/24_transformation_accessors.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/04_jsx_runtime.a/native",
+    "Elapsed": 3.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/04_jsx_runtime.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/04_jsx_runtime.a",
+    "Elapsed": 3.53
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/23_factory_getters.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/03_diagnostic_file.a/native",
+    "Elapsed": 3.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/03_diagnostic_file.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste/03_diagnostic_file.a",
+    "Elapsed": 3.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste/taste",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesTaste",
+    "Elapsed": 0.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/22_nested_optional_calls.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/22_nested_optional_calls.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/22_nested_optional_calls.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/20_queue_optional_call.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/20_queue_optional_call.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/20_queue_optional_call.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/19_identifier_multimap.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/19_identifier_multimap.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/19_identifier_multimap.a",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/08_loop_state.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/08_loop_state.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/08_loop_state.a",
+    "Elapsed": 0.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/16_version_defaults.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/16_version_defaults.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/16_version_defaults.a",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/28_debugger.a/native",
+    "Elapsed": 2.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/28_debugger.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/28_debugger.a",
+    "Elapsed": 3.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/15_accessor_absence.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/15_accessor_absence.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/15_accessor_absence.a",
+    "Elapsed": 0.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/14_comment_pending.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/12_decorator_descriptor.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/12_decorator_descriptor.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/12_decorator_descriptor.a",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/10_build_options.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/10_build_options.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/10_build_options.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/05_polling_array_metadata.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/05_polling_array_metadata.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/05_polling_array_metadata.a",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/24_transformation_accessors.a/native",
+    "Elapsed": 3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/24_transformation_accessors.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/24_transformation_accessors.a",
+    "Elapsed": 3.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/07_synthetic_reference.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/06_watch_close.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/06_watch_close.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/06_watch_close.a",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/03_resolution_cache_spreads.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/04_trace_metadata.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/04_trace_metadata.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/04_trace_metadata.a",
+    "Elapsed": 0.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/23_factory_getters.a/native",
+    "Elapsed": 3.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/23_factory_getters.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/23_factory_getters.a",
+    "Elapsed": 3.55
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/02_polling_levels.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/02_polling_levels.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/02_polling_levels.a",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/refused/01_scanner_frame.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/refused/01_scanner_frame.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/refused/01_scanner_frame.a",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/01_readFile_utf8.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/11_scanner_method_wrapper.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/01_readFile_utf8.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/01_readFile_utf8.a",
+    "Elapsed": 0.94
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/10_checker_arrow_cleanup.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/14_comment_pending.a/native",
+    "Elapsed": 3.52
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/14_comment_pending.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/14_comment_pending.a",
+    "Elapsed": 3.83
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/09_checker_constituent_recursion.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/07_synthetic_reference.a/native",
+    "Elapsed": 3.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/07_synthetic_reference.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects/07_synthetic_reference.a",
+    "Elapsed": 3.78
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects/objects",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesObjects",
+    "Elapsed": 0.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/08_checker_symbol_recursion.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/11_scanner_method_wrapper.a/native",
+    "Elapsed": 3.13
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/11_scanner_method_wrapper.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/11_scanner_method_wrapper.a",
+    "Elapsed": 3.42
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/07_binder_symbol_count.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/10_checker_arrow_cleanup.a/native",
+    "Elapsed": 3.06
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/10_checker_arrow_cleanup.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/10_checker_arrow_cleanup.a",
+    "Elapsed": 3.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/06_parser_token_state.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/09_checker_constituent_recursion.a/native",
+    "Elapsed": 3.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/09_checker_constituent_recursion.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/09_checker_constituent_recursion.a",
+    "Elapsed": 3.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/05_scanner_reassigned_text.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/08_checker_symbol_recursion.a/native",
+    "Elapsed": 3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/08_checker_symbol_recursion.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/08_checker_symbol_recursion.a",
+    "Elapsed": 3.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/04_scanner_escaped_text.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/07_binder_symbol_count.a/native",
+    "Elapsed": 3.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/07_binder_symbol_count.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/07_binder_symbol_count.a",
+    "Elapsed": 3.55
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/06_parser_token_state.a/native",
+    "Elapsed": 2.8
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/06_parser_token_state.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/06_parser_token_state.a",
+    "Elapsed": 3.1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/03_scanner_hoisting.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/02_scanner_digits.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/05_scanner_reassigned_text.a/native",
+    "Elapsed": 3.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/05_scanner_reassigned_text.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/05_scanner_reassigned_text.a",
+    "Elapsed": 3.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/14_getCurrentDirectory.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/14_getCurrentDirectory.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/14_getCurrentDirectory.a",
+    "Elapsed": 0.7
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/04_scanner_escaped_text.a/native",
+    "Elapsed": 3.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/04_scanner_escaped_text.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/04_scanner_escaped_text.a",
+    "Elapsed": 3.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/25_readDirectory.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/24_useCaseSensitiveFileNames.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/25_readDirectory.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/25_readDirectory.a",
+    "Elapsed": 0.8
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/23_newLine.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/03_scanner_hoisting.a/native",
+    "Elapsed": 3.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/03_scanner_hoisting.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/03_scanner_hoisting.a",
+    "Elapsed": 3.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/23_newLine.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/23_newLine.a",
+    "Elapsed": 0.76
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/22_createHash_fallback.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/21_createHash.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/02_scanner_digits.a/native",
+    "Elapsed": 3.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/02_scanner_digits.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions/02_scanner_digits.a",
+    "Elapsed": 3.68
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions/nested-functions",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNestedFunctions",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/20_exit_2.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/22_createHash_fallback.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/22_createHash_fallback.a",
+    "Elapsed": 0.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/21_createHash.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/21_createHash.a",
+    "Elapsed": 0.73
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/19_exit_1.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/18_exit_0.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/20_exit_2.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/20_exit_2.a",
+    "Elapsed": 0.82
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/19_exit_1.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/19_exit_1.a",
+    "Elapsed": 0.73
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/17_write.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/18_exit_0.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/18_exit_0.a",
+    "Elapsed": 0.78
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/16_getEnvironmentVariable.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/15_getExecutingFilePath.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/17_write.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/17_write.a",
+    "Elapsed": 0.84
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/15_getExecutingFilePath.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/15_getExecutingFilePath.a",
+    "Elapsed": 0.67
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/16_getEnvironmentVariable.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/16_getEnvironmentVariable.a",
+    "Elapsed": 0.84
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/08_getDirectories.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/13_createDirectory.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/12_deleteFile.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/08_getDirectories.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/08_getDirectories.a",
+    "Elapsed": 0.76
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/24_useCaseSensitiveFileNames.a/native",
+    "Elapsed": 3.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/24_useCaseSensitiveFileNames.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/24_useCaseSensitiveFileNames.a",
+    "Elapsed": 4.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/12_deleteFile.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/12_deleteFile.a",
+    "Elapsed": 0.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/11_setModifiedTime.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/09_realpath.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/10_getModifiedTime.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/10_getModifiedTime.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/10_getModifiedTime.a",
+    "Elapsed": 0.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/09_realpath.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/09_realpath.a",
+    "Elapsed": 0.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/05_writeFile.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/07_directoryExists.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/07_directoryExists.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/07_directoryExists.a",
+    "Elapsed": 0.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/06_fileExists.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/06_fileExists.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/06_fileExists.a",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/03_readFile_utf16be.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/03_readFile_utf16be.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/03_readFile_utf16be.a",
+    "Elapsed": 0.72
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/04_readFile_missing.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/04_readFile_missing.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/04_readFile_missing.a",
+    "Elapsed": 0.63
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/02_readFile_utf16le.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/13_createDirectory.a/native",
+    "Elapsed": 4.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/13_createDirectory.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/13_createDirectory.a",
+    "Elapsed": 5
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/02_readFile_utf16le.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/02_readFile_utf16le.a",
+    "Elapsed": 0.87
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareClosure/self-compare/closure.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/11_setModifiedTime.a/native",
+    "Elapsed": 4.33
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/11_setModifiedTime.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/11_setModifiedTime.a",
+    "Elapsed": 5.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/01_builder_state.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/05_writeFile.a/native",
+    "Elapsed": 3.93
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/05_writeFile.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host/05_writeFile.a",
+    "Elapsed": 4.81
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost/host",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesHost",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/native",
+    "Elapsed": 2.83
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareSweep/self-compare/sweep.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareSweep/self-compare/sweep.a",
+    "Elapsed": 3.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareSweep/self-compare",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareSweep",
+    "Elapsed": 0.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/12_builder_release_cache.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareClosure/self-compare/closure.a/native",
+    "Elapsed": 2.85
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareClosure/self-compare/closure.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareClosure/self-compare/closure.a",
+    "Elapsed": 3.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareClosure/self-compare",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareClosure",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/11_status_type_only.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/01_builder_state.a/native",
+    "Elapsed": 2.86
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/01_builder_state.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/01_builder_state.a",
+    "Elapsed": 3.1
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/10_tracing_escape.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/10_tracing_escape.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/10_tracing_escape.a",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/native",
+    "Elapsed": 2.79
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareArrayFill/self-compare/array-fill.a",
+    "Elapsed": 3.02
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareArrayFill/self-compare",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesSelfCompareArrayFill",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/09_incremental_parser.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/12_builder_release_cache.a/native",
+    "Elapsed": 2.97
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/12_builder_release_cache.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/12_builder_release_cache.a",
+    "Elapsed": 3.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/07_parser_singleton.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/11_status_type_only.a/native",
+    "Elapsed": 3.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/11_status_type_only.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/11_status_type_only.a",
+    "Elapsed": 3.4
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/06_binary_expression_state.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/06_binary_expression_state.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/06_binary_expression_state.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/05_debug_log_merge.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a/native",
+    "Elapsed": 3.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/08_parser_jsdoc_nested.a",
+    "Elapsed": 3.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/09_incremental_parser.a/native",
+    "Elapsed": 3.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/09_incremental_parser.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/09_incremental_parser.a",
+    "Elapsed": 3.37
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/04_debug_state.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/03_react_names.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/03_react_names.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/03_react_names.a",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/02_jsx_names.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/02_jsx_names.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/02_jsx_names.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/01_has_property.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/01_has_property.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/01_has_property.a",
+    "Elapsed": 0.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/11_option_string.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/11_option_string.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/11_option_string.a",
+    "Elapsed": 0.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/19_compare_empty_objects.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/19_compare_empty_objects.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/19_compare_empty_objects.a",
+    "Elapsed": 0.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/18_compare_missing_scalar.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/18_compare_missing_scalar.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/18_compare_missing_scalar.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/17_compare_missing_object.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/17_compare_missing_object.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/17_compare_missing_object.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/16_built_strings.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/16_built_strings.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/16_built_strings.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/15_inherited_read.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/15_inherited_read.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/15_inherited_read.a",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/07_parser_singleton.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/07_parser_singleton.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/07_parser_singleton.a",
+    "Elapsed": 3.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/14_group_by.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/14_group_by.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/14_group_by.a",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/13_strict_option.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/13_strict_option.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/13_strict_option.a",
+    "Elapsed": 0.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/12_nested_entries.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/06_delete_readd.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/12_nested_entries.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/12_nested_entries.a",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/06_delete_readd.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/06_delete_readd.a",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/10_option_wrong_type.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/09_option_undefined.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/10_option_wrong_type.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/10_option_wrong_type.a",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/09_option_undefined.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/09_option_undefined.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/05_debug_log_merge.a/native",
+    "Elapsed": 3.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/05_debug_log_merge.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/05_debug_log_merge.a",
+    "Elapsed": 3.39
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/07_optional_view.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/08_option_boolean.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/07_optional_view.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/07_optional_view.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/04_own_values.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/08_option_boolean.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/08_option_boolean.a",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/04_own_values.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/04_own_values.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/04_debug_state.a/native",
+    "Elapsed": 3.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/04_debug_state.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces/04_debug_state.a",
+    "Elapsed": 3.48
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces/namespaces",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesNamespaces",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/05_integer_order.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/03_own_keys.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/05_integer_order.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/05_integer_order.a",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/03_own_keys.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/03_own_keys.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/02_get_property.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/02_get_property.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records/02_get_property.a",
+    "Elapsed": 0.32
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords/records",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesRecords",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/08_debug_format_enum.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/01_token_range.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/13_regex_map_keys.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/08_debug_format_enum.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/08_debug_format_enum.a",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/11_format_syntax_kind.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/11_format_syntax_kind.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/11_format_syntax_kind.a",
+    "Elapsed": 0.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/10_string_enum.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/13_regex_map_keys.a/native",
+    "Elapsed": 3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/13_regex_map_keys.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/13_regex_map_keys.a",
+    "Elapsed": 3.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/01_token_range.a/native",
+    "Elapsed": 3.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/01_token_range.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/01_token_range.a",
+    "Elapsed": 3.57
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/09_symbol_exclusion_mask.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/native",
+    "Elapsed": 3.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/12_diagnostic_reverse_lookup.a",
+    "Elapsed": 3.51
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/05_local_export_flags.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/07_regex_array_map.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/10_string_enum.a/native",
+    "Elapsed": 3.21
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/10_string_enum.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/10_string_enum.a",
+    "Elapsed": 3.47
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/06_set_node_flags.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/06_set_node_flags.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/06_set_node_flags.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/03_jsdoc_range.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/09_symbol_exclusion_mask.a/native",
+    "Elapsed": 3.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/09_symbol_exclusion_mask.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/09_symbol_exclusion_mask.a",
+    "Elapsed": 3.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/04_parse_tree_mask.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/05_local_export_flags.a/native",
+    "Elapsed": 3.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/05_local_export_flags.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/05_local_export_flags.a",
+    "Elapsed": 3.44
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/07_regex_array_map.a/native",
+    "Elapsed": 3.09
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/07_regex_array_map.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/07_regex_array_map.a",
+    "Elapsed": 3.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/02_node_range.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/01_scanner_keywords.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/03_jsdoc_range.a/native",
+    "Elapsed": 3.05
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/03_jsdoc_range.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/03_jsdoc_range.a",
+    "Elapsed": 3.27
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/04_alias_add_key.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/04_parse_tree_mask.a/native",
+    "Elapsed": 2.91
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/04_parse_tree_mask.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/04_parse_tree_mask.a",
+    "Elapsed": 3.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/06_symbol_key.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/06_symbol_key.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/06_symbol_key.a",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/02_node_range.a/native",
+    "Elapsed": 2.88
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/02_node_range.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums/02_node_range.a",
+    "Elapsed": 3.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums/enums",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEnums",
+    "Elapsed": 0.19
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/03_hidden_other_type.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/05_getter.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/05_getter.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/05_getter.a",
+    "Elapsed": 0.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/02_hidden_same_type.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/04_alias_add_key.a/native",
+    "Elapsed": 2.94
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/04_alias_add_key.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/04_alias_add_key.a",
+    "Elapsed": 3.18
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/01_call_time/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/01_scanner_keywords.a/native",
+    "Elapsed": 3.69
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/01_scanner_keywords.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/01_scanner_keywords.a",
+    "Elapsed": 3.98
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/06_import_order_mutant/main.a",
+    "Elapsed": 0.17
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/03_hidden_other_type.a/native",
+    "Elapsed": 3.07
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/03_hidden_other_type.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/03_hidden_other_type.a",
+    "Elapsed": 3.36
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/02_hidden_same_type.a/native",
+    "Elapsed": 2.95
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/02_hidden_same_type.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries/02_hidden_same_type.a",
+    "Elapsed": 3.14
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries/entries",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesEntries",
+    "Elapsed": 0.16
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/01_call_time/main.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/01_call_time/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/01_call_time/main.a",
+    "Elapsed": 3.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/native",
+    "Elapsed": 3.04
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/10_hoisted_before_body/main.a",
+    "Elapsed": 3.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/04_directory_callback/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/04_directory_callback/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/04_directory_callback/main.a",
+    "Elapsed": 0.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/05_safe_load_read/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/05_safe_load_read/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/05_safe_load_read/main.a",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/03_extensions/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a/native",
+    "Elapsed": 2.74
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/09_function_value_load/main.a",
+    "Elapsed": 2.97
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a/native",
+    "Elapsed": 2.97
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/08_named_reexports/main.a",
+    "Elapsed": 3.22
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/type-predicate/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/native",
+    "Elapsed": 3.03
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/07_namespace_barrel/main.a",
+    "Elapsed": 3.3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/generic-optional-return/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/03_extensions/main.a/native",
+    "Elapsed": 3.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/03_extensions/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/03_extensions/main.a",
+    "Elapsed": 3.41
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/optional-boolean-field/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles/02_reverse_barrel/main.a",
+    "Elapsed": 3.29
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles/cycles",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesCycles",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/type-predicate/main.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/type-predicate/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/type-predicate/main.a",
+    "Elapsed": 3.2
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/any-value/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/any-value/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/any-value/main.a",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/binary-value-value/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/value-condition/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/generic-optional-return/main.a/native",
+    "Elapsed": 2.99
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/generic-optional-return/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/generic-optional-return/main.a",
+    "Elapsed": 3.26
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/prefix-unary-value/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/optional-boolean-field/main.a/native",
+    "Elapsed": 3.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/optional-boolean-field/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/optional-boolean-field/main.a",
+    "Elapsed": 3.24
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/structural-method-statics/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/value-condition/main.a/native",
+    "Elapsed": 2.66
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/value-condition/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/value-condition/main.a",
+    "Elapsed": 2.89
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/function-without-body/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/binary-value-value/main.a/native",
+    "Elapsed": 2.9
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/binary-value-value/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/binary-value-value/main.a",
+    "Elapsed": 3.14
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/non-null-assertion/main.a/node",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/non-null-assertion/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/non-null-assertion/main.a",
+    "Elapsed": 0.28
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/prefix-unary-value/main.a/native",
+    "Elapsed": 2.75
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/prefix-unary-value/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/prefix-unary-value/main.a",
+    "Elapsed": 3
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/structural-method-statics/main.a/native",
+    "Elapsed": 2.71
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/structural-method-statics/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/structural-method-statics/main.a",
+    "Elapsed": 2.96
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/function-without-body/main.a/native",
+    "Elapsed": 2.11
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/function-without-body/main.a/stage0",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real/function-without-body/main.a",
+    "Elapsed": 2.34
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal/real",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage3/fixtures",
+    "Test": "TestFixturesReal",
+    "Elapsed": 0.26
+  }
+]
