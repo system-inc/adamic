@@ -1,0 +1,5 @@
+function* keep(value: string[]): Generator<string, string, undefined> {yield 'ready';yield value[0] ?? 'missing';return 'done';}
+function make(): Generator<string, string, undefined> {const value=['owned'];return keep(value);}
+const g=make();console.log(`${g.next().value}`);console.log(`${g.next().value}`);console.log(`${g.next().value}`);
+function* local(): Generator<string,string,undefined> {const value=['local'];yield 'ready';yield value[0] ?? 'missing';return 'done';}
+const h=local();console.log(`${h.next().value}`);console.log(`${h.next().value}`);console.log(`${h.next().value}`);

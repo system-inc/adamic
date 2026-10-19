@@ -1,0 +1,420 @@
+[
+  {
+    "package": "./bench/regex",
+    "tests": [],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./bridge/tsgo",
+    "tests": [
+      "TestTSGoRequiresLink"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "tests": [
+      "TestRuntimeFeaturesMatchNode"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./cmd/adamic",
+    "tests": [
+      "TestExplainChecksOutput"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./cmd/adamic-admission-delta",
+    "tests": [
+      "TestClassification",
+      "TestDiffCoverage",
+      "TestShardPartitionKeepsDiff"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./cmd/adamic-gocacheprog",
+    "tests": [
+      "TestNoToken"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "tests": [
+      "TestOptionalPositionCountsUTF16Surrogates"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "tests": [
+      "TestAdaptSingletonArrayCallback"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/boundedrun",
+    "tests": [
+      "TestDeadlineKillsGrandchild"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/buildcache/cmd/productidentity",
+    "tests": [],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/buildcache/cmd/traced",
+    "tests": [
+      "TestSettleParsesOnlyAskedCalls"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/buildcache/goplan",
+    "tests": [],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/compilercensus",
+    "tests": [
+      "TestEveryCCompilerRunsThroughNative",
+      "TestDependenciesFollowTheMarkers",
+      "TestDependenciesCoverTheDeclaredMap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "tests": [
+      "TestCheckKeyTellsTheCompilerFromTscWhole"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/fuzz",
+    "tests": [
+      "TestGeneratedProgramsCheckAndLower"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/leakcheck",
+    "tests": [
+      "TestReportedLeakIsRejected",
+      "TestCountedBalance"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "tests": [
+      "TestOriginalCycleLedger"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "tests": [],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/toolchain",
+    "tests": [
+      "TestAToolsCompilersAreClangUnlessTheCallerNamesOne"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./internal/tracked",
+    "tests": [
+      "TestChangedNamesEveryDifference"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestClosedEmptyArrayUnionGap",
+      "TestClosedParserRegexGap",
+      "TestClosedOptionalBooleanConditionGap",
+      "TestClosedPrinterRegexGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "tests": [
+      "TestCSSNumbersAnswerProductsRekey"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "tests": [
+      "TestMultiPushGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "tests": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestRawInputGap",
+      "TestParserRecoveryGap",
+      "TestInterfaceTypeMethodGap",
+      "TestRecoveryLibraryGaps",
+      "TestPinnedNumericGaps",
+      "TestTypeMemberLibraryGap",
+      "TestCookedSurrogateLibraryGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/executable",
+    "tests": [
+      "TestWriteLeavesNoWritableDescriptorForSiblingForksToExec"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "tests": [
+      "TestExtAgreesWithGo"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "tests": [
+      "TestPrinterConstructorGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "tests": [
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "tests": [
+      "TestClosedComparatorGaps",
+      "TestNestedConstructorGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "tests": [
+      "TestKnownGapsAreExplicit"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "tests": [
+      "TestJsxParserGapIsExplicit"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "tests": [
+      "TestDynamicPatternGap",
+      "TestOptionDialectGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "tests": [
+      "TestNoUnderscoreDangleProfileBuildsSanitized",
+      "TestNoUnderscoreDangleProfileBuildsRelease",
+      "TestNoUnderscoreDangleProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestNoUnsafeNegationProfileBuildsSanitized",
+      "TestNoUnsafeNegationProfileBuildsRelease",
+      "TestNoUnsafeNegationProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestNoUnsafeOptionalChainingProfileBuildsSanitized",
+      "TestNoUnsafeOptionalChainingProfileBuildsRelease",
+      "TestNoUnsafeOptionalChainingProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestTypeScriptNoThisAliasProfileBuildsSanitized",
+      "TestTypeScriptNoThisAliasProfileBuildsRelease",
+      "TestTypeScriptNoThisAliasProfileEmitsJavaScript"
+    ],
+    "removed_previous_tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "tests": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "tests": [
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "tests": [
+      "TestLexerGaps",
+      "TestClosedStringPresenceGap",
+      "TestClosedLexerGaps",
+      "TestClosedValuePresenceGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "tests": [
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "tests": [
+      "TestGapStandsWhereGapsMdSays",
+      "TestBigintGapStandsWhereGapsMdSays"
+    ],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage3/census/tool",
+    "tests": [],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "tests": [],
+    "removed_previous_tests": []
+  },
+  {
+    "package": "./stage3/lane",
+    "tests": [
+      "TestShardsMatchManifest"
+    ],
+    "removed_previous_tests": [],
+    "coverage_note": "Focused Go manifest reader only; the source report records Python wrapper deadline limitations, so no repeated broad Python run."
+  },
+  {
+    "package": "./stage3/ledger/checker-259",
+    "tests": [],
+    "coverage_note": "No previous focused selection; compile-only"
+  },
+  {
+    "package": "./stage3/ledger/checker-259/rerun-2026-10-08",
+    "tests": [],
+    "coverage_note": "No previous focused selection; compile-only"
+  }
+]

@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesDiamond
+=== PAUSE TestProjectReferencesDiamond
+=== CONT  TestProjectReferencesDiamond
+    project_references_test.go:69: duplicate checking root /tmp/adamic-gate/TestProjectReferencesDiamond2487213911/001/app/main.ts
+--- FAIL: TestProjectReferencesDiamond (0.29s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.300s
+FAIL

@@ -319,7 +319,14 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 					}
 				}
 			}
-		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+		}
+		contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+		if contextual != nil {
+			if base := l.readonlyArrayView(contextual); base != nil {
+				contextual = base
+			}
+		}
+		if contextual != nil && l.checker.IsArrayType(contextual) {
 			// Layout must follow the destination, even when the literal infers narrower elements.
 			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
 				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
@@ -335,6 +342,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	if target := l.weakTarget(arrayType); target != nil {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
+	}
+	if base := l.readonlyArrayView(arrayType); base != nil {
+		arrayType = base
 	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
@@ -355,6 +365,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err := l.eepPropertyPresence(node); err != nil {
 		return nil, err
+	}
+	if value, handled, err := l.generatorResultRead(node); handled {
+		return value, err
 	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
@@ -688,6 +701,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.generatorCall(node); handled {
+		return value, handled, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}

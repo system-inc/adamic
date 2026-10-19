@@ -1,0 +1,290 @@
+[
+  {
+    "file": "body_throw.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: body_throw",
+    "node": {
+      "stdout": "iterator\nnext:0\nvalue:1\nclose:1\nbody:value:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "break.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: break",
+    "node": {
+      "stdout": "iterator\nnext:0\nvalue:1\nclose:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "cached_next.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: cached_next",
+    "node": {
+      "stdout": "cached:1\nyield:1\ncached:2\nyield:2\ncached:3\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "class.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: class",
+    "node": {
+      "stdout": "iterator\nnext:0\nvalue:1\nnext:1\nvalue:2\nnext:2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "close_throw_body.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: close_throw_body",
+    "node": {
+      "stdout": "iterator\nnext:0\nvalue:1\nclose:1\noriginal:value:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "close_throw_break.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: close_throw_break",
+    "node": {
+      "stdout": "iterator\nnext:0\nvalue:1\nclose:1\nclose failure 1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "completion.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: completion",
+    "node": {
+      "stdout": "1\n2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "done_throw.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: done_throw",
+    "node": {
+      "stdout": "done getter\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "labeled_continue.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: labeled_continue",
+    "node": {
+      "stdout": "iterator\nnext:0\nouter:0:value:1\nclose:1\niterator\nnext:0\nouter:1:value:1\nclose:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "method_getters.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: method_getters",
+    "node": {
+      "stdout": "get next:1\nstep:1\nyield:1\nget return\nclose:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "next_throw.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: next_throw",
+    "node": {
+      "stdout": "iterator\nnext:0\nnext failure 0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "non_callable_next.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: non_callable_next",
+    "node": {
+      "stdout": "TypeError\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/iteration-dispatch/non_callable_next.a:5:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "file": "non_object_close.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: non_object_close",
+    "node": {
+      "stdout": "1\nTypeError\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/iteration-dispatch/non_object_close.a:5:114: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "file": "non_object_iterator.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: non_object_iterator",
+    "node": {
+      "stdout": "TypeError\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/iteration-dispatch/non_object_iterator.a:5:53: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "file": "non_object_step.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: non_object_step",
+    "node": {
+      "stdout": "TypeError\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/iteration-dispatch/non_object_step.a:5:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "file": "object.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: object",
+    "node": {
+      "stdout": "step:1\nyield:1\nstep:2\nyield:2\nstep:3\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "return.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: return",
+    "node": {
+      "stdout": "iterator\nnext:0\nclose:1\nreturned:value:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "value_throw.a",
+    "tsc": [
+      "Authored slice 4 iteration-dispatch control; no upstream source copied"
+    ],
+    "reason": "Slice 4 iteration-dispatch witness: value_throw",
+    "node": {
+      "stdout": "value getter\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  }
+]

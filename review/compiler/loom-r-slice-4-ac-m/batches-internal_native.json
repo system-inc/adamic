@@ -1,0 +1,23 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-run",
+      "^(TestAsyncHostPromisesThread|TestOrdinaryToPrimitive|TestQuarantineIsPerThreadUnderTSan)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "log": "logs/batch-internal_native-0.jsonl",
+    "tests": [
+      "TestAsyncHostPromisesThread",
+      "TestOrdinaryToPrimitive",
+      "TestQuarantineIsPerThreadUnderTSan"
+    ]
+  }
+]

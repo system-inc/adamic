@@ -1,0 +1,67 @@
+[
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/generic-mutants.py",
+      "review/compiler/loom-r-slice-4/generic-mutants"
+    ],
+    "exit": 0,
+    "seconds": 67.34781154400002,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-0.log"
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/generator-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 157.28688366200004,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-1.log"
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/loader-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 148.384031698,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-2.log"
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/iteration-mutants.py",
+      "review/compiler/loom-r-slice-4/iteration-mutants"
+    ],
+    "exit": 0,
+    "seconds": 60.043906335999964,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-3.log"
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/extra-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 30.03876011400007,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-4.log"
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/reconciliation-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 27.02161678599998,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-5.log"
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-r-slice-4/scout-tests.py"
+    ],
+    "exit": 0,
+    "seconds": 1.4202595570000085,
+    "log": "review/compiler/loom-r-slice-4/mutant-run-6.log"
+  }
+]

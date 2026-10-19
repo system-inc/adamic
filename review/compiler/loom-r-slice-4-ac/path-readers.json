@@ -1,0 +1,92 @@
+[
+  {
+    "path": "internal/lower/testdata/generic_body_relations/refused.a",
+    "matches": "internal/lower/generic_body_relations_test.go:17:\tsource, err := os.ReadFile(\"testdata/generic_body_relations/refused.a\")\n",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/notyet/generator_cycle.a",
+    "matches": "internal/oracle/generator_cycle_test.go:13:\tpath, err := filepath.Abs(filepath.Join(repository, \"internal/oracle/testdata/notyet/generator_cycle.a\"))\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/generics/06_polymorphic_recursion.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/generics/07_generic_cast.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/generics/08_readonly_view.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/generics/11_indexed_result.a",
+    "matches": "internal/oracle/step16_generics_test.go:34:\t\"11_indexed_result\":       \"stage3/fixtures/generics/11_indexed_result.a:2:68: Adamic 0.1 refuses generic body return into slot T[\\\"value\\\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\",\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+    "matches": "internal/oracle/step16_generics_test.go:35:\t\"12_mixed_indexed_result\": \"stage3/fixtures/generics/12_mixed_indexed_result.a:2:87: Adamic 0.1 refuses generic body return into slot U | T[\\\"value\\\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\",\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/generics/13_constrained_local.a",
+    "matches": "internal/oracle/step16_generics_test.go:36:\t\"13_constrained_local\":    \"stage3/fixtures/generics/13_constrained_local.a:3:11: Adamic 0.1 refuses generic body initializer into slot T[\\\"value\\\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\",\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_callable_next.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_close.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_iterator.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/iteration-dispatch/non_object_step.a",
+    "matches": "",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/iteration/array_view_variance.a",
+    "matches": "internal/oracle/step20_variance_test.go:14:\tpath, failure := filepath.Abs(filepath.Join(repository, \"stage3/fixtures/iteration/array_view_variance.a\"))\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+    "matches": "internal/oracle/step20_intrinsic_test.go:33:\tfor _, name := range []string{\"intrinsic_iterator_write.a\", \"intrinsic_iterator_alias.a\", \"intrinsic_iterator_prototype.a\"} {\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+    "matches": "internal/oracle/step20_intrinsic_test.go:33:\tfor _, name := range []string{\"intrinsic_iterator_write.a\", \"intrinsic_iterator_alias.a\", \"intrinsic_iterator_prototype.a\"} {\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+    "matches": "internal/oracle/step20_intrinsic_test.go:33:\tfor _, name := range []string{\"intrinsic_iterator_write.a\", \"intrinsic_iterator_alias.a\", \"intrinsic_iterator_prototype.a\"} {\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/iteration/delegated_generator.a",
+    "matches": "internal/oracle/step20_iteration_test.go:22:\tfor _, file := range []string{\"collections.a\", \"strings.a\", \"object_iteration.a\", \"array_view_stress.a\", \"test262_array_views.a\", \"array_view_weak.a\", \"user_forwarding.a\", \"generator.a\", \"delegated_generator.a\"} {\n",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/iteration/generator.a",
+    "matches": "stage3/fixtures/testdata/toplevel/fixture-union.json:114:    \"objects/25_map_generator.a\",\nstage3/fixtures/testdata/toplevel/fixture-union.json:289:    \"objects/25_map_generator.a\",\nstage3/fixtures/testdata/toplevel/fixture-union.json:464:    \"objects/25_map_generator.a\",\ninternal/oracle/step20_iteration_test.go:22:\tfor _, file := range []string{\"collections.a\", \"strings.a\", \"object_iteration.a\", \"array_view_stress.a\", \"test262_array_views.a\", \"array_view_weak.a\", \"user_forwarding.a\", \"generator.a\", \"delegated_generator.a\"} {\n",
+    "exit": 0
+  }
+]

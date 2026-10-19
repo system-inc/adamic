@@ -1,0 +1,19 @@
+{
+  "reason": "root filesystem exhausted by generated export products",
+  "source_and_recipes_changed": false,
+  "data_deleted": false,
+  "relocations": [
+    {
+      "product": "ebe51a6776eed74543b79aefac43978f44f6bc5fce3d8065a75b4c6572a540e6",
+      "from_root": "/home/agent/.cache/adamic-build/local",
+      "to_root": "/tmp/adamic-gate/retired-export-products/local",
+      "seconds": 4.884
+    },
+    {
+      "product": "209cee9400e974f8e9b0e4dfac15e4180e04e3347b361c32d148b2a147a81184",
+      "from_root": "/home/agent/.cache/adamic-build/local",
+      "to_root": "/tmp/adamic-gate/retired-export-products/local",
+      "seconds": 1.051
+    }
+  ]
+}

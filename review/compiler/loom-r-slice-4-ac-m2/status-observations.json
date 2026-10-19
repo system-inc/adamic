@@ -1,0 +1,302 @@
+[
+  {
+    "file": "stage3/fixtures/generics/01_identity.a",
+    "sha256": "b16e2c9b45d645d1a7869932eea63d5a6ac19f0c19176987fa8e03b19ba16455",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/02_optional_return.a",
+    "sha256": "16584ffa00f4f24e61d185dc55df9276df6c435181d3dc33f1ec2ba4f1f36d67",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/03_callback_return.a",
+    "sha256": "7f60071f2dfeac3d2b5e2812596e068b4f93882a95067e3c7ed0dae8dd4df081",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/04_function_value.a",
+    "sha256": "fecbfe88cfa3baa6d979b299bbbb4fa5f851beedeb8e22e7e4ce70efa360a22f",
+    "node_exit": 0,
+    "stage0": "NotYet"
+  },
+  {
+    "file": "stage3/fixtures/generics/05_nested_class.a",
+    "sha256": "ab88a95f5b53d411fa2eaf8c10637087892de334baecf7240e9ef10fa77c541a",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/06_polymorphic_recursion.a",
+    "sha256": "1a00441a396c73d314d9b78076239bcd3f94ecf67ce33fd62d07dfa5ae2ef76b",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/generics/07_generic_cast.a",
+    "sha256": "f5a6ad3217bfad913357875dad41fa8b90ca3c09421656c176c90590c43d4c80",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/generics/08_readonly_view.a",
+    "sha256": "fe1c20414b854cf7cd417a4eab78374ee6e11f3f8a09e295ff45a8cd27a511ed",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/generics/09_recursive_optional.a",
+    "sha256": "a6e7899e7a85928b0a0d68774f4461ef86c69cc20685148a758e1ad5269b00e8",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/10_identifier_multimap.a",
+    "sha256": "9a5ff1f40a7a4071fcea20a2c3997390f50ba01561ce55a9dc71b96d7da8882d",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/11_indexed_result.a",
+    "sha256": "b32b4fef3baf96d9f3c23576d248c60a82d09f683dbd0bde12b6e89a90c9a7ae",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+    "sha256": "3d2137bb382adacbfb428436021b92979b59e7691004e2e71d20308c5c12ad0a",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/generics/13_constrained_local.a",
+    "sha256": "09ba88144344b1dfd94e470496f58a111988bee2191b3e5ff86afcee3ca02433",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/generics/14_optional_literal_union.a",
+    "sha256": "0a340e978b2ab5b473ce1d82f3ffad6943887434051b6bd04c8618f46125709d",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/generics/15_array_callback.a",
+    "sha256": "63065343826ccd098309f612457b0f46e76b2516f921174ccba292e126e88c6f",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/accessor_binding.a",
+    "sha256": "0c580a72c77a9742a96a7edcd029bb6cee3db4be52ac42fae166bbb3faa80dec",
+    "node_exit": 0,
+    "stage0": "NotYet"
+  },
+  {
+    "file": "stage3/fixtures/iteration/array_view_stress.a",
+    "sha256": "a1bbb7d4f15c17b60a33521831280c959cf4bf3310a1f331fdf4e25d168f0cc1",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/array_view_variance.a",
+    "sha256": "fdb1650c18ed082559a64744aab24b5d14d880c61725c55830a00e80a87330e6",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration/array_view_weak.a",
+    "sha256": "87f029cbc3f6cb8d78caf43a4221297c955ae40fe74292a8247a7e38258c5ad9",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/collections.a",
+    "sha256": "111b1e9c584e5aa6482f670ffeab0ce18fb09bfc6d87587583d7c63ac23a7fc4",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/delegated_generator.a",
+    "sha256": "bab62e02c9675f6c385ad55062b5e321c15bbfd5bc240a02547422842a90ecfe",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/generator.a",
+    "sha256": "60d913c58b77e323f56eee997d0d5aabfa93b57bdbc66ef458ce08e8d9f1c7b1",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+    "sha256": "e14865adce1ff31170df1f1f4c9c03887cc581c03ee3f9b9347aa60cea848ba2",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+    "sha256": "3b56a9f0d9770117f5759985de0a9389ea4ed4a8c19db78b837e7a0abb679b14",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+    "sha256": "d2a653112f0279501bf618c98919bbd7688f059d1dc5d81e928c23ca2ce05e2e",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration/iterable_view.a",
+    "sha256": "faea1673dcc60337e52895d5ca191d934b5164b19fdf1502b5898b0e9597ed4a",
+    "node_exit": 0,
+    "stage0": "NotYet"
+  },
+  {
+    "file": "stage3/fixtures/iteration/object_binding.a",
+    "sha256": "be52aed10506f05b4212752295bbfe2611e9ea869d61d3efdb019c993cccbe33",
+    "node_exit": 0,
+    "stage0": "NotYet"
+  },
+  {
+    "file": "stage3/fixtures/iteration/object_binding_stress.a",
+    "sha256": "38627130c54c306808981b6aee06c3cf81c9aa9f4407c95cbd184ad52bdde5ff",
+    "node_exit": 0,
+    "stage0": "NotYet"
+  },
+  {
+    "file": "stage3/fixtures/iteration/object_iteration.a",
+    "sha256": "dea679edaa1f167be59c9acf4c1bb89b84004525f5045f5531664fcdcbdbc249",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/strings.a",
+    "sha256": "206fc527ea4059a11a510009ae78ce5624fcaa804c458797dc9ce0aa20125c3a",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/test262_array_views.a",
+    "sha256": "ab64285bc68d37cf1bde7afd10d700fbb53d34e276632aaeef74ce55f1f903b2",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration/user_forwarding.a",
+    "sha256": "210758163d2220f5a1c5c169d73642ede20d62f924571032cf4e7fea6d9beccb",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/body_throw.a",
+    "sha256": "ed9370e4d726c47554d77720c7027d489d886a4a90c4a308b9fe81101998980b",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/break.a",
+    "sha256": "0769538a34995987a392cb114292c1b9964c90cf8810ddd8ae067ef83b3f8b0e",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/cached_next.a",
+    "sha256": "2b4f4021fbfef236a9cd333eb230f3adfa2b8933f6faa4ae6ed30341cb2b069f",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/class.a",
+    "sha256": "96f2f690df75ad3d7630cdfd643168ead0348cd5859a017bd04c359b8faee6e6",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+    "sha256": "d5fbb4c682c7a1159eb38572738a2916aef7f3bc546fd859ed3a642fdd576748",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+    "sha256": "fe89a0a1107760b9ecc524231475c586fff5096f4021c03efdcc790675200d7a",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/completion.a",
+    "sha256": "98038a766387ffd8252209ca70438b2f979fecb306cbb0a482d11a50ba17e255",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/done_throw.a",
+    "sha256": "64dec4c7bebda100c668a3449c6e4661d2a488ed3201c8173e17c94e4ee8ae7e",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+    "sha256": "3bd600ed20784663db9ea2a74bd970a00ec4639514edbded43d003713721e94a",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/method_getters.a",
+    "sha256": "ae1de1578908deb432f426571c23c4868232b88432e6c6a26e0aebcef43b53df",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/next_throw.a",
+    "sha256": "edec354558a9da59eaeafb5c65c0cdcb11500ab2361ca6eb6213ed39ed42a106",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/non_callable_next.a",
+    "sha256": "a16b4e94528e70032eb311dda34549b79168a19ba47e98abc548a5cee1cd11df",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/non_object_close.a",
+    "sha256": "ba4c19d195c1db3cd6c1a2f0e552562aeaa571fe09b3048b97e0964a4f3c05eb",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/non_object_iterator.a",
+    "sha256": "1b0c952024f445433aa4ed85bcedfc2539e4cda5c37b01dd2db7bbd5dc86a954",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/non_object_step.a",
+    "sha256": "93142e26d8519e641fc57a6c257af8d9058f9317ae801ca36fd237fdfad4ab94",
+    "node_exit": 0,
+    "stage0": "Refused"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/object.a",
+    "sha256": "ad2de8ae55be25de33af430c1c2d4c5c7149230939c0d5f92698902b6aa9d41d",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/return.a",
+    "sha256": "e23e7abb9c4aa6ccffc12643906f5716c3309882b4963465d1013ef7d578be6f",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  },
+  {
+    "file": "stage3/fixtures/iteration-dispatch/value_throw.a",
+    "sha256": "e8bb4a7048420ba1d04b39a3fc0064f15dc9db29a6a9ad06d3892abe44014a20",
+    "node_exit": 0,
+    "stage0": "Compiles"
+  }
+]

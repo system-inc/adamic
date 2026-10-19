@@ -1,0 +1,3 @@
+{'refused': 1} {'a-check': 1}
+a-check failed for 1 file:
+/workspace/scratch/slice4-header-mutants/wrong-reason.a: refused, expected refused deliberately absent reason (adamic: /workspace/scratch/slice4-header-mutants/wrong-reason.a:2:78: Adamic 0.1 refuses generic body initializer into slot T["value"] from source 2 is not proven for every allowed type argument; chec)

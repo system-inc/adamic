@@ -1,0 +1,1219 @@
+{
+  "main": "5e33a17b",
+  "scope": "tracked main oracle/lower/load testdata and stage3 fixtures plus new slice witnesses; Load and Lower only",
+  "files": 1814,
+  "deltas": [
+    {
+      "path": "internal/lower/testdata/generic_body_relations/refused.a",
+      "before": {
+        "kind": "accepted",
+        "path": "internal/lower/testdata/generic_body_relations/refused.a",
+        "reason": ""
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "internal/lower/testdata/generic_body_relations/refused.a",
+        "reason": "/workspace/adamic/internal/lower/testdata/generic_body_relations/refused.a:1:78: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+      },
+      "new_fixture": true,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:11:22: stage 0 can't lower a function expression with a this parameter (dynamic receivers are not implemented) yet"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:8:5: Adamic 0.1 refuses generic body return into slot ((...args: A) => R) | undefined from source OmitThisParameter<(this: T, ...args: A) => R> | undefined is not proven for every allowed type argument; checker constraint: T (unconstrained); A extends any[]; R (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+      },
+      "new_fixture": false,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a:4:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/basic.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/basic.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/basic.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/basic.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/cancellation.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/cancellation.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/cancellation.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/cancellation.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/captures.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/captures.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/captures.a:3:10: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/captures.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/checker.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/checker.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/checker.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/checker.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/close.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/close.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/close.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/close.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/completions.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/completions.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/completions.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/completions.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/default_error.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/default_error.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/default_error.a:2:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/default_error.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/defaults.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/defaults.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/defaults.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/defaults.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/delegate.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/delegate.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/delegate.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/delegate.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/delegate_throw.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/delegate_throw.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/delegate_throw.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/delegate_throw.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/first_reference.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/first_reference.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/first_reference.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/first_reference.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/map_iterator.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/map_iterator.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/map_iterator.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/map_iterator.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/owned.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/owned.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/owned.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/owned.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/reentrant.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/reentrant.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/reentrant.a:6:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/reentrant.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generators/throw.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/generators/throw.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generators/throw.a:1:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generators/throw.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/generic_body_indexed.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "internal/oracle/testdata/generic_body_indexed.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/generic_body_indexed.a:1:10: stage 0 can't lower a function returning T[\"value\"] yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/generic_body_indexed.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "internal/oracle/testdata/notyet/generator_cycle.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/notyet/generator_cycle.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/notyet/generator_cycle.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/notyet/generator_cycle.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/notyet/generator_cycle.a:4:6: Adamic 0.1 refuses cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator"
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "internal/oracle/testdata/notyet_element_access/nodearray.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "internal/oracle/testdata/notyet_element_access/nodearray.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/notyet_element_access/nodearray.a:4:84: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/notyet_element_access/nodearray.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "internal/oracle/testdata/notyet_element_access/sorted.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "internal/oracle/testdata/notyet_element_access/sorted.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/notyet_element_access/sorted.a:3:112: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/notyet_element_access/sorted.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "internal/oracle/testdata/notyet_element_access/template.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "internal/oracle/testdata/notyet_element_access/template.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/notyet_element_access/template.a:2:89: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/notyet_element_access/template.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "internal/oracle/testdata/review/refused/fxspptb_iterators_hidden_return.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/review/refused/fxspptb_iterators_hidden_return.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_iterators_hidden_return.a:22:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/review/refused/fxspptb_iterators_hidden_return.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "internal/oracle/testdata/review/refused/fxspptb_iterators_override_this.a",
+      "before": {
+        "kind": "Refused",
+        "path": "internal/oracle/testdata/review/refused/fxspptb_iterators_override_this.a",
+        "reason": "/workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_iterators_override_this.a:31:20: Adamic 0.1 refuses an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin); return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "internal/oracle/testdata/review/refused/fxspptb_iterators_override_this.a",
+        "reason": ""
+      },
+      "new_fixture": false,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/enums/06_set_node_flags.a",
+      "before": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/enums/06_set_node_flags.a",
+        "reason": "/workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/enums/06_set_node_flags.a",
+        "reason": "/workspace/adamic/stage3/fixtures/enums/06_set_node_flags.a:79:9: Adamic 0.1 refuses generic body assignment into slot T[\"flags\"] from source NodeFlags is not proven for every allowed type argument; checker constraint: T extends Node; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+      },
+      "new_fixture": false,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "stage3/fixtures/generics/11_indexed_result.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/generics/11_indexed_result.a",
+        "reason": "/workspace/adamic/stage3/fixtures/generics/11_indexed_result.a:1:10: stage 0 can't lower a function returning T[\"value\"] yet"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/generics/11_indexed_result.a",
+        "reason": "/workspace/adamic/stage3/fixtures/generics/11_indexed_result.a:1:68: Adamic 0.1 refuses generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+      },
+      "new_fixture": true,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+        "reason": "/workspace/adamic/stage3/fixtures/generics/12_mixed_indexed_result.a:1:10: stage 0 can't lower a function returning U | T[\"value\"] | undefined yet"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/generics/12_mixed_indexed_result.a",
+        "reason": "/workspace/adamic/stage3/fixtures/generics/12_mixed_indexed_result.a:1:87: Adamic 0.1 refuses generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+      },
+      "new_fixture": true,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "stage3/fixtures/generics/13_constrained_local.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/generics/13_constrained_local.a",
+        "reason": "/workspace/adamic/stage3/fixtures/generics/13_constrained_local.a:2:11: stage 0 can't lower a value of type T[\"value\"] yet"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/generics/13_constrained_local.a",
+        "reason": "/workspace/adamic/stage3/fixtures/generics/13_constrained_local.a:2:11: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+      },
+      "new_fixture": true,
+      "owner": "generic-body-relations"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/body_throw.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/body_throw.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/body_throw.a:22:78: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/body_throw.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/break.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/break.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/break.a:22:72: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/break.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/cached_next.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/cached_next.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/cached_next.a:5:21: stage 0 can't lower replacing an iterator protocol method at runtime yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/cached_next.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/class.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/class.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/class.a:22:62: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/class.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/close_throw_body.a:22:77: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/close_throw_break.a:22:77: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/completion.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/completion.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/completion.a:6:20: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/completion.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/labeled_continue.a:22:124: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/method_getters.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/method_getters.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/method_getters.a:9:20: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/method_getters.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/next_throw.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/next_throw.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/next_throw.a:22:77: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/next_throw.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/object.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/object.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/object.a:10:21: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/object.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration-dispatch/return.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration-dispatch/return.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration-dispatch/return.a:22:64: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration-dispatch/return.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/array_view_stress.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/array_view_stress.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/array_view_stress.a:27:25: stage 0 can't lower for...of over an object yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/array_view_stress.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/array_view_variance.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/array_view_variance.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/array_view_variance.a:10:20: stage 0 can't lower for...of over an object yet"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/array_view_variance.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/array_view_variance.a:9:38: Adamic 0.1 refuses a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/array_view_weak.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/array_view_weak.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/array_view_weak.a:8:20: stage 0 can't lower for...of over an object yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/array_view_weak.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/delegated_generator.a",
+      "before": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/delegated_generator.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/delegated_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/delegated_generator.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/generator.a",
+      "before": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/generator.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/generator.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "generators-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_alias.a:3:5: stage 0 can't lower a value of type unique symbol yet"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/intrinsic_iterator_alias.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_alias.a:5:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+      "before": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_prototype.a:3:1: Adamic 0.1 refuses inherited library member prototype read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/intrinsic_iterator_prototype.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_prototype.a:3:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+      "before": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_write.a:4:8: Adamic 0.1 refuses inherited library member iterator read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+      },
+      "after": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/iteration/intrinsic_iterator_write.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_write.a:4:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/iterable_view.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/iterable_view.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/iterable_view.a:4:25: stage 0 can't lower for...of over an object yet"
+      },
+      "after": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/iterable_view.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/iterable_view.a:4:25: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet"
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/object_iteration.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/object_iteration.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/object_iteration.a:6:29: stage 0 can't lower for...of over an object yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/object_iteration.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/test262_array_views.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/test262_array_views.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/test262_array_views.a:12:21: stage 0 can't lower for...of over an object yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/test262_array_views.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/iteration/user_forwarding.a",
+      "before": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/iteration/user_forwarding.a",
+        "reason": "/workspace/adamic/stage3/fixtures/iteration/user_forwarding.a:6:21: stage 0 can't lower an iterator method whose concrete origin is erased by a structural signature yet"
+      },
+      "after": {
+        "kind": "accepted",
+        "path": "stage3/fixtures/iteration/user_forwarding.a",
+        "reason": ""
+      },
+      "new_fixture": true,
+      "owner": "iteration-main"
+    },
+    {
+      "path": "stage3/fixtures/objects/25_map_generator.a",
+      "before": {
+        "kind": "Refused",
+        "path": "stage3/fixtures/objects/25_map_generator.a",
+        "reason": "/workspace/adamic/stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "path": "stage3/fixtures/objects/25_map_generator.a",
+        "reason": "/workspace/adamic/stage3/fixtures/objects/25_map_generator.a:4:21: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet"
+      },
+      "new_fixture": false,
+      "owner": "generators-main"
+    }
+  ],
+  "shards": [
+    {
+      "version": "main",
+      "shard": 0,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 0,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 1,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 1,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 2,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 2,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 3,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 3,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 4,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 4,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 5,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 5,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 6,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 6,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 7,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 7,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 8,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 8,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 9,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 9,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 10,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 10,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 11,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 11,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 12,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 12,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 13,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 13,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 14,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 14,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 15,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 15,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 16,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 16,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 17,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 17,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 18,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "slice",
+      "shard": 18,
+      "files": 60,
+      "resumed": true
+    },
+    {
+      "version": "main",
+      "shard": 19,
+      "seconds": 2.899,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 19,
+      "seconds": 3.041,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 20,
+      "seconds": 1.609,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 20,
+      "seconds": 1.589,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 21,
+      "seconds": 1.433,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 21,
+      "seconds": 1.405,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 22,
+      "seconds": 1.48,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 22,
+      "seconds": 1.667,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 23,
+      "seconds": 2.335,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 23,
+      "seconds": 3.208,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 24,
+      "seconds": 1.823,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 24,
+      "seconds": 2.033,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 25,
+      "seconds": 1.662,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 25,
+      "seconds": 2.384,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 26,
+      "seconds": 12.564,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 26,
+      "seconds": 15.611,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 27,
+      "seconds": 12.082,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 27,
+      "seconds": 9.474,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 28,
+      "seconds": 9.72,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 28,
+      "seconds": 10.5,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 29,
+      "seconds": 5.62,
+      "files": 60
+    },
+    {
+      "version": "slice",
+      "shard": 29,
+      "seconds": 6.084,
+      "files": 60
+    },
+    {
+      "version": "main",
+      "shard": 30,
+      "seconds": 0.995,
+      "files": 14
+    },
+    {
+      "version": "slice",
+      "shard": 30,
+      "seconds": 1.032,
+      "files": 14
+    }
+  ],
+  "same_panics": [
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_iterators_derived_symbol.a",
+      "kind": "panic",
+      "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+    },
+    {
+      "path": "internal/oracle/testdata/review/agree/fxspptb_iterators_override_source.a",
+      "kind": "panic",
+      "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+    }
+  ],
+  "conclusion": "No tracked main accepted witness loses admission. The only accepted-to-Refused delta is the new generic-body type-lie witness. Two exploratory review witnesses panic identically in main and slice."
+}

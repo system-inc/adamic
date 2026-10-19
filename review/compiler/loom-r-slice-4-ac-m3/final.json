@@ -1,0 +1,1279 @@
+{
+  "gate_sha": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": {
+    "internal/lower/testdata/generic_body_relations/refused.a": {
+      "status": "refused",
+      "reason": "generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/generic_body_relations/refused.a:2:78: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.05328161400029785
+    },
+    "internal/oracle/testdata/generators/basic.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 119483,
+      "stdout_sha256": "7198dab1e2a9c053b35c7af61eebedfcf124a37442ebf4c7ea3fa6def9bb368e",
+      "seconds": 0.07380699399800505
+    },
+    "internal/oracle/testdata/generators/cancellation.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 237547,
+      "stdout_sha256": "042b46d99f46134629af876027342079a61b8c41f731bbea540fadc0d5b94c74",
+      "seconds": 0.11854761500217137
+    },
+    "internal/oracle/testdata/generators/captures.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 130732,
+      "stdout_sha256": "908539a24714dc002aee591e13b938c512bf42ca4962fab0be6d523918a6c8ae",
+      "seconds": 0.09154284300166182
+    },
+    "internal/oracle/testdata/generators/checker.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 112008,
+      "stdout_sha256": "80b49e468e30822b43732332459e4a11686e728a50f52daddc2954673e448bf9",
+      "seconds": 0.08539513899813755
+    },
+    "internal/oracle/testdata/generators/close.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 99579,
+      "stdout_sha256": "4e0685f02ff3806ea0a7225b27f986021dc7bbb150f023718ea79ff1846b7bea",
+      "seconds": 0.07400731899906532
+    },
+    "internal/oracle/testdata/generators/completions.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 213407,
+      "stdout_sha256": "6e99297673792781bd2ea61647d0d4b688614b35851c0887658e639e72030b57",
+      "seconds": 0.1238924360004603
+    },
+    "internal/oracle/testdata/generators/default_error.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 148020,
+      "stdout_sha256": "a4a78567f6961c5eff2caa00ae3a039a0754f13f956803bd7c3f5df37bbe0b07",
+      "seconds": 0.06066974599889363
+    },
+    "internal/oracle/testdata/generators/defaults.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 154314,
+      "stdout_sha256": "e4e0ba133fe7dcaa16b17a6fc2f9ab07011deb13260e2384cc6c2f415a6e2bc2",
+      "seconds": 0.08646164200035855
+    },
+    "internal/oracle/testdata/generators/delegate.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 462088,
+      "stdout_sha256": "a85dcc40d0a2d95a1eaf6ea60089a6a15037e4300e6dcee84857fee859d41e68",
+      "seconds": 0.20085982000091462
+    },
+    "internal/oracle/testdata/generators/delegate_throw.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 235107,
+      "stdout_sha256": "823af45366696a43fe3dfa83dd19df7e5edd982c05345eba4eaed5ee2de10de5",
+      "seconds": 0.10734519899779116
+    },
+    "internal/oracle/testdata/generators/first_reference.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 109389,
+      "stdout_sha256": "b6e7973ee5600e1ce2ccc3a93a5fb429f49b42aedd43c2d8b6a3afea5d77051a",
+      "seconds": 0.07157782899957965
+    },
+    "internal/oracle/testdata/generators/map_iterator.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 90481,
+      "stdout_sha256": "86a69f89f05c6d3fd3806481536c0b9b4a90f69c0a6074446178e1f60e2c34d1",
+      "seconds": 0.06983442699856823
+    },
+    "internal/oracle/testdata/generators/owned.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 196156,
+      "stdout_sha256": "78e6a0d546cfdc9e792cf3f06ffbfd0cb8aaa2d25f2500c9a499295d7f7fd5b8",
+      "seconds": 0.07977648499945644
+    },
+    "internal/oracle/testdata/generators/reentrant.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 68211,
+      "stdout_sha256": "9e51f2bbec1e1dda728fe26b2f286e0b66ce57190c63081c9682b3982af43a52",
+      "seconds": 0.05118805700112716
+    },
+    "internal/oracle/testdata/generators/throw.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 110633,
+      "stdout_sha256": "2009a0eba5d29f14620f98a89283e05f8cd36362a464900262a30306c5014896",
+      "seconds": 0.06612606999988202
+    },
+    "internal/oracle/testdata/generic_body_indexed.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 938,
+      "stdout_sha256": "6af315cc18d8664ccec46d1200f74dcd80ce07b1089c7c0580419250d0b6a3ae",
+      "seconds": 0.04711141699954169
+    },
+    "internal/oracle/testdata/generic_body_read.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3221,
+      "stdout_sha256": "20e03547cdd485c1fe857cc6a5fac6d549095ecb36a7ecb5f6b105706e334e81",
+      "seconds": 0.07493400599923916
+    },
+    "internal/oracle/testdata/notyet/generator_cycle.a": {
+      "status": "refused",
+      "reason": "cycle-capable generator frame slot saved without weak",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/generator_cycle.a:4:6: Adamic 0.1 refuses cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.07706283399966196
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_iterators_hidden_return.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 39102,
+      "stdout_sha256": "edc2ab139fbad917ab1599349e08d0538215a4b97b6f1569991754abab2ae3d9",
+      "seconds": 0.043685905999154784
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_iterators_override_this.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 59379,
+      "stdout_sha256": "38e85f39f7a3cfdac4e39f075ce68e6199d8f33387acbc3bfcab72b835e6a95b",
+      "seconds": 0.0690367619972676
+    },
+    "stage3/fixtures/generics/01_identity.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3959,
+      "stdout_sha256": "acac561166c61b51f88673b1e43ae8b11bb9290fe7833402f0d57011a17cd2e0",
+      "seconds": 0.04995522999888635
+    },
+    "stage3/fixtures/generics/02_optional_return.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6233,
+      "stdout_sha256": "f22550dc61cad4836e1fc3661731aadfeb8726b5ca0bf26169c3e9e6bd7bccc4",
+      "seconds": 0.07495989400194958
+    },
+    "stage3/fixtures/generics/03_callback_return.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7471,
+      "stdout_sha256": "9fcd029d94f02f855dc7d3d375818a6a258f8133576920bdb21cb8bfdcbe4cdc",
+      "seconds": 0.061446992000128375
+    },
+    "stage3/fixtures/generics/04_function_value.a": {
+      "status": "NotYet",
+      "reason": null,
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/04_function_value.a:3:60: stage 0 can't lower a generic function as a value yet\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.09649875900140614
+    },
+    "stage3/fixtures/generics/05_nested_class.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 18574,
+      "stdout_sha256": "031cd8ff4ce923d47dbcc064212b85652eea220725339cf6353914d6cf70ab43",
+      "seconds": 0.04725741099900915
+    },
+    "stage3/fixtures/generics/06_polymorphic_recursion.a": {
+      "status": "refused",
+      "reason": "a generic function instantiated without end (polymorphic recursion)",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/06_polymorphic_recursion.a:5:12: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06254047400216223
+    },
+    "stage3/fixtures/generics/07_generic_cast.a": {
+      "status": "refused",
+      "reason": "a cast the runtime can't check",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/07_generic_cast.a:4:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.07530808799856459
+    },
+    "stage3/fixtures/generics/08_readonly_view.a": {
+      "status": "refused",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/08_readonly_view.a:6:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06640289399729227
+    },
+    "stage3/fixtures/generics/09_recursive_optional.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3311,
+      "stdout_sha256": "3773db70016a4392565d2c542f227cc57aa0dae4166f1e8427cf3d0b19e05db9",
+      "seconds": 0.07276947500213282
+    },
+    "stage3/fixtures/generics/10_identifier_multimap.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 28417,
+      "stdout_sha256": "5883f4bba767f3c03fdc2565e5ad2822c8c18f9e8023f11b918877d3ecb372b9",
+      "seconds": 0.05972027600000729
+    },
+    "stage3/fixtures/generics/11_indexed_result.a": {
+      "status": "refused",
+      "reason": "generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/11_indexed_result.a:2:68: Adamic 0.1 refuses generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06135950300085824
+    },
+    "stage3/fixtures/generics/12_mixed_indexed_result.a": {
+      "status": "refused",
+      "reason": "generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/12_mixed_indexed_result.a:2:87: Adamic 0.1 refuses generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.0588863869998022
+    },
+    "stage3/fixtures/generics/13_constrained_local.a": {
+      "status": "refused",
+      "reason": "generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/generics/13_constrained_local.a:3:11: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.041200783001841046
+    },
+    "stage3/fixtures/generics/14_optional_literal_union.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2046,
+      "stdout_sha256": "c9004446958435c694518d306397bc6a1153e9153dff0aa8ba5028cbf6d1ba09",
+      "seconds": 0.07050400499792886
+    },
+    "stage3/fixtures/generics/15_array_callback.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 18436,
+      "stdout_sha256": "7d0c09ef5667aa83a4a9bbb4092fa2ada80cc62e5be85550f84467e40916a271",
+      "seconds": 0.08111789300164673
+    },
+    "stage3/fixtures/iteration-dispatch/body_throw.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 48658,
+      "stdout_sha256": "697418389a53c90ac9179a2555670ee348938767c2ce7172c9d40da2569ee8fd",
+      "seconds": 0.09091007899769465
+    },
+    "stage3/fixtures/iteration-dispatch/break.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 45370,
+      "stdout_sha256": "0606f98e9125f98bb658b571fe631c23c342076d8310e820428d78f058b028c9",
+      "seconds": 0.07078918000115664
+    },
+    "stage3/fixtures/iteration-dispatch/cached_next.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 22354,
+      "stdout_sha256": "c5acd24094896c7e55924fa7c84f8de2d192197caaa7fc891937055bc75a9c09",
+      "seconds": 0.08117502700042678
+    },
+    "stage3/fixtures/iteration-dispatch/class.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 46623,
+      "stdout_sha256": "681637d5c5c8acc661dd5bcf8ec13bbf4a478b30c9bea55378eb5ba5f814b2b8",
+      "seconds": 0.08152066099864896
+    },
+    "stage3/fixtures/iteration-dispatch/close_throw_body.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 48667,
+      "stdout_sha256": "39caa64a167ddcc61360e380bd66472a88531b87b671760ebf73230520662bb6",
+      "seconds": 0.07297328499771538
+    },
+    "stage3/fixtures/iteration-dispatch/close_throw_break.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 48200,
+      "stdout_sha256": "249adffc6a25fa6ff60ac9d950612dc616cc0813f2e4ac86d76edef18353a6c4",
+      "seconds": 0.07600446399737848
+    },
+    "stage3/fixtures/iteration-dispatch/completion.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 18554,
+      "stdout_sha256": "e1d2b05904d41c90fea44d610f8f87c96b9094657771c59d8f3267b6f4bd0e61",
+      "seconds": 0.054576122001890326
+    },
+    "stage3/fixtures/iteration-dispatch/done_throw.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 35157,
+      "stdout_sha256": "046ac7c81b38b2af4912fa2d6be53a3c2085be35a21170b4022c721b5d9e04ff",
+      "seconds": 0.06308407499818713
+    },
+    "stage3/fixtures/iteration-dispatch/labeled_continue.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 53385,
+      "stdout_sha256": "556b762aa46b5583512a4fc858de57f872a2334539e16973df3c3729869c15c6",
+      "seconds": 0.05006573100035894
+    },
+    "stage3/fixtures/iteration-dispatch/method_getters.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 26301,
+      "stdout_sha256": "0a94e6aca5e87817c1ae73a1f70bceb2e8e7bd4b2e54b83dcdc6b6219554e924",
+      "seconds": 0.06852910300221993
+    },
+    "stage3/fixtures/iteration-dispatch/next_throw.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 48193,
+      "stdout_sha256": "116ae99c8f3a94e1b0e7a2b0393617ab7de03dcf0e819f3dea3ed0345e4f7c0c",
+      "seconds": 0.04719211600240669
+    },
+    "stage3/fixtures/iteration-dispatch/non_callable_next.a": {
+      "status": "refused",
+      "reason": "a cast the runtime can't check",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_callable_next.a:5:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06997648700053105
+    },
+    "stage3/fixtures/iteration-dispatch/non_object_close.a": {
+      "status": "refused",
+      "reason": "a cast the runtime can't check",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_close.a:5:114: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06836140599989449
+    },
+    "stage3/fixtures/iteration-dispatch/non_object_iterator.a": {
+      "status": "refused",
+      "reason": "a cast the runtime can't check",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_iterator.a:5:53: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.0489227670004766
+    },
+    "stage3/fixtures/iteration-dispatch/non_object_step.a": {
+      "status": "refused",
+      "reason": "a cast the runtime can't check",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_step.a:5:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06611086900011287
+    },
+    "stage3/fixtures/iteration-dispatch/object.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 18570,
+      "stdout_sha256": "74a96dd3749e724481de7f9f02074e405492e62fcc68be56dd79e0b723dc8dcf",
+      "seconds": 0.05098723099945346
+    },
+    "stage3/fixtures/iteration-dispatch/return.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 54114,
+      "stdout_sha256": "fe5966a0c65c23f3690208bf09960fa4bb6752d979290699100ac79a7639842c",
+      "seconds": 0.08399557499797083
+    },
+    "stage3/fixtures/iteration-dispatch/value_throw.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 35063,
+      "stdout_sha256": "0cb44ebc48b290606605950d0fe883736f5786d75da18a6d17d7920ab9020587",
+      "seconds": 0.07557613799872342
+    },
+    "stage3/fixtures/iteration/accessor_binding.a": {
+      "status": "NotYet",
+      "reason": null,
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/accessor_binding.a:24:10: stage 0 can't lower a for...of destructuring an object yet\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.08702030499989633
+    },
+    "stage3/fixtures/iteration/array_view_stress.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 16460,
+      "stdout_sha256": "13803b1411237190158f0c1640013f798f5763deb9c09e24f44d7a8cce79a1b9",
+      "seconds": 0.08509915299873683
+    },
+    "stage3/fixtures/iteration/array_view_variance.a": {
+      "status": "refused",
+      "reason": "a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/array_view_variance.a:9:38: Adamic 0.1 refuses a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.06429461000152514
+    },
+    "stage3/fixtures/iteration/array_view_weak.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3968,
+      "stdout_sha256": "b214a13c1b8bcbd7c0bc5ff640fc6dbdcfce57617585d2065cb7080fa609804f",
+      "seconds": 0.07278674000190222
+    },
+    "stage3/fixtures/iteration/collections.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7808,
+      "stdout_sha256": "d02f7197ecd43e824433d888d05e2040941f3a29dadaaf6bb547dc252ae0d48c",
+      "seconds": 0.06237860500186798
+    },
+    "stage3/fixtures/iteration/delegated_generator.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 101060,
+      "stdout_sha256": "f2b577d763117f152ddc73add718df40cccf6b3f61859aedcdfd4d4ec43c04ef",
+      "seconds": 0.047098016999370884
+    },
+    "stage3/fixtures/iteration/generator.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 60287,
+      "stdout_sha256": "f6d7cd264ffdd002803297090c243fcb664a0123f80fd066af1c7cd83fc8c7a0",
+      "seconds": 0.059608722000120906
+    },
+    "stage3/fixtures/iteration/intrinsic_iterator_alias.a": {
+      "status": "refused",
+      "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_alias.a:5:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.04231577800237574
+    },
+    "stage3/fixtures/iteration/intrinsic_iterator_prototype.a": {
+      "status": "refused",
+      "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_prototype.a:3:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.05852948000028846
+    },
+    "stage3/fixtures/iteration/intrinsic_iterator_write.a": {
+      "status": "refused",
+      "reason": "writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator)",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_write.a:4:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.05096563299957779
+    },
+    "stage3/fixtures/iteration/iterable_view.a": {
+      "status": "NotYet",
+      "reason": null,
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/iterable_view.a:4:25: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.07334596900182078
+    },
+    "stage3/fixtures/iteration/object_binding.a": {
+      "status": "NotYet",
+      "reason": null,
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/object_binding.a:3:6: stage 0 can't lower a for...of destructuring an object yet\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.059642148000421
+    },
+    "stage3/fixtures/iteration/object_binding_stress.a": {
+      "status": "NotYet",
+      "reason": null,
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/iteration/object_binding_stress.a:42:10: stage 0 can't lower a for...of destructuring an object yet\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.042596185998263536
+    },
+    "stage3/fixtures/iteration/object_iteration.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1428,
+      "stdout_sha256": "477e09215f0d91aadeb9f57762bce4a0e0e6fdac8894af034513e821a5cb8915",
+      "seconds": 0.038869108000653796
+    },
+    "stage3/fixtures/iteration/strings.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3668,
+      "stdout_sha256": "7a5c6211a0f5d9526baec70141239aac8df3ae479bc7285faaf2be8b4a5bb721",
+      "seconds": 0.07019095199939329
+    },
+    "stage3/fixtures/iteration/test262_array_views.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 13461,
+      "stdout_sha256": "49cb1f52ebd0990a365dae77caef4f10e5e2b61ef6e5a9bf680d280d4e821263",
+      "seconds": 0.07281900500311167
+    },
+    "stage3/fixtures/iteration/user_forwarding.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 14204,
+      "stdout_sha256": "890a6af416384d23b258604bf6f368c8580551d78a0ff4df6e1ba20a54ad128e",
+      "seconds": 0.07941745100106345
+    },
+    "stage3/project-loader/fixture/app/main.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 726,
+      "stdout_sha256": "8564a0eaee25e3f4c1a9f310848c753e32ec8fbbe87e74972fffe2ca4724b65c",
+      "seconds": 0.03974804800236598
+    },
+    "stage3/project-loader/fixture/dependency/value.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 352,
+      "stdout_sha256": "2c30dd3b68e58fe6a016b44c32b8f4bb539b68ddf3d34f10d2ba76d531f92122",
+      "seconds": 0.05659106399980374
+    },
+    "stage3/project-references-source/fixture/chain/app/main-print.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 943,
+      "stdout_sha256": "bcc647ce43f6858bc7addd837ee876f0b963c2497ffb5665f9ff24292e4fbeef",
+      "seconds": 0.062320736000401666
+    },
+    "stage3/project-references-source/fixture/chain/app/main.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 937,
+      "stdout_sha256": "877ca854c881ee519bdafad0476eebd97efb9c23d4523b242cbda49b3005c06b",
+      "seconds": 0.06410247500025434
+    },
+    "stage3/project-references-source/fixture/chain/leaf/base.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 349,
+      "stdout_sha256": "9f6d3c76e84c107d3d4a99bb06bdf26dcddf60410d8bd40e85d874cb23b013b0",
+      "seconds": 0.05015770699901623
+    },
+    "stage3/project-references-source/fixture/chain/leaf/unused.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 353,
+      "stdout_sha256": "3cf26c78bc8bd072f1356c03c3375f9495ce08eb43e228b4e62e969ab94492ea",
+      "seconds": 0.0766585599994869
+    },
+    "stage3/project-references-source/fixture/chain/middle/value.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 563,
+      "stdout_sha256": "57b5a41fd19e07e6a646d9ffd6fd41a0988587dbad69e539de4ec4732a986383",
+      "seconds": 0.06847658699916792
+    },
+    "stage3/project-references-source/fixture/two/app/main.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 726,
+      "stdout_sha256": "8564a0eaee25e3f4c1a9f310848c753e32ec8fbbe87e74972fffe2ca4724b65c",
+      "seconds": 0.047414038999704644
+    },
+    "stage3/project-references-source/fixture/two/dependency/value.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 352,
+      "stdout_sha256": "2c30dd3b68e58fe6a016b44c32b8f4bb539b68ddf3d34f10d2ba76d531f92122",
+      "seconds": 0.06877313500081073
+    },
+    "stage3/project-references-source/fixture/types/app/main.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1129,
+      "stdout_sha256": "6eae033a75a435e11a9c4a1b0bf865683dae062994cf12ce5251e3b550be75a6",
+      "seconds": 0.06302377999963937
+    },
+    "stage3/project-references-source/fixture/types/dependency/value.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 552,
+      "stdout_sha256": "51bbc401f723d3bcc2d1dedcd8df9d2ee2ba31939233061b2e2e39e36f53ff10",
+      "seconds": 0.07903188999989652
+    },
+    "stage3/project-references-source/fixture/types/packages/dependency.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 215,
+      "stdout_sha256": "6eb1d0d7bb3e6d0671ba0cc40a895f9e66a396c1b27ea4019a71af1a56387b19",
+      "seconds": 0.05592827500004205
+    },
+    "stage3/project-references-source/fixture/types/packages/entry.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 210,
+      "stdout_sha256": "2c3ba163089d230604ac1f4dc22912c72c9d22d509b3369017b5be95bc25849a",
+      "seconds": 0.06136656899980153
+    }
+  },
+  "predicate": {
+    "internal/lower/testdata/generic_body_relations/refused.a": {
+      "outcome": "refused",
+      "expected": "refused generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/generic_body_relations/refused.a:2:78: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same d"
+    },
+    "internal/oracle/testdata/generators/basic.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/cancellation.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/captures.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/checker.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/close.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/completions.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/default_error.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/defaults.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/delegate.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/delegate_throw.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/first_reference.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/map_iterator.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/owned.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/reentrant.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generators/throw.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generic_body_indexed.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/generic_body_read.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/notyet/generator_cycle.a": {
+      "outcome": "refused",
+      "expected": "refused cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/generator_cycle.a:4:6: Adamic 0.1 refuses cycle-capable generator frame slot saved without weak; keep the back-reference weak, or remove the owning path back to this generator"
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_iterators_hidden_return.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/review/agree/fxspptb_iterators_override_this.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/01_identity.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/02_optional_return.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/03_callback_return.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/04_function_value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/04_function_value.a:3:60: stage 0 can't lower a generic function as a value yet"
+    },
+    "stage3/fixtures/generics/05_nested_class.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/06_polymorphic_recursion.a": {
+      "outcome": "refused",
+      "expected": "refused a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/06_polymorphic_recursion.a:5:12: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type"
+    },
+    "stage3/fixtures/generics/07_generic_cast.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/07_generic_cast.a:4:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-uncheck"
+    },
+    "stage3/fixtures/generics/08_readonly_view.a": {
+      "outcome": "refused",
+      "expected": "refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/08_readonly_view.a:6:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type"
+    },
+    "stage3/fixtures/generics/09_recursive_optional.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/10_identifier_multimap.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/11_indexed_result.a": {
+      "outcome": "refused",
+      "expected": "refused generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/11_indexed_result.a:2:68: Adamic 0.1 refuses generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type fro"
+    },
+    "stage3/fixtures/generics/12_mixed_indexed_result.a": {
+      "outcome": "refused",
+      "expected": "refused generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/12_mixed_indexed_result.a:2:87: Adamic 0.1 refuses generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); re"
+    },
+    "stage3/fixtures/generics/13_constrained_local.a": {
+      "outcome": "refused",
+      "expected": "refused generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/generics/13_constrained_local.a:3:11: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of "
+    },
+    "stage3/fixtures/generics/14_optional_literal_union.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/generics/15_array_callback.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/body_throw.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/break.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/cached_next.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/class.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/close_throw_body.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/close_throw_break.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/completion.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/done_throw.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/labeled_continue.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/method_getters.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/next_throw.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/non_callable_next.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_callable_next.a:5:52: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adami"
+    },
+    "stage3/fixtures/iteration-dispatch/non_object_close.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_close.a:5:114: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adami"
+    },
+    "stage3/fixtures/iteration-dispatch/non_object_iterator.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_iterator.a:5:53: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (ada"
+    },
+    "stage3/fixtures/iteration-dispatch/non_object_step.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration-dispatch/non_object_step.a:5:67: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/"
+    },
+    "stage3/fixtures/iteration-dispatch/object.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/return.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration-dispatch/value_throw.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/accessor_binding.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/accessor_binding.a:24:10: stage 0 can't lower a for...of destructuring an object yet"
+    },
+    "stage3/fixtures/iteration/array_view_stress.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/array_view_variance.a": {
+      "outcome": "refused",
+      "expected": "refused a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/array_view_variance.a:9:38: Adamic 0.1 refuses a value of type Slot<Large>[] seen as NodeArray<Slot<Small>>, which can write Small where Large is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or"
+    },
+    "stage3/fixtures/iteration/array_view_weak.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/collections.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/delegated_generator.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/generator.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/intrinsic_iterator_alias.a": {
+      "outcome": "refused",
+      "expected": "refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_alias.a:5:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"
+    },
+    "stage3/fixtures/iteration/intrinsic_iterator_prototype.a": {
+      "outcome": "refused",
+      "expected": "refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_prototype.a:3:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"
+    },
+    "stage3/fixtures/iteration/intrinsic_iterator_write.a": {
+      "outcome": "refused",
+      "expected": "refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_write.a:4:1: Adamic 0.1 refuses writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden"
+    },
+    "stage3/fixtures/iteration/iterable_view.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/iterable_view.a:4:25: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet"
+    },
+    "stage3/fixtures/iteration/object_binding.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/object_binding.a:3:6: stage 0 can't lower a for...of destructuring an object yet"
+    },
+    "stage3/fixtures/iteration/object_binding_stress.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/iteration/object_binding_stress.a:42:10: stage 0 can't lower a for...of destructuring an object yet"
+    },
+    "stage3/fixtures/iteration/object_iteration.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/strings.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/test262_array_views.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/fixtures/iteration/user_forwarding.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-loader/fixture/app/main.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-loader/fixture/dependency/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/app/main-print.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/app/main.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/leaf/base.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/leaf/unused.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/middle/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/two/app/main.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/two/dependency/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/types/app/main.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/types/dependency/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/types/packages/dependency.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/types/packages/entry.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null,
+  "seconds": {
+    "a-check": 8.2
+  },
+  "counts": {
+    "refused": 16,
+    "checked": 63,
+    "NotYet": 5
+  }
+}

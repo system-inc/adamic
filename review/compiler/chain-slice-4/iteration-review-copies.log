@@ -1,0 +1,17 @@
+=== RUN   TestClassWrongOutput107
+=== PAUSE TestClassWrongOutput107
+=== CONT  TestClassWrongOutput107
+=== RUN   TestClassWrongOutput107/iterators_override_this
+=== PAUSE TestClassWrongOutput107/iterators_override_this
+=== RUN   TestClassWrongOutput107/iterators_hidden_return
+=== PAUSE TestClassWrongOutput107/iterators_hidden_return
+=== CONT  TestClassWrongOutput107/iterators_override_this
+=== CONT  TestClassWrongOutput107/iterators_hidden_return
+--- PASS: TestClassWrongOutput107 (0.00s)
+    --- PASS: TestClassWrongOutput107/iterators_hidden_return (0.53s)
+    --- PASS: TestClassWrongOutput107/iterators_override_this (0.66s)
+PASS
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.667s

@@ -1,0 +1,13 @@
+function* sequence(): Generator<number | undefined, number, number | undefined> {
+  yield 1;
+  const sent = yield 2;
+  yield sent;
+  return 9;
+}
+const iterator = sequence();
+console.log(`${iterator.next(100).value}`);
+console.log(`${iterator.next(200).value}`);
+console.log(`${iterator.next(7).value}`);
+const last = iterator.next();
+console.log(`${last.done}:${last.value}`);
+console.log(`${iterator.next().done}`);

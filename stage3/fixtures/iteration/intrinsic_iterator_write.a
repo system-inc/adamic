@@ -1,0 +1,5 @@
+// a-check: refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden
+// Authored counterexample for the ruled proof behind the array fast path.
+const values: number[] = [1, 2];
+values[Symbol.iterator] = () => [9].values();
+for (const value of values) { console.log(String(value)); }
