@@ -137,8 +137,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 		return err
 	}
 	if node.Kind == ast.KindModuleDeclaration {
-		if !ast.IsIdentifier(node.Name()) || ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
-			return l.notYet(node, "an ambient namespace or external module; use named file imports")
+		if ambientDeclaration(node) || !ast.IsIdentifier(node.Name()) {
+			// The ambient refusal owns declarations without runtime definitions.
+			return nil
 		}
 		if node.Parent.Kind != ast.KindSourceFile && node.Parent.Kind != ast.KindModuleBlock && node.Parent.Kind != ast.KindModuleDeclaration {
 			return l.notYet(node, "a namespace outside module scope")

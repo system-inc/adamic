@@ -1,0 +1,3 @@
+// a-check: refused an ambient enum declaration
+declare enum Missing { Value }
+console.log(`${Missing.Value}`);
