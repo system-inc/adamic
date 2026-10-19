@@ -633,6 +633,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			}
 			return array
 		}
+		if array, constant := e.constantArray(expression); constant {
+			return array
+		}
 		elements := make([]string, 0, len(expression.Elements))
 		for _, element := range expression.Elements {
 			elements = append(elements, e.value(element))
