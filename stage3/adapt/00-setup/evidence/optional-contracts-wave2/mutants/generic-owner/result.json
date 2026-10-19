@@ -1,0 +1,96 @@
+{
+  "group": "generic-owner",
+  "status": "caught",
+  "witnesses": [
+    {
+      "witness": "check-internal.cjs",
+      "exit": 1
+    },
+    {
+      "witness": "check-nullable-return.cjs",
+      "exit": 0
+    }
+  ],
+  "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "mutant_helper_sha256": "e504acdc908b9b860da55d42e742e0ee5a0289851561eb992c18934123f357ff",
+  "runs": [
+    {
+      "run": "stock-no-prelude",
+      "count": 207,
+      "returned_ids": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-filtered-prelude",
+      "count": 208,
+      "returned_ids": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-no-prelude",
+      "count": 207,
+      "returned_ids": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-filtered-prelude",
+      "count": 208,
+      "returned_ids": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-no-unchecked-control",
+      "count": 108,
+      "returned_ids": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-original-prelude-mutant",
+      "count": 292,
+      "returned_ids": [
+        "D5fa96141b629",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dd08d8be5f37d"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    }
+  ],
+  "group_ids_returned": [
+    "D5fa96141b629",
+    "Dba090b507f07",
+    "Dba1da66fe167",
+    "Dd08d8be5f37d"
+  ]
+}

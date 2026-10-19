@@ -1,0 +1,126 @@
+{
+  "group": "nullable-argument",
+  "status": "caught",
+  "witnesses": [
+    {
+      "witness": "check-internal.cjs",
+      "exit": 0
+    },
+    {
+      "witness": "check-nullable-return.cjs",
+      "exit": 1
+    }
+  ],
+  "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "mutant_helper_sha256": "266b6dfc3801f491e6c6ce65d1df5849e4ca74a601560ec477fb6c1287746e0d",
+  "runs": [
+    {
+      "run": "stock-no-prelude",
+      "count": 212,
+      "returned_ids": [
+        "D5fa96141b629",
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dbb70df85cbc3",
+        "Dd08d8be5f37d",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-filtered-prelude",
+      "count": 213,
+      "returned_ids": [
+        "D5fa96141b629",
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dbb70df85cbc3",
+        "Dd08d8be5f37d",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-no-prelude",
+      "count": 212,
+      "returned_ids": [
+        "D5fa96141b629",
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dbb70df85cbc3",
+        "Dd08d8be5f37d",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-filtered-prelude",
+      "count": 213,
+      "returned_ids": [
+        "D5fa96141b629",
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dbb70df85cbc3",
+        "Dd08d8be5f37d",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-no-unchecked-control",
+      "count": 113,
+      "returned_ids": [
+        "D5fa96141b629",
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dbb70df85cbc3",
+        "Dd08d8be5f37d",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-original-prelude-mutant",
+      "count": 297,
+      "returned_ids": [
+        "D5fa96141b629",
+        "D9cecacb705c3",
+        "Db5cc84e69483",
+        "Dba090b507f07",
+        "Dba1da66fe167",
+        "Dbb70df85cbc3",
+        "Dd08d8be5f37d",
+        "Dd8176fe26c6e",
+        "Dedba949185e9"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    }
+  ],
+  "group_ids_returned": [
+    "D9cecacb705c3",
+    "Db5cc84e69483",
+    "Dd8176fe26c6e",
+    "Dedba949185e9"
+  ]
+}

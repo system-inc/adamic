@@ -1,0 +1,1062 @@
+{
+  "schema": "adamic-optional-contracts-wave2-v1",
+  "base": "8b7b0554d086fcc9444eb6d3a7e934cc351f1dc5",
+  "rows": [
+    {
+      "id": "Df257019e13f7",
+      "file": "src/compiler/builder.ts",
+      "line": 2273,
+      "column": 9,
+      "code": "TS2375",
+      "reasonGroup": "late-exposure",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 176,
+          "kind": "PropertySignature",
+          "path": [
+            "ReusableBuilderProgramState",
+            "outSignature"
+          ],
+          "text": "outSignature?: EmitSignature;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Inspect incompatible contextual object constructions whose own optional diagnostic is masked by another member error. No source site list or later adaptation is used.",
+      "public_blockers": []
+    },
+    {
+      "id": "D551a5cf2dd60",
+      "file": "src/compiler/builder.ts",
+      "line": 2310,
+      "column": 9,
+      "code": "TS2375",
+      "reasonGroup": "late-exposure",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 172,
+          "kind": "PropertySignature",
+          "path": [
+            "ReusableBuilderProgramState",
+            "emitSignatures"
+          ],
+          "text": "emitSignatures?: Map<Path, EmitSignature>;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Inspect incompatible contextual object constructions whose own optional diagnostic is masked by another member error. No source site list or later adaptation is used.",
+      "public_blockers": []
+    },
+    {
+      "id": "D9cecacb705c3",
+      "file": "src/compiler/checker.ts",
+      "line": 7837,
+      "column": 133,
+      "code": "TS2379",
+      "reasonGroup": "nullable-argument",
+      "owners": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8006,
+          "kind": "PropertySignature",
+          "path": [
+            "createTypeChecker",
+            "createNodeBuilder",
+            "SignatureToSignatureDeclarationOptions",
+            "questionToken"
+          ],
+          "text": "questionToken?: QuestionToken;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the single present object arm of an argument context; follow its data slots and retain compatibility checks.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dedba949185e9",
+      "file": "src/compiler/checker.ts",
+      "line": 8082,
+      "column": 62,
+      "code": "TS2379",
+      "reasonGroup": "nullable-argument",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 10066,
+          "kind": "PropertySignature",
+          "path": [
+            "SymbolTracker",
+            "moduleResolverHost"
+          ],
+          "text": "moduleResolverHost?: ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; };",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the single present object arm of an argument context; follow its data slots and retain compatibility checks.",
+      "public_blockers": []
+    },
+    {
+      "id": "Db5cc84e69483",
+      "file": "src/compiler/checker.ts",
+      "line": 10941,
+      "column": 33,
+      "code": "TS2379",
+      "reasonGroup": "nullable-argument",
+      "owners": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8004,
+          "kind": "PropertySignature",
+          "path": [
+            "createTypeChecker",
+            "createNodeBuilder",
+            "SignatureToSignatureDeclarationOptions",
+            "modifiers"
+          ],
+          "text": "modifiers?: readonly Modifier[];",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the single present object arm of an argument context; follow its data slots and retain compatibility checks.",
+      "public_blockers": []
+    },
+    {
+      "id": "D84985126581f",
+      "file": "src/compiler/checker.ts",
+      "line": 17890,
+      "column": 21,
+      "code": "TS2412",
+      "reasonGroup": "indexed-read",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 6102,
+          "kind": "PropertySignature",
+          "path": [
+            "SymbolLinks",
+            "tupleLabelDeclaration"
+          ],
+          "text": "tupleLabelDeclaration?: NamedTupleMember | ParameterDeclaration;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "declined",
+      "reason": "Declined: namedMemberDeclarations?.[i] is an unproven indexed read; no density or presence proof sanctions widening this owner.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dcc8edd0800fa",
+      "file": "src/compiler/checker.ts",
+      "line": 20618,
+      "column": 50,
+      "code": "TS2345",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 7101,
+          "kind": "PropertySignature",
+          "path": [
+            "TypeMapper",
+            "debugInfo"
+          ],
+          "text": "debugInfo?: () => string;",
+          "declarationForm": "property signature",
+          "containerKind": "type literal inside type alias",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dbf236c4b28d8",
+      "file": "src/compiler/checker.ts",
+      "line": 21434,
+      "column": 98,
+      "code": "TS2379",
+      "reasonGroup": "nullable-argument",
+      "owners": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 21338,
+          "kind": "PropertySignature",
+          "path": [
+            "createTypeChecker",
+            "checkTypeAssignableTo",
+            "errorOutputObject",
+            "errors"
+          ],
+          "text": "errors?: Diagnostic[];",
+          "declarationForm": "property signature",
+          "containerKind": "type literal in parameter",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the single present object arm of an argument context; follow its data slots and retain compatibility checks.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dd8176fe26c6e",
+      "file": "src/compiler/checker.ts",
+      "line": 43740,
+      "column": 86,
+      "code": "TS2379",
+      "reasonGroup": "nullable-argument",
+      "owners": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 43496,
+          "kind": "PropertySignature",
+          "path": [
+            "createTypeChecker",
+            "getPromisedTypeOfPromise",
+            "thisTypeForErrorOut",
+            "value"
+          ],
+          "text": "value?: Type;",
+          "declarationForm": "property signature",
+          "containerKind": "type literal in parameter",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the single present object arm of an argument context; follow its data slots and retain compatibility checks.",
+      "public_blockers": []
+    },
+    {
+      "id": "D06736c072d16",
+      "file": "src/compiler/checker.ts",
+      "line": 46159,
+      "column": 176,
+      "code": "TS2345",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 21338,
+          "kind": "PropertySignature",
+          "path": [
+            "createTypeChecker",
+            "checkTypeAssignableTo",
+            "errorOutputObject",
+            "errors"
+          ],
+          "text": "errors?: Diagnostic[];",
+          "declarationForm": "property signature",
+          "containerKind": "type literal in parameter",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dbb70df85cbc3",
+      "file": "src/compiler/checker.ts",
+      "line": 54329,
+      "column": 7,
+      "code": "TS2420",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 10066,
+          "kind": "PropertySignature",
+          "path": [
+            "SymbolTracker",
+            "moduleResolverHost"
+          ],
+          "text": "moduleResolverHost?: ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; };",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false,
+          "role": "implemented interface slot"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 54330,
+          "kind": "PropertyDeclaration",
+          "path": [
+            "SymbolTrackerImpl",
+            "moduleResolverHost"
+          ],
+          "text": "moduleResolverHost: ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; } | undefined = undefined;",
+          "declarationForm": "class field",
+          "containerKind": "class",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false,
+          "role": "implementing class field; already explicitly admits undefined"
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "Da5c0ee2a5f85",
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2668,
+      "column": 9,
+      "code": "TS2375",
+      "reasonGroup": "nested-expression",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 7432,
+          "kind": "PropertySignature",
+          "path": [
+            "CompilerOptions",
+            "build"
+          ],
+          "text": "build?: boolean;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": true
+        }
+      ],
+      "status": "declined",
+      "reason": "Declined in the measured construction: public CompilerOptions.project also rejects undefined. A partial internal build edit would replace the original diagnostic with a new chain. General nested-initializer lookup remains covered by a focused witness.",
+      "public_blockers": [
+        "CompilerOptions.project"
+      ]
+    },
+    {
+      "id": "Db18a6d195733",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 132,
+      "column": 13,
+      "code": "TS2375",
+      "reasonGroup": "nullable-assignment",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 8076,
+          "kind": "PropertySignature",
+          "path": [
+            "PackageId",
+            "peerDependencies"
+          ],
+          "text": "peerDependencies?: string;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": true
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the present assignment context; two diagnostics share nonRecursive. Original-path construction with public packageId remains deferred.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dcb3573ed8c8f",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 286,
+      "column": 9,
+      "code": "TS2322",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 8049,
+          "kind": "PropertySignature",
+          "path": [
+            "ResolvedModuleFull",
+            "originalPath"
+          ],
+          "text": "readonly originalPath?: string;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": true
+        }
+      ],
+      "status": "declined",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": [
+        "ResolvedModuleFull.packageId",
+        "ResolvedModule.isExternalLibraryImport"
+      ]
+    },
+    {
+      "id": "D5af6153ea92f",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 627,
+      "column": 9,
+      "code": "TS2375",
+      "reasonGroup": "nullable-assignment",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 8121,
+          "kind": "PropertySignature",
+          "path": [
+            "ResolvedTypeReferenceDirective",
+            "originalPath"
+          ],
+          "text": "originalPath?: string;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": true
+        }
+      ],
+      "status": "declined",
+      "reason": "Resolve the present assignment context; two diagnostics share nonRecursive. Original-path construction with public packageId remains deferred.",
+      "public_blockers": [
+        "ResolvedTypeReferenceDirective.packageId"
+      ]
+    },
+    {
+      "id": "D4c7cd2fa4786",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 635,
+      "column": 5,
+      "code": "TS2375",
+      "reasonGroup": "nullable-assignment",
+      "owners": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 8131,
+          "kind": "PropertySignature",
+          "path": [
+            "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+            "resolutionDiagnostics"
+          ],
+          "text": "resolutionDiagnostics?: Diagnostic[];",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": true
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the present assignment context; two diagnostics share nonRecursive. Original-path construction with public packageId remains deferred.",
+      "public_blockers": []
+    },
+    {
+      "id": "D899ab2dda4eb",
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2772,
+      "column": 21,
+      "code": "TS2322",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 168,
+          "kind": "PropertySignature",
+          "path": [
+            "Resolved",
+            "originalPath"
+          ],
+          "text": "readonly originalPath?: string | true;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dba090b507f07",
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 990,
+      "column": 43,
+      "code": "TS2379",
+      "reasonGroup": "generic-owner",
+      "owners": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "line": 850,
+          "kind": "PropertySignature",
+          "path": [
+            "createResolutionCache",
+            "ResolveNamesWithLocalCacheInput",
+            "reusedNames"
+          ],
+          "text": "reusedNames?: readonly Entry[];",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Array and callable annotations are objects for every type argument. Check against the instantiated slot only after proving the declaration is an object. Bare T, unknown, indexed and conditional contracts remain excluded.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dd08d8be5f37d",
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1019,
+      "column": 43,
+      "code": "TS2379",
+      "reasonGroup": "generic-owner",
+      "owners": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "line": 850,
+          "kind": "PropertySignature",
+          "path": [
+            "createResolutionCache",
+            "ResolveNamesWithLocalCacheInput",
+            "reusedNames"
+          ],
+          "text": "reusedNames?: readonly Entry[];",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Array and callable annotations are objects for every type argument. Check against the instantiated slot only after proving the declaration is an object. Bare T, unknown, indexed and conditional contracts remain excluded.",
+      "public_blockers": []
+    },
+    {
+      "id": "D398ee22e023b",
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": "TS2375",
+      "reasonGroup": "nullable-assignment",
+      "owners": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "line": 235,
+          "kind": "PropertySignature",
+          "path": [
+            "DirectoryWatchesOfFailedLookup",
+            "nonRecursive"
+          ],
+          "text": "nonRecursive?: boolean;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the present assignment context; two diagnostics share nonRecursive. Original-path construction with public packageId remains deferred.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dfef6d22c3ab0",
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": "TS2379",
+      "reasonGroup": "nullable-assignment",
+      "owners": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "line": 235,
+          "kind": "PropertySignature",
+          "path": [
+            "DirectoryWatchesOfFailedLookup",
+            "nonRecursive"
+          ],
+          "text": "nonRecursive?: boolean;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Resolve the present assignment context; two diagnostics share nonRecursive. Original-path construction with public packageId remains deferred.",
+      "public_blockers": []
+    },
+    {
+      "id": "Da43ecabe1c93",
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1386,
+      "column": 9,
+      "code": "TS2412",
+      "reasonGroup": "generic-receiver",
+      "owners": [
+        {
+          "file": "src/compiler/resolutionCache.ts",
+          "line": 171,
+          "kind": "PropertySignature",
+          "path": [
+            "ResolutionWithFailedLookupLocations",
+            "files"
+          ],
+          "text": "files?: Set<Path>;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "declined",
+      "reason": "Declined: the receiver is an arbitrary specialization which may narrow files. Widening a base optional declaration does not prove that write valid for every T.",
+      "public_blockers": []
+    },
+    {
+      "id": "D1c9885b9e665",
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2745,
+      "column": 16,
+      "code": "TS2375",
+      "reasonGroup": "nested-generic-result",
+      "owners": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 301,
+          "kind": "PropertySignature",
+          "path": [
+            "PrivateEnvironmentData",
+            "className"
+          ],
+          "text": "className?: Identifier;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Follow the concrete required data slot of the generic call result on the right of ??=; widen only the internal optional data owners, not generic parameters.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dc00d790b49ab",
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2864,
+      "column": 52,
+      "code": "TS2345",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 272,
+          "kind": "PropertySignature",
+          "path": [
+            "PrivateIdentifierAccessorInfo",
+            "setterName"
+          ],
+          "text": "setterName?: Identifier;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "D85a162474867",
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2896,
+      "column": 52,
+      "code": "TS2345",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 268,
+          "kind": "PropertySignature",
+          "path": [
+            "PrivateIdentifierAccessorInfo",
+            "getterName"
+          ],
+          "text": "getterName?: Identifier;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "Daf767ecf9b24",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 351,
+      "column": 9,
+      "code": "TS2322",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "line": 266,
+          "kind": "PropertySignature",
+          "path": [
+            "ClassLexicalEnvironmentStackEntry",
+            "savedPendingExpressions"
+          ],
+          "text": "savedPendingExpressions?: Expression[];",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "D255c75fe6d0a",
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 398,
+      "column": 13,
+      "code": "TS2322",
+      "reasonGroup": "unsupported-code",
+      "owners": [
+        {
+          "file": "src/compiler/transformers/esDecorators.ts",
+          "line": 285,
+          "kind": "PropertySignature",
+          "path": [
+            "OtherLexicalEnvironmentStackEntry",
+            "savedPendingExpressions"
+          ],
+          "text": "savedPendingExpressions?: Expression[];",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport.",
+      "public_blockers": []
+    },
+    {
+      "id": "D5fa96141b629",
+      "file": "src/compiler/watchPublic.ts",
+      "line": 371,
+      "column": 65,
+      "code": "TS2379",
+      "reasonGroup": "generic-owner",
+      "owners": [
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 906,
+          "kind": "PropertySignature",
+          "path": [
+            "CreateWatchCompilerHostInput",
+            "createProgram"
+          ],
+          "text": "createProgram?: CreateProgram<T>;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Array and callable annotations are objects for every type argument. Check against the instantiated slot only after proving the declaration is an object. Bare T, unknown, indexed and conditional contracts remain excluded.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dba1da66fe167",
+      "file": "src/compiler/watchPublic.ts",
+      "line": 383,
+      "column": 52,
+      "code": "TS2379",
+      "reasonGroup": "generic-owner",
+      "owners": [
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 906,
+          "kind": "PropertySignature",
+          "path": [
+            "CreateWatchCompilerHostInput",
+            "createProgram"
+          ],
+          "text": "createProgram?: CreateProgram<T>;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "repaired",
+      "reason": "Array and callable annotations are objects for every type argument. Check against the instantiated slot only after proving the declaration is an object. Bare T, unknown, indexed and conditional contracts remain excluded.",
+      "public_blockers": []
+    },
+    {
+      "id": "Dba945f1b0d91",
+      "file": "src/compiler/watchPublic.ts",
+      "line": 568,
+      "column": 17,
+      "code": "TS2412",
+      "reasonGroup": "required-view",
+      "owners": [
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "line": 424,
+          "kind": "PropertySignature",
+          "path": [
+            "createWatchProgram",
+            "FilePresentOnHost",
+            "fileWatcher"
+          ],
+          "text": "fileWatcher: FileWatcher;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        },
+        {
+          "file": "src/compiler/watchPublic.ts",
+          "line": 429,
+          "kind": "PropertySignature",
+          "path": [
+            "createWatchProgram",
+            "FilePresenceUnknownOnHost",
+            "fileWatcher"
+          ],
+          "text": "fileWatcher?: FileWatcher;",
+          "declarationForm": "property signature",
+          "containerKind": "interface",
+          "publicApi": false,
+          "publicApiLines": [],
+          "containerAppearsInPublicApi": false
+        }
+      ],
+      "status": "declined",
+      "reason": "Declined: the slot has both a required FilePresentOnHost owner and an optional FilePresenceUnknownOnHost owner. A required declaration is not eligible.",
+      "public_blockers": []
+    }
+  ],
+  "groups": [
+    {
+      "reason": "nullable-argument",
+      "count": 5,
+      "removed_ids": [
+        "D9cecacb705c3",
+        "Dedba949185e9",
+        "Db5cc84e69483",
+        "Dbf236c4b28d8",
+        "Dd8176fe26c6e"
+      ],
+      "declined_ids": [],
+      "why": "Resolve the single present object arm of an argument context; follow its data slots and retain compatibility checks."
+    },
+    {
+      "reason": "nullable-assignment",
+      "count": 5,
+      "removed_ids": [
+        "Db18a6d195733",
+        "D4c7cd2fa4786",
+        "D398ee22e023b",
+        "Dfef6d22c3ab0"
+      ],
+      "declined_ids": [
+        "D5af6153ea92f"
+      ],
+      "why": "Resolve the present assignment context; two diagnostics share nonRecursive. Original-path construction with public packageId remains deferred."
+    },
+    {
+      "reason": "generic-owner",
+      "count": 4,
+      "removed_ids": [
+        "Dba090b507f07",
+        "Dd08d8be5f37d",
+        "D5fa96141b629",
+        "Dba1da66fe167"
+      ],
+      "declined_ids": [],
+      "why": "Array and callable annotations are objects for every type argument. Check against the instantiated slot only after proving the declaration is an object. Bare T, unknown, indexed and conditional contracts remain excluded."
+    },
+    {
+      "reason": "unsupported-code",
+      "count": 9,
+      "removed_ids": [
+        "Dcc8edd0800fa",
+        "D06736c072d16",
+        "Dbb70df85cbc3",
+        "D899ab2dda4eb",
+        "Dc00d790b49ab",
+        "D85a162474867",
+        "Daf767ecf9b24",
+        "D255c75fe6d0a"
+      ],
+      "declined_ids": [
+        "Dcb3573ed8c8f"
+      ],
+      "why": "TS2322 and TS2345 structural data relations may identify the same owned optional slot. The TS2420 and one TS2345 are discharged by shared owners. ResolvedModuleFull originalPath remains deferred behind public packageId and isExternalLibraryImport."
+    },
+    {
+      "reason": "late-exposure",
+      "count": 2,
+      "removed_ids": [
+        "Df257019e13f7",
+        "D551a5cf2dd60"
+      ],
+      "declined_ids": [],
+      "why": "Inspect incompatible contextual object constructions whose own optional diagnostic is masked by another member error. No source site list or later adaptation is used."
+    },
+    {
+      "reason": "indexed-read",
+      "count": 1,
+      "removed_ids": [],
+      "declined_ids": [
+        "D84985126581f"
+      ],
+      "why": "Declined: namedMemberDeclarations?.[i] is an unproven indexed read; no density or presence proof sanctions widening this owner."
+    },
+    {
+      "reason": "generic-receiver",
+      "count": 1,
+      "removed_ids": [],
+      "declined_ids": [
+        "Da43ecabe1c93"
+      ],
+      "why": "Declined: the receiver is an arbitrary specialization which may narrow files. Widening a base optional declaration does not prove that write valid for every T."
+    },
+    {
+      "reason": "required-view",
+      "count": 1,
+      "removed_ids": [],
+      "declined_ids": [
+        "Dba945f1b0d91"
+      ],
+      "why": "Declined: the slot has both a required FilePresentOnHost owner and an optional FilePresenceUnknownOnHost owner. A required declaration is not eligible."
+    },
+    {
+      "reason": "nested-expression",
+      "count": 1,
+      "removed_ids": [],
+      "declined_ids": [
+        "Da5c0ee2a5f85"
+      ],
+      "why": "Declined in the measured construction: public CompilerOptions.project also rejects undefined. A partial internal build edit would replace the original diagnostic with a new chain. General nested-initializer lookup remains covered by a focused witness."
+    },
+    {
+      "reason": "nested-generic-result",
+      "count": 1,
+      "removed_ids": [
+        "D1c9885b9e665"
+      ],
+      "declined_ids": [],
+      "why": "Follow the concrete required data slot of the generic call result on the right of ??=; widen only the internal optional data owners, not generic parameters."
+    }
+  ],
+  "removed_ids": [
+    "D06736c072d16",
+    "D12935f679493",
+    "D1c9885b9e665",
+    "D255c75fe6d0a",
+    "D31a062fa64e8",
+    "D398ee22e023b",
+    "D4c7cd2fa4786",
+    "D551a5cf2dd60",
+    "D5977dd79a645",
+    "D5fa96141b629",
+    "D664bf39bc400",
+    "D85a162474867",
+    "D899ab2dda4eb",
+    "D9cce204205f3",
+    "D9cecacb705c3",
+    "Daf767ecf9b24",
+    "Db18a6d195733",
+    "Db5cc84e69483",
+    "Dba090b507f07",
+    "Dba1da66fe167",
+    "Dbb70df85cbc3",
+    "Dbf236c4b28d8",
+    "Dc00d790b49ab",
+    "Dcc8edd0800fa",
+    "Dd08d8be5f37d",
+    "Dd8176fe26c6e",
+    "Ddb064de445c4",
+    "Dedba949185e9",
+    "Df257019e13f7",
+    "Dfef6d22c3ab0"
+  ],
+  "cascade_ids": [
+    "D12935f679493",
+    "D5977dd79a645",
+    "D664bf39bc400",
+    "D31a062fa64e8",
+    "Ddb064de445c4",
+    "D9cce204205f3"
+  ],
+  "summary": {
+    "internal_rows": 30,
+    "repaired": 24,
+    "declined": 6,
+    "primary_before": 233,
+    "primary_after": 203,
+    "added_diagnostics": 0
+  },
+  "baseline": "Wave-1 complete apply source hashes unchanged; six retained observations plus two freshly run option controls. Every loaded root and library remains explicit in raw observations."
+}
