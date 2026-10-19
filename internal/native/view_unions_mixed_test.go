@@ -16,7 +16,7 @@ func TestViewMixedUnionUnknownAndUnavailable(t *testing.T) {
 static bool forged(void *context,const adamic_view_union_member *member,const adamic_view_union_value *value){(void)context;(void)member;(void)value;return true;}
 int main(int argc,char **argv){
  if(argc!=2)return 2;
- int scenario=atoi(argv[1]);int object=0;
+ int scenario=atoi(argv[1]);adamic_object object={0};
  adamic_view_union_value value={adamic_view_union_unknown,{.number=42}};
  adamic_view_union_member member={adamic_view_union_number,false,{.number=0},0};
  adamic_view_union_match match=NULL;const char *declared="number | string";
