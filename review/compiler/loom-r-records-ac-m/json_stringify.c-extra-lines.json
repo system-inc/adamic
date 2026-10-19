@@ -1,0 +1,32 @@
+{
+  "path": "internal/native/runtime/json_stringify.c",
+  "beyond_source": [
+    "-    return schema->kind == adamic_json_string || schema->kind == adamic_json_array || schema->kind == adamic_json_object || schema->kind == adamic_json_toJSON || schema->kind == adamic_json_union || schema->kind == adamic_json_maybe_boolean || schema->kind == adamic_json_map || schema->kind == adamic_json_function;",
+    "+    return schema->kind == adamic_json_string || schema->kind == adamic_json_array || schema->kind == adamic_json_object || schema->kind == adamic_json_toJSON || schema->kind == adamic_json_union || schema->kind == adamic_json_maybe_boolean || schema->kind == adamic_json_map || schema->kind == adamic_json_function || schema->kind == adamic_json_record;",
+    "-    bool container = s.kind == adamic_json_array || s.kind == adamic_json_tuple || s.kind == adamic_json_object || s.kind == adamic_json_toJSON;",
+    "+    bool container = s.kind == adamic_json_array || s.kind == adamic_json_tuple || s.kind == adamic_json_object || s.kind == adamic_json_toJSON || s.kind == adamic_json_record;",
+    "+\t\tconst adamic_record *record = s.value.reference;",
+    "+\t\t\tbool owned;",
+    "+\t\t\tadamic_json_result result = prepare(w, *slot, schema->element, key, &owned);",
+    "+\t\t\tif (adamic_thrown != NULL) {",
+    "+\t\t\t\tif (owned && reference_result(result.schema)) { adamic_release(result.value.reference); }",
+    "+\t\t\t\tadamic_release(ordered); return false;",
+    "+\t\t\t}",
+    "+\t\t\t}",
+    "+\t\t\tjson_scalar item = scalar(result.value, result.schema, w->runtime);",
+    "+\t\t\tif (item.kind != adamic_json_undefined && item.kind != adamic_json_function) {",
+    "+\t\t\t\tif (written++ != 0) { ascii(w, \",\"); }",
+    "+\t\t\t\tindent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? \": \" : \":\");",
+    "+\t\t\t\t(void)write_prepared(w, result.value, result.schema, depth + 1);",
+    "+\t\t\tif (owned && reference_result(result.schema)) { adamic_release(result.value.reference); }",
+    "+\t\t\tif (adamic_thrown != NULL) { adamic_release(ordered); return false; }"
+  ],
+  "source_lines_adapted": [
+    "+\t\tconst adamic_record *record = value.reference;",
+    "+\t\t\tjson_scalar item = scalar(*slot, schema->element->kind);",
+    "+\t\t\tif (item.kind == adamic_json_undefined || item.kind == adamic_json_function) { continue; }",
+    "+\t\t\tif (written++ != 0) { ascii(w, \",\"); }",
+    "+\t\t\tindent(w, depth + 1); quote(w, key); ascii(w, w->pretty ? \": \" : \":\");",
+    "+\t\t\t(void)write_value(w, *slot, schema->element, depth + 1);"
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "mutant": "removed-header",
+    "command": [
+      "python3",
+      "/workspace/adamic/review/compiler/loom-r-records-ac-m/scan.py",
+      "removed-header",
+      "/workspace/adamic/review/compiler/loom-r-records-ac-m/mutant-path.json"
+    ],
+    "exit": 1,
+    "seconds": 0.215,
+    "catcher": "unchanged pinned Gate.aCheck",
+    "observed_status": "refused",
+    "expected": "checked"
+  },
+  {
+    "mutant": "wrong-reason",
+    "command": [
+      "python3",
+      "/workspace/adamic/review/compiler/loom-r-records-ac-m/scan.py",
+      "wrong-reason",
+      "/workspace/adamic/review/compiler/loom-r-records-ac-m/mutant-path.json"
+    ],
+    "exit": 1,
+    "seconds": 0.216,
+    "catcher": "unchanged pinned Gate.aCheck",
+    "observed_status": "refused",
+    "expected": "refused deliberately wrong reason that is absent from this diagnostic"
+  }
+]

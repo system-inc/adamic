@@ -1,0 +1,1 @@
+internal/oracle/testdata/void_widening_refused/container_tuple.a:4:48: Adamic 0.1 refuses a void-returning function at the initializer site through [0] seen as () => unknown; declare the function's real return type (adamic/no-void-widening)

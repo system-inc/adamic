@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site seen as (() => void) | (() => number)
+// A void-typed function seen through a union with a number-returning one.
+const make: () => void = () => 42;
+const either: (() => void) | (() => number) = make;
+const result = either();
+console.log(typeof result);

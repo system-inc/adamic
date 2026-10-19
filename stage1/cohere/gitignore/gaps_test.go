@@ -68,7 +68,8 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 			if err != nil {
 				t.Fatalf("a closed gap is refused again: %v", err)
 			}
-			nativeRun, sanitized := natively(t, lowered)
+			sanitized := filepath.Join(gapSanitized(t, gap.path), "port")
+			nativeRun := sanitizedRun(t, sanitized)
 			if nativeRun.exitCode != 0 || string(nativeRun.stdout) != gap.stdout {
 				t.Errorf("natively: exit %d, stdout %q, stderr %q; Node prints %q", nativeRun.exitCode, nativeRun.stdout, nativeRun.stderr, gap.stdout)
 			}

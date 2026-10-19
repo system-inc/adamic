@@ -15,6 +15,9 @@ import (
 // objectLiteral lowers { name: value, ... }, and the one spread 0.1 allows: { ...source, fields },
 // where every field replaces one the source's type already has.
 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
+	if element := l.recordLiteralElement(node); element != nil {
+		return l.recordLiteral(node, element)
+	}
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
@@ -595,7 +598,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 	property.View = sourceExpression(node)
 	property.ViewWhere = l.program.Where(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+		property.ViewReceiverTypeID = l.viewReceiverTypeID(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
@@ -688,6 +691,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.processValue(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.nodeFSDirectoryCall(node); known {
+		return value, true, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}
@@ -696,6 +705,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.detachedOwnCall(node); handled {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
@@ -1694,6 +1706,9 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeProcessValue(property.Name()); known {
+		return value, err
+	}
 	symbol := l.checker.GetShorthandAssignmentValueSymbol(property)
 	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
 		symbol = l.checker.GetAliasedSymbol(symbol)
@@ -1931,7 +1946,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position >= 0 && position < len(elements) {
 			property.ViewTypeID = int(elements[position].Id())
 			property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-			property.ViewReceiverTypeID = int(receiver.Id())
+			property.ViewReceiverTypeID = l.viewReceiverTypeID(receiver)
 			property.ViewType = l.checker.TypeToString(elements[position])
 			property.ViewAllowed = l.viewLiterals(elements[position])
 			property.View = sourceExpression(node)

@@ -1,0 +1,13 @@
+{
+  "cleared": "9878c2cd",
+  "files": [
+    "internal/native/runtime/json_stringify.c",
+    "internal/native/runtime/json_stringify.h"
+  ],
+  "record_writer_identical": true,
+  "record_writer_sha256": "af39bfb73f02f5465921cadc09362559f9ca5016b9d0aa046e8e507079c0b109",
+  "header_identical": true,
+  "full_c_identical": false,
+  "other_c_difference": "Main lacks chain object-presence/initialized checks and write-order serialization, retained exactly as main. Those chain hunks were not imported.",
+  "replacer_dedup": "Existing keys() loop keeps the first equal key; unchanged from main and clearance."
+}

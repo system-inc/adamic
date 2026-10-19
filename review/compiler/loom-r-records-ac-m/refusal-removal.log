@@ -1,0 +1,132 @@
+=== RUN   TestNamedRecordTypeGuardMutant
+=== PAUSE TestNamedRecordTypeGuardMutant
+=== RUN   TestRecordRefusalPrototypeRead
+=== PAUSE TestRecordRefusalPrototypeRead
+=== RUN   TestRecordRefusalPrototypeIn
+=== PAUSE TestRecordRefusalPrototypeIn
+=== RUN   TestRecordRefusalPrototypeSet
+=== PAUSE TestRecordRefusalPrototypeSet
+=== RUN   TestRecordRefusalCompareLeft
+=== PAUSE TestRecordRefusalCompareLeft
+=== RUN   TestRecordRefusalCompareRight
+=== PAUSE TestRecordRefusalCompareRight
+=== RUN   TestRecordRefusalEnvironment
+=== PAUSE TestRecordRefusalEnvironment
+=== RUN   TestRecordRefusalNamedInvalidated
+=== PAUSE TestRecordRefusalNamedInvalidated
+=== RUN   TestRecordRefusalNarrowedNumber
+=== PAUSE TestRecordRefusalNarrowedNumber
+=== RUN   TestRecordPrototypeMutant
+=== PAUSE TestRecordPrototypeMutant
+=== RUN   TestRecordNarrowingMutant
+=== PAUSE TestRecordNarrowingMutant
+=== CONT  TestRecordNarrowingMutant
+=== CONT  TestNamedRecordTypeGuardMutant
+=== CONT  TestRecordPrototypeMutant
+=== CONT  TestRecordRefusalNarrowedNumber
+    records_refusal_test.go:107: gate cache node miss
+=== NAME  TestNamedRecordTypeGuardMutant
+    records_named_test.go:23: gate cache node miss
+=== NAME  TestRecordPrototypeMutant
+    records_test.go:103: gate cache node miss
+=== NAME  TestRecordNarrowingMutant
+    records_test.go:192: gate cache node hit
+    records_test.go:192: gate cache node miss
+=== NAME  TestRecordPrototypeMutant
+    records_test.go:103: gate cache node miss
+=== NAME  TestNamedRecordTypeGuardMutant
+    records_named_test.go:23: gate cache node miss
+=== NAME  TestRecordNarrowingMutant
+    records_test.go:192: javascript refusal removal admits divergent checked stop
+    records_test.go:192: native refusal removal admits divergent checked stop
+=== NAME  TestRecordRefusalNarrowedNumber
+    records_refusal_test.go:107: gate cache node hit
+    records_refusal_test.go:107: native refusal removal admits divergent checked stop
+    records_refusal_test.go:107: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalNarrowedNumber (2.90s)
+=== CONT  TestRecordRefusalNamedInvalidated
+=== NAME  TestRecordPrototypeMutant
+    records_test.go:103: native refusal removal admits divergent checked stop
+    records_test.go:103: javascript refusal removal admits divergent checked stop
+=== NAME  TestNamedRecordTypeGuardMutant
+    records_named_test.go:23: native refusal removal admits divergent checked stop
+    records_named_test.go:23: javascript refusal removal admits divergent checked stop
+=== NAME  TestRecordNarrowingMutant
+    records_test.go:212: gate cache node miss
+=== NAME  TestRecordRefusalNamedInvalidated
+    records_refusal_test.go:103: gate cache node hit
+=== NAME  TestRecordPrototypeMutant
+    records_test.go:123: gate cache node miss
+=== NAME  TestNamedRecordTypeGuardMutant
+    records_named_test.go:34: gate cache node hit
+    records_named_test.go:58: gate cache node miss
+=== NAME  TestRecordNarrowingMutant
+    records_test.go:212: gate cache node hit
+    records_test.go:216: unchecked deleted scalar read caught by checked exit 70
+--- PASS: TestRecordNarrowingMutant (3.00s)
+=== CONT  TestRecordRefusalEnvironment
+=== NAME  TestRecordPrototypeMutant
+    records_test.go:123: gate cache node hit
+    records_test.go:127: prototype read-through caught by checked exit 70; mutant runs as Node
+--- PASS: TestRecordPrototypeMutant (3.01s)
+=== CONT  TestRecordRefusalPrototypeIn
+=== NAME  TestNamedRecordTypeGuardMutant
+    records_named_test.go:59: gate cache node hit
+    records_named_test.go:62: removed member-kind guard caught by exit 70 pin; mutant runs on exactly as Node
+--- PASS: TestNamedRecordTypeGuardMutant (3.02s)
+=== CONT  TestRecordRefusalPrototypeRead
+=== NAME  TestRecordRefusalPrototypeIn
+    records_refusal_test.go:84: gate cache node miss
+=== NAME  TestRecordRefusalEnvironment
+    records_refusal_test.go:99: gate cache node miss
+=== NAME  TestRecordRefusalPrototypeRead
+    records_refusal_test.go:82: gate cache node hit
+=== NAME  TestRecordRefusalNamedInvalidated
+    records_refusal_test.go:103: gate cache node hit
+    records_refusal_test.go:103: native refusal removal admits divergent checked stop
+    records_refusal_test.go:103: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalNamedInvalidated (0.24s)
+=== CONT  TestRecordRefusalCompareRight
+    records_refusal_test.go:95: gate cache node miss
+=== NAME  TestRecordRefusalPrototypeRead
+    records_refusal_test.go:82: gate cache node hit
+    records_refusal_test.go:82: native refusal removal admits divergent checked stop
+    records_refusal_test.go:82: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalPrototypeRead (0.22s)
+=== CONT  TestRecordRefusalCompareLeft
+    records_refusal_test.go:91: gate cache node miss
+=== NAME  TestRecordRefusalPrototypeIn
+    records_refusal_test.go:84: gate cache node miss
+=== NAME  TestRecordRefusalEnvironment
+    records_refusal_test.go:99: gate cache node miss
+=== NAME  TestRecordRefusalPrototypeIn
+    records_refusal_test.go:84: native refusal removal admits divergent checked stop
+    records_refusal_test.go:84: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalPrototypeIn (0.31s)
+=== CONT  TestRecordRefusalPrototypeSet
+=== NAME  TestRecordRefusalEnvironment
+    records_refusal_test.go:99: native refusal removal admits divergent checked stop
+    records_refusal_test.go:99: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalEnvironment (0.34s)
+=== NAME  TestRecordRefusalPrototypeSet
+    records_refusal_test.go:87: gate cache node miss
+=== NAME  TestRecordRefusalCompareRight
+    records_refusal_test.go:95: gate cache node miss
+    records_refusal_test.go:95: native refusal removal admits divergent checked stop
+    records_refusal_test.go:95: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalCompareRight (0.28s)
+=== NAME  TestRecordRefusalCompareLeft
+    records_refusal_test.go:91: gate cache node miss
+    records_refusal_test.go:91: native refusal removal admits divergent checked stop
+    records_refusal_test.go:91: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalCompareLeft (0.28s)
+=== NAME  TestRecordRefusalPrototypeSet
+    records_refusal_test.go:87: gate cache node miss
+    records_refusal_test.go:87: native refusal removal admits divergent checked stop
+    records_refusal_test.go:87: javascript refusal removal admits divergent checked stop
+--- PASS: TestRecordRefusalPrototypeSet (0.28s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=10 misses=19
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.612s

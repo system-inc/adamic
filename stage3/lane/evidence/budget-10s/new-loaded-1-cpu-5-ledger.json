@@ -1,0 +1,460 @@
+{
+  "concurrency": 4,
+  "load_processes": 5,
+  "mode": "adapted-tree product",
+  "adapted_tree": "/workspace/x2jdg33/products/local/04d979148f440864934c43358444f2a06603bb7149ddfd1153bf9360df7c4c56/tree",
+  "shard_limit_seconds": 50.0,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "cold": "fresh processes; NODE_DISABLE_COMPILE_CACHE=1; no result reuse; OS page cache retained",
+  "wall_seconds": 109.49406347399963,
+  "units": [
+    {
+      "name": "stage3-lane-file-020",
+      "seconds": 36.14115780800057,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-020"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-021",
+      "seconds": 20.827155302999927,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 122,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-021"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-022",
+      "seconds": 20.821769258999666,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-022"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-023",
+      "seconds": 14.474574040000334,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-023"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-024",
+      "seconds": 20.793326269000318,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 92,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-024"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-025",
+      "seconds": 9.969727966000391,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 48,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-025"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-026",
+      "seconds": 15.810201803000382,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-026"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-027",
+      "seconds": 12.344030909999674,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 18,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-027"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-028",
+      "seconds": 13.798199762000877,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-028"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-029",
+      "seconds": 26.305422508999982,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 77,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-029"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-030",
+      "seconds": 13.289755985000738,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-030"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-031",
+      "seconds": 16.803363581000667,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 24,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-031"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-032",
+      "seconds": 18.651387437000267,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-032"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-033",
+      "seconds": 17.515941953000038,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 50,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-033"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-034",
+      "seconds": 18.2547336789994,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 189,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-034"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-035",
+      "seconds": 20.938658672999736,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 269,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-035"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-036",
+      "seconds": 19.907138239999767,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 216,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-036"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-037",
+      "seconds": 23.414249204000043,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 188,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-037"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-038",
+      "seconds": 14.698334534000423,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 150,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-038"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-039",
+      "seconds": 18.048137105000023,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 177,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-039"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-040",
+      "seconds": 22.12844497399965,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 358,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/new-loaded-1-cpu-5",
+        "--unit",
+        "stage3-lane-file-040"
+      ]
+    }
+  ]
+}

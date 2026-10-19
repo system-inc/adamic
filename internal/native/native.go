@@ -167,7 +167,7 @@ func linkFlags(flags []string, options Options) []string {
 
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
-	if err := ValidateOptions(options); err != nil {
+	if err := validateBuild(source, options); err != nil {
 		return err
 	}
 	if options.Target == "" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
@@ -179,7 +179,7 @@ func Build(source string, output string, options Options) error {
 // BuildFlags is Build with the compiler flags the caller gives in place of Flags(options), in one translation unit
 // (markdownblocks' mutant canary, at -O0): the binary names no build directory, as Build's doesn't.
 func BuildFlags(source string, output string, options Options, flags []string) error {
-	if err := ValidateOptions(options); err != nil {
+	if err := validateBuild(source, options); err != nil {
 		return err
 	}
 	return buildOne(source, output, options, flags)
@@ -232,6 +232,10 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		}
 		program = "main.o"
 	}
+	compilerLink, err := regexpCompilerLinkFlags(source, options, directory)
+	if err != nil {
+		return err
+	}
 	arguments := append(linkFlags(compileFlags, options), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, program)
@@ -247,6 +251,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		// Runtime constructors precede module initialization at the same default priority.
 		arguments = append(arguments, program)
 	}
+	arguments = append(arguments, compilerLink...)
 	if program == "main.o" {
 		arguments = append(arguments, objectPrefixFlags()...)
 	}

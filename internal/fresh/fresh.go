@@ -1183,6 +1183,25 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(argument)
 		}
 		return value{}
+	case ir.RecordCoalesce:
+		holder := a.value(expression.Record)
+		a.value(expression.Key)
+		result := a.value(expression.Value)
+		a.write(WriteMapEntry, expression.Site, "", holder, result, elementKey)
+		result.merge(a.load(holder, elementKey))
+		return result
+	case ir.RecordCall:
+		return a.recordCall(expression)
+	case ir.RecordLiteral:
+		var entries value
+		if expression.Spread != nil {
+			entries.merge(a.load(a.value(expression.Spread), elementKey))
+		}
+		for _, entry := range expression.Entries {
+			a.value(entry.Key)
+			entries.merge(a.value(entry.Value))
+		}
+		return a.fresh(elementKey, entries)
 	case ir.ObjectCall:
 		return a.objectCall(expression)
 	case ir.NumberCall:
@@ -1329,6 +1348,10 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.ProcessCall:
+		return a.call(a.operands(expression), expression.Type())
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.NodeFSFile:
 		return a.nodeFSFile(expression)
 	case ir.FileStatus:

@@ -1,0 +1,185 @@
+{
+  "concurrency": 4,
+  "load_processes": 5,
+  "mode": "adapted-tree product",
+  "adapted_tree": "/workspace/x2jdg33/products/local/04d979148f440864934c43358444f2a06603bb7149ddfd1153bf9360df7c4c56/tree",
+  "shard_limit_seconds": 50.0,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "cold": "fresh processes; NODE_DISABLE_COMPILE_CACHE=1; no result reuse; OS page cache retained",
+  "wall_seconds": 78.58738985000036,
+  "units": [
+    {
+      "name": "stage3-lane-file-100",
+      "seconds": 27.307170490000317,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 313,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-100"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-101",
+      "seconds": 18.768186635000347,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 287,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-101"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-102",
+      "seconds": 19.04833658000007,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 327,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-102"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-103",
+      "seconds": 28.554343094000615,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 338,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-103"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-104",
+      "seconds": 14.083141221000005,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 311,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-104"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-105",
+      "seconds": 26.81305047600017,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 288,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-105"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-106",
+      "seconds": 23.60325894000016,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 289,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-file-106"
+      ]
+    },
+    {
+      "name": "stage3-lane-budget-mutant",
+      "seconds": 50.004116848000194,
+      "exit": 1,
+      "status": "fail",
+      "counts": {},
+      "errors": [
+        "stage3-lane-budget-mutant timed out after 49.5 seconds, past its 50 second limit"
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+        "--unit",
+        "stage3-lane-budget-mutant"
+      ]
+    }
+  ]
+}

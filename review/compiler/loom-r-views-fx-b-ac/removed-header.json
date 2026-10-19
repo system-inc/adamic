@@ -1,0 +1,28 @@
+{
+  "paths": [
+    "stage3/fixtures/entries/06_symbol_key.a"
+  ],
+  "rows": {
+    "stage3/fixtures/entries/06_symbol_key.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: Adamic 0.1 refuses Object enumeration with symbol keys; use own string-keyed data properties",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "stage3/fixtures/entries/06_symbol_key.a"
+      ],
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: Adamic 0.1 refuses Object enumeration with symbol keys; use own string-keyed data properties\n",
+      "stdout_bytes": 0,
+      "seconds": 0.0
+    }
+  },
+  "failure": "a-check failed for 1 file:\nstage3/fixtures/entries/06_symbol_key.a: refused, expected checked (adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: Adamic 0.1 refuses Object enumeration with symbol keys; use own string-keyed data properties)",
+  "exits": {
+    "a-check": 1
+  },
+  "steps": {
+    "a-check": 0.0
+  }
+}

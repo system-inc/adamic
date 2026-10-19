@@ -1,0 +1,214 @@
+{
+  "status": "pass",
+  "shard_count_before": 151,
+  "shard_count_after": 377,
+  "cold": {
+    "n": 377,
+    "minimum": 2.0538403850000577,
+    "median": 5.8039327320002485,
+    "p95": 7.928027431999908,
+    "maximum": 11.78537923299973
+  },
+  "union": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "whole_counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "units": 377,
+    "tests": 106367,
+    "artifact": "ca99f25d13bfb84fe9c89a4ba0eaf088b5a529c393a80eba07bdc326cbe48557",
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "whole_verdict": "pass"
+  },
+  "dropped_case": {
+    "unit": "stage3-lane-file-034",
+    "task": {
+      "runner": "fourslash",
+      "file": "tests/cases/fourslash/codeFixAddMissingParam9.ts",
+      "size": 306
+    },
+    "verdict": {
+      "status": "fail",
+      "errors": [
+        "executed test union differs from the unsharded lane",
+        "counts differ: units {'pass': 106365, 'fail': 1, 'skip': 0}, whole {'pass': 106366, 'fail': 1, 'skip': 0}, plan {'pass': 106366, 'fail': 1, 'skip': 0}"
+      ],
+      "counts": {
+        "pass": 106365,
+        "fail": 1,
+        "skip": 0
+      },
+      "whole_counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "units": 377,
+      "tests": 106366,
+      "artifact": "ca99f25d13bfb84fe9c89a4ba0eaf088b5a529c393a80eba07bdc326cbe48557",
+      "failed_tests": [
+        "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+      ],
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ],
+      "whole_verdict": "pass"
+    }
+  },
+  "hardware": {
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "cpu_max": "400000 100000",
+    "active_shards": 4
+  },
+  "after_cohort": [
+    "stage3-lane-file-020",
+    "stage3-lane-file-021",
+    "stage3-lane-file-022",
+    "stage3-lane-file-023",
+    "stage3-lane-file-024",
+    "stage3-lane-file-025",
+    "stage3-lane-file-026",
+    "stage3-lane-file-027",
+    "stage3-lane-file-028",
+    "stage3-lane-file-029",
+    "stage3-lane-file-030",
+    "stage3-lane-file-031",
+    "stage3-lane-file-032",
+    "stage3-lane-file-033",
+    "stage3-lane-file-034",
+    "stage3-lane-file-035",
+    "stage3-lane-file-036",
+    "stage3-lane-file-037",
+    "stage3-lane-file-038",
+    "stage3-lane-file-039",
+    "stage3-lane-file-040"
+  ],
+  "before_cohort": [
+    "stage3-lane-file-007",
+    "stage3-lane-file-018",
+    "stage3-lane-file-109",
+    "stage3-lane-file-010",
+    "stage3-lane-file-036",
+    "stage3-lane-file-049",
+    "stage3-lane-file-057",
+    "stage3-lane-file-063"
+  ],
+  "calibration": [
+    {
+      "load": 12,
+      "median_slowdown_vs_unloaded_cohort": 4.437628487249579,
+      "median_slowdown_vs_alone": 7.466966528932847,
+      "distribution": {
+        "n": 21,
+        "minimum": 20.344625130000168,
+        "median": 36.242928720000236,
+        "p95": 49.981714378000106,
+        "maximum": 50.21700590199998
+      },
+      "good": false
+    },
+    {
+      "load": 5,
+      "median_slowdown_vs_unloaded_cohort": 2.210559630244948,
+      "median_slowdown_vs_alone": 3.5560643217834245,
+      "distribution": {
+        "n": 21,
+        "minimum": 9.969727966000391,
+        "median": 18.2547336789994,
+        "p95": 26.305422508999982,
+        "maximum": 36.14115780800057
+      },
+      "good": true
+    }
+  ],
+  "load_processes": 5,
+  "slowdown_reference": "Same 4-concurrent cohort without artificial load; serial ratios are also reported.",
+  "after_unloaded": {
+    "n": 21,
+    "minimum": 5.810221310000088,
+    "median": 8.803071896000802,
+    "p95": 12.732154606000222,
+    "maximum": 13.202389282000695
+  },
+  "after_loaded": {
+    "n": 21,
+    "minimum": 9.969727966000391,
+    "median": 18.2547336789994,
+    "p95": 26.305422508999982,
+    "maximum": 36.14115780800057
+  },
+  "before_unloaded": {
+    "n": 8,
+    "minimum": 16.000227665999773,
+    "median": 20.548659293000128,
+    "p95": 30.897192436000296,
+    "maximum": 30.897192436000296
+  },
+  "before_loaded": {
+    "n": 8,
+    "minimum": 36.81777489999968,
+    "median": 49.94401351150009,
+    "p95": 50.382968793000146,
+    "maximum": 50.382968793000146
+  },
+  "mutant_alone": {
+    "name": "stage3-lane-budget-mutant",
+    "seconds": 24.367258479000157,
+    "exit": 0,
+    "status": "pass",
+    "counts": {
+      "pass": 298,
+      "fail": 0,
+      "skip": 0
+    },
+    "errors": [],
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/adamic/stage3/lane/measure_budget.py",
+      "/workspace/x2jdg33/proofs-4cpu/budget-mutant-alone-0/plan.json",
+      "/workspace/x2jdg33/proofs-4cpu/budget-mutant-alone-0",
+      "--unit",
+      "stage3-lane-budget-mutant"
+    ]
+  },
+  "mutant_loaded": {
+    "name": "stage3-lane-budget-mutant",
+    "seconds": 50.004116848000194,
+    "exit": 1,
+    "status": "fail",
+    "counts": {},
+    "errors": [
+      "stage3-lane-budget-mutant timed out after 49.5 seconds, past its 50 second limit"
+    ],
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/adamic/stage3/lane/measure_budget.py",
+      "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded/plan.json",
+      "/workspace/x2jdg33/proofs-4cpu/budget-mutant-loaded",
+      "--unit",
+      "stage3-lane-budget-mutant"
+    ]
+  },
+  "limitation": "Available allocation has a four-CPU quota; this is not the requested eight-CPU proof."
+}

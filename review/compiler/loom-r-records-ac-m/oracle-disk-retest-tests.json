@@ -1,0 +1,22 @@
+[
+  {
+    "test": "TestCheckedViewInterfaces/interfaces-wrong-inherited",
+    "action": "pass",
+    "seconds": 3.06
+  },
+  {
+    "test": "TestCheckedViewInterfaces",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "test": "TestCheckedViewV2ReadsAfterWrites/fixed-tuple-good",
+    "action": "pass",
+    "seconds": 3.53
+  },
+  {
+    "test": "TestCheckedViewV2ReadsAfterWrites",
+    "action": "pass",
+    "seconds": 0
+  }
+]

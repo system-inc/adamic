@@ -1,0 +1,224 @@
+[
+  {
+    "path": "stage3/interface-downcasts/lane1/interfaces-good.a",
+    "before": "| stage3/interface-downcasts/lane1/interfaces-good.a | 5 | 5 | 6 | 12 | 4 | 0 |",
+    "after": "| stage3/interface-downcasts/lane1/interfaces-good.a | 5 | 5 | 5 | 11 | 4 | 0 |",
+    "c_before_sha256": "05d893535a87e90f87d572be6eecb023d78610c5a752083415ba46e9da2a271c",
+    "c_after_sha256": "f55842ed9c94bc32f2f2ae1ef013558f1430a1f2a1f642c04c3ef0eb4af44787",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/stage3/interface-downcasts/lane1/interfaces-good.a"
+      ],
+      "exit": 0,
+      "stdout": "true:okok\ntrue\n",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/review/compiler/loom-views-fx-b/interfaces-good-generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true:okok\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/loom-views-count-check"
+      ],
+      "exit": 0,
+      "stdout": "true:okok\ntrue\n",
+      "stderr": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/lane1/objects-good.a",
+    "before": "| stage3/interface-downcasts/lane1/objects-good.a | 5 | 5 | 6 | 12 | 4 | 0 |",
+    "after": "| stage3/interface-downcasts/lane1/objects-good.a | 5 | 5 | 4 | 10 | 4 | 0 |",
+    "c_before_sha256": "c25e569e26359a3e88e66c801ab0bed8bce6520aa4d59fee8db6f10a3ffbde9e",
+    "c_after_sha256": "840fd64c95e22ca67f4a051381263775b612333c747203f5f143087406899835",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/stage3/interface-downcasts/lane1/objects-good.a"
+      ],
+      "exit": 0,
+      "stdout": "true:okok\ntrue\n",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/review/compiler/loom-views-fx-b/objects-good-generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true:okok\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/loom-views-count-check"
+      ],
+      "exit": 0,
+      "stdout": "true:okok\ntrue\n",
+      "stderr": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a",
+    "before": "| stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a | 47 | 47 | 96 | 144 | 36 | 0 |",
+    "after": "| stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a | 47 | 47 | 84 | 132 | 36 | 0 |",
+    "c_before_sha256": "9df4f8635228fc1d5253e06342b5f709445aced925cc27cec18590737e80bb04",
+    "c_after_sha256": "d02e3ff4fd0adb535418fb5a37581036627a4ba9be653a72fd46dd552f7d7da8",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/review/compiler/loom-views-fx-b/binding-name-source-good-generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/loom-views-count-check"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a",
+    "before": "| stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a | 19 | 19 | 40 | 60 | 15 | 0 |",
+    "after": "| stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a | 19 | 19 | 35 | 55 | 15 | 0 |",
+    "c_before_sha256": "17a5f8ac8fffd21751e03e77247b17e0e2c2a722ee48256d79150f3615025927",
+    "c_after_sha256": "de9f51912b88cedc4903e82ebfe6b0545de2bebfc3d809faffb971fead9b181c",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/review/compiler/loom-views-fx-b/option-element-source-good-generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/loom-views-count-check"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\ntrue\ntrue\ntrue\n",
+      "stderr": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/structural-source-good.a",
+    "before": "| stage3/interface-downcasts/untagged/fixtures/structural-source-good.a | 7 | 7 | 16 | 24 | 6 | 0 |",
+    "after": "| stage3/interface-downcasts/untagged/fixtures/structural-source-good.a | 7 | 7 | 14 | 22 | 6 | 0 |",
+    "c_before_sha256": "ca195fd390e43cf236fcbccafedfcac0898179a48449f87fb1544d635c3a5c8b",
+    "c_after_sha256": "2686cc55b4ed662cbed39bab21f0ed8263318ba3e7fcf1d260e409a02f1ddcf5",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/stage3/interface-downcasts/untagged/fixtures/structural-source-good.a"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\n",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/review/compiler/loom-views-fx-b/structural-source-good-generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\n",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/loom-views-count-check"
+      ],
+      "exit": 0,
+      "stdout": "true\ntrue\n",
+      "stderr": ""
+    }
+  },
+  {
+    "path": "stage3/interface-downcasts/visitor.a",
+    "before": "| stage3/interface-downcasts/visitor.a | 21 | 21 | 32 | 40 | 13 | 0 |",
+    "after": "| stage3/interface-downcasts/visitor.a | 21 | 21 | 28 | 36 | 13 | 0 |",
+    "c_before_sha256": "e61db6b5fe1287792597406a21ed29bb1f9f4757b8a3ac65e39c46210d0f5179",
+    "c_after_sha256": "e20ca5664c8115322fdaade91c3123e21c5cc21bafb171d64a052f03d89ad718",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/stage3/interface-downcasts/visitor.a"
+      ],
+      "exit": 0,
+      "stdout": "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic-views-b/review/compiler/loom-views-fx-b/visitor-generated.mjs"
+      ],
+      "exit": 0,
+      "stdout": "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/loom-views-count-check"
+      ],
+      "exit": 0,
+      "stdout": "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n",
+      "stderr": ""
+    }
+  }
+]

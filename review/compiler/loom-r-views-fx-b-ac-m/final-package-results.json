@@ -1,0 +1,32 @@
+[
+  {
+    "command": "final-five-packages",
+    "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+    "Action": "pass",
+    "Elapsed": 1.131
+  },
+  {
+    "command": "final-five-packages",
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Action": "pass",
+    "Elapsed": 48.043
+  },
+  {
+    "command": "final-five-packages",
+    "Package": "github.com/system-inc/adamic/internal/javascript",
+    "Action": "pass",
+    "Elapsed": 0.152
+  },
+  {
+    "command": "final-five-packages",
+    "Package": "github.com/system-inc/adamic/internal/oracle",
+    "Action": "pass",
+    "Elapsed": 504.769
+  },
+  {
+    "command": "native-compatible-final",
+    "Package": "github.com/system-inc/adamic/internal/native",
+    "Action": "pass",
+    "Elapsed": 212.412
+  }
+]

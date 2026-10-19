@@ -97,8 +97,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -117,8 +117,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -151,8 +151,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/08_getDirectories.a:187:25: stage 0 can't lower node:fs.readdirSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/08_getDirectories.a:161:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
     }
   },
   {
@@ -172,7 +172,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet"
+      "what": "stage3/fixtures/host/09_realpath.a:18:134: stage 0 can't lower observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented yet"
     }
   },
   {
@@ -190,7 +190,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/10_getModifiedTime.a:37:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:36:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"
     }
   },
   {
@@ -221,8 +221,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/12_deleteFile.a:23:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -278,8 +278,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:22:52: stage 0 can't lower node:path.dirname yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -294,8 +294,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:13:12: stage 0 can't lower node:process.Process.env yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -310,8 +310,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -327,8 +327,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/18_exit_0.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -344,8 +344,8 @@
       "exit": 1
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/19_exit_1.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -361,8 +361,8 @@
       "exit": 2
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/20_exit_2.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
@@ -396,8 +396,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/22_createHash_fallback.a:23:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
     }
   },
   {
@@ -412,8 +412,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/23_newLine.a:12:31: stage 0 can't lower node:os.EOL yet"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {

@@ -177,7 +177,7 @@ inventory and original IPC observation behavior.
 
 The follow-up [manifest contract](SHARD_CONTRACT.md) supersedes the whole-file
 blocker for this lane. `shards.json` uses the exact developer-tools version-1
-schema. Its 151 commands share a verified artifact by inputs hash, give each
+schema. Its 377 commands share a verified artifact by inputs hash, give each
 watcher case an exact upstream `--tests` grep, and keep the same expected counts
 and Public APIs sanction. The original run.sh remains available; its optional
 `--artifact` mode supplies the same-tree unsharded reference measurement.
@@ -188,3 +188,7 @@ tools owns `cloud/fast-gate/run.py stage3()` on `devtools/fast-gate`; it is not
 modified here. Artifact preparation precedes test units. The separate
 merge_shards.py script checks all actual results against the same-artifact
 unsharded lane rather than acting as a parallel unit with undeclared dependencies.
+
+[SHARDS_10S_REPORT.md](SHARDS_10S_REPORT.md) records the current smaller plan,
+serial product-path measurements, executed union, CPU-load experiments and mutants.
+The older shared-artifact measurement path is reported separately.

@@ -1,0 +1,308 @@
+[
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsDestructuredObjectUnionLiteral",
+    "seconds": 0.87
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedOptionalNumberField",
+    "seconds": 1.12
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsDestructuredCallableUnion",
+    "seconds": 0.7
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsDestructuredScalarUnion",
+    "seconds": 1
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedOptionalStringField",
+    "seconds": 1.11
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedUnionField",
+    "seconds": 0.61
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedMutableField",
+    "seconds": 0.67
+  },
+  {
+    "command": "gate-lower-final",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsViewedProducerMutation",
+    "seconds": 0.94
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsViewedProducerMutation",
+    "seconds": 0.23
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsDestructuredScalarUnion",
+    "seconds": 0.26
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsDestructuredObjectUnionLiteral",
+    "seconds": 0.27
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedOptionalNumberField",
+    "seconds": 0.31
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsDestructuredCallableUnion",
+    "seconds": 0.19
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedUnionField",
+    "seconds": 0.17
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedOptionalStringField",
+    "seconds": 0.2
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestLowerViewsUnrelatedMutableField",
+    "seconds": 0.17
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsUnrelatedOptionalStringField",
+    "seconds": 3.22
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredInvalidCallableStops",
+    "seconds": 3.31
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredInvalidObjectUnionRefuses",
+    "seconds": 0.16
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanNative",
+    "seconds": 0.22
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanJavaScript",
+    "seconds": 0.07
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredScalarUnion",
+    "seconds": 0.45
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredCallableUnion",
+    "seconds": 0.56
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanSanitized",
+    "seconds": 0.21
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsUnrelatedUnionField",
+    "seconds": 0.54
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsUnrelatedMutableField",
+    "seconds": 0.47
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsViewedProducerMutation",
+    "seconds": 0.6
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberSanitized",
+    "seconds": 0.32
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberJavaScript",
+    "seconds": 0.08
+  },
+  {
+    "command": "A-combination-tests",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberNative",
+    "seconds": 0.13
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredInvalidObjectUnionRefuses",
+    "seconds": 0.54
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredInvalidCallableStops",
+    "seconds": 2.02
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredScalarUnion",
+    "seconds": 1.46
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredCallableUnion",
+    "seconds": 1.88
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsUnrelatedOptionalStringField",
+    "seconds": 1.21
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsUnrelatedMutableField",
+    "seconds": 1.32
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsUnrelatedUnionField",
+    "seconds": 1.77
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsViewedProducerMutation",
+    "seconds": 1.33
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberSanitized",
+    "seconds": 1.41
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanJavaScript",
+    "seconds": 0.4
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanNative",
+    "seconds": 0.4
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanSanitized",
+    "seconds": 0.84
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberJavaScript",
+    "seconds": 0.31
+  },
+  {
+    "command": "oracle-full",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberNative",
+    "seconds": 0.24
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOracleViewsDestructuredInvalidObjectUnionRefuses",
+    "seconds": 0.65
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberJavaScript",
+    "seconds": 0.34
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanJavaScript",
+    "seconds": 0.31
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanNative",
+    "seconds": 0.3
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberNative",
+    "seconds": 0.33
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitBooleanSanitized",
+    "seconds": 0.65
+  },
+  {
+    "command": "oracle-final",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestScalarUnionViewMisfitNumberSanitized",
+    "seconds": 0.49
+  }
+]

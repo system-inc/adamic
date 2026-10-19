@@ -49,6 +49,9 @@ def main():
                 stream.write(json.dumps(row) + '\n')
             print(json.dumps(row), flush=True)
     report = dict(concurrency=args.concurrency, nproc=os.cpu_count(),
+                  mode='adapted-tree product' if os.environ.get('STAGE3_ADAPTED_TREE') else 'shared artifact',
+                  adapted_tree=os.environ.get('STAGE3_ADAPTED_TREE'),
+                  affinity=sorted(os.sched_getaffinity(0)),
                   cpu_max=Path('/sys/fs/cgroup/cpu.max').read_text().strip(),
                   cold='fresh processes; NODE_DISABLE_COMPILE_CACHE=1; no result reuse; OS page cache retained',
                   wall_seconds=time.monotonic() - started, maximum=max(row['seconds'] for row in rows),

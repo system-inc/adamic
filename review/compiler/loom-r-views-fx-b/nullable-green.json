@@ -1,0 +1,41 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/oracle",
+    "-run",
+    "^TestCheckedViewOptionalReadBoundary$",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 30.619,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary/JavaScript",
+      "Action": "pass",
+      "Elapsed": 0.14
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary/native",
+      "Action": "pass",
+      "Elapsed": 0.19
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary/ordinary_control",
+      "Action": "pass",
+      "Elapsed": 2.09
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary",
+      "Action": "pass",
+      "Elapsed": 10.8
+    }
+  ]
+}

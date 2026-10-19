@@ -1,0 +1,27 @@
+[
+  {
+    "name": "01_paths-missing_constructor",
+    "before": "main.ts(1,23): error TS2307: Cannot find module 'constructor' or its corresponding type declarations.\n",
+    "after": "main.ts(2,23): error TS2307: Cannot find module 'constructor' or its corresponding type declarations.\n"
+  },
+  {
+    "name": "02_paths-missing_toString",
+    "before": "main.ts(1,23): error TS2307: Cannot find module 'toString' or its corresponding type declarations.\n",
+    "after": "main.ts(2,23): error TS2307: Cannot find module 'toString' or its corresponding type declarations.\n"
+  },
+  {
+    "name": "03_paths-missing_hasOwnProperty",
+    "before": "main.ts(1,23): error TS2307: Cannot find module 'hasOwnProperty' or its corresponding type declarations.\n",
+    "after": "main.ts(2,23): error TS2307: Cannot find module 'hasOwnProperty' or its corresponding type declarations.\n"
+  },
+  {
+    "name": "04_paths-missing___proto__",
+    "before": "main.ts(1,23): error TS2307: Cannot find module '__proto__' or its corresponding type declarations.\n",
+    "after": "main.ts(2,23): error TS2307: Cannot find module '__proto__' or its corresponding type declarations.\n"
+  },
+  {
+    "name": "08_paths-own___proto__",
+    "before": "main.ts(1,23): error TS2307: Cannot find module '__proto__' or its corresponding type declarations.\n",
+    "after": "main.ts(2,23): error TS2307: Cannot find module '__proto__' or its corresponding type declarations.\n"
+  }
+]

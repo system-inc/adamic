@@ -1,0 +1,8 @@
+// a-check: refused a void value at a return site whose function returns void | number
+// A number | void function returning a void call's value.
+const make: () => void = () => 42;
+function step(): number | void {
+	return make();
+}
+const next = step();
+console.log(next === undefined ? 'none' : `got ${typeof next}`);

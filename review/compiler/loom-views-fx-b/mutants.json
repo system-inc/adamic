@@ -1,0 +1,104 @@
+[
+  {
+    "mutant": "receiver",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestFX6P37$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "JavaScript backend stdout"
+  },
+  {
+    "mutant": "destructure",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestFX6P53$",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "JavaScript backend stdout"
+  },
+  {
+    "mutant": "scalar-check",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestScalarUnionViewMisfit",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "native"
+  },
+  {
+    "mutant": "nullable",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCheckedViewOptionalReadBoundary|TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "optional checked read escaped"
+  },
+  {
+    "mutant": "generic",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "exit codes differ"
+  },
+  {
+    "mutant": "union",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+      "-count=1",
+      "-v",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "gap changed"
+  }
+]

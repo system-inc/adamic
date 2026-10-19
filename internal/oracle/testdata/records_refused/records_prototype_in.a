@@ -1,0 +1,4 @@
+// a-check: refused record membership for constructor: the record's prototype chain isn't modeled; use Object.hasOwn(record, key) for own membership, or a Map
+const r: Record<string, number> = {};
+function has(key: string): void {console.log(String(key in r));}
+has('constructor');

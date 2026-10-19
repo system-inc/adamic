@@ -1,0 +1,146 @@
+[
+  {
+    "file": "test_artifact.py",
+    "exit": 0,
+    "tests": 7,
+    "seconds": 0.2165826009995726,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_artifact.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_case_observer.py",
+    "exit": 0,
+    "tests": 1,
+    "seconds": 0.21586154400029045,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_case_observer.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_check.py",
+    "exit": 0,
+    "tests": 37,
+    "seconds": 15.528058248999514,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_check.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_measure_plan.py",
+    "exit": 0,
+    "tests": 5,
+    "seconds": 1.841645506000532,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_measure_plan.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_profile.py",
+    "exit": 0,
+    "tests": 2,
+    "seconds": 0.2684384799995314,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_profile.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_shards.py",
+    "exit": 0,
+    "tests": 14,
+    "seconds": 7.268913464999969,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_shards.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_table.py",
+    "exit": 0,
+    "tests": 3,
+    "seconds": 0.2682755640007599,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_table.py",
+      "-v"
+    ]
+  },
+  {
+    "file": "test_worker_environment.py",
+    "exit": 0,
+    "tests": 1,
+    "seconds": 0.2756459840002208,
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "stage3/lane",
+      "-p",
+      "test_worker_environment.py",
+      "-v"
+    ]
+  }
+]

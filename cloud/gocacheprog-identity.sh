@@ -55,7 +55,7 @@ done
 
 repository=$(cd "$(dirname "$0")/.." && pwd)
 # Nothing from the caller's cache setup may reach a build: each leg names its own.
-unset GOCACHEPROG ADAMIC_GOCACHE_DIR ADAMIC_GOCACHE_STORE ADAMIC_GOCACHE_WRITE ADAMIC_GOCACHE_TOKEN ADAMIC_GOCACHE_TRUST ADAMIC_GOCACHE_OFF
+unset GOCACHEPROG ADAMIC_GOCACHE_DIR ADAMIC_GOCACHE_STORE ADAMIC_GOCACHE_WRITE ADAMIC_GOCACHE_TOKEN ADAMIC_GOCACHE_TRUST ADAMIC_GOCACHE
 [ "$(uname)" = Darwin ] && export ZERO_AR_DATE=1
 started=$(date +%s)
 

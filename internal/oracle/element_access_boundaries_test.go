@@ -12,8 +12,8 @@ var elementAccessBoundaries = []string{"nodearray", "paths", "template", "sorted
 
 func init() {
 	for _, name := range elementAccessBoundaries {
-		// The shared fixture list reads a non-lowering fixture as a NotYet stop. string_dictionary
-		// is refused (an index signature), which TestElementAccessCompilerAreaBoundaries pins.
+		// The shared fixture list reads a non-lowering fixture as a NotYet stop.
+		// string_dictionary now lowers as a record and is held to Node below.
 		if name == "string_dictionary" {
 			continue
 		}
@@ -25,8 +25,8 @@ func init() {
 	}
 }
 
-// These are compiler-area boundary witnesses, not runnable backend certificates.
-// Each valid source is held to Node before pinning its explicit lowering stop.
+// Each compiler-area boundary witness is held to Node before pinning its explicit
+// representation stop. String dictionaries now have a record representation.
 func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 	t.Parallel()
 	for _, name := range elementAccessBoundaries {
@@ -40,21 +40,33 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 			if truth.exitCode != 0 || string(truth.stdout) != "witness\n" || len(truth.stderr) != 0 {
 				t.Fatalf("Node: %#v", truth)
 			}
-			_, err = lowered(t, path)
+			program, err := lowered(t, path)
 			if name == "string_dictionary" {
-				var refusal *lower.Refused
-				if !errors.As(err, &refusal) || refusal.What != "an index signature" {
-					t.Fatalf("expected index-signature ruling boundary, got %v", err)
+				if err != nil {
+					t.Fatal(err)
 				}
-			} else {
-				var stop *lower.NotYet
-				want := "an ElementAccessExpression"
-				if name == "paths" {
-					want = "a function returning Path | undefined"
+				actual, binary := natively(t, program)
+				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if difference := disagreement(truth, got); difference != "" {
+						t.Fatal(difference)
+					}
 				}
-				if !errors.As(err, &stop) || stop.What != want {
-					t.Fatalf("expected explicit NotYet representation/read boundary, got %v", err)
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
 				}
+				return
+			}
+			var stop *lower.NotYet
+			want := map[string]string{
+				"nodearray":      "a value of type NodeArray<Entry>",
+				"jsdoc":          "a value of type JSDocArray",
+				"numeric_record": "a value of type Record<number, FlowGraphNode>",
+				"template":       "a value of type TemplateStringsArray",
+				"sorted":         "a value of type SortedReadonlyArray<MappedPosition>",
+				"paths":          "a function returning Path | undefined",
+			}[name]
+			if !errors.As(err, &stop) || stop.What != want {
+				t.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, err)
 			}
 			t.Logf("%s", err)
 		})

@@ -120,7 +120,19 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	if err := l.weakArrayCallback(expression); err != nil {
 		return nil, err
 	}
+	if value, known, err := l.nodeProcessEnvironmentMutation(expression); known {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	expression = ast.SkipParentheses(expression)
+	if value, handled, err := l.recordExpression(expression); handled {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
@@ -155,6 +167,10 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 				return nil, err
 			}
 			return []ir.Statement{ir.Panic{Message: message}}, nil
+		}
+		if l.isProcessExit(expression) {
+			value, _, err := l.processValue(expression)
+			return []ir.Statement{ir.Evaluate{Value: value}}, err
 		}
 		if value, handled, err := l.typedArrayExpression(expression); handled {
 			if err != nil {
@@ -217,7 +233,7 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 		return l.returnAssignment(expression)
 	}
-	if l.isPanicCall(expression) {
+	if l.isPanicCall(expression) || l.isProcessExit(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}

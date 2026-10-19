@@ -1,0 +1,43 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b/union-overlay.json",
+    "./stage3/fixtures",
+    "-run",
+    "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "seconds": 55.896,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+      "Action": "fail",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions/assertions/19_identifier_kind.a",
+      "Action": "fail",
+      "Elapsed": 0.17
+    },
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions/assertions",
+      "Action": "fail",
+      "Elapsed": 0
+    },
+    {
+      "Package": "github.com/system-inc/adamic/stage3/fixtures",
+      "Test": "TestFixturesAssertions",
+      "Action": "fail",
+      "Elapsed": 7.55
+    }
+  ]
+}

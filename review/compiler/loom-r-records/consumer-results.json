@@ -1,0 +1,984 @@
+[
+  {
+    "package": "./bench/regex",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./bench/regex",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.482
+  },
+  {
+    "package": "./bridge/tsgo",
+    "tests": [
+      "TestTSGoRequiresLink"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^(TestTSGoRequiresLink)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 37.901
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "tests": [
+      "TestRuntimeFeaturesMatchNode"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cloud/reports/decode-ascii",
+      "-run",
+      "^(TestRuntimeFeaturesMatchNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 41.342
+  },
+  {
+    "package": "./cmd/adamic",
+    "tests": [
+      "TestExplainChecksOutput"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^(TestExplainChecksOutput)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 37.641
+  },
+  {
+    "package": "./cmd/adamic-fuzz",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-fuzz",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 2.234
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "tests": [
+      "TestOptionalPositionCountsUTF16Surrogates"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 24.895
+  },
+  {
+    "package": "./cmd/adamic-reduce",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-reduce",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.87
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "tests": [
+      "TestAdaptSingletonArrayCallback"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-test262",
+      "-run",
+      "^(TestAdaptSingletonArrayCallback)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 22.728
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "tests": [
+      "TestCheckKeyTellsTheCompilerFromTscWhole"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/compilerinputs",
+      "-run",
+      "^(TestCheckKeyTellsTheCompilerFromTscWhole)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.62
+  },
+  {
+    "package": "./internal/fresh",
+    "tests": [
+      "TestFreshCorpusRemainder"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "^(TestFreshCorpusRemainder)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 19.88
+  },
+  {
+    "package": "./internal/fuzz",
+    "tests": [
+      "TestGeneratedProgramsCheckAndLower"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/fuzz",
+      "-run",
+      "^(TestGeneratedProgramsCheckAndLower)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 46.346
+  },
+  {
+    "package": "./internal/javascript",
+    "tests": [
+      "TestViewMixedUnionSelectsNumber"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript",
+      "-run",
+      "^(TestViewMixedUnionSelectsNumber)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 3.91
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "tests": [
+      "TestOriginalCycleLedger"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/cycleledger",
+      "-run",
+      "^(TestOriginalCycleLedger)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 106.834
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./internal/native/runtimeproducts",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.596
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestClosedEmptyArrayUnionGap",
+      "TestClosedParserRegexGap",
+      "TestClosedOptionalBooleanConditionGap",
+      "TestClosedPrinterRegexGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/css",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes|TestClosedEmptyArrayUnionGap|TestClosedParserRegexGap|TestClosedOptionalBooleanConditionGap|TestClosedPrinterRegexGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 40.157
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "tests": [
+      "TestCSSNumbersAnswerProductsRekey"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssnumbers",
+      "-run",
+      "^(TestCSSNumbersAnswerProductsRekey)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 13.454
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "tests": [
+      "TestMultiPushGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestMultiPushGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 14.503
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "tests": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestRawInputGap",
+      "TestParserRecoveryGap",
+      "TestInterfaceTypeMethodGap",
+      "TestRecoveryLibraryGaps",
+      "TestPinnedNumericGaps",
+      "TestTypeMemberLibraryGap",
+      "TestCookedSurrogateLibraryGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^(TestPostfixValueGap|TestMethodReplacementGap|TestRawInputGap|TestParserRecoveryGap|TestInterfaceTypeMethodGap|TestRecoveryLibraryGaps|TestPinnedNumericGaps|TestTypeMemberLibraryGap|TestCookedSurrogateLibraryGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 32.929
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "tests": [
+      "TestExtAgreesWithGo"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/formatfiles",
+      "-run",
+      "^(TestExtAgreesWithGo)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.406
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/gitignore",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.361
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.177
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "tests": [
+      "TestPrinterConstructorGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/graphql/printer",
+      "-run",
+      "^(TestPrinterConstructorGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.527
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "tests": [
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-run",
+      "^(TestDocumentedStageZeroGaps|TestClosedEmptyFallbackGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 9.36
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "tests": [
+      "TestClosedComparatorGaps",
+      "TestNestedConstructorGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-run",
+      "^(TestClosedComparatorGaps|TestNestedConstructorGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.702
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "tests": [
+      "TestKnownGapsAreExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers",
+      "-run",
+      "^(TestKnownGapsAreExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.81
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "tests": [
+      "TestJsxParserGapIsExplicit"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^(TestJsxParserGapIsExplicit)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 24.408
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "tests": [
+      "TestDynamicPatternGap",
+      "TestOptionDialectGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/regex",
+      "-run",
+      "^(TestDynamicPatternGap|TestOptionDialectGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 10.042
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-underscore-dangle",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 45.421
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-negation",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 36.169
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 30.598
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestCompileProfiles"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias",
+      "-run",
+      "^(TestCompileProfiles)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 30.252
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^(TestArrayGrowthWitness)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.939
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/markdowninline",
+      "-run",
+      "^(TestDelimiterExpressionMatchesNode)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.924
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/mediaquery",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.415
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/selector",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 9.062
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/static_single_assignment",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.99
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/suppression",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.874
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "tests": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/tsprinter",
+      "-run",
+      "^(TestClassInterfaceMethodGap|TestClosedOptionalBooleanFunctionGap|TestCompilerGaps|TestClosedPrefixUpdateValueGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.214
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "tests": [
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/typeaware",
+      "-run",
+      "^(TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 6.853
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-run",
+      "^(TestEachGapStandsWhereGapsMdSaysItDoes)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 7.123
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "tests": [
+      "TestLexerGaps",
+      "TestClosedStringPresenceGap",
+      "TestClosedLexerGaps",
+      "TestClosedValuePresenceGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^(TestLexerGaps|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 10.386
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "tests": [
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-run",
+      "^(TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 8.26
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "tests": [
+      "TestGapStandsWhereGapsMdSays",
+      "TestBigintGapStandsWhereGapsMdSays"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/scanner",
+      "-run",
+      "^(TestGapStandsWhereGapsMdSays|TestBigintGapStandsWhereGapsMdSays)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 5.546
+  },
+  {
+    "package": "./stage3/census/tool",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage3/census/tool",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.164
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "tests": [],
+    "command": [
+      "go",
+      "test",
+      "./stage3/drivers/parser/probe",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.265
+  },
+  {
+    "package": "./internal/leakcheck",
+    "tests": [
+      "TestReportedLeakIsRejected",
+      "TestCountedBalance"
+    ],
+    "command": [
+      "go",
+      "test",
+      "./internal/leakcheck",
+      "-run",
+      "^(TestReportedLeakIsRejected|TestCountedBalance)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 0.267
+  }
+]

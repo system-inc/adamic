@@ -1,0 +1,294 @@
+[
+  {
+    "package": "./bench/regex",
+    "tests": []
+  },
+  {
+    "package": "./bridge/tsgo",
+    "tests": [
+      "TestTSGoRequiresLink"
+    ]
+  },
+  {
+    "package": "./cloud/reports/decode-ascii",
+    "tests": [
+      "TestRuntimeFeaturesMatchNode"
+    ]
+  },
+  {
+    "package": "./cmd/adamic",
+    "tests": [
+      "TestExplainChecksOutput"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-fuzz",
+    "tests": []
+  },
+  {
+    "package": "./cmd/adamic-meter",
+    "tests": [
+      "TestOptionalPositionCountsUTF16Surrogates"
+    ]
+  },
+  {
+    "package": "./cmd/adamic-reduce",
+    "tests": []
+  },
+  {
+    "package": "./cmd/adamic-test262",
+    "tests": [
+      "TestAdaptSingletonArrayCallback"
+    ]
+  },
+  {
+    "package": "./internal/compilerinputs",
+    "tests": [
+      "TestCheckKeyTellsTheCompilerFromTscWhole"
+    ]
+  },
+  {
+    "package": "./internal/fresh",
+    "tests": [
+      "TestFreshCorpusRemainder"
+    ]
+  },
+  {
+    "package": "./internal/fuzz",
+    "tests": [
+      "TestGeneratedProgramsCheckAndLower"
+    ]
+  },
+  {
+    "package": "./internal/javascript",
+    "tests": [
+      "TestViewMixedUnionSelectsNumber"
+    ]
+  },
+  {
+    "package": "./internal/lower/cycleledger",
+    "tests": [
+      "TestOriginalCycleLedger"
+    ]
+  },
+  {
+    "package": "./internal/native/runtimeproducts",
+    "tests": []
+  },
+  {
+    "package": "./stage1/cohere/css",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestClosedEmptyArrayUnionGap",
+      "TestClosedParserRegexGap",
+      "TestClosedOptionalBooleanConditionGap",
+      "TestClosedPrinterRegexGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssnumbers",
+    "tests": [
+      "TestCSSNumbersAnswerProductsRekey"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "tests": [
+      "TestMultiPushGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/estree",
+    "tests": [
+      "TestPostfixValueGap",
+      "TestMethodReplacementGap",
+      "TestRawInputGap",
+      "TestParserRecoveryGap",
+      "TestInterfaceTypeMethodGap",
+      "TestRecoveryLibraryGaps",
+      "TestPinnedNumericGaps",
+      "TestTypeMemberLibraryGap",
+      "TestCookedSurrogateLibraryGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/formatfiles",
+    "tests": [
+      "TestExtAgreesWithGo"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/gitignore",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/graphql",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/graphql/printer",
+    "tests": [
+      "TestPrinterConstructorGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/json",
+    "tests": [
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint",
+    "tests": [
+      "TestClosedComparatorGaps",
+      "TestNestedConstructorGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers",
+    "tests": [
+      "TestKnownGapsAreExplicit"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/helpers/comments",
+    "tests": [
+      "TestJsxParserGapIsExplicit"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/regex",
+    "tests": [
+      "TestDynamicPatternGap",
+      "TestOptionDialectGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-underscore-dangle",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-negation",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/lint/rules/typescript-no-this-alias",
+    "tests": [
+      "TestCompileProfiles"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdownblocks",
+    "tests": [
+      "TestArrayGrowthWitness"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/markdowninline",
+    "tests": [
+      "TestDelimiterExpressionMatchesNode"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/mediaquery",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/selector",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/static_single_assignment",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/suppression",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/tsprinter",
+    "tests": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestCompilerGaps",
+      "TestClosedPrefixUpdateValueGap"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/typeaware",
+    "tests": [
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "tests": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ]
+  },
+  {
+    "package": "./stage1/cohere/yaml",
+    "tests": [
+      "TestLexerGaps",
+      "TestClosedStringPresenceGap",
+      "TestClosedLexerGaps",
+      "TestClosedValuePresenceGap"
+    ]
+  },
+  {
+    "package": "./stage1/typescript/parser",
+    "tests": [
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap"
+    ]
+  },
+  {
+    "package": "./stage1/typescript/scanner",
+    "tests": [
+      "TestGapStandsWhereGapsMdSays",
+      "TestBigintGapStandsWhereGapsMdSays"
+    ]
+  },
+  {
+    "package": "./stage3/census/tool",
+    "tests": []
+  },
+  {
+    "package": "./stage3/drivers/parser/probe",
+    "tests": []
+  },
+  {
+    "package": "./internal/leakcheck",
+    "tests": [
+      "TestReportedLeakIsRejected",
+      "TestCountedBalance"
+    ]
+  }
+]

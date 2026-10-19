@@ -116,9 +116,6 @@
 `node_fs_file.c:cache:1`
 `node_fs_file.c:cache:2`
 `node_fs_file.c:dots:1`
-`node_host.c:cleanup_registered:1`
-`node_host.c:current_directory:1`
-`node_host.c:error_name:1`
 `normalize.c:cached_classes:1`
 `normalize.c:cached_mappings:1`
 `normalize.c:cached_pairs:1`
@@ -284,3 +281,64 @@
 `runtime-file:regexp_compile_tables.h`
 `runtime-file:regexp_compile_v8.c`
 `runtime-file:regexp_compile_v8.h`
+
+# Constructor runtime and ownership helpers keep state in counted per-object storage.
+`runtime-file:regexp_compile_ownership.c`
+`runtime-file:regexp_compile_runtime.c`
+
+# Directory-host strings are immortal literals; slot caches use the atomic cache protocol.
+# Lexical path adapters own no mutable static storage.
+`node_fs_directory.c:arrow:1`
+`node_fs_directory.c:before:1`
+`node_fs_directory.c:cache:1`
+`node_fs_directory.c:cache:2`
+`node_fs_directory.c:code:1`
+`node_fs_directory.c:colon:1`
+`node_fs_directory.c:comma:1`
+`node_fs_directory.c:dots:1`
+`node_fs_directory.c:end:1`
+`node_fs_directory.c:error_name:1`
+`node_fs_directory.c:quote:1`
+`node_fs_directory.c:quote:2`
+`node_fs_directory.c:target_before:1`
+`node_fs_directory.c:type_error_name:1`
+`runtime-file:node_fs_directory.c`
+`runtime-file:node_fs_directory.h`
+`runtime-file:node_fs_wasi.h`
+`runtime-file:node_path.c`
+`runtime-file:node_path.h`
+
+# Process-host state is initialized at startup and finalized at normal exit.
+# Performance entries and cwd/argv caches belong to the synchronous host;
+# strings and method closures below are immutable runtime literals.
+`node_process.c:arguments:1`
+`node_process.c:current_directory:1`
+`node_process.c:error_name:1`
+`node_process.c:execution_arguments:1`
+`node_process.c:mark_type:1`
+`node_process.c:marks:1`
+`node_process.c:measure_type:1`
+`node_process.c:method:1`
+`node_process.c:name_error:1`
+`node_process.c:performance_clear_marks_closure:1`
+`node_process.c:performance_clear_measures_closure:1`
+`node_process.c:performance_mark_closure:1`
+`node_process.c:performance_measure_closure:1`
+`node_process.c:performance_now_closure:1`
+`node_process.c:performance_object:1`
+`node_process.c:platform:1`
+`node_process.c:platform:2`
+`runtime-file:node_process.c`
+`runtime-file:node_process.h`
+`runtime-file:process.c`
+
+# WASI has one execution thread; adapters share this once-only cwd bootstrap flag.
+`node_cwd_wasi.c:initialized:1`
+`runtime-file:node_cwd_wasi.c`
+`runtime-file:node_cwd_wasi.h`
+
+# Exit status belongs to the synchronous process host; validation metadata is immutable.
+`process.c:prefix:1`
+`process.c:range_prefix:1`
+`process.c:range_name:1`
+`process.c:range_code:1`

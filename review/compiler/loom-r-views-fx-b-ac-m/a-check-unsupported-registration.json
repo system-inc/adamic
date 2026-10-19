@@ -1,0 +1,32 @@
+{
+  "result": {
+    "a_check": {
+      "review/compiler/loom-views-fx-b/native_p21.a": {
+        "outcome": "checked",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": ""
+      },
+      "review/compiler/loom-views-fx-b/native_p37.a": {
+        "outcome": "checked",
+        "expected": "refused checked view read of field count with unsupported representation conversion contract",
+        "first": ""
+      }
+    }
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 2 files:\nreview/compiler/loom-views-fx-b/native_p21.a: checked, expected refused checked view read of field count with unsupported representation conversion contract ()\nreview/compiler/loom-views-fx-b/native_p37.a: checked, expected refused checked view read of field count with unsupported representation conversion contract ()",
+  "diagnostics": {
+    "review/compiler/loom-views-fx-b/native_p21.a": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.0360206229997857
+    },
+    "review/compiler/loom-views-fx-b/native_p37.a": {
+      "exit": 0,
+      "stderr": "",
+      "seconds": 0.03543377000005421
+    }
+  }
+}

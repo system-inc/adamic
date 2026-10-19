@@ -1,6 +1,6 @@
 {
   "blocks": { "on": true, "budget": 4, "sizing": { "min": 3, "max": 16, "target": 0.8, "window": 20 }, "depth": 2 },
   "restack": { "on": true },
-  "first": ["chg_4ts6hhmxzb5zacxpjsdtxvy3as", "chg_ecxhk3jwkgjjz9rdhg8eb5mn6v", "chg_sqfhz32n1a1qaffat04w2v6b8g"],
-  "door": { "heavy": 1000 }
+  "first": ["chg_m3gbhkn2vtt6pb95zybjgah6fv", "chg_1qew8yr1hab01s9gs578rdm77x", "chg_54p7avygbx9vw41dfstx2b81zz", "chg_670v1yv9y1rqq6grsphejvcvd0", "chg_23dep1ce3n32rdxpr4qq645zfw", "chg_1yrt2rd25m6jfxmvavdgk92dq4", "chg_3mz212s99f8q5vbaevxsftxj0a", "chg_m8ndvd58pyygf3hw4mz61eq7ty", "chg_cph1z54xj4zse33vxkrqpzy88j", "chg_d59kp6qsde8mvcgg6bd0jkp5xr"],
+  "door": { "heavy": 1000, "pacedAfter": 2, "waiting": 10, "files": 400 }
 }

@@ -1,0 +1,12 @@
+{
+  "original": {
+    "outcome": "NotYet",
+    "what": "stage3/fixtures/records/07_optional_view.a:17:7: stage 0 can't lower a Record<string, string> seen as Named (fixed objects and records have different storage; copy explicitly) yet"
+  },
+  "mutant": {
+    "outcome": "Compiles",
+    "what": ""
+  },
+  "source": "stage3/fixtures/records/07_optional_view.a",
+  "source_sha256": "65422b62827a9250f0abac0c9b2d5e62d37f18b80ba6f873e68cc8fe595f7b36"
+}

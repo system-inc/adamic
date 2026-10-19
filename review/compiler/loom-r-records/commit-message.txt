@@ -1,0 +1,13 @@
+Port records lowering onto the pinned main base
+
+Apply only 9f9ccacf28d326e072b7adfbd9c10245e6901c38's own patch onto
+exactly dbdf977f5b8b0979d414ebe6f20e7aadd312e309.
+
+Preserve main's async corpus handling. Conservatively place deliberate
+record refusal witnesses in records_refused rather than exempting top-level
+programs. Use main's shared leak-check API and regenerate its counts format
+with Linux clang 20.1.8. Runtime changed lines match the source patch exactly.
+
+Records checks, mutants, readers and vet pass. Two unchanged stage3 Python
+reader suites exceeded their deadlines and were not rerun. Keep their
+limitations and all command results in review/compiler/loom-r-records.
