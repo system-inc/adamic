@@ -51,19 +51,23 @@ func TestSampling(t *testing.T) {
 	for _, path := range []string{"d", "a", "c", "b"} {
 		programs = append(programs, entry{program: program{Path: path}, Corpus: "fixtures", Class: "newly-accepted"})
 	}
-	selected, omitted := sample(programs, "head-sha", 15, time.Second)
+	seed, err := samplingSeed("head-sha", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	selected, omitted := sample(programs, seed, 15, time.Second)
 	if len(selected) != 3 || omitted != 2 || selected[0] != 0 {
 		t.Fatalf("sample: %v, omitted %d", selected, omitted)
 	}
-	again, _ := sample(programs, "head-sha", 15, time.Second)
+	again, _ := sample(programs, seed, 15, time.Second)
 	if !reflect.DeepEqual(selected, again) {
 		t.Fatal("nondeterministic sample")
 	}
-	selected, omitted = sample(programs, "head-sha", 1, time.Second)
+	selected, omitted = sample(programs, seed, 1, time.Second)
 	if len(selected) != 1 || selected[0] != 0 || omitted != 4 {
 		t.Fatal("witness lost under budget")
 	}
-	selected, omitted = sample(programs, "head-sha", 0, time.Second)
+	selected, omitted = sample(programs, seed, 0, time.Second)
 	if len(selected) != 5 || omitted != 0 {
 		t.Fatal("unlimited budget omitted programs")
 	}

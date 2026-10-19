@@ -86,7 +86,7 @@ func TestDiffSamplingIsMandatory(t *testing.T) {
 		{Corpus: "diff", Class: "newly-accepted"},
 		{Corpus: "diff", Class: "newly-accepted"},
 	}
-	selected, omitted := sample(programs, "head", 1, time.Second)
+	selected, omitted := sample(programs, headSeed("head"), 1, time.Second)
 	if !reflect.DeepEqual(selected, []int{2, 3, 0}) || omitted != 1 {
 		t.Fatalf("diff or witness sampled away: %v, omitted %d", selected, omitted)
 	}

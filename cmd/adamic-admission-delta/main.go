@@ -6,7 +6,9 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"math/rand"
@@ -57,6 +59,7 @@ type entry struct {
 	NegativeRelated   bool         `json:"negative_related"`
 	NegativeWitness   bool         `json:"negative_witness"`
 	Sampled           bool         `json:"sampled"`
+	VoidReason        string       `json:"void_reason,omitempty"`
 }
 type report struct {
 	NegativeWitnessCount  int                `json:"negative_witness_count"`
@@ -80,8 +83,11 @@ type report struct {
 	Admitted              int                `json:"admitted"`
 	Programs              []entry            `json:"programs"`
 	Verdict               string             `json:"verdict"`
+	Void                  bool               `json:"void"`
+	VoidReason            string             `json:"void_reason,omitempty"`
 	Corpora               []corpus           `json:"corpora"`
 	SamplingSeed          string             `json:"sampling_seed"`
+	SeedGiven             bool               `json:"seed_given"`
 	SamplingSize          int                `json:"sampling_size"`
 	Omitted               int                `json:"omitted"`
 	BudgetSeconds         float64            `json:"budget_seconds"`
@@ -163,11 +169,26 @@ func classify(a, b observation) string {
 	}
 	return "newly-refused"
 }
+
+// errVoid is a run that proved nothing about the change: a timeout or a missing native toolchain says the machine
+// was slow or unprovisioned, so the judge reruns it instead of charging the change. A mismatch or an unrecognised
+// compiler error is never void.
+var errVoid = errors.New("admission delta is void")
+
 func main() {
-	if err := run(os.Args[1:]); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
+	os.Exit(exitCode(run(os.Args[1:])))
+}
+
+// exitCode is 0 for a run that held, 3 for a void one and 1 for anything else, printing the error.
+func exitCode(err error) int {
+	if err == nil {
+		return 0
 	}
+	fmt.Fprintln(os.Stderr, err)
+	if errors.Is(err, errVoid) {
+		return 3
+	}
+	return 1
 }
 func run(args []string) error {
 	flags := flag.NewFlagSet("adamic-admission-delta", flag.ContinueOnError)
@@ -189,6 +210,7 @@ func run(args []string) error {
 	limit := flags.Duration("timeout", 10*time.Second, "per-runtime command timeout")
 	workers := flags.Int("workers", runtime.GOMAXPROCS(0), "parallel classification workers")
 	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
+	givenSeed := flags.String("seed", "", "hex sampling seed, at least 8 bytes, in place of head's SHA-256")
 	if err := flags.Parse(args); err != nil {
 		return err
 	}
@@ -203,6 +225,11 @@ func run(args []string) error {
 	}
 	if *limit <= 0 || *compileLimit <= 0 {
 		return fmt.Errorf("timeout must be positive")
+	}
+	if *givenSeed != "" {
+		if _, err := samplingSeed("", *givenSeed); err != nil {
+			return err
+		}
 	}
 	root, err := git(".", "rev-parse", "--show-toplevel")
 	if err != nil {
@@ -367,7 +394,11 @@ func run(args []string) error {
 	}
 	result.CorpusFilter, result.Shard = *corpusFilter, *shard
 	result.Corpora = m.Corpora
-	result.SamplingSeed = result.Head
+	seed, err := samplingSeed(result.Head, *givenSeed)
+	if err != nil {
+		return err
+	}
+	result.SamplingSeed, result.SeedGiven = hex.EncodeToString(seed), *givenSeed != ""
 	result.BudgetSeconds = *budget
 	result.CompileTimeoutSeconds = compileLimit.Seconds()
 	result.RuntimeTimeoutSeconds = limit.Seconds()
@@ -410,16 +441,29 @@ func run(args []string) error {
 	result.Phases["manifest_and_verification"] = time.Since(phaseStarted).Seconds()
 	phaseStarted = time.Now()
 	classifyPrograms(headTree, baseLower, headLower, result.Programs, *workers, *compileLimit)
-	for _, record := range result.Programs {
+	var voids []string
+	for index := range result.Programs {
+		record := &result.Programs[index]
 		if record.Class == "newly-accepted" {
 			result.Admitted++
 		}
-		if strings.HasPrefix(record.Class, "compiler-") {
+		if record.Class == "compiler-timeout" {
+			record.VoidReason = "compile timeout"
+			voids = append(voids, record.Path+": "+record.VoidReason)
+		} else if strings.HasPrefix(record.Class, "compiler-") {
 			result.Verdict = "fail"
 		}
 	}
 	result.Phases["classification"] = time.Since(phaseStarted).Seconds()
-	selected, omitted := sample(result.Programs, result.Head, *budget, *limit)
+	selected, omitted := sample(result.Programs, seed, *budget, *limit)
+	// The native build resolves clang as toolchain.Path does; without it every native observation would be a
+	// compilation failure the change didn't cause, so nothing runs and the run is void.
+	if len(selected) > 0 {
+		if _, e := toolchain.Path("clang"); e != nil {
+			voids = append(voids, "native toolchain missing: "+e.Error())
+			selected = nil
+		}
+	}
 	result.Omitted = omitted
 	if omitted > 0 && result.Verdict == "pass" {
 		result.Verdict = "sampled"
@@ -471,7 +515,12 @@ func run(args []string) error {
 		}
 		record.Agree = &agree
 		if !agree && !record.NegativeWitness {
-			result.Verdict = "fail"
+			if command := timedOut(node, jsCompile, javascript, nativeCompile, native); command != "" {
+				record.VoidReason = command + " timeout"
+				voids = append(voids, record.Path+": "+record.VoidReason)
+			} else {
+				result.Verdict = "fail"
+			}
 		}
 	}
 	result.SamplingSize = len(selected)
@@ -479,6 +528,10 @@ func run(args []string) error {
 	result.Phases["runtime"] = result.BudgetUsedSeconds
 	if !result.CompleteCorpus && result.Verdict == "pass" {
 		result.Verdict = "partial"
+	}
+	result.VoidReason = strings.Join(voids, "; ")
+	if len(voids) > 0 && result.Verdict != "fail" {
+		result.Verdict, result.Void = "void", true
 	}
 	result.Phases["total"] = time.Since(startedAll).Seconds()
 	if *asJSON {
@@ -494,11 +547,41 @@ func run(args []string) error {
 	if result.Verdict == "fail" {
 		return fmt.Errorf("admission delta failed")
 	}
+	if result.Void {
+		return fmt.Errorf("%w: %s", errVoid, result.VoidReason)
+	}
 	return nil
 }
 
+// timedOut names the first of a program's runtime commands that hit its timeout, or is empty.
+func timedOut(node, jsCompile, javascript, nativeCompile, native observation) string {
+	for _, command := range []struct {
+		name string
+		o    observation
+	}{{"node", node}, {"javascript compile", jsCompile}, {"javascript", javascript}, {"native compile", nativeCompile}, {"native", native}} {
+		if command.o.Error == "timeout" {
+			return command.name
+		}
+	}
+	return ""
+}
+
+// samplingSeed is the given hex seed's bytes, or head's SHA-256 when none is given, so one unit key always samples
+// the same programs whatever head is. A seed shorter than the 8 bytes the shuffle reads is refused.
+func samplingSeed(head, given string) ([]byte, error) {
+	if given == "" {
+		digest := sha256.Sum256([]byte(head))
+		return digest[:], nil
+	}
+	seed, err := hex.DecodeString(given)
+	if err != nil || len(seed) < 8 {
+		return nil, fmt.Errorf("--seed %q must be hex of at least 8 bytes", given)
+	}
+	return seed, nil
+}
+
 // Each selected program reserves five command timeouts. Diff and witnesses override the budget.
-func sample(programs []entry, seed string, seconds float64, limit time.Duration) ([]int, int) {
+func sample(programs []entry, seed []byte, seconds float64, limit time.Duration) ([]int, int) {
 	diff := []int{}
 	witnesses := []int{}
 	others := []int{}
@@ -515,8 +598,7 @@ func sample(programs []entry, seed string, seconds float64, limit time.Duration)
 		}
 	}
 	sort.Slice(others, func(i, j int) bool { return programs[others[i]].Path < programs[others[j]].Path })
-	digest := sha256.Sum256([]byte(seed))
-	random := rand.New(rand.NewSource(int64(binary.LittleEndian.Uint64(digest[:8]))))
+	random := rand.New(rand.NewSource(int64(binary.LittleEndian.Uint64(seed[:8]))))
 	random.Shuffle(len(others), func(i, j int) { others[i], others[j] = others[j], others[i] })
 	take := len(others)
 	if seconds > 0 {
