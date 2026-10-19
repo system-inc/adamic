@@ -113,29 +113,6 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 	return onNode(t, path, arguments...)
 }
 
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
-}
-
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
@@ -508,22 +485,18 @@ func TestThreePortMutantsAreCaught(t *testing.T) {
 	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
 		t.Fatal(err)
 	}
-	for _, mutation := range []printerMutation{
-		{"missing final newline", "formatter.ts", "printer.docs.concat([document, printer.docs.line(false, true)])", "document"},
-		{"missing colon space", "formatter.ts", "documents.text(': ')", "documents.text(':')"},
-		{"wrong filename parser", "formatter.ts", "base === 'package.json'", "base === 'other-package.json'"},
-	} {
+	for _, mutation := range formatterMutants {
 		t.Run(mutation.name, func(t *testing.T) {
 			t.Parallel()
 			directory := portDirectory(t, &mutation)
 			entry := filepath.Join(directory, "main.ts")
-			program := lowered(t, entry)
+			binary := filepath.Join(mutantPortProduct(t, mutation, native.Options{Sanitize: true}), "port")
 			for _, side := range []struct {
 				name   string
 				result run
 			}{
 				{"Node", onNode(t, entry, "--cases", path)},
-				{"native", nativelyRun(t, program, "--cases", path)},
+				{"native", sanitizedRun(t, binary, "--cases", path)},
 			} {
 				if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
 					t.Fatalf("%s mutant must succeed: exit %d stderr %s", side.name, side.result.exitCode, side.result.stderr)
@@ -589,8 +562,10 @@ func TestAdditionalJSONBoundaries(t *testing.T) {
 	if os.Getenv("ADAMIC_JSON_NODE_ONLY") != "" {
 		t.Skip("debug Node only")
 	}
+	// The sanitized port is portMatchesProduct's, built ahead; the lowered program is only for leaks off Linux.
 	program := lowered(t, entry)
-	result, binary := natively(t, program, "--cases", path)
+	binary := filepath.Join(portMatchesProduct(t, "sanitized"), "port")
+	result = sanitizedRun(t, binary, "--cases", path)
 	compare(t, "native boundaries", result, expected, cases)
 	if report := leaks(t, program, binary, "--cases", path); report != "" {
 		t.Fatal(report)

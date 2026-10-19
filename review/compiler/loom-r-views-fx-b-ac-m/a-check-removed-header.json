@@ -1,0 +1,22 @@
+{
+  "result": {
+    "a_check": {
+      "internal/lower/testdata/fx6_refused/p49.a": {
+        "outcome": "refused",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/fx6_refused/p49.a:9:9: Adamic 0.1 refuses a destructured object-union view with an incompatible literal producer; build a member of Target before destructuring field value"
+      }
+    }
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\ninternal/lower/testdata/fx6_refused/p49.a: refused, expected checked (adamic: /workspace/adamic/internal/lower/testdata/fx6_refused/p49.a:9:9: Adamic 0.1 refuses a destructured object-union view with an incompatible literal producer; build a member of Target before dest)",
+  "diagnostics": {
+    "internal/lower/testdata/fx6_refused/p49.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/fx6_refused/p49.a:9:9: Adamic 0.1 refuses a destructured object-union view with an incompatible literal producer; build a member of Target before destructuring field value\n",
+      "seconds": 0.046769469000537356
+    }
+  }
+}

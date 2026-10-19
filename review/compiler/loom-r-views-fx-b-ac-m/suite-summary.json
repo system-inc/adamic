@@ -1,0 +1,50 @@
+{
+  "gate-lower-final": [
+    {
+      "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "Action": "pass",
+      "Elapsed": 4.313
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Action": "pass",
+      "Elapsed": 127.032
+    }
+  ],
+  "backends-lower": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/javascript",
+      "Action": "pass",
+      "Elapsed": 0.598
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Action": "fail",
+      "Elapsed": 158.052
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Action": "fail",
+      "Elapsed": 540.149
+    }
+  ],
+  "oracle-serial": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Action": "pass",
+      "Elapsed": 353.87
+    }
+  ],
+  "A-combination-tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Action": "pass",
+      "Elapsed": 0.496
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Action": "pass",
+      "Elapsed": 18.433
+    }
+  ]
+}

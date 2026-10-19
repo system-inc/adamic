@@ -1,0 +1,162 @@
+[
+  {
+    "name": "receiver",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/receiver-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestLowerViewsUnrelatedUnionField$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 8.419139911000457,
+    "caught": true,
+    "marker": "JavaScript backend stdout"
+  },
+  {
+    "name": "destructure",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/destructure-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestLowerViewsDestructuredCallableUnion$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 8.048919223000667,
+    "caught": true,
+    "marker": "JavaScript backend stdout"
+  },
+  {
+    "name": "scalar-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/scalar-check-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestScalarUnionViewMisfit",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 9.763526154000829,
+    "caught": true,
+    "marker": "native"
+  },
+  {
+    "name": "nullable",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/nullable-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestCheckedViewOptionalReadBoundary|TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 15.870728150000105,
+    "caught": true,
+    "marker": "optional checked read escaped"
+  },
+  {
+    "name": "generic",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/generic-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 15.524139764999745,
+    "caught": true,
+    "marker": "exit codes differ"
+  },
+  {
+    "name": "union",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/union-overlay.json",
+      "./stage3/fixtures",
+      "-run",
+      "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 15.381519355999444,
+    "caught": true,
+    "marker": "gap changed"
+  },
+  {
+    "name": "literal-key",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/literal-key-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestReviewProgramsRefuse$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 13.24615014400024,
+    "caught": true,
+    "marker": "accepted refused review program"
+  },
+  {
+    "name": "incompatible-producer",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/incompatible-producer-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOracleViewsDestructuredInvalidObjectUnionRefuses$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 15.272550983999281,
+    "caught": true,
+    "marker": "want located incompatible-producer refusal"
+  }
+]

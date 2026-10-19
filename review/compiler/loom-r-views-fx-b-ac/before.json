@@ -1,0 +1,268 @@
+{
+  "paths": [
+    "internal/lower/testdata/fx6/p35.a",
+    "internal/lower/testdata/fx6/p36.a",
+    "internal/lower/testdata/fx6/p37.a",
+    "internal/lower/testdata/fx6/p38.a",
+    "internal/lower/testdata/fx6/p38_number.a",
+    "internal/lower/testdata/fx6/p49.a",
+    "internal/lower/testdata/fx6/p51.a",
+    "internal/lower/testdata/fx6/p51_wrong.a",
+    "internal/lower/testdata/fx6/p53.a",
+    "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "review/compiler/loom-views-fx-b/native_p21.a",
+    "review/compiler/loom-views-fx-b/native_p37.a",
+    "review/compiler/loom-views-fx-b/views_p05.a"
+  ],
+  "rows": {
+    "internal/lower/testdata/fx6/p35.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p35.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7909,
+      "seconds": 0.0541
+    },
+    "internal/lower/testdata/fx6/p36.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p36.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8737,
+      "seconds": 0.0499
+    },
+    "internal/lower/testdata/fx6/p37.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p37.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7205,
+      "seconds": 0.0475
+    },
+    "internal/lower/testdata/fx6/p38.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p38.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4817,
+      "seconds": 0.0451
+    },
+    "internal/lower/testdata/fx6/p38_number.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p38_number.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4720,
+      "seconds": 0.051
+    },
+    "internal/lower/testdata/fx6/p49.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p49.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6914,
+      "seconds": 0.0477
+    },
+    "internal/lower/testdata/fx6/p51.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p51.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7088,
+      "seconds": 0.05
+    },
+    "internal/lower/testdata/fx6/p51_wrong.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p51_wrong.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7340,
+      "seconds": 0.046
+    },
+    "internal/lower/testdata/fx6/p53.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/fx6/p53.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7610,
+      "seconds": 0.0478
+    },
+    "internal/lower/testdata/scalar_union_views/misfit_boolean.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/scalar_union_views/misfit_boolean.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 6057,
+      "seconds": 0.0443
+    },
+    "internal/lower/testdata/scalar_union_views/misfit_number.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/scalar_union_views/misfit_number.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5653,
+      "seconds": 0.0441
+    },
+    "internal/lower/testdata/scalar_union_views/p54_b.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/scalar_union_views/p54_b.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10306,
+      "seconds": 0.0441
+    },
+    "internal/lower/testdata/scalar_union_views/p54_n.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/scalar_union_views/p54_n.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9484,
+      "seconds": 0.0452
+    },
+    "internal/lower/testdata/scalar_union_views/p54_s.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "internal/lower/testdata/scalar_union_views/p54_s.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9753,
+      "seconds": 0.0494
+    },
+    "review/compiler/loom-views-fx-b/native_p21.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "review/compiler/loom-views-fx-b/native_p21.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10472,
+      "seconds": 0.0963
+    },
+    "review/compiler/loom-views-fx-b/native_p37.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "review/compiler/loom-views-fx-b/native_p37.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9170,
+      "seconds": 0.0478
+    },
+    "review/compiler/loom-views-fx-b/views_p05.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "",
+      "command": [
+        "/workspace/adamic-binaries/adamic-acheck",
+        "c",
+        "review/compiler/loom-views-fx-b/views_p05.a"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5497,
+      "seconds": 0.0459
+    }
+  },
+  "failure": null,
+  "exits": {
+    "a-check": 0
+  },
+  "steps": {
+    "a-check": 3.4
+  }
+}

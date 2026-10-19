@@ -1,0 +1,17 @@
+=== RUN   TestFixturesAssertions
+=== PAUSE TestFixturesAssertions
+=== CONT  TestFixturesAssertions
+    fixtures_test.go:202: build stage3-fixture-oracle-hook 26e4d5ea86a6 miss 6.62
+=== RUN   TestFixturesAssertions/assertions
+=== PAUSE TestFixturesAssertions/assertions
+=== CONT  TestFixturesAssertions/assertions
+=== RUN   TestFixturesAssertions/assertions/19_identifier_kind.a
+=== PAUSE TestFixturesAssertions/assertions/19_identifier_kind.a
+=== CONT  TestFixturesAssertions/assertions/19_identifier_kind.a
+=== RUN   TestFixturesAssertions/assertions/19_identifier_kind.a/stage0
+--- PASS: TestFixturesAssertions (8.91s)
+    --- PASS: TestFixturesAssertions/assertions (0.00s)
+        --- PASS: TestFixturesAssertions/assertions/19_identifier_kind.a (0.09s)
+            --- PASS: TestFixturesAssertions/assertions/19_identifier_kind.a/stage0 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	9.010s

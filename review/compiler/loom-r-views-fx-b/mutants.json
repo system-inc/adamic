@@ -1,0 +1,44 @@
+[
+  {
+    "mutant": "receiver",
+    "file": "internal/lower/readiness.go",
+    "selector": "^TestFX6P37$",
+    "marker": "JavaScript backend stdout",
+    "caught": true
+  },
+  {
+    "mutant": "destructure",
+    "file": "internal/lower/collections.go",
+    "selector": "^TestFX6P53$",
+    "marker": "JavaScript backend stdout",
+    "caught": true
+  },
+  {
+    "mutant": "scalar-check",
+    "file": "internal/native/view_unions_read.go",
+    "selector": "^TestScalarUnionViewMisfit",
+    "marker": "native",
+    "caught": true
+  },
+  {
+    "mutant": "nullable",
+    "file": "internal/lower/interface_cast.go",
+    "selector": "TestCheckedViewOptionalReadBoundary|TestCheckedViewObjectPrimitiveSource/optional-receiver",
+    "marker": "optional checked read escaped",
+    "caught": true
+  },
+  {
+    "mutant": "generic",
+    "file": "internal/lower/interface_cast.go",
+    "selector": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+    "marker": "exit codes differ",
+    "caught": true
+  },
+  {
+    "mutant": "union",
+    "file": "internal/lower/interface_cast.go",
+    "selector": "TestFixturesAssertions/assertions/19_identifier_kind.a/stage0",
+    "marker": "gap changed",
+    "caught": true
+  }
+]

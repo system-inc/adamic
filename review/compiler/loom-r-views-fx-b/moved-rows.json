@@ -1,0 +1,55 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b/rows-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "^TestMovedCounts_",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 38.544,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestMovedCounts_lane1_interfaces_good",
+      "Action": "pass",
+      "Elapsed": 11.1
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestMovedCounts_untagged_fixtures_option_element_source_good",
+      "Action": "pass",
+      "Elapsed": 11.25
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestMovedCounts_visitor",
+      "Action": "pass",
+      "Elapsed": 11.25
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestMovedCounts_untagged_fixtures_binding_name_source_good",
+      "Action": "pass",
+      "Elapsed": 11.84
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestMovedCounts_lane1_objects_good",
+      "Action": "pass",
+      "Elapsed": 0.85
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestMovedCounts_untagged_fixtures_structural_source_good",
+      "Action": "pass",
+      "Elapsed": 0.76
+    }
+  ]
+}

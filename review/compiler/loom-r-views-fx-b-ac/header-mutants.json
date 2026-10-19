@@ -1,0 +1,18 @@
+[
+  {
+    "mutant": "removed-header",
+    "path": "stage3/fixtures/entries/06_symbol_key.a",
+    "caught": true,
+    "failure": "a-check failed for 1 file:\nstage3/fixtures/entries/06_symbol_key.a: refused, expected checked (adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: Adamic 0.1 refuses Object enumeration with symbol keys; use own string-keyed data properties)",
+    "predicate": "unchanged Gate.aCheck at fbac28c62493f27a788edc02a18bc8edb68de5da",
+    "diagnostics": "captured real compiler output after headers"
+  },
+  {
+    "mutant": "wrong-reason",
+    "path": "stage3/fixtures/entries/06_symbol_key.a",
+    "caught": true,
+    "failure": "a-check failed for 1 file:\nstage3/fixtures/entries/06_symbol_key.a: refused, expected refused deliberate wrong reason mutant (adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: Adamic 0.1 refuses Object enumeration with symbol keys; use own string-keyed data properties)",
+    "predicate": "unchanged Gate.aCheck at fbac28c62493f27a788edc02a18bc8edb68de5da",
+    "diagnostics": "captured real compiler output after headers"
+  }
+]
