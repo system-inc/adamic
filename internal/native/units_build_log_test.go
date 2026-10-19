@@ -124,3 +124,20 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 	}
 	t.Logf("%d units: off, miss and hit each logged once a unit with one link, and five binaries the same bytes", len(units))
 }
+
+// A name holding whitespace is one field of one line: an output path with a tab or a newline in it can't split the line
+// or forge a second. Mutant: replacing spaces alone, as record does.
+//
+// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG for the process.
+func TestBuildLogKeepsANameOnOneLine(t *testing.T) {
+	log := filepath.Join(t.TempDir(), "build.log")
+	t.Setenv("ADAMIC_BUILD_LOG", log)
+	buildLog("cLink", "a b\tc\ncCompile forged 0123456789ab hit 9.000", "", "off", time.Second)
+	written, err := os.ReadFile(log)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := "cLink a_b_c_cCompile_forged_0123456789ab_hit_9.000 - off 1.000\n"; string(written) != want {
+		t.Fatalf("wrote %q, want %q", written, want)
+	}
+}
