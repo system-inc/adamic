@@ -1,6 +1,7 @@
 package flow
 
 import (
+	"maps"
 	"reflect"
 	"slices"
 
@@ -90,6 +91,9 @@ func (s *shape) merge(other shape) {
 // each variable holds.
 func (n *inference) run() {
 	exits := map[BlockId]map[DeclarationId]IdentifierId{}
+	// thrown is what a block ending in MayThrow hands its handler: the values from before its last
+	// instruction, whose definitions a throw never made.
+	thrown := map[BlockId]map[DeclarationId]IdentifierId{}
 	for _, parameter := range n.function.Params {
 		n.escaped[parameter.Identifier] = true
 	}
@@ -103,7 +107,11 @@ func (n *inference) run() {
 		// A variable's value on entry is the same from every predecessor already walked, or there'd
 		// be a phi; a predecessor not yet walked is a back edge, whose value a phi carries.
 		for _, predecessor := range block.Predecessors {
-			for variable, value := range exits[predecessor] {
+			from := exits[predecessor]
+			if walked, ok := n.function.Block(predecessor); ok && throwsTo(walked, block.Id) {
+				from = thrown[predecessor]
+			}
+			for variable, value := range from {
 				n.current[variable] = value
 			}
 		}
@@ -115,7 +123,13 @@ func (n *inference) run() {
 				}
 			}
 		}
-		for _, id := range block.Instructions {
+		_, endsInThrow := block.Terminal.(*MayThrow)
+		for position, id := range block.Instructions {
+			// run1 changes current only by the instruction's definitions, last, so what it holds now
+			// is what a throw out of this instruction leaves.
+			if endsInThrow && position == len(block.Instructions)-1 {
+				thrown[block.Id] = maps.Clone(n.current)
+			}
 			n.list = nil
 			n.instruction = id
 			n.run1(n.function.Instructions[id])

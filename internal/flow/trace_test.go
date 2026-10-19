@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -445,6 +446,70 @@ func checkLivenessProgram(t *testing.T, path string) {
 		t.Error("nothing was checked in the witness program")
 	}
 	t.Logf("%d variable-and-point pairs checked", count)
+	// The same run, read forward: which definition each use read on Node. It rides on liveness's
+	// trace rather than a family of its own, since both ask what a throw left behind.
+	checkDefinitionsRan(t, path, run)
+}
+
+// Every use names the definition Node ran: following a call's points forward, the definitions of a
+// variable that took effect last (an instruction that threw made none, threw says when) are among
+// the sites the use's value comes to, through any phis. A catch that reads a variable a throwing
+// call never assigned reads its old value on Node, and single assignment has to name that one.
+// Reaching definitions (flow_test.go) is computed over the same graph; this holds it to the run.
+func checkDefinitionsRan(t *testing.T, path string, run run) {
+	t.Helper()
+	count := 0
+	for _, sequence := range frames(run) {
+		graph := run.graphs[sequence.function]
+		throwers := throwingInstructions(graph)
+		named := definitionSites(graph)
+		declaration := func(place Place) DeclarationId { return graph.Identifiers[place.Identifier].Declaration }
+		// ran is, per variable, the definitions that may have run last: one, unless an instruction
+		// that may throw was followed by a point both its ways lead to, and then either.
+		ran := map[DeclarationId][]site{}
+		for index, parameter := range graph.Params {
+			ran[declaration(parameter)] = []site{{-1, index}}
+		}
+		for position, id := range sequence.points {
+			instruction := graph.Instructions[id]
+			for _, use := range instruction.Uses {
+				last, ok := ran[declaration(use)]
+				if !ok {
+					t.Errorf("function %d (%s): instruction %d reads %s before any definition of it ran", sequence.function, graph.Name, id, graph.PlaceString(use))
+					continue
+				}
+				count++
+				sites := named.of(use.Identifier)
+				for _, each := range last {
+					if !slices.Contains(sites, each) {
+						t.Errorf("function %d (%s): %s in instruction %d names %v, but the definition that ran is %v", sequence.function, graph.Name, graph.PlaceString(use), id, sites, each)
+					}
+				}
+			}
+			if len(instruction.Defines) == 0 {
+				continue
+			}
+			made := !threw(graph, throwers, sequence.points, position)
+			either := false
+			if throws, ok := throwers[id]; ok && !made && position+1 < len(sequence.points) {
+				next := sequence.points[position+1]
+				either = leadsTo(graph, throws.Next, next) && leadsTo(graph, throws.Handler, next)
+			}
+			for index, define := range instruction.Defines {
+				variable := declaration(define)
+				switch {
+				case made:
+					ran[variable] = []site{{int(id), index}}
+				case either:
+					ran[variable] = append(slices.Clone(ran[variable]), site{int(id), index})
+				}
+			}
+		}
+	}
+	if (path == "../oracle/testdata/throw_keeps_old_value.a" || path == "testdata/throws.a") && count == 0 {
+		t.Error("no use was checked in the witness program")
+	}
+	t.Logf("%d uses held to the definition that ran", count)
 }
 
 // throwingInstructions is, for each instruction that ends a block by maybe throwing, its terminal.

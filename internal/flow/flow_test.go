@@ -204,6 +204,9 @@ func reachingDefinitions(graph *Function) reaching {
 		entryState[declaration(parameter)] = []site{{instruction: -1, index: index}}
 	}
 	exits := map[BlockId]state{}
+	// thrown is what a block ending in MayThrow hands its handler: what reached its last instruction,
+	// since a throw out of it never makes its definitions.
+	thrown := map[BlockId]state{}
 	result := reaching{}
 	for changed := true; changed; {
 		changed = false
@@ -213,12 +216,26 @@ func reachingDefinitions(graph *Function) reaching {
 				merge(current, entryState)
 			}
 			for _, predecessor := range block.Predecessors {
+				from, _ := graph.Block(predecessor)
+				if throws, ok := from.Terminal.(*MayThrow); ok && throws.Handler == block.Id {
+					merge(current, thrown[predecessor])
+					continue
+				}
 				merge(current, exits[predecessor])
 			}
-			for _, id := range block.Instructions {
+			_, endsInThrow := block.Terminal.(*MayThrow)
+			for position, id := range block.Instructions {
 				instruction := graph.Instructions[id]
 				for index, use := range instruction.Uses {
 					result[site{int(id), index}] = slices.Clone(current[declaration(use)])
+				}
+				if endsInThrow && position == len(block.Instructions)-1 {
+					if thrown[block.Id] == nil {
+						thrown[block.Id] = state{}
+					}
+					if merge(thrown[block.Id], current) {
+						changed = true
+					}
 				}
 				for index, define := range instruction.Defines {
 					current[declaration(define)] = []site{{int(id), index}}
@@ -242,41 +259,7 @@ func reachingDefinitions(graph *Function) reaching {
 // they name, come to exactly those sites.
 func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 	t.Helper()
-	definedBy := map[IdentifierId]site{}
-	for index, parameter := range graph.Params {
-		definedBy[parameter.Identifier] = site{-1, index}
-	}
-	phis := map[IdentifierId]*Phi{}
-	for _, block := range graph.Blocks {
-		for _, phi := range block.Phis {
-			phis[phi.Place.Identifier] = phi
-		}
-		for _, id := range block.Instructions {
-			for index, define := range graph.Instructions[id].Defines {
-				definedBy[define.Identifier] = site{int(id), index}
-			}
-		}
-	}
-	var sitesOf func(value IdentifierId, seen map[IdentifierId]bool) []site
-	sitesOf = func(value IdentifierId, seen map[IdentifierId]bool) []site {
-		if each, ok := definedBy[value]; ok {
-			return []site{each}
-		}
-		phi, ok := phis[value]
-		if !ok || seen[value] {
-			return nil
-		}
-		seen[value] = true
-		var sites []site
-		for _, predecessor := range PhiOperandsInOrder(phi) {
-			for _, each := range sitesOf(phi.Operands[predecessor].Identifier, seen) {
-				if !slices.Contains(sites, each) {
-					sites = append(sites, each)
-				}
-			}
-		}
-		return sites
-	}
+	sitesOf := definitionSites(graph)
 	order := func(sites []site) string {
 		text := make([]string, len(sites))
 		for index, each := range sites {
@@ -293,8 +276,8 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 					t.Errorf("%s: %s in instruction %d reads a variable nothing defines", where, graph.PlaceString(use), id)
 					continue
 				}
-				_, isPhi := phis[use.Identifier]
-				got := sitesOf(use.Identifier, map[IdentifierId]bool{})
+				isPhi := sitesOf.isPhi(use.Identifier)
+				got := sitesOf.of(use.Identifier)
 				switch {
 				case len(expected) == 1 && (isPhi || order(got) != order(expected)):
 					t.Errorf("%s: %s in instruction %d names %v, want the one definition that reaches it, %v", where, graph.PlaceString(use), id, got, expected)
@@ -304,6 +287,63 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			}
 		}
 	}
+}
+
+// definitions says, of a constructed graph's values, which sites each comes to: a parameter's or an
+// instruction's value is its own site, and a phi's is every site its operands come to, followed
+// through any phis they name.
+type definitions struct {
+	definedBy map[IdentifierId]site
+	phis      map[IdentifierId]*Phi
+}
+
+func definitionSites(graph *Function) definitions {
+	definedBy := map[IdentifierId]site{}
+	for index, parameter := range graph.Params {
+		definedBy[parameter.Identifier] = site{-1, index}
+	}
+	phis := map[IdentifierId]*Phi{}
+	for _, block := range graph.Blocks {
+		for _, phi := range block.Phis {
+			phis[phi.Place.Identifier] = phi
+		}
+		for _, id := range block.Instructions {
+			for index, define := range graph.Instructions[id].Defines {
+				definedBy[define.Identifier] = site{int(id), index}
+			}
+		}
+	}
+	return definitions{definedBy: definedBy, phis: phis}
+}
+
+func (s definitions) isPhi(value IdentifierId) bool {
+	_, ok := s.phis[value]
+	return ok
+}
+
+// of is every site a value comes to.
+func (s definitions) of(value IdentifierId) []site {
+	return s.walk(value, map[IdentifierId]bool{})
+}
+
+func (s definitions) walk(value IdentifierId, seen map[IdentifierId]bool) []site {
+	if each, ok := s.definedBy[value]; ok {
+		return []site{each}
+	}
+	phi, ok := s.phis[value]
+	if !ok || seen[value] {
+		return nil
+	}
+	seen[value] = true
+	var found []site
+	for _, predecessor := range PhiOperandsInOrder(phi) {
+		for _, each := range s.walk(phi.Operands[predecessor].Identifier, seen) {
+			if !slices.Contains(found, each) {
+				found = append(found, each)
+			}
+		}
+	}
+	return found
 }
 
 // These constructor fixtures deliberately assert NotYet and never enter the oracle's runnable set.

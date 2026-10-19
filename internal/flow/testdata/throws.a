@@ -1,0 +1,104 @@
+// Every way a throw leaves a variable its old value, each printing what it saw so the program means
+// something on Node too: a catch that reads what a throwing call never assigned, one that writes into
+// the old object, a do...while whose first instruction throws (with and without reading the variable
+// it assigns), a finally reached both ways, and a declaration inside a try a catch never reads.
+type Box = { value: number; label: string };
+
+function make(value: number, fail: boolean): Box {
+	if (fail) {
+		throw new Error(`make${value}`);
+	}
+	return { value: value, label: `made${value}` };
+}
+
+function grow(box: Box, fail: boolean): Box {
+	if (fail) {
+		throw new Error(`grow${box.value}`);
+	}
+	return { value: box.value + 1, label: `grown${box.value + 1}` };
+}
+
+function readsOld(): string {
+	let box: Box = make(1, false);
+	try {
+		box = make(2, true);
+	} catch (error) {
+		return `reads old: ${box.value} ${box.label}`;
+	}
+	return `kept: ${box.value}`;
+}
+
+function writesOld(): number {
+	let box: Box = make(3, false);
+	const alias = box;
+	try {
+		box = make(4, true);
+	} catch (error) {
+		box.value = 30;
+	}
+	return alias.value + box.value;
+}
+
+function headerReads(limit: number): string {
+	let box: Box = make(5, false);
+	let count = 0;
+	try {
+		do {
+			box = grow(box, box.value >= limit);
+			count++;
+		} while (count < 10);
+	} catch (error) {
+		return `header reads: ${box.value} ${count}`;
+	}
+	return `header done: ${box.value}`;
+}
+
+function headerDefines(): string {
+	let box: Box = make(0, false);
+	let count = 0;
+	try {
+		do {
+			box = make(count + 10, count >= 2);
+			count++;
+		} while (count < 10);
+	} catch (error) {
+		return `header defines: ${box.value} ${count}`;
+	}
+	return `header defined: ${box.value}`;
+}
+
+function inFinally(fail: boolean): string {
+	let box: Box = make(6, false);
+	let seen = '';
+	try {
+		try {
+			box = make(7, fail);
+		} finally {
+			seen = `finally ${box.value}`;
+		}
+	} catch (error) {
+		return `${seen}, caught ${box.value}`;
+	}
+	return `${seen}, kept ${box.value}`;
+}
+
+function declaresInTry(): string {
+	let total = 0;
+	for (let index = 0; index < 3; index++) {
+		try {
+			const fresh = make(index, index === 1);
+			total += fresh.value;
+		} catch (error) {
+			total += 100;
+		}
+	}
+	return `declares: ${total}`;
+}
+
+console.log(readsOld());
+console.log(writesOld());
+console.log(headerReads(7));
+console.log(headerDefines());
+console.log(inFinally(true));
+console.log(inFinally(false));
+console.log(declaresInTry());
