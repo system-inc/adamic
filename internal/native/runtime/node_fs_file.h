@@ -23,6 +23,8 @@ double adamic_fs_file_utimes(const adamic_string *, double, double);
 double adamic_fs_file_utimes_dates(const adamic_string *, const adamic_object *, const adamic_object *);
 double adamic_fs_file_utimes_atime_date(const adamic_string *, const adamic_object *, double);
 double adamic_fs_file_utimes_mtime_date(const adamic_string *, double, const adamic_object *);
+bool adamic_fs_file_is_stats(const adamic_object *);
+bool adamic_fs_file_stat_is(const adamic_object *, const char *);
 bool adamic_fs_file_is_file(const adamic_object *);
 bool adamic_fs_file_is_directory(const adamic_object *);
 bool adamic_fs_file_is_symbolic_link(const adamic_object *);
@@ -37,5 +39,7 @@ adamic_string *adamic_fs_file_host_tmpdir(void);
 double adamic_fs_file_host_chdir(const adamic_string *);
 #endif
 
-// Translate the saved host realpath errno; no other operation uses this error variant.
+// Translate realpath errors through the shared native/walk error variant.
 void adamic_fs_file_realpath_error(const adamic_string *);
+
+void adamic_fs_file_realpath_walk_error(const adamic_string *, int, const char *);
