@@ -75,6 +75,10 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				}
 				return
 			}
+			backendRun := onJavaScriptBackend(t, lowered)
+			if backendRun.exitCode != 0 || string(backendRun.stdout) != gap.stdout {
+				t.Errorf("JavaScript backend: exit %d, stdout %q, stderr %q; Node prints %q", backendRun.exitCode, backendRun.stdout, backendRun.stderr, gap.stdout)
+			}
 			nativeRun, sanitized := natively(t, lowered)
 			if nativeRun.exitCode != 0 || string(nativeRun.stdout) != gap.stdout {
 				t.Errorf("natively: exit %d, stdout %q, stderr %q; Node prints %q", nativeRun.exitCode, nativeRun.stdout, nativeRun.stderr, gap.stdout)

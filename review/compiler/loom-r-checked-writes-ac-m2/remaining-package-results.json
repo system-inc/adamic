@@ -1,0 +1,246 @@
+[
+  {
+    "package": "internal/flow",
+    "selection": null,
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/flow",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "exit": 0,
+    "wall_seconds": 69.421,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:47:37.71959183Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/flow",
+        "Elapsed": 67.095
+      }
+    ],
+    "test_events": 905,
+    "max_leaf_seconds": 16.16,
+    "over_budget": [],
+    "log": "package-04.log"
+  },
+  {
+    "package": "internal/fresh",
+    "selection": null,
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/fresh",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "exit": 0,
+    "wall_seconds": 15.193,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:47:52.914422664Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/fresh",
+        "Elapsed": 13.316
+      }
+    ],
+    "test_events": 936,
+    "max_leaf_seconds": 2.1,
+    "over_budget": [],
+    "log": "package-05.log"
+  },
+  {
+    "package": "internal/regexp",
+    "selection": null,
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./internal/regexp",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "exit": 0,
+    "wall_seconds": 12.94,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:48:05.961316345Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/regexp",
+        "Elapsed": 9.105
+      }
+    ],
+    "test_events": 128,
+    "max_leaf_seconds": 3.57,
+    "over_budget": [],
+    "log": "package-06.log"
+  },
+  {
+    "package": "cmd/adamic",
+    "selection": "^TestProduct_CommandRuntime",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s",
+      "-run",
+      "^TestProduct_CommandRuntime"
+    ],
+    "exit": 0,
+    "wall_seconds": 7.269,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:48:13.230270075Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 2.065
+      }
+    ],
+    "test_events": 5,
+    "max_leaf_seconds": 2.06,
+    "over_budget": [],
+    "log": "package-07.log"
+  },
+  {
+    "package": "cmd/adamic",
+    "selection": null,
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "exit": 0,
+    "wall_seconds": 15.183,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:48:28.413138677Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 13.517
+      }
+    ],
+    "test_events": 100,
+    "max_leaf_seconds": 3.51,
+    "over_budget": [],
+    "log": "package-08.log"
+  },
+  {
+    "package": "stage1/cohere/values/oracles",
+    "selection": "^TestProduct_ValuesGoOracle$",
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./stage1/cohere/values/oracles",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s",
+      "-run",
+      "^TestProduct_ValuesGoOracle$"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.955,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:48:29.374007238Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values/oracles",
+        "Elapsed": 0.558
+      }
+    ],
+    "test_events": 1,
+    "max_leaf_seconds": 0.55,
+    "over_budget": [],
+    "log": "package-09.log"
+  },
+  {
+    "package": "stage1/cohere/values",
+    "selection": null,
+    "command": [
+      "timeout",
+      "570",
+      "go",
+      "test",
+      "./stage1/cohere/values",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=540s"
+    ],
+    "exit": 0,
+    "wall_seconds": 24.154,
+    "packages": [
+      {
+        "Time": "2026-10-18T23:48:53.521274582Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/values",
+        "Elapsed": 19.111
+      }
+    ],
+    "test_events": 28,
+    "max_leaf_seconds": 4.25,
+    "over_budget": [],
+    "log": "package-10.log"
+  },
+  {
+    "package": "internal/oracle",
+    "selection": null,
+    "command": [
+      "timeout",
+      "1230",
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-p=1",
+      "-parallel=4",
+      "-json",
+      "-timeout=1200s"
+    ],
+    "exit": 0,
+    "wall_seconds": 541.345,
+    "packages": [
+      {
+        "Time": "2026-10-19T00:01:00.472999481Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Elapsed": 536.069
+      }
+    ],
+    "test_events": 5543,
+    "max_leaf_seconds": 32.73,
+    "over_budget": [],
+    "log": "package-11.log"
+  }
+]

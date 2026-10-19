@@ -1,0 +1,1220 @@
+[
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainChecksDriver",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_container_number_misfit",
+    "action": "pass",
+    "seconds": 3.96
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_overload_callback_misfit",
+    "action": "pass",
+    "seconds": 4
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_emit_node_misfit",
+    "action": "pass",
+    "seconds": 4.04
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_optional_boolean_misfit",
+    "action": "pass",
+    "seconds": 4.14
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_overload_result_misfit",
+    "action": "pass",
+    "seconds": 5.52
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_flow_node_misfit",
+    "action": "pass",
+    "seconds": 6.02
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_number_misfit",
+    "action": "pass",
+    "seconds": 6.05
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_container_fill_misfit",
+    "action": "pass",
+    "seconds": 6.12
+  },
+  {
+    "package": "./cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_container_map_misfit",
+    "action": "pass",
+    "seconds": 2.51
+  },
+  {
+    "package": "./internal/lower",
+    "test": "TestCheckedSignatureEveryReceivingOverload",
+    "action": "pass",
+    "seconds": 0.2
+  },
+  {
+    "package": "./internal/lower",
+    "test": "TestCheckedSignatureInstantiation",
+    "action": "pass",
+    "seconds": 0.22
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsWeakerContract",
+    "action": "pass",
+    "seconds": 17.97
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestObjectMetadataCheckedWritesIsPerEmission",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsLiteral",
+    "action": "pass",
+    "seconds": 18.02
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsWrongElement",
+    "action": "pass",
+    "seconds": 18.08
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestObjectMetadataCacheIsPerEmission",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeFieldLayoutsAreIncluded",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRegExpIteratorResultShape",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeCheckedLibraryPushRejectsLiteral",
+    "action": "pass",
+    "seconds": 0.39
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayKeepsContract",
+    "action": "pass",
+    "seconds": 0.46
+  },
+  {
+    "package": "./internal/native",
+    "test": "TestRuntimeCheckedLibraryPush",
+    "action": "pass",
+    "seconds": 24.38
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessage15",
+    "action": "pass",
+    "seconds": 19.23
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessage13",
+    "action": "pass",
+    "seconds": 19.22
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeReferenceArrayLaterWriter",
+    "action": "pass",
+    "seconds": 19.55
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeRegexFields",
+    "action": "pass",
+    "seconds": 20
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeDirectoryFields",
+    "action": "pass",
+    "seconds": 1.62
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeStatusFields",
+    "action": "pass",
+    "seconds": 1.7
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeFSFields",
+    "action": "pass",
+    "seconds": 1.68
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeSetFields",
+    "action": "pass",
+    "seconds": 1.77
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessageMutant16",
+    "action": "pass",
+    "seconds": 1
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWritesAdamicRefuses",
+    "action": "pass",
+    "seconds": 0.75
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedRuntimeMapFields",
+    "action": "pass",
+    "seconds": 1.68
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWritesProvenAdamic",
+    "action": "pass",
+    "seconds": 1.37
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessageMutant03",
+    "action": "pass",
+    "seconds": 1.21
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessageMutant13",
+    "action": "pass",
+    "seconds": 0.87
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessageMutant15",
+    "action": "pass",
+    "seconds": 0.98
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessage02",
+    "action": "pass",
+    "seconds": 1.03
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessage03",
+    "action": "pass",
+    "seconds": 0.8
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextAdamicRefusals",
+    "action": "pass",
+    "seconds": 0.35
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWriteMessage16",
+    "action": "pass",
+    "seconds": 0.75
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextProvenAdamic",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_required_boolean_misfit",
+    "action": "pass",
+    "seconds": 5.76
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_required_boolean_fit",
+    "action": "pass",
+    "seconds": 6.34
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_start_fit",
+    "action": "pass",
+    "seconds": 6.57
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_callback_fit",
+    "action": "pass",
+    "seconds": 6.6
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_boolean_misfit",
+    "action": "pass",
+    "seconds": 1.02
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_callback_misfit",
+    "action": "pass",
+    "seconds": 0.97
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_file_misfit",
+    "action": "pass",
+    "seconds": 1.17
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_boolean_fit",
+    "action": "pass",
+    "seconds": 1.57
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_file_fit",
+    "action": "pass",
+    "seconds": 1.69
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_false_misfit",
+    "action": "pass",
+    "seconds": 1.14
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_number_misfit",
+    "action": "pass",
+    "seconds": 1.49
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_false_fit",
+    "action": "pass",
+    "seconds": 1.73
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
+    "action": "pass",
+    "seconds": 0.09
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWritesProvenContainers",
+    "action": "pass",
+    "seconds": 1.6
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitProvenAdamic",
+    "action": "pass",
+    "seconds": 2.14
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedNeverContractMutant",
+    "action": "pass",
+    "seconds": 1.38
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_length_misfit",
+    "action": "pass",
+    "seconds": 1.44
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_number_fit",
+    "action": "pass",
+    "seconds": 1.52
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_start_misfit",
+    "action": "pass",
+    "seconds": 1.03
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_length_fit",
+    "action": "pass",
+    "seconds": 1.37
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_values_misfit",
+    "action": "pass",
+    "seconds": 10.19
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_auto_misfit",
+    "action": "pass",
+    "seconds": 10.32
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_callback_fit",
+    "action": "pass",
+    "seconds": 10.91
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_string_fit",
+    "action": "pass",
+    "seconds": 11.08
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_slice_misfit",
+    "action": "pass",
+    "seconds": 1.47
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_values_fit",
+    "action": "pass",
+    "seconds": 2.31
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_node_fit",
+    "action": "pass",
+    "seconds": 1.86
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_slice_fit",
+    "action": "pass",
+    "seconds": 2.27
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_node_misfit",
+    "action": "pass",
+    "seconds": 1.6
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_auto_fit",
+    "action": "pass",
+    "seconds": 2.48
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_result_misfit",
+    "action": "pass",
+    "seconds": 1.6
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_callback_misfit",
+    "action": "pass",
+    "seconds": 2.06
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_resolution_misfit",
+    "action": "pass",
+    "seconds": 1.64
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_comment_misfit",
+    "action": "pass",
+    "seconds": 1.52
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_resolution_fit",
+    "action": "pass",
+    "seconds": 2.62
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_generic_site_misfit",
+    "action": "pass",
+    "seconds": 1.45
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_comment_fit",
+    "action": "pass",
+    "seconds": 2.44
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_result_fit",
+    "action": "pass",
+    "seconds": 2.17
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_string_misfit",
+    "action": "pass",
+    "seconds": 1.49
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_generic_site_fit",
+    "action": "pass",
+    "seconds": 2.14
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_splice_misfit",
+    "action": "pass",
+    "seconds": 9.92
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_number_misfit",
+    "action": "pass",
+    "seconds": 10.11
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_boolean_fit",
+    "action": "pass",
+    "seconds": 10.72
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_string_fit",
+    "action": "pass",
+    "seconds": 10.91
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_alias_misfit",
+    "action": "pass",
+    "seconds": 1.77
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_number_fit",
+    "action": "pass",
+    "seconds": 2.38
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_object_misfit",
+    "action": "pass",
+    "seconds": 1.79
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_alias_fit",
+    "action": "pass",
+    "seconds": 2.69
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_fill_misfit",
+    "action": "pass",
+    "seconds": 1.43
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_object_fit",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_fill_fit",
+    "action": "pass",
+    "seconds": 1.93
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_boolean_misfit",
+    "action": "pass",
+    "seconds": 1.51
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_nested_misfit",
+    "action": "pass",
+    "seconds": 1.38
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_nested_fit",
+    "action": "pass",
+    "seconds": 1.99
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_fit",
+    "action": "pass",
+    "seconds": 2.03
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_misfit",
+    "action": "pass",
+    "seconds": 1.29
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_splice_fit",
+    "action": "pass",
+    "seconds": 2.21
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_object_misfit",
+    "action": "pass",
+    "seconds": 1.39
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_string_misfit",
+    "action": "pass",
+    "seconds": 1.48
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_container_object_fit",
+    "action": "pass",
+    "seconds": 1.73
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_number_misfit",
+    "action": "pass",
+    "seconds": 8.48
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_object_fit",
+    "action": "pass",
+    "seconds": 9.23
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_node_fit",
+    "action": "pass",
+    "seconds": 9.35
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_proof_fit",
+    "action": "pass",
+    "seconds": 9.46
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_alias_misfit",
+    "action": "pass",
+    "seconds": 1.19
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_object_misfit",
+    "action": "pass",
+    "seconds": 1.05
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_alias_fit",
+    "action": "pass",
+    "seconds": 1.7
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_nullable_fit",
+    "action": "pass",
+    "seconds": 1.5
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_number_fit",
+    "action": "pass",
+    "seconds": 1.51
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_wide_fit",
+    "action": "pass",
+    "seconds": 1.56
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_splice_misfit",
+    "action": "pass",
+    "seconds": 1.07
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_index_misfit",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_nullable_misfit",
+    "action": "pass",
+    "seconds": 0.97
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_undefined_misfit",
+    "action": "pass",
+    "seconds": 1.09
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_array_misfit",
+    "action": "pass",
+    "seconds": 1.03
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_array_fit",
+    "action": "pass",
+    "seconds": 1.62
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_undefined_fit",
+    "action": "pass",
+    "seconds": 1.85
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_node_misfit",
+    "action": "pass",
+    "seconds": 1.23
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_string_fit",
+    "action": "pass",
+    "seconds": 1.47
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_never_string_misfit",
+    "action": "pass",
+    "seconds": 0.88
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_inner_misfit",
+    "action": "pass",
+    "seconds": 9.08
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_proof_misfit",
+    "action": "pass",
+    "seconds": 9.12
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_nested_fit",
+    "action": "pass",
+    "seconds": 10.06
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flags_fit",
+    "action": "pass",
+    "seconds": 10.21
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_reference_structure",
+    "action": "pass",
+    "seconds": 1.1
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_related_misfit",
+    "action": "pass",
+    "seconds": 1.7
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_boolean_misfit",
+    "action": "pass",
+    "seconds": 1.49
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_number_misfit",
+    "action": "pass",
+    "seconds": 1.75
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_misfit",
+    "action": "pass",
+    "seconds": 1.23
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_number_fit",
+    "action": "pass",
+    "seconds": 1.9
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_string_misfit",
+    "action": "pass",
+    "seconds": 1.27
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_rich_misfit",
+    "action": "pass",
+    "seconds": 1.51
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_fit",
+    "action": "pass",
+    "seconds": 2.09
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_related_fit",
+    "action": "pass",
+    "seconds": 1.76
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_boolean_fit",
+    "action": "pass",
+    "seconds": 1.58
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_inner_fit",
+    "action": "pass",
+    "seconds": 1.53
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_string_fit",
+    "action": "pass",
+    "seconds": 1.83
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_rich_fit",
+    "action": "pass",
+    "seconds": 1.91
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_flags_misfit",
+    "action": "pass",
+    "seconds": 1.18
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_nested_misfit",
+    "action": "pass",
+    "seconds": 1.31
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+    "action": "pass",
+    "seconds": 13.52
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+    "action": "pass",
+    "seconds": 13.7
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_compound_fit",
+    "action": "pass",
+    "seconds": 13.84
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+    "action": "pass",
+    "seconds": 13.84
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+    "action": "pass",
+    "seconds": 2.15
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+    "action": "pass",
+    "seconds": 2.06
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+    "action": "pass",
+    "seconds": 2.29
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+    "action": "pass",
+    "seconds": 2.56
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+    "action": "pass",
+    "seconds": 2.31
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+    "action": "pass",
+    "seconds": 2.14
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWriteMutants_drop_literal_set",
+    "action": "pass",
+    "seconds": 2.32
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_receiver_fit",
+    "action": "pass",
+    "seconds": 3.04
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_parent_misfit",
+    "action": "pass",
+    "seconds": 1.87
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWriteMutants_drop_check",
+    "action": "pass",
+    "seconds": 2.22
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_nullable_number_misfit",
+    "action": "pass",
+    "seconds": 2
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_parent_fit",
+    "action": "pass",
+    "seconds": 2.37
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_range_misfit",
+    "action": "pass",
+    "seconds": 1.78
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_range_fit",
+    "action": "pass",
+    "seconds": 2.14
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_compound_misfit",
+    "action": "pass",
+    "seconds": 1.5
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedWiderWrites_nullable_number_fit",
+    "action": "pass",
+    "seconds": 2.04
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+    "action": "pass",
+    "seconds": 17.17
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+    "action": "pass",
+    "seconds": 17.63
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+    "action": "pass",
+    "seconds": 17.9
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+    "action": "pass",
+    "seconds": 17.91
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+    "action": "pass",
+    "seconds": 2.35
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+    "action": "pass",
+    "seconds": 2.6
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_node_misfit",
+    "action": "pass",
+    "seconds": 3.48
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_drop_check",
+    "action": "pass",
+    "seconds": 3.37
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+    "action": "pass",
+    "seconds": 2.68
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+    "action": "pass",
+    "seconds": 2.93
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+    "action": "pass",
+    "seconds": 3.22
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+    "action": "pass",
+    "seconds": 3.13
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_length_misfit",
+    "action": "pass",
+    "seconds": 3.37
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_start_misfit",
+    "action": "pass",
+    "seconds": 3.08
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_file_misfit",
+    "action": "pass",
+    "seconds": 3.18
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_required_boolean_misfit",
+    "action": "pass",
+    "seconds": 3.1
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_optional_false_misfit",
+    "action": "pass",
+    "seconds": 2.41
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+    "action": "pass",
+    "seconds": 2.37
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+    "action": "pass",
+    "seconds": 1.87
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+    "action": "pass",
+    "seconds": 2.26
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants/null",
+    "action": "pass",
+    "seconds": 6.27
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_overload_result_misfit",
+    "action": "pass",
+    "seconds": 12.32
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+    "action": "pass",
+    "seconds": 12.49
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_generic_site_misfit",
+    "action": "pass",
+    "seconds": 6.23
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestFamilyWrappersAreCurrent",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewsNextMutants_overload_callback_misfit",
+    "action": "pass",
+    "seconds": 12.53
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestFamiliesOwnEveryCaseOnce",
+    "action": "pass",
+    "seconds": 0.07
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants/int32",
+    "action": "pass",
+    "seconds": 0.89
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants/uint8",
+    "action": "pass",
+    "seconds": 0.78
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants/float64",
+    "action": "pass",
+    "seconds": 0.89
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants/undefined",
+    "action": "pass",
+    "seconds": 1
+  },
+  {
+    "package": "./internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+    "action": "pass",
+    "seconds": 1.91
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+    "action": "pass",
+    "seconds": 1.97
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+    "action": "pass",
+    "seconds": 1.97
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+    "action": "pass",
+    "seconds": 2
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+    "action": "pass",
+    "seconds": 0.16
+  },
+  {
+    "package": "./stage1/cohere/values",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/ir",
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/ir",
+    "test": "TestASortedMapIsNilWhereAPlainMapIs",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "./internal/ir",
+    "test": "TestAProgramIsTheSameBytesEveryTimeGobWritesIt",
+    "action": "pass",
+    "seconds": 0.02
+  }
+]

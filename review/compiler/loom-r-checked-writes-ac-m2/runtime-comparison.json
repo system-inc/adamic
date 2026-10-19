@@ -1,0 +1,13 @@
+{
+  "additional_signed_lines": [
+    [
+      "internal/native/runtime/exceptions.c",
+      "-static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};"
+    ],
+    [
+      "internal/native/runtime/exceptions.c",
+      "+static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL, NULL};"
+    ]
+  ],
+  "source_signed_lines_not_present": []
+}

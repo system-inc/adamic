@@ -1,0 +1,22 @@
+{"Time":"2026-10-18T00:15:21.585646353Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:15:21.591397406Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception"}
+{"Time":"2026-10-18T00:15:21.591458338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception","Output":"=== RUN   TestParallelMap_nested_exception\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:21.591483445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception","Output":"=== PAUSE TestParallelMap_nested_exception\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:21.591485889Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception"}
+{"Time":"2026-10-18T00:15:21.591487802Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception"}
+{"Time":"2026-10-18T00:15:21.591489945Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception","Output":"=== CONT  TestParallelMap_nested_exception\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:21.591565469Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan"}
+{"Time":"2026-10-18T00:15:21.591568584Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan","Output":"=== RUN   TestParallelMap_nested_exception/tsan\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:23.507279005Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan/nested_exception"}
+{"Time":"2026-10-18T00:15:23.507373838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan/nested_exception","Output":"=== RUN   TestParallelMap_nested_exception/tsan/nested_exception\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:23.571655399Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan/nested_exception","Output":"    parallel_test.go:121: harness threads=1 arguments=[nested_exception] runs=3 elapsed=64.186772ms\n"}
+{"Time":"2026-10-18T00:15:23.714029145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan/nested_exception","Output":"    parallel_test.go:122: harness threads=4 arguments=[nested_exception] runs=3 elapsed=142.41615ms\n"}
+{"Time":"2026-10-18T00:15:23.714086442Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan/nested_exception","Output":"--- PASS: TestParallelMap_nested_exception/tsan/nested_exception (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:23.714091059Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan/nested_exception","Elapsed":0.21}
+{"Time":"2026-10-18T00:15:23.714164409Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan","Output":"--- PASS: TestParallelMap_nested_exception/tsan (2.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:23.714169818Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception/tsan","Elapsed":2.12}
+{"Time":"2026-10-18T00:15:23.714174004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception","Output":"--- PASS: TestParallelMap_nested_exception (2.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:23.714176047Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMap_nested_exception","Elapsed":2.12}
+{"Time":"2026-10-18T00:15:23.714177519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:23.715357288Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t2.129s\n"}
+{"Time":"2026-10-18T00:15:23.715401394Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":2.13}

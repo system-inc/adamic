@@ -1,0 +1,115 @@
+=== RUN   TestDocumentedStageZeroGaps
+=== PAUSE TestDocumentedStageZeroGaps
+=== RUN   TestClosedEmptyFallbackGap
+=== PAUSE TestClosedEmptyFallbackGap
+=== CONT  TestDocumentedStageZeroGaps
+=== RUN   TestDocumentedStageZeroGaps/multiplePush.ts
+=== PAUSE TestDocumentedStageZeroGaps/multiplePush.ts
+=== RUN   TestDocumentedStageZeroGaps/repeatInTry.ts
+=== PAUSE TestDocumentedStageZeroGaps/repeatInTry.ts
+=== CONT  TestDocumentedStageZeroGaps/multiplePush.ts
+=== CONT  TestDocumentedStageZeroGaps/repeatInTry.ts
+=== CONT  TestClosedEmptyFallbackGap
+=== NAME  TestDocumentedStageZeroGaps/multiplePush.ts
+    gaps_test.go:40: /workspace/adamic/stage1/cohere/json/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet; Node "a,b\n"
+=== NAME  TestDocumentedStageZeroGaps/repeatInTry.ts
+    gaps_test.go:40: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; Node "xxx\n"
+--- PASS: TestDocumentedStageZeroGaps (0.00s)
+    --- PASS: TestDocumentedStageZeroGaps/multiplePush.ts (0.83s)
+    --- PASS: TestDocumentedStageZeroGaps/repeatInTry.ts (0.89s)
+--- PASS: TestClosedEmptyFallbackGap (2.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	2.902s
+=== RUN   TestParserRepresentationProbes
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+=== PAUSE TestParserRepresentationProbes
+=== CONT  TestParserRepresentationProbes
+=== RUN   TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== PAUSE TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== RUN   TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== PAUSE TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== RUN   TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== PAUSE TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== RUN   TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== PAUSE TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== RUN   TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== PAUSE TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== RUN   TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== PAUSE TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== RUN   TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== PAUSE TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== RUN   TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== PAUSE TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== RUN   TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== PAUSE TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== RUN   TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== PAUSE TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== RUN   TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== PAUSE TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== RUN   TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== PAUSE TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== RUN   TestParserRepresentationProbes/gaps/15_string_or.ts
+=== PAUSE TestParserRepresentationProbes/gaps/15_string_or.ts
+=== RUN   TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== PAUSE TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== RUN   TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+=== PAUSE TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+=== CONT  TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== CONT  TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== CONT  TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+=== CONT  TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== CONT  TestParserRepresentationProbes/gaps/15_string_or.ts
+=== CONT  TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== CONT  TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== CONT  TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== CONT  TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== CONT  TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== CONT  TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== CONT  TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== CONT  TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== CONT  TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== CONT  TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+--- PASS: TestParserRepresentationProbes (0.01s)
+    --- PASS: TestParserRepresentationProbes/gaps/9_mixed_path_names.ts (0.94s)
+    --- PASS: TestParserRepresentationProbes/gaps/17_long_optional_chain.ts (0.95s)
+    --- PASS: TestParserRepresentationProbes/gaps/16_array_shift.ts (0.98s)
+    --- PASS: TestParserRepresentationProbes/gaps/10_multiple_push.ts (0.85s)
+    --- PASS: TestParserRepresentationProbes/gaps/1_recursive_state.ts (2.28s)
+    --- PASS: TestParserRepresentationProbes/gaps/15_string_or.ts (2.43s)
+    --- PASS: TestParserRepresentationProbes/gaps/4_structural_ranges.ts (0.61s)
+    --- PASS: TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts (1.91s)
+    --- PASS: TestParserRepresentationProbes/gaps/8_generic_callback_result.ts (0.74s)
+    --- PASS: TestParserRepresentationProbes/gaps/7_postfix_property.ts (0.68s)
+    --- PASS: TestParserRepresentationProbes/gaps/11_function_expression.ts (2.15s)
+    --- PASS: TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts (0.50s)
+    --- PASS: TestParserRepresentationProbes/gaps/5_conditional_panic.ts (1.51s)
+    --- PASS: TestParserRepresentationProbes/gaps/3_recursive_callable.ts (1.56s)
+    --- PASS: TestParserRepresentationProbes/gaps/14_missing_path_key.ts (3.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	6.469s
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts
+=== RUN   TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts
+=== PAUSE TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts
+=== CONT  TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts
+--- PASS: TestEachGapStandsWhereGapsMdSaysItDoes (0.00s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts (0.63s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts (1.42s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts (1.48s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts (1.61s)
+    --- PASS: TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts (1.78s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/values	1.809s

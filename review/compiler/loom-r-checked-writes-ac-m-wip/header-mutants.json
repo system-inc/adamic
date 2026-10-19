@@ -1,0 +1,48 @@
+[
+  {
+    "name": "removed-header",
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/directory.a",
+    "caught_by": "unchanged Gate.aCheck over captured real branch compiler diagnostics",
+    "exits": {
+      "a-check": 1
+    },
+    "failures": [
+      {
+        "step": "a-check",
+        "message": "a-check failed for 1 file:\ninternal/oracle/testdata/checked-runtime-fields_refused/directory.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly )"
+      }
+    ],
+    "observations": {
+      "a_check": {
+        "internal/oracle/testdata/checked-runtime-fields_refused/directory.a": {
+          "outcome": "refused",
+          "expected": "checked",
+          "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], w"
+        }
+      }
+    }
+  },
+  {
+    "name": "wrong-reason",
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/directory.a",
+    "caught_by": "unchanged Gate.aCheck over captured real branch compiler diagnostics",
+    "exits": {
+      "a-check": 1
+    },
+    "failures": [
+      {
+        "step": "a-check",
+        "message": "a-check failed for 1 file:\ninternal/oracle/testdata/checked-runtime-fields_refused/directory.a: refused, expected refused deliberately unrelated header mutant (adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly )"
+      }
+    ],
+    "observations": {
+      "a_check": {
+        "internal/oracle/testdata/checked-runtime-fields_refused/directory.a": {
+          "outcome": "refused",
+          "expected": "refused deliberately unrelated header mutant",
+          "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], w"
+        }
+      }
+    }
+  }
+]

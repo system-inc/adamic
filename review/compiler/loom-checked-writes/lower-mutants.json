@@ -1,0 +1,26 @@
+[
+  {
+    "name": "skip-signature-instantiation",
+    "overlay": "review/compiler/loom-checked-writes/skip-signature-instantiation.json",
+    "selector": "^TestCheckedSignatureInstantiation$",
+    "package": "./internal/lower"
+  },
+  {
+    "name": "disable-mapped-identity",
+    "overlay": "review/compiler/loom-checked-writes/disable-mapped-identity.json",
+    "selector": "^TestCheckedSignatureInstantiation$",
+    "package": "./internal/lower"
+  },
+  {
+    "name": "accept-optional-mapped-identity",
+    "overlay": "review/compiler/loom-checked-writes/accept-optional-mapped-identity.json",
+    "selector": "^TestCheckedSignatureInstantiation$",
+    "package": "./internal/lower"
+  },
+  {
+    "name": "skip-receiving-overloads",
+    "overlay": "review/compiler/loom-checked-writes/skip-receiving-overloads.json",
+    "selector": "^TestCheckedSignatureEveryReceivingOverload$",
+    "package": "./internal/lower"
+  }
+]

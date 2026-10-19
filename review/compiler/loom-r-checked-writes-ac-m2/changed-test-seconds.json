@@ -1,0 +1,1283 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCheckedLogicalAndDoesNotWidenTruthTestedLeft",
+    "action": "pass",
+    "seconds": 0.03,
+    "log": "package-01.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCheckedSignatureEveryReceivingOverload",
+    "action": "pass",
+    "seconds": 0.05,
+    "log": "package-01.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestCheckedSignatureInstantiation",
+    "action": "pass",
+    "seconds": 0.06,
+    "log": "package-01.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestObjectMetadataCheckedWritesIsPerEmission",
+    "action": "pass",
+    "seconds": 0,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCheckedLibraryPushRejectsLiteral",
+    "action": "pass",
+    "seconds": 0.17,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsWeakerContract",
+    "action": "pass",
+    "seconds": 0.19,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsLiteral",
+    "action": "pass",
+    "seconds": 0.22,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayRejectsWrongElement",
+    "action": "pass",
+    "seconds": 0.19,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCheckedReferenceArrayKeepsContract",
+    "action": "pass",
+    "seconds": 0.18,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestRuntimeCheckedLibraryPush",
+    "action": "pass",
+    "seconds": 0.37,
+    "log": "native-final.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_overload_callback_misfit",
+    "action": "pass",
+    "seconds": 1.73,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_overload_result_misfit",
+    "action": "pass",
+    "seconds": 1.7,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_optional_boolean_misfit",
+    "action": "pass",
+    "seconds": 1.69,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_container_fill_misfit",
+    "action": "pass",
+    "seconds": 1.7,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_container_map_misfit",
+    "action": "pass",
+    "seconds": 1.67,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_flow_node_misfit",
+    "action": "pass",
+    "seconds": 1.72,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_container_number_misfit",
+    "action": "pass",
+    "seconds": 1.73,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_number_misfit",
+    "action": "pass",
+    "seconds": 1.6,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/cmd/adamic",
+    "test": "TestExplainCheckedWritesOutput_emit_node_misfit",
+    "action": "pass",
+    "seconds": 1.67,
+    "log": "package-08.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessageMutant13",
+    "action": "pass",
+    "seconds": 3.24,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessageMutant03",
+    "action": "pass",
+    "seconds": 0.54,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessage16",
+    "action": "pass",
+    "seconds": 0.49,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessage15",
+    "action": "pass",
+    "seconds": 0.47,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessage13",
+    "action": "pass",
+    "seconds": 0.42,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessage03",
+    "action": "pass",
+    "seconds": 0.5,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessage02",
+    "action": "pass",
+    "seconds": 0.53,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextAdamicRefusals",
+    "action": "pass",
+    "seconds": 0.15,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextProvenAdamic",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeReferenceArrayLaterWriter",
+    "action": "pass",
+    "seconds": 0.51,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeStatusFields",
+    "action": "pass",
+    "seconds": 0.72,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeDirectoryFields",
+    "action": "pass",
+    "seconds": 0.7,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeFSFields",
+    "action": "pass",
+    "seconds": 0.66,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeSetFields",
+    "action": "pass",
+    "seconds": 0.69,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeRegexFields",
+    "action": "pass",
+    "seconds": 0.7,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedRuntimeMapFields",
+    "action": "pass",
+    "seconds": 0.72,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_overload_callback_misfit",
+    "action": "pass",
+    "seconds": 0.72,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_overload_result_misfit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_generic_site_misfit",
+    "action": "pass",
+    "seconds": 0.74,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+    "action": "pass",
+    "seconds": 0.63,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_length_misfit",
+    "action": "pass",
+    "seconds": 0.69,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_start_misfit",
+    "action": "pass",
+    "seconds": 0.75,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_branch_file_misfit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_required_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_optional_false_misfit",
+    "action": "pass",
+    "seconds": 0.64,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+    "action": "pass",
+    "seconds": 0.58,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+    "action": "pass",
+    "seconds": 0.61,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+    "action": "pass",
+    "seconds": 0.61,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+    "action": "pass",
+    "seconds": 0.64,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_drop_check",
+    "action": "pass",
+    "seconds": 0.57,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitContractsMutants_emit_node_misfit",
+    "action": "pass",
+    "seconds": 0.62,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+    "action": "pass",
+    "seconds": 0.57,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+    "action": "pass",
+    "seconds": 0.58,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+    "action": "pass",
+    "seconds": 0.55,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.52,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+    "action": "pass",
+    "seconds": 0.54,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+    "action": "pass",
+    "seconds": 0.57,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+    "action": "pass",
+    "seconds": 0.57,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+    "action": "pass",
+    "seconds": 0.52,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+    "action": "pass",
+    "seconds": 0.63,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+    "action": "pass",
+    "seconds": 0.62,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+    "action": "pass",
+    "seconds": 0.61,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+    "action": "pass",
+    "seconds": 0.56,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+    "action": "pass",
+    "seconds": 0.56,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+    "action": "pass",
+    "seconds": 0.58,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+    "action": "pass",
+    "seconds": 0.58,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+    "action": "pass",
+    "seconds": 0.58,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWriteMutants_drop_literal_set",
+    "action": "pass",
+    "seconds": 0.62,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWriteMutants_drop_check",
+    "action": "pass",
+    "seconds": 0.5,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_parent_misfit",
+    "action": "pass",
+    "seconds": 0.41,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_range_misfit",
+    "action": "pass",
+    "seconds": 0.48,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_parent_fit",
+    "action": "pass",
+    "seconds": 0.69,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_receiver_fit",
+    "action": "pass",
+    "seconds": 0.68,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_nullable_number_misfit",
+    "action": "pass",
+    "seconds": 0.46,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_range_fit",
+    "action": "pass",
+    "seconds": 0.75,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_nullable_number_fit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_compound_misfit",
+    "action": "pass",
+    "seconds": 0.48,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_number_misfit",
+    "action": "pass",
+    "seconds": 0.44,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_compound_fit",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_misfit",
+    "action": "pass",
+    "seconds": 0.44,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_number_fit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.44,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_fit",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_string_misfit",
+    "action": "pass",
+    "seconds": 0.44,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_boolean_fit",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flags_misfit",
+    "action": "pass",
+    "seconds": 0.41,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_string_fit",
+    "action": "pass",
+    "seconds": 0.69,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_reference_structure",
+    "action": "pass",
+    "seconds": 0.45,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flags_fit",
+    "action": "pass",
+    "seconds": 0.74,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_inner_misfit",
+    "action": "pass",
+    "seconds": 0.47,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_nested_misfit",
+    "action": "pass",
+    "seconds": 0.37,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_inner_fit",
+    "action": "pass",
+    "seconds": 0.69,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_related_misfit",
+    "action": "pass",
+    "seconds": 0.49,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_nested_fit",
+    "action": "pass",
+    "seconds": 0.73,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_rich_misfit",
+    "action": "pass",
+    "seconds": 0.45,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_related_fit",
+    "action": "pass",
+    "seconds": 0.7,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_proof_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_rich_fit",
+    "action": "pass",
+    "seconds": 0.78,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_alias_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_proof_fit",
+    "action": "pass",
+    "seconds": 0.72,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_object_misfit",
+    "action": "pass",
+    "seconds": 0.43,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_diagnostic_alias_fit",
+    "action": "pass",
+    "seconds": 0.71,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_object_fit",
+    "action": "pass",
+    "seconds": 0.61,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_string_misfit",
+    "action": "pass",
+    "seconds": 0.42,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_number_misfit",
+    "action": "pass",
+    "seconds": 0.43,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_string_fit",
+    "action": "pass",
+    "seconds": 0.64,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_wide_fit",
+    "action": "pass",
+    "seconds": 0.63,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_number_fit",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_splice_misfit",
+    "action": "pass",
+    "seconds": 0.43,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_index_misfit",
+    "action": "pass",
+    "seconds": 0.42,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_nullable_misfit",
+    "action": "pass",
+    "seconds": 0.43,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_array_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_never_nullable_fit",
+    "action": "pass",
+    "seconds": 0.63,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_undefined_misfit",
+    "action": "pass",
+    "seconds": 0.37,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_array_fit",
+    "action": "pass",
+    "seconds": 0.67,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_node_misfit",
+    "action": "pass",
+    "seconds": 0.35,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_undefined_fit",
+    "action": "pass",
+    "seconds": 0.64,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_nested_misfit",
+    "action": "pass",
+    "seconds": 0.35,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_object_misfit",
+    "action": "pass",
+    "seconds": 0.4,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_flow_node_fit",
+    "action": "pass",
+    "seconds": 0.78,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_nested_fit",
+    "action": "pass",
+    "seconds": 0.74,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_splice_misfit",
+    "action": "pass",
+    "seconds": 0.37,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_object_fit",
+    "action": "pass",
+    "seconds": 0.74,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_splice_fit",
+    "action": "pass",
+    "seconds": 0.66,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_number_misfit",
+    "action": "pass",
+    "seconds": 0.35,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_fit",
+    "action": "pass",
+    "seconds": 0.68,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_string_fit",
+    "action": "pass",
+    "seconds": 0.7,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_alias_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_number_fit",
+    "action": "pass",
+    "seconds": 0.65,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_object_misfit",
+    "action": "pass",
+    "seconds": 0.36,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_alias_fit",
+    "action": "pass",
+    "seconds": 0.73,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_fill_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.37,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_object_fit",
+    "action": "pass",
+    "seconds": 0.79,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_fill_fit",
+    "action": "pass",
+    "seconds": 0.7,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_boolean_fit",
+    "action": "pass",
+    "seconds": 0.75,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_values_misfit",
+    "action": "pass",
+    "seconds": 0.58,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_slice_misfit",
+    "action": "pass",
+    "seconds": 0.55,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_map_values_fit",
+    "action": "pass",
+    "seconds": 0.82,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_auto_misfit",
+    "action": "pass",
+    "seconds": 0.45,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_slice_fit",
+    "action": "pass",
+    "seconds": 0.72,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_node_misfit",
+    "action": "pass",
+    "seconds": 0.43,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_auto_fit",
+    "action": "pass",
+    "seconds": 0.75,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_callback_misfit",
+    "action": "pass",
+    "seconds": 0.46,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_resolution_misfit",
+    "action": "pass",
+    "seconds": 0.41,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_node_fit",
+    "action": "pass",
+    "seconds": 0.84,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_callback_fit",
+    "action": "pass",
+    "seconds": 0.81,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_comment_misfit",
+    "action": "pass",
+    "seconds": 0.41,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_resolution_fit",
+    "action": "pass",
+    "seconds": 0.78,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_result_misfit",
+    "action": "pass",
+    "seconds": 0.42,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_emit_comment_fit",
+    "action": "pass",
+    "seconds": 0.76,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_generic_site_misfit",
+    "action": "pass",
+    "seconds": 0.44,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_result_fit",
+    "action": "pass",
+    "seconds": 0.79,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_string_misfit",
+    "action": "pass",
+    "seconds": 0.38,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_generic_site_fit",
+    "action": "pass",
+    "seconds": 0.71,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_number_misfit",
+    "action": "pass",
+    "seconds": 0.42,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_string_fit",
+    "action": "pass",
+    "seconds": 0.77,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_length_misfit",
+    "action": "pass",
+    "seconds": 0.46,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_bottom_number_fit",
+    "action": "pass",
+    "seconds": 0.75,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_start_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_length_fit",
+    "action": "pass",
+    "seconds": 0.76,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_file_misfit",
+    "action": "pass",
+    "seconds": 0.42,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_start_fit",
+    "action": "pass",
+    "seconds": 0.72,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_false_misfit",
+    "action": "pass",
+    "seconds": 0.4,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_branch_file_fit",
+    "action": "pass",
+    "seconds": 0.74,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_required_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.39,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_false_fit",
+    "action": "pass",
+    "seconds": 0.7,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_boolean_misfit",
+    "action": "pass",
+    "seconds": 0.36,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_required_boolean_fit",
+    "action": "pass",
+    "seconds": 0.66,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_callback_misfit",
+    "action": "pass",
+    "seconds": 0.38,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_optional_boolean_fit",
+    "action": "pass",
+    "seconds": 0.68,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_overload_callback_fit",
+    "action": "pass",
+    "seconds": 0.77,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessageMutant15",
+    "action": "pass",
+    "seconds": 0.41,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWritesKeepSpreadOverrideRefusal",
+    "action": "pass",
+    "seconds": 0.02,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedNeverContractMutant",
+    "action": "pass",
+    "seconds": 0.44,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedEmitProvenAdamic",
+    "action": "pass",
+    "seconds": 0.62,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWritesAdamicRefuses",
+    "action": "pass",
+    "seconds": 0.19,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWritesProvenAdamic",
+    "action": "pass",
+    "seconds": 0.64,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWrites_container_string_misfit",
+    "action": "pass",
+    "seconds": 0.38,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWriteMessageMutant16",
+    "action": "pass",
+    "seconds": 0.4,
+    "log": "package-11.log"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCheckedWiderWritesProvenContainers",
+    "action": "pass",
+    "seconds": 0.71,
+    "log": "package-11.log"
+  }
+]

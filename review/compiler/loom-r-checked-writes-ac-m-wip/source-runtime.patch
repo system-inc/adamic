@@ -1,0 +1,374 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index f8273026..ce1d41d1 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -290,0 +291,20 @@ typedef struct adamic_methods adamic_methods;
++typedef struct adamic_field_contract {
++	bool nullish_only;
++	unsigned char kind;
++	bool nullable;
++	const char *declared;
++	size_t count;
++	const adamic_value *allowed;
++	int type_id;
++	bool reference;
++	bool structural;
++	size_t write_proof_count;
++	const int *write_proofs;
++	size_t field_proof_count;
++	const int *field_proofs;
++	size_t field_count;
++	const char *const *field_names;
++	const bool *field_optional;
++	const struct adamic_field_contract *field_contracts;
++} adamic_field_contract;
++
+@@ -295,0 +316,2 @@ typedef struct adamic_shape {
++	// Points one past a header entry whose type_id is the allocation type; NULL when absent.
++	const adamic_field_contract *contracts;
+@@ -504,0 +527,3 @@ typedef struct adamic_array {
++	bool never_elements;
++	const adamic_field_contract *element_contract;
++	int allocation_type;
+@@ -569,0 +595,2 @@ typedef struct adamic_map {
++	const adamic_field_contract *element_contract;
++	int allocation_type;
+@@ -743,0 +771 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double
++adamic_array *adamic_array_fill_checked(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end, unsigned char kind, const char *expression);
+@@ -1230,0 +1259,6 @@ void *adamic_library_identity(size_t index);
++void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, int source_type, const char *expression);
++
++void adamic_check_contract(const adamic_field_contract *, unsigned char, adamic_value, int, const char *);
++void adamic_map_check_contract(const adamic_map *, unsigned char, adamic_value, const char *);
++void adamic_array_check_never(const adamic_array *, unsigned char, adamic_value, const char *);
++
+diff --git a/internal/native/runtime/array.c b/internal/native/runtime/array.c
+index c194282f..c08e3442 100644
+--- a/internal/native/runtime/array.c
++++ b/internal/native/runtime/array.c
+@@ -15,0 +16,3 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
++	array->never_elements = false;
++	array->element_contract = NULL;
++	array->allocation_type = 0;
+@@ -27,0 +31,8 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
++void adamic_array_check_never(const adamic_array *array, unsigned char kind, adamic_value value, const char *expression) {
++	if (array->element_contract != NULL) { adamic_check_contract(array->element_contract, kind==0 ? array->element_contract->kind : kind, value, 0, expression); }
++	if (array->never_elements) {
++		static const adamic_field_contract contract = {.declared = "never"};
++		adamic_check_contract(&contract, kind, value, 0, expression);
++	}
++}
++
+@@ -28,0 +40 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
++	if (array->element_contract != NULL || array->never_elements) { adamic_array_check_never(array, 0, value, "array[]"); }
+@@ -281 +293 @@ adamic_array *adamic_array_filled(double length, adamic_value value, bool refere
+-adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end) {
++adamic_array *adamic_array_fill_checked(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end, unsigned char kind, const char *expression) {
+@@ -287,0 +300 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double
++	if (start < end && (array->element_contract != NULL || array->never_elements)) { adamic_array_check_never(array, kind, value, expression); }
+@@ -298,0 +312,4 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double
++adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end) {
++ return adamic_array_fill_checked(array, value, start, end, has_start, has_end, 0, "array[]");
++}
++
+@@ -301,0 +319,3 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
++	if (array->element_contract != NULL || array->never_elements) {
++		for (size_t item = 0; item < item_count; item++) { adamic_array_check_never(array, 0, items[item], "array[]"); }
++	}
+@@ -399,0 +420 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
++	if (array->element_contract != NULL || array->never_elements) { adamic_array_check_never(array, 0, value, "array[]"); }
+diff --git a/internal/native/runtime/async_host_impl.h b/internal/native/runtime/async_host_impl.h
+index 62f10ca9..c79522f2 100644
+--- a/internal/native/runtime/async_host_impl.h
++++ b/internal/native/runtime/async_host_impl.h
+@@ -226 +226 @@ static void host_settle(host_entry *entry) {
+-        static const adamic_shape shape = {2, names, references, NULL};
++        static const adamic_shape shape = {2, names, references, NULL, NULL};
+diff --git a/internal/native/runtime/directory.c b/internal/native/runtime/directory.c
+index e2a58f63..60484fd3 100644
+--- a/internal/native/runtime/directory.c
++++ b/internal/native/runtime/directory.c
+@@ -25,3 +25,3 @@ static const bool status_references[] = {true, true, false, false};
+-static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL};
+-static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL};
+-static const adamic_shape error_shape = {2, error_names, two_references, NULL};
++static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL, NULL};
++static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, NULL};
++static const adamic_shape error_shape = {2, error_names, two_references, NULL, NULL};
+@@ -171,0 +172,2 @@ adamic_object *adamic_file_status(const adamic_string *path) {
++	adamic_object_field_types(result)[2] = 1;
++	adamic_object_field_types(result)[3] = 2;
+diff --git a/internal/native/runtime/exceptions.c b/internal/native/runtime/exceptions.c
+index a4fc0890..8b943dc4 100644
+--- a/internal/native/runtime/exceptions.c
++++ b/internal/native/runtime/exceptions.c
+@@ -14 +14 @@ static const bool error_references[] = {true, true};
+-static const adamic_shape error_shape = {2, error_names, error_references, NULL};
++static const adamic_shape error_shape = {2, error_names, error_references, NULL, NULL};
+diff --git a/internal/native/runtime/input.c b/internal/native/runtime/input.c
+index 5a8143f7..2a70ed16 100644
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -188,2 +188,2 @@ static const bool both_references[] = {true, true};
+-static const adamic_shape ok_shape = {2, ok_names, both_references, NULL};
+-static const adamic_shape error_shape = {2, error_names, both_references, NULL};
++static const adamic_shape ok_shape = {2, ok_names, both_references, NULL, NULL};
++static const adamic_shape error_shape = {2, error_names, both_references, NULL, NULL};
+@@ -349 +349 @@ static const char *const written_names[] = {"kind"};
+-static const adamic_shape written_shape = {1, written_names, both_references, NULL};
++static const adamic_shape written_shape = {1, written_names, both_references, NULL, NULL};
+diff --git a/internal/native/runtime/library_object.c b/internal/native/runtime/library_object.c
+index d768d262..e9c862bf 100644
+--- a/internal/native/runtime/library_object.c
++++ b/internal/native/runtime/library_object.c
+@@ -118,2 +118,2 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
+- static const adamic_shape number_pair = {2, names, number_references, NULL};
+- static const adamic_shape string_pair = {2, names, string_references, NULL};
++ static const adamic_shape number_pair = {2, names, number_references, NULL, NULL};
++ static const adamic_shape string_pair = {2, names, string_references, NULL, NULL};
+@@ -165,2 +165,2 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected,
+- static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL};
+- static const adamic_shape string_pair = {2, checked_names, string_references, NULL};
++ static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL, NULL};
++ static const adamic_shape string_pair = {2, checked_names, string_references, NULL, NULL};
+diff --git a/internal/native/runtime/map.c b/internal/native/runtime/map.c
+index 715141f2..ae254d29 100644
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -25,0 +26,2 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
++	map->element_contract = NULL;
++	map->allocation_type = 0;
+@@ -171,0 +174,4 @@ adamic_value *adamic_map_get(const adamic_map *map, adamic_value key) {
++void adamic_map_check_contract(const adamic_map *map, unsigned char kind, adamic_value value, const char *expression) {
++	if (map->element_contract != NULL) { adamic_check_contract(map->element_contract, kind==0 ? map->element_contract->kind : kind, value, 0, expression); }
++}
++
+@@ -172,0 +179 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
++	if (map->element_contract != NULL) { adamic_map_check_contract(map, 0, value, "Map[value]"); }
+diff --git a/internal/native/runtime/map_set.c b/internal/native/runtime/map_set.c
+index 299fa10e..7aba68db 100644
+--- a/internal/native/runtime/map_set.c
++++ b/internal/native/runtime/map_set.c
+@@ -49 +49 @@ static const bool iterator_references[] = {true};
+-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL};
++static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, NULL};
+@@ -52 +52 @@ static const bool state_references[] = {true, false, false, false, false};
+-static const adamic_shape state_shape = {5, state_names, state_references, NULL};
++static const adamic_shape state_shape = {5, state_names, state_references, NULL, NULL};
+@@ -56 +56 @@ static const bool result_scalar[] = {false, false};
+-static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL}, {2, result_names, result_reference, NULL}};
++static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, NULL}, {2, result_names, result_reference, NULL, NULL}};
+@@ -59 +59 @@ static const bool pair_references[][2] = {{false, false}, {false, true}, {true,
+-static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL}, {2, pair_names, pair_references[1], NULL}, {2, pair_names, pair_references[2], NULL}, {2, pair_names, pair_references[3], NULL}};
++static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, NULL}, {2, pair_names, pair_references[1], NULL, NULL}, {2, pair_names, pair_references[2], NULL, NULL}, {2, pair_names, pair_references[3], NULL, NULL}};
+diff --git a/internal/native/runtime/node_crypto.c b/internal/native/runtime/node_crypto.c
+index b9af6161..31c9be51 100644
+--- a/internal/native/runtime/node_crypto.c
++++ b/internal/native/runtime/node_crypto.c
+@@ -63 +63 @@ static const bool references[] = {true, false};
+-static const adamic_shape shape = {2, names, references, NULL};
++static const adamic_shape shape = {2, names, references, NULL, NULL};
+diff --git a/internal/native/runtime/node_fs_file.c b/internal/native/runtime/node_fs_file.c
+index 517bbe06..6ca266c6 100644
+--- a/internal/native/runtime/node_fs_file.c
++++ b/internal/native/runtime/node_fs_file.c
+@@ -19 +19 @@ static const bool error_refs[] = {true, true, true};
+-static const adamic_shape error_shape = {3, error_fields, error_refs, NULL};
++static const adamic_shape error_shape = {3, error_fields, error_refs, NULL, NULL};
+@@ -399 +399 @@ static const bool date_refs[] = {false};
+-static const adamic_shape date_shape = {1, date_fields, date_refs, NULL};
++static const adamic_shape date_shape = {1, date_fields, date_refs, NULL, NULL};
+@@ -415 +415 @@ static const bool stat_refs[] = {false, false, true, false, true};
+-static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL};
++static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL, NULL};
+diff --git a/internal/native/runtime/node_host.c b/internal/native/runtime/node_host.c
+index 2a924806..d142e05c 100644
+--- a/internal/native/runtime/node_host.c
++++ b/internal/native/runtime/node_host.c
+@@ -132 +132 @@ static void host_directory_error(int error, const char *operation, const adamic_
+-    static const adamic_shape shape = {3, directory_error_names, references, NULL};
++    static const adamic_shape shape = {3, directory_error_names, references, NULL, NULL};
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index b6b41102..eba76fd8 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -256,0 +257,4 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
++	if (actual == 9 && wanted == 2) {
++		adamic_maybe_boolean unpacked = adamic_maybe_boolean_unpack(slot->maybe_boolean);
++		if (unpacked.present) { return (adamic_value){.boolean = unpacked.boolean}; }
++	}
+@@ -302 +306 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
+-		if (actual == wanted || (actual == 13 && reference_write && object->shape->references[index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
++		if (actual == wanted || (actual == 13 && reference_write && object->shape->references[index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1) || (actual == 9 && wanted == 2)) { return; }
+@@ -316,0 +321 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
++	if (adamic_object_field_types(owner)[adamic_slot_index(owner, slot)] == 2) { return (adamic_maybe_boolean){true, slot->boolean}; }
+@@ -318,0 +324,130 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
++
++static bool adamic_contract_proven(size_t count, const int *proofs, int source) {
++	for (size_t index = 0; index < count; index++) { if (proofs[index] == source) { return true; } }
++	return false;
++}
++
++// Runtime scalar storage tags prove unrestricted numeric and boolean declarations.
++// Literal and branded scalar fields still require allocation metadata; a matching
++// current payload is not evidence that their later values will stay in that domain.
++static bool adamic_contract_runtime_scalar(const adamic_field_contract *expected, unsigned char actual) {
++	if (expected->count != 0 || expected->reference || expected->nullish_only || expected->declared == NULL) { return false; }
++	if (expected->kind == 1 && actual == 1 && strcmp(expected->declared, "number") == 0) { return true; }
++	if (expected->kind == 2 && actual == 2 && strcmp(expected->declared, "boolean") == 0) { return true; }
++	if (expected->nullable && expected->kind == 7 && (actual == 1 || actual == 7) && strcmp(expected->declared, "number | undefined") == 0) { return true; }
++	if (expected->nullable && expected->kind == 9 && (actual == 2 || actual == 9) && strcmp(expected->declared, "boolean | undefined") == 0) { return true; }
++	return false;
++}
++
++// A runtime array has no checker allocation identity. Prove its string storage before
++// attaching an element contract, so later writes cannot invalidate the proof. Compiler
++// allocations still use directional type proofs, never payload-based narrowing.
++static bool adamic_contract_runtime_array(const adamic_field_contract *expected, adamic_array *value) {
++	if (value->allocation_type != 0 || !value->references || !expected->structural || expected->field_count != 1) { return false; }
++	const adamic_field_contract *element = &expected->field_contracts[0];
++	if (element->kind != 3 || element->count != 0 || element->reference || element->nullish_only || element->declared == NULL || (strcmp(element->declared, "string") != 0 && strcmp(element->declared, "string | undefined") != 0)) { return false; }
++	for (size_t index = 0; index < value->length; index++) {
++		const adamic_heap *item = value->elements[index].reference;
++		if (item == NULL ? !element->nullable : item->kind != adamic_kind_string) { return false; }
++	}
++	// Keep only a compatible pre-existing contract; nullable storage cannot promise string[].
++	if (value->element_contract != NULL && (value->element_contract->kind != 3 || (value->element_contract->nullable && !element->nullable))) { return false; }
++	if (value->element_contract == NULL) { value->element_contract = element; }
++	return true;
++}
++
++static bool adamic_contract_object(const adamic_field_contract *contract, const adamic_object *value);
++
++static bool adamic_contract_runtime_field(const adamic_field_contract *expected, const adamic_object *object, size_t index) {
++	unsigned char actual = adamic_object_field_types(object)[index];
++	if (adamic_contract_runtime_scalar(expected, actual)) { return true; }
++	// A shape's reference bitmap proves which union member may safely be read,
++	// including runtime constructors that leave the more specific storage tag unset.
++	if (!object->shape->references[index] || expected->declared == NULL) { return false; }
++	const adamic_heap *value = object->slots[index].reference;
++	if (value == NULL) { return expected->nullable && expected->kind >= 3 && expected->kind <= 6; }
++	if (expected->kind == 3 && expected->count == 0 && !expected->nullish_only && (strcmp(expected->declared, "string") == 0 || strcmp(expected->declared, "string | undefined") == 0)) { return value->kind == adamic_kind_string; }
++	if (expected->kind == 5 && value->kind == adamic_kind_array) { return adamic_contract_proven(expected->field_proof_count, expected->field_proofs, ((const adamic_array *)value)->allocation_type) || adamic_contract_runtime_array(expected, (adamic_array *)value); }
++	if (expected->kind == 6 && value->kind == adamic_kind_map) { return adamic_contract_proven(expected->field_proof_count, expected->field_proofs, ((const adamic_map *)value)->allocation_type); }
++	if (expected->kind == 4 && value->kind == adamic_kind_object) { return adamic_contract_object(expected, (const adamic_object *)value); }
++	return false;
++}
++
++// Compare allocation declarations, not a snapshot of a mutable object's values.
++// This preserves a nested literal contract even when the candidate arrived through
++// a broader source view. Getters and unproven domains fail closed.
++static bool adamic_contract_object(const adamic_field_contract *contract, const adamic_object *value) {
++	if (value->shape->contracts != NULL && adamic_contract_proven(contract->field_proof_count, contract->field_proofs, value->shape->contracts[-1].type_id)) { return true; }
++	if (!contract->structural) { return false; }
++	for (size_t index = 0; index < contract->field_count; index++) {
++		adamic_slot_cache cache = {0};
++		adamic_value *slot = adamic_object_optional_field(value, contract->field_names[index], &cache);
++		if (slot == NULL) { if (contract->field_optional[index]) { continue; } return false; }
++		if (!adamic_object_initialized(value)[adamic_slot_index(value, slot)] || adamic_accessor_find(value, contract->field_names[index]) != NULL) { return false; }
++		const adamic_field_contract *expected = &contract->field_contracts[index];
++		if (value->shape->contracts == NULL) {
++			if (!adamic_contract_runtime_field(expected, value, adamic_slot_index(value, slot))) { return false; }
++			continue;
++		}
++		const adamic_field_contract *actual = &value->shape->contracts[adamic_slot_index(value, slot)];
++		if (!adamic_contract_proven(expected->field_proof_count, expected->field_proofs, actual->type_id)) { return false; }
++	}
++	return true;
++}
++
++// Check the incoming value before ownership changes or a store. The old payload is never
++// evidence for a literal domain: the immutable actual shape carries the declaration.
++void adamic_object_check_contract(adamic_object *object, const char *name, unsigned char kind, adamic_value value, int source_type, const char *expression) {
++	adamic_slot_cache cache = {0};
++	adamic_value *slot = adamic_object_optional_field(object, name, &cache);
++	const adamic_field_contract *contract = slot == NULL || object->shape->contracts == NULL ? NULL : &object->shape->contracts[adamic_slot_index(object, slot)];
++	adamic_check_contract(contract, kind, value, source_type, expression);
++}
++
++void adamic_check_contract(const adamic_field_contract *contract, unsigned char kind, adamic_value value, int source_type, const char *expression) {
++	bool present = true;
++	if (kind >= 3 && kind <= 6) { present = value.reference != NULL; }
++	if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
++	if (kind == 9) { present = adamic_maybe_boolean_unpack(value.maybe_boolean).present; }
++	bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7) || ((contract->kind == 2 || contract->kind == 9) && (kind == 2 || kind == 9)) || (!present && contract->nullable && contract->kind>=3 && contract->kind<=6 && kind>=3 && kind<=6)) && (present || contract->nullable) && (!contract->nullish_only || !present);
++	if (valid && present && kind == 3) { valid = ((const adamic_heap *)value.reference)->kind == adamic_kind_string; }
++	if (valid && present && contract->count != 0) {
++		valid = false;
++		for (size_t index = 0; index < contract->count; index++) {
++			adamic_value allowed = contract->allowed[index];
++			if ((kind == 1 || kind == 7) && (kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number) == allowed.number) { valid = true; }
++			if ((kind == 2 || kind == 9) && (kind == 9 ? adamic_maybe_boolean_unpack(value.maybe_boolean).boolean : value.boolean) == allowed.boolean) { valid = true; }
++			if (kind == 3 && adamic_string_equal(value.reference, allowed.reference)) { valid = true; }
++		}
++	}
++	if (valid && present && contract->reference) {
++		valid = adamic_contract_proven(contract->write_proof_count, contract->write_proofs, source_type);
++		if (!valid && kind == 4 && ((const adamic_heap *)value.reference)->kind == adamic_kind_object) { valid = adamic_contract_object(contract, value.reference); }
++		if (!valid && kind == 5 && ((const adamic_heap *)value.reference)->kind == adamic_kind_array) { valid = adamic_contract_proven(contract->field_proof_count,contract->field_proofs,((const adamic_array *)value.reference)->allocation_type); }
++		if (!valid && kind == 6 && ((const adamic_heap *)value.reference)->kind == adamic_kind_map) { valid = adamic_contract_proven(contract->field_proof_count,contract->field_proofs,((const adamic_map *)value.reference)->allocation_type); }
++	}
++	if (valid) { return; }
++	const char *expected = contract == NULL || contract->declared == NULL ? "unavailable field contract" : contract->declared;
++	const char *got = kind == 1 ? "number" : kind == 2 ? "boolean" : kind == 3 ? "string" : kind == 4 ? "object" : kind == 5 ? "array" : kind == 6 ? "Map" : "unsupported representation";
++	const adamic_string *text = NULL;
++	if (!present) { got = "undefined"; }
++	else if (kind == 1 || kind == 7) { text = adamic_string_from_number(kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number); }
++	else if (kind == 2 || kind == 9) { got = (kind == 9 ? adamic_maybe_boolean_unpack(value.maybe_boolean).boolean : value.boolean) ? "true" : "false"; }
++	else if (kind == 3 && ((const adamic_heap *)value.reference)->kind == adamic_kind_string) { text = value.reference; }
++	else if (kind == 3) {
++		enum adamic_kind actual = ((const adamic_heap *)value.reference)->kind;
++		got = actual == adamic_kind_object ? "object" : actual == adamic_kind_array ? "array" : actual == adamic_kind_map ? "Map" : "unsupported representation";
++	}
++	else if (kind == 4 && ((const adamic_heap *)value.reference)->kind == adamic_kind_object) {
++		const adamic_shape *shape = ((const adamic_object *)value.reference)->shape;
++		if (shape->contracts != NULL && shape->contracts[-1].declared != NULL && shape->contracts[-1].declared[0] != '\0') { got = shape->contracts[-1].declared; }
++	}
++	size_t capacity = strlen(expression) + strlen(expected) + strlen(got) + (text == NULL ? 0 : text->length) + 100;
++	char *message = malloc(capacity);
++	if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
++	int prefix = snprintf(message, capacity, "write failed: %s expects %s, got %s", expression, expected, text == NULL ? got : "");
++	if (text != NULL) { memcpy(message + prefix, text->bytes, text->length); }
++	size_t length = (size_t)prefix + (text == NULL ? 0 : text->length);
++	if (present && (kind == 1 || kind == 7)) { memcpy(message + length, " (number)", 9); length += 9; }
++	adamic_panic(message, length);
++}
+diff --git a/internal/native/runtime/record.c b/internal/native/runtime/record.c
+index 8ce40637..d7a59eb1 100644
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -14 +14 @@ static const bool record_references[] = {true};
+-static const adamic_shape record_shape = {1, record_names, record_references, NULL};
++static const adamic_shape record_shape = {1, record_names, record_references, NULL, NULL};
+@@ -17 +17 @@ static const bool iteration_references[] = {true, true, false};
+-static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL};
++static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, NULL};
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index aa40bff6..3383e531 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -409 +409 @@ static const bool regex_references[] = {false, false, true,	 true,	false, false,
+-static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL};
++static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL, NULL};
+@@ -527 +527 @@ static const bool match_references[] = {false, true, true, true};
+-static const adamic_shape match_shape = {4, match_names, match_references, NULL};
++static const adamic_shape match_shape = {4, match_names, match_references, NULL, NULL};
+@@ -545 +545 @@ static const bool pair_references[] = {false, false};
+-static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL};
++static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL, NULL};
+@@ -705 +705 @@ static const bool iterator_references[] = {true, true, false};
+-static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL};
++static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL, NULL};
+@@ -744 +744 @@ static const bool next_references[] = {false, true};
+-static const adamic_shape next_shape = {2, next_names, next_references, NULL};
++static const adamic_shape next_shape = {2, next_names, next_references, NULL, NULL};
+@@ -749,0 +750,2 @@ adamic_object *adamic_regex_next(adamic_object *iterator) {
++	adamic_object_field_types(result)[0] = 2;
++	adamic_object_field_types(result)[1] = value == NULL ? 13 : 5;
+diff --git a/internal/native/runtime/tsgo.c b/internal/native/runtime/tsgo.c
+index 178d9296..4ac2175d 100644
+--- a/internal/native/runtime/tsgo.c
++++ b/internal/native/runtime/tsgo.c
+@@ -96 +96 @@ adamic_object *adamic_tsgo_query_in(adamic_region *region, double handle, const
+- static const adamic_shape shape = {3, names, references, NULL};
++ static const adamic_shape shape = {3, names, references, NULL, NULL};

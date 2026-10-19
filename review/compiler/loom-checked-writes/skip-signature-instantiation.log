@@ -1,0 +1,8 @@
+=== RUN   TestCheckedSignatureInstantiation
+=== PAUSE TestCheckedSignatureInstantiation
+=== CONT  TestCheckedSignatureInstantiation
+    checked_signatures_test.go:47: produce: producer binder was not instantiated
+--- FAIL: TestCheckedSignatureInstantiation (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.057s
+FAIL

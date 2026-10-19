@@ -1,0 +1,257 @@
+=== RUN   TestArgumentsLengthReadKeepsReaderFact
+=== PAUSE TestArgumentsLengthReadKeepsReaderFact
+=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries
+=== PAUSE TestCensusPredicateMarkerKeepsProofBoundaries
+=== RUN   TestClassFeaturesStaticSoundness
+=== PAUSE TestClassFeaturesStaticSoundness
+=== RUN   TestInheritanceGenericSoundness
+=== PAUSE TestInheritanceGenericSoundness
+=== RUN   TestClockGenericReturnsT01RejectsIndexBeforeBody
+=== PAUSE TestClockGenericReturnsT01RejectsIndexBeforeBody
+=== RUN   TestEnumMemberValuesAndReverseNameMatchNode
+=== PAUSE TestEnumMemberValuesAndReverseNameMatchNode
+=== RUN   TestParseIntMapUsesIndexRadix
+=== PAUSE TestParseIntMapUsesIndexRadix
+=== RUN   TestIteratorViewsCannotHideReturn
+=== PAUSE TestIteratorViewsCannotHideReturn
+=== RUN   TestLibraryMethodValues
+=== PAUSE TestLibraryMethodValues
+=== RUN   TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== PAUSE TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== RUN   TestCallableNamespaceLimitsStayLoud
+=== PAUSE TestCallableNamespaceLimitsStayLoud
+=== RUN   TestDebugNamespaceMergedCapabilities
+=== PAUSE TestDebugNamespaceMergedCapabilities
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestParameterPropertyValueMatchesNode
+=== PAUSE TestParameterPropertyValueMatchesNode
+=== RUN   TestNullishPrototypeReadsAreRejectedByChecker
+=== PAUSE TestNullishPrototypeReadsAreRejectedByChecker
+=== RUN   TestSuppressionDirectivesAreRefused
+=== PAUSE TestSuppressionDirectivesAreRefused
+=== RUN   TestMixedUnionContractFailureDoesNotCertifyRetry
+=== PAUSE TestMixedUnionContractFailureDoesNotCertifyRetry
+=== CONT  TestArgumentsLengthReadKeepsReaderFact
+=== CONT  TestMixedUnionContractFailureDoesNotCertifyRetry
+=== CONT  TestSuppressionDirectivesAreRefused
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== CONT  TestNullishPrototypeReadsAreRejectedByChecker
+=== CONT  TestIteratorViewsCannotHideReturn
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestParameterPropertyValueMatchesNode
+--- PASS: TestIteratorViewsCannotHideReturn (0.27s)
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+--- PASS: TestMixedUnionContractFailureDoesNotCertifyRetry (0.27s)
+=== CONT  TestDebugNamespaceMergedCapabilities
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_log.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_log.a
+=== RUN   TestDebugNamespaceMergedCapabilities/class_merge.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/class_merge.a
+=== RUN   TestDebugNamespaceMergedCapabilities/debug_class.a
+=== PAUSE TestDebugNamespaceMergedCapabilities/debug_class.a
+=== CONT  TestCallableNamespaceLimitsStayLoud
+=== RUN   TestCallableNamespaceLimitsStayLoud/escape
+=== PAUSE TestCallableNamespaceLimitsStayLoud/escape
+=== RUN   TestCallableNamespaceLimitsStayLoud/reflection
+=== PAUSE TestCallableNamespaceLimitsStayLoud/reflection
+=== RUN   TestCallableNamespaceLimitsStayLoud/replacement
+=== PAUSE TestCallableNamespaceLimitsStayLoud/replacement
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic
+=== RUN   TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== PAUSE TestCallableNamespaceLimitsStayLoud/intrinsic_method
+=== RUN   TestCallableNamespaceLimitsStayLoud/early
+=== PAUSE TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.22s)
+=== CONT  TestLibraryMethodValues
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== RUN   TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== RUN   TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== PAUSE TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== RUN   TestLibraryMethodValues/console.log([].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([].map(String).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== RUN   TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== PAUSE TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestClockGenericReturnsT01RejectsIndexBeforeBody
+--- PASS: TestArgumentsLengthReadKeepsReaderFact (0.64s)
+=== CONT  TestParseIntMapUsesIndexRadix
+--- PASS: TestClockGenericReturnsT01RejectsIndexBeforeBody (0.45s)
+=== CONT  TestEnumMemberValuesAndReverseNameMatchNode
+--- PASS: TestParameterPropertyValueMatchesNode (1.41s)
+=== CONT  TestClassFeaturesStaticSoundness
+--- PASS: TestParseIntMapUsesIndexRadix (0.89s)
+=== CONT  TestInheritanceGenericSoundness
+=== RUN   TestInheritanceGenericSoundness/generic_narrowing
+=== RUN   TestInheritanceGenericSoundness/generic_inherited_cycle
+--- PASS: TestInheritanceGenericSoundness (0.27s)
+    --- PASS: TestInheritanceGenericSoundness/generic_narrowing (0.20s)
+    --- PASS: TestInheritanceGenericSoundness/generic_inherited_cycle (0.07s)
+=== CONT  TestCensusPredicateMarkerKeepsProofBoundaries
+--- PASS: TestEnumMemberValuesAndReverseNameMatchNode (1.42s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+--- PASS: TestCensusPredicateMarkerKeepsProofBoundaries (0.74s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+--- PASS: TestClassFeaturesStaticSoundness (1.65s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+--- PASS: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (3.76s)
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_log.a
+=== CONT  TestCallableNamespaceLimitsStayLoud/escape
+=== CONT  TestDebugNamespaceMergedCapabilities/debug_class.a
+--- PASS: TestSuppressionDirectivesAreRefused (0.07s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_ (0.17s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_ (0.12s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_ (0.12s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_ (0.13s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_ (0.15s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_ (0.26s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_ (0.20s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_ (0.32s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_ (0.12s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_ (0.21s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_ (0.13s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_ (0.23s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_ (0.22s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_ (0.28s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_ (0.17s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_ (0.10s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_ (0.15s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_ (0.17s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_ (0.20s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_ (0.23s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_ (0.30s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_ (0.17s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_ (0.30s)
+    --- PASS: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_ (0.22s)
+=== CONT  TestDebugNamespaceMergedCapabilities/class_merge.a
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic
+=== CONT  TestCallableNamespaceLimitsStayLoud/early
+=== CONT  TestCallableNamespaceLimitsStayLoud/intrinsic_method
+--- PASS: TestNullishPrototypeReadsAreRejectedByChecker (4.57s)
+=== CONT  TestCallableNamespaceLimitsStayLoud/replacement
+=== CONT  TestCallableNamespaceLimitsStayLoud/reflection
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== CONT  TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+--- PASS: TestCallableNamespaceLimitsStayLoud (0.00s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/escape (0.22s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic (0.16s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/early (0.23s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/intrinsic_method (0.15s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/reflection (0.20s)
+    --- PASS: TestCallableNamespaceLimitsStayLoud/replacement (0.29s)
+=== CONT  TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+--- PASS: TestDebugNamespaceMergedCapabilities (0.00s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/class_merge.a (0.16s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_log.a (0.61s)
+    --- PASS: TestDebugNamespaceMergedCapabilities/debug_class.a (0.89s)
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== CONT  TestLibraryMethodValues/console.log([].map(String).join(','));
+=== CONT  TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+--- PASS: TestLibraryMethodValues (0.00s)
+    --- PASS: TestLibraryMethodValues/console.log([1,_2].map(String).join(',')); (0.64s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`); (0.70s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(',')); (0.65s)
+    --- PASS: TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(',')); (0.80s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f()); (0.84s)
+    --- PASS: TestLibraryMethodValues/console.log([].map(String).join(',')); (0.74s)
+    --- PASS: TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1])); (0.71s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`); (0.68s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`); (0.62s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4])); (0.73s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_')); (0.62s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1])); (0.66s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`); (0.60s)
+PASS

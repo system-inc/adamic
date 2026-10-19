@@ -1,0 +1,5 @@
+// a-check: refused a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+const narrow: Map<string, 1 | 2> = new Map<string, 1 | 2>();
+function store(values: Map<string, number>, value: number): void { values.set('key', value); }
+store(narrow, 3);
+console.log((narrow.get('key') ?? 0).toString());

@@ -1,0 +1,332 @@
+{
+  "paths": [
+    "internal/native/testdata/checked_library_push.a",
+    "internal/oracle/testdata/checked-runtime-fields_refused/directory.a",
+    "internal/oracle/testdata/checked-runtime-fields_refused/fs.a",
+    "internal/oracle/testdata/checked-runtime-fields_refused/map.a",
+    "internal/oracle/testdata/checked-runtime-fields_refused/regex.a",
+    "internal/oracle/testdata/checked-runtime-fields_refused/set.a",
+    "internal/oracle/testdata/checked-runtime-fields_refused/status.a",
+    "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a",
+    "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a",
+    "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a",
+    "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a",
+    "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a",
+    "review/compiler/checked-writes-follow/push-loop.a",
+    "review/compiler/loom-r-checked-writes-ac-m-wip/and-left.a",
+    "stage3/checked-writes/array-refused.a",
+    "stage3/checked-writes/emit-refused.a",
+    "stage3/checked-writes/flags-refused.a",
+    "stage3/checked-writes/flow-refused.a",
+    "stage3/checked-writes/map-refused.a",
+    "stage3/checked-writes/proven-containers.a",
+    "stage3/checked-writes/proven-emit.a",
+    "stage3/checked-writes/proven-generic.a",
+    "stage3/checked-writes/proven-number.a",
+    "stage3/checked-writes/refused-branch-bottom.a",
+    "stage3/checked-writes/refused-branch-diagnostic.a",
+    "stage3/checked-writes/refused-optional-boolean.a",
+    "stage3/checked-writes/refused-overload-result.a",
+    "stage3/checked-writes/shared-never.a",
+    "stage3/checked-writes/string-refused.a"
+  ],
+  "exits": {
+    "a-check": 0
+  },
+  "results": {
+    "a_check": {
+      "internal/native/testdata/checked_library_push.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/internal/native/testdata/checked_library_push.a:7:14: stage 0 can't lower a SpreadElement yet"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/directory.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], w"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/fs.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/fs.a:7:35: Adamic 0.1 refuses a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would re"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/map.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/map.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower tha"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/regex.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/regex.a:5:101: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/set.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/set.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower tha"
+      },
+      "internal/oracle/testdata/checked-runtime-fields_refused/status.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/status.a:7:72: Adamic 0.1 refuses a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can'"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (reado"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider"
+      },
+      "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type rea"
+      },
+      "review/compiler/checked-writes-follow/push-loop.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "review/compiler/loom-r-checked-writes-ac-m-wip/and-left.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/array-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/array-refused.a:4:7: Adamic 0.1 refuses a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items],"
+      },
+      "stage3/checked-writes/emit-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/emit-refused.a:12:7: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of"
+      },
+      "stage3/checked-writes/flags-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/flags-refused.a:6:6: Adamic 0.1 refuses a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in th"
+      },
+      "stage3/checked-writes/flow-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/flow-refused.a:12:7: Adamic 0.1 refuses a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't wr"
+      },
+      "stage3/checked-writes/map-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/map-refused.a:4:7: Adamic 0.1 refuses a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the "
+      },
+      "stage3/checked-writes/proven-containers.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/proven-emit.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/proven-generic.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/proven-number.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/checked-writes/refused-branch-bottom.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-bottom.a:4:41: Adamic 0.1 refuses a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([.."
+      },
+      "stage3/checked-writes/refused-branch-diagnostic.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-diagnostic.a:8:41: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't "
+      },
+      "stage3/checked-writes/refused-optional-boolean.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-optional-boolean.a:4:7: Adamic 0.1 refuses a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than"
+      },
+      "stage3/checked-writes/refused-overload-result.a": {
+        "outcome": "refused",
+        "expected": "refused overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/refused-overload-result.a:9:1: Adamic 0.1 refuses overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result"
+      },
+      "stage3/checked-writes/shared-never.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/shared-never.a:4:7: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { "
+      },
+      "stage3/checked-writes/string-refused.a": {
+        "outcome": "refused",
+        "expected": "refused a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "first": "adamic: /workspace/adamic/stage3/checked-writes/string-refused.a:4:7: Adamic 0.1 refuses a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of st"
+      }
+    }
+  },
+  "diagnostics": {
+    "internal/native/testdata/checked_library_push.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/native/testdata/checked_library_push.a:7:14: stage 0 can't lower a SpreadElement yet\n"
+    },
+    "internal/oracle/testdata/checked-runtime-fields_refused/directory.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/directory.a:7:47: Adamic 0.1 refuses a value of type Result[] seen as { names: readonly string[]; }[], whose readonly field names becomes writable: a readonly field may hold something narrower than readonly string[], which a write of readonly string[] would replace; keep names readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-runtime-fields_refused/fs.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/fs.a:7:35: Adamic 0.1 refuses a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-runtime-fields_refused/map.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/map.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-runtime-fields_refused/regex.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/regex.a:5:101: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: readonly (string | undefined)[] | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-runtime-fields_refused/set.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/set.a:5:76: Adamic 0.1 refuses a value of type Result[] seen as { done?: boolean | undefined; value: string | undefined; }[], whose readonly field done becomes writable: a readonly field may hold something narrower than boolean | undefined, which a write of boolean | undefined would replace; keep done readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-runtime-fields_refused/status.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields_refused/status.a:7:72: Adamic 0.1 refuses a value of type Result[] seen as { type: string; size: number; symbolicLink: boolean; }[], whose readonly field type becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep type readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "review/compiler/checked-writes-follow/push-loop.a": {
+      "exit": 0,
+      "stdout": "// Generated by adamic from push-loop.a. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\nstatic adamic_string adamic_string_0 = ADAMIC_STRING_UNITS(\" \", 1);\n\nstatic adamic_array * adamic_global_0_values = NULL;\nstatic bool adamic_ready_0 = false;\n\nint main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n\tadamic_array * adamic_temporary_1 = adamic_array_new(0, false);\n\tadamic_array * adamic_temporary_2 = adamic_global_0_values;\n\tadamic_global_0_values = adamic_temporary_1;\n\tadamic_release(adamic_temporary_2);\n\tadamic_ready_0 = true;\n\t{\n\t\tint64_t adamic_local_1_index = (int64_t)(0x0p+00);\n\t\tfor (;;) {\n\t\t\tif (!(((double)adamic_local_1_index) < (0x1.312dp+23))) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\t{\n\t\t\t\t{\n\t\t\t\t\tadamic_array * adamic_temporary_5 = adamic_retain(adamic_global_0_values);\n\t\t\t\t\tadamic_array_push(adamic_temporary_5, (adamic_value){.number = ((double)adamic_local_1_index)});\n\t\t\t\t\tdouble adamic_temporary_6 = (double)adamic_temporary_5->length;\n\t\t\t\t\t(void)adamic_temporary_6;\n\t\t\t\t\tadamic_release(adamic_temporary_5);\n\t\t\t\t}\n\t\t\t}\n\t\t\tadamic_local_1_index += (int64_t)((0x1p+00));\n\t\t}\n\t}\n\tadamic_array * adamic_temporary_7 = adamic_global_0_values;\n\tdouble adamic_temporary_8 = (double)adamic_temporary_7->length;\n\tdouble adamic_temporary_9 = adamic_temporary_8;\n\tadamic_string * adamic_temporary_10 = adamic_string_from_number(adamic_temporary_9);\n\tadamic_array * adamic_temporary_11 = adamic_global_0_values;\n\tadamic_value *adamic_temporary_12 = adamic_array_at(adamic_temporary_11, (0x1.312cfep+23));\n\tadamic_maybe_number adamic_temporary_13 = adamic_temporary_12 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_12->number});\n\tadamic_maybe_number adamic_temporary_14 = adamic_temporary_13;\n\tadamic_string * adamic_temporary_15 = adamic_string_from_maybe_number(adamic_temporary_14);\n\tadamic_string * adamic_temporary_16 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_10, &adamic_string_0, adamic_temporary_15});\n\tadamic_write_line(adamic_stdout, adamic_temporary_16);\n\tadamic_release(adamic_temporary_16);\n\tadamic_release(adamic_temporary_15);\n\tadamic_release(adamic_temporary_10);\n\tadamic_release(adamic_global_0_values);\n\tadamic_global_0_values = NULL;\n\treturn adamic_host_exit_status();\n}\n",
+      "stderr": ""
+    },
+    "review/compiler/loom-r-checked-writes-ac-m-wip/and-left.a": {
+      "exit": 0,
+      "stdout": "// Generated by adamic from and-left.a. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\nstatic adamic_object * adamic_global_0_left = NULL;\nstatic bool adamic_ready_0 = false;\nstatic adamic_object * adamic_global_1_right = NULL;\nstatic bool adamic_ready_1 = false;\nstatic adamic_object * adamic_global_2_result = NULL;\nstatic bool adamic_ready_2 = false;\n\nstatic const char *const adamic_shape_0_names[] = {\"value\"};\nstatic const bool adamic_shape_0_references[] = {false};\nstatic const adamic_shape adamic_shape_0 = {1, adamic_shape_0_names, adamic_shape_0_references, NULL, NULL};\nstatic adamic_slot_cache adamic_cache_12;\n\nint main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n\tadamic_object * adamic_temporary_1 = adamic_object_new(&adamic_shape_0);\n\tadamic_temporary_1->slots[0].number = (0x1p+00);\n\tadamic_object * adamic_temporary_2 = adamic_global_0_left;\n\tadamic_global_0_left = adamic_temporary_1;\n\tadamic_release(adamic_temporary_2);\n\tadamic_ready_0 = true;\n\tadamic_object * adamic_temporary_3 = adamic_object_new(&adamic_shape_0);\n\tadamic_temporary_3->slots[0].number = (0x1p+01);\n\tadamic_object * adamic_temporary_4 = adamic_global_1_right;\n\tadamic_global_1_right = adamic_temporary_3;\n\tadamic_release(adamic_temporary_4);\n\tadamic_ready_1 = true;\n\tadamic_object * adamic_temporary_5 = adamic_retain(adamic_global_0_left);\n\tadamic_object * adamic_temporary_6 = adamic_temporary_5;\n\tadamic_object * adamic_temporary_7 = adamic_temporary_6;\n\tadamic_object * adamic_temporary_8;\n\tif (!((adamic_temporary_7 != NULL))) {\n\t\tadamic_temporary_8 = adamic_retain(adamic_temporary_6);\n\t} else {\n\t\tadamic_object * adamic_temporary_9 = adamic_retain(adamic_global_1_right);\n\t\tadamic_temporary_8 = adamic_retain(adamic_temporary_9);\n\t\tadamic_release(adamic_temporary_9);\n\t}\n\tadamic_object * adamic_temporary_10 = adamic_global_2_result;\n\tadamic_global_2_result = adamic_temporary_8;\n\tadamic_release(adamic_temporary_10);\n\tadamic_ready_2 = true;\n\tadamic_release(adamic_temporary_5);\n\tadamic_object * adamic_temporary_11 = adamic_global_2_result;\n\tdouble adamic_temporary_13 = adamic_object_data_field(adamic_temporary_11, \"value\", &adamic_cache_12)->number;\n\tdouble adamic_temporary_14 = adamic_temporary_13;\n\tadamic_string * adamic_temporary_15 = adamic_string_from_number(adamic_temporary_14);\n\tadamic_write_line(adamic_stdout, adamic_temporary_15);\n\tadamic_release(adamic_temporary_15);\n\tadamic_release(adamic_global_2_result);\n\tadamic_global_2_result = NULL;\n\tadamic_release(adamic_global_1_right);\n\tadamic_global_1_right = NULL;\n\tadamic_release(adamic_global_0_left);\n\tadamic_global_0_left = NULL;\n\treturn adamic_host_exit_status();\n}\n",
+      "stderr": ""
+    },
+    "stage3/checked-writes/array-refused.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/array-refused.a:4:7: Adamic 0.1 refuses a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/emit-refused.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/emit-refused.a:12:7: Adamic 0.1 refuses a value of type GeneratedIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace; keep emitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/flags-refused.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/flags-refused.a:6:6: Adamic 0.1 refuses a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "stage3/checked-writes/flow-refused.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/flow-refused.a:12:7: Adamic 0.1 refuses a value of type FlowMutation seen as FlowNode, which can write Expression where BinaryExpression | CallExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/map-refused.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/map-refused.a:4:7: Adamic 0.1 refuses a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/proven-containers.a": {
+      "exit": 0,
+      "stdout": "// Generated by adamic from proven-containers.a. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\nstatic adamic_string adamic_string_0 = ADAMIC_STRING_UNITS(\"key\", 3);\nstatic adamic_string adamic_string_1 = ADAMIC_STRING_UNITS(\" \", 1);\n\nstatic adamic_array * adamic_global_0_values = NULL;\nstatic bool adamic_ready_0 = false;\nstatic adamic_map * adamic_global_1_map = NULL;\nstatic bool adamic_ready_1 = false;\n\nint main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n\tadamic_array * adamic_temporary_1 = adamic_array_new(1, false);\n\tadamic_array_push(adamic_temporary_1, (adamic_value){.number = (0x1p+00)});\n\tadamic_array * adamic_temporary_2 = adamic_global_0_values;\n\tadamic_global_0_values = adamic_temporary_1;\n\tadamic_release(adamic_temporary_2);\n\tadamic_ready_0 = true;\n\tadamic_array * adamic_temporary_3 = adamic_retain(adamic_global_0_values);\n\tadamic_array_set(adamic_temporary_3, (0x0p+00), (adamic_value){.number = (0x1p+01)});\n\tadamic_release(adamic_temporary_3);\n\tadamic_map * adamic_temporary_4 = adamic_map_new(true, false);\n\tadamic_map * adamic_temporary_5 = adamic_global_1_map;\n\tadamic_global_1_map = adamic_temporary_4;\n\tadamic_release(adamic_temporary_5);\n\tadamic_ready_1 = true;\n\tadamic_map * adamic_temporary_6 = adamic_retain(adamic_global_1_map);\n\tadamic_map_set(adamic_temporary_6, (adamic_value){.reference = adamic_retain(&adamic_string_0)}, (adamic_value){.number = (0x1p+00)});\n\t(void)adamic_temporary_6;\n\tadamic_release(adamic_temporary_6);\n\tadamic_array * adamic_temporary_7 = adamic_global_0_values;\n\tadamic_value *adamic_temporary_8 = adamic_array_at(adamic_temporary_7, (0x0p+00));\n\tadamic_maybe_number adamic_temporary_9 = adamic_temporary_8 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_8->number});\n\tadamic_maybe_number adamic_temporary_10 = adamic_temporary_9;\n\tdouble adamic_temporary_11;\n\tif (adamic_temporary_10.present) {\n\t\tadamic_temporary_11 = adamic_temporary_10.number;\n\t} else {\n\t\tadamic_temporary_11 = (0x0p+00);\n\t}\n\tadamic_string * adamic_temporary_12 = adamic_string_from_number(adamic_temporary_11);\n\tadamic_string * adamic_temporary_13 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_12, &adamic_string_1});\n\tadamic_map * adamic_temporary_14 = adamic_global_1_map;\n\tadamic_value *adamic_temporary_15 = adamic_map_get(adamic_temporary_14, (adamic_value){.reference = &adamic_string_0});\n\tadamic_maybe_number adamic_temporary_16 = adamic_temporary_15 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_15->number});\n\tadamic_maybe_number adamic_temporary_17 = adamic_temporary_16;\n\tdouble adamic_temporary_18;\n\tif (adamic_temporary_17.present) {\n\t\tadamic_temporary_18 = adamic_temporary_17.number;\n\t} else {\n\t\tadamic_temporary_18 = (0x0p+00);\n\t}\n\tadamic_string * adamic_temporary_19 = adamic_string_from_number(adamic_temporary_18);\n\tadamic_string * adamic_temporary_20 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_13, adamic_temporary_19});\n\tadamic_write_line(adamic_stdout, adamic_temporary_20);\n\tadamic_release(adamic_temporary_20);\n\tadamic_release(adamic_temporary_19);\n\tadamic_release(adamic_temporary_13);\n\tadamic_release(adamic_temporary_12);\n\tadamic_release(adamic_global_1_map);\n\tadamic_global_1_map = NULL;\n\tadamic_release(adamic_global_0_values);\n\tadamic_global_0_values = NULL;\n\treturn adamic_host_exit_status();\n}\n",
+      "stderr": ""
+    },
+    "stage3/checked-writes/proven-emit.a": {
+      "exit": 0,
+      "stdout": "// Generated by adamic from proven-emit.a. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\nstatic adamic_object * adamic_global_0_original = NULL;\nstatic bool adamic_ready_0 = false;\nstatic adamic_object * adamic_global_1_node = NULL;\nstatic bool adamic_ready_1 = false;\nstatic adamic_object * adamic_global_2_good = NULL;\nstatic bool adamic_ready_2 = false;\nstatic adamic_object * adamic_global_3_bad = NULL;\nstatic bool adamic_ready_3 = false;\n\nstatic const char *const adamic_shape_0_names[] = {\"flags\", \"id\"};\nstatic const bool adamic_shape_0_references[] = {false, false};\nstatic const adamic_shape adamic_shape_0 = {2, adamic_shape_0_names, adamic_shape_0_references, NULL, NULL};\nstatic const char *const adamic_shape_1_names[] = {\"flags\", \"autoGenerate\"};\nstatic const bool adamic_shape_1_references[] = {false, true};\nstatic const adamic_shape adamic_shape_1 = {2, adamic_shape_1_names, adamic_shape_1_references, NULL, NULL};\nstatic const char *const adamic_shape_2_names[] = {\"emitNode\"};\nstatic const bool adamic_shape_2_references[] = {true};\nstatic const adamic_shape adamic_shape_2 = {1, adamic_shape_2_names, adamic_shape_2_references, NULL, NULL};\nstatic adamic_slot_cache adamic_cache_16;\nstatic adamic_slot_cache adamic_cache_17;\n\nint main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n\tadamic_object * adamic_temporary_1 = adamic_object_new(&adamic_shape_0);\n\tadamic_temporary_1->slots[0].number = (0x1p+00);\n\tadamic_temporary_1->slots[1].number = (0x1.cp+02);\n\tadamic_object * adamic_temporary_2 = adamic_object_new(&adamic_shape_1);\n\tadamic_temporary_2->slots[0].number = (0x0p+00);\n\tadamic_temporary_2->slots[1].reference = adamic_temporary_1;\n\tadamic_object * adamic_temporary_3 = adamic_global_0_original;\n\tadamic_global_0_original = adamic_temporary_2;\n\tadamic_release(adamic_temporary_3);\n\tadamic_ready_0 = true;\n\tadamic_object * adamic_temporary_4 = adamic_retain(adamic_global_0_original);\n\tadamic_object * adamic_temporary_5 = adamic_object_new(&adamic_shape_2);\n\tadamic_temporary_5->slots[0].reference = adamic_temporary_4;\n\tadamic_object * adamic_temporary_6 = adamic_global_1_node;\n\tadamic_global_1_node = adamic_temporary_5;\n\tadamic_release(adamic_temporary_6);\n\tadamic_ready_1 = true;\n\tadamic_object * adamic_temporary_7 = adamic_object_new(&adamic_shape_0);\n\tadamic_temporary_7->slots[0].number = (0x1p+01);\n\tadamic_temporary_7->slots[1].number = (0x1p+03);\n\tadamic_object * adamic_temporary_8 = adamic_object_new(&adamic_shape_1);\n\tadamic_temporary_8->slots[0].number = (0x0p+00);\n\tadamic_temporary_8->slots[1].reference = adamic_temporary_7;\n\tadamic_object * adamic_temporary_9 = adamic_global_2_good;\n\tadamic_global_2_good = adamic_temporary_8;\n\tadamic_release(adamic_temporary_9);\n\tadamic_ready_2 = true;\n\tadamic_object * adamic_temporary_10 = adamic_object_new(&adamic_shape_1);\n\tadamic_temporary_10->slots[0].number = (0x0p+00);\n\tadamic_temporary_10->slots[1].reference = NULL;\n\tadamic_object * adamic_temporary_11 = adamic_global_3_bad;\n\tadamic_global_3_bad = adamic_temporary_10;\n\tadamic_release(adamic_temporary_11);\n\tadamic_ready_3 = true;\n\tadamic_object * adamic_temporary_12 = adamic_retain(adamic_global_0_original);\n\tadamic_object * adamic_temporary_13 = adamic_global_2_good;\n\tadamic_object * adamic_temporary_14 = adamic_retain(((adamic_object *)(&adamic_temporary_13->slots[1])->reference));\n\tif (adamic_temporary_12 == NULL) {\n\t\tstatic const char message[] = \"TypeError: Cannot set properties of undefined (setting 'autoGenerate')\";\n\t\tadamic_panic(message, sizeof message - 1);\n\t}\n\tadamic_object_check_data_write(adamic_temporary_12, \"autoGenerate\");\n\tadamic_value *adamic_temporary_15 = (adamic_temporary_12->shape == &adamic_shape_1 ? (&adamic_temporary_12->slots[1]) : adamic_object_data_field(adamic_temporary_12, \"autoGenerate\", &adamic_cache_17));\n\tvoid *adamic_temporary_18 = adamic_temporary_15->reference;\n\tadamic_temporary_15->reference = adamic_temporary_14;\n\tif (adamic_temporary_18 != NULL) adamic_release(adamic_temporary_18);\n\tadamic_release(adamic_temporary_12);\n\tadamic_object * adamic_temporary_19 = adamic_global_0_original;\n\tadamic_object * adamic_temporary_20 = ((adamic_object *)(&adamic_temporary_19->slots[1])->reference);\n\tdouble adamic_temporary_21 = (&adamic_temporary_20->slots[1])->number;\n\tdouble adamic_temporary_22 = adamic_temporary_21;\n\tadamic_string * adamic_temporary_23 = adamic_string_from_number(adamic_temporary_22);\n\tadamic_write_line(adamic_stdout, adamic_temporary_23);\n\tadamic_release(adamic_temporary_23);\n\tadamic_release(adamic_global_3_bad);\n\tadamic_global_3_bad = NULL;\n\tadamic_release(adamic_global_2_good);\n\tadamic_global_2_good = NULL;\n\tadamic_release(adamic_global_1_node);\n\tadamic_global_1_node = NULL;\n\tadamic_release(adamic_global_0_original);\n\tadamic_global_0_original = NULL;\n\treturn adamic_host_exit_status();\n}\n",
+      "stderr": ""
+    },
+    "stage3/checked-writes/proven-generic.a": {
+      "exit": 0,
+      "stdout": "// Generated by adamic from proven-generic.a. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\nstatic adamic_object * adamic_global_0_original = NULL;\nstatic bool adamic_ready_0 = false;\n\nstatic adamic_object * adamic_function_0_update_0(adamic_object * adamic_local_1_node);\n\nstatic const char *const adamic_shape_0_names[] = {\"flags\"};\nstatic const bool adamic_shape_0_references[] = {false};\nstatic const adamic_shape adamic_shape_0 = {1, adamic_shape_0_names, adamic_shape_0_references, NULL, NULL};\nstatic adamic_slot_cache adamic_cache_6;\n\nstatic adamic_object * adamic_function_0_update_0(adamic_object * adamic_local_1_node) {\n\tADAMIC_CHECK_STACK();\n\tadamic_object * adamic_temporary_1 = adamic_retain(adamic_local_1_node);\n\treturn adamic_temporary_1;\n\tadamic_unreachable();\n}\n\nint main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n\tadamic_object * adamic_temporary_2 = adamic_object_new(&adamic_shape_0);\n\tadamic_temporary_2->slots[0].number = (0x1p+04);\n\tadamic_object * adamic_temporary_3 = adamic_global_0_original;\n\tadamic_global_0_original = adamic_temporary_2;\n\tadamic_release(adamic_temporary_3);\n\tadamic_ready_0 = true;\n\tadamic_object * adamic_temporary_4 = adamic_global_0_original;\n\tadamic_object * adamic_temporary_5 = adamic_function_0_update_0(adamic_temporary_4);\n\tdouble adamic_temporary_7 = adamic_object_data_field(adamic_temporary_5, \"flags\", &adamic_cache_6)->number;\n\tadamic_string * adamic_temporary_8 = adamic_string_from_number(adamic_temporary_7);\n\tadamic_write_line(adamic_stdout, adamic_temporary_8);\n\tadamic_release(adamic_temporary_8);\n\tadamic_release(adamic_temporary_5);\n\tadamic_release(adamic_global_0_original);\n\tadamic_global_0_original = NULL;\n\treturn adamic_host_exit_status();\n}\n",
+      "stderr": ""
+    },
+    "stage3/checked-writes/proven-number.a": {
+      "exit": 0,
+      "stdout": "// Generated by adamic from proven-number.a. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\nstatic adamic_string adamic_string_0 = ADAMIC_STRING_UNITS(\"Synthesized\", 11);\nstatic adamic_string adamic_string_1 = ADAMIC_STRING_UNITS(\"Other\", 5);\n\nstatic adamic_object * adamic_global_0_NodeFlags = NULL;\nstatic bool adamic_ready_0 = false;\nstatic adamic_object * adamic_global_1_node = NULL;\nstatic bool adamic_ready_1 = false;\n\nstatic void adamic_function_0_update(adamic_object * adamic_local_2_view);\n\nstatic adamic_slot_cache adamic_cache_5;\nstatic adamic_slot_cache adamic_cache_6;\nstatic adamic_slot_cache adamic_cache_7;\nstatic const char *const adamic_shape_0_names[] = {\"Synthesized\", \"16\", \"Other\", \"0\"};\nstatic const bool adamic_shape_0_references[] = {false, true, false, true};\nstatic const adamic_shape adamic_shape_0 = {4, adamic_shape_0_names, adamic_shape_0_references, NULL, NULL};\nstatic const char *const adamic_shape_1_names[] = {\"flags\"};\nstatic const bool adamic_shape_1_references[] = {false};\nstatic const adamic_shape adamic_shape_1 = {1, adamic_shape_1_names, adamic_shape_1_references, NULL, NULL};\nstatic adamic_slot_cache adamic_cache_17;\n\nstatic void adamic_function_0_update(adamic_object * adamic_local_2_view) {\n\tADAMIC_CHECK_STACK();\n\tif (!adamic_ready_0) {\n\t\tstatic const char message[] = \"ReferenceError: Cannot access 'NodeFlags' before initialization\";\n\t\tadamic_panic(message, sizeof message - 1);\n\t}\n\tadamic_object * adamic_temporary_1 = adamic_global_0_NodeFlags;\n\tdouble adamic_temporary_2 = (&adamic_temporary_1->slots[0])->number;\n\tdouble adamic_temporary_3 = adamic_temporary_2;\n\tif (adamic_local_2_view == NULL) {\n\t\tstatic const char message[] = \"TypeError: Cannot set properties of undefined (setting 'flags')\";\n\t\tadamic_panic(message, sizeof message - 1);\n\t}\n\tadamic_object_check_data_write(adamic_local_2_view, \"flags\");\n\tadamic_value *adamic_temporary_4 = adamic_object_data_field(adamic_local_2_view, \"flags\", &adamic_cache_7);\n\tadamic_temporary_4->number = adamic_temporary_3;\n\treturn;\n}\n\nint main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n\tadamic_object * adamic_temporary_8 = adamic_object_new(&adamic_shape_0);\n\tadamic_temporary_8->slots[0].number = (0x1p+04);\n\tadamic_temporary_8->slots[1].reference = adamic_retain(&adamic_string_0);\n\tadamic_temporary_8->slots[2].number = (0x0p+00);\n\tadamic_temporary_8->slots[3].reference = adamic_retain(&adamic_string_1);\n\tadamic_object * adamic_temporary_9 = adamic_global_0_NodeFlags;\n\tadamic_global_0_NodeFlags = adamic_temporary_8;\n\tadamic_release(adamic_temporary_9);\n\tadamic_ready_0 = true;\n\tadamic_object * adamic_temporary_10 = adamic_global_0_NodeFlags;\n\tdouble adamic_temporary_11 = (&adamic_temporary_10->slots[0])->number;\n\tdouble adamic_temporary_12 = adamic_temporary_11;\n\tadamic_object * adamic_temporary_13 = adamic_object_new(&adamic_shape_1);\n\tadamic_temporary_13->slots[0].number = adamic_temporary_12;\n\tadamic_object * adamic_temporary_14 = adamic_global_1_node;\n\tadamic_global_1_node = adamic_temporary_13;\n\tadamic_release(adamic_temporary_14);\n\tadamic_ready_1 = true;\n\tadamic_object * adamic_temporary_15 = adamic_global_1_node;\n\tadamic_function_0_update(adamic_temporary_15);\n\tadamic_object * adamic_temporary_16 = adamic_global_1_node;\n\tdouble adamic_temporary_18 = adamic_object_data_field(adamic_temporary_16, \"flags\", &adamic_cache_17)->number;\n\tdouble adamic_temporary_19 = adamic_temporary_18;\n\tadamic_string * adamic_temporary_20 = adamic_string_from_number(adamic_temporary_19);\n\tadamic_string * adamic_temporary_21 = adamic_string_concat(1, (adamic_string *const[]){adamic_temporary_20});\n\tadamic_write_line(adamic_stdout, adamic_temporary_21);\n\tadamic_release(adamic_temporary_21);\n\tadamic_release(adamic_temporary_20);\n\tadamic_release(adamic_global_1_node);\n\tadamic_global_1_node = NULL;\n\tadamic_release(adamic_global_0_NodeFlags);\n\tadamic_global_0_NodeFlags = NULL;\n\treturn adamic_host_exit_status();\n}\n",
+      "stderr": ""
+    },
+    "stage3/checked-writes/refused-branch-bottom.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-bottom.a:4:41: Adamic 0.1 refuses a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/refused-branch-diagnostic.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/refused-branch-diagnostic.a:8:41: Adamic 0.1 refuses a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/refused-optional-boolean.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/refused-optional-boolean.a:4:7: Adamic 0.1 refuses a value of type { readonly multiLine: true | undefined; } seen as { multiLine: boolean | undefined; }, whose readonly field multiLine becomes writable: a readonly field may hold something narrower than true | undefined, which a write of boolean | undefined would replace; keep multiLine readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/refused-overload-result.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/refused-overload-result.a:9:1: Adamic 0.1 refuses overload 1 of createTempVariable result GeneratedIdentifier cannot be served by implementation result Identifier; make the implementation result covariant with every overload result\n"
+    },
+    "stage3/checked-writes/shared-never.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/shared-never.a:4:7: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    },
+    "stage3/checked-writes/string-refused.a": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/checked-writes/string-refused.a:4:7: Adamic 0.1 refuses a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "flow-corpus.log": {
+    "events": 855,
+    "leaves": 854,
+    "maximum_leaf_seconds": 23.03,
+    "failures": []
+  },
+  "guards-ir.log": {
+    "events": 2,
+    "leaves": 2,
+    "maximum_leaf_seconds": 44.03,
+    "failures": []
+  },
+  "guards-lower.log": {
+    "events": 11,
+    "leaves": 10,
+    "maximum_leaf_seconds": 1.64,
+    "failures": []
+  },
+  "guard-parallel.log": {
+    "events": 1,
+    "leaves": 1,
+    "maximum_leaf_seconds": 1.03,
+    "failures": []
+  },
+  "guards-oracle.log": {
+    "events": 3,
+    "leaves": 3,
+    "maximum_leaf_seconds": 4.26,
+    "failures": []
+  }
+}

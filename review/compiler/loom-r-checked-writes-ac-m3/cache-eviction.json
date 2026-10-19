@@ -1,0 +1,14 @@
+[
+  {
+    "key": "a3e2a5aa1a13165fb3193248828e2012e91cd5a7b6ff0bac9e7a4febf27e1c64",
+    "input": "name go list -export  ./internal/native listing.json"
+  },
+  {
+    "key": "911e1ea589bb400ffee026dfff3b06b5042094c4cb5f41dabd1396c3e06fc288",
+    "input": "name go list -export  ./internal/lower ./internal/leakcheck listing.json"
+  },
+  {
+    "key": "e1cd329bf2c57e65c7f01e7e3ee9443a1df3ea3c38f9cbcf08d988c21e067f86",
+    "input": "name go list -export  ./internal/lower ./internal/leakcheck listing.json"
+  }
+]

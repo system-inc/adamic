@@ -1,0 +1,8 @@
+=== RUN   TestImpliedTargetAndQueriesOnce
+=== PAUSE TestImpliedTargetAndQueriesOnce
+=== CONT  TestImpliedTargetAndQueriesOnce
+    implied_target_test.go:145: queried 0 logical expressions, want at least 255
+--- FAIL: TestImpliedTargetAndQueriesOnce (0.81s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.818s
+FAIL

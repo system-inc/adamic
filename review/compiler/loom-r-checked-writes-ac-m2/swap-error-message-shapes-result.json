@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-checked-writes-ac-m2/swap-error-message-shapes.json",
+    "./internal/native",
+    "-run",
+    "^TestErrorUndefinedMessageHasNoOwnProperty$",
+    "-count=1",
+    "-parallel=4",
+    "-v",
+    "-timeout=90s"
+  ],
+  "exit": 1,
+  "caught": true,
+  "catcher": "TestErrorUndefinedMessageHasNoOwnProperty compares sanitizer-clean runtime stdout with Node"
+}

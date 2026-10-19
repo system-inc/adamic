@@ -13,12 +13,15 @@ import (
 // products for differing bytes under one key). Mutant: SortedMap without GobEncode (a plain map's random order).
 func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(t *testing.T) {
 	t.Parallel()
-	program := Program{ViewContractTypes: SortedMap[int, ViewContractID]{}, UninitializedFields: SortedMap[string, bool]{},
+	program := Program{CheckedWrites: SortedMap[string, bool]{}, ContractTypeNames: SortedMap[int, string]{},
+		ViewContractTypes: SortedMap[int, ViewContractID]{}, UninitializedFields: SortedMap[string, bool]{},
 		CheckedFields: SortedMap[string, bool]{}, MethodTargets: SortedMap[int, []int]{}, StructuralMethodThunks: SortedMap[int, bool]{},
 		FunctionTypeTargets: SortedMap[int, []int]{}, RestArgumentSlots: SortedMap[RestArguments, int]{}}
 	function := Function{OptionalParameters: SortedMap[int, bool]{}}
 	for index := range 16 {
 		name := string(rune('a' + index))
+		program.CheckedWrites[name] = index%2 == 0
+		program.ContractTypeNames[index] = "contract " + name
 		program.ViewContractTypes[index] = ViewContractID(index + 1)
 		program.UninitializedFields[name], program.CheckedFields[name] = true, index%2 == 0
 		program.MethodTargets[index], program.FunctionTypeTargets[index] = []int{index, index + 1}, []int{index}
@@ -44,7 +47,8 @@ func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(t *testing.T) {
 	if err := gob.NewDecoder(bytes.NewReader(last)).Decode(&read); err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(read.MethodTargets, program.MethodTargets) || !reflect.DeepEqual(read.Functions[0].OptionalParameters, function.OptionalParameters) ||
+	if !reflect.DeepEqual(read.CheckedWrites, program.CheckedWrites) || !reflect.DeepEqual(read.ContractTypeNames, program.ContractTypeNames) ||
+		!reflect.DeepEqual(read.MethodTargets, program.MethodTargets) || !reflect.DeepEqual(read.Functions[0].OptionalParameters, function.OptionalParameters) ||
 		!reflect.DeepEqual(read.RestArgumentSlots, program.RestArgumentSlots) {
 		t.Fatalf("the program read back differs: %+v", read)
 	}

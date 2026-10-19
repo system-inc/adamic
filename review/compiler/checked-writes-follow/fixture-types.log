@@ -1,0 +1,7 @@
+internal/native/testdata/checked_library_push.a:1:7: variable iterator: RegExpStringIterator<RegExpExecArray>
+internal/native/testdata/checked_library_push.a:2:7: variable source: { readonly done?: boolean | undefined; }[]
+internal/native/testdata/checked_library_push.a:2:26: property done: boolean | undefined
+internal/native/testdata/checked_library_push.a:3:10: variable index: number
+internal/native/testdata/checked_library_push.a:6:7: variable results: { readonly done?: boolean | undefined; }[]
+internal/native/testdata/checked_library_push.a:6:27: property done: boolean | undefined
+internal/native/testdata/checked_library_push.a:8:25: parameter result: { readonly done?: boolean | undefined; }

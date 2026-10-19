@@ -1,0 +1,45 @@
+package oracle
+import (
+ "crypto/sha256"
+ "encoding/hex"
+ "encoding/json"
+ "os"
+ "path/filepath"
+ "testing"
+ "github.com/system-inc/adamic/internal/native"
+)
+func TestCheckedWritesEmissionProbe(t *testing.T) {
+ // Not parallel: this scratch-only probe records one complete emission inventory.
+ destination := os.Getenv("ADAMIC_CHECKED_WRITE_EMISSION_DIR")
+ if destination == "" { t.Fatal("missing emission evidence directory") }
+ if err := os.MkdirAll(destination, 0755); err != nil { t.Fatal(err) }
+ hashes := map[string]string{}
+ record := func(name, source string) {
+  digest := sha256.Sum256([]byte(source))
+  hashes[name] = hex.EncodeToString(digest[:])
+  if err := os.WriteFile(filepath.Join(destination, name+".c.txt"), []byte(source), 0644); err != nil { t.Fatal(err) }
+ }
+ for _, fixture := range checkedWriteFixtures {
+  program, _ := checkedWriteFixture(t, fixture.name)
+  record(fixture.name, native.C(program))
+ }
+ for _, name := range []string{"proven-generic", "proven-emit", "proven-number", "proven-containers"} {
+  path, err := filepath.Abs(filepath.Join(repository, "stage3/checked-writes", name+".a"))
+  if err != nil { t.Fatal(err) }
+  program, err := lowered(t, path)
+  if err != nil { t.Fatal(err) }
+  record(name, native.C(program))
+ }
+ for _, name := range []string{"regex", "map", "set", "fs", "directory", "status"} {
+  program, _ := checkedRuntimeFieldProgram(t, name)
+  record("runtime-"+name, native.C(program))
+ }
+ for _, name := range []string{"02_shared-empty", "03_flow-node", "13_declaration-array", "15_detached-diagnostic", "16_flow-assignment-union"} {
+  program, _ := checkedWriteMessageProgram(t, name)
+  record("message-"+name, native.C(program))
+ }
+ data, err := json.MarshalIndent(hashes, "", "  ")
+ if err != nil { t.Fatal(err) }
+ if err := os.WriteFile(filepath.Join(destination, "sha256.json"), append(data, '\n'), 0644); err != nil { t.Fatal(err) }
+ t.Logf("recorded %d checked-write fixture C outputs", len(hashes))
+}

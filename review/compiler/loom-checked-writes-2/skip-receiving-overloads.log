@@ -1,0 +1,8 @@
+=== RUN   TestCheckedSignatureEveryReceivingOverload
+=== PAUSE TestCheckedSignatureEveryReceivingOverload
+=== CONT  TestCheckedSignatureEveryReceivingOverload
+    checked_signatures_test.go:83: second receiving overload was not refused: <nil>
+--- FAIL: TestCheckedSignatureEveryReceivingOverload (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.036s
+FAIL
