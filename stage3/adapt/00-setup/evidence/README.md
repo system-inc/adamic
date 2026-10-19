@@ -301,3 +301,185 @@ Node is v24.19.0, Go 1.27.1, clang 20.1.8. The public method groups remain
 for the language lead, with counts and examples above. The full native gate,
 full upstream oracle and fixes for the other groups were not run or claimed.
 No PR is opened; this branch must land with its census evidence base.
+
+
+## Optional-contract wave 2
+
+The wave-1 must is fixed and pushed as `8b7b0554`: one comment line only in
+`nullable-return.a`. The real Adamic compiler reports TS2375 in place, the header
+matches it, and `check-nullable-return.cjs` passes without stripping the comment.
+Wave 2 is cut from that exact pushed commit and must land with wave 1.
+
+The [complete disposition ledger](optional-contracts-wave2/groups.json) covers
+all 30 remaining internal property rows. **24 are repaired and six are declined.**
+The main census is **233 -> 203**, with **30 exact IDs removed and zero new IDs**:
+24 scoped rows plus six original optional-assignment cascades. All remaining
+full messages and related-information chains are unchanged. Both public-property
+rows and all 29 method rows are preserved, including the control-only method row.
+
+| Original group | Rows | Repaired IDs | Declined IDs |
+|---|---:|---|---|
+| nullable-argument | 5 | `D9cecacb705c3`, `Dedba949185e9`, `Db5cc84e69483`, `Dbf236c4b28d8`, `Dd8176fe26c6e` | None |
+| nullable-assignment | 5 | `Db18a6d195733`, `D4c7cd2fa4786`, `D398ee22e023b`, `Dfef6d22c3ab0` | `D5af6153ea92f` |
+| generic-owner | 4 | `Dba090b507f07`, `Dd08d8be5f37d`, `D5fa96141b629`, `Dba1da66fe167` | None |
+| unsupported-code | 9 | `Dcc8edd0800fa`, `D06736c072d16`, `Dbb70df85cbc3`, `D899ab2dda4eb`, `Dc00d790b49ab`, `D85a162474867`, `Daf767ecf9b24`, `D255c75fe6d0a` | `Dcb3573ed8c8f` |
+| late-exposure | 2 | `Df257019e13f7`, `D551a5cf2dd60` | None |
+| indexed-read | 1 | None | `D84985126581f` |
+| generic-receiver | 1 | None | `Da43ecabe1c93` |
+| required-view | 1 | None | `Dba945f1b0d91` |
+| nested-expression | 1 | None | `Da5c0ee2a5f85` |
+| nested-generic-result | 1 | `D1c9885b9e665` | None |
+
+The nullable contexts are resolver lookup gaps. TS2322/TS2345 structural data
+chains can supply the same compatible stored-undefined evidence as the original
+seed codes. The TS2420 and one TS2345 disappear through shared owners. The
+generic-owner rows are arrays/callables, whose declarations stay objects for
+every type argument; their instantiated slot types prove the non-undefined
+source values fit. Bare T and other unresolved generic value contracts remain
+excluded. The concrete nested generic result is resolved through its required
+data field, without widening a generic parameter.
+
+The builder constructions already store undefined before adaptation 20; earlier
+member errors mask the optional-property errors. A mechanical contextual-object
+scan supplies those owner facts before the masking errors are removed later.
+This refines the wave-1 late-exposure explanation: the writes were present all
+along, but 20 did not receive diagnostics for those particular slots.
+
+Three scoped rows are declined because a partial repair would expose a public
+property error, violating both this wave's public boundary and no-new-chain
+requirement. The resolver records the blockers explicitly:
+
+- CompilerOptions.build is blocked by public CompilerOptions.project.
+- ResolvedModuleFull.originalPath is blocked by public packageId and inherited
+  ResolvedModule.isExternalLibraryImport.
+- ResolvedTypeReferenceDirective.originalPath is blocked by public packageId.
+
+The indexed read has no density/presence proof. The generic receiver can be a
+specialization narrowing files. The required watcher view contains a required
+owner as well as an optional owner. These remain their original exact IDs.
+
+The six incidental cascade IDs removed are:
+`D12935f679493`, `D5977dd79a645`, `D664bf39bc400`, `D31a062fa64e8`, `Ddb064de445c4`, `D9cce204205f3`.
+
+The corrected adapter selects **401 owners**, up from 376. All **25** new owners
+are internal and present in its `resolved_findings` ledger. The completed apply
+tree changes eight files. Every changed file has byte-identical stock
+`transpileModule` output; an actual appended runtime expression is rejected for
+each file by the same comparator. Both Node witnesses retain their own-key
+fingerprints. Actual `typescript.d.ts` bytes are identical, and the real lane
+API check accepts all **222** sanctions (194 added and 193 removed diff lines).
+A public method-to-property input mutant is rejected by that check.
+
+The full primary driver and both option controls run with frozen dependencies:
+
+| Run | Wave 1 | Wave 2 |
+|---|---:|---:|
+| Stock, no prelude | 233 | 203 |
+| Stock, filtered prelude | 234 | 204 |
+| Adamic library view, no prelude | 233 | 203 |
+| Adamic library view, filtered prelude | 234 | 204 |
+| Stock, no unchecked indexed access | 134 | 104 |
+| Original-prelude iterator-next mutant | 318 | 288 |
+| Stock, exact optional properties off | 166 | 166 |
+| Stock, known catch variables | 229 | 199 |
+
+The baseline six observations are the retained complete wave-1 tree, with two
+fresh option controls. Its source hashes remain unchanged. Each final run
+removes the same 30 IDs except the no-exact control, which has no delta.
+Compressed raw observations retain the complete source/library hashes and CLI
+logs; `verify-optional-wave2.py` checks identities, log hashes, unchanged options,
+related information, public/method preservation and every group disposition.
+
+A provisional full apply/census removed the internal slots but exposed three
+new public-property chains. It is retained as discarded exploration, not a
+passing result. The final blocking rule and negative witness preserve those
+old diagnostic IDs. The new fixture initially measured TS2322; after adding
+the public-blocker control its final body measures TS2375. Its header was
+remeasured and corrected, and the final in-place compiler result agrees.
+
+Setup succeeded in **15.365s**, `nproc=5`, cgroup quota four CPUs:
+
+```text
+setup: go ready (0.022s)
+setup: node ready (0.023s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.069s)
+setup: submodules ready (0.071s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.174s)
+setup: shared cache ready (0.920s)
+setup: go build ready (15.259s)
+setup: test binaries deferred (use --warm-tests) (15.336s)
+setup: build cache warm (15.338s)
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (15.365s)
+setup: source /workspace/adamic-tools/env.sh
+```
+
+Commands, final apply-test results and per-group mutant observations follow in
+the retained proof report. Full native and full upstream-oracle gates are not
+claimed for this resolver-only wave.
+
+
+Wave-2 final validation and mutants:
+
+The final apply suite passes **23 tests in 15.657s**. The complete evidence
+verifier passes all eight ordinary/control observations and all eight per-group
+or safety reverts. The resolver is restored to SHA-256
+`bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97`.
+The retained [proof report](optional-contracts-wave2/proof.json) includes every
+returned ID, exact reverted resolver file and full CLI/API-backed observations.
+
+| Revert | Main census | Observed result |
+|---|---:|---|
+| Nullable argument path | 212 | Caught; four scoped argument IDs, four dependent generic IDs and the linked TS2420 return. |
+| Nullable assignment path | 209 | Caught; two scoped IDs and four cascades return; shared nonRecursive owner remains fixed through the argument path. |
+| Generic object-owner comparison | 207 | Caught; all four generic-owner IDs return. |
+| TS2322/TS2345 path | 209 | Caught; six scoped IDs return; shared-owner discharges remain. |
+| Nested initializer path | 203 | Unchanged for the declined scoped row. Both witnesses also remain covered through the shared construction scan; no kill or scoped repair is claimed. |
+| Nested generic result path | 204 | Caught; D1c9885b9e665 returns. |
+| Public-blocker exclusion | 203 | Caught; same count but three new public-property chains, rejected by the final verifier's exact no-new-chain comparison. |
+| Masked contextual construction scan | 205 | Caught; both scoped builder IDs return. |
+
+The initial mutant harness expected the declined nested-initializer witness to
+fail. It survived through the shared scan. That exploratory survival is retained,
+and the final record explicitly requires its six-run census to remain unchanged.
+All repaired-group reverts fail a focused witness and restore scoped IDs in every
+one of the six census profiles. The public-blocker safety revert fails the blocked
+peer witness and the no-new-chain check. An omitted owner attribution also fails
+the resolved-findings check; actual runtime-expression mutations are caught in
+every changed file, and the actual API method conversion is rejected.
+
+Full apply checkouts were monitored and completed scratch trees were removed
+when disk usage rose. Every report, CLI stream, source/library hash manifest and
+actual reverted resolver input remains retained. No incomplete run is relabeled
+as a passing observation.
+
+Representative exact commands (all test output goes to logs):
+
+```sh
+source /workspace/adamic-tools/env.sh
+export ADAMIC_TYPESCRIPT_SOURCE=/tmp/optional-source
+timeout 90 go build -o /tmp/optional-adamic ./cmd/adamic > /tmp/optional-header-build.log 2>&1
+timeout 30 /tmp/optional-adamic c stage3/adapt/20-optional-declarations/testdata/nullable-return.a > /tmp/optional-header-after.stdout 2> /tmp/optional-header-after.log
+timeout 90 node stage3/adapt/20-optional-declarations/check-nullable-return.cjs > /tmp/optional-header-witness.log 2>&1
+# The header-only commit is pushed before cutting wave 2 from origin's exact ref.
+timeout 300 bash stage3/apply.sh /tmp/optional-wave2-final > /tmp/optional-wave2-final-apply.log 2>&1
+# Identical locked dependencies are linked for build, then unlinked before census.
+timeout 300 npm run build --prefix /tmp/optional-wave2-final > /tmp/optional-wave2-final-build.log 2>&1
+timeout 360 node stage3/adapt/00-setup/evidence/checker-census.cjs "$PWD" /tmp/optional-wave2-final /tmp/optional-wave2-final-census > /tmp/optional-wave2-final-census.log 2>&1
+timeout 180 node stage3/adapt/00-setup/evidence/checker-census.cjs "$PWD" /tmp/optional-wave2-final /tmp/optional-wave2-final-census --option-controls > /tmp/optional-wave2-final-controls.log 2>&1
+timeout 90 node stage3/adapt/20-optional-declarations/check-wave2.cjs /tmp/optional-after /tmp/optional-wave2-final /tmp/optional-20-after.json /tmp/optional-wave2-final-report.json > /tmp/optional-wave2-final-bytes.json 2> /tmp/optional-wave2-final-bytes.log
+PYTHONDONTWRITEBYTECODE=1 timeout 60 python3 stage3/adapt/00-setup/evidence/check-optional-api.py /tmp/optional-after /tmp/optional-wave2-final > /tmp/optional-wave2-final-api.log 2>&1
+PYTHONPATH="$PWD/stage3" PYTHONDONTWRITEBYTECODE=1 timeout 90 python3 -m unittest stage3/test_apply.py > /tmp/optional-wave2-final-apply-tests.log 2>&1
+timeout 120 node stage3/adapt/20-optional-declarations/check-internal.cjs > /tmp/optional-wave2-restored-internal.log 2>&1
+timeout 90 node stage3/adapt/20-optional-declarations/check-nullable-return.cjs > /tmp/optional-wave2-restored-return.log 2>&1
+PYTHONDONTWRITEBYTECODE=1 timeout 3600 python3 stage3/adapt/20-optional-declarations/run-wave2-mutants.py /tmp/optional-wave2-mutants /tmp/optional-wave2-final-census/raw.json > /tmp/optional-wave2-mutants.log 2>&1
+# Bounded resume after recording the declined-group survival; completed groups are skipped.
+PYTHONDONTWRITEBYTECODE=1 timeout 2400 python3 stage3/adapt/20-optional-declarations/run-wave2-mutants.py /tmp/optional-wave2-mutants /tmp/optional-wave2-final-census/raw.json > /tmp/optional-wave2-mutants-resume.log 2>&1
+PYTHONDONTWRITEBYTECODE=1 timeout 60 python3 stage3/adapt/00-setup/evidence/verify-optional-wave2.py > /tmp/optional-wave2-verify.log 2>&1
+```
+
+Each mutant apply has a 300-second limit and each unchanged census driver a
+360-second limit. The main harness is monitored during those bounded subprocesses.
+Final header checks invoke the real compiler in place on both `.a` witnesses:
+both exit 1 with first code TS2375, matching their first-line headers. No header
+is stripped by the resolver witness scripts.
