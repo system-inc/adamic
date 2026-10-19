@@ -162,11 +162,13 @@ func TestWASIInputRunnerCatchesMutants(t *testing.T) {
 	if disagreement(expected, probe(native.C(program))) != "stdout differs" {
 		t.Fatal("stdout mutant escaped")
 	}
-	index := strings.LastIndex(original, "return 0;")
+	// Generated main returns the host's exit status after its ordinary cleanup.
+	const mainReturn = "return adamic_host_exit_status();"
+	index := strings.LastIndex(original, mainReturn)
 	if index < 0 {
 		t.Fatal("missing main return")
 	}
-	if disagreement(expected, probe(original[:index]+strings.Replace(original[index:], "return 0;", "return 23;", 1))) != "exit codes differ" {
+	if disagreement(expected, probe(original[:index]+strings.Replace(original[index:], mainReturn, "return 23;", 1))) != "exit codes differ" {
 		t.Fatal("exit mutant escaped")
 	}
 	if disagreement(expected, probe("#include <stdio.h>\n"+original[:index]+"fputs(\"mutant\\n\",stderr); "+original[index:])) != "stderr differs" {
