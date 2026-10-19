@@ -17,6 +17,7 @@
 #include <unistd.h>
 #ifdef ADAMIC_TARGET_WASI
 #include <sys/stat.h>
+#include "node_cwd_wasi.h"
 #endif
 
 // new_string makes a string of length bytes, references 1, its bytes right after it in one block, the
@@ -250,6 +251,12 @@ static char *file_name(const adamic_string *path) {
 	if (memchr(path->bytes, 0, path->length) != NULL) {
 		return NULL;
 	}
+#ifdef ADAMIC_TARGET_WASI
+	// Legacy text-file APIs also resolve relative paths, without a Node fs adapter.
+	if (path->length != 0 && path->bytes[0] != '/') {
+		adamic_node_wasi_cwd();
+	}
+#endif
 	return utf8(path);
 }
 
