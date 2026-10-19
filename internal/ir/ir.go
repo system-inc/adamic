@@ -16,6 +16,8 @@ type Program struct {
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
+	// methodTables caches MethodsNamed's walk of every method table (call_targets.go).
+	methodTables *methodTables
 	// UninitializedFields records the field names whose readiness can be observed.
 	UninitializedFields SortedMap[string, bool]
 	// PredicateChecks counts overload-result directions, per emitted call site.
