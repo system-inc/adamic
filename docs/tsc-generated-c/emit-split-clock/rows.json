@@ -1,0 +1,4801 @@
+{
+ "trees": [
+  {
+   "label": "2b22b31ccc8b",
+   "path": "/home/user/trees/a-main-parts-base",
+   "commit": "2b22b31ccc8b218ac564fba8f8641adb63160e6f"
+  },
+  {
+   "label": "71fcee578a",
+   "path": "/home/user/trees/b-main-parts",
+   "commit": "71fcee578a7bdba6b6059e4325b27fd5e7f3e2e6"
+  },
+  {
+   "label": "141fec77",
+   "path": "/home/user/trees/c-constant-tables-base",
+   "commit": "141fec7702d4aed21429724b2afd7efcd980f277"
+  },
+  {
+   "label": "375a979e17",
+   "path": "/home/user/trees/d-constant-tables",
+   "commit": "375a979e17782e94ba1179d0f5d040b5f3f57fcb"
+  }
+ ],
+ "box": {
+  "nproc": 4,
+  "lscpu_model_name": "Intel(R) Xeon(R) Processor",
+  "cpuinfo_model_name": "Intel(R) Xeon(R) Processor",
+  "memory_kb": 16479424,
+  "kernel": "6.18.44-fc-v139",
+  "clang": "/opt/llvm-dl/LLVM-20.1.8-Linux-X64/bin/clang",
+  "clang_version": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /opt/llvm-dl/LLVM-20.1.8-Linux-X64/bin",
+  "go_version": "go version go1.24.7 linux/amd64",
+  "flags": [
+   "-std=c11",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-Wcast-function-type-strict",
+   "-pedantic",
+   "-Wno-unused-variable",
+   "-Wno-unused-but-set-variable",
+   "-Wno-unused-function",
+   "-Wno-unused-parameter",
+   "-Wno-self-assign",
+   "-ffp-contract=off",
+   "-fno-optimize-sibling-calls",
+   "-pthread"
+  ],
+  "load_at_start": [
+   "0.87",
+   "2.64",
+   "1.73"
+  ],
+  "load_at_end": [
+   "1.00",
+   "1.04",
+   "1.20"
+  ]
+ },
+ "rows": [
+  {
+   "tree": "2b22b31ccc8b",
+   "commit": "2b22b31ccc8b218ac564fba8f8641adb63160e6f",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 6.58,
+   "load_before_program": [
+    "0.87",
+    "2.64",
+    "1.73"
+   ],
+   "c_bytes": 4429107,
+   "c_lines": 59096,
+   "c_functions": 460,
+   "largest_function": "main",
+   "largest_function_lines": 19887,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 19887
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 1.04,
+       "user_seconds": 0.95,
+       "system_seconds": 0.08,
+       "max_rss_kb": 181696,
+       "object_bytes": 3127400,
+       "load_before": [
+        "0.91",
+        "2.53",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.53",
+        "1.71"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.99,
+       "user_seconds": 0.93,
+       "system_seconds": 0.05,
+       "max_rss_kb": 181736,
+       "object_bytes": 3127400,
+       "load_before": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 1.04,
+       "user_seconds": 0.99,
+       "system_seconds": 0.04,
+       "max_rss_kb": 181560,
+       "object_bytes": 3127400,
+       "load_before": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "load_after": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 1.04,
+     "median_max_rss_mb": 177.4,
+     "raw_wall_seconds": [
+      1.04,
+      0.99,
+      1.04
+     ],
+     "raw_max_rss_mb": [
+      177.4,
+      177.5,
+      177.3
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 20.37,
+       "user_seconds": 19.97,
+       "system_seconds": 0.19,
+       "max_rss_kb": 314388,
+       "object_bytes": 2739192,
+       "load_before": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "load_after": [
+        "0.94",
+        "2.38",
+        "1.69"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 22.4,
+       "user_seconds": 21.6,
+       "system_seconds": 0.55,
+       "max_rss_kb": 314372,
+       "object_bytes": 2739192,
+       "load_before": [
+        "0.97",
+        "2.19",
+        "1.66"
+       ],
+       "load_after": [
+        "0.98",
+        "2.11",
+        "1.64"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 21.72,
+       "user_seconds": 21.04,
+       "system_seconds": 0.48,
+       "max_rss_kb": 313688,
+       "object_bytes": 2739192,
+       "load_before": [
+        "0.99",
+        "1.95",
+        "1.61"
+       ],
+       "load_after": [
+        "1.00",
+        "1.89",
+        "1.60"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 21.72,
+     "median_max_rss_mb": 307.0,
+     "raw_wall_seconds": [
+      20.37,
+      22.4,
+      21.72
+     ],
+     "raw_max_rss_mb": [
+      307.0,
+      307.0,
+      306.3
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 22.62,
+       "user_seconds": 21.89,
+       "system_seconds": 0.45,
+       "max_rss_kb": 315592,
+       "object_bytes": 2749016,
+       "load_before": [
+        "1.00",
+        "1.78",
+        "1.57"
+       ],
+       "load_after": [
+        "1.00",
+        "1.71",
+        "1.55"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 23.38,
+       "user_seconds": 22.52,
+       "system_seconds": 0.62,
+       "max_rss_kb": 315476,
+       "object_bytes": 2749016,
+       "load_before": [
+        "1.00",
+        "1.61",
+        "1.52"
+       ],
+       "load_after": [
+        "1.00",
+        "1.57",
+        "1.51"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 22.36,
+       "user_seconds": 21.85,
+       "system_seconds": 0.15,
+       "max_rss_kb": 315736,
+       "object_bytes": 2749016,
+       "load_before": [
+        "1.00",
+        "1.49",
+        "1.49"
+       ],
+       "load_after": [
+        "1.00",
+        "1.45",
+        "1.47"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 22.62,
+     "median_max_rss_mb": 308.2,
+     "raw_wall_seconds": [
+      22.62,
+      23.38,
+      22.36
+     ],
+     "raw_max_rss_mb": [
+      308.2,
+      308.1,
+      308.3
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ]
+  },
+  {
+   "tree": "71fcee578a",
+   "commit": "71fcee578a7bdba6b6059e4325b27fd5e7f3e2e6",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 5.201,
+   "load_before_program": [
+    "0.87",
+    "2.64",
+    "1.73"
+   ],
+   "c_bytes": 4429327,
+   "c_lines": 59112,
+   "c_functions": 464,
+   "largest_function": "adamic_main_2",
+   "largest_function_lines": 11410,
+   "main_functions": [
+    {
+     "name": "adamic_main_0",
+     "lines": 1879
+    },
+    {
+     "name": "adamic_main_1",
+     "lines": 3050
+    },
+    {
+     "name": "adamic_main_2",
+     "lines": 11410
+    },
+    {
+     "name": "adamic_main_3",
+     "lines": 3520
+    },
+    {
+     "name": "main",
+     "lines": 40
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.81,
+       "user_seconds": 0.76,
+       "system_seconds": 0.04,
+       "max_rss_kb": 154916,
+       "object_bytes": 3246280,
+       "load_before": [
+        "0.91",
+        "2.53",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.53",
+        "1.71"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.84,
+       "user_seconds": 0.78,
+       "system_seconds": 0.05,
+       "max_rss_kb": 154944,
+       "object_bytes": 3246280,
+       "load_before": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.85,
+       "user_seconds": 0.8,
+       "system_seconds": 0.03,
+       "max_rss_kb": 154520,
+       "object_bytes": 3246280,
+       "load_before": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "load_after": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.84,
+     "median_max_rss_mb": 151.3,
+     "raw_wall_seconds": [
+      0.81,
+      0.84,
+      0.85
+     ],
+     "raw_max_rss_mb": [
+      151.3,
+      151.3,
+      150.9
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 14.35,
+       "user_seconds": 13.82,
+       "system_seconds": 0.4,
+       "max_rss_kb": 269276,
+       "object_bytes": 2743064,
+       "load_before": [
+        "0.94",
+        "2.38",
+        "1.69"
+       ],
+       "load_after": [
+        "0.96",
+        "2.31",
+        "1.68"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 15.44,
+       "user_seconds": 14.99,
+       "system_seconds": 0.2,
+       "max_rss_kb": 268820,
+       "object_bytes": 2743064,
+       "load_before": [
+        "0.98",
+        "2.11",
+        "1.64"
+       ],
+       "load_after": [
+        "0.99",
+        "2.05",
+        "1.63"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 13.59,
+       "user_seconds": 13.24,
+       "system_seconds": 0.13,
+       "max_rss_kb": 269248,
+       "object_bytes": 2743064,
+       "load_before": [
+        "1.00",
+        "1.89",
+        "1.60"
+       ],
+       "load_after": [
+        "1.00",
+        "1.84",
+        "1.58"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 14.35,
+     "median_max_rss_mb": 262.9,
+     "raw_wall_seconds": [
+      14.35,
+      15.44,
+      13.59
+     ],
+     "raw_max_rss_mb": [
+      263.0,
+      262.5,
+      262.9
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 14.94,
+       "user_seconds": 14.49,
+       "system_seconds": 0.2,
+       "max_rss_kb": 270848,
+       "object_bytes": 2752888,
+       "load_before": [
+        "1.00",
+        "1.71",
+        "1.55"
+       ],
+       "load_after": [
+        "1.00",
+        "1.68",
+        "1.54"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 16.28,
+       "user_seconds": 15.82,
+       "system_seconds": 0.22,
+       "max_rss_kb": 270192,
+       "object_bytes": 2752888,
+       "load_before": [
+        "1.00",
+        "1.57",
+        "1.51"
+       ],
+       "load_after": [
+        "1.00",
+        "1.53",
+        "1.50"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 14.95,
+       "user_seconds": 14.59,
+       "system_seconds": 0.07,
+       "max_rss_kb": 270564,
+       "object_bytes": 2752888,
+       "load_before": [
+        "1.00",
+        "1.45",
+        "1.47"
+       ],
+       "load_after": [
+        "1.00",
+        "1.42",
+        "1.46"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 14.95,
+     "median_max_rss_mb": 264.2,
+     "raw_wall_seconds": [
+      14.94,
+      16.28,
+      14.95
+     ],
+     "raw_max_rss_mb": [
+      264.5,
+      263.9,
+      264.2
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ]
+  },
+  {
+   "tree": "141fec77",
+   "commit": "141fec7702d4aed21429724b2afd7efcd980f277",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 5.058,
+   "load_before_program": [
+    "0.87",
+    "2.64",
+    "1.73"
+   ],
+   "c_bytes": 4429107,
+   "c_lines": 59096,
+   "c_functions": 460,
+   "largest_function": "main",
+   "largest_function_lines": 19887,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 19887
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 1.03,
+       "user_seconds": 0.97,
+       "system_seconds": 0.05,
+       "max_rss_kb": 182096,
+       "object_bytes": 3127400,
+       "load_before": [
+        "0.91",
+        "2.53",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 1.0,
+       "user_seconds": 0.95,
+       "system_seconds": 0.04,
+       "max_rss_kb": 181832,
+       "object_bytes": 3127400,
+       "load_before": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 1.0,
+       "user_seconds": 0.93,
+       "system_seconds": 0.05,
+       "max_rss_kb": 181928,
+       "object_bytes": 3127400,
+       "load_before": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "load_after": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 1.0,
+     "median_max_rss_mb": 177.7,
+     "raw_wall_seconds": [
+      1.03,
+      1.0,
+      1.0
+     ],
+     "raw_max_rss_mb": [
+      177.8,
+      177.6,
+      177.7
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 23.01,
+       "user_seconds": 21.99,
+       "system_seconds": 0.76,
+       "max_rss_kb": 313780,
+       "object_bytes": 2739192,
+       "load_before": [
+        "0.96",
+        "2.31",
+        "1.68"
+       ],
+       "load_after": [
+        "0.97",
+        "2.21",
+        "1.66"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 22.9,
+       "user_seconds": 22.04,
+       "system_seconds": 0.55,
+       "max_rss_kb": 314064,
+       "object_bytes": 2739192,
+       "load_before": [
+        "0.99",
+        "2.05",
+        "1.63"
+       ],
+       "load_after": [
+        "0.99",
+        "1.97",
+        "1.61"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 21.21,
+       "user_seconds": 20.41,
+       "system_seconds": 0.5,
+       "max_rss_kb": 314080,
+       "object_bytes": 2739192,
+       "load_before": [
+        "1.00",
+        "1.84",
+        "1.58"
+       ],
+       "load_after": [
+        "1.00",
+        "1.79",
+        "1.57"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 22.9,
+     "median_max_rss_mb": 306.7,
+     "raw_wall_seconds": [
+      23.01,
+      22.9,
+      21.21
+     ],
+     "raw_max_rss_mb": [
+      306.4,
+      306.7,
+      306.7
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 22.47,
+       "user_seconds": 21.58,
+       "system_seconds": 0.69,
+       "max_rss_kb": 315656,
+       "object_bytes": 2749016,
+       "load_before": [
+        "1.00",
+        "1.68",
+        "1.54"
+       ],
+       "load_after": [
+        "1.00",
+        "1.63",
+        "1.53"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 22.7,
+       "user_seconds": 21.93,
+       "system_seconds": 0.46,
+       "max_rss_kb": 315800,
+       "object_bytes": 2749016,
+       "load_before": [
+        "1.00",
+        "1.53",
+        "1.50"
+       ],
+       "load_after": [
+        "1.00",
+        "1.50",
+        "1.49"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 22.13,
+       "user_seconds": 21.56,
+       "system_seconds": 0.28,
+       "max_rss_kb": 315236,
+       "object_bytes": 2749016,
+       "load_before": [
+        "1.00",
+        "1.42",
+        "1.46"
+       ],
+       "load_after": [
+        "1.00",
+        "1.40",
+        "1.45"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 22.47,
+     "median_max_rss_mb": 308.3,
+     "raw_wall_seconds": [
+      22.47,
+      22.7,
+      22.13
+     ],
+     "raw_max_rss_mb": [
+      308.3,
+      308.4,
+      307.8
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ]
+  },
+  {
+   "tree": "375a979e17",
+   "commit": "375a979e17782e94ba1179d0f5d040b5f3f57fcb",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 5.058,
+   "load_before_program": [
+    "0.87",
+    "2.64",
+    "1.73"
+   ],
+   "c_bytes": 3062408,
+   "c_lines": 40764,
+   "c_functions": 460,
+   "largest_function": "adamic_function_183_Statements_statement",
+   "largest_function_lines": 1693,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 541
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.49,
+       "user_seconds": 0.45,
+       "system_seconds": 0.03,
+       "max_rss_kb": 109696,
+       "object_bytes": 1719184,
+       "load_before": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.5,
+       "user_seconds": 0.46,
+       "system_seconds": 0.02,
+       "max_rss_kb": 109680,
+       "object_bytes": 1719184,
+       "load_before": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "load_after": [
+        "0.91",
+        "2.50",
+        "1.71"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.49,
+       "user_seconds": 0.45,
+       "system_seconds": 0.03,
+       "max_rss_kb": 109644,
+       "object_bytes": 1719184,
+       "load_before": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "load_after": [
+        "0.92",
+        "2.48",
+        "1.71"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.49,
+     "median_max_rss_mb": 107.1,
+     "raw_wall_seconds": [
+      0.49,
+      0.5,
+      0.49
+     ],
+     "raw_max_rss_mb": [
+      107.1,
+      107.1,
+      107.1
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 5.53,
+       "user_seconds": 5.44,
+       "system_seconds": 0.05,
+       "max_rss_kb": 160056,
+       "object_bytes": 1941816,
+       "load_before": [
+        "0.97",
+        "2.21",
+        "1.66"
+       ],
+       "load_after": [
+        "0.97",
+        "2.19",
+        "1.66"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 5.95,
+       "user_seconds": 5.84,
+       "system_seconds": 0.05,
+       "max_rss_kb": 160140,
+       "object_bytes": 1941816,
+       "load_before": [
+        "0.99",
+        "1.97",
+        "1.61"
+       ],
+       "load_after": [
+        "0.99",
+        "1.95",
+        "1.61"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 5.57,
+       "user_seconds": 5.42,
+       "system_seconds": 0.06,
+       "max_rss_kb": 159904,
+       "object_bytes": 1941816,
+       "load_before": [
+        "1.00",
+        "1.79",
+        "1.57"
+       ],
+       "load_after": [
+        "1.00",
+        "1.78",
+        "1.57"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 5.57,
+     "median_max_rss_mb": 156.3,
+     "raw_wall_seconds": [
+      5.53,
+      5.95,
+      5.57
+     ],
+     "raw_max_rss_mb": [
+      156.3,
+      156.4,
+      156.2
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 6.19,
+       "user_seconds": 6.05,
+       "system_seconds": 0.06,
+       "max_rss_kb": 160892,
+       "object_bytes": 1950536,
+       "load_before": [
+        "1.00",
+        "1.63",
+        "1.53"
+       ],
+       "load_after": [
+        "1.00",
+        "1.61",
+        "1.52"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 5.7,
+       "user_seconds": 5.61,
+       "system_seconds": 0.04,
+       "max_rss_kb": 160900,
+       "object_bytes": 1950536,
+       "load_before": [
+        "1.00",
+        "1.50",
+        "1.49"
+       ],
+       "load_after": [
+        "1.00",
+        "1.49",
+        "1.49"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 5.8,
+       "user_seconds": 5.71,
+       "system_seconds": 0.04,
+       "max_rss_kb": 161124,
+       "object_bytes": 1950536,
+       "load_before": [
+        "1.00",
+        "1.40",
+        "1.45"
+       ],
+       "load_after": [
+        "1.00",
+        "1.39",
+        "1.45"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 5.8,
+     "median_max_rss_mb": 157.1,
+     "raw_wall_seconds": [
+      6.19,
+      5.7,
+      5.8
+     ],
+     "raw_max_rss_mb": [
+      157.1,
+      157.1,
+      157.3
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ]
+  },
+  {
+   "tree": "2b22b31ccc8b",
+   "commit": "2b22b31ccc8b218ac564fba8f8641adb63160e6f",
+   "program": "stage1/cohere/json/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.728,
+   "load_before_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ],
+   "c_bytes": 1879342,
+   "c_lines": 25248,
+   "c_functions": 80,
+   "largest_function": "main",
+   "largest_function_lines": 19857,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 19857
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.61,
+       "user_seconds": 0.57,
+       "system_seconds": 0.03,
+       "max_rss_kb": 151428,
+       "object_bytes": 1662944,
+       "load_before": [
+        "1.00",
+        "1.31",
+        "1.41"
+       ],
+       "load_after": [
+        "1.00",
+        "1.31",
+        "1.41"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.61,
+       "user_seconds": 0.56,
+       "system_seconds": 0.03,
+       "max_rss_kb": 151412,
+       "object_bytes": 1662944,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.59,
+       "user_seconds": 0.53,
+       "system_seconds": 0.04,
+       "max_rss_kb": 151440,
+       "object_bytes": 1662944,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.61,
+     "median_max_rss_mb": 147.9,
+     "raw_wall_seconds": [
+      0.61,
+      0.61,
+      0.59
+     ],
+     "raw_max_rss_mb": [
+      147.9,
+      147.9,
+      147.9
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 13.74,
+       "user_seconds": 13.19,
+       "system_seconds": 0.29,
+       "max_rss_kb": 353960,
+       "object_bytes": 1292824,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.06",
+        "1.30",
+        "1.41"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 12.76,
+       "user_seconds": 12.42,
+       "system_seconds": 0.13,
+       "max_rss_kb": 354268,
+       "object_bytes": 1292824,
+       "load_before": [
+        "1.04",
+        "1.28",
+        "1.40"
+       ],
+       "load_after": [
+        "1.03",
+        "1.27",
+        "1.39"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 13.67,
+       "user_seconds": 13.39,
+       "system_seconds": 0.13,
+       "max_rss_kb": 353968,
+       "object_bytes": 1292824,
+       "load_before": [
+        "1.02",
+        "1.24",
+        "1.38"
+       ],
+       "load_after": [
+        "1.02",
+        "1.23",
+        "1.38"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 13.67,
+     "median_max_rss_mb": 345.7,
+     "raw_wall_seconds": [
+      13.74,
+      12.76,
+      13.67
+     ],
+     "raw_max_rss_mb": [
+      345.7,
+      346.0,
+      345.7
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 13.34,
+       "user_seconds": 13.03,
+       "system_seconds": 0.19,
+       "max_rss_kb": 353720,
+       "object_bytes": 1285048,
+       "load_before": [
+        "1.01",
+        "1.21",
+        "1.36"
+       ],
+       "load_after": [
+        "1.01",
+        "1.20",
+        "1.36"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 14.28,
+       "user_seconds": 14.01,
+       "system_seconds": 0.11,
+       "max_rss_kb": 354228,
+       "object_bytes": 1285048,
+       "load_before": [
+        "1.00",
+        "1.19",
+        "1.35"
+       ],
+       "load_after": [
+        "1.00",
+        "1.18",
+        "1.34"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 13.86,
+       "user_seconds": 13.58,
+       "system_seconds": 0.11,
+       "max_rss_kb": 353424,
+       "object_bytes": 1285048,
+       "load_before": [
+        "1.00",
+        "1.16",
+        "1.33"
+       ],
+       "load_after": [
+        "1.00",
+        "1.15",
+        "1.33"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 13.86,
+     "median_max_rss_mb": 345.4,
+     "raw_wall_seconds": [
+      13.34,
+      14.28,
+      13.86
+     ],
+     "raw_max_rss_mb": [
+      345.4,
+      345.9,
+      345.1
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ]
+  },
+  {
+   "tree": "71fcee578a",
+   "commit": "71fcee578a7bdba6b6059e4325b27fd5e7f3e2e6",
+   "program": "stage1/cohere/json/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.746,
+   "load_before_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ],
+   "c_bytes": 1879617,
+   "c_lines": 25268,
+   "c_functions": 85,
+   "largest_function": "adamic_main_3",
+   "largest_function_lines": 11410,
+   "main_functions": [
+    {
+     "name": "adamic_main_0",
+     "lines": 3961
+    },
+    {
+     "name": "adamic_main_1",
+     "lines": 3407
+    },
+    {
+     "name": "adamic_main_2",
+     "lines": 624
+    },
+    {
+     "name": "adamic_main_3",
+     "lines": 11410
+    },
+    {
+     "name": "adamic_main_4",
+     "lines": 443
+    },
+    {
+     "name": "main",
+     "lines": 27
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.44,
+       "user_seconds": 0.41,
+       "system_seconds": 0.02,
+       "max_rss_kb": 124360,
+       "object_bytes": 1678416,
+       "load_before": [
+        "1.00",
+        "1.31",
+        "1.41"
+       ],
+       "load_after": [
+        "1.00",
+        "1.31",
+        "1.41"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.46,
+       "user_seconds": 0.41,
+       "system_seconds": 0.03,
+       "max_rss_kb": 124400,
+       "object_bytes": 1678416,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.43,
+       "user_seconds": 0.38,
+       "system_seconds": 0.04,
+       "max_rss_kb": 124408,
+       "object_bytes": 1678416,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.44,
+     "median_max_rss_mb": 121.5,
+     "raw_wall_seconds": [
+      0.44,
+      0.46,
+      0.43
+     ],
+     "raw_max_rss_mb": [
+      121.4,
+      121.5,
+      121.5
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 9.72,
+       "user_seconds": 9.48,
+       "system_seconds": 0.11,
+       "max_rss_kb": 238576,
+       "object_bytes": 1300472,
+       "load_before": [
+        "1.06",
+        "1.30",
+        "1.41"
+       ],
+       "load_after": [
+        "1.05",
+        "1.29",
+        "1.41"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 9.66,
+       "user_seconds": 9.46,
+       "system_seconds": 0.09,
+       "max_rss_kb": 238724,
+       "object_bytes": 1300472,
+       "load_before": [
+        "1.03",
+        "1.27",
+        "1.39"
+       ],
+       "load_after": [
+        "1.03",
+        "1.26",
+        "1.39"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 10.79,
+       "user_seconds": 10.58,
+       "system_seconds": 0.09,
+       "max_rss_kb": 238528,
+       "object_bytes": 1300472,
+       "load_before": [
+        "1.02",
+        "1.23",
+        "1.38"
+       ],
+       "load_after": [
+        "1.01",
+        "1.22",
+        "1.37"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 9.72,
+     "median_max_rss_mb": 233.0,
+     "raw_wall_seconds": [
+      9.72,
+      9.66,
+      10.79
+     ],
+     "raw_max_rss_mb": [
+      233.0,
+      233.1,
+      232.9
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 10.54,
+       "user_seconds": 10.38,
+       "system_seconds": 0.06,
+       "max_rss_kb": 238744,
+       "object_bytes": 1292712,
+       "load_before": [
+        "1.01",
+        "1.20",
+        "1.36"
+       ],
+       "load_after": [
+        "1.01",
+        "1.20",
+        "1.35"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 10.94,
+       "user_seconds": 10.66,
+       "system_seconds": 0.11,
+       "max_rss_kb": 238656,
+       "object_bytes": 1292712,
+       "load_before": [
+        "1.00",
+        "1.18",
+        "1.34"
+       ],
+       "load_after": [
+        "1.00",
+        "1.17",
+        "1.34"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 10.3,
+       "user_seconds": 10.14,
+       "system_seconds": 0.07,
+       "max_rss_kb": 238592,
+       "object_bytes": 1292712,
+       "load_before": [
+        "1.00",
+        "1.15",
+        "1.33"
+       ],
+       "load_after": [
+        "1.00",
+        "1.15",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 10.54,
+     "median_max_rss_mb": 233.1,
+     "raw_wall_seconds": [
+      10.54,
+      10.94,
+      10.3
+     ],
+     "raw_max_rss_mb": [
+      233.1,
+      233.1,
+      233.0
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ]
+  },
+  {
+   "tree": "141fec77",
+   "commit": "141fec7702d4aed21429724b2afd7efcd980f277",
+   "program": "stage1/cohere/json/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.782,
+   "load_before_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ],
+   "c_bytes": 1879342,
+   "c_lines": 25248,
+   "c_functions": 80,
+   "largest_function": "main",
+   "largest_function_lines": 19857,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 19857
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.59,
+       "user_seconds": 0.56,
+       "system_seconds": 0.02,
+       "max_rss_kb": 151448,
+       "object_bytes": 1662944,
+       "load_before": [
+        "1.00",
+        "1.31",
+        "1.41"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.61,
+       "user_seconds": 0.56,
+       "system_seconds": 0.03,
+       "max_rss_kb": 151420,
+       "object_bytes": 1662944,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.68,
+       "user_seconds": 0.61,
+       "system_seconds": 0.05,
+       "max_rss_kb": 151420,
+       "object_bytes": 1662944,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.61,
+     "median_max_rss_mb": 147.9,
+     "raw_wall_seconds": [
+      0.59,
+      0.61,
+      0.68
+     ],
+     "raw_max_rss_mb": [
+      147.9,
+      147.9,
+      147.9
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 12.42,
+       "user_seconds": 12.16,
+       "system_seconds": 0.13,
+       "max_rss_kb": 354532,
+       "object_bytes": 1292824,
+       "load_before": [
+        "1.05",
+        "1.29",
+        "1.41"
+       ],
+       "load_after": [
+        "1.04",
+        "1.28",
+        "1.40"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 12.68,
+       "user_seconds": 12.33,
+       "system_seconds": 0.21,
+       "max_rss_kb": 353976,
+       "object_bytes": 1292824,
+       "load_before": [
+        "1.03",
+        "1.26",
+        "1.39"
+       ],
+       "load_after": [
+        "1.02",
+        "1.24",
+        "1.38"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 12.61,
+       "user_seconds": 12.29,
+       "system_seconds": 0.2,
+       "max_rss_kb": 354028,
+       "object_bytes": 1292824,
+       "load_before": [
+        "1.01",
+        "1.22",
+        "1.37"
+       ],
+       "load_after": [
+        "1.01",
+        "1.21",
+        "1.36"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 12.61,
+     "median_max_rss_mb": 345.7,
+     "raw_wall_seconds": [
+      12.42,
+      12.68,
+      12.61
+     ],
+     "raw_max_rss_mb": [
+      346.2,
+      345.7,
+      345.7
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 14.26,
+       "user_seconds": 13.89,
+       "system_seconds": 0.22,
+       "max_rss_kb": 353476,
+       "object_bytes": 1285048,
+       "load_before": [
+        "1.01",
+        "1.20",
+        "1.35"
+       ],
+       "load_after": [
+        "1.00",
+        "1.19",
+        "1.35"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 14.3,
+       "user_seconds": 14.0,
+       "system_seconds": 0.13,
+       "max_rss_kb": 353616,
+       "object_bytes": 1285048,
+       "load_before": [
+        "1.00",
+        "1.17",
+        "1.34"
+       ],
+       "load_after": [
+        "1.00",
+        "1.16",
+        "1.33"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 13.81,
+       "user_seconds": 13.49,
+       "system_seconds": 0.12,
+       "max_rss_kb": 354064,
+       "object_bytes": 1285048,
+       "load_before": [
+        "1.00",
+        "1.15",
+        "1.32"
+       ],
+       "load_after": [
+        "1.00",
+        "1.14",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 14.26,
+     "median_max_rss_mb": 345.3,
+     "raw_wall_seconds": [
+      14.26,
+      14.3,
+      13.81
+     ],
+     "raw_max_rss_mb": [
+      345.2,
+      345.3,
+      345.8
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ]
+  },
+  {
+   "tree": "375a979e17",
+   "commit": "375a979e17782e94ba1179d0f5d040b5f3f57fcb",
+   "program": "stage1/cohere/json/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.804,
+   "load_before_program": [
+    "1.00",
+    "1.31",
+    "1.41"
+   ],
+   "c_bytes": 505131,
+   "c_lines": 6510,
+   "c_functions": 80,
+   "largest_function": "adamic_function_38_Printer_print",
+   "largest_function_lines": 848,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 240
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.1,
+       "user_seconds": 0.08,
+       "system_seconds": 0.01,
+       "max_rss_kb": 68188,
+       "object_bytes": 326976,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.08,
+       "user_seconds": 0.07,
+       "system_seconds": 0.01,
+       "max_rss_kb": 68192,
+       "object_bytes": 326976,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.08,
+       "user_seconds": 0.08,
+       "system_seconds": 0.0,
+       "max_rss_kb": 68208,
+       "object_bytes": 326976,
+       "load_before": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "load_after": [
+        "1.08",
+        "1.32",
+        "1.42"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.08,
+     "median_max_rss_mb": 66.6,
+     "raw_wall_seconds": [
+      0.1,
+      0.08,
+      0.08
+     ],
+     "raw_max_rss_mb": [
+      66.6,
+      66.6,
+      66.6
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 0.65,
+       "user_seconds": 0.61,
+       "system_seconds": 0.03,
+       "max_rss_kb": 83344,
+       "object_bytes": 351848,
+       "load_before": [
+        "1.04",
+        "1.28",
+        "1.40"
+       ],
+       "load_after": [
+        "1.04",
+        "1.28",
+        "1.40"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 0.63,
+       "user_seconds": 0.61,
+       "system_seconds": 0.0,
+       "max_rss_kb": 83364,
+       "object_bytes": 351848,
+       "load_before": [
+        "1.02",
+        "1.24",
+        "1.38"
+       ],
+       "load_after": [
+        "1.02",
+        "1.24",
+        "1.38"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 0.6,
+       "user_seconds": 0.57,
+       "system_seconds": 0.01,
+       "max_rss_kb": 83812,
+       "object_bytes": 351848,
+       "load_before": [
+        "1.01",
+        "1.21",
+        "1.36"
+       ],
+       "load_after": [
+        "1.01",
+        "1.21",
+        "1.36"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.63,
+     "median_max_rss_mb": 81.4,
+     "raw_wall_seconds": [
+      0.65,
+      0.63,
+      0.6
+     ],
+     "raw_max_rss_mb": [
+      81.4,
+      81.4,
+      81.8
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 0.69,
+       "user_seconds": 0.67,
+       "system_seconds": 0.01,
+       "max_rss_kb": 82508,
+       "object_bytes": 342776,
+       "load_before": [
+        "1.00",
+        "1.19",
+        "1.35"
+       ],
+       "load_after": [
+        "1.00",
+        "1.19",
+        "1.35"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 0.72,
+       "user_seconds": 0.69,
+       "system_seconds": 0.0,
+       "max_rss_kb": 82704,
+       "object_bytes": 342776,
+       "load_before": [
+        "1.00",
+        "1.16",
+        "1.33"
+       ],
+       "load_after": [
+        "1.00",
+        "1.16",
+        "1.33"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 0.7,
+       "user_seconds": 0.68,
+       "system_seconds": 0.0,
+       "max_rss_kb": 82620,
+       "object_bytes": 342776,
+       "load_before": [
+        "1.00",
+        "1.14",
+        "1.32"
+       ],
+       "load_after": [
+        "1.00",
+        "1.14",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.7,
+     "median_max_rss_mb": 80.7,
+     "raw_wall_seconds": [
+      0.69,
+      0.72,
+      0.7
+     ],
+     "raw_max_rss_mb": [
+      80.6,
+      80.8,
+      80.7
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ]
+  },
+  {
+   "tree": "2b22b31ccc8b",
+   "commit": "2b22b31ccc8b218ac564fba8f8641adb63160e6f",
+   "program": "stage1/cohere/yaml/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 4.394,
+   "load_before_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ],
+   "c_bytes": 3371301,
+   "c_lines": 47565,
+   "c_functions": 482,
+   "largest_function": "main",
+   "largest_function_lines": 12505,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 12505
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.66,
+       "user_seconds": 0.59,
+       "system_seconds": 0.05,
+       "max_rss_kb": 141524,
+       "object_bytes": 2204608,
+       "load_before": [
+        "1.15",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.64,
+       "user_seconds": 0.6,
+       "system_seconds": 0.03,
+       "max_rss_kb": 141600,
+       "object_bytes": 2204608,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.62,
+       "user_seconds": 0.57,
+       "system_seconds": 0.04,
+       "max_rss_kb": 141560,
+       "object_bytes": 2204608,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.64,
+     "median_max_rss_mb": 138.2,
+     "raw_wall_seconds": [
+      0.66,
+      0.64,
+      0.62
+     ],
+     "raw_max_rss_mb": [
+      138.2,
+      138.3,
+      138.2
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.83,
+       "user_seconds": 11.56,
+       "system_seconds": 0.07,
+       "max_rss_kb": 267476,
+       "object_bytes": 2072848,
+       "load_before": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.10",
+        "1.15",
+        "1.31"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.44,
+       "user_seconds": 11.16,
+       "system_seconds": 0.1,
+       "max_rss_kb": 267836,
+       "object_bytes": 2072848,
+       "load_before": [
+        "1.06",
+        "1.14",
+        "1.30"
+       ],
+       "load_after": [
+        "1.05",
+        "1.13",
+        "1.30"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 10.89,
+       "user_seconds": 10.69,
+       "system_seconds": 0.1,
+       "max_rss_kb": 267688,
+       "object_bytes": 2072848,
+       "load_before": [
+        "1.03",
+        "1.12",
+        "1.29"
+       ],
+       "load_after": [
+        "1.11",
+        "1.13",
+        "1.29"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 11.44,
+     "median_max_rss_mb": 261.4,
+     "raw_wall_seconds": [
+      11.83,
+      11.44,
+      10.89
+     ],
+     "raw_max_rss_mb": [
+      261.2,
+      261.6,
+      261.4
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 11.69,
+       "user_seconds": 11.53,
+       "system_seconds": 0.07,
+       "max_rss_kb": 267904,
+       "object_bytes": 2053256,
+       "load_before": [
+        "1.06",
+        "1.12",
+        "1.28"
+       ],
+       "load_after": [
+        "1.05",
+        "1.11",
+        "1.28"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 12.46,
+       "user_seconds": 12.22,
+       "system_seconds": 0.07,
+       "max_rss_kb": 267912,
+       "object_bytes": 2053256,
+       "load_before": [
+        "1.09",
+        "1.12",
+        "1.27"
+       ],
+       "load_after": [
+        "1.08",
+        "1.11",
+        "1.27"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 12.25,
+       "user_seconds": 12.02,
+       "system_seconds": 0.11,
+       "max_rss_kb": 267972,
+       "object_bytes": 2053256,
+       "load_before": [
+        "1.05",
+        "1.10",
+        "1.26"
+       ],
+       "load_after": [
+        "1.04",
+        "1.10",
+        "1.26"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 12.25,
+     "median_max_rss_mb": 261.6,
+     "raw_wall_seconds": [
+      11.69,
+      12.46,
+      12.25
+     ],
+     "raw_max_rss_mb": [
+      261.6,
+      261.6,
+      261.7
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ]
+  },
+  {
+   "tree": "71fcee578a",
+   "commit": "71fcee578a7bdba6b6059e4325b27fd5e7f3e2e6",
+   "program": "stage1/cohere/yaml/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 4.344,
+   "load_before_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ],
+   "c_bytes": 3371466,
+   "c_lines": 47577,
+   "c_functions": 485,
+   "largest_function": "adamic_main_1",
+   "largest_function_lines": 11410,
+   "main_functions": [
+    {
+     "name": "adamic_main_0",
+     "lines": 655
+    },
+    {
+     "name": "adamic_main_1",
+     "lines": 11410
+    },
+    {
+     "name": "adamic_main_2",
+     "lines": 414
+    },
+    {
+     "name": "main",
+     "lines": 35
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.68,
+       "user_seconds": 0.63,
+       "system_seconds": 0.03,
+       "max_rss_kb": 137280,
+       "object_bytes": 2212608,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.6,
+       "user_seconds": 0.57,
+       "system_seconds": 0.02,
+       "max_rss_kb": 137404,
+       "object_bytes": 2212608,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.63,
+       "user_seconds": 0.58,
+       "system_seconds": 0.04,
+       "max_rss_kb": 137232,
+       "object_bytes": 2212608,
+       "load_before": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.63,
+     "median_max_rss_mb": 134.1,
+     "raw_wall_seconds": [
+      0.68,
+      0.6,
+      0.63
+     ],
+     "raw_max_rss_mb": [
+      134.1,
+      134.2,
+      134.0
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.29,
+       "user_seconds": 11.05,
+       "system_seconds": 0.08,
+       "max_rss_kb": 248792,
+       "object_bytes": 2076960,
+       "load_before": [
+        "1.10",
+        "1.15",
+        "1.31"
+       ],
+       "load_after": [
+        "1.09",
+        "1.15",
+        "1.31"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.2,
+       "user_seconds": 10.88,
+       "system_seconds": 0.08,
+       "max_rss_kb": 248588,
+       "object_bytes": 2076960,
+       "load_before": [
+        "1.05",
+        "1.13",
+        "1.30"
+       ],
+       "load_after": [
+        "1.04",
+        "1.13",
+        "1.29"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 10.89,
+       "user_seconds": 10.68,
+       "system_seconds": 0.09,
+       "max_rss_kb": 248360,
+       "object_bytes": 2076960,
+       "load_before": [
+        "1.11",
+        "1.13",
+        "1.29"
+       ],
+       "load_after": [
+        "1.08",
+        "1.12",
+        "1.29"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 11.2,
+     "median_max_rss_mb": 242.8,
+     "raw_wall_seconds": [
+      11.29,
+      11.2,
+      10.89
+     ],
+     "raw_max_rss_mb": [
+      243.0,
+      242.8,
+      242.5
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 12.24,
+       "user_seconds": 11.97,
+       "system_seconds": 0.08,
+       "max_rss_kb": 248656,
+       "object_bytes": 2057360,
+       "load_before": [
+        "1.05",
+        "1.11",
+        "1.28"
+       ],
+       "load_after": [
+        "1.05",
+        "1.11",
+        "1.27"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 11.82,
+       "user_seconds": 11.63,
+       "system_seconds": 0.08,
+       "max_rss_kb": 248704,
+       "object_bytes": 2057360,
+       "load_before": [
+        "1.08",
+        "1.11",
+        "1.27"
+       ],
+       "load_after": [
+        "1.06",
+        "1.11",
+        "1.26"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 12.49,
+       "user_seconds": 12.25,
+       "system_seconds": 0.07,
+       "max_rss_kb": 248676,
+       "object_bytes": 2057360,
+       "load_before": [
+        "1.04",
+        "1.10",
+        "1.26"
+       ],
+       "load_after": [
+        "1.03",
+        "1.09",
+        "1.25"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 12.24,
+     "median_max_rss_mb": 242.8,
+     "raw_wall_seconds": [
+      12.24,
+      11.82,
+      12.49
+     ],
+     "raw_max_rss_mb": [
+      242.8,
+      242.9,
+      242.8
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ]
+  },
+  {
+   "tree": "141fec77",
+   "commit": "141fec7702d4aed21429724b2afd7efcd980f277",
+   "program": "stage1/cohere/yaml/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 4.593,
+   "load_before_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ],
+   "c_bytes": 3371301,
+   "c_lines": 47565,
+   "c_functions": 482,
+   "largest_function": "main",
+   "largest_function_lines": 12505,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 12505
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.72,
+       "user_seconds": 0.66,
+       "system_seconds": 0.03,
+       "max_rss_kb": 141168,
+       "object_bytes": 2204608,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.62,
+       "user_seconds": 0.58,
+       "system_seconds": 0.03,
+       "max_rss_kb": 141300,
+       "object_bytes": 2204608,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.64,
+       "user_seconds": 0.59,
+       "system_seconds": 0.05,
+       "max_rss_kb": 141460,
+       "object_bytes": 2204608,
+       "load_before": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.64,
+     "median_max_rss_mb": 138.0,
+     "raw_wall_seconds": [
+      0.72,
+      0.62,
+      0.64
+     ],
+     "raw_max_rss_mb": [
+      137.9,
+      138.0,
+      138.1
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.65,
+       "user_seconds": 11.41,
+       "system_seconds": 0.08,
+       "max_rss_kb": 266948,
+       "object_bytes": 2072848,
+       "load_before": [
+        "1.09",
+        "1.15",
+        "1.31"
+       ],
+       "load_after": [
+        "1.07",
+        "1.14",
+        "1.30"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.71,
+       "user_seconds": 11.44,
+       "system_seconds": 0.11,
+       "max_rss_kb": 267596,
+       "object_bytes": 2072848,
+       "load_before": [
+        "1.04",
+        "1.13",
+        "1.29"
+       ],
+       "load_after": [
+        "1.04",
+        "1.12",
+        "1.29"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 11.32,
+       "user_seconds": 11.1,
+       "system_seconds": 0.05,
+       "max_rss_kb": 267436,
+       "object_bytes": 2072848,
+       "load_before": [
+        "1.08",
+        "1.12",
+        "1.29"
+       ],
+       "load_after": [
+        "1.07",
+        "1.12",
+        "1.28"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 11.65,
+     "median_max_rss_mb": 261.2,
+     "raw_wall_seconds": [
+      11.65,
+      11.71,
+      11.32
+     ],
+     "raw_max_rss_mb": [
+      260.7,
+      261.3,
+      261.2
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 12.22,
+       "user_seconds": 11.98,
+       "system_seconds": 0.09,
+       "max_rss_kb": 267784,
+       "object_bytes": 2053256,
+       "load_before": [
+        "1.05",
+        "1.11",
+        "1.27"
+       ],
+       "load_after": [
+        "1.10",
+        "1.12",
+        "1.27"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 12.53,
+       "user_seconds": 12.21,
+       "system_seconds": 0.12,
+       "max_rss_kb": 268124,
+       "object_bytes": 2053256,
+       "load_before": [
+        "1.06",
+        "1.11",
+        "1.26"
+       ],
+       "load_after": [
+        "1.05",
+        "1.10",
+        "1.26"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 13.82,
+       "user_seconds": 13.33,
+       "system_seconds": 0.09,
+       "max_rss_kb": 267732,
+       "object_bytes": 2053256,
+       "load_before": [
+        "1.03",
+        "1.09",
+        "1.25"
+       ],
+       "load_after": [
+        "1.02",
+        "1.09",
+        "1.25"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 12.53,
+     "median_max_rss_mb": 261.5,
+     "raw_wall_seconds": [
+      12.22,
+      12.53,
+      13.82
+     ],
+     "raw_max_rss_mb": [
+      261.5,
+      261.8,
+      261.5
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ]
+  },
+  {
+   "tree": "375a979e17",
+   "commit": "375a979e17782e94ba1179d0f5d040b5f3f57fcb",
+   "program": "stage1/cohere/yaml/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 4.657,
+   "load_before_program": [
+    "1.00",
+    "1.14",
+    "1.32"
+   ],
+   "c_bytes": 2498468,
+   "c_lines": 35854,
+   "c_functions": 482,
+   "largest_function": "adamic_function_207_UnistContext_document",
+   "largest_function_lines": 843,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 224
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.38,
+       "user_seconds": 0.36,
+       "system_seconds": 0.01,
+       "max_rss_kb": 100364,
+       "object_bytes": 1397632,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.38,
+       "user_seconds": 0.34,
+       "system_seconds": 0.02,
+       "max_rss_kb": 100236,
+       "object_bytes": 1397632,
+       "load_before": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.14",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.39,
+       "user_seconds": 0.36,
+       "system_seconds": 0.01,
+       "max_rss_kb": 100196,
+       "object_bytes": 1397632,
+       "load_before": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "load_after": [
+        "1.12",
+        "1.16",
+        "1.32"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.38,
+     "median_max_rss_mb": 97.9,
+     "raw_wall_seconds": [
+      0.38,
+      0.38,
+      0.39
+     ],
+     "raw_max_rss_mb": [
+      98.0,
+      97.9,
+      97.8
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 3.89,
+       "user_seconds": 3.83,
+       "system_seconds": 0.03,
+       "max_rss_kb": 137056,
+       "object_bytes": 1505888,
+       "load_before": [
+        "1.07",
+        "1.14",
+        "1.30"
+       ],
+       "load_after": [
+        "1.06",
+        "1.14",
+        "1.30"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 4.19,
+       "user_seconds": 4.1,
+       "system_seconds": 0.04,
+       "max_rss_kb": 137176,
+       "object_bytes": 1505888,
+       "load_before": [
+        "1.04",
+        "1.12",
+        "1.29"
+       ],
+       "load_after": [
+        "1.03",
+        "1.12",
+        "1.29"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 3.8,
+       "user_seconds": 3.68,
+       "system_seconds": 0.05,
+       "max_rss_kb": 136780,
+       "object_bytes": 1505888,
+       "load_before": [
+        "1.07",
+        "1.12",
+        "1.28"
+       ],
+       "load_after": [
+        "1.06",
+        "1.12",
+        "1.28"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 3.89,
+     "median_max_rss_mb": 133.8,
+     "raw_wall_seconds": [
+      3.89,
+      4.19,
+      3.8
+     ],
+     "raw_max_rss_mb": [
+      133.8,
+      134.0,
+      133.6
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 4.23,
+       "user_seconds": 4.15,
+       "system_seconds": 0.03,
+       "max_rss_kb": 135788,
+       "object_bytes": 1485216,
+       "load_before": [
+        "1.10",
+        "1.12",
+        "1.27"
+       ],
+       "load_after": [
+        "1.09",
+        "1.12",
+        "1.27"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 4.22,
+       "user_seconds": 4.15,
+       "system_seconds": 0.02,
+       "max_rss_kb": 136028,
+       "object_bytes": 1485216,
+       "load_before": [
+        "1.05",
+        "1.10",
+        "1.26"
+       ],
+       "load_after": [
+        "1.05",
+        "1.10",
+        "1.26"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 5.15,
+       "user_seconds": 4.99,
+       "system_seconds": 0.05,
+       "max_rss_kb": 135712,
+       "object_bytes": 1485216,
+       "load_before": [
+        "1.02",
+        "1.09",
+        "1.25"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.25"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 4.23,
+     "median_max_rss_mb": 132.6,
+     "raw_wall_seconds": [
+      4.23,
+      4.22,
+      5.15
+     ],
+     "raw_max_rss_mb": [
+      132.6,
+      132.8,
+      132.5
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ]
+  },
+  {
+   "tree": "2b22b31ccc8b",
+   "commit": "2b22b31ccc8b218ac564fba8f8641adb63160e6f",
+   "program": "stage1/cohere/graphql/printer/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.787,
+   "load_before_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ],
+   "c_bytes": 1744917,
+   "c_lines": 25134,
+   "c_functions": 273,
+   "largest_function": "main",
+   "largest_function_lines": 12534,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 12534
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.41,
+       "user_seconds": 0.37,
+       "system_seconds": 0.03,
+       "max_rss_kb": 123532,
+       "object_bytes": 1279920,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.25"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.25"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.4,
+       "user_seconds": 0.37,
+       "system_seconds": 0.02,
+       "max_rss_kb": 123652,
+       "object_bytes": 1279920,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.41,
+       "user_seconds": 0.38,
+       "system_seconds": 0.03,
+       "max_rss_kb": 123592,
+       "object_bytes": 1279920,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.41,
+     "median_max_rss_mb": 120.7,
+     "raw_wall_seconds": [
+      0.41,
+      0.4,
+      0.41
+     ],
+     "raw_max_rss_mb": [
+      120.6,
+      120.8,
+      120.7
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 7.9,
+       "user_seconds": 7.74,
+       "system_seconds": 0.08,
+       "max_rss_kb": 242896,
+       "object_bytes": 1080480,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.32,
+       "user_seconds": 8.11,
+       "system_seconds": 0.08,
+       "max_rss_kb": 242968,
+       "object_bytes": 1080480,
+       "load_before": [
+        "1.01",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.71,
+       "user_seconds": 8.47,
+       "system_seconds": 0.1,
+       "max_rss_kb": 242876,
+       "object_bytes": 1080480,
+       "load_before": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "load_after": [
+        "1.00",
+        "1.07",
+        "1.23"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 8.32,
+     "median_max_rss_mb": 237.2,
+     "raw_wall_seconds": [
+      7.9,
+      8.32,
+      8.71
+     ],
+     "raw_max_rss_mb": [
+      237.2,
+      237.3,
+      237.2
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 8.78,
+       "user_seconds": 8.6,
+       "system_seconds": 0.05,
+       "max_rss_kb": 243528,
+       "object_bytes": 1069400,
+       "load_before": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "load_after": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 9.45,
+       "user_seconds": 9.2,
+       "system_seconds": 0.08,
+       "max_rss_kb": 243368,
+       "object_bytes": 1069400,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 9.04,
+       "user_seconds": 8.85,
+       "system_seconds": 0.07,
+       "max_rss_kb": 243412,
+       "object_bytes": 1069400,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.20"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.20"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 9.04,
+     "median_max_rss_mb": 237.7,
+     "raw_wall_seconds": [
+      8.78,
+      9.45,
+      9.04
+     ],
+     "raw_max_rss_mb": [
+      237.8,
+      237.7,
+      237.7
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.04",
+    "1.20"
+   ]
+  },
+  {
+   "tree": "71fcee578a",
+   "commit": "71fcee578a7bdba6b6059e4325b27fd5e7f3e2e6",
+   "program": "stage1/cohere/graphql/printer/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.787,
+   "load_before_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ],
+   "c_bytes": 1745082,
+   "c_lines": 25146,
+   "c_functions": 276,
+   "largest_function": "adamic_main_1",
+   "largest_function_lines": 11410,
+   "main_functions": [
+    {
+     "name": "adamic_main_0",
+     "lines": 634
+    },
+    {
+     "name": "adamic_main_1",
+     "lines": 11410
+    },
+    {
+     "name": "adamic_main_2",
+     "lines": 468
+    },
+    {
+     "name": "main",
+     "lines": 31
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.37,
+       "user_seconds": 0.35,
+       "system_seconds": 0.01,
+       "max_rss_kb": 119272,
+       "object_bytes": 1287976,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.25"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.39,
+       "user_seconds": 0.33,
+       "system_seconds": 0.05,
+       "max_rss_kb": 119108,
+       "object_bytes": 1287976,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.71,
+       "user_seconds": 0.39,
+       "system_seconds": 0.31,
+       "max_rss_kb": 119056,
+       "object_bytes": 1287976,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.39,
+     "median_max_rss_mb": 116.3,
+     "raw_wall_seconds": [
+      0.37,
+      0.39,
+      0.71
+     ],
+     "raw_max_rss_mb": [
+      116.5,
+      116.3,
+      116.3
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.03,
+       "user_seconds": 7.89,
+       "system_seconds": 0.04,
+       "max_rss_kb": 224648,
+       "object_bytes": 1084416,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.01",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.06,
+       "user_seconds": 7.81,
+       "system_seconds": 0.08,
+       "max_rss_kb": 224460,
+       "object_bytes": 1084416,
+       "load_before": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "load_after": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.86,
+       "user_seconds": 8.63,
+       "system_seconds": 0.08,
+       "max_rss_kb": 224700,
+       "object_bytes": 1084416,
+       "load_before": [
+        "1.00",
+        "1.07",
+        "1.23"
+       ],
+       "load_after": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 8.06,
+     "median_max_rss_mb": 219.4,
+     "raw_wall_seconds": [
+      8.03,
+      8.06,
+      8.86
+     ],
+     "raw_max_rss_mb": [
+      219.4,
+      219.2,
+      219.4
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 8.86,
+       "user_seconds": 8.67,
+       "system_seconds": 0.06,
+       "max_rss_kb": 226184,
+       "object_bytes": 1073304,
+       "load_before": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "load_after": [
+        "1.00",
+        "1.06",
+        "1.21"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 8.75,
+       "user_seconds": 8.54,
+       "system_seconds": 0.09,
+       "max_rss_kb": 226092,
+       "object_bytes": 1073304,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 9.28,
+       "user_seconds": 8.96,
+       "system_seconds": 0.08,
+       "max_rss_kb": 225844,
+       "object_bytes": 1073304,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.20"
+       ],
+       "load_after": [
+        "1.00",
+        "1.04",
+        "1.20"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 8.86,
+     "median_max_rss_mb": 220.8,
+     "raw_wall_seconds": [
+      8.86,
+      8.75,
+      9.28
+     ],
+     "raw_max_rss_mb": [
+      220.9,
+      220.8,
+      220.6
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.04",
+    "1.20"
+   ]
+  },
+  {
+   "tree": "141fec77",
+   "commit": "141fec7702d4aed21429724b2afd7efcd980f277",
+   "program": "stage1/cohere/graphql/printer/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.872,
+   "load_before_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ],
+   "c_bytes": 1744917,
+   "c_lines": 25134,
+   "c_functions": 273,
+   "largest_function": "main",
+   "largest_function_lines": 12534,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 12534
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.41,
+       "user_seconds": 0.38,
+       "system_seconds": 0.02,
+       "max_rss_kb": 123628,
+       "object_bytes": 1279920,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.42,
+       "user_seconds": 0.36,
+       "system_seconds": 0.04,
+       "max_rss_kb": 123456,
+       "object_bytes": 1279920,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.49,
+       "user_seconds": 0.36,
+       "system_seconds": 0.12,
+       "max_rss_kb": 123460,
+       "object_bytes": 1279920,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.42,
+     "median_max_rss_mb": 120.6,
+     "raw_wall_seconds": [
+      0.41,
+      0.42,
+      0.49
+     ],
+     "raw_max_rss_mb": [
+      120.7,
+      120.6,
+      120.6
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.3,
+       "user_seconds": 8.15,
+       "system_seconds": 0.04,
+       "max_rss_kb": 242848,
+       "object_bytes": 1080480,
+       "load_before": [
+        "1.01",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.01",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.51,
+       "user_seconds": 8.27,
+       "system_seconds": 0.1,
+       "max_rss_kb": 242980,
+       "object_bytes": 1080480,
+       "load_before": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "load_after": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 8.43,
+       "user_seconds": 8.21,
+       "system_seconds": 0.1,
+       "max_rss_kb": 242884,
+       "object_bytes": 1080480,
+       "load_before": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "load_after": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 8.43,
+     "median_max_rss_mb": 237.2,
+     "raw_wall_seconds": [
+      8.3,
+      8.51,
+      8.43
+     ],
+     "raw_max_rss_mb": [
+      237.2,
+      237.3,
+      237.2
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 9.27,
+       "user_seconds": 8.99,
+       "system_seconds": 0.07,
+       "max_rss_kb": 243328,
+       "object_bytes": 1069400,
+       "load_before": [
+        "1.00",
+        "1.06",
+        "1.21"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 8.77,
+       "user_seconds": 8.6,
+       "system_seconds": 0.07,
+       "max_rss_kb": 243616,
+       "object_bytes": 1069400,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.20"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 8.85,
+       "user_seconds": 8.68,
+       "system_seconds": 0.07,
+       "max_rss_kb": 243472,
+       "object_bytes": 1069400,
+       "load_before": [
+        "1.00",
+        "1.04",
+        "1.20"
+       ],
+       "load_after": [
+        "1.00",
+        "1.04",
+        "1.20"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 8.85,
+     "median_max_rss_mb": 237.8,
+     "raw_wall_seconds": [
+      9.27,
+      8.77,
+      8.85
+     ],
+     "raw_max_rss_mb": [
+      237.6,
+      237.9,
+      237.8
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.04",
+    "1.20"
+   ]
+  },
+  {
+   "tree": "375a979e17",
+   "commit": "375a979e17782e94ba1179d0f5d040b5f3f57fcb",
+   "program": "stage1/cohere/graphql/printer/main.ts",
+   "adamic_exit": 0,
+   "adamic_seconds": 0.868,
+   "load_before_program": [
+    "1.02",
+    "1.08",
+    "1.25"
+   ],
+   "c_bytes": 885931,
+   "c_lines": 13423,
+   "c_functions": 273,
+   "largest_function": "adamic_function_142_Printer_generic",
+   "largest_function_lines": 988,
+   "main_functions": [
+    {
+     "name": "main",
+     "lines": 253
+    }
+   ],
+   "clang": {
+    "-O0": {
+     "runs": [
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.14,
+       "user_seconds": 0.12,
+       "system_seconds": 0.01,
+       "max_rss_kb": 73840,
+       "object_bytes": 473064,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.14,
+       "user_seconds": 0.12,
+       "system_seconds": 0.02,
+       "max_rss_kb": 73616,
+       "object_bytes": 473064,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O0",
+       "exit": 0,
+       "wall_seconds": 0.14,
+       "user_seconds": 0.13,
+       "system_seconds": 0.0,
+       "max_rss_kb": 73644,
+       "object_bytes": 473064,
+       "load_before": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.02",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 0.14,
+     "median_max_rss_mb": 71.9,
+     "raw_wall_seconds": [
+      0.14,
+      0.14,
+      0.14
+     ],
+     "raw_max_rss_mb": [
+      72.1,
+      71.9,
+      71.9
+     ]
+    },
+    "-O1": {
+     "runs": [
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 1.2,
+       "user_seconds": 1.15,
+       "system_seconds": 0.01,
+       "max_rss_kb": 92832,
+       "object_bytes": 513584,
+       "load_before": [
+        "1.01",
+        "1.08",
+        "1.24"
+       ],
+       "load_after": [
+        "1.01",
+        "1.08",
+        "1.24"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 1.17,
+       "user_seconds": 1.13,
+       "system_seconds": 0.01,
+       "max_rss_kb": 92256,
+       "object_bytes": 513584,
+       "load_before": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "load_after": [
+        "1.01",
+        "1.07",
+        "1.23"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O1",
+       "exit": 0,
+       "wall_seconds": 1.24,
+       "user_seconds": 1.21,
+       "system_seconds": 0.01,
+       "max_rss_kb": 92292,
+       "object_bytes": 513584,
+       "load_before": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "load_after": [
+        "1.00",
+        "1.06",
+        "1.22"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 1.2,
+     "median_max_rss_mb": 90.1,
+     "raw_wall_seconds": [
+      1.2,
+      1.17,
+      1.24
+     ],
+     "raw_max_rss_mb": [
+      90.7,
+      90.1,
+      90.1
+     ]
+    },
+    "-O2": {
+     "runs": [
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 1.37,
+       "user_seconds": 1.35,
+       "system_seconds": 0.01,
+       "max_rss_kb": 93192,
+       "object_bytes": 501360,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.21"
+       ],
+       "repeat": 1
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 1.27,
+       "user_seconds": 1.22,
+       "system_seconds": 0.02,
+       "max_rss_kb": 92924,
+       "object_bytes": 501360,
+       "load_before": [
+        "1.00",
+        "1.05",
+        "1.20"
+       ],
+       "load_after": [
+        "1.00",
+        "1.05",
+        "1.20"
+       ],
+       "repeat": 2
+      },
+      {
+       "level": "-O2",
+       "exit": 0,
+       "wall_seconds": 1.34,
+       "user_seconds": 1.28,
+       "system_seconds": 0.01,
+       "max_rss_kb": 93776,
+       "object_bytes": 501360,
+       "load_before": [
+        "1.00",
+        "1.04",
+        "1.20"
+       ],
+       "load_after": [
+        "1.00",
+        "1.04",
+        "1.20"
+       ],
+       "repeat": 3
+      }
+     ],
+     "all_exit_zero": true,
+     "median_wall_seconds": 1.34,
+     "median_max_rss_mb": 91.0,
+     "raw_wall_seconds": [
+      1.37,
+      1.27,
+      1.34
+     ],
+     "raw_max_rss_mb": [
+      91.0,
+      90.7,
+      91.6
+     ]
+    }
+   },
+   "load_after_program": [
+    "1.00",
+    "1.04",
+    "1.20"
+   ]
+  }
+ ],
+ "time_trace": [
+  {
+   "tree": "2b22b31ccc8b",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "run": {
+    "level": "-O2",
+    "exit": 0,
+    "wall_seconds": 22.99,
+    "user_seconds": 22.19,
+    "system_seconds": 0.36,
+    "max_rss_kb": 320544,
+    "object_bytes": 2749016,
+    "load_before": [
+     "1.00",
+     "1.39",
+     "1.45"
+    ],
+    "load_after": [
+     "1.00",
+     "1.36",
+     "1.44"
+    ]
+   },
+   "phases": {
+    "outline": [
+     {
+      "phase": "ExecuteCompiler",
+      "seconds": 22.958
+     },
+     {
+      "phase": "Backend",
+      "seconds": 22.496
+     },
+     {
+      "phase": "CodeGenPasses",
+      "seconds": 18.172
+     },
+     {
+      "phase": "OptModule",
+      "seconds": 18.169
+     },
+     {
+      "phase": "OptFunction",
+      "seconds": 18.087
+     },
+     {
+      "phase": "RunPass",
+      "seconds": 18.076
+     },
+     {
+      "phase": "Optimizer",
+      "seconds": 4.32
+     },
+     {
+      "phase": "PassManager<Function>",
+      "seconds": 3.3
+     },
+     {
+      "phase": "ModuleInlinerWrapperPass",
+      "seconds": 3.158
+     },
+     {
+      "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+      "seconds": 3.143
+     },
+     {
+      "phase": "DevirtSCCRepeatedPass",
+      "seconds": 3.13
+     },
+     {
+      "phase": "PassManager<LazyCallGraph::SCC, CGSCCAnalysisManager, LazyCallGraph &, CGSCCUpdateResult &>",
+      "seconds": 3.117
+     }
+    ],
+    "passes": [
+     {
+      "name": "Greedy Register Allocator",
+      "seconds": 7.592
+     },
+     {
+      "name": "Live Interval Analysis",
+      "seconds": 3.368
+     },
+     {
+      "name": "Live Variable Analysis",
+      "seconds": 1.333
+     },
+     {
+      "name": "X86 DAG->DAG Instruction Selection",
+      "seconds": 1.284
+     },
+     {
+      "name": "Machine code sinking",
+      "seconds": 0.643
+     },
+     {
+      "name": "Constant Hoisting",
+      "seconds": 0.387
+     },
+     {
+      "name": "ReachingDefAnalysis",
+      "seconds": 0.328
+     },
+     {
+      "name": "Eliminate PHI nodes for register allocation",
+      "seconds": 0.26
+     }
+    ],
+    "functions": [
+     {
+      "name": "main",
+      "seconds": 14.558
+     },
+     {
+      "name": "adamic_function_179_Statements_classDeclaration",
+      "seconds": 0.327
+     },
+     {
+      "name": "adamic_function_278_Expressions_argumentsDoc",
+      "seconds": 0.141
+     }
+    ]
+   }
+  },
+  {
+   "tree": "71fcee578a",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "run": {
+    "level": "-O2",
+    "exit": 0,
+    "wall_seconds": 14.76,
+    "user_seconds": 14.48,
+    "system_seconds": 0.15,
+    "max_rss_kb": 276272,
+    "object_bytes": 2752888,
+    "load_before": [
+     "1.00",
+     "1.36",
+     "1.44"
+    ],
+    "load_after": [
+     "1.00",
+     "1.34",
+     "1.43"
+    ]
+   },
+   "phases": {
+    "outline": [
+     {
+      "phase": "ExecuteCompiler",
+      "seconds": 14.737
+     },
+     {
+      "phase": "Backend",
+      "seconds": 14.262
+     },
+     {
+      "phase": "CodeGenPasses",
+      "seconds": 10.354
+     },
+     {
+      "phase": "OptModule",
+      "seconds": 10.35
+     },
+     {
+      "phase": "OptFunction",
+      "seconds": 10.287
+     },
+     {
+      "phase": "RunPass",
+      "seconds": 10.277
+     },
+     {
+      "phase": "Optimizer",
+      "seconds": 3.905
+     },
+     {
+      "phase": "PassManager<Function>",
+      "seconds": 3.183
+     },
+     {
+      "phase": "ModuleInlinerWrapperPass",
+      "seconds": 2.861
+     },
+     {
+      "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+      "seconds": 2.846
+     },
+     {
+      "phase": "DevirtSCCRepeatedPass",
+      "seconds": 2.833
+     },
+     {
+      "phase": "PassManager<LazyCallGraph::SCC, CGSCCAnalysisManager, LazyCallGraph &, CGSCCUpdateResult &>",
+      "seconds": 2.819
+     }
+    ],
+    "passes": [
+     {
+      "name": "Greedy Register Allocator",
+      "seconds": 3.386
+     },
+     {
+      "name": "Live Interval Analysis",
+      "seconds": 1.591
+     },
+     {
+      "name": "X86 DAG->DAG Instruction Selection",
+      "seconds": 1.205
+     },
+     {
+      "name": "Machine code sinking",
+      "seconds": 0.633
+     },
+     {
+      "name": "Live Variable Analysis",
+      "seconds": 0.569
+     },
+     {
+      "name": "CodeGen Prepare",
+      "seconds": 0.204
+     },
+     {
+      "name": "Register Coalescer",
+      "seconds": 0.176
+     },
+     {
+      "name": "ReachingDefAnalysis",
+      "seconds": 0.163
+     }
+    ],
+    "functions": [
+     {
+      "name": "adamic_main_2",
+      "seconds": 6.417
+     },
+     {
+      "name": "adamic_function_179_Statements_classDeclaration",
+      "seconds": 0.372
+     },
+     {
+      "name": "adamic_main_3",
+      "seconds": 0.267
+     }
+    ]
+   }
+  },
+  {
+   "tree": "141fec77",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "run": {
+    "level": "-O2",
+    "exit": 0,
+    "wall_seconds": 22.15,
+    "user_seconds": 21.54,
+    "system_seconds": 0.29,
+    "max_rss_kb": 321116,
+    "object_bytes": 2749016,
+    "load_before": [
+     "1.00",
+     "1.34",
+     "1.43"
+    ],
+    "load_after": [
+     "1.00",
+     "1.32",
+     "1.42"
+    ]
+   },
+   "phases": {
+    "outline": [
+     {
+      "phase": "ExecuteCompiler",
+      "seconds": 22.126
+     },
+     {
+      "phase": "Backend",
+      "seconds": 21.624
+     },
+     {
+      "phase": "CodeGenPasses",
+      "seconds": 17.405
+     },
+     {
+      "phase": "OptModule",
+      "seconds": 17.402
+     },
+     {
+      "phase": "OptFunction",
+      "seconds": 17.354
+     },
+     {
+      "phase": "RunPass",
+      "seconds": 17.343
+     },
+     {
+      "phase": "Optimizer",
+      "seconds": 4.216
+     },
+     {
+      "phase": "PassManager<Function>",
+      "seconds": 3.302
+     },
+     {
+      "phase": "ModuleInlinerWrapperPass",
+      "seconds": 3.076
+     },
+     {
+      "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+      "seconds": 3.06
+     },
+     {
+      "phase": "DevirtSCCRepeatedPass",
+      "seconds": 3.045
+     },
+     {
+      "phase": "PassManager<LazyCallGraph::SCC, CGSCCAnalysisManager, LazyCallGraph &, CGSCCUpdateResult &>",
+      "seconds": 3.031
+     }
+    ],
+    "passes": [
+     {
+      "name": "Greedy Register Allocator",
+      "seconds": 7.269
+     },
+     {
+      "name": "Live Interval Analysis",
+      "seconds": 3.331
+     },
+     {
+      "name": "Live Variable Analysis",
+      "seconds": 1.251
+     },
+     {
+      "name": "X86 DAG->DAG Instruction Selection",
+      "seconds": 1.235
+     },
+     {
+      "name": "Machine code sinking",
+      "seconds": 0.713
+     },
+     {
+      "name": "Constant Hoisting",
+      "seconds": 0.39
+     },
+     {
+      "name": "Eliminate PHI nodes for register allocation",
+      "seconds": 0.286
+     },
+     {
+      "name": "CodeGen Prepare",
+      "seconds": 0.209
+     }
+    ],
+    "functions": [
+     {
+      "name": "main",
+      "seconds": 13.992
+     },
+     {
+      "name": "adamic_function_179_Statements_classDeclaration",
+      "seconds": 0.326
+     },
+     {
+      "name": "adamic_function_278_Expressions_argumentsDoc",
+      "seconds": 0.136
+     }
+    ]
+   }
+  },
+  {
+   "tree": "375a979e17",
+   "program": "stage1/cohere/tsprinter/main.ts",
+   "run": {
+    "level": "-O2",
+    "exit": 0,
+    "wall_seconds": 6.09,
+    "user_seconds": 5.94,
+    "system_seconds": 0.06,
+    "max_rss_kb": 166184,
+    "object_bytes": 1950536,
+    "load_before": [
+     "1.00",
+     "1.32",
+     "1.42"
+    ],
+    "load_after": [
+     "1.00",
+     "1.31",
+     "1.41"
+    ]
+   },
+   "phases": {
+    "outline": [
+     {
+      "phase": "ExecuteCompiler",
+      "seconds": 6.069
+     },
+     {
+      "phase": "Backend",
+      "seconds": 5.728
+     },
+     {
+      "phase": "CodeGenPasses",
+      "seconds": 3.296
+     },
+     {
+      "phase": "OptModule",
+      "seconds": 3.293
+     },
+     {
+      "phase": "OptFunction",
+      "seconds": 3.24
+     },
+     {
+      "phase": "RunPass",
+      "seconds": 3.229
+     },
+     {
+      "phase": "Optimizer",
+      "seconds": 2.429
+     },
+     {
+      "phase": "PassManager<Function>",
+      "seconds": 1.903
+     },
+     {
+      "phase": "ModuleInlinerWrapperPass",
+      "seconds": 1.694
+     },
+     {
+      "phase": "ModuleToPostOrderCGSCCPassAdaptor",
+      "seconds": 1.685
+     },
+     {
+      "phase": "DevirtSCCRepeatedPass",
+      "seconds": 1.674
+     },
+     {
+      "phase": "PassManager<LazyCallGraph::SCC, CGSCCAnalysisManager, LazyCallGraph &, CGSCCUpdateResult &>",
+      "seconds": 1.665
+     }
+    ],
+    "passes": [
+     {
+      "name": "X86 DAG->DAG Instruction Selection",
+      "seconds": 0.832
+     },
+     {
+      "name": "Greedy Register Allocator",
+      "seconds": 0.393
+     },
+     {
+      "name": "Live Interval Analysis",
+      "seconds": 0.135
+     },
+     {
+      "name": "Register Coalescer",
+      "seconds": 0.132
+     },
+     {
+      "name": "CodeGen Prepare",
+      "seconds": 0.124
+     },
+     {
+      "name": "Control Flow Optimizer",
+      "seconds": 0.109
+     },
+     {
+      "name": "Live Variable Analysis",
+      "seconds": 0.096
+     },
+     {
+      "name": "Machine Instruction Scheduler",
+      "seconds": 0.096
+     }
+    ],
+    "functions": [
+     {
+      "name": "adamic_function_179_Statements_classDeclaration",
+      "seconds": 0.291
+     },
+     {
+      "name": "adamic_function_278_Expressions_argumentsDoc",
+      "seconds": 0.126
+     },
+     {
+      "name": "adamic_function_70_Scanner_scan",
+      "seconds": 0.124
+     }
+    ]
+   }
+  }
+ ],
+ "provenance": {
+  "llvm_release": "LLVM-20.1.8-Linux-X64.tar.xz from github.com/llvm/llvm-project/releases/tag/llvmorg-20.1.8",
+  "llvm_tarball_sha256": "1ead36b3dfcb774b57be530df42bec70ab2d239fbce9889447c7a29a4ddc1ae6",
+  "llvm_tarball_sha256_matches_release_attestation": true,
+  "cohere_submodule": "0183ccf8c57a775f874ca73be1adfc06e9ad1562 in every tree",
+  "gnu_time": "GNU time 1.9 (Ubuntu package time 1.9-0.2build1), installed for this run",
+  "repeats_interleaved_across_trees": true,
+  "median_of": 3
+ }
+}
