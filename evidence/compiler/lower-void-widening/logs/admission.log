@@ -1,0 +1,57 @@
+100/3699 in 11.8s
+200/3699 in 23.4s
+300/3699 in 30.8s
+400/3699 in 42.8s
+500/3699 in 50.0s
+600/3699 in 58.2s
+700/3699 in 66.6s
+800/3699 in 74.6s
+900/3699 in 82.0s
+1000/3699 in 89.2s
+1100/3699 in 105.3s
+1200/3699 in 119.0s
+1300/3699 in 125.5s
+1400/3699 in 131.8s
+1500/3699 in 143.2s
+1600/3699 in 155.8s
+1700/3699 in 164.6s
+1800/3699 in 175.9s
+1900/3699 in 186.0s
+2000/3699 in 287.7s
+2100/3699 in 401.5s
+2200/3699 in 401.5s
+2300/3699 in 401.5s
+2400/3699 in 401.5s
+2500/3699 in 402.1s
+2600/3699 in 413.9s
+2700/3699 in 475.5s
+2800/3699 in 475.5s
+2900/3699 in 475.5s
+3000/3699 in 475.5s
+3100/3699 in 475.5s
+3200/3699 in 475.5s
+3300/3699 in 499.4s
+3400/3699 in 508.9s
+3500/3699 in 514.8s
+3600/3699 in 521.8s
+{"completed": 3699, "timeouts": 0, "newly_refused": 20, "seconds": 532.024562255}
+internal/oracle/testdata/async_coverage_discard.a adamic: /workspace/adamic/internal/oracle/testdata/async_coverage_discard.a:11:12: Adamic 0.1 refuses a void value at a return site whose function returns void | PromiseLike<void>; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/async_plain.a adamic: /workspace/adamic/internal/oracle/testdata/async_plain.a:6:12: Adamic 0.1 refuses a void value at a return site whose function returns void | PromiseLike<void>; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/regexp_replace/callback.a adamic: /workspace/adamic/internal/oracle/testdata/regexp_replace/callback.a:32:31: Adamic 0.1 refuses a void-returning function at the argument site seen as (substring: string, ...args: any[]) => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/any_return.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/any_return.a:3:26: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => any; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/assignment.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/assignment.a:4:9: Adamic 0.1 refuses a void-returning function at the assignment site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/empty_object_return.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/empty_object_return.a:3:42: Adamic 0.1 refuses a void-returning function at the initializer site seen as (() => void) | (() => {}); declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/generic_union.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/generic_union.a:6:26: Adamic 0.1 refuses a void-returning function at the argument site seen as (() => void) | (() => number); declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/rest_argument.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/rest_argument.a:8:6: Adamic 0.1 refuses a void-returning function at the argument site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/return_unknown.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/return_unknown.a:4:9: Adamic 0.1 refuses a void value at a return site whose function returns unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/shorthand.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/shorthand.a:3:50: Adamic 0.1 refuses a void-returning function at the object field site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v01_widen_unknown.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v01_widen_unknown.a:4:30: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v01_widen_unknown.ts adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v01_widen_unknown.ts:4:30: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v02_widen_return.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v02_widen_return.a:4:9: Adamic 0.1 refuses a void-returning function at the return site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v03_widen_explicit_generic.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v03_widen_explicit_generic.a:7:30: Adamic 0.1 refuses a void-returning function at the argument site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v04_widen_union.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v04_widen_union.a:4:47: Adamic 0.1 refuses a void-returning function at the initializer site seen as (() => void) | (() => number); declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v05_widen_object_field.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v05_widen_object_field.a:7:27: Adamic 0.1 refuses a void-returning function at the object field site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v06_widen_array.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v06_widen_array.a:4:35: Adamic 0.1 refuses a void-returning function at the array element site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/v10_widen_param.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/v10_widen_param.a:7:18: Adamic 0.1 refuses a void-returning function at the argument site seen as () => unknown; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/w01_void_to_union_return.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/w01_void_to_union_return.a:4:35: Adamic 0.1 refuses a void-returning function at the initializer site seen as () => void | number; declare the function's real return type (adamic/no-void-widening)
+internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a adamic: /workspace/adamic/internal/oracle/testdata/void_widening_refused/w03_union_void_returns_void_call.a:5:9: Adamic 0.1 refuses a void value at a return site whose function returns void | number; declare the function's real return type (adamic/no-void-widening)

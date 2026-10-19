@@ -1,0 +1,15 @@
+--- FAIL: TestCountsAreRecorded_030 (0.00s)
+    --- FAIL: TestCountsAreRecorded_030/internal/oracle/testdata/async_coverage_discard.a (0.21s)
+        counts_test.go:294: Lower: <source>.a:11:12: Adamic 0.1 refuses a void value at a return site whose function returns void | PromiseLike<void>; declare the function's real return type (adamic/no-void-widening)
+--- FAIL: TestCountsAreRecorded_026 (0.00s)
+    --- FAIL: TestCountsAreRecorded_026/internal/oracle/testdata/regexp_replace/callback.a (0.20s)
+        counts_test.go:294: Lower: <source>.a:32:31: Adamic 0.1 refuses a void-returning function at the argument site seen as (substring: string, ...args: any[]) => unknown; declare the function's real return type (adamic/no-void-widening)
+--- FAIL: TestCountsAreRecorded_017 (0.00s)
+    --- FAIL: TestCountsAreRecorded_017/internal/oracle/testdata/async_plain.a (0.25s)
+        counts_test.go:294: Lower: <source>.a:6:12: Adamic 0.1 refuses a void value at a return site whose function returns void | PromiseLike<void>; declare the function's real return type (adamic/no-void-widening)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	470.397s
+FAIL

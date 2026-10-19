@@ -1,0 +1,98 @@
+=== RUN   TestNativeAgreesWithNode_106
+=== PAUSE TestNativeAgreesWithNode_106
+=== RUN   TestVoidWideningIsRefused
+=== PAUSE TestVoidWideningIsRefused
+=== CONT  TestNativeAgreesWithNode_106
+=== CONT  TestVoidWideningIsRefused
+=== RUN   TestNativeAgreesWithNode_106/internal/oracle/testdata/void_widening_legal.a
+=== PAUSE TestNativeAgreesWithNode_106/internal/oracle/testdata/void_widening_legal.a
+=== CONT  TestNativeAgreesWithNode_106/internal/oracle/testdata/void_widening_legal.a
+=== RUN   TestVoidWideningIsRefused/any_return.a
+=== PAUSE TestVoidWideningIsRefused/any_return.a
+=== RUN   TestVoidWideningIsRefused/assignment.a
+=== PAUSE TestVoidWideningIsRefused/assignment.a
+=== RUN   TestVoidWideningIsRefused/empty_object_return.a
+=== PAUSE TestVoidWideningIsRefused/empty_object_return.a
+=== RUN   TestVoidWideningIsRefused/generic_union.a
+=== PAUSE TestVoidWideningIsRefused/generic_union.a
+=== RUN   TestVoidWideningIsRefused/rest_argument.a
+=== PAUSE TestVoidWideningIsRefused/rest_argument.a
+=== RUN   TestVoidWideningIsRefused/return_unknown.a
+=== PAUSE TestVoidWideningIsRefused/return_unknown.a
+=== RUN   TestVoidWideningIsRefused/shorthand.a
+=== PAUSE TestVoidWideningIsRefused/shorthand.a
+=== RUN   TestVoidWideningIsRefused/v01_widen_unknown.a
+=== PAUSE TestVoidWideningIsRefused/v01_widen_unknown.a
+=== RUN   TestVoidWideningIsRefused/v01_widen_unknown.ts
+=== PAUSE TestVoidWideningIsRefused/v01_widen_unknown.ts
+=== RUN   TestVoidWideningIsRefused/v02_widen_return.a
+=== PAUSE TestVoidWideningIsRefused/v02_widen_return.a
+=== RUN   TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+=== PAUSE TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+=== RUN   TestVoidWideningIsRefused/v04_widen_union.a
+=== PAUSE TestVoidWideningIsRefused/v04_widen_union.a
+=== RUN   TestVoidWideningIsRefused/v05_widen_object_field.a
+=== PAUSE TestVoidWideningIsRefused/v05_widen_object_field.a
+=== RUN   TestVoidWideningIsRefused/v06_widen_array.a
+=== PAUSE TestVoidWideningIsRefused/v06_widen_array.a
+=== RUN   TestVoidWideningIsRefused/v10_widen_param.a
+=== PAUSE TestVoidWideningIsRefused/v10_widen_param.a
+=== RUN   TestVoidWideningIsRefused/w01_void_to_union_return.a
+=== PAUSE TestVoidWideningIsRefused/w01_void_to_union_return.a
+=== RUN   TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+=== PAUSE TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+=== CONT  TestVoidWideningIsRefused/any_return.a
+=== CONT  TestVoidWideningIsRefused/v02_widen_return.a
+=== CONT  TestVoidWideningIsRefused/w03_union_void_returns_void_call.a
+=== CONT  TestVoidWideningIsRefused/w01_void_to_union_return.a
+=== CONT  TestVoidWideningIsRefused/v10_widen_param.a
+=== CONT  TestVoidWideningIsRefused/v06_widen_array.a
+=== CONT  TestVoidWideningIsRefused/v05_widen_object_field.a
+=== CONT  TestVoidWideningIsRefused/v04_widen_union.a
+=== CONT  TestVoidWideningIsRefused/v03_widen_explicit_generic.a
+=== CONT  TestVoidWideningIsRefused/return_unknown.a
+=== CONT  TestVoidWideningIsRefused/v01_widen_unknown.ts
+=== CONT  TestVoidWideningIsRefused/v01_widen_unknown.a
+=== NAME  TestNativeAgreesWithNode_106/internal/oracle/testdata/void_widening_legal.a
+    oracle_test.go:732: leaks:
+        LeakSanitizer ended the run, so its output wasn't compared: exit 1
+        
+        =================================================================
+        ==33118==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 223 byte(s) in 3 object(s) allocated from:
+            #0 0x5589c1fb1354 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x5589c200c1ff in adamic_allocate /adamic-runtime/heap.c:250:10
+        
+        SUMMARY: AddressSanitizer: 223 byte(s) leaked in 3 allocation(s).
+--- FAIL: TestNativeAgreesWithNode_106 (0.00s)
+    --- FAIL: TestNativeAgreesWithNode_106/internal/oracle/testdata/void_widening_legal.a (22.34s)
+=== CONT  TestVoidWideningIsRefused/shorthand.a
+=== CONT  TestVoidWideningIsRefused/generic_union.a
+=== CONT  TestVoidWideningIsRefused/rest_argument.a
+=== CONT  TestVoidWideningIsRefused/empty_object_return.a
+=== CONT  TestVoidWideningIsRefused/assignment.a
+--- PASS: TestVoidWideningIsRefused (0.04s)
+    --- PASS: TestVoidWideningIsRefused/any_return.a (20.57s)
+    --- PASS: TestVoidWideningIsRefused/w01_void_to_union_return.a (20.90s)
+    --- PASS: TestVoidWideningIsRefused/w03_union_void_returns_void_call.a (20.95s)
+    --- PASS: TestVoidWideningIsRefused/v02_widen_return.a (20.99s)
+    --- PASS: TestVoidWideningIsRefused/v10_widen_param.a (1.16s)
+    --- PASS: TestVoidWideningIsRefused/v06_widen_array.a (0.95s)
+    --- PASS: TestVoidWideningIsRefused/v04_widen_union.a (1.04s)
+    --- PASS: TestVoidWideningIsRefused/v05_widen_object_field.a (1.24s)
+    --- PASS: TestVoidWideningIsRefused/v03_widen_explicit_generic.a (1.39s)
+    --- PASS: TestVoidWideningIsRefused/return_unknown.a (1.27s)
+    --- PASS: TestVoidWideningIsRefused/shorthand.a (1.05s)
+    --- PASS: TestVoidWideningIsRefused/v01_widen_unknown.ts (1.35s)
+    --- PASS: TestVoidWideningIsRefused/v01_widen_unknown.a (1.33s)
+    --- PASS: TestVoidWideningIsRefused/empty_object_return.a (0.66s)
+    --- PASS: TestVoidWideningIsRefused/generic_union.a (1.14s)
+    --- PASS: TestVoidWideningIsRefused/assignment.a (0.93s)
+    --- PASS: TestVoidWideningIsRefused/rest_argument.a (1.24s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=19
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	24.663s
+FAIL
