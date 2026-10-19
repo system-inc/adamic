@@ -30,8 +30,9 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay   map[tspath.RootedFilePath]string
-	nodeTypes bool
+	overlay         map[tspath.RootedFilePath]string
+	nodeTypes       bool
+	nodePreludeText string
 	// display names a file for whoever reads the program (LoadDisplayed); nil names it by its path.
 	display func(string) string
 }
@@ -74,7 +75,7 @@ func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
 		if s.nodeTypes {
-			return nodePrelude(), true
+			return s.nodePreludeText, true
 		}
 		return prelude, true
 	}

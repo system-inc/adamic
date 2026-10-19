@@ -1,0 +1,5 @@
+import 'node:process';
+process.exitCode = -1;
+console.log('chosen status');
+const end = (): never => process.exit(undefined);
+end();
