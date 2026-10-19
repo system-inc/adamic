@@ -1,0 +1,64 @@
+{"Path":"internal/oracle/testdata/json_stringify_indent.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_keys.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_numbers.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_options.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_replacer.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_scalars.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_undefined.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/json_stringify_values.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/killed_after_output.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/large_output.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/lent_reads.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_copy.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_copy_within.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_find_last.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_flat.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_flat_map.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_iterators.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_join.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_metadata.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_search.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_spliced.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_array_with.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_fnexpr_loops.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_fnexpr_recurse.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_fnexpr_store.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_for_in.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_for_in_keys.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_for_in_live.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_function_expressions.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_globals.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_globals_typeof.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_construct.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_group_by.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_groupby_keys.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_exhausted.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_number_hash.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_entries_assign.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_entries_assign.a:3:32: stage 0 can't lower Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_entries_spread.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_entries_spread.a:3:16: stage 0 can't lower spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_keys_assign.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_keys_assign.a:3:32: stage 0 can't lower Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_keys_spread.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_keys_spread.a:3:16: stage 0 can't lower spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_values_assign.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_values_assign.a:3:32: stage 0 can't lower Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_values_spread.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_map_values_spread.a:3:16: stage 0 can't lower spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_entries_assign.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_entries_assign.a:3:32: stage 0 can't lower Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_entries_spread.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_entries_spread.a:3:16: stage 0 can't lower spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_keys_assign.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_keys_assign.a:3:32: stage 0 can't lower Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_keys_spread.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_keys_spread.a:3:16: stage 0 can't lower spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_values_assign.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_values_assign.a:3:32: stage 0 can't lower Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_values_spread.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_set_values_spread.a:3:16: stage 0 can't lower spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array yet"}
+{"Path":"internal/oracle/testdata/library_map_set_iterators.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_keys.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_next.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_setops.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_visit.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_map_set_zeros.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_math_number_convert.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_math_number_math.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_math_number_prototype.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_method_values.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_method_values_dead_zone.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_object_assign.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_object_assign_fields.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_object_freeze.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/library_object_freeze_alias.a","Status":"accepted","Error":""}

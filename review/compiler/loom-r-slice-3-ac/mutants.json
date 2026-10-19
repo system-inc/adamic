@@ -1,0 +1,16 @@
+[
+  {
+    "name": "removed-header",
+    "path": "internal/oracle/testdata/refusal_rulings/function_call.a",
+    "caught": true,
+    "compiler_status": "refused",
+    "predicate_exit": 1
+  },
+  {
+    "name": "wrong-reason",
+    "path": "internal/oracle/testdata/refusal_rulings/function_call.a",
+    "caught": true,
+    "compiler_status": "refused",
+    "predicate_exit": 1
+  }
+]

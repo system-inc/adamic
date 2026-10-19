@@ -1,0 +1,82 @@
+[
+  {
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts",
+    "seconds": 5.46,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts",
+    "seconds": 0.87,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts",
+    "seconds": 0.07,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts",
+    "seconds": 0.07,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts",
+    "seconds": 0.06,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "test": "TestParserRepresentationProbes",
+    "seconds": 8.4,
+    "action": "pass"
+  }
+]

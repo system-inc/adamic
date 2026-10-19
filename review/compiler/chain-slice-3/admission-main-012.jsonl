@@ -1,0 +1,64 @@
+{"Path":"internal/oracle/testdata/power_of_two_string.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/precision_range.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:3: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p12_find_undefined_target.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p12_find_undefined_target.a:5:15: stage 0 can't lower find predicate result representation conversion from string to undefined; use a loop with an explicit narrowed result yet"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:8:27: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument \"g\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p21_find_inferred_number.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p21_find_inferred_number.a:2:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p22_filter_inferred_narrowing.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p22_filter_inferred_narrowing.a:2:17: stage 0 can't lower filter predicate element representation conversion from boxed union to string; use a loop with an explicit narrowed copy yet"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p23_find_declared_predicate.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p23_find_declared_predicate.a:5:15: stage 0 can't lower find predicate result representation conversion from union of differently held members to number | undefined; use a loop with an explicit narrowed result yet"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p24_filter_proven_number.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p24_filter_proven_number.a:5:17: stage 0 can't lower filter predicate element representation conversion from boxed union to number; use a loop with an explicit narrowed copy yet"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p26_assert_nested_if_without_else.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p26_assert_nested_if_without_else.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+{"Path":"internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/predicate_refusals/representation_controls.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/presence_refused/in_union_narrowing.a","Status":"*lower.Refused","Error":"/workspace/adamic/internal/oracle/testdata/presence_refused/in_union_narrowing.a:12:9: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant, or a Map"}
+{"Path":"internal/oracle/testdata/presence_refused/optional_field_write.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/presence_refused/optional_field_write.a:9:1: stage 0 can't lower writing a possibly absent optional own field yet"}
+{"Path":"internal/oracle/testdata/prompt_then_read.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/proven_assertions.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/proven_class_guards.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/proven_guards.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/proven_satisfies.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/proven_upcasts.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/radix_range.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/radixes.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/read_arguments.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/read_files.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/read_order.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_cycle_closures.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_cycle_collections.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_cycle_fields.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_cycle_weak.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_exec.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_match.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_matchall_nonglobal.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_null_narrowed.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replace.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replace/argument_guard.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replace/arguments.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replace/callback.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replace/group_guard.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replace/throw.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_replaceall_nonglobal.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_search.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_split.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_split_pair_pattern.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regexp_unicode.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regions.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regions_constructor_capture.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/regions_throw.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reland_refused/generic_instance_key_json.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/reland_refused/generic_instance_key_json.a:3:72: stage 0 can't lower JSON.stringify unions containing arrays (adamic/json-union-array) yet"}
+{"Path":"internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a","Status":"*lower.NotYet","Error":"/workspace/adamic/internal/oracle/testdata/reland_refused/narrowed_union_object_tag.a:7:16: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"}
+{"Path":"internal/oracle/testdata/replace_all_large.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/representation_clock_source.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/return_panic.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/return_panic_fires.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_arrays.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_foreach_global.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_forward.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_global_sibling.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_lent_global.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_narrowed.a","Status":"accepted","Error":""}
+{"Path":"internal/oracle/testdata/reuse_spread_method.a","Status":"accepted","Error":""}

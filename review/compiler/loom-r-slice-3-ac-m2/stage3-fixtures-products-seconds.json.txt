@@ -1,0 +1,26 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestProduct_FixtureOracleHook",
+    "action": "pass",
+    "seconds": 10.47
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestProduct_FixtureRuntimesSanitized1",
+    "action": "pass",
+    "seconds": 4.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestProduct_FixtureRuntimesSanitized2",
+    "action": "pass",
+    "seconds": 4.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestProduct_FixtureRuntimesSanitized0",
+    "action": "pass",
+    "seconds": 4.18
+  }
+]

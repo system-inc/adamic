@@ -1,0 +1,110 @@
+[
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_call.a",
+    "status": "refused",
+    "old_header": "// a-check: refused Function annotation",
+    "header": "// a-check: refused the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+    "body_sha256": "3c1a02a9891e12a76675de63e57e5ec361f76968e7e9271b78808c59c1903d06",
+    "body_unchanged": true,
+    "line_shift": 0
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_length.a",
+    "status": "refused",
+    "old_header": "// a-check: refused Function annotation; oracle also lowers a temporary .ts copy",
+    "header": "// a-check: refused the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+    "body_sha256": "1ae025e4ec402978de36b83ecaadba36c73e1d292186a794b1b75b809748d457",
+    "body_unchanged": true,
+    "line_shift": 0
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_unused.a",
+    "status": "refused",
+    "old_header": "// a-check: refused Function annotation",
+    "header": "// a-check: refused the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+    "body_sha256": "acb32ab25989c37696da26e12b3e6ac95a25d4a7b814668514207a35e5c5e776",
+    "body_unchanged": true,
+    "line_shift": 0
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing.a",
+    "status": "refused",
+    "old_header": "// a-check: refused class/interface field promise; oracle also lowers a temporary .ts copy",
+    "header": "// a-check: refused class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+    "body_sha256": "515b8dac6603e2d6b5c67206ac0ce9255bc92981588638368287e4db113053e1",
+    "body_unchanged": true,
+    "line_shift": 0
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a",
+    "status": "refused",
+    "old_header": "// a-check: refused class/interface field promise; oracle also lowers a temporary .ts copy",
+    "header": "// a-check: refused class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+    "body_sha256": "df5bb6367d0ba12730335253cb821400c94f1774da4f0370fa2f86ed265a4e4a",
+    "body_unchanged": true,
+    "line_shift": 0
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_unused.a",
+    "status": "refused",
+    "old_header": "// a-check: refused class/interface field promise",
+    "header": "// a-check: refused class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+    "body_sha256": "d69ce50dc0923ec5817e8793c55dd375280739227cbcff137072b542c15f12de",
+    "body_unchanged": true,
+    "line_shift": 0
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+    "status": "checked",
+    "old_header": "// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).",
+    "header": null,
+    "body_sha256": "06823e05f425a646396121d177ec3e1cb6380821cab16718772e6b779e81d0f0",
+    "body_unchanged": true,
+    "line_shift": -1
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+    "status": "checked",
+    "old_header": "// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).",
+    "header": null,
+    "body_sha256": "1f145884fe7f573d60a89c6a52c3193acf7b1b4c5fe0ff9965c6f232d9a5c38f",
+    "body_unchanged": true,
+    "line_shift": -1
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/03_return_defined.a",
+    "status": "checked",
+    "old_header": "// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).",
+    "header": null,
+    "body_sha256": "f6dc3b36f46bbd95ded8f1dba6be6fa3650d607269b204c771da53e68d0584ae",
+    "body_unchanged": true,
+    "line_shift": -1
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/04_chained.a",
+    "status": "checked",
+    "old_header": "// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).",
+    "header": null,
+    "body_sha256": "5beef4fe59c5a42093985b14915ffe1b8fcdbdf2f784dff2e58bd05e9c80f8b9",
+    "body_unchanged": true,
+    "line_shift": -1
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/05_compound.a",
+    "status": "checked",
+    "old_header": "// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).",
+    "header": null,
+    "body_sha256": "96cc7e3e1dc324b53ffb38f617bcad01df8ca4403e5d5270fd9fe4cf37486388",
+    "body_unchanged": true,
+    "line_shift": -1
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/06_wider_target.a",
+    "status": "checked",
+    "old_header": "// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).",
+    "header": null,
+    "body_sha256": "3e3e281b7d4db6178cf494ad5294c230652030527b0063fe89ad49ed9dbe158d",
+    "body_unchanged": true,
+    "line_shift": -1
+  }
+]

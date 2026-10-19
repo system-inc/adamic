@@ -1,0 +1,2 @@
+const f: Function = (value: number) => value;
+console.log(`${f(7)}`);

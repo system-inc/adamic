@@ -1,0 +1,13 @@
+{"Time":"2026-10-19T01:09:56.298690422Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles"}
+{"Time":"2026-10-19T01:09:56.344657739Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle"}
+{"Time":"2026-10-19T01:09:56.344811184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle","Output":"=== RUN   TestProduct_ScannerOracle\n","OutputType":"frame"}
+{"Time":"2026-10-19T01:09:56.344848Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle","Output":"=== PAUSE TestProduct_ScannerOracle\n","OutputType":"frame"}
+{"Time":"2026-10-19T01:09:56.34485212Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle"}
+{"Time":"2026-10-19T01:09:56.344856136Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle"}
+{"Time":"2026-10-19T01:09:56.344859215Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle","Output":"=== CONT  TestProduct_ScannerOracle\n","OutputType":"frame"}
+{"Time":"2026-10-19T01:09:59.455994644Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle","Output":"    owner_test.go:16: build scanner-go-oracle_oracle-owner-v1 a524beb9faff miss 3.10\n"}
+{"Time":"2026-10-19T01:09:59.456474615Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle","Output":"--- PASS: TestProduct_ScannerOracle (3.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T01:09:59.456489197Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Test":"TestProduct_ScannerOracle","Elapsed":3.11}
+{"Time":"2026-10-19T01:09:59.456568949Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T01:09:59.461462711Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/scanner/oracles\t3.162s\n"}
+{"Time":"2026-10-19T01:09:59.461550691Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner/oracles","Elapsed":3.163}

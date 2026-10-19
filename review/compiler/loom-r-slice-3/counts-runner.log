@@ -1,0 +1,4 @@
+{"name": "json-existing", "command": ["go", "test", "./stage1/cohere/json", "-run", "^TestDocumentedStageZeroGaps$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 1.574}
+{"name": "yaml-consumers", "command": ["go", "test", "./stage1/cohere/yaml", "-run", "^Test(ClosedLexerGaps|ClosedStringPresenceGap|ClosedValuePresenceGap)$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 2.641}
+{"name": "counts", "command": ["go", "test", "./internal/oracle", "-run", "TestCountsAreRecorded", "-count=1", "-v", "-timeout=600s", "-args", "-update-counts"], "exit": 0, "seconds": 63.623}
+{"name": "counts-table", "command": ["go", "test", "./internal/oracle", "-run", "^TestCountsAreRecordedTable$", "-count=1", "-json", "-timeout=90s", "-parallel=4"], "exit": 0, "seconds": 1.22}

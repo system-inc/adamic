@@ -1,0 +1,584 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_Setup",
+    "action": "pass",
+    "seconds": 2.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_Setup",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_007",
+    "action": "pass",
+    "seconds": 3.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_002",
+    "action": "pass",
+    "seconds": 4.9
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_003",
+    "action": "skip",
+    "seconds": 4.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedValuePresenceGap",
+    "action": "pass",
+    "seconds": 0.26
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/assignmentValue.ts",
+    "action": "pass",
+    "seconds": 0.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/dynamicCase.ts",
+    "action": "pass",
+    "seconds": 0.25
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/negativeCase.ts",
+    "action": "pass",
+    "seconds": 0.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/stringFallback.ts",
+    "action": "pass",
+    "seconds": 0.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/valueConjunction.ts",
+    "action": "pass",
+    "seconds": 0.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_001",
+    "action": "pass",
+    "seconds": 3.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/prefixIncrement.ts",
+    "action": "pass",
+    "seconds": 0.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/emptyAlternative.ts",
+    "action": "pass",
+    "seconds": 0.24
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps",
+    "action": "pass",
+    "seconds": 1.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedStringPresenceGap",
+    "action": "pass",
+    "seconds": 0.29
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestStructuralPositionRefusal",
+    "action": "pass",
+    "seconds": 0.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestBundledParserDifference",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerGaps",
+    "action": "pass",
+    "seconds": 0.33
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_000",
+    "action": "pass",
+    "seconds": 2.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGoPlantedFailure",
+    "action": "pass",
+    "seconds": 1.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGoUnion",
+    "action": "pass",
+    "seconds": 2.09
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGo_000",
+    "action": "skip",
+    "seconds": 10.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_002",
+    "action": "skip",
+    "seconds": 4.07
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSharedSliceAppendMatchesNode/0",
+    "action": "pass",
+    "seconds": 0.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSharedSliceAppendMatchesNode/48",
+    "action": "pass",
+    "seconds": 0.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSharedSliceAppendMatchesNode",
+    "action": "pass",
+    "seconds": 0.97
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_003",
+    "action": "skip",
+    "seconds": 7.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_001",
+    "action": "skip",
+    "seconds": 5.66
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMatchesGo_000",
+    "action": "skip",
+    "seconds": 4.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_002",
+    "action": "skip",
+    "seconds": 2.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGoPlantedFailure",
+    "action": "pass",
+    "seconds": 1.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGoUnion",
+    "action": "pass",
+    "seconds": 1.12
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutantsPlantedFailure",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_001",
+    "action": "skip",
+    "seconds": 3.4
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_000",
+    "action": "skip",
+    "seconds": 3.02
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants/escaped_line_feed_becomes_carriage_return",
+    "action": "pass",
+    "seconds": 2.67
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants/indicator_presence_lost",
+    "action": "pass",
+    "seconds": 2.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/keep_chomping_lost",
+    "action": "pass",
+    "seconds": 2.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants/strip_becomes_clip",
+    "action": "pass",
+    "seconds": 2.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants/anchor_separation_unchecked",
+    "action": "pass",
+    "seconds": 2.16
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/tab_not_whitespace",
+    "action": "pass",
+    "seconds": 2.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants/flow_line_break_stops_folding",
+    "action": "pass",
+    "seconds": 2.32
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarMutants",
+    "action": "pass",
+    "seconds": 9.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants/tab_indentation_accepted",
+    "action": "pass",
+    "seconds": 2.23
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMutants",
+    "action": "pass",
+    "seconds": 8.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestPropsMatchGo",
+    "action": "skip",
+    "seconds": 9.58
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/BOM_not_split",
+    "action": "pass",
+    "seconds": 3.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_000",
+    "action": "pass",
+    "seconds": 2.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_006",
+    "action": "pass",
+    "seconds": 1.98
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/cached_NUL_becomes_space",
+    "action": "pass",
+    "seconds": 3.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_003",
+    "action": "pass",
+    "seconds": 4.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_005",
+    "action": "pass",
+    "seconds": 5.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_004",
+    "action": "pass",
+    "seconds": 6.11
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants/numeric_whitespace_excludes_space",
+    "action": "pass",
+    "seconds": 3.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerMutants",
+    "action": "pass",
+    "seconds": 16.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_004",
+    "action": "pass",
+    "seconds": 2.79
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_002",
+    "action": "pass",
+    "seconds": 4.77
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriverUnion",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_005",
+    "action": "pass",
+    "seconds": 2.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFileDriver_001",
+    "action": "pass",
+    "seconds": 6.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants/null_key_absent",
+    "action": "pass",
+    "seconds": 1.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes/stringUnitScan.ts",
+    "action": "pass",
+    "seconds": 3.31
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes/arenaNodeRead.ts",
+    "action": "pass",
+    "seconds": 0.8
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants/document_start_marker_lost",
+    "action": "pass",
+    "seconds": 3.34
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes/numericMapLookup.ts",
+    "action": "pass",
+    "seconds": 0.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSpeedCostProbes",
+    "action": "pass",
+    "seconds": 4.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants/source_offset_advanced",
+    "action": "pass",
+    "seconds": 2.49
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants/line_start_shifted",
+    "action": "pass",
+    "seconds": 1.87
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMutants",
+    "action": "pass",
+    "seconds": 8.61
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants/block_mapping_pair_lost",
+    "action": "pass",
+    "seconds": 3.75
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestCSTMatchesGo",
+    "action": "skip",
+    "seconds": 11.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants/implicit_key_limit_skipped",
+    "action": "pass",
+    "seconds": 3.81
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMutants",
+    "action": "pass",
+    "seconds": 13.83
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGoUnion",
+    "action": "pass",
+    "seconds": 1.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGoPlantedFailure",
+    "action": "pass",
+    "seconds": 2.74
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants/comment_prefix_lost",
+    "action": "pass",
+    "seconds": 2.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants/point_column_shifted",
+    "action": "pass",
+    "seconds": 1.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants/document_end_marker_lost",
+    "action": "pass",
+    "seconds": 2.65
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMutants",
+    "action": "pass",
+    "seconds": 11.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGo_000",
+    "action": "skip",
+    "seconds": 6.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestWidthsMatchGo",
+    "action": "pass",
+    "seconds": 17.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/class_range_loses_last_character",
+    "action": "pass",
+    "seconds": 0.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_007",
+    "action": "skip",
+    "seconds": 4.63
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestUnistMatchesGo_001",
+    "action": "skip",
+    "seconds": 10.14
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/plus_accepts_empty",
+    "action": "pass",
+    "seconds": 0.62
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/optional_accepts_twice",
+    "action": "pass",
+    "seconds": 0.51
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants/nullable_prefix_loses_successors",
+    "action": "pass",
+    "seconds": 0.48
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMutants",
+    "action": "pass",
+    "seconds": 4.37
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestSchemaMatchesGo",
+    "action": "skip",
+    "seconds": 3.79
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_005",
+    "action": "skip",
+    "seconds": 2.94
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestFormatterMutants_003",
+    "action": "pass",
+    "seconds": 1.99
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_006",
+    "action": "skip",
+    "seconds": 3.55
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGoUnion",
+    "action": "pass",
+    "seconds": 1.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGoPlantedFailure",
+    "action": "pass",
+    "seconds": 1.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestScalarsMatchGo_004",
+    "action": "skip",
+    "seconds": 2.57
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestComposeMatchGo_001",
+    "action": "skip",
+    "seconds": 6.98
+  }
+]

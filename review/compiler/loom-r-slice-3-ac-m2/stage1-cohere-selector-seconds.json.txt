@@ -1,0 +1,98 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestSelectorThroughput",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestPostcssSelectorParserParsesAsGoCohereDoes",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheComparisonCatchesTheSuffixOperatorLosingItsBar",
+    "action": "pass",
+    "seconds": 9.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestCorpusKeepsEveryParseableFile",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestSelectorAnswersRekey",
+    "action": "pass",
+    "seconds": 0.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheComparisonCatchesAMergedWordUsingItsFirstTokenPosition",
+    "action": "pass",
+    "seconds": 9.35
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "action": "pass",
+    "seconds": 0.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "action": "pass",
+    "seconds": 0.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "action": "pass",
+    "seconds": 0.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "action": "pass",
+    "seconds": 0.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "action": "pass",
+    "seconds": 0.42
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestTheComparisonCatchesAQuoteIgnoringEscapeParity",
+    "action": "pass",
+    "seconds": 11.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "action": "pass",
+    "seconds": 14.68
+  }
+]

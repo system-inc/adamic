@@ -1,0 +1,62 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLFormatGo",
+    "action": "pass",
+    "seconds": 6.88
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLSchemaGo",
+    "action": "pass",
+    "seconds": 0.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLFormatterMutantsOracle",
+    "action": "pass",
+    "seconds": 1.3
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLComposeGo",
+    "action": "pass",
+    "seconds": 0.78
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLPropsGo",
+    "action": "pass",
+    "seconds": 0.76
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLScalarsGo",
+    "action": "pass",
+    "seconds": 0.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLUnistGo",
+    "action": "pass",
+    "seconds": 0.56
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLWidthGo",
+    "action": "pass",
+    "seconds": 0.45
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLCSTGo",
+    "action": "pass",
+    "seconds": 0.46
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml/oracles",
+    "test": "TestProduct_YAMLLexerGo",
+    "action": "pass",
+    "seconds": 0.44
+  }
+]

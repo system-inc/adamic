@@ -1,0 +1,830 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalAfterCallPreservesEarlierThrow",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestOptionalAfterCallFlowEdges",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheShippedRelease",
+    "seconds": 1.9,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheSanitized",
+    "seconds": 2.02,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheRelease",
+    "seconds": 1.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestMultiPushGap",
+    "seconds": 2.46,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "test": "TestClosedMultiplePushGap",
+    "seconds": 0.41,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "test": "TestClosedEmptyFallbackGap",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "test": "TestDocumentedStageZeroGaps/repeatInTry.ts",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "test": "TestDocumentedStageZeroGaps",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts",
+    "seconds": 9.21,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts",
+    "seconds": 0.68,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts",
+    "seconds": 0.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts",
+    "seconds": 0.37,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts",
+    "seconds": 0.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts",
+    "seconds": 0.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes",
+    "seconds": 12.69,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "seconds": 1.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.16,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "seconds": 0.39,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedStringPresenceGap",
+    "seconds": 3.71,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceSanitized",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestStructuralPositionRefusal",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSharedSliceLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerGaps",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSpeedProbesNative",
+    "seconds": 0.87,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSpeedProbesLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLWidthLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlScalarsLowered",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLWidthNative",
+    "seconds": 6.25,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaNative",
+    "seconds": 0.82,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLSchemaLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLPropsLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YamlScalarsNative",
+    "seconds": 4.85,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTLowered",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLCSTNative",
+    "seconds": 2.84,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistLowered",
+    "seconds": 2.41,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeNative",
+    "seconds": 11.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLUnistNative",
+    "seconds": 16.01,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLComposeLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLFormatLowered",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedValuePresenceGap",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/assignmentValue.ts",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/dynamicCase.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/negativeCase.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/stringFallback.ts",
+    "seconds": 0.12,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/valueConjunction.ts",
+    "seconds": 0.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/prefixIncrement.ts",
+    "seconds": 0.28,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps/emptyAlternative.ts",
+    "seconds": 0.27,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestClosedLexerGaps",
+    "seconds": 1.19,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestPushSpreadGap",
+    "seconds": 1.36,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClosedOptionalFunctionValueGap",
+    "seconds": 0.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "seconds": 0.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestClassMethodInterfaceGap",
+    "seconds": 0.17,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestStrongAstParentGap",
+    "seconds": 0.21,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestGapStandsWhereGapsMdSays",
+    "seconds": 1.7,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "seconds": 0.15,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/native",
+    "seconds": 4.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 4.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/native",
+    "seconds": 4.15,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a",
+    "seconds": 4.31,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/native",
+    "seconds": 2.59,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a",
+    "seconds": 2.96,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/native",
+    "seconds": 3.04,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a",
+    "seconds": 3.3,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/native",
+    "seconds": 2.98,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a",
+    "seconds": 3.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/native",
+    "seconds": 3.14,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a",
+    "seconds": 3.28,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs",
+    "seconds": 8.62,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallSpreadEvaluatedTwiceMutant",
+    "seconds": 0.5,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofWiderTargetMutant",
+    "seconds": 1.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofWiderTarget",
+    "seconds": 1.37,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofCompoundMutant",
+    "seconds": 1.06,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofCompound",
+    "seconds": 1.4,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofChainedMutant",
+    "seconds": 1.23,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofChained",
+    "seconds": 1.28,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofReturnDefinedMutant",
+    "seconds": 1.19,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofReturnDefined",
+    "seconds": 1.43,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofIfNarrowing",
+    "seconds": 1.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofIfNarrowingMutant",
+    "seconds": 1.31,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallSpreadArray",
+    "seconds": 0.66,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofScannerKeywordMutant",
+    "seconds": 1.33,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofScannerKeyword",
+    "seconds": 1.22,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallComputed",
+    "seconds": 0.47,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallPropagation",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallRequired",
+    "seconds": 0.46,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallVariants",
+    "seconds": 0.53,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCall193",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCall79",
+    "seconds": 0.48,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicComputedRefused",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptInitializedAgreesWithNode",
+    "seconds": 0.71,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptComputedChecked",
+    "seconds": 0.46,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicInitializedAgreesWithNode",
+    "seconds": 0.66,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicReadRefused",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicUnusedRefused",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptMissingChecked",
+    "seconds": 0.49,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptUnusedAccepted",
+    "seconds": 0.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestJSONStringifyShorthandWrongBindingMutant",
+    "seconds": 0.38,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestJSONStringifyShorthand",
+    "seconds": 0.53,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionAdamicCallAnnotationRefused",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionTypeScriptCallRefused",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionCallSignatureAgreesWithNode",
+    "seconds": 0.48,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionTypeScriptLengthAgreesWithNode",
+    "seconds": 0.6,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionAdamicLengthAnnotationRefused",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionAdamicUnusedAnnotationRefused",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionTypeScriptUnusedAccepted",
+    "seconds": 0.56,
+    "action": "pass"
+  }
+]

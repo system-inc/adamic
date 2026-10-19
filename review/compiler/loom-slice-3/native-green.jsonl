@@ -1,0 +1,46 @@
+{"Time":"2026-10-13T08:36:15.322969431Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-13T08:36:15.352847127Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome"}
+{"Time":"2026-10-13T08:36:15.353147155Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome","Output":"=== RUN   TestNativeCachesWriteNothingUnderHome\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353266526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome","Output":"=== PAUSE TestNativeCachesWriteNothingUnderHome\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353271694Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome"}
+{"Time":"2026-10-13T08:36:15.353289373Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive"}
+{"Time":"2026-10-13T08:36:15.353292806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive","Output":"=== RUN   TestCheckerBuildsNameNoPlaceOfTheArchive\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.35329818Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive","Output":"=== PAUSE TestCheckerBuildsNameNoPlaceOfTheArchive\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353301324Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive"}
+{"Time":"2026-10-13T08:36:15.353308594Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease"}
+{"Time":"2026-10-13T08:36:15.35331262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease","Output":"=== RUN   TestTSGoCacheRelease\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353324706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease","Output":"=== PAUSE TestTSGoCacheRelease\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353327908Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease"}
+{"Time":"2026-10-13T08:36:15.353331308Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized"}
+{"Time":"2026-10-13T08:36:15.353334305Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized","Output":"=== RUN   TestTSGoCacheSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.35333791Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized","Output":"=== PAUSE TestTSGoCacheSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353340342Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized"}
+{"Time":"2026-10-13T08:36:15.353343491Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-13T08:36:15.353346053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== RUN   TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353358959Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== PAUSE TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353362157Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-13T08:36:15.353371518Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome"}
+{"Time":"2026-10-13T08:36:15.353394448Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome","Output":"=== CONT  TestNativeCachesWriteNothingUnderHome\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353398848Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized"}
+{"Time":"2026-10-13T08:36:15.35340444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized","Output":"=== CONT  TestTSGoCacheSanitized\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.353415744Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures"}
+{"Time":"2026-10-13T08:36:15.353419424Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"=== CONT  TestTSGoBuildSeesTheProgramsFeatures\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.355740682Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease"}
+{"Time":"2026-10-13T08:36:15.355796587Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease","Output":"=== CONT  TestTSGoCacheRelease\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.858958831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Output":"--- PASS: TestTSGoBuildSeesTheProgramsFeatures (0.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:15.859200921Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoBuildSeesTheProgramsFeatures","Elapsed":0.51}
+{"Time":"2026-10-13T08:36:15.859293774Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive"}
+{"Time":"2026-10-13T08:36:15.859298156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive","Output":"=== CONT  TestCheckerBuildsNameNoPlaceOfTheArchive\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:23.699708545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive","Output":"--- PASS: TestCheckerBuildsNameNoPlaceOfTheArchive (7.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:25.144063317Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCheckerBuildsNameNoPlaceOfTheArchive","Elapsed":7.84}
+{"Time":"2026-10-13T08:36:25.144123865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease","Output":"    tsgo_cache_test.go:18: first and warm builds agree with source Node: \"0:0\\n1:1\\n1:9\\n0:0\\n1:1\\n0 1 8\\n3:,2,\\n3:,2,\\n0 1 8\\n0 1 8\\n0\\n1:9\\n0\\n\"; binary bytes and runtime archive unchanged\n"}
+{"Time":"2026-10-13T08:36:25.14429638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease","Output":"--- PASS: TestTSGoCacheRelease (9.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:25.365036786Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheRelease","Elapsed":9.79}
+{"Time":"2026-10-13T08:36:25.365095306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome","Output":"--- PASS: TestNativeCachesWriteNothingUnderHome (10.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:28.764783316Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNativeCachesWriteNothingUnderHome","Elapsed":10.01}
+{"Time":"2026-10-13T08:36:28.764875641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized","Output":"    tsgo_cache_test.go:19: first and warm builds agree with source Node: \"0:0\\n1:1\\n1:9\\n0:0\\n1:1\\n0 1 8\\n3:,2,\\n3:,2,\\n0 1 8\\n0 1 8\\n0\\n1:9\\n0\\n\"; binary bytes and runtime archive unchanged\n"}
+{"Time":"2026-10-13T08:36:28.765561827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized","Output":"--- PASS: TestTSGoCacheSanitized (13.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:28.765615255Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestTSGoCacheSanitized","Elapsed":13.41}
+{"Time":"2026-10-13T08:36:28.765622856Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-13T08:36:28.772892118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t13.449s\n"}
+{"Time":"2026-10-13T08:36:28.773041967Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":13.45}

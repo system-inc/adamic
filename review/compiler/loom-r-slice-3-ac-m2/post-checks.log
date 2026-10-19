@@ -1,0 +1,7 @@
+Ordered suite driver completed; starting repaired-toolchain verification
+{"name": "internal-native-repaired", "command": ["go", "test", "./internal/native/...", "-skip", "^TestProduct_", "-count=1", "-json", "-parallel=4", "-timeout=13m", "-p", "1"], "exit": 0, "seconds": 301.597, "failed": [], "over_budget": []}
+{"name": "production-mutants", "command": ["python3", "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m2/run-mutants.py"], "exit": 0, "seconds": 237.107, "failed": [], "over_budget": []}
+{"name": "assignment-proof-driver", "command": ["python3", "stage3/fixtures/assignment-proofs/check.py", "--require-adamic"], "exit": 0, "seconds": 36.135, "failed": [], "over_budget": []}
+{"name": "reader-guard-final", "command": ["go", "test", "./internal/ir", "-run", "^TestCallTargetReaders$", "-count=1", "-timeout=90s", "-json"], "exit": 0, "seconds": 3.226, "failed": [], "over_budget": []}
+{"name": "vet-final", "command": ["go", "vet", "-p", "1", "./internal/ir/...", "./internal/javascript/...", "./internal/lower/...", "./internal/flow/...", "./internal/native/...", "./internal/oracle/...", "./stage1/cohere/cssstrings/...", "./stage1/cohere/json/...", "./stage1/cohere/markdownblocks/...", "./stage1/cohere/selector/...", "./stage1/cohere/yaml/...", "./stage1/typescript/parser/...", "./stage1/typescript/scanner/...", "./stage3/fixtures/..."], "exit": 0, "seconds": 8.962, "failed": [], "over_budget": []}
+Post-checks complete

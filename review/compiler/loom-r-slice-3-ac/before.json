@@ -1,0 +1,341 @@
+{
+  "rows": {
+    "internal/oracle/testdata/call_spread_array.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 36559,
+      "stdout_sha256": "4f787db8673ec9229ae6f9869a832e1e494ffd4d24a16581326f37d84e536568",
+      "seconds": 0.042139,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/json_shorthand.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 15721,
+      "stdout_sha256": "d39918d1d9ef72a0b47f3ca8ae031a5dae38b87d3b7083d7522a985d4c57f7f6",
+      "seconds": 0.044113,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/optional_after_call_193.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 7867,
+      "stdout_sha256": "57eb0ac3dd6b346f83fe98997e4cdda085e47ceb496fba7a136036aab9f1f007",
+      "seconds": 0.037466,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/optional_after_call_79.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 12251,
+      "stdout_sha256": "d2f5e8546b8de72e30a9045fbc4c1fc09ff3e88142070e436274278b79dd8bf7",
+      "seconds": 0.050796,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/optional_after_call_gaps/computed.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 2969,
+      "stdout_sha256": "aa982a0cc56d2edfbd5df76304a4dc353fc429973dc15a2a05655f4e6e16e9ea",
+      "seconds": 0.037265,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/optional_after_call_propagation.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 9641,
+      "stdout_sha256": "31de5b6f3a8a677516d9574cb7f351e9d8bb6ed2c8bf61b275283cd85dbc1fea",
+      "seconds": 0.028106,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/optional_after_call_required.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3576,
+      "stdout_sha256": "1ea099e38883cc59a5fc7f79e4f6c93f372ed873b8b035881701f873991a64fd",
+      "seconds": 0.029119,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/optional_after_call_variants.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 10540,
+      "stdout_sha256": "557e7bac4d1053d70b769c8d6be2643fc8b51369dffb8f44d15ef47f7be86139",
+      "seconds": 0.041001,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/function_call.a": {
+      "status": "refused",
+      "reason": "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_call.a:2:10: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.032325,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused Function annotation",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_call.a:2:10: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number"
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/function_length.a": {
+      "status": "refused",
+      "reason": "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_length.a:2:23: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.033092,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused Function annotation; oracle also lowers a temporary .ts copy",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_length.a:2:23: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number"
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/function_signature.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 1614,
+      "stdout_sha256": "d2fe605fbbb3c27bbd794ef69ed7ea6c4d182b93cd6e661c05195408b66629ac",
+      "seconds": 0.04466,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/function_unused.a": {
+      "status": "refused",
+      "reason": "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_unused.a:2:22: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.036947,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused Function annotation",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_unused.a:2:22: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number"
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/merge_missing.a": {
+      "status": "refused",
+      "reason": "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_missing.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.05517,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused class/interface field promise; oracle also lowers a temporary .ts copy",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_missing.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked v"
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a": {
+      "status": "refused",
+      "reason": "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_missing_computed.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.032269,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused class/interface field promise; oracle also lowers a temporary .ts copy",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_missing_computed.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a "
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/merge_present.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3507,
+      "stdout_sha256": "aa5c2ca3ebfd9773d4dd7f7c7f9012515dd80031446fead1442248f65cf31eac",
+      "seconds": 0.046867,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    },
+    "internal/oracle/testdata/refusal_rulings/merge_unused.a": {
+      "status": "refused",
+      "reason": "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_unused.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.038195,
+      "predicate": {
+        "outcome": "refused",
+        "expected": "refused class/interface field promise",
+        "first": "adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_unused.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked vi"
+      }
+    },
+    "stage3/fixtures/assignment-proofs/01_scanner_keyword.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 8970,
+      "stdout_sha256": "7baeca7b735dec631161a2656b11d6085b24e6e4df05a6ceb53859f054704b7d",
+      "seconds": 0.032007,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "pass; expected after assignment-expression proofs (#cvhj5fk).",
+        "first": ""
+      }
+    },
+    "stage3/fixtures/assignment-proofs/02_if_narrowing.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4422,
+      "stdout_sha256": "dce4399c3bd96ceb3fcf9000824f15fce04ae0d2d107fb9b44ce8a617822660b",
+      "seconds": 0.047414,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "pass; expected after assignment-expression proofs (#cvhj5fk).",
+        "first": ""
+      }
+    },
+    "stage3/fixtures/assignment-proofs/03_return_defined.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5292,
+      "stdout_sha256": "4efd221003ee79fd047fb583dff9e11c6af71fb7e2353765ef7f62e08ec286d6",
+      "seconds": 0.04239,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "pass; expected after assignment-expression proofs (#cvhj5fk).",
+        "first": ""
+      }
+    },
+    "stage3/fixtures/assignment-proofs/04_chained.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5332,
+      "stdout_sha256": "7dabae982d7bf18997b91ab787cc8f0dd3e1762c9f5b11cb39fb5958b68ba1a6",
+      "seconds": 0.037981,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "pass; expected after assignment-expression proofs (#cvhj5fk).",
+        "first": ""
+      }
+    },
+    "stage3/fixtures/assignment-proofs/05_compound.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4181,
+      "stdout_sha256": "7bf7fbbdaaac512fb4cac302ffb80893114b74e94f70ee4bc1f55f943bb9015e",
+      "seconds": 0.041508,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "pass; expected after assignment-expression proofs (#cvhj5fk).",
+        "first": ""
+      }
+    },
+    "stage3/fixtures/assignment-proofs/06_wider_target.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3065,
+      "stdout_sha256": "c95e31c844372250ed79473da3b192e470558bd82042b681233dbdac0caf7db1",
+      "seconds": 0.035834,
+      "predicate": {
+        "outcome": "checked",
+        "expected": "pass; expected after assignment-expression proofs (#cvhj5fk).",
+        "first": ""
+      }
+    }
+  },
+  "counts": {
+    "checked": 16,
+    "refused": 6
+  },
+  "exit": 1,
+  "failure": "a-check failed for 4 files:\ninternal/oracle/testdata/refusal_rulings/function_length.a: refused, expected refused Function annotation; oracle also lowers a temporary .ts copy (adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/function_length.a:2:23: Adamic 0.1 refuses the Function annotation in .a; write a call signature with its parameters and result, like)\ninternal/oracle/testdata/refusal_rulings/merge_missing.a: refused, expected refused class/interface field promise; oracle also lowers a temporary .ts copy (adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_missing.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initia)\ninternal/oracle/testdata/refusal_rulings/merge_missing_computed.a: refused, expected refused class/interface field promise; oracle also lowers a temporary .ts copy (adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_missing_computed.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does n)\ninternal/oracle/testdata/refusal_rulings/merge_unused.a: refused, expected refused class/interface field promise (adamic: /workspace/adamic/internal/oracle/testdata/refusal_rulings/merge_unused.a:2:1: Adamic 0.1 refuses class Missing merged with an interface promises field promised that the class does not initial)",
+  "seconds": 2.1
+}

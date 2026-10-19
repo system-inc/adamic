@@ -1,0 +1,32 @@
+[
+  {
+    "test": "TestOptionalAfterCall79",
+    "seconds": 3.89,
+    "action": "pass"
+  },
+  {
+    "test": "TestOptionalAfterCallRequired",
+    "seconds": 4.07,
+    "action": "pass"
+  },
+  {
+    "test": "TestOptionalAfterCallComputed",
+    "seconds": 4.12,
+    "action": "pass"
+  },
+  {
+    "test": "TestOptionalAfterCallPropagation",
+    "seconds": 4.12,
+    "action": "pass"
+  },
+  {
+    "test": "TestOptionalAfterCall193",
+    "seconds": 0.6,
+    "action": "pass"
+  },
+  {
+    "test": "TestOptionalAfterCallVariants",
+    "seconds": 0.69,
+    "action": "pass"
+  }
+]

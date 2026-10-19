@@ -1,0 +1,134 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProfileArtifacts",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestPerformance",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestGapStandsWhereGapsMdSays",
+    "action": "pass",
+    "seconds": 1.97
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_001",
+    "action": "pass",
+    "seconds": 4.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_004",
+    "action": "pass",
+    "seconds": 3.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_006",
+    "action": "pass",
+    "seconds": 8.06
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_003",
+    "action": "pass",
+    "seconds": 3.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerShardCoverage",
+    "action": "pass",
+    "seconds": 1.05
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProfileSnapshotsAgree",
+    "action": "skip",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_000",
+    "action": "pass",
+    "seconds": 3.84
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_005",
+    "action": "pass",
+    "seconds": 12.18
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_002",
+    "action": "pass",
+    "seconds": 10.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_015",
+    "action": "pass",
+    "seconds": 3.68
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_011",
+    "action": "pass",
+    "seconds": 9.22
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "action": "pass",
+    "seconds": 0.13
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_013",
+    "action": "pass",
+    "seconds": 4.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_012",
+    "action": "pass",
+    "seconds": 4.5
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_010",
+    "action": "pass",
+    "seconds": 3.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_008",
+    "action": "pass",
+    "seconds": 2.71
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_009",
+    "action": "pass",
+    "seconds": 4.82
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_014",
+    "action": "pass",
+    "seconds": 13.21
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_007",
+    "action": "pass",
+    "seconds": 2.76
+  }
+]

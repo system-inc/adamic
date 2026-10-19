@@ -1,0 +1,3 @@
+// a-check: refused intentionally wrong reason 999999
+const f: Function = (value: number) => value;
+console.log(`${f(7)}`);

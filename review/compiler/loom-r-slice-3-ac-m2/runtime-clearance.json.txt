@@ -1,0 +1,29 @@
+{
+  "original": {
+    "internal/native/runtime/adamic.h": [
+      "+\tsize_t source_length;"
+    ],
+    "internal/native/runtime/closure.c": [
+      "+\tclosure->source_length = 0;"
+    ],
+    "internal/native/runtime/union.c": [
+      "+\tif (value != NULL && value->kind == adamic_kind_closure && strcmp(name, \"length\") == 0) {",
+      "+\t\treturn adamic_box_number((double)((adamic_closure *)value)->source_length);",
+      "+\t}"
+    ]
+  },
+  "recut": {
+    "internal/native/runtime/adamic.h": [
+      "+\tsize_t source_length;"
+    ],
+    "internal/native/runtime/closure.c": [
+      "+\tclosure->source_length = 0;"
+    ],
+    "internal/native/runtime/union.c": [
+      "+\tif (value != NULL && value->kind == adamic_kind_closure && strcmp(name, \"length\") == 0) {",
+      "+\t\treturn adamic_box_number((double)((adamic_closure *)value)->source_length);",
+      "+\t}"
+    ]
+  },
+  "extra_lines": []
+}
