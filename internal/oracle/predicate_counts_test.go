@@ -2,40 +2,42 @@ package oracle
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"sort"
-	"strings"
 	"testing"
 )
 
-const predicateCountsHeader = `
-## Predicate direction counts
-
-Each emitted overload predicate call reports its true and false directions (assertions
-have only a true direction). Unobservable directions have no narrowed read in their
-flow region; they are included in Proven and also reported separately. These are
-compiler proof counts, independent of the runtime allocation counts above.
-
-| Fixture | Call sites | Proven | Checked | Unobservable |
-|---|---:|---:|---:|---:|
-`
-
-func predicateCountsTable(t *testing.T) string {
-	t.Helper()
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.a"))
-	if err != nil || len(paths) == 0 {
-		t.Fatalf("predicate fixtures: %v", err)
+func predicateCountKeys() ([]string, error) {
+	var keys []string
+	for _, extension := range []string{"a", "ts"} {
+		paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*."+extension))
+		if err != nil {
+			return nil, err
+		}
+		for _, path := range paths {
+			relative, err := filepath.Rel(repository, path)
+			if err != nil {
+				return nil, err
+			}
+			keys = append(keys, filepath.ToSlash(relative))
+		}
 	}
-	typeScriptPaths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.ts"))
+	sort.Strings(keys)
+	if len(keys) == 0 {
+		return nil, fmt.Errorf("no predicate fixtures")
+	}
+	return keys, nil
+}
+
+func predicateCountsTable(t *testing.T) map[string]string {
+	t.Helper()
+	keys, err := predicateCountKeys()
 	if err != nil {
 		t.Fatal(err)
 	}
-	paths = append(paths, typeScriptPaths...)
-	sort.Strings(paths)
-	var table strings.Builder
-	table.WriteString(predicateCountsHeader)
-	for _, path := range paths {
+	table := map[string]string{}
+	for _, relative := range keys {
+		path := filepath.Join(repository, relative)
 
 		program, err := lowered(t, path)
 		if err != nil {
@@ -69,30 +71,24 @@ func predicateCountsTable(t *testing.T) string {
 		if counts.Proven != proven || counts.Checked != checked || counts.Unobservable != unobservable {
 			t.Fatalf("%s: direction records (%d,%d,%d) disagree with aggregate %+v", path, proven, checked, unobservable, counts)
 		}
-		relative, err := filepath.Rel(repository, path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		fmt.Fprintf(&table, "| %s | %d | %d | %d | %d |\n", filepath.ToSlash(relative), len(counts.Sites), proven, checked, unobservable)
+		table[relative] = fmt.Sprintf("| %s | %d | %d | %d | %d |", relative, len(counts.Sites), proven, checked, unobservable)
 	}
-	return table.String()
+	return table
 }
 
 func TestPredicateDirectionCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	// The full count writer owns counts.md during -update-counts.
+	// TestMain owns committed writes during -update-counts.
 	if *updateCounts {
 		return
 	}
-	recorded, err := os.ReadFile(countsPath)
-	if err != nil {
-		t.Fatal(err)
-	}
-	index := strings.Index(string(recorded), predicateCountsHeader)
-	if index < 0 {
-		t.Fatal("missing predicate direction table in counts.md")
-	}
-	if got := predicateCountsTable(t); string(recorded[index:]) != got {
-		t.Fatalf("predicate counts changed; update counts.md with the full count writer:\n%s", got)
+	for key, got := range predicateCountsTable(t) {
+		want, err := readCountRow(countsDirectory, "predicates", key)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got != want {
+			t.Errorf("predicate counts changed in %s; update with -update-counts:\nrecorded: %s\nmeasured: %s", countFile("predicates", key), want, got)
+		}
 	}
 }

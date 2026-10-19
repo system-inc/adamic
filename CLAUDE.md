@@ -59,7 +59,7 @@ runtime library, Node version or test harness invalidates the affected observati
 `ADAMIC_GATE_UNCACHED=1` bypasses all oracle result caches. **Integration always runs uncached before
 main moves.** Ordinary worker gates may use the cache. Keep `-timeout 30m` for the complete gate.
 
-The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new fixture needs its row in internal/oracle/counts.md: `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
+The input tests drop to uid 65534 when run as root, so TMPDIR must be world-traversable (for example /tmp/adamic-gate, mode 1777) and Node must not live under /root. A new counted fixture needs its committed file under internal/oracle/testdata/counts/ (layout and columns in README.md there): `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts`.
 
 Add a stage 1 lint rule only under `stage1/cohere/lint/rules/<slug>/`. Its directory
 owns `rule.json`, `rule.ts`, messages, its upstream Go `oracle.go` adapter,

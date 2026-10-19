@@ -127,11 +127,11 @@ func TestNodeFSRmOptionsCounts(t *testing.T) {
 	_, measure := counted(t, rmOptionsFixture, false, nil, false, false)
 	row := measure()
 	t.Log(row)
-	recorded, err := os.ReadFile(countsPath)
+	recorded, err := recordedCounts()
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(string(recorded), row+"\n") {
+	if recorded[rmOptionsFixture] != row {
 		t.Fatalf("rm options counts not recorded: %s", row)
 	}
 }
