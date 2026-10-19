@@ -89,34 +89,35 @@ func readFusionCases(t *testing.T, file string) map[string]fusionCase {
 }
 
 // handled holds one of the sweep's answers to the list. A listed question must answer its pinned value
-// natively, everywhere, and Node either that (x86-64) or the fused answer the list records (arm64). It
-// says whether the answer is accounted for here, explained or reported, so the sweep doesn't count it
-// again. A pending question is reported where Node differs, with what it waits on.
-func (list *fusionList) handled(t *testing.T, question, native, oracle string) bool {
+// natively, everywhere, and Node either that (x86-64) or the fused answer the list records (arm64).
+// accounted says the answer was dealt with here, explained or reported, so the sweep doesn't count it
+// again, and explained that Node differed and an audited case says why. A pending question is
+// reported where Node differs, with what it waits on.
+func (list *fusionList) handled(t *testing.T, question, native, oracle string) (accounted, explained bool) {
 	t.Helper()
 	listed, audited := list.cases[question]
 	if !audited {
 		var pending bool
 		if listed, pending = list.pending[question]; !pending {
-			return false
+			return false, false
 		}
 	}
 	list.asked[question] = true
 	if native != listed.pinned {
 		t.Errorf("%s: native %s, where the %s fusion list pins %s", question, native, list.name, listed.pinned)
-		return true
+		return true, false
 	}
 	switch {
 	case oracle == listed.pinned:
-		return true
+		return true, false
 	case oracle == listed.fused && audited:
-		return true
+		return true, true
 	case oracle == listed.fused:
 		t.Errorf("%s: native %s, arm64 Node %s; pending on the %s fusion list, which no auditor has explained yet (#t3rw158)", question, native, oracle, list.name)
 	default:
 		t.Errorf("%s: Node %s is neither the pinned %s nor the fused %s the %s fusion list records", question, oracle, listed.pinned, listed.fused, list.name)
 	}
-	return true
+	return true, false
 }
 
 // complete says every listed question was asked: a list over cases the sweep no longer asks is stale.

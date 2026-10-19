@@ -201,8 +201,8 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 	}
 	mismatches, held := 0, 0
 	for index, parse := range cases {
-		if fusion.handled(t, asked[index], native[index], oracle[index]) {
-			if native[index] != oracle[index] {
+		if accounted, explained := fusion.handled(t, asked[index], native[index], oracle[index]); accounted {
+			if explained {
 				held++
 			}
 			continue
