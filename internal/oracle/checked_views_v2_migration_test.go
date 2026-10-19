@@ -163,7 +163,7 @@ func TestCheckedViewV2MembershipMutant(t *testing.T) {
 	if node.exitCode != 0 {
 		t.Fatalf("Node: %#v", node)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value is not a Target; expected Target, found object\n")}
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if difference := disagreement(want, got); difference != "" {
 			t.Fatal(difference)
@@ -194,7 +194,7 @@ func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
 	if difference := disagreement(run{stdout: []byte("first\n")}, node); difference != "" {
 		t.Fatal(difference)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found object\n")}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: viewed.value is not a readonly [string, number]; expected readonly [string, number], found object\n")}
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 		if difference := disagreement(want, got); difference != "" {
 			t.Fatal(difference)

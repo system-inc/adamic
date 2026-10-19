@@ -18,8 +18,8 @@ const adamicViewMixedUnionSelect = (snapshot, members, match, expression, declar
   }
   return index;
  }
- const found = snapshot.kind === 'unknown' ? 'unsupported representation' : snapshot.kind;
- panic('field read failed: ' + expression + ' matches no member of ' + declared + '; expected ' + declared + ', found ' + found);
+ const found = snapshot.kind === 'unknown' ? 'unsupported representation' : snapshot.kind === 'null' || snapshot.kind === 'undefined' ? 'nullish' : snapshot.kind;
+ panic('field read failed: ' + expression + ' is not a ' + declared + '; expected ' + declared + ', found ' + found);
 };
 `
 

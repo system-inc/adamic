@@ -66,10 +66,18 @@ size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, cons
         return index;
     }
     const char *found = adamic_view_union_kind_name(value->kind);
+    // Tuples and constructors use object storage. Their recorded identity, rather
+    // than that storage kind, determines the category JavaScript reports.
+    if (value->kind == adamic_view_union_object && value->payload.reference != NULL) {
+        const adamic_object *object = value->payload.reference;
+        if (object->tuple) { found = "array"; }
+        if (object->class != NULL && object->class->is_static) { found = "function"; }
+    }
+    if (value->kind == adamic_view_union_null || value->kind == adamic_view_union_undefined) { found = "nullish"; }
     size_t capacity = strlen(expression) + 2 * strlen(declared) + strlen(found) + 96;
     char *message = malloc(capacity);
     if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
-    int length = snprintf(message, capacity, "field read failed: %s matches no member of %s; expected %s, found %s", expression, declared, declared, found);
+    int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, declared, declared, found);
     adamic_panic(message, (size_t)length);
     return 0;
 }

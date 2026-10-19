@@ -95,7 +95,7 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
  };
  if(contracts[id-1].FixedTuple && matches(value,id)) return id;
  for(const member of contracts[id-1].Members || []){if(matches(value,member)) return member;}
- panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(value===null?'null':value===undefined?'undefined':Array.isArray(value)?'array':typeof value));
+ panic('field read failed: '+expression+' is not a '+declared+'; expected '+declared+', found '+(value===null || value===undefined?'nullish':Array.isArray(value)?'array':value instanceof Map?'Map':adamicTypeOf(value)));
 };
 `
 

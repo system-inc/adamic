@@ -16,7 +16,7 @@ func TestViewMixedUnionUnknownAndUnavailable(t *testing.T) {
 static bool forged(void *context,const adamic_view_union_member *member,const adamic_view_union_value *value){(void)context;(void)member;(void)value;return true;}
 int main(int argc,char **argv){
  if(argc!=2)return 2;
- int scenario=atoi(argv[1]);int object=0;
+ int scenario=atoi(argv[1]);adamic_object object={0};
  adamic_view_union_value value={adamic_view_union_unknown,{.number=42}};
  adamic_view_union_member member={adamic_view_union_number,false,{.number=0},0};
  adamic_view_union_match match=NULL;const char *declared="number | string";
@@ -37,7 +37,7 @@ int main(int argc,char **argv){
 				{"0", "number | string", "unsupported representation"},
 				{"1", "Left | Right", "object"},
 				{"2", "Left | Right", "object"},
-				{"3", "string | undefined", "null"},
+				{"3", "string | undefined", "nullish"},
 				{"4", "false | string", "boolean"},
 				{"5", "string", "string"},
 			} {
@@ -48,7 +48,7 @@ int main(int argc,char **argv){
 					command.Stderr = &errout
 					err := command.Run()
 					failure, ok := err.(*exec.ExitError)
-					want := "adamic: panic: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n"
+					want := "adamic: panic: field read failed: view.value is not a " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n"
 					if !ok || failure.ExitCode() != 70 || out.Len() != 0 || errout.String() != want {
 						t.Fatalf("got %v, stdout %q, stderr %q; want exit 70 and %q", err, out.String(), errout.String(), want)
 					}

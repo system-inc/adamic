@@ -135,7 +135,7 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 					t.Fatal("Node: " + difference)
 				}
 				if variant == "wrong" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: holder.value is not a Target; expected Target, found object\n")}
 				}
 				for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
 					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
@@ -160,7 +160,7 @@ func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
 			}
 			want := node
 			if variant != "good" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value is not a Target; expected Target, found object\n")}
 			}
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
 				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
@@ -184,7 +184,7 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 			}
 			want := node
 			if variant == "wrong" || variant == "nested" || variant == "cycle-wrong" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value is not a Target; expected Target, found object\n")}
 			}
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
 				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
