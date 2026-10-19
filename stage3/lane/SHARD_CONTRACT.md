@@ -6,14 +6,20 @@ the repository root. The last argument is the unit's SHA-256 inputs hash.
 `expect` uses `pass`, `fail` and `skip`. Every successful command exits zero,
 including the unit which validates the single sanctioned upstream failure.
 
-This measured manifest is for Linux x64 with Node v24.19.0. Its 151 units comprise
-134 deterministically balanced file shards, 16 individually selected watcher
-cases, and the byte-comparison unit. Only `stage3-lane-byte-comparisons` expects a
+This measured manifest is for Linux x64 with Node v24.19.0. Its 377 units comprise
+348 deterministically balanced file shards, 12 exact groups from four expensive
+unittest suites, 16 individually selected watcher cases, and the byte-comparison unit. Only `stage3-lane-byte-comparisons` expects a
 failure, the original Public APIs failure. It owns every suite from publicApi.ts,
 checks the exact API diff and applies the unchanged stock-parser declaration
 sanction. Every other unit requires no baseline mismatch and no failure.
 
-Before starting test units, produce or restore the shared build as an artifact:
+Normal Go tests use the adapted-tree product, built ahead by
+`TestProduct_Stage3AdaptedTree`. Serial measurements use the same manifest commands
+with `STAGE3_ADAPTED_TREE` naming that verified product and the pinned API parser
+and harness packages installed. Producer work is outside the unit tier.
+
+The legacy shared-artifact path remains available. Before using it, produce or
+restore the shared build as an artifact:
 
 ```sh
 python3 stage3/lane/prepare_shards.py /absolute/shared/artifact-cache > /tmp/stage3-artifact.log 2>&1
@@ -37,17 +43,26 @@ Node's compile cache disabled, private mutable outputs and the verified artifact
 They never reuse a previous test result. Existing result directories are refused.
 
 `shard-plan.json` contains the tasks, exact anchored watcher grep, expected
-identity digest and inputs hash for each unit. All other unit suites from one
-source file stay together. Watcher selections go through upstream's own
+identity digest and inputs hash for each unit. Project-reference sourcemaps, async-function conversion, tsbuild/noEmit and
+tsc/noEmit each have three exact case groups. Duplicate full titles stay together.
+The noEmit groups keep each compilation and its clean-build comparison in the
+same describe family. All other unit suites from one source file stay together. Watcher selections go through upstream's own
 `--tests` parser and `runConsoleTests` Mocha grep, preserving setup/cleanup hooks,
 original waits and the 40-second upstream timeout. The test-only entry function
-avoids Hereby's build dependencies. Node and Python command walls, artifact
-verification, baseline scanning and API checks all count toward 30 seconds.
+avoids Hereby's build dependencies. All command work counts toward the existing runtime limit: 30 seconds for a
+standalone command, or the Go test deadline less teardown (normally 50 seconds).
+The new plan is measured against a separate 12-second alone bound; it changes
+neither runtime limit. The complete under-12 evidence uses the normal adapted-tree
+product path. Retained legacy shared-artifact samples exceed that bound on this
+worker; the exact eight-CPU load proof is also outstanding. See
+[SHARDS_10S_REPORT.md](SHARDS_10S_REPORT.md) for the measured scope and limitations.
 
 The inputs hash binds the prepared input tree, stock parser bytes, complete
 runtime harness and the unit definition. Different build inputs, tool versions,
-platform, harness, task assignment or expectations require a new hash. Units
-rehash the whole artifact and stock parser before execution. They also check
+platform, harness, task assignment or expectations require a new hash. Shared-artifact commands
+rehash the whole artifact and stock parser before execution. Normal Go tests use
+the adapted-tree product verified by the product framework and recheck the stock
+parser, runtime and unit definition before execution. They also check
 counts, selected test identities, task completion, failure titles, baseline
 paths, upstream exit and elapsed wall. No acceptance predicate in check.py or
 expected.json has been removed or relaxed.

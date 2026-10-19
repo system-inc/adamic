@@ -1,0 +1,34 @@
+{
+  "key": "ca99f25d13bfb84fe9c89a4ba0eaf088b5a529c393a80eba07bdc326cbe48557",
+  "inputs": {
+    "files": "f5ccffb75dea9ecf36af22f8a2dabcd4e3b9f86eb6fc54e1134cce7cdf4665c7",
+    "tools": {
+      "node": "v24.19.0",
+      "npm": "11.9.0",
+      "git": "git version 2.52.0",
+      "python3": "Python 3.12.14"
+    },
+    "preparation": "17a48460f44f46025f29ada928c5a796e3973ba39e9f84fce9e5dfcc4cbbdc90",
+    "platform": "linux/x64"
+  },
+  "payload": "0403e7014d97214a26cbb5e74db5c8fcd347fc69eeda1c9cab9e263d3624b4f9",
+  "phases": {
+    "apply": {
+      "exit": 0,
+      "seconds": 17.517
+    },
+    "install": {
+      "exit": 0,
+      "seconds": 3.981
+    },
+    "build": {
+      "exit": 0,
+      "seconds": 44.821
+    },
+    "harness": {
+      "exit": 0,
+      "seconds": 3.354
+    }
+  },
+  "seconds": 98.644
+}

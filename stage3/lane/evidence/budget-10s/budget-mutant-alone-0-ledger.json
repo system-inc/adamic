@@ -1,0 +1,40 @@
+{
+  "concurrency": 1,
+  "load_processes": 0,
+  "mode": "adapted-tree product",
+  "adapted_tree": "/workspace/x2jdg33/products/local/04d979148f440864934c43358444f2a06603bb7149ddfd1153bf9360df7c4c56/tree",
+  "shard_limit_seconds": 30.0,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "cold": "fresh processes; NODE_DISABLE_COMPILE_CACHE=1; no result reuse; OS page cache retained",
+  "wall_seconds": 24.370180461000018,
+  "units": [
+    {
+      "name": "stage3-lane-budget-mutant",
+      "seconds": 24.367258479000157,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 298,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-alone-0/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/budget-mutant-alone-0",
+        "--unit",
+        "stage3-lane-budget-mutant"
+      ]
+    }
+  ]
+}

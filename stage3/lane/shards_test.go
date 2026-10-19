@@ -14,8 +14,8 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// The upstream TypeScript suite, 106,366 tests, is 151 manifest units (shards.json): 134 file shards balanced from a
-// measured census, 16 symlink-watcher cases each selected by an exact grep, and the publicApi byte comparison. Each is a
+// The upstream TypeScript suite is partitioned into manifest units (shards.json): file shards balanced from the
+// measured census, exact groups for expensive suites, 16 symlink-watcher cases, and the publicApi byte comparison. Each is a
 // TestShard_ test of its own (shards_generated_test.go), so Planner cuts them like any other tests and a red names its
 // shard. Every one runs shard.py against the adapted tree product, built ahead (adaptedTree), never a tree it builds.
 
