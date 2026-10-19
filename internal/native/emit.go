@@ -178,7 +178,7 @@ func cProgram(program *ir.Program, handler, lines int) string {
 // spends time superlinear in a function's size once it passes about 12,500 lines, and every module's
 // top-level code runs in main, so a long main is cut into parts that main calls in order
 // (docs/tsc-generated-c.md). A part can be longer only by holding one statement that is.
-const mainLines = 4000
+const mainLines = 1
 
 // mainParts groups main's statements, each one top-level statement's C (the last what main's scope
 // releases at its end), into parts of about lines lines, in order. A cut falls only between two
