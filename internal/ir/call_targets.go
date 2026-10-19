@@ -153,7 +153,10 @@ func (p *Program) MethodDiscard(call CallClosure) Discard {
 	return p.ReturnsDiscard(p.MethodsNamed(property.Name))
 }
 
-// methodTables caches MethodsNamed's walk, keyed to the program's size as argumentFacts is.
+// methodTables caches MethodsNamed's walk, keyed to the program's size as argumentFacts is. Lowering
+// fills it in its last pass (voidDiscards), after every pass that writes the program (readiness,
+// borrow and counters the last of them), and nothing after it, the emitter's plans included, adds or
+// moves an object literal's Methods, so the emitter reads the same walk rather than making its own.
 type methodTables struct {
 	functions int
 	named     map[string][]int

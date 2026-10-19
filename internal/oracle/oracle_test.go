@@ -284,6 +284,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/param_assigned_in_try.a", true, false},
 	{"internal/oracle/testdata/named_function_values.a", true, false},
 	{"internal/oracle/testdata/void_discards_value.a", true, false},
+	{"internal/oracle/testdata/void_discards_canonical.a", true, false},
 	{"internal/oracle/testdata/panic_in_try.a", true, false},
 	{"internal/oracle/testdata/invariance_readonly.a", true, false},
 	{"internal/oracle/testdata/tuples_kept.a", true, false},

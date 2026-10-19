@@ -241,10 +241,17 @@ static inline void adamic_closure_discard(adamic_closure *closure, adamic_value 
 #endif
 
 #ifdef ADAMIC_CANONICAL_CLOSURES
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// A canonical closure is given its discard (an adamic_discard) with the rest of what makes it, and
+// stores it once, when it's made rather than found in its frame's cache.
+#define ADAMIC_CANONICAL_DISCARD , uint8_t discard
+#else
+#define ADAMIC_CANONICAL_DISCARD
+#endif
 // Returns an owned canonical value; the frame cache holds no count on it.
-adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
 #ifdef ADAMIC_CLOSURE_CONVENTION
-adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
+adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
 #endif
 void adamic_closure_uncache(adamic_closure *closure);
 #endif

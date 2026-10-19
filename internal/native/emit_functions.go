@@ -433,9 +433,17 @@ func (e *emitter) discard(discard ir.Discard, closure, result string) string {
 
 // closureDiscard stores in a closure just made how a void call that can't know its function lets go
 // of its result: by the made function's Returns, whose adamic_value member the type alone fixes.
-// adamic_closure_new stores nothing to let go.
+// adamic_closure_new stores nothing to let go; a canonical closure takes its discard as it's made.
 func (e *emitter) closureDiscard(closure string, function int) {
-	if e.closureDiscards && e.program.Functions[function].Returns.IsReference() {
-		e.line("%s->discard = adamic_discard_reference;", closure)
+	if discard := e.discardOf(function); e.closureDiscards && discard != "adamic_discard_none" {
+		e.line("%s->discard = %s;", closure, discard)
 	}
+}
+
+// discardOf is the adamic_discard a closure of function is made with.
+func (e *emitter) discardOf(function int) string {
+	if e.program.Functions[function].Returns.IsReference() {
+		return "adamic_discard_reference"
+	}
+	return "adamic_discard_none"
 }
