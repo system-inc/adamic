@@ -1,0 +1,11 @@
+--- FAIL: TestClosureMergeRefusals (0.00s)
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a (0.14s)
+        closure_merge_refusals_test.go:37: source Node: exit 70 stderr "adamic: panic: Error: EPERM: operation not permitted, utime '/tmp/adamic-gate/adamic-input-1103058518/refused-node/file'\n"
+    --- FAIL: TestClosureMergeRefusals/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a (0.16s)
+        closure_merge_refusals_test.go:37: source Node: exit 70 stderr "adamic: panic: Error: EPERM: operation not permitted, utime '/tmp/adamic-gate/adamic-input-213721750/refused-node/file'\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.600s
+FAIL

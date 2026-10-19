@@ -1,0 +1,14 @@
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==4833==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x558f55d9e01d bp 0x7ffd30b56630 sp 0x7ffd30b56570 T0)
+==4833==The signal is caused by a READ memory access.
+==4833==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.
+    #0 0x558f55d9e01d in adamic_union_typeof /adamic-runtime/union.c:71:17
+    #1 0x558f55d2da84 in main /adamic-build/main.c:63:35
+    #2 0x7f250ea2a1c9 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #3 0x7f250ea2a28a in __libc_start_main csu/../csu/libc-start.c:360:3
+    #4 0x558f55c54554 in _start (/tmp/claude-0/-home-user-adamic/b70ee44f-de0e-5804-a8ba-594c959ca0ce/scratchpad/sig_return-mutant+0x6b554) (BuildId: 893f59268a16deed3496c1cc589057445cbeb5fc)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /adamic-runtime/union.c:71:17 in adamic_union_typeof
+==4833==ABORTING

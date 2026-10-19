@@ -1,0 +1,23 @@
+Commit 4bc6b023 on 0dfe22fb (compiler/lower-void-widening-signatures).
+Tools: Node v24.22.0 and clang 20.1.8 from the releases cloud/setup.sh fetches; Go 1.27.1; Linux x86_64.
+
+Mutant: the call to voidWidenedSignatures removed from voidWidened.
+  adamic build sig_return.a --sanitize: exit 0.
+  native: exit 1, stdout empty, ASan SEGV in adamic_union_typeof (union.c:71); see mutant-sig_return-native.stderr.
+  Node (oracle/node.mjs): stdout "number", exit 0.
+  Restored; cmp against the saved source matched.
+
+Gate:
+  gofmt -l cmd internal: empty. go vet ./internal/lower ./internal/oracle: clean.
+  go test lower, fresh, flow: ok (gate-unit.log).
+  ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle: FAIL on two TestClosureMergeRefusals programs,
+  optional_widening_refused/node_fs_file_utimes.a and node_fs_file_stat.a, source Node EPERM on utime under
+  the uid 65534 drop. 0dfe22fb fails the same two the same way (base-0dfe22fb-closure-merge.log). Everything else ok.
+
+Counts: TestCountsAreRecorded -update-counts with clang 20.1.8: ok, no file changed.
+
+Sweep: adamic c over 3611 git-tracked .a and .ts files outside cohere/ and node_modules, not .d.ts, built from
+0dfe22fb and 4bc6b023. Changed first stops: 0 (sweep-changed.tsv is empty). 27 no-void-widening refusals under both,
+0 depth-limit stops under both. The three new programs were not tracked when the list was taken.
+
+TypeScript 6.0.3 count: not measured. No checkout at 050880ce here, and this session reads only system-inc/adamic.
