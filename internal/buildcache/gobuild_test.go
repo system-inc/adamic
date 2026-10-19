@@ -661,8 +661,9 @@ func TestGoExportsAreTheSameAtEveryCommit(t *testing.T) {
 
 // GoDirectExports keeps the named package, its tests and what they import directly, never the rest of -deps, while
 // GoExports keeps all of it (#mtvmz1w), and the two never share a key. tool imports lib/b, whose signature returns
-// lib/c's type, and tool's test imports lib/d. Mutants that each fail it: GoDirectExports keeping all of -deps; a test
-// file's import dropped; GoDirectExports' verb GoExports' own, so one product would answer both.
+// lib/c's type, and tool's test imports lib/d; a commit then moves the test's import to lib/c, which the next product
+// lists. Mutants that each fail it: GoDirectExports keeping all of -deps; a test file's import dropped; GoDirectExports'
+// verb GoExports' own, so one product would answer both; its key reading no test variant, so the old product answers.
 // Not parallel: inRepository changes the working directory and repositoryRoot.
 func TestGoDirectExportsKeepOnlyWhatTheNamedPackagesImport(t *testing.T) {
 	root, err := filepath.EvalSymlinks(t.TempDir())
@@ -707,6 +708,12 @@ func TestGoDirectExportsKeepOnlyWhatTheNamedPackagesImport(t *testing.T) {
 	}
 	if !slices.Contains(all, "lib/c") {
 		t.Fatalf("GoExports listed %v; want all of -deps, lib/c included", all)
+	}
+	// A test file's import moves the direct product's key: tool's test now imports lib/c, which the product must list.
+	write(t, root, "tool/main_test.go", "package main\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/lib/c\"\n)\n\nfunc TestNothing(t *testing.T) { _ = c.T{} }\n")
+	gitIn(t, root, "commit", "-q", "-am", "two")
+	if again := listed(GoDirectExports(t, "./tool")); !slices.Contains(again, "lib/c") || slices.Contains(again, "lib/d") {
+		t.Fatalf("after tool's test changed its import to lib/c, GoDirectExports listed %v, its old product's", again)
 	}
 }
 
