@@ -1,3 +1,4 @@
+// a-check: refused an unproven escaping callable read of view.value
 type Target=((value:1)=>number)|((value:string)=>number);
 interface Receiver {readonly kind:'Receiver';readonly value:Target;}
 const raw={kind:'Receiver' as const,value:(value:number):number=>1};

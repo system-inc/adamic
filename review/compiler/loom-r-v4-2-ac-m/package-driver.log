@@ -1,0 +1,21 @@
+Starting internal/flow
+{"package": "internal/flow", "command": ["go", "test", "./internal/flow", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 70.213}
+Starting internal/fresh
+{"package": "internal/fresh", "command": ["go", "test", "./internal/fresh", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 14.586}
+Starting internal/ir
+{"package": "internal/ir", "command": ["go", "test", "./internal/ir", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 13.763}
+Starting internal/javascript
+{"package": "internal/javascript", "command": ["go", "test", "./internal/javascript", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 0.97}
+Starting internal/load
+{"package": "internal/load", "command": ["go", "test", "./internal/load", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 3.735}
+Starting internal/lower
+{"package": "internal/lower", "command": ["go", "test", "./internal/lower", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 36.291}
+Starting internal/native
+{"package": "internal/native", "command": ["go", "test", "./internal/native", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 83.372}
+Starting internal/native/runtimeproducts
+{"package": "internal/native/runtimeproducts", "command": ["go", "test", "./internal/native/runtimeproducts", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 108.528}
+Starting internal/oracle
+{"package": "internal/oracle", "command": ["go", "test", "./internal/oracle", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 137.848}
+Starting stage1/cohere/json
+{"package": "stage1/cohere/json", "command": ["go", "test", "./stage1/cohere/json", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 83.643}
+Completed all touched packages

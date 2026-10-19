@@ -1,0 +1,16 @@
+{"Time":"2026-10-19T00:02:35.598631041Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-19T00:02:35.603407855Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-19T00:02:35.603472841Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== RUN   TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:02:35.603536195Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== PAUSE TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:02:35.603539209Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-19T00:02:35.603605728Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-19T00:02:35.603607971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== CONT  TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:02:35.901235611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"    c_portability_oracle_test.go:25: native: listing the runtime's headers: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-19T00:02:35.90131558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"        gcc: fatal error: cannot execute 'cc1': posix_spawnp: No such file or directory\n","OutputType":"error-continue"}
+{"Time":"2026-10-19T00:02:35.901318945Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"        compilation terminated.\n","OutputType":"error-continue"}
+{"Time":"2026-10-19T00:02:35.901322239Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-19T00:02:35.901342059Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"--- FAIL: TestLongUnicodePortabilityGCC (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:02:35.901344603Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Elapsed":0.3}
+{"Time":"2026-10-19T00:02:35.901361748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:02:35.902851952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.304s\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:02:35.902867314Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.304}

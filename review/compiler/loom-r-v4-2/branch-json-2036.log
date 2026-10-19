@@ -1,0 +1,11 @@
+=== RUN   TestPortMatchesGoCohere_2036
+=== PAUSE TestPortMatchesGoCohere_2036
+=== CONT  TestPortMatchesGoCohere_2036
+    port_matches_prepared_split_test.go:192: build json_lowered_port_and_backend_sources 827e76e57514 hit 0.53
+    port_matches_prepared_split_test.go:190: build go_build_cohere_./command/formatter_comparison_go-cohere-oracle-owner-v1 b074075f9339 hit 0.00
+    port_matches_prepared_split_test.go:207: build json_native_release_port 0d017ce3521e hit 0.04
+    port_matches_prepared_split_test.go:207: build json_native_ASan_UBSan_port b3ff07f4a1f3 hit 0.04
+    pinned_repository_corpus_test.go:105: json pinned corpus product: settle stage1/cohere/json TestProduct_JSONPinnedCorpus first
+    port_matches_prepared_split_test.go:47: TestPortMatchesGoCohere (setup): 1.798s
+--- FAIL: TestPortMatchesGoCohere_2036 (1.80s)
+FAIL

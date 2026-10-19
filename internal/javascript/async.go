@@ -9,6 +9,9 @@ import (
 func asyncJavaScript(program *ir.Program) string {
 	var out strings.Builder
 	out.WriteString("const adamicTypeOf = (value) => typeof value;\n")
+	// Async payloads are primitive and never adapters, but the shared expression
+	// emitter still uses the identity hook for equality.
+	out.WriteString("const adamicViewAdapterUnderlying = value => value;\n")
 	e := &emitter{program: program, indent: 1}
 	for index, fn := range program.Async.Functions {
 		parameters := []string{}

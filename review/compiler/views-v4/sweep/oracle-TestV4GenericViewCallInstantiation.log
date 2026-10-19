@@ -1,0 +1,18 @@
+=== RUN   TestV4GenericViewCallInstantiation
+=== PAUSE TestV4GenericViewCallInstantiation
+=== CONT  TestV4GenericViewCallInstantiation
+    checked_views_v4_generics_test.go:88: gate cache node miss
+    checked_views_v4_generics_test.go:90: gate cache node miss
+    checked_views_v4_generics_test.go:94: native view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation895616697/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:94: sanitized view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation895616697/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:94: javascript view call's instantiation checked: adamic: panic: callable call failed: view.run at /tmp/adamic-gate/TestV4GenericViewCallInstantiation895616697/001/identity.ts:4:69 result expected view "ok", producer string
+    checked_views_v4_generics_test.go:106: gate cache node miss
+    checked_views_v4_generics_test.go:106: guard mutant admitted in native: exit 0 output "producer\nbad\n"
+    checked_views_v4_generics_test.go:106: guard mutant admitted in sanitized: exit 0 output "producer\nbad\n"
+    checked_views_v4_generics_test.go:106: guard mutant admitted in javascript: exit 0 output "producer\nbad\n"
+--- PASS: TestV4GenericViewCallInstantiation (0.92s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.928s

@@ -1,0 +1,12 @@
+{"Time":"2026-10-18T23:40:06.0334092Z","Action":"start","Package":"github.com/system-inc/adamic/internal/compilercensus"}
+{"Time":"2026-10-18T23:40:06.045351349Z","Action":"run","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative"}
+{"Time":"2026-10-18T23:40:06.045416475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"=== RUN   TestEveryCCompilerRunsThroughNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:40:06.045433771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"=== PAUSE TestEveryCCompilerRunsThroughNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:40:06.045436054Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative"}
+{"Time":"2026-10-18T23:40:06.045438117Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative"}
+{"Time":"2026-10-18T23:40:06.0454399Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"=== CONT  TestEveryCCompilerRunsThroughNative\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:40:06.739506406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Output":"--- PASS: TestEveryCCompilerRunsThroughNative (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:40:06.739844055Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilercensus","Test":"TestEveryCCompilerRunsThroughNative","Elapsed":0.7}
+{"Time":"2026-10-18T23:40:06.739894229Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:40:06.740662079Z","Action":"output","Package":"github.com/system-inc/adamic/internal/compilercensus","Output":"ok  \tgithub.com/system-inc/adamic/internal/compilercensus\t0.707s\n"}
+{"Time":"2026-10-18T23:40:06.740684102Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/compilercensus","Elapsed":0.707}

@@ -1,0 +1,58 @@
+{
+  "label": "fullcpu-v4",
+  "commit": "a93a7bdac8efa6d0079f27a715e368425cf94da8",
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/json",
+    "-count=1",
+    "-parallel=5",
+    "-timeout=30m"
+  ],
+  "GOMAXPROCS": 5,
+  "affinity_cpus": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "memory_limit_bytes": "17179869184",
+  "memory_baseline_bytes": 14958436352,
+  "memory_baseline_anon_bytes": 41033728,
+  "memory_baseline_file_bytes": 13839249408,
+  "peak_cgroup_current_bytes": 17179869184,
+  "peak_cgroup_anon_bytes": 4488556544,
+  "peak_cgroup_file_bytes": 13885292544,
+  "peak_descendant_rss_bytes": 6993100800,
+  "samples": 4708,
+  "sample_interval_seconds": 0.05,
+  "seconds": 339.471,
+  "exit": 0,
+  "timed_out": false,
+  "memory_events_before": {
+    "low": 0,
+    "high": 0,
+    "max": 7109,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  },
+  "memory_events_after": {
+    "low": 0,
+    "high": 0,
+    "max": 8705,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  },
+  "memory_events_delta": {
+    "low": 0,
+    "high": 0,
+    "max": 1596,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  }
+}

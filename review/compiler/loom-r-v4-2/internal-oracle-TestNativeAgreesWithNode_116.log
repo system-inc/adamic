@@ -1,0 +1,70 @@
+=== RUN   TestNativeAgreesWithNode_116
+=== PAUSE TestNativeAgreesWithNode_116
+=== CONT  TestNativeAgreesWithNode_116
+=== RUN   TestNativeAgreesWithNode_116/internal/oracle/testdata/nbody_write_read_order.a
+=== PAUSE TestNativeAgreesWithNode_116/internal/oracle/testdata/nbody_write_read_order.a
+=== RUN   TestNativeAgreesWithNode_116/internal/oracle/testdata/devirtualize_modules/main.a
+=== PAUSE TestNativeAgreesWithNode_116/internal/oracle/testdata/devirtualize_modules/main.a
+=== RUN   TestNativeAgreesWithNode_116/stage3/fixtures/enums/13_regex_map_keys.a
+=== PAUSE TestNativeAgreesWithNode_116/stage3/fixtures/enums/13_regex_map_keys.a
+=== RUN   TestNativeAgreesWithNode_116/internal/oracle/testdata/non_null_checked_initializer.ts
+=== PAUSE TestNativeAgreesWithNode_116/internal/oracle/testdata/non_null_checked_initializer.ts
+=== RUN   TestNativeAgreesWithNode_116/internal/oracle/testdata/omitted_reader.a
+=== PAUSE TestNativeAgreesWithNode_116/internal/oracle/testdata/omitted_reader.a
+=== RUN   TestNativeAgreesWithNode_116/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+=== PAUSE TestNativeAgreesWithNode_116/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+=== RUN   TestNativeAgreesWithNode_116/internal/oracle/testdata/static_constructor_spread_gap.a
+=== PAUSE TestNativeAgreesWithNode_116/internal/oracle/testdata/static_constructor_spread_gap.a
+=== CONT  TestNativeAgreesWithNode_116/internal/oracle/testdata/nbody_write_read_order.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_116/internal/oracle/testdata/omitted_reader.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_116/internal/oracle/testdata/static_constructor_spread_gap.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_116/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_116/stage3/fixtures/enums/13_regex_map_keys.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_116/internal/oracle/testdata/non_null_checked_initializer.ts
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:600: gate cache native miss
+=== CONT  TestNativeAgreesWithNode_116/internal/oracle/testdata/devirtualize_modules/main.a
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:716: gate cache node miss
+    oracle_test.go:607: gate cache native miss
+    oracle_test.go:614: gate cache native hit
+    oracle_test.go:600: gate cache native miss
+--- PASS: TestNativeAgreesWithNode_116 (0.00s)
+    --- PASS: TestNativeAgreesWithNode_116/internal/oracle/testdata/nbody_write_read_order.a (9.05s)
+    --- PASS: TestNativeAgreesWithNode_116/internal/oracle/testdata/omitted_reader.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode_116/internal/oracle/testdata/static_constructor_spread_gap.a (1.13s)
+    --- PASS: TestNativeAgreesWithNode_116/stage3/fixtures/nested-functions/07_binder_symbol_count.a (7.26s)
+    --- PASS: TestNativeAgreesWithNode_116/stage3/fixtures/enums/13_regex_map_keys.a (1.54s)
+    --- PASS: TestNativeAgreesWithNode_116/internal/oracle/testdata/non_null_checked_initializer.ts (0.92s)
+    --- PASS: TestNativeAgreesWithNode_116/internal/oracle/testdata/devirtualize_modules/main.a (1.00s)
+PASS
+gate cache: native hits=6 misses=14
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,7 @@
+=== RUN   TestProduct_ScannerDecimalSeparator
+=== PAUSE TestProduct_ScannerDecimalSeparator
+=== CONT  TestProduct_ScannerDecimalSeparator
+    scanner_products_test.go:51: build scanner-native 0c3b6489e656 miss 4.41
+    scanner_products_test.go:161: product cold/fetch time 4.420s
+--- PASS: TestProduct_ScannerDecimalSeparator (4.42s)
+PASS

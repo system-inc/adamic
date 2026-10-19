@@ -1,0 +1,13 @@
+{"Time":"2026-10-19T00:33:39.283570498Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-19T00:33:39.292031253Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-19T00:33:39.29211742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== RUN   TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:33:39.292143859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== PAUSE TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:33:39.292148957Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-19T00:33:39.292154865Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed"}
+{"Time":"2026-10-19T00:33:39.292156808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"=== CONT  TestRuntimeStaticsAreListed\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:33:39.327577648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"    runtime_statics_test.go:293: runtime/closure.c:123: unlisted mutable storage view_adapter_used; audit it in testdata/runtime-statics/storage.txt\n","OutputType":"error"}
+{"Time":"2026-10-19T00:33:39.622357077Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Output":"--- FAIL: TestRuntimeStaticsAreListed (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:33:39.622412549Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStaticsAreListed","Elapsed":0.33}
+{"Time":"2026-10-19T00:33:39.622435593Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:33:39.623603009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.340s\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:33:39.62365081Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.34}

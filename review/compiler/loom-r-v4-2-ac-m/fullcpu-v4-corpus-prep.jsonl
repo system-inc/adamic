@@ -1,0 +1,13 @@
+{"Time":"2026-10-19T00:44:53.743578169Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/json"}
+{"Time":"2026-10-19T00:44:53.749289773Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus"}
+{"Time":"2026-10-19T00:44:53.74935517Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus","Output":"=== RUN   TestProduct_JSONPinnedCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:44:53.749392124Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus","Output":"=== PAUSE TestProduct_JSONPinnedCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:44:53.749394488Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus"}
+{"Time":"2026-10-19T00:44:53.749498501Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus"}
+{"Time":"2026-10-19T00:44:53.74950455Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus","Output":"=== CONT  TestProduct_JSONPinnedCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:44:58.386382978Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus","Output":"    pinned_repository_corpus_test.go:98: build json_pinned_corpus 82998e222b05 miss 4.59\n"}
+{"Time":"2026-10-19T00:44:58.386468474Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus","Output":"--- PASS: TestProduct_JSONPinnedCorpus (4.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:44:58.38647249Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Test":"TestProduct_JSONPinnedCorpus","Elapsed":4.64}
+{"Time":"2026-10-19T00:44:58.386496676Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-19T00:44:58.43858887Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/json","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/json\t4.694s\n"}
+{"Time":"2026-10-19T00:44:58.438656851Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/json","Elapsed":4.695}

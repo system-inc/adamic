@@ -1,0 +1,12 @@
+import type { WatchOptions } from 'original-tsc-types';
+interface Base { readonly watchFile?: number; }
+function read(base: Base | undefined): void {
+ const viewed = base === undefined ? undefined : base as WatchOptions;
+ const items = viewed?.excludeFiles;
+ if (items === undefined) { console.log('absent'); return; }
+ mutate();
+ console.log(items.slice(0, 1).join(';'));
+}
+const raw = {watchFile: 0, excludeFiles: ['a']};
+function mutate(): void { raw.excludeFiles[0] =  'second'; }
+read(raw);

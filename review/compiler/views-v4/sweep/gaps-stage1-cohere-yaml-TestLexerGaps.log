@@ -1,0 +1,11 @@
+=== RUN   TestLexerGaps
+=== PAUSE TestLexerGaps
+=== CONT  TestLexerGaps
+=== RUN   TestLexerGaps/multiplePush.ts
+=== PAUSE TestLexerGaps/multiplePush.ts
+=== CONT  TestLexerGaps/multiplePush.ts
+    gaps_test.go:46: /workspace/adamic/stage1/cohere/yaml/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet
+--- PASS: TestLexerGaps (0.00s)
+    --- PASS: TestLexerGaps/multiplePush.ts (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	0.132s

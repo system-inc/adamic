@@ -1,0 +1,11 @@
+=== RUN   TestArrayViewMissingReceiverMutant
+=== PAUSE TestArrayViewMissingReceiverMutant
+=== CONT  TestArrayViewMissingReceiverMutant
+    array_runtime_mutants_test.go:104: gate cache node miss
+    array_runtime_mutants_test.go:114: gate cache node miss
+    array_runtime_mutants_test.go:122: receiver presence check omitted; the pinned values[0] stop rejects both mutants
+--- PASS: TestArrayViewMissingReceiverMutant (7.68s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

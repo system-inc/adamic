@@ -1,0 +1,152 @@
+[
+  {
+    "row": "internal/oracle/testdata/library_array_holes_length.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/library_array_holes_length.a | 17 | 17 | 3 | 19 | 6 | 0 |"
+  },
+  {
+    "row": "internal/oracle/testdata/library_array_holes_range.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/library_array_holes_range.a | 24 | 24 | 12 | 27 | 4 | 0 |"
+  },
+  {
+    "row": "internal/oracle/testdata/library_array_holes_scanner_probe.a",
+    "before": null,
+    "after": "| internal/oracle/testdata/library_array_holes_scanner_probe.a | 4 | 4 | 0 | 3 | 4 | 0 |"
+  },
+  {
+    "row": "internal/oracle/testdata/namespace_method_receiver.a",
+    "before": "| internal/oracle/testdata/namespace_method_receiver.a | 7 | 7 | 9 | 16 | 5 | 0 |",
+    "after": "| internal/oracle/testdata/namespace_method_receiver.a | 7 | 7 | 7 | 14 | 5 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-alias.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-alias.a | 3 | 1 | 9 | 8 | 3 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-boolean.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-boolean.a | 2 | 0 | 4 | 3 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-bounds.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-bounds.a | 5 | 5 | 5 | 10 | 5 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-element.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-element.a | 4 | 4 | 4 | 7 | 4 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-field.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-field.a | 4 | 4 | 3 | 6 | 4 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-holes-view.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-holes-view.a | 7 | 7 | 9 | 15 | 5 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-iteration-bad.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-iteration-bad.a | 2 | 0 | 4 | 2 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-iteration.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-iteration.a | 6 | 6 | 3 | 8 | 4 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-lazy.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-lazy.a | 4 | 4 | 5 | 7 | 4 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-length-kind.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-length-kind.a | 2 | 0 | 2 | 1 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-map-bad.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-map-bad.a | 4 | 0 | 4 | 1 | 4 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-map.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-map.a | 7 | 7 | 5 | 12 | 6 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-missing.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-missing.a | 1 | 0 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-pop.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-pop.a | 6 | 6 | 5 | 11 | 6 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-second.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-second.a | 2 | 0 | 6 | 3 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-string-literal.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-string-literal.a | 2 | 0 | 4 | 2 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/array-undefined.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/array-undefined.a | 2 | 0 | 4 | 1 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/generic-array-element.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/generic-array-element.a | 2 | 1 | 1 | 2 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/non-array.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/non-array.a | 1 | 0 | 2 | 1 | 1 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/nullable-array-element.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/nullable-array-element.a | 1 | 0 | 4 | 2 | 1 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/nullable-array-missing.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/nullable-array-missing.a | 0 | 0 | 1 | 1 | 0 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/nullable-array-string.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/nullable-array-string.a | 2 | 0 | 4 | 2 | 2 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/lane2/object-element.a",
+    "before": null,
+    "after": "| stage3/interface-downcasts/lane2/object-element.a | 3 | 3 | 9 | 10 | 3 | 0 |"
+  },
+  {
+    "row": "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+    "before": "| stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a | 3 | 0 | 6 | 4 | 3 | 0 |",
+    "after": null
+  },
+  {
+    "row": "stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+    "before": "| stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a | 2 | 0 | 5 | 4 | 2 | 0 |",
+    "after": null
+  },
+  {
+    "row": "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+    "before": "| stage3/interface-downcasts/v2/callable-producer-wrong.a | 2 | 0 | 5 | 4 | 2 | 0 |",
+    "after": null
+  }
+]

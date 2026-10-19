@@ -1,0 +1,116 @@
+[
+  {
+    "mutant": "escape-Argument",
+    "path": "internal/lower/view_callable_escape.go",
+    "restored": true,
+    "sha256": "8254f8d9e7207404560ca2ae7ff07072c0db39c897ab4b1291971477c6113595"
+  },
+  {
+    "mutant": "escape-Result",
+    "path": "internal/lower/view_callable_escape.go",
+    "restored": true,
+    "sha256": "8254f8d9e7207404560ca2ae7ff07072c0db39c897ab4b1291971477c6113595"
+  },
+  {
+    "mutant": "escape-Passed",
+    "path": "internal/lower/view_callable_escape.go",
+    "restored": true,
+    "sha256": "8254f8d9e7207404560ca2ae7ff07072c0db39c897ab4b1291971477c6113595"
+  },
+  {
+    "mutant": "escape-Returned",
+    "path": "internal/lower/view_callable_escape.go",
+    "restored": true,
+    "sha256": "8254f8d9e7207404560ca2ae7ff07072c0db39c897ab4b1291971477c6113595"
+  },
+  {
+    "mutant": "escape-MixedProducer",
+    "path": "internal/lower/view_callable_escape.go",
+    "restored": true,
+    "sha256": "8254f8d9e7207404560ca2ae7ff07072c0db39c897ab4b1291971477c6113595"
+  },
+  {
+    "mutant": "unsupported-domain",
+    "path": "internal/lower/view_lazy.go",
+    "restored": true,
+    "sha256": "38f6ad7a849ee6560803c951704abbc5a6888d33807534346a35aefe858d935d"
+  },
+  {
+    "mutant": "unsupported-producer",
+    "path": "internal/lower/view_lazy.go",
+    "restored": true,
+    "sha256": "38f6ad7a849ee6560803c951704abbc5a6888d33807534346a35aefe858d935d"
+  },
+  {
+    "mutant": "surface-borrow",
+    "path": "internal/native/borrow.go",
+    "restored": true,
+    "sha256": "91423f416c8e884f25e7afc3314924b9d7e7dc8a6bee5c1de70cb113d8d7720d"
+  },
+  {
+    "mutant": "bind-name-borrow",
+    "path": "internal/native/borrow.go",
+    "restored": true,
+    "sha256": "91423f416c8e884f25e7afc3314924b9d7e7dc8a6bee5c1de70cb113d8d7720d"
+  },
+  {
+    "mutant": "identity-root",
+    "path": "internal/native/runtime/closure.c",
+    "restored": true,
+    "sha256": "ad74a0522504998b0b5350332ce150607fad402331a7b99656dd2349168f7b74"
+  },
+  {
+    "mutant": "metadata-inline",
+    "path": "internal/native/view_arrays.go",
+    "restored": true,
+    "sha256": "e38848c3a83bc96f708fedb66cdd3a955cefb209e562ad9321c0b7a112c36c73"
+  },
+  {
+    "mutant": "metadata-omitted",
+    "path": "internal/native/view_arrays.go",
+    "restored": true,
+    "sha256": "e38848c3a83bc96f708fedb66cdd3a955cefb209e562ad9321c0b7a112c36c73"
+  },
+  {
+    "mutant": "native-order",
+    "path": "internal/native/view_callable_calls.go",
+    "restored": true,
+    "sha256": "c0649f542c2ea86358c0e84ffcdb16fc77bb0f2622d3c49edb3d0eb9b2701248"
+  },
+  {
+    "mutant": "javascript-order",
+    "path": "internal/javascript/view_callable_calls.go",
+    "restored": true,
+    "sha256": "4d1f662eb0d30c1a0bd43b79cdd3ace555c4d42f8773b4d4961f7de31ebb5641"
+  },
+  {
+    "mutant": "construct-witness",
+    "path": "internal/oracle/testdata/views_v4_refused/construct-no-signature.a",
+    "restored": true,
+    "sha256": "2a66fcdf84788115fcd9c6141afe44ad846c3ef91566dc24f776af6a9e46e795"
+  },
+  {
+    "mutant": "boxed-witness",
+    "path": "internal/oracle/testdata/views_v4_refused/view-result-wrong.a",
+    "restored": true,
+    "sha256": "8c183ef237648791cde0255686417145b2b82ff30c8a244d6b1d3b86487d7dee"
+  },
+  {
+    "mutant": "factory-witness",
+    "path": "internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a",
+    "restored": true,
+    "sha256": "a65e4ab80db0063ee4fa475d139733947a3497ed8701ca7f1241eb50c1777321"
+  },
+  {
+    "mutant": "runtime-witness-mismatch",
+    "path": "internal/native/runtimeproducts/runtimeproducts.go",
+    "restored": true,
+    "sha256": "f78cf8e315e8a7c08b8e614233f6eb678a8e12735c317d43106ef55bdb684209"
+  },
+  {
+    "mutant": "main-library-spread-omitted",
+    "path": "internal/lower/lower.go",
+    "restored": true,
+    "sha256": "422a9a785c930820147ff84e67a8bf2caac6e83eaae0d096fc5e680347aa44b9"
+  }
+]

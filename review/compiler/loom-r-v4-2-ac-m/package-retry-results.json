@@ -1,0 +1,72 @@
+[
+  {
+    "package": "internal/ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-count=1",
+      "-json",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "exit": 0,
+    "seconds": 71.376
+  },
+  {
+    "package": "internal/lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-count=1",
+      "-json",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "exit": 0,
+    "seconds": 40.077
+  },
+  {
+    "package": "internal/native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-count=1",
+      "-json",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "exit": 1,
+    "seconds": 435.973
+  },
+  {
+    "package": "internal/oracle",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-count=1",
+      "-json",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "exit": 1,
+    "seconds": 464.22
+  },
+  {
+    "package": "stage1/cohere/json",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/json",
+      "-count=1",
+      "-json",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "exit": 1,
+    "seconds": 71.546
+  }
+]

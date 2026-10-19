@@ -1,0 +1,29 @@
+=== RUN   TestCheckedViewFlagDowncast
+=== PAUSE TestCheckedViewFlagDowncast
+=== CONT  TestCheckedViewFlagDowncast
+=== RUN   TestCheckedViewFlagDowncast/tsc_source
+=== PAUSE TestCheckedViewFlagDowncast/tsc_source
+=== RUN   TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+=== PAUSE TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+=== CONT  TestCheckedViewFlagDowncast/tsc_source
+=== CONT  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+    checked_views_flag_downcast_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewFlagDowncast/tsc_source
+    checked_views_flag_downcast_test.go:24: gate cache node miss
+=== NAME  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+    checked_views_flag_downcast_test.go:46: gate cache node miss
+=== NAME  TestCheckedViewFlagDowncast/tsc_source
+    checked_views_flag_downcast_test.go:29: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal
+    checked_views_flag_downcast_test.go:65: gate cache node miss
+    checked_views_flag_downcast_test.go:72: native release field-check mutant caught: exit 0 stdout "5e-324\n" stderr ""
+    checked_views_flag_downcast_test.go:72: JavaScript field-check mutant caught: exit 0 stdout "true\n" stderr ""
+--- PASS: TestCheckedViewFlagDowncast (0.00s)
+    --- PASS: TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal (0.72s)
+    --- PASS: TestCheckedViewFlagDowncast/tsc_source (0.78s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.797s

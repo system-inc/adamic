@@ -1,0 +1,6 @@
+=== RUN   TestProduct_JSONPinnedCorpus
+=== PAUSE TestProduct_JSONPinnedCorpus
+=== CONT  TestProduct_JSONPinnedCorpus
+    pinned_repository_corpus_test.go:98: build json pinned corpus: pinned corpus input stage3/api/node_modules/.package-lock.json (npm ci --prefix stage3/api provisions it on the corpus product's builder): open /tmp/adamic-v4-2-base/stage3/api/node_modules/.package-lock.json: no such file or directory
+--- FAIL: TestProduct_JSONPinnedCorpus (1.69s)
+FAIL

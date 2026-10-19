@@ -1,0 +1,10 @@
+--- a/internal/javascript/view_callable_calls.go
++++ b/internal/javascript/view_callable_calls.go
+@@ -153,6 +153,7 @@
+ 
+ func (e *emitter) emitDirectViewCallable(call ir.CallClosure, p ir.Property) string {
+ 	raw := "adamicViewCallablePreparedRead(object, " + quote(p.Name) + ", " + quote(p.View) + ", true, false, true, " + quote(p.ViewType) + ")"
++	raw = "((value) => { if (adamicTypeOf(value) !== 'function') panic('early callable check'); return value; })(" + raw + ")"
+ 	invocation := e.viewCallableInvoke(call, p) + "({object, value: " + raw + "}, [" + e.callValues(call.Arguments, call.Spread) + "])"
+ 	if p.Optional {
+ 		invocation = "object === undefined ? undefined : " + invocation

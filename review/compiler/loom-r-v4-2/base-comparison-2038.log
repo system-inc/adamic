@@ -1,0 +1,24 @@
+=== RUN   TestPortMatchesGoCohere_2038
+=== PAUSE TestPortMatchesGoCohere_2038
+=== CONT  TestPortMatchesGoCohere_2038
+    port_matches_prepared_split_test.go:192: build json_lowered_port_and_backend_sources 580ff309eda4 hit 0.44
+    port_matches_prepared_split_test.go:190: build go_build_cohere_./command/formatter_comparison_go-cohere-oracle-owner-v1 b074075f9339 hit 0.00
+    port_matches_prepared_split_test.go:207: build json_native_release_port 59996553b20f hit 0.12
+    port_matches_prepared_split_test.go:207: build json_native_ASan_UBSan_port abbcd5ab6ff1 hit 0.11
+    audit_test.go:107: full corpus: 3919 cases before gate sampling
+    audit_test.go:107: corpus repository: 2806 tracked JSON files; read from the corpus product at Git pin 2b4dbde172c1c2f23c065ecae8b906f8fcb72a20
+    audit_test.go:107: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    audit_test.go:107: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    audit_test.go:107: corpus pin group cohere: 858, SHA256 34c398ee1ce83e8c789e28189aa334c5da0a6edf9c5d973a1837e572eca17241
+    audit_test.go:107: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    port_matches_prepared_split_test.go:47: TestPortMatchesGoCohere (setup): 2.930s
+    port_test.go:366: shard union: 3917 cases exactly once across 2048 shards
+    port_test.go:415: Go 0.046s
+    port_test.go:415: Node 0.348s
+    port_test.go:415: release 0.098s
+    port_test.go:415: ASan/UBSan/LeakSanitizer 0.167s; admission waited 0.000s
+    port_test.go:415: JavaScript backend 0.213s
+    port_test.go:416: case range [3894:3902]; 8 cases; execution 0.516s; shared setup waited 0.020s; execution plus locally measured builds 0.536s
+    port_test.go:423: setup outside shards: 0.541s (including local builds)
+--- PASS: TestPortMatchesGoCohere_2038 (3.47s)
+PASS

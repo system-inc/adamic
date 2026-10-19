@@ -1,0 +1,6 @@
+{"Time":"2026-10-18T23:52:46.43015821Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T23:52:46.436679838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-18T23:52:46.436787798Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:52:46.437475004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"-update-counts measured no row of counts.md: select the shards with -run TestCountsAreRecorded, unanchored\n"}
+{"Time":"2026-10-18T23:52:46.441491378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.011s\n","OutputType":"frame"}
+{"Time":"2026-10-18T23:52:46.441518688Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.011}

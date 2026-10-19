@@ -1,0 +1,30 @@
+{"Time":"2026-10-18T08:19:31.050911016Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T08:19:31.055607134Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI"}
+{"Time":"2026-10-18T08:19:31.055658881Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI","Output":"=== RUN   TestParallelMapCompilerABI\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.055710948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI","Output":"=== PAUSE TestParallelMapCompilerABI\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.055713381Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI"}
+{"Time":"2026-10-18T08:19:31.055717778Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode"}
+{"Time":"2026-10-18T08:19:31.055720692Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"=== RUN   TestAsyncCompilerSuspensionsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.055723296Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"=== PAUSE TestAsyncCompilerSuspensionsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.055724808Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode"}
+{"Time":"2026-10-18T08:19:31.055728103Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode"}
+{"Time":"2026-10-18T08:19:31.055730376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"=== RUN   TestParallelCompilerSharedReferencesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.055734292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"=== PAUSE TestParallelCompilerSharedReferencesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.055736005Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode"}
+{"Time":"2026-10-18T08:19:31.055738008Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI"}
+{"Time":"2026-10-18T08:19:31.0557398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI","Output":"=== CONT  TestParallelMapCompilerABI\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.057482281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI","Output":"--- PASS: TestParallelMapCompilerABI (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:31.057496372Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelMapCompilerABI","Elapsed":0}
+{"Time":"2026-10-18T08:19:31.057507359Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode"}
+{"Time":"2026-10-18T08:19:31.057509962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"=== CONT  TestParallelCompilerSharedReferencesMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:33.270043528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"    async_test.go:37: source Node, JavaScript, ASan/UBSan native and leak check agree\n"}
+{"Time":"2026-10-18T08:19:33.271957759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Output":"--- PASS: TestParallelCompilerSharedReferencesMatchNode (2.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:33.271983407Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestParallelCompilerSharedReferencesMatchNode","Elapsed":2.22}
+{"Time":"2026-10-18T08:19:33.271993743Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode"}
+{"Time":"2026-10-18T08:19:33.272034593Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"=== CONT  TestAsyncCompilerSuspensionsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:33.979346862Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"    async_test.go:23: source Node, JavaScript, ASan/UBSan native and leak check agree\n"}
+{"Time":"2026-10-18T08:19:33.979394582Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Output":"--- PASS: TestAsyncCompilerSuspensionsMatchNode (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:33.979398268Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestAsyncCompilerSuspensionsMatchNode","Elapsed":0.71}
+{"Time":"2026-10-18T08:19:33.979405158Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T08:19:33.980146234Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t2.929s\n"}
+{"Time":"2026-10-18T08:19:33.980165483Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":2.9290000000000003}

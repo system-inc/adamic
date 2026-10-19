@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewArraysArrayLengthKind
+=== PAUSE TestCheckedViewArraysArrayLengthKind
+=== CONT  TestCheckedViewArraysArrayLengthKind
+    checked_views_arrays_test.go:67: gate cache node miss
+    checked_views_arrays_test.go:67: Node: exit=0 stdout="read\n" stderr=""
+    checked_views_arrays_test.go:67: gate cache node miss
+--- PASS: TestCheckedViewArraysArrayLengthKind (6.85s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

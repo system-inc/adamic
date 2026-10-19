@@ -1,0 +1,9 @@
+Starting internal/oracle
+{"package": "internal/oracle", "command": ["go", "test", "./internal/oracle", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 418.763}
+Starting stage1/cohere/json
+{"package": "stage1/cohere/json", "command": ["go", "test", "./stage1/cohere/json", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 382.739}
+Starting internal/flow
+{"package": "internal/flow", "command": ["go", "test", "./internal/flow", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 73.723}
+Starting internal/fresh
+{"package": "internal/fresh", "command": ["go", "test", "./internal/fresh", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 14.206}
+Completed all touched packages

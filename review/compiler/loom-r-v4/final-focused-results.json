@@ -1,0 +1,2384 @@
+[
+  {
+    "package": "internal/ir",
+    "test": "TestProduct_CallTargetExports",
+    "seconds": 3.083,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_Adamic",
+    "seconds": 5.982,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesCounted0",
+    "seconds": 15.005,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesCounted1",
+    "seconds": 10.914,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesCounted2",
+    "seconds": 10.036,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesRelease0",
+    "seconds": 10.646,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesRelease1",
+    "seconds": 8.373,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesRelease2",
+    "seconds": 9.733,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesSanitized0",
+    "seconds": 20.756,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesSanitized1",
+    "seconds": 28.691,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_NativeRuntimesSanitized2",
+    "seconds": 38.496,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_V4SanitizedCountedRuntimes0",
+    "seconds": 41.207,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_V4SanitizedCountedRuntimes1",
+    "seconds": 25.509,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_V4SanitizedCountedRuntimes2",
+    "seconds": 21.445,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesAliasingIsFresh",
+    "seconds": 0.04,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesOperandMutations",
+    "seconds": 0.024,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesThrowAndIdentityRead",
+    "seconds": 0.03,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesTraceSnapshots",
+    "seconds": 0.189,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayHolesBackEdgeRemainsUnproven",
+    "seconds": 0.037,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayHolesOperandsStillJudgeCycles",
+    "seconds": 0.011,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayHolesResultsAreFresh",
+    "seconds": 0.01,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayRangeErrorIdentityDoesNotEscape",
+    "seconds": 0.013,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestCallTargetReaders",
+    "seconds": 3.951,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 0.187,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 0.017,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestClosureTargetsPreserveBoundaryValue",
+    "seconds": 0.049,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestEveryMapAProgramHoldsIsSorted",
+    "seconds": 0.016,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestObjectSpreadAccessorEffects",
+    "seconds": 0.011,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewArrayFieldPresence",
+    "seconds": 0.306,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewArraysNode",
+    "seconds": 1.151,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallableBoxingUnknownProducer",
+    "seconds": 0.1,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallableProducerCertificateNode",
+    "seconds": 0.452,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallableShapeNode",
+    "seconds": 0.468,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallablesNode",
+    "seconds": 0.437,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestArrayMembershipUsesUnionMatcher",
+    "seconds": 0.017,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestClassFeaturesAccessorRefusals",
+    "seconds": 0.185,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestClassFeaturesNarrowedAccessor",
+    "seconds": 0.072,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestClassFeaturesThrowingAccessorSpread",
+    "seconds": 0.221,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibraryLanguageBoundaries",
+    "seconds": 0.646,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadDateView",
+    "seconds": 0.064,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadErrorView",
+    "seconds": 0.116,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadMapView",
+    "seconds": 0.115,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadPlainProducers",
+    "seconds": 0.133,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadRegExpUnion",
+    "seconds": 0.066,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadSetView",
+    "seconds": 0.072,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestLibrarySpreadTypedArrayView",
+    "seconds": 0.133,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedArrayElementStorageRemainsRefused",
+    "seconds": 0.082,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "seconds": 0.133,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedUnionContractGraph",
+    "seconds": 0.345,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "seconds": 0.084,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "seconds": 0.13,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedUnionContractRecursiveMember",
+    "seconds": 0.067,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedUnionContractUnknownMemberFails",
+    "seconds": 0.12,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestNativeAgreementRowsNameRegisteredPrograms",
+    "seconds": 0.032,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestPrepareViewCallableRead",
+    "seconds": 0.314,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewArrayContract",
+    "seconds": 0.265,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewArraySourceCertificateOmission",
+    "seconds": 0.066,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewArrayWritesNeedSourceCertificate",
+    "seconds": 0.169,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewCallableAggregateReturnedDemand",
+    "seconds": 0.02,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewCallableShapeContract",
+    "seconds": 0.316,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewCallableSignature",
+    "seconds": 0.009,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestConstantPortabilityClang",
+    "seconds": 0.032,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestLongUnicodeLiteralByteCoverage",
+    "seconds": 0.064,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestLongUnicodePortabilityClang",
+    "seconds": 7.879,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheBounded",
+    "seconds": 3.132,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheBytes",
+    "seconds": 0.972,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheCanonical",
+    "seconds": 2.573,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheDying",
+    "seconds": 2.767,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheIdentity",
+    "seconds": 3.034,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheIntern",
+    "seconds": 2.311,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheMany",
+    "seconds": 1.991,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheOrder",
+    "seconds": 3.117,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheRecheck",
+    "seconds": 2.233,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheWeakLeakRoot",
+    "seconds": 1.546,
+    "exit": 0,
+    "grain": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterPoolTSanPending",
+    "seconds": 0.032,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterProgramUnderlyingPending",
+    "seconds": 0.017,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterRegionAdoptionPending",
+    "seconds": 0.056,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterRuntimeStaticsPending",
+    "seconds": 0.023,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableBoxingUnknownProducer",
+    "seconds": 11.285,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeOptionalAbsent",
+    "seconds": 10.7,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeUnrecorded",
+    "seconds": 3.905,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeValid",
+    "seconds": 3.7,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeWrongArity",
+    "seconds": 2.686,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeWrongResult",
+    "seconds": 2.887,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeNumber",
+    "seconds": 3.107,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeOptionalAbsent",
+    "seconds": 3.313,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeRequiredAbsent",
+    "seconds": 4.139,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeUnknownParameter",
+    "seconds": 4.331,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeUnknownResult",
+    "seconds": 3.711,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeUnknownSignature",
+    "seconds": 3.464,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeValid",
+    "seconds": 4.643,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeWrongArity",
+    "seconds": 4.486,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeWrongParameter",
+    "seconds": 6.181,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeWrongResult",
+    "seconds": 6.108,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayElementKindRuntimeMutant",
+    "seconds": 13.969,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayHolesAbsentSlotMutant",
+    "seconds": 14.112,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayHolesMilestone",
+    "seconds": 6.935,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayHolesRangeErrorMutant",
+    "seconds": 12.644,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayViewHolesAbsenceMutant",
+    "seconds": 6.454,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayViewMissingReceiverMutant",
+    "seconds": 9.839,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayViewPhysicalWriteMutant",
+    "seconds": 10.199,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayBoolean",
+    "seconds": 4.261,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayIterationBad",
+    "seconds": 4.307,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayMapBad",
+    "seconds": 4.149,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayMissing",
+    "seconds": 4.254,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArraySecond",
+    "seconds": 4.493,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayStringLiteral",
+    "seconds": 5.495,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayUndefined",
+    "seconds": 6.051,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsNonArray",
+    "seconds": 5.95,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipBoolean",
+    "seconds": 5.345,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipBooleanGood",
+    "seconds": 4.59,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipBoxedMixed",
+    "seconds": 5.545,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipMaybeNumber",
+    "seconds": 6.21,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipNumber",
+    "seconds": 6.267,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipSparseMax",
+    "seconds": 6.395,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipSparseWrong",
+    "seconds": 6.54,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipString",
+    "seconds": 5.761,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipTupleObject",
+    "seconds": 5.772,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionNarrowing",
+    "seconds": 5.83,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayAlias",
+    "seconds": 4.675,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayBoolean",
+    "seconds": 4.514,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayBounds",
+    "seconds": 5.204,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayElement",
+    "seconds": 5.805,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayField",
+    "seconds": 7.004,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayHolesView",
+    "seconds": 6.226,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayIteration",
+    "seconds": 4.337,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayIterationBad",
+    "seconds": 4.412,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayLazy",
+    "seconds": 4.718,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayLengthKind",
+    "seconds": 4.859,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayMap",
+    "seconds": 5.154,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayMapBad",
+    "seconds": 5.208,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayMissing",
+    "seconds": 6.287,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayPop",
+    "seconds": 6.299,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArraySecond",
+    "seconds": 6.115,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayStringLiteral",
+    "seconds": 5.794,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayUndefined",
+    "seconds": 6.6,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysGenericArrayElement",
+    "seconds": 6.454,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNonArray",
+    "seconds": 7.884,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNullableArrayElement",
+    "seconds": 8.341,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNullableArrayMissing",
+    "seconds": 6.818,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNullableArrayString",
+    "seconds": 6.714,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysObjectElement",
+    "seconds": 5.382,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewObjectPrimitiveSource",
+    "seconds": 19.348,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedArraySource",
+    "seconds": 11.465,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedCallableUnion",
+    "seconds": 6.44,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedOptionalCallableControl",
+    "seconds": 5.745,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedOwnClassData",
+    "seconds": 5.39,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedRecursive",
+    "seconds": 5.952,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceDispatch",
+    "seconds": 10.6,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedSourceFlows",
+    "seconds": 10.636,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2ArrayArmAdmission",
+    "seconds": 7.705,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2CallableProducerMutant",
+    "seconds": 7.8,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2MembershipMutant",
+    "seconds": 5.499,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2MovedStage3Results",
+    "seconds": 9.274,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2ReadsAfterWrites",
+    "seconds": 12.542,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2RepresentationMutants",
+    "seconds": 4.078,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2TupleIdentityMutant",
+    "seconds": 3.916,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2WrongFamilyMutant",
+    "seconds": 3.689,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestFamilyWrappersAreCurrent",
+    "seconds": 0.016,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNarrowedUnionMemberCheck",
+    "seconds": 4.11,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNarrowedUnionObjectTagMisfit",
+    "seconds": 3.235,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNarrowedUnionObjectTagPassing",
+    "seconds": 3.519,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_009",
+    "seconds": 8.625,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_031",
+    "seconds": 9.195,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_047",
+    "seconds": 13.28,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_053",
+    "seconds": 10.375,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_070",
+    "seconds": 4.649,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_116",
+    "seconds": 7.444,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNativeAgreesWithNode_124",
+    "seconds": 7.268,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessExtensions",
+    "seconds": 0.032,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode",
+    "seconds": 33.862,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestRuntimeProductKeyHoldsEveryPart",
+    "seconds": 9.19,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestRuntimeSetsAreEachUsed",
+    "seconds": 4.039,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DestructuredCallableAdamicRefusal",
+    "seconds": 2.996,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DestructuredCallableArgument",
+    "seconds": 6.218,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DestructuredCallableReadOnly",
+    "seconds": 5.192,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectArgument",
+    "seconds": 3.586,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectArrayArgument",
+    "seconds": 3.603,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectBoxed",
+    "seconds": 3.252,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectCalleeOrder",
+    "seconds": 3.233,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectClassResult",
+    "seconds": 3.295,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectCompatible",
+    "seconds": 3.395,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectMethod",
+    "seconds": 3.344,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectNull",
+    "seconds": 3.332,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectObjectArgument",
+    "seconds": 3.591,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectOptionalReceiver",
+    "seconds": 3.404,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectProducerRefusal",
+    "seconds": 3.151,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectRecursiveRefusal",
+    "seconds": 2.944,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectResult",
+    "seconds": 3.48,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectUnknownProducerParameter",
+    "seconds": 3.346,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectUnused",
+    "seconds": 3.343,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectVoid",
+    "seconds": 3.339,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterApplyArgument",
+    "seconds": 6.262,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterApplyResult",
+    "seconds": 6.271,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterArgument",
+    "seconds": 5.354,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindAllArguments",
+    "seconds": 5.102,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindBoxed",
+    "seconds": 5.003,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindCompatible",
+    "seconds": 5.076,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindCountAndSurface",
+    "seconds": 5.099,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindNameOwnership",
+    "seconds": 4.966,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindPrefix",
+    "seconds": 5.248,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindReceiverAndCapture",
+    "seconds": 5.044,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindRemainingArgument",
+    "seconds": 5.456,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindResult",
+    "seconds": 5.414,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameApply",
+    "seconds": 5.271,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameArgument",
+    "seconds": 5.319,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameBound",
+    "seconds": 5.502,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameCall",
+    "seconds": 5.216,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameNestedResult",
+    "seconds": 4.907,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameResult",
+    "seconds": 5.466,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameRuntimeCallback",
+    "seconds": 0.008,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundAliasCallRefusal",
+    "seconds": 3.041,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundApplyRefusal",
+    "seconds": 3.184,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundBindRefusal",
+    "seconds": 3.105,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundCallRefusal",
+    "seconds": 2.997,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundHelperApplyRefusal",
+    "seconds": 3.11,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundHelperBindRefusal",
+    "seconds": 3.05,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundViewRefusal",
+    "seconds": 3.145,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoxed",
+    "seconds": 5.028,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallApplyCount",
+    "seconds": 4.952,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallApplyReceiver",
+    "seconds": 5.114,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallApplyZeroReceiver",
+    "seconds": 5.006,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallArgument",
+    "seconds": 5.91,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallReceiverCheck",
+    "seconds": 5.92,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallReceiverRefusal",
+    "seconds": 2.983,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallRefusal",
+    "seconds": 3.04,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallResult",
+    "seconds": 6.116,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCollectionKeyContract",
+    "seconds": 5.009,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterConstructSignatureRefusal",
+    "seconds": 3.055,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterConstructorIdentity",
+    "seconds": 3.3,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCounted",
+    "seconds": 5.158,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterDynamicApplyRefusal",
+    "seconds": 3.08,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterIdentity",
+    "seconds": 6.261,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterLength",
+    "seconds": 5.213,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterName",
+    "seconds": 5.309,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterNoStacking",
+    "seconds": 5.014,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterNull",
+    "seconds": 5.008,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterNullablePrimitiveCallRefusal",
+    "seconds": 2.942,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterPrimitiveApplyRefusal",
+    "seconds": 2.977,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterPrimitiveCallRefusal",
+    "seconds": 2.981,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterResult",
+    "seconds": 5.264,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterReturned",
+    "seconds": 5.0,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterScalarIdentityControls",
+    "seconds": 3.994,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceAnonymousName",
+    "seconds": 5.16,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceComputedName",
+    "seconds": 5.023,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceDefaults",
+    "seconds": 5.168,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceLengthRefusal",
+    "seconds": 2.938,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceNameRefusal",
+    "seconds": 3.147,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceRegExpCallback",
+    "seconds": 5.453,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceReturned",
+    "seconds": 5.162,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceSortCallback",
+    "seconds": 5.012,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterUncheckableRefusal",
+    "seconds": 3.031,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterUnusedMisfit",
+    "seconds": 5.259,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterVoid",
+    "seconds": 5.209,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterWithoutConstructSignatureRefusal",
+    "seconds": 0.118,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeArgumentRefusal",
+    "seconds": 3.082,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeCompatible",
+    "seconds": 3.598,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeMixedProducerRefusal",
+    "seconds": 3.089,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeOrdinaryRead",
+    "seconds": 3.387,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapePassedRefusal",
+    "seconds": 3.037,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeResultRefusal",
+    "seconds": 2.947,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeReturnedRefusal",
+    "seconds": 3.046,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeTypeScriptBoundary",
+    "seconds": 5.266,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ExistingExplicitMethodReceiver",
+    "seconds": 5.267,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4GenericErasedReadRefusal",
+    "seconds": 3.035,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4GenericProducerInstantiation",
+    "seconds": 5.567,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4GenericViewCallInstantiation",
+    "seconds": 3.671,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherAdamicEscapeRefusal",
+    "seconds": 3.152,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackArgument",
+    "seconds": 5.549,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackArgumentOrder",
+    "seconds": 5.203,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackNeverCalled",
+    "seconds": 5.21,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackResult",
+    "seconds": 5.461,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherReturnedCallable",
+    "seconds": 5.065,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4IteratorPackedReceiver",
+    "seconds": 5.117,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedAdamicRefusal",
+    "seconds": 2.943,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedParameter",
+    "seconds": 5.517,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedParameterMembers",
+    "seconds": 5.514,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedResult",
+    "seconds": 5.109,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedResultMembers",
+    "seconds": 5.101,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryClone",
+    "seconds": 3.708,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryIdentifier",
+    "seconds": 3.642,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryImport",
+    "seconds": 3.808,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryModifier",
+    "seconds": 3.816,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryReadonlyTargetControl",
+    "seconds": 0.008,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryResult",
+    "seconds": 3.282,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryStringLiteral",
+    "seconds": 3.688,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryUniqueName",
+    "seconds": 3.697,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryWiderWritePending",
+    "seconds": 0.008,
+    "exit": 0,
+    "grain": true,
+    "skip": true
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryWiderWriteRefusal",
+    "seconds": 2.997,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryYield",
+    "seconds": 3.63,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5SkipAdapterMutant",
+    "seconds": 6.06,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4MixedCallableFieldArgument",
+    "seconds": 3.507,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4MixedCallableFieldBoxing",
+    "seconds": 3.248,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4MixedLongFieldDiagnostic",
+    "seconds": 3.282,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4UnrelatedArrayFieldWrite",
+    "seconds": 3.843,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestViewAdapterBaselineCountsClosures",
+    "seconds": 3.039,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestViewAdapterBaselineCountsMethods",
+    "seconds": 2.988,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestViewAdapterBaselineCountsReceiverRest",
+    "seconds": 3.748,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  },
+  {
+    "package": "stage1/cohere/json",
+    "test": "TestPortElementMetadataEmission",
+    "seconds": 0.872,
+    "exit": 0,
+    "grain": true,
+    "skip": false
+  }
+]

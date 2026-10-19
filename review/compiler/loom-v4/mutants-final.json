@@ -1,0 +1,138 @@
+[
+  {
+    "mutant": "escape-Argument",
+    "test": "TestV4EscapeArgumentRefusal",
+    "seconds": 23.889,
+    "exit": 1,
+    "killed": true,
+    "catcher": "missing escaping-read refusal after clean Node-equivalent execution"
+  },
+  {
+    "mutant": "escape-Result",
+    "test": "TestV4EscapeResultRefusal",
+    "seconds": 6.303,
+    "exit": 1,
+    "killed": true,
+    "catcher": "missing escaping-read refusal after clean Node-equivalent execution"
+  },
+  {
+    "mutant": "escape-Passed",
+    "test": "TestV4EscapePassedRefusal",
+    "seconds": 6.073,
+    "exit": 1,
+    "killed": true,
+    "catcher": "missing escaping-read refusal after clean Node-equivalent execution"
+  },
+  {
+    "mutant": "escape-Returned",
+    "test": "TestV4EscapeReturnedRefusal",
+    "seconds": 6.103,
+    "exit": 1,
+    "killed": true,
+    "catcher": "missing escaping-read refusal after clean Node-equivalent execution"
+  },
+  {
+    "mutant": "escape-MixedProducer",
+    "test": "TestV4EscapeMixedProducerRefusal",
+    "seconds": 6.168,
+    "exit": 1,
+    "killed": true,
+    "catcher": "missing escaping-read refusal after clean Node-equivalent execution"
+  },
+  {
+    "mutant": "unsupported-domain",
+    "test": "TestV4DirectRecursiveRefusal",
+    "seconds": 16.639,
+    "exit": 1,
+    "killed": true,
+    "catcher": "recursive domain refusal missing"
+  },
+  {
+    "mutant": "unsupported-producer",
+    "test": "TestV4DirectProducerRefusal",
+    "seconds": 15.988,
+    "exit": 1,
+    "killed": true,
+    "catcher": "recursive producer refusal missing"
+  },
+  {
+    "mutant": "surface-borrow",
+    "test": "TestV4EscapeAdapterName",
+    "seconds": 12.228,
+    "exit": 1,
+    "killed": true,
+    "catcher": "ASan heap-use-after-free in adapter root access"
+  },
+  {
+    "mutant": "bind-name-borrow",
+    "test": "TestV4EscapeAdapterBindNameOwnership",
+    "seconds": 12.627,
+    "exit": 1,
+    "killed": true,
+    "catcher": "ASan heap-use-after-free in string output"
+  },
+  {
+    "mutant": "identity-root",
+    "test": "TestV4EscapeAdapterIdentity",
+    "seconds": 33.983,
+    "exit": 1,
+    "killed": true,
+    "catcher": "Node stdout comparison, clean exit 0"
+  },
+  {
+    "mutant": "metadata-inline",
+    "test": "TestPortElementMetadataEmission",
+    "seconds": 10.011,
+    "exit": 1,
+    "killed": true,
+    "catcher": "2,885 inline stores violate the zero-store bound"
+  },
+  {
+    "mutant": "metadata-omitted",
+    "test": "TestPortElementMetadataEmission",
+    "seconds": 9.244,
+    "exit": 1,
+    "killed": true,
+    "catcher": "zero runtime calls violate the 2,885-certificate assertion"
+  },
+  {
+    "mutant": "native-order",
+    "test": "TestV4DirectCalleeOrder",
+    "seconds": 11.051,
+    "exit": 1,
+    "killed": true,
+    "catcher": "argument output missing; premature exit 70"
+  },
+  {
+    "mutant": "javascript-order",
+    "test": "TestV4DirectCalleeOrder",
+    "seconds": 11.739,
+    "exit": 1,
+    "killed": true,
+    "catcher": "argument output missing; premature exit 70"
+  },
+  {
+    "mutant": "construct-no-signature",
+    "test": "TestV4EscapeAdapterWithoutConstructSignatureRefusal",
+    "seconds": 3.393,
+    "exit": 1,
+    "killed": true,
+    "catcher": "checker refusal needs path and fix"
+  },
+  {
+    "mutant": "view-result-wrong",
+    "test": "TestV4Lane5BoxedAdamicRefusal",
+    "seconds": 5.892,
+    "exit": 1,
+    "killed": true,
+    "catcher": ".a keeps the unproven-read refusal"
+  },
+  {
+    "mutant": "factory-165-wrong-arity",
+    "test": "TestV4Lane5FactoryWiderWriteRefusal",
+    "seconds": 5.804,
+    "exit": 1,
+    "killed": true,
+    "catcher": "wider-write keeps path and fix"
+  }
+]

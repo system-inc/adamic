@@ -1,0 +1,37 @@
+=== RUN   TestNarrowedUnionMemberCheck
+=== PAUSE TestNarrowedUnionMemberCheck
+=== RUN   TestNarrowedUnionObjectTagPassing
+=== PAUSE TestNarrowedUnionObjectTagPassing
+=== RUN   TestNarrowedUnionObjectTagMisfit
+=== PAUSE TestNarrowedUnionObjectTagMisfit
+=== CONT  TestNarrowedUnionMemberCheck
+=== RUN   TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== CONT  TestNarrowedUnionObjectTagMisfit
+=== PAUSE TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== CONT  TestNarrowedUnionObjectTagPassing
+=== RUN   TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== CONT  TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== CONT  TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== NAME  TestNarrowedUnionObjectTagPassing
+    narrowed_union_test.go:82: native-sanitized: exit 0 stdout "1\n" stderr ""
+    narrowed_union_test.go:82: native-release: exit 0 stdout "1\n" stderr ""
+    narrowed_union_test.go:82: JavaScript: exit 0 stdout "1\n" stderr ""
+--- PASS: TestNarrowedUnionObjectTagPassing (0.54s)
+=== NAME  TestNarrowedUnionObjectTagMisfit
+    narrowed_union_test.go:98: native-release: exit 70 stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    narrowed_union_test.go:98: JavaScript: exit 70 stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+    narrowed_union_test.go:98: native-sanitized: exit 70 stdout "" stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+--- PASS: TestNarrowedUnionObjectTagMisfit (0.56s)
+=== NAME  TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+    narrowed_union_test.go:70: unchecked member mutant caught: exit 0, stdout "after toText: 1\n", stderr ""
+=== NAME  TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+    narrowed_union_test.go:70: unchecked member mutant caught: exit 1, stdout "", stderr "=================================================================\n==648446==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b60251e0060 at pc 0x56386b47bc9e bp 0x7ffd5c096a10 sp 0x7ffd5c096a08\nREAD of size 8 at 0x7b60251e0060 thread T0\n    #0 0x56386b47bc9d in adamic_string_length /home/agent/.cache/adamic/runtime/a323404596b3ecb2bf5133f57c776f217c854a7eb279d47cba93f812737f1406/adamic.h:748:17\n    #1 0x56386b47bc9d in adamic_function_2_check /tmp/adamic-gate/adamic-build-2636438378/main.c:67:68\n    #2 0x56386b47bc9d in main /tmp/adamic-gate/adamic-build-2636438378/main.c:93:2\n    #3 0x7f3026103ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f3026103d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x56386b395460 in _start (/tmp/adamic-gate/TestNarrowedUnionMemberChecke4eec87_f2_union_narrow_call.a923146697/004/program+0x5a460)\n\n0x7b60251e0060 is located 8 bytes after 24-byte region [0x7b60251e0040,0x7b60251e0058)\nallocated by thread T0 here:\n    #0 0x56386b438274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x56386b48e8ef in adamic_allocate /home/agent/.cache/adamic/runtime/.build-811025977/heap.c:196:10\n    #2 0x7f3026103ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /home/agent/.cache/adamic/runtime/a323404596b3ecb2bf5133f57c776f217c854a7eb279d47cba93f812737f1406/adamic.h:748:17 in adamic_string_length\nShadow bytes around the buggy address:\n  0x7b60251dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b60251dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b60251dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b60251dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b60251dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7b60251e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa[fa]fa fa fa\n  0x7b60251e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b60251e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b60251e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b60251e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b60251e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==648446==ABORTING\n"
+--- PASS: TestNarrowedUnionMemberCheck (0.00s)
+    --- PASS: TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a (0.69s)
+    --- PASS: TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a (0.71s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.719s

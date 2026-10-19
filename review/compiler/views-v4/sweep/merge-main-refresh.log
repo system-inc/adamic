@@ -1,0 +1,14 @@
+Merge made by the 'ort' strategy.
+ cmd/adamic-test262/adapt_guards_test.go            |  31 +++
+ internal/lower/definite_assignment_test.go         |   3 +
+ internal/native/record_test.go                     |   2 +-
+ internal/native/testdata/records/harness.c         |   9 +
+ internal/native/testdata/records/oracle.js         |   4 +
+ stage1/cohere/json/grain30_json_test.go            |   4 +
+ stage1/cohere/lint/helpers/helper_mutants_test.go  | 255 +++++++++++++++++++++
+ stage1/cohere/lint/helpers/helpers_test.go         |  38 ---
+ ...t.go => grain30_yaml_formatter_mutants_test.go} |  10 +-
+ 9 files changed, 312 insertions(+), 44 deletions(-)
+ create mode 100644 cmd/adamic-test262/adapt_guards_test.go
+ create mode 100644 stage1/cohere/lint/helpers/helper_mutants_test.go
+ rename stage1/cohere/yaml/{formatter_mutants_grain_test.go => grain30_yaml_formatter_mutants_test.go} (97%)

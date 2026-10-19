@@ -1,0 +1,9 @@
+=== RUN   TestViewAdapterCacheBytes
+=== PAUSE TestViewAdapterCacheBytes
+=== CONT  TestViewAdapterCacheBytes
+    view_adapter_runtime_test.go:266: C fixture must compile, including mutant: exit status 1
+        /usr/bin/ld: /tmp/adamic-gate/heap-90d758.o: in function `release_last':
+        heap.c:(.text+0x629): undefined reference to `adamic_async_free_children'
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- FAIL: TestViewAdapterCacheBytes (0.51s)
+FAIL

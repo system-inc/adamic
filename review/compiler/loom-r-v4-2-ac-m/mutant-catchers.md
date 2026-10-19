@@ -1,0 +1,77 @@
+Executed mutant catchers
+
+The dedicated new integration mutants are documented in REPORT.md and their expected-failure JSONL logs. The following are actual notes emitted by passing native cache and V4 oracle test functions, including the original executable source mutants. Historical external mutation-driver records are carried from the source commit; this unit does not claim a fresh standalone run of those external drivers.
+
+- native-cache-final.jsonl / TestViewAdapterCacheBounded: view_adapter_runtime_test.go:162: skip-intern caught sanitize=false: bounded allocation exceeded: repeated reads rebuilt adapters
+- native-cache-final.jsonl / TestViewAdapterCacheRecheck: view_adapter_runtime_test.go:173: skip-recheck caught: factory winner was not rechecked
+- native-cache-final.jsonl / TestViewAdapterCacheBounded: view_adapter_runtime_test.go:162: skip-intern caught sanitize=true: bounded allocation exceeded: repeated reads rebuilt adapters
+- native-cache-final.jsonl / TestViewAdapterCacheCanonical: view_adapter_runtime_test.go:207: canonical-factory omission caught by exit 0 instead of required exit 70
+- native-cache-final.jsonl / TestViewAdapterCacheOrder: view_adapter_runtime_test.go:193: release-before-remove caught: remove/release order violated
+- native-cache-final.jsonl / TestViewAdapterCacheWeakLeakRoot: view_adapter_runtime_test.go:221: strong-leak-root mutant caught: LeakSanitizer lost the required leak report
+- native-cache-final.jsonl / TestViewAdapterCacheDying: view_adapter_runtime_test.go:183: dying-retain caught by ASan in the actual count-zero destruction window:
+- native-cache-final.jsonl / TestViewAdapterCacheIdentity: view_adapter_runtime_test.go:260: identity-overread caught by ASan: =================================================================
+- v4-focused-final.jsonl / TestV4GenericProducerInstantiation: checked_views_v4_generics_test.go:45: instantiation domain omission caught in both backends and sanitized native
+- v4-focused-final.jsonl / TestV4EscapeAdapterResult: checked_views_v4_escape_test.go:191: native result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterResult: checked_views_v4_escape_test.go:191: sanitized result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterResult: checked_views_v4_escape_test.go:191: javascript result omission caught: exit=0 stdout="read\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterArgument: checked_views_v4_escape_test.go:186: javascript argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterArgument: checked_views_v4_escape_test.go:186: native argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterArgument: checked_views_v4_escape_test.go:186: sanitized argument omission caught: exit=0 stdout="read\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterIdentity: checked_views_v4_escape_test.go:196: native/sanitized unequal-read mutant caught: "true:false:false:true\ntrue:true:true\n1:true:true:updated\n1:true:true\nok\nok\ntrue:true:0:0\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterIdentity: checked_views_v4_escape_test.go:196: JavaScript unequal-read mutant caught: "true:false:false:true\ntrue:false:false\n2:true:false:updated\n2:true:false\nok\nok\nok\nok\nfalse:true:2:1\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterNoStacking: checked_views_v4_escape_test.go:201: native/sanitized unconditional-wrap caught by bounded allocation: [2003 2003 5007 4009 5 0] vs [1003 1003 5007 4009 4 0]
+- v4-focused-final.jsonl / TestV4EscapeAdapterNoStacking: checked_views_v4_escape_test.go:201: JavaScript unconditional-wrap caught by bounded allocation: "ok\nadapter-makes:1001\n"
+- v4-focused-final.jsonl / TestV4DirectObjectArgument: checked_views_v4_direct_test.go:213: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+- v4-focused-final.jsonl / TestV4DirectObjectArgument: checked_views_v4_direct_test.go:213: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+- v4-focused-final.jsonl / TestV4DirectObjectArgument: checked_views_v4_direct_test.go:213: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+- v4-focused-final.jsonl / TestV4DirectArrayArgument: checked_views_v4_direct_test.go:222: native aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+- v4-focused-final.jsonl / TestV4DirectArrayArgument: checked_views_v4_direct_test.go:222: sanitized aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+- v4-focused-final.jsonl / TestV4DirectArrayArgument: checked_views_v4_direct_test.go:222: javascript aggregate argument check omission caught: exit 0 output "producer\n"; expected exit 70
+- v4-focused-final.jsonl / TestV4DirectResult: checked_views_v4_direct_test.go:113: native result check omission caught: exit 0 output "argument\nbad\n"
+- v4-focused-final.jsonl / TestV4DirectResult: checked_views_v4_direct_test.go:113: sanitized result check omission caught: exit 0 output "argument\nbad\n"
+- v4-focused-final.jsonl / TestV4DirectResult: checked_views_v4_direct_test.go:113: javascript result check omission caught: exit 0 output "argument\nbad\n"
+- v4-focused-final.jsonl / TestV4DirectArgument: checked_views_v4_direct_test.go:109: native argument check omission caught: exit 0 output "argument\nproducer\n"
+- v4-focused-final.jsonl / TestV4DirectArgument: checked_views_v4_direct_test.go:109: sanitized argument check omission caught: exit 0 output "argument\nproducer\n"
+- v4-focused-final.jsonl / TestV4DirectArgument: checked_views_v4_direct_test.go:109: javascript argument check omission caught: exit 0 output "argument\nproducer\n"
+- v4-focused-final.jsonl / TestV4DestructuredCallableArgument: checked_views_v4_destructured_test.go:40: destructured adapter omission caught in native ASan/UBSan/LSan and JavaScript
+- v4-focused-final.jsonl / TestV4EscapeAdapterCallReceiverCheck: checked_views_v4_call_apply_test.go:153: receiver-domain omission caught in native/ASan/UBSan/LSan and JavaScript
+- v4-focused-final.jsonl / TestV4EscapeAdapterApplyResult: checked_views_v4_call_apply_test.go:67: native/ASan/UBSan/LSan apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterApplyResult: checked_views_v4_call_apply_test.go:67: JavaScript apply result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterApplyArgument: checked_views_v4_call_apply_test.go:63: native/ASan/UBSan/LSan apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterApplyArgument: checked_views_v4_call_apply_test.go:63: JavaScript apply argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterCallResult: checked_views_v4_call_apply_test.go:59: native/ASan/UBSan/LSan call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterCallResult: checked_views_v4_call_apply_test.go:59: JavaScript call result omission caught: "read\nreceiver\nargument\nproducer\nbad\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterCallArgument: checked_views_v4_call_apply_test.go:55: native/ASan/UBSan/LSan call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterCallArgument: checked_views_v4_call_apply_test.go:55: JavaScript call argument omission caught: "read\nreceiver\nargument\nproducer\nproducer\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameBound: checked_views_v4_blame_test.go:102: native read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameBound: checked_views_v4_blame_test.go:102: sanitized read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameBound: checked_views_v4_blame_test.go:102: javascript read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameApply: checked_views_v4_blame_test.go:99: native read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameApply: checked_views_v4_blame_test.go:99: sanitized read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameApply: checked_views_v4_blame_test.go:99: javascript read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameCall: checked_views_v4_blame_test.go:98: native read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameCall: checked_views_v4_blame_test.go:98: sanitized read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameCall: checked_views_v4_blame_test.go:98: javascript read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameResult: checked_views_v4_blame_test.go:96: native read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameResult: checked_views_v4_blame_test.go:96: sanitized read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameResult: checked_views_v4_blame_test.go:96: javascript read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameArgument: checked_views_v4_blame_test.go:92: native read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameArgument: checked_views_v4_blame_test.go:92: sanitized read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBlameArgument: checked_views_v4_blame_test.go:92: javascript read-site omission caught; same exit/output, missing read site
+- v4-focused-final.jsonl / TestV4EscapeAdapterBindResult: checked_views_v4_bind_test.go:104: later result omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+- v4-focused-final.jsonl / TestV4EscapeAdapterBindRemainingArgument: checked_views_v4_bind_test.go:102: later argument omission caught in native/ASan/UBSan/LeakSanitizer and JavaScript
+- v4-focused-final.jsonl / TestV4EscapeAdapterBindPrefix: checked_views_v4_bind_test.go:53: prefix omission caught in both backends, native ASan/UBSan/LeakSanitizer clean; producer never invoked
+- v4-focused-final.jsonl / TestV4EscapeAdapterLength: checked_views_v4_surface_test.go:56: native/ASan/UBSan/LSan own-surface mutant caught: expected "3\n", got "2\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterName: checked_views_v4_surface_test.go:67: native/ASan/UBSan/LSan own-surface mutant caught: expected "producer\n", got "\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterLength: checked_views_v4_surface_test.go:56: JavaScript own-surface mutant caught: expected "3\n", got "2\n"
+- v4-focused-final.jsonl / TestV4EscapeAdapterName: checked_views_v4_surface_test.go:67: JavaScript own-surface mutant caught: expected "producer\n", got "\n"
+- v4-focused-final.jsonl / TestV4ReviewDestructuredReadChecksUnionMembers: checked_views_v4_review_test.go:130: union member check omission caught: all backends instead print Node's true, sanitizer-clean
+- v4-focused-final.jsonl / TestV4ReviewElementReadChecksUnionMembers: checked_views_v4_review_test.go:125: union member check omission caught: all backends instead print Node's true, sanitizer-clean
+- v4-focused-final.jsonl / TestV4ReviewMapValueCallChecksProducerArgument: checked_views_v4_review_test.go:63: sanitized producer-domain omission caught: exit=1 stdout="" stderr="AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==420178==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x5561ab9a9300 bp 0x7ffd46e5ced0 sp 0x7ffd46e5cea0 T0)\n==420178==The signal is caused by a READ memory access.\n==420178==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x5561ab9a9300 in adamic_is_shared /adamic-build/runtime/adamic.h:60:16\n    #1 0x5561ab9a9300 in adamic_retain /adamic-build/runtime/adamic.h:94:23\n    #2 0x5561ab9a9168 in adamic_function_0_closure /adamic-build/main.c:63:2\n    #3 0x5561ab9a8e66 in adamic_temporary_24 /adamic-build/main.c:47:21\n    #4 0x5561ab9a8e66 in main /adamic-build/main.c:120:37\n    #5 0x7f5aefb11ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec128
+- v4-focused-final.jsonl / TestV4ReviewMapValueCallChecksProducerArgument: checked_views_v4_review_test.go:63: native producer-domain omission caught: exit=-1 stdout="" stderr=""
+- v4-focused-final.jsonl / TestV4ReviewMapValueCallChecksProducerArgument: checked_views_v4_review_test.go:63: javascript producer-domain omission caught: exit=70 stdout="" stderr="adamic: panic: callable call failed: view.compute at /workspace/adamic/internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p75_callable_from_map_value.a:10:17 result expected view number, producer number\n"
+- v4-focused-final.jsonl / TestV4MixedCallableFieldArgument: checked_views_v4_mixed_test.go:41: mixed aggregate producer-domain omission caught against Node in both backends with sanitizers
+- v4-focused-final.jsonl / TestV4Lane5SkipAdapterMutant: checked_views_v4_lane5_test.go:154: skip-adapter mutant caught in native ASan/UBSan/LSan and JavaScript
+- v4-focused-final.jsonl / TestV4IteratorPackedReceiver: checked_views_v4_iterator_receiver_test.go:34: double receiver mutant caught by native sanitizer; JavaScript's existing packed ABI stays unchanged
+- v4-focused-final.jsonl / TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal: checked_views_flag_downcast_test.go:72: native release field-check mutant caught: exit 0 stdout "5e-324\n" stderr ""
+- v4-focused-final.jsonl / TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal: checked_views_flag_downcast_test.go:72: JavaScript field-check mutant caught: exit 0 stdout "true\n" stderr ""

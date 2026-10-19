@@ -1,0 +1,1801 @@
+[
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesAliasingIsFresh",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-flow-final.jsonl"
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesOperandMutations",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-flow-final.jsonl"
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesThrowAndIdentityRead",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-flow-final.jsonl"
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestArrayHolesTraceSnapshots",
+    "status": "pass",
+    "seconds": 0.03,
+    "log": "internal-flow-final.jsonl"
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayHolesBackEdgeRemainsUnproven",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-fresh-final.jsonl"
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayHolesOperandsStillJudgeCycles",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-fresh-final.jsonl"
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayHolesResultsAreFresh",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-fresh-final.jsonl"
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestArrayRangeErrorIdentityDoesNotEscape",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-fresh-final.jsonl"
+  },
+  {
+    "package": "internal/ir",
+    "test": "TestClosureTargetsPreserveBoundaryValue",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-ir-retry.jsonl"
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestJavaScriptViewCallableBoxingUnknownProducer",
+    "status": "pass",
+    "seconds": 0.17,
+    "log": "internal-javascript-final.jsonl"
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewArrayFieldPresence",
+    "status": "pass",
+    "seconds": 0.25,
+    "log": "internal-javascript-final.jsonl"
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewArraysNode",
+    "status": "pass",
+    "seconds": 0.96,
+    "log": "internal-javascript-final.jsonl"
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallableProducerCertificateNode",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "internal-javascript-final.jsonl"
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallableShapeNode",
+    "status": "pass",
+    "seconds": 0.98,
+    "log": "internal-javascript-final.jsonl"
+  },
+  {
+    "package": "internal/javascript",
+    "test": "TestViewCallablesNode",
+    "status": "pass",
+    "seconds": 0.75,
+    "log": "internal-javascript-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestArrayMembershipUsesUnionMatcher",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestMixedArrayElementStorageRemainsRefused",
+    "status": "pass",
+    "seconds": 0.03,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestPrepareViewCallableRead",
+    "status": "pass",
+    "seconds": 0.24,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewArrayContract",
+    "status": "pass",
+    "seconds": 0.2,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewArraySourceCertificateOmission",
+    "status": "pass",
+    "seconds": 0.04,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewArrayWritesNeedSourceCertificate",
+    "status": "pass",
+    "seconds": 0.08,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewCallableAggregateReturnedDemand",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewCallableShapeContract",
+    "status": "pass",
+    "seconds": 0.23,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestViewCallableSignature",
+    "status": "pass",
+    "seconds": 0,
+    "log": "internal-lower-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestNativeViewCallableBoxingUnknownProducer",
+    "status": "pass",
+    "seconds": 0.22,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheBounded",
+    "status": "pass",
+    "seconds": 2.14,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheBytes",
+    "status": "pass",
+    "seconds": 1.03,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheCanonical",
+    "status": "pass",
+    "seconds": 2.4,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheDying",
+    "status": "pass",
+    "seconds": 1.74,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheIdentity",
+    "status": "pass",
+    "seconds": 1.84,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheIntern",
+    "status": "pass",
+    "seconds": 1.05,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheMany",
+    "status": "pass",
+    "seconds": 1.06,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheOrder",
+    "status": "pass",
+    "seconds": 1.69,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheRecheck",
+    "status": "pass",
+    "seconds": 1.69,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterCacheWeakLeakRoot",
+    "status": "pass",
+    "seconds": 1.3,
+    "log": "native-cache-final.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterPoolTSanPending",
+    "status": "skip",
+    "seconds": 0,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterProgramUnderlyingPending",
+    "status": "skip",
+    "seconds": 0,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterRegionAdoptionPending",
+    "status": "skip",
+    "seconds": 0,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewAdapterRuntimeStaticsPending",
+    "status": "skip",
+    "seconds": 0,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeOptionalAbsent",
+    "status": "pass",
+    "seconds": 0.28,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeUnrecorded",
+    "status": "pass",
+    "seconds": 0.32,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeValid",
+    "status": "pass",
+    "seconds": 0.28,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeWrongArity",
+    "status": "pass",
+    "seconds": 0.29,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableProducerCertificateNativeWrongResult",
+    "status": "pass",
+    "seconds": 0.28,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeNumber",
+    "status": "pass",
+    "seconds": 0.27,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeOptionalAbsent",
+    "status": "pass",
+    "seconds": 0.26,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeRequiredAbsent",
+    "status": "pass",
+    "seconds": 0.32,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeUnknownParameter",
+    "status": "pass",
+    "seconds": 0.25,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeUnknownResult",
+    "status": "pass",
+    "seconds": 0.26,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeUnknownSignature",
+    "status": "pass",
+    "seconds": 0.23,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeValid",
+    "status": "pass",
+    "seconds": 0.27,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeWrongArity",
+    "status": "pass",
+    "seconds": 0.24,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeWrongParameter",
+    "status": "pass",
+    "seconds": 0.27,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/native",
+    "test": "TestViewCallableShapeNativeWrongResult",
+    "status": "pass",
+    "seconds": 0.25,
+    "log": "internal-native-retry.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayElementKindRuntimeMutant",
+    "status": "pass",
+    "seconds": 2.49,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayHolesAbsentSlotMutant",
+    "status": "pass",
+    "seconds": 1.22,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayHolesMilestone",
+    "status": "pass",
+    "seconds": 3.82,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayHolesRangeErrorMutant",
+    "status": "pass",
+    "seconds": 1.19,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayViewHolesAbsenceMutant",
+    "status": "pass",
+    "seconds": 2.32,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayViewMissingReceiverMutant",
+    "status": "pass",
+    "seconds": 2.37,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestArrayViewPhysicalWriteMutant",
+    "status": "pass",
+    "seconds": 2.93,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayBoolean",
+    "status": "pass",
+    "seconds": 0.26,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayIterationBad",
+    "status": "pass",
+    "seconds": 0.27,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayMapBad",
+    "status": "pass",
+    "seconds": 0.29,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayMissing",
+    "status": "pass",
+    "seconds": 0.27,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArraySecond",
+    "status": "pass",
+    "seconds": 0.25,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayStringLiteral",
+    "status": "pass",
+    "seconds": 0.25,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsArrayUndefined",
+    "status": "pass",
+    "seconds": 0.22,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayReadMutantsNonArray",
+    "status": "pass",
+    "seconds": 0.24,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipBoolean",
+    "status": "pass",
+    "seconds": 0.46,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipBooleanGood",
+    "status": "pass",
+    "seconds": 0.46,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipBoxedMixed",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipMaybeNumber",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipNumber",
+    "status": "pass",
+    "seconds": 0.46,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipSparseMax",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipSparseWrong",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipString",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionMembershipTupleObject",
+    "status": "pass",
+    "seconds": 0.5,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArrayUnionNarrowing",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayAlias",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayBoolean",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayBounds",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayElement",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayField",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayHolesView",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayIteration",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayIterationBad",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayLazy",
+    "status": "pass",
+    "seconds": 0.43,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayLengthKind",
+    "status": "pass",
+    "seconds": 0.46,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayMap",
+    "status": "pass",
+    "seconds": 0.53,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayMapBad",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayMissing",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayPop",
+    "status": "pass",
+    "seconds": 0.52,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArraySecond",
+    "status": "pass",
+    "seconds": 0.51,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayStringLiteral",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysArrayUndefined",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysGenericArrayElement",
+    "status": "pass",
+    "seconds": 0.41,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNonArray",
+    "status": "pass",
+    "seconds": 0.41,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNullableArrayElement",
+    "status": "pass",
+    "seconds": 0.41,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNullableArrayMissing",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysNullableArrayString",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewArraysObjectElement",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewUntaggedArraySource",
+    "status": "pass",
+    "seconds": 0,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestCheckedViewV2ArrayArmAdmission",
+    "status": "pass",
+    "seconds": 0.46,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNarrowedUnionObjectTagMisfit",
+    "status": "pass",
+    "seconds": 0.43,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestNarrowedUnionObjectTagPassing",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessExtensions",
+    "status": "pass",
+    "seconds": 0.01,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0000",
+    "status": "pass",
+    "seconds": 2.53,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0001",
+    "status": "pass",
+    "seconds": 2.8,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0002",
+    "status": "pass",
+    "seconds": 2.88,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0003",
+    "status": "pass",
+    "seconds": 2.72,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0004",
+    "status": "pass",
+    "seconds": 2.7,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0005",
+    "status": "pass",
+    "seconds": 2.49,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0006",
+    "status": "pass",
+    "seconds": 2.46,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0007",
+    "status": "pass",
+    "seconds": 2.36,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0008",
+    "status": "pass",
+    "seconds": 2.5,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0009",
+    "status": "pass",
+    "seconds": 2.47,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0010",
+    "status": "pass",
+    "seconds": 2.56,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0011",
+    "status": "pass",
+    "seconds": 2.31,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0012",
+    "status": "pass",
+    "seconds": 2.89,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0013",
+    "status": "pass",
+    "seconds": 2.3,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0014",
+    "status": "pass",
+    "seconds": 2.33,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestOriginalArrayWitnessNode_0015",
+    "status": "pass",
+    "seconds": 2.33,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_V4SanitizedCountedRuntimes0",
+    "status": "pass",
+    "seconds": 3.95,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_V4SanitizedCountedRuntimes1",
+    "status": "pass",
+    "seconds": 3.87,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestProduct_V4SanitizedCountedRuntimes2",
+    "status": "pass",
+    "seconds": 5.3,
+    "log": "internal-oracle-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DestructuredCallableAdamicRefusal",
+    "status": "pass",
+    "seconds": 0.13,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DestructuredCallableArgument",
+    "status": "pass",
+    "seconds": 0.81,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DestructuredCallableReadOnly",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectArgument",
+    "status": "pass",
+    "seconds": 0.79,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectArrayArgument",
+    "status": "pass",
+    "seconds": 0.81,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectBoxed",
+    "status": "pass",
+    "seconds": 0.43,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectCalleeOrder",
+    "status": "pass",
+    "seconds": 0.42,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectClassResult",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectCompatible",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectMethod",
+    "status": "pass",
+    "seconds": 0.43,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectNull",
+    "status": "pass",
+    "seconds": 0.41,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectObjectArgument",
+    "status": "pass",
+    "seconds": 0.76,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectOptionalReceiver",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectProducerRefusal",
+    "status": "pass",
+    "seconds": 0.17,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectRecursiveRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectResult",
+    "status": "pass",
+    "seconds": 0.79,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectUnknownProducerParameter",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectUnused",
+    "status": "pass",
+    "seconds": 0.41,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4DirectVoid",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterApplyArgument",
+    "status": "pass",
+    "seconds": 0.82,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterApplyResult",
+    "status": "pass",
+    "seconds": 0.77,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterArgument",
+    "status": "pass",
+    "seconds": 0.76,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindAllArguments",
+    "status": "pass",
+    "seconds": 0.55,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindBoxed",
+    "status": "pass",
+    "seconds": 0.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindCompatible",
+    "status": "pass",
+    "seconds": 0.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindCountAndSurface",
+    "status": "pass",
+    "seconds": 0.55,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindNameOwnership",
+    "status": "pass",
+    "seconds": 0.51,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindPrefix",
+    "status": "pass",
+    "seconds": 0.96,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindReceiverAndCapture",
+    "status": "pass",
+    "seconds": 0.56,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindRemainingArgument",
+    "status": "pass",
+    "seconds": 0.92,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBindResult",
+    "status": "pass",
+    "seconds": 0.89,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameApply",
+    "status": "pass",
+    "seconds": 0.82,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameArgument",
+    "status": "pass",
+    "seconds": 0.8,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameBound",
+    "status": "pass",
+    "seconds": 0.92,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameCall",
+    "status": "pass",
+    "seconds": 0.84,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameNestedResult",
+    "status": "pass",
+    "seconds": 0.56,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameResult",
+    "status": "pass",
+    "seconds": 0.77,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBlameRuntimeCallback",
+    "status": "skip",
+    "seconds": 0,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundAliasCallRefusal",
+    "status": "pass",
+    "seconds": 0.17,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundApplyRefusal",
+    "status": "pass",
+    "seconds": 0.18,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundBindRefusal",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundCallRefusal",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundHelperApplyRefusal",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundHelperBindRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoundViewRefusal",
+    "status": "pass",
+    "seconds": 0.3,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterBoxed",
+    "status": "pass",
+    "seconds": 0.5,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallApplyCount",
+    "status": "pass",
+    "seconds": 1.59,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallApplyReceiver",
+    "status": "pass",
+    "seconds": 0.49,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallApplyZeroReceiver",
+    "status": "pass",
+    "seconds": 0.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallArgument",
+    "status": "pass",
+    "seconds": 0.81,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallReceiverCheck",
+    "status": "pass",
+    "seconds": 0.8,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallReceiverRefusal",
+    "status": "pass",
+    "seconds": 2.85,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallRefusal",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCallResult",
+    "status": "pass",
+    "seconds": 0.81,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCollectionKeyContract",
+    "status": "pass",
+    "seconds": 0.51,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterConstructSignatureRefusal",
+    "status": "pass",
+    "seconds": 0.16,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterConstructorIdentity",
+    "status": "pass",
+    "seconds": 0.4,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterCounted",
+    "status": "pass",
+    "seconds": 2.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterDynamicApplyRefusal",
+    "status": "pass",
+    "seconds": 0.16,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterIdentity",
+    "status": "pass",
+    "seconds": 1.72,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterLength",
+    "status": "pass",
+    "seconds": 0.72,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterName",
+    "status": "pass",
+    "seconds": 0.78,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterNoStacking",
+    "status": "pass",
+    "seconds": 2.43,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterNull",
+    "status": "pass",
+    "seconds": 0.49,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterNullablePrimitiveCallRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterPrimitiveApplyRefusal",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterPrimitiveCallRefusal",
+    "status": "pass",
+    "seconds": 0.17,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterResult",
+    "status": "pass",
+    "seconds": 0.8,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterReturned",
+    "status": "pass",
+    "seconds": 0.5,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterScalarIdentityControls",
+    "status": "pass",
+    "seconds": 1.01,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceAnonymousName",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceComputedName",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceDefaults",
+    "status": "pass",
+    "seconds": 0.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceLengthRefusal",
+    "status": "pass",
+    "seconds": 0.17,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceNameRefusal",
+    "status": "pass",
+    "seconds": 0.16,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceRegExpCallback",
+    "status": "pass",
+    "seconds": 2.65,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceReturned",
+    "status": "pass",
+    "seconds": 0.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterSurfaceSortCallback",
+    "status": "pass",
+    "seconds": 0.49,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterUncheckableRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterUnusedMisfit",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterVoid",
+    "status": "pass",
+    "seconds": 0.52,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeAdapterWithoutConstructSignatureRefusal",
+    "status": "pass",
+    "seconds": 0.1,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeArgumentRefusal",
+    "status": "pass",
+    "seconds": 0.13,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeCompatible",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeMixedProducerRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeOrdinaryRead",
+    "status": "pass",
+    "seconds": 0.54,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapePassedRefusal",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeResultRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeReturnedRefusal",
+    "status": "pass",
+    "seconds": 0.16,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4EscapeTypeScriptBoundary",
+    "status": "pass",
+    "seconds": 0.49,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ExistingExplicitMethodReceiver",
+    "status": "pass",
+    "seconds": 0.48,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4GenericErasedReadRefusal",
+    "status": "pass",
+    "seconds": 0.17,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4GenericProducerInstantiation",
+    "status": "pass",
+    "seconds": 0.79,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4GenericViewCallInstantiation",
+    "status": "pass",
+    "seconds": 0.83,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherAdamicEscapeRefusal",
+    "status": "pass",
+    "seconds": 2.85,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackArgument",
+    "status": "pass",
+    "seconds": 1.63,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackArgumentOrder",
+    "status": "pass",
+    "seconds": 5.05,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackNeverCalled",
+    "status": "pass",
+    "seconds": 2.22,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherCallbackResult",
+    "status": "pass",
+    "seconds": 2.65,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4HigherReturnedCallable",
+    "status": "pass",
+    "seconds": 0.49,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4IteratorPackedReceiver",
+    "status": "pass",
+    "seconds": 0.68,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedAdamicRefusal",
+    "status": "pass",
+    "seconds": 0.14,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedParameter",
+    "status": "pass",
+    "seconds": 0.97,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedParameterMembers",
+    "status": "pass",
+    "seconds": 0.98,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedResult",
+    "status": "pass",
+    "seconds": 0.44,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5BoxedResultMembers",
+    "status": "pass",
+    "seconds": 0.47,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryClone",
+    "status": "pass",
+    "seconds": 0.95,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryIdentifier",
+    "status": "pass",
+    "seconds": 0.94,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryImport",
+    "status": "pass",
+    "seconds": 0.94,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryModifier",
+    "status": "pass",
+    "seconds": 0.95,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryReadonlyTargetControl",
+    "status": "skip",
+    "seconds": 0,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryResult",
+    "status": "pass",
+    "seconds": 0.5,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryStringLiteral",
+    "status": "pass",
+    "seconds": 0.93,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryUniqueName",
+    "status": "pass",
+    "seconds": 0.98,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryWiderWritePending",
+    "status": "skip",
+    "seconds": 0,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryWiderWriteRefusal",
+    "status": "pass",
+    "seconds": 0.18,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5FactoryYield",
+    "status": "pass",
+    "seconds": 0.95,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4Lane5SkipAdapterMutant",
+    "status": "pass",
+    "seconds": 0.8,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4MixedCallableFieldArgument",
+    "status": "pass",
+    "seconds": 0.88,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4MixedCallableFieldBoxing",
+    "status": "pass",
+    "seconds": 0.61,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4MixedLongFieldDiagnostic",
+    "status": "pass",
+    "seconds": 0.45,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ReviewDestructuredReadChecksUnionMembers",
+    "status": "pass",
+    "seconds": 0.81,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ReviewElementCallPreservesCompatibleProducer",
+    "status": "pass",
+    "seconds": 0.52,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ReviewElementReadChecksUnionMembers",
+    "status": "pass",
+    "seconds": 0.91,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ReviewForeignElementCallChecksProducerArgument",
+    "status": "pass",
+    "seconds": 0.51,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4ReviewMapValueCallChecksProducerArgument",
+    "status": "pass",
+    "seconds": 0.88,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestV4UnrelatedArrayFieldWrite",
+    "status": "pass",
+    "seconds": 0.97,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestViewAdapterBaselineCountsClosures",
+    "status": "pass",
+    "seconds": 0.27,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestViewAdapterBaselineCountsMethods",
+    "status": "pass",
+    "seconds": 0.15,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestViewAdapterBaselineCountsReceiverRest",
+    "status": "pass",
+    "seconds": 1.2,
+    "log": "v4-focused-final.jsonl"
+  },
+  {
+    "package": "stage1/cohere/json",
+    "test": "TestPortElementMetadataEmission",
+    "status": "pass",
+    "seconds": 0.84,
+    "log": "stage1-cohere-json-final.jsonl"
+  }
+]

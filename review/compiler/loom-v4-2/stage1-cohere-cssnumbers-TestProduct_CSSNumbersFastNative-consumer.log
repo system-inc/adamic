@@ -1,0 +1,7 @@
+=== RUN   TestProduct_CSSNumbersFastNative
+=== PAUSE TestProduct_CSSNumbersFastNative
+=== CONT  TestProduct_CSSNumbersFastNative
+    setup_products_test.go:44: build cssnumbers_port_lowering_and_backends cfeadbf7f145 hit 1.03
+    setup_products_test.go:66: build cssnumbers_native-fast 21091e801f7b miss 1.09
+--- PASS: TestProduct_CSSNumbersFastNative (2.14s)
+PASS

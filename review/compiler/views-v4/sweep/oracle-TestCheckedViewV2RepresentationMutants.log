@@ -1,0 +1,35 @@
+=== RUN   TestCheckedViewV2RepresentationMutants
+=== PAUSE TestCheckedViewV2RepresentationMutants
+=== CONT  TestCheckedViewV2RepresentationMutants
+=== RUN   TestCheckedViewV2RepresentationMutants/null
+=== PAUSE TestCheckedViewV2RepresentationMutants/null
+=== RUN   TestCheckedViewV2RepresentationMutants/undefined
+=== PAUSE TestCheckedViewV2RepresentationMutants/undefined
+=== RUN   TestCheckedViewV2RepresentationMutants/uint8
+=== PAUSE TestCheckedViewV2RepresentationMutants/uint8
+=== RUN   TestCheckedViewV2RepresentationMutants/int32
+=== PAUSE TestCheckedViewV2RepresentationMutants/int32
+=== RUN   TestCheckedViewV2RepresentationMutants/float64
+=== PAUSE TestCheckedViewV2RepresentationMutants/float64
+=== CONT  TestCheckedViewV2RepresentationMutants/null
+=== CONT  TestCheckedViewV2RepresentationMutants/int32
+=== CONT  TestCheckedViewV2RepresentationMutants/uint8
+=== CONT  TestCheckedViewV2RepresentationMutants/undefined
+=== CONT  TestCheckedViewV2RepresentationMutants/float64
+    checked_views_v2_migration_test.go:123: old-layout float64 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== NAME  TestCheckedViewV2RepresentationMutants/undefined
+    checked_views_v2_migration_test.go:123: old-layout undefined caught: exit 1 stdout "" stderr "/home/agent/.cache/adamic/runtime/.build-1885917509/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1885917509/typed_array.c:88:46 \n"
+=== NAME  TestCheckedViewV2RepresentationMutants/uint8
+    checked_views_v2_migration_test.go:123: old-layout uint8 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+=== NAME  TestCheckedViewV2RepresentationMutants/null
+    checked_views_v2_migration_test.go:123: old-layout null caught: exit 1 stdout "" stderr "/home/agent/.cache/adamic/runtime/.build-1885917509/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1885917509/typed_array.c:88:46 \n"
+=== NAME  TestCheckedViewV2RepresentationMutants/int32
+    checked_views_v2_migration_test.go:123: old-layout int32 caught: exit 70 stdout "" stderr "adamic: panic: old layout has no slot representation\n"
+--- PASS: TestCheckedViewV2RepresentationMutants (0.00s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/float64 (1.38s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/undefined (1.46s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/uint8 (1.49s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/null (1.66s)
+    --- PASS: TestCheckedViewV2RepresentationMutants/int32 (1.71s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	1.724s

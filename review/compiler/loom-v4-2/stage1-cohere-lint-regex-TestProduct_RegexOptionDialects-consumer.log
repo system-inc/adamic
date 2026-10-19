@@ -1,0 +1,6 @@
+=== RUN   TestProduct_RegexOptionDialects
+=== PAUSE TestProduct_RegexOptionDialects
+=== CONT  TestProduct_RegexOptionDialects
+    build_products_test.go:12: build go_build_cohere_/workspace/adamic/stage1/cohere/lint/regex/testdata/option_dialects.go_regex-option-dialects 5615f2ef2a05 miss 3.09
+--- PASS: TestProduct_RegexOptionDialects (4.16s)
+PASS

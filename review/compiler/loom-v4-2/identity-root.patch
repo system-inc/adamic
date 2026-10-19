@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/closure.c
++++ b/internal/native/runtime/closure.c
+@@ -211,7 +211,7 @@
+ 	// Only library_language.c's bare constructor identities are immortal closures
+ 	// on main. Their allocation ends at adamic_heap: never read the view pointer.
+ 	if (value == NULL || value->heap.references == 0) { return value; }
+-	return value->view != NULL ? value->view->underlying : value;
++	return value;
+ }
+ 
+ adamic_closure *adamic_view_adapter_intern(adamic_closure *underlying, const void *view_key, adamic_closure *(*make)(adamic_closure *, const void *)) {

@@ -1,0 +1,442 @@
+[
+  {
+    "path": "internal/oracle/testdata/library_array_holes_length.a",
+    "status": "checked",
+    "first_line": "function allocate(s2: string): void {",
+    "sha256": "9421d1bca045d5534a2754ee805fbcf6b75b42428beefb143f5634f11036eeca",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_holes_range.a",
+    "status": "checked",
+    "first_line": "function lengthAttempt(length: number): void {",
+    "sha256": "4d1dd97a562fabefa702dcd970a01d3b82b508c49dc4b2119b7ab06f1b6b6e3d",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/library_array_holes_scanner_probe.a",
+    "status": "checked",
+    "first_line": "// From TypeScript 6.0.3, src/compiler/core.ts:2198-2200",
+    "sha256": "52cec54b8ad9acf098614dbc60a564ee6f1842fd1ddcb1712733af22a78010bc",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p64_array_arm_element.a",
+    "status": "checked",
+    "first_line": "// The views-v3 array arm, read by a string-literal key instead of a dot.",
+    "sha256": "aa6c9bf135eb73b3ea5a0a38dc8df92bd6a461a3db3bec5adee1f40aaa5875d7",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of view['compute']",
+    "sha256": "0f3095b72e2ed4a1debe67a3cae72dbd5ed9b22626ea2e1b67dcf4f14d6d708a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a:7:16: Adamic 0.1 refuses an unproven escaping callable read of view['compute']; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "status": "checked",
+    "first_line": "// A wrong untagged union view read by a string-literal key.",
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p49_union_destructure_wrong.a",
+    "status": "checked",
+    "first_line": "// A wrong untagged union view read by destructuring.",
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p75_callable_from_map_value.a",
+    "status": "checked",
+    "first_line": "// A wrong view made from a Map value, whose function-valued field is then called.",
+    "sha256": "2cc5c8e3fed276b265f394cbb888cb9f7bb4b960f3600a9cddc0e978bf51dfd9",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/construct-no-signature.a",
+    "status": "type error",
+    "first_line": "// a-check: type error TS7009",
+    "sha256": "2a66fcdf84788115fcd9c6141afe44ad846c3ef91566dc24f776af6a9e46e795",
+    "diagnostic": "internal/oracle/testdata/views_v4_refused/construct-no-signature.a:6:37: error TS7009: 'new' expression, whose target lacks a construct signature, implicitly has an 'any' type.; use a producer with a construct signature directly, or call the callable directly\n",
+    "exit": 1
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a",
+    "status": "refused",
+    "first_line": "// a-check: refused readonly field onEmitNode becomes writable",
+    "sha256": "a65e4ab80db0063ee4fa475d139733947a3497ed8701ca7f1241eb50c1777321",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/factory-165-wrong-arity.a:7:48: Adamic 0.1 refuses a value of type Base seen as Target, whose readonly field onEmitNode becomes writable: a readonly field may hold something narrower than unknown, which a write of (hint: number, node: Node, emitCallback: (hint: number, node: Node) => void) => void would replace; keep onEmitNode readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)\n",
+    "exit": 1
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of viewed.run",
+    "sha256": "9fc84af33611d15f7cb0d51c65dfa452dd81ac7e7142e4d6c2006c127d5394e8",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of viewed.run",
+    "sha256": "d5066c1f16e63f8968611df40f31f20ddb95b510558656a653a1972426d18220",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-parameter-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of viewed.run",
+    "sha256": "a1e459b5513e25a7bbed6f2f3bd4ddb5883269fff2b12d5c5dfb48d0ef67a57b",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong-members.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "internal/oracle/testdata/views_v4_refused/view-result-wrong.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of viewed.run",
+    "sha256": "8c183ef237648791cde0255686417145b2b82ff30c8a244d6b1d3b86487d7dee",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/views_v4_refused/view-result-wrong.a:6:19: Adamic 0.1 refuses an unproven escaping callable read of viewed.run; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "review/compiler/views-v4/construct-misfit.a",
+    "status": "NotYet",
+    "first_line": "interface Base {readonly kind:'Receiver'}",
+    "sha256": "7a3c36c8ad0a9af6d2aa572b0d889de0c84b59ad0d793346fc6390d4e8fdc499",
+    "diagnostic": "adamic: /workspace/adamic/review/compiler/views-v4/construct-misfit.a:7:60: stage 0 can't lower new an Identifier yet; construct the producer directly with its declared parameter types; checked construction through a view is not implemented\n",
+    "exit": 1
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-12-wrong-producer.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "d9a052aea4d1e367f29c59c896ad2f39559b72da1df038e2be0540151f296670",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-174-wrong-producer.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "b929680a8a84c3e6a46d9ec245bbf91d9a6788042792dc418902b4e5d24853d3",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-186-wrong-overload.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "d0d02b92fa6856d274284aa6b8c06be9460f6b350c3f15f837219a4bf49bf463",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-189-wrong-overload.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "0679356bb2f42b4ab7a1b0bce95a164685639e027cf7dab51dc69108c2c8309b",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-24-wrong-overload.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "8083a0d6bf76aaccf71c274a5ca11deec5f28062bc242beecef8a689c8a3af60",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-3-wrong-overload.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "3f5076f9e34f6e276c1821463e1245fe7e27a391caf9800759ea37cb8243b19c",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-3-wrong-result.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "d3272aec4f6a04ac10fd8e8db0f3c66b5c7938feeb82e05f8024574256adf957",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "review/compiler/views-v4/lane5/factory-9-wrong-overload.a",
+    "status": "checked",
+    "first_line": "// Original overloaded/generic declarations and read; adjacent carriers reduced.",
+    "sha256": "75f3f865fe6212a2b8110621ee880155414cbd38e5781b974d7b684ffeee45e9",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-alias.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "6e728d2090d765072bc31cbe8b1b6d4a49a4356880c1a6cfd4a0d0bf9306240c",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-boolean.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "f2e90b9f124bacb84ce062b248b1ef0eb511a347f31141ba51942511dd1036e9",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-bounds.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "23c88cea68c16b01bc981d92ac746a091091aaeecad6817bfdb457d0d42907a2",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-element.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "ee860fafa3117f8c8c0c5d2708ccc40575bf18acc835e1e45b915167cd68ca82",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-field.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "ea7623230769b9097d716c1b1acb30ddfd2327dae90a8b327f35694520276351",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-holes-view.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "f7cdaac7e0fba2ccc3cf579702b59bdc948b6cdd0b382b374aec8dba3c757a9a",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-iteration-bad.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "c86f91ebb0b709e10919f19f85c39a1f7ee67ae7309660545869afe9b8816b71",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-iteration.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "86de1f80346a02a70b55399619454ce4f82190d2a0f126b98776d6ca48c7408a",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-lazy.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "7c76485a04458b77f47b4c891dfd4ab15697f0570b8748003d8c66eb8438f62e",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-length-kind.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "6daefa0f46534dee0ed5d67d2b1131a1e796205a504074350a1dba9b9f370ee9",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-map-bad.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "d40db85c9f44de13ce0985f4694111b9165131f22d6b67fc1987d1d4c3112d02",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-map.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "613e8354b5b868b246393dab6509533a04519087f45e618ca3320479f4cdbe01",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-missing.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "bdbd9ddf724bd6d1c4cf328381fe64e1594c0130a353ae6f165264e6c76765f6",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-pop.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "7b88d88299210b5f8b3f54aaaa8e9993088cf0cd512deb330ccb14087cd17214",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-second.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "f789c84989186d803af7167bbc533efd5ba43ffa22320e30d9ae2602b71ee9b3",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-string-literal.a",
+    "status": "checked",
+    "first_line": "function checked(items: readonly string[]): readonly \"ok\"[] {",
+    "sha256": "6c1bbb6976f0ba40b4ee396579059684c3563d936faf9201af8fa199f13bee25",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/array-undefined.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "01145b6d2cf0a7bf61659d70ef52f0ccde035ba68b6da8b731a2bb8b87b74868",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/generic-array-element.a",
+    "status": "checked",
+    "first_line": "// From TypeScript 6.0.3, src/compiler/core.ts:355",
+    "sha256": "3d3fe6c52dae74f2e117ecb35ce869380a5ffb4cfc7e59a1d31950739739861c",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/non-array.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "d8b355acd0b9f899327d2a60540563222771d393f44df128e24f572b0267fe8d",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/nullable-array-element.a",
+    "status": "checked",
+    "first_line": "function unchanged<T, U>(array: readonly T[] | undefined): readonly U[] | undefined {",
+    "sha256": "43f91da3c37e51b12d5d50c8e00e6d1c96819f7609dfe20a85980d5885a5b5a3",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/nullable-array-missing.a",
+    "status": "checked",
+    "first_line": "function missing(): readonly number[] | undefined { return undefined; }",
+    "sha256": "380b49d64110f08842dfb588b9394a1f34667f8246c71137a567e1a97093eb30",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/nullable-array-string.a",
+    "status": "checked",
+    "first_line": "function unchanged<T, U>(array: readonly T[] | undefined): readonly U[] | undefined {",
+    "sha256": "a3114a1819a057859b25889578f595954cbfd36e1acc16377355494afe7a9208",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/lane2/object-element.a",
+    "status": "checked",
+    "first_line": "interface Base { readonly kind: 'items' | 'other'; }",
+    "sha256": "43e9b3c5db88e80ff4cb1bee892bd877b70178314a234650f0e795a93918d19d",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/array-union-empty.a",
+    "status": "checked",
+    "first_line": "// Independent lazy array-union projection.",
+    "sha256": "5ca3d6c468972014585e9970117051c184cb1b5a3767d1becd0063448feaff97",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/array-union-good.a",
+    "status": "checked",
+    "first_line": "// Independent lazy array-union projection.",
+    "sha256": "97d8e0387ce558d2ceabf8059806ae8e255d4694513717ebea9c4e5e7e5937f0",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a",
+    "status": "checked",
+    "first_line": "// Independent lazy array-union projection.",
+    "sha256": "523fa0a6f81162f79f7b8832f998f5d75e428ba25724d87aa70146dc570e1677",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/array-union-nested.a",
+    "status": "checked",
+    "first_line": "// Independent lazy array-union projection.",
+    "sha256": "3d7a2e7c5d1fd2ced072ffb1710cb1e3376cf1d5bea40e610fe0126af74ea56e",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a",
+    "status": "checked",
+    "first_line": "// Independent lazy array-union projection.",
+    "sha256": "db943c16076ba9b3c2ee56527a13574f19b1b60fd0ac8f4a1b20b7cc3e765cc9",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of view.holder.value",
+    "sha256": "202bb887b3bae5b1bf1809d7699e8020f46b1d7504dce302b0374696ccf8f219",
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a:9:16: Adamic 0.1 refuses an unproven escaping callable read of view.holder.value; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of view.value",
+    "sha256": "994a98fed29a5a6d925c291eb522e9bc60581c296706dd1c65e917aaf99a854a",
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a:8:16: Adamic 0.1 refuses an unproven escaping callable read of view.value; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/interface-downcasts/v2/array-arm.a",
+    "status": "checked",
+    "first_line": "interface Node { readonly ready: boolean; }",
+    "sha256": "111d155fc55e198dbfc8e1acaa3ba45e949589d3807ea4b167607bbbb6e7b78c",
+    "diagnostic": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+    "status": "refused",
+    "first_line": "// a-check: refused an unproven escaping callable read of view.value",
+    "sha256": "f2fde3124489887b42a9bd4e1bb3146bcf63363ecf0b51af5bb11e6144f7e6e2",
+    "diagnostic": "adamic: /workspace/adamic/stage3/interface-downcasts/v2/callable-producer-wrong.a:7:16: Adamic 0.1 refuses an unproven escaping callable read of view.value; prove the producer parameter and result relation before this read, or call the member directly through the view\n",
+    "exit": 1
+  }
+]

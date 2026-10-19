@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -19,6 +20,9 @@ import (
 // stage3/fixtures' oracle hook too, this binary run once per fixture in stage3/fixtures' unit: that package declares
 // the sanitized archives its hook links as its own products, which its unit fetches, rather than the hook compiling
 // seven archives in every unit, 12 s before its first fixture could finish and most of its CPU (#43k99f8).
+// Source-profile probes still lower a real program and must enable exactly their declared set.
+var runtimeWitnesses = map[string]func(*testing.T) *ir.Program{}
+
 func init() {
 	native.SupplyRuntimes(runtimeproducts.Supply)
 }
@@ -77,14 +81,19 @@ func TestRuntimeSetsAreEachUsed(t *testing.T) {
 			t.Errorf("the set [%s] is in runtimeproducts.Sets twice", name)
 		}
 		seen[name] = true
-		path, err := filepath.Abs(filepath.Join(repository, set.Witness))
-		if err != nil {
-			t.Fatal(err)
-		}
-		program, err := lowered(t, path)
-		if err != nil {
-			t.Errorf("the witness of [%s], %s: %v", name, set.Witness, err)
-			continue
+		var program *ir.Program
+		if witness := runtimeWitnesses[set.Witness]; witness != nil {
+			program = witness(t)
+		} else {
+			path, err := filepath.Abs(filepath.Join(repository, set.Witness))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err = lowered(t, path)
+			if err != nil {
+				t.Errorf("the witness of [%s], %s: %v", name, set.Witness, err)
+				continue
+			}
 		}
 		if got := native.Features(native.C(program)); !slices.Equal(got, set.Features) {
 			t.Errorf("the witness of [%s], %s, turns on %v: name a program that needs exactly the set, or drop the set", name, set.Witness, got)

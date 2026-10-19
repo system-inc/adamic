@@ -1,0 +1,26 @@
+=== RUN   TestCSSPrinterAgreesWithGo_000
+=== PAUSE TestCSSPrinterAgreesWithGo_000
+=== CONT  TestCSSPrinterAgreesWithGo_000
+    css_printer_30s_test.go:33: build css_Go_parser_oracle 7a079234e8f0 hit 1.04
+    parser_shards_test.go:632: Go oracle: === RUN   TestAdamicPortCases
+        === PAUSE TestAdamicPortCases
+        === CONT  TestAdamicPortCases
+            adamic_port_side_test.go:123: Prettier fixtures absent; set ADAMIC_CSS_FIXTURES
+            adamic_port_side_test.go:168: corpus files: map[.css:166 .scss:90]
+            adamic_port_side_test.go:251: 24016 cases, 4990 parsed
+            adamic_port_side_test.go:269: Go: 240160 stylesheets in 2.697047209s, 89046 stylesheets/s; 49900 parsed, 95790 children
+        --- PASS: TestAdamicPortCases (3.31s)
+        PASS
+    css_printer_30s_test.go:33: build css_Go_parser_oracle_answers db3b6bd59c08 miss 3.34
+    printer_shards_test.go:57: build css-printer-oracle-1 2c43f84da940 miss 5.39
+    printer_shards_test.go:101: build css-printer-executable--1 c0b1a21de001 miss 17.96
+    css_printer_30s_test.go:250: setup including products: 27.867186522s
+    css_printer_30s_test.go:250: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:92: printed stylesheets: 398 inputs, 90 formatted, elapsed 11.66499ms
+        --- PASS: TestAdamicPrinterCases (0.01s)
+        PASS
+    css_printer_30s_test.go:250: optional library comparisons unavailable: set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6
+    css_printer_30s_test.go:250: default: 398 cases; three backends, sanitizers and leaks checked
+    css_printer_30s_test.go:76: own work: 634.325967ms
+--- PASS: TestCSSPrinterAgreesWithGo_000 (28.50s)
+PASS

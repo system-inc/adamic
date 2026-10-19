@@ -1,0 +1,11 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    selector_test.go:56: corpus-files: upstream /workspace/adamic/cohere root internal/format/css pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 157
+    selector_test.go:56: corpus-files: upstream /workspace/adamic/cohere root internal/lint/rules/tailwind pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 8
+    selector_test.go:56: build go_test_-c_cohere_./internal/format/css/selector_selector.test b583234e5093 hit 0.34
+    selector_test.go:56: build selector_Go_oracle_answers 66453b7a0c14 hit 0.01
+    selector_test.go:56: seed 20261005, 4000 generated selectors
+    selector_test.go:79: 26778 selectors: every answer agrees on Node, native, and the JavaScript backend
+--- PASS: TestThePortParsesAsGoCohereDoes (10.20s)
+PASS

@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewArraysArrayBoolean
+=== PAUSE TestCheckedViewArraysArrayBoolean
+=== CONT  TestCheckedViewArraysArrayBoolean
+    checked_views_arrays_test.go:77: gate cache node miss
+    checked_views_arrays_test.go:77: Node: exit=0 stdout="false\n" stderr=""
+    checked_views_arrays_test.go:77: gate cache node miss
+--- PASS: TestCheckedViewArraysArrayBoolean (7.73s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

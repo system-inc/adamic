@@ -1,0 +1,17 @@
+=== RUN   TestCSSPrinterAgreesWithGo_002
+=== PAUSE TestCSSPrinterAgreesWithGo_002
+=== CONT  TestCSSPrinterAgreesWithGo_002
+    css_printer_30s_test.go:33: build css_Go_parser_oracle 7a079234e8f0 hit 1.50
+    css_printer_30s_test.go:33: build css_Go_parser_oracle_answers db3b6bd59c08 hit 0.03
+    printer_shards_test.go:57: build css-printer-oracle-1 2c43f84da940 hit 1.42
+    printer_shards_test.go:101: build css-printer-executable--1 c0b1a21de001 hit 0.68
+    css_printer_30s_test.go:252: setup including products: 3.921747568s
+    css_printer_30s_test.go:252: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:92: printed stylesheets: 359 inputs, 52 formatted, elapsed 12.507151ms
+        --- PASS: TestAdamicPrinterCases (0.01s)
+        PASS
+    css_printer_30s_test.go:252: optional library comparisons unavailable: set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6
+    css_printer_30s_test.go:252: default: 359 cases; three backends, sanitizers and leaks checked
+    css_printer_30s_test.go:76: own work: 558.649031ms
+--- PASS: TestCSSPrinterAgreesWithGo_002 (4.48s)
+PASS

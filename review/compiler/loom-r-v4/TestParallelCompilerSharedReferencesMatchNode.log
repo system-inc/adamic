@@ -1,0 +1,6 @@
+=== RUN   TestParallelCompilerSharedReferencesMatchNode
+=== PAUSE TestParallelCompilerSharedReferencesMatchNode
+=== CONT  TestParallelCompilerSharedReferencesMatchNode
+    async_test.go:37: source Node, JavaScript, ASan/UBSan native and leak check agree
+--- PASS: TestParallelCompilerSharedReferencesMatchNode (2.02s)
+PASS

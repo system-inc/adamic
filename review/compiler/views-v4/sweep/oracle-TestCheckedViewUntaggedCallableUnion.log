@@ -1,0 +1,30 @@
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== PAUSE TestCheckedViewUntaggedCallableUnion
+=== CONT  TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-number
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+=== PAUSE TestCheckedViewUntaggedCallableUnion/good-string
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+=== PAUSE TestCheckedViewUntaggedCallableUnion/wrong
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+=== PAUSE TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-number
+=== CONT  TestCheckedViewUntaggedCallableUnion/nested
+=== CONT  TestCheckedViewUntaggedCallableUnion/wrong
+=== CONT  TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_v2_source_test.go:84: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-good-string.a:7:16: Adamic 0.1 refuses an unproven escaping callable read of view.value; prove the producer parameter and result relation before this read, or call the member directly through the view
+=== NAME  TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_v2_source_test.go:84: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a:7:16: Adamic 0.1 refuses an unproven escaping callable read of view.value; prove the producer parameter and result relation before this read, or call the member directly through the view
+=== NAME  TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_v2_source_test.go:84: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a:8:16: Adamic 0.1 refuses an unproven escaping callable read of view.holder.value; prove the producer parameter and result relation before this read, or call the member directly through the view
+=== NAME  TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_v2_source_test.go:84: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a:7:16: Adamic 0.1 refuses an unproven escaping callable read of view.value; prove the producer parameter and result relation before this read, or call the member directly through the view
+--- FAIL: TestCheckedViewUntaggedCallableUnion (0.00s)
+    --- FAIL: TestCheckedViewUntaggedCallableUnion/good-string (0.13s)
+    --- FAIL: TestCheckedViewUntaggedCallableUnion/wrong (0.15s)
+    --- FAIL: TestCheckedViewUntaggedCallableUnion/nested (0.16s)
+    --- FAIL: TestCheckedViewUntaggedCallableUnion/good-number (0.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.252s
+FAIL

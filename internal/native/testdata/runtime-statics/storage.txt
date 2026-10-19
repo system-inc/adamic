@@ -267,3 +267,25 @@
 `weak.c:table_count:1`
 `weak.c:table_lock:1`
 `weak.c:table_used:1`
+
+# V4 storage audit. RangeError literals are immortal ADAMIC_STRING values;
+# retains/releases do not mutate references=0, and string indexing excludes
+# immortal literals from mutable index caches (as for exceptions.c:empty_message).
+`array_holes.c:range_name:1`
+`array_holes.c:range_message:1`
+# All weak-adapter table reads/mutations hold view_adapter_lock. Entries are
+# hidden non-owning words; removal precedes the underlying release. This audits
+# storage, not the still-pending shared-heap/pool/region adoption conditions.
+`closure.c:view_adapter_lock:1`
+`closure.c:view_adapter_entries:1`
+`closure.c:view_adapter_capacity:1`
+`closure.c:view_adapter_count:1`
+`closure.c:view_adapter_used:1`
+# A forward struct tag, not object storage; retained in the conservative census.
+`view_arrays.h:adamic_array:1`
+# The array/callable view units hold no other mutable file/block-scope storage.
+`runtime-file:array_holes.c`
+`runtime-file:view_arrays.c`
+`runtime-file:view_arrays.h`
+`runtime-file:view_callables.c`
+`runtime-file:view_callables.h`

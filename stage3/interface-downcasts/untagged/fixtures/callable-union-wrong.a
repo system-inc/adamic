@@ -1,3 +1,4 @@
+// a-check: refused an unproven escaping callable read of view.value
 // Independent producer-certified callable union control.
 type Target=((value:number)=>number)|((value:string)=>number);
 interface Receiver {readonly kind:'Receiver';readonly value:Target;}

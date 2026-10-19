@@ -89,7 +89,16 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 	var read ir.Expression
 	for index, name := range names {
 		stored, _ := l.representation(l.checker.GetTypeOfSymbol(fields[index]))
-		read = ir.Property{Object: heldObject, Name: name, Of: stored, Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0}
+		declared := l.checker.GetTypeOfSymbol(fields[index])
+		property := ir.Property{Object: heldObject, Name: name, Of: stored, Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0,
+			View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewReceiverTypeID: int(receiver.Id()),
+			ViewTypeID: int(declared.Id()), ViewType: l.checker.TypeToString(declared), ViewAllowed: l.viewLiterals(declared)}
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+		l.prepareViewCallableProperty(node, declared, &property)
+		if stored == ir.Closure {
+			l.prepareViewCallableEscapingValue(node, declared, &property)
+		}
+		read = property
 		read = fit(read, result)
 		if read.Type() != result {
 			return nil, l.notYet(node, "a computed field with differently represented alternatives")

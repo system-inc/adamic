@@ -1,0 +1,16 @@
+--- internal/childguard/childguard.go	2026-10-08 15:48:16.945776962 +0000
++++ /tmp/v3-json-measure/v3-childguard.go	2026-10-09 04:23:06.101351275 +0000
+@@ -73,6 +73,13 @@
+ // Output is forwarded to the command's original writers (nil means discard).
+ // Callers should use exec.Command, rather than an independent context deadline.
+ func Run(cmd *exec.Cmd, options Options) error {
++ if directory := os.Getenv("ADAMIC_RSS_DIR"); directory != "" {
++  log, err := os.CreateTemp(directory, "child-*.rss")
++  if err != nil { return err }; log.Close()
++  cmd.Args = append([]string{"rss", log.Name(), cmd.Path}, cmd.Args[1:]...)
++  cmd.Path = "/tmp/v3-json-measure/rss"
++ }
++
+ 	if options.FirstOutput == 0 {
+ 		options.FirstOutput = DefaultFirstOutput
+ 	}

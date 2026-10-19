@@ -1,0 +1,6 @@
+=== RUN   TestProduct_MarkdownInlineParityLowered
+=== PAUSE TestProduct_MarkdownInlineParityLowered
+=== CONT  TestProduct_MarkdownInlineParityLowered
+    inline_products_shards_test.go:77: build markdowninline_mutant_escaped_delimiter_parity_lowered ff1fc404776b miss 0.47
+--- PASS: TestProduct_MarkdownInlineParityLowered (2.88s)
+PASS

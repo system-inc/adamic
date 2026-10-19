@@ -1,0 +1,11 @@
+Starting internal/ir
+{"package": "internal/ir", "command": ["go", "test", "./internal/ir", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 71.376}
+Starting internal/lower
+{"package": "internal/lower", "command": ["go", "test", "./internal/lower", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 0, "seconds": 40.077}
+Starting internal/native
+{"package": "internal/native", "command": ["go", "test", "./internal/native", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 435.973}
+Starting internal/oracle
+{"package": "internal/oracle", "command": ["go", "test", "./internal/oracle", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 464.22}
+Starting stage1/cohere/json
+{"package": "stage1/cohere/json", "command": ["go", "test", "./stage1/cohere/json", "-count=1", "-json", "-parallel=4", "-timeout=30m"], "exit": 1, "seconds": 71.546}
+Completed all touched packages

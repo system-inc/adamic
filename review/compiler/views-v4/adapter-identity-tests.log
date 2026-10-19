@@ -1,0 +1,20 @@
+=== RUN   TestV4EscapeAdapterIdentity
+=== PAUSE TestV4EscapeAdapterIdentity
+=== RUN   TestV4EscapeAdapterNoStacking
+=== PAUSE TestV4EscapeAdapterNoStacking
+=== CONT  TestV4EscapeAdapterIdentity
+=== CONT  TestV4EscapeAdapterNoStacking
+=== NAME  TestV4EscapeAdapterIdentity
+    checked_views_v4_escape_test.go:196: native/sanitized unequal-read mutant caught: "true:false:false:true\ntrue:true:true\n1:true:true:updated\n1:true:true\nok\nok\ntrue:true:0:0\n"
+    checked_views_v4_escape_test.go:196: JavaScript unequal-read mutant caught: "true:false:false:true\ntrue:false:false\n2:true:false:updated\n2:true:false\nok\nok\nok\nok\nfalse:true:2:1\n"
+--- PASS: TestV4EscapeAdapterIdentity (0.90s)
+=== NAME  TestV4EscapeAdapterNoStacking
+    checked_views_v4_escape_test.go:201: bounded native allocation/retain rows: zero=[3 3 7 9 3 0] 1000=[1003 1003 5007 4009 4 0] 2000=[2003 2003 10007 8009 4 0]
+    checked_views_v4_escape_test.go:201: native/sanitized unconditional-wrap caught by bounded allocation: [2003 2003 5007 4009 5 0] vs [1003 1003 5007 4009 4 0]
+    checked_views_v4_escape_test.go:201: JavaScript unconditional-wrap caught by bounded allocation: "ok\nadapter-makes:1001\n"
+--- PASS: TestV4EscapeAdapterNoStacking (1.44s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.455s

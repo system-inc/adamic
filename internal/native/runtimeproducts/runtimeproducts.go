@@ -52,6 +52,7 @@ var Sets = []Set{
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/getters_census_binary_inline.a"},
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
+	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "v4-receiver-regexp"},
 }
 
 // A Variant is one way the oracle builds a program: sanitized for the comparison and the leak check, release as a
@@ -64,6 +65,7 @@ type Variant struct {
 }
 
 var Variants = []Variant{
+	{"sanitized-counted", native.Options{Sanitize: true, Count: true}, ""},
 	{"sanitized", native.Options{Sanitize: true}, ""},
 	{"release", native.Options{}, ""},
 	{"shipped", native.Options{Release: true}, ""},

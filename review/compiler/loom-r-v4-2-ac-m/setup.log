@@ -1,0 +1,16 @@
+submodule cache: off
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.019s)
+setup: node ready (0.019s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.066s)
+setup: submodules ready (0.066s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.162s)
+setup: shared cache ready (0.928s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/object.go:1251:1: syntax error: unexpected <<, expected }
+internal/lower/object.go:1260:1: syntax error: unexpected ==, expected }
+internal/lower/object.go:1475:1: syntax error: unexpected <<, expected }
+internal/lower/object.go:1515:1: syntax error: unexpected <<, expected }

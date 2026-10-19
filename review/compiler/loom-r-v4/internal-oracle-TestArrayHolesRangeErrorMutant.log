@@ -1,0 +1,11 @@
+=== RUN   TestArrayHolesRangeErrorMutant
+=== PAUSE TestArrayHolesRangeErrorMutant
+=== CONT  TestArrayHolesRangeErrorMutant
+    array_holes_test.go:91: gate cache node miss
+    array_holes_test.go:101: gate cache node miss
+    array_holes_test.go:106: invalid-length throw removed; Node's nominal RangeError observations reject both mutants
+--- PASS: TestArrayHolesRangeErrorMutant (12.57s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0

@@ -1,0 +1,17 @@
+=== RUN   TestViewCallablesNode
+=== PAUSE TestViewCallablesNode
+=== CONT  TestViewCallablesNode
+=== RUN   TestViewCallablesNode/field
+=== RUN   TestViewCallablesNode/method
+=== RUN   TestViewCallablesNode/missing
+=== RUN   TestViewCallablesNode/uninitialized
+=== RUN   TestViewCallablesNode/kind
+=== RUN   TestViewCallablesNode/once
+--- PASS: TestViewCallablesNode (0.35s)
+    --- PASS: TestViewCallablesNode/field (0.05s)
+    --- PASS: TestViewCallablesNode/method (0.05s)
+    --- PASS: TestViewCallablesNode/missing (0.04s)
+    --- PASS: TestViewCallablesNode/uninitialized (0.05s)
+    --- PASS: TestViewCallablesNode/kind (0.03s)
+    --- PASS: TestViewCallablesNode/once (0.06s)
+PASS

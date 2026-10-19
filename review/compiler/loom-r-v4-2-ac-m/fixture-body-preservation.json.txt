@@ -1,0 +1,50 @@
+[
+  {
+    "path": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p17_callable_field_element_call.a",
+    "header": "// a-check: refused an unproven escaping callable read of view['compute']",
+    "body_sha256": "cc6272d50f1fdc79a6b1dbe7b34a61908a6c14ed29be62d92f39c187ebb4ab42",
+    "body_matches_base": true
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
+    "header": "// a-check: refused an unproven escaping callable read of view.holder.value",
+    "body_sha256": "0ad5e4aa0254c241dd234181b0548d7d724f427c728f2c58573fe94836a091f4",
+    "body_matches_base": true
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
+    "header": "// a-check: refused an unproven escaping callable read of view.value",
+    "body_sha256": "b377559a98a39d63e9e2a720f3e40fac721fb81c40d7cf15a73ccfaf40e1cc51",
+    "body_matches_base": true
+  },
+  {
+    "path": "stage3/interface-downcasts/v2/callable-producer-wrong.a",
+    "header": "// a-check: refused an unproven escaping callable read of view.value",
+    "body_sha256": "78097737815ceb764c1376a86633722b54b9cbb67275db08f012f338f82a1de1",
+    "body_matches_base": true
+  },
+  {
+    "from": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p64_array_arm_element.a",
+    "to": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p64_array_arm_element.a",
+    "sha256": "aa6c9bf135eb73b3ea5a0a38dc8df92bd6a461a3db3bec5adee1f40aaa5875d7",
+    "body_matches_base": true
+  },
+  {
+    "from": "internal/oracle/testdata/review/refused/fxspptb_oct9_views_p75_callable_from_map_value.a",
+    "to": "internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p75_callable_from_map_value.a",
+    "sha256": "2cc5c8e3fed276b265f394cbb888cb9f7bb4b960f3600a9cddc0e978bf51dfd9",
+    "body_matches_base": true
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "to": "internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p07_element_access_union_wrong.a",
+    "sha256": "c76e229a6927eba8ad0af401b221e968a74d85c8dafbe0bb45431eb9dcea4026",
+    "body_matches_base": true
+  },
+  {
+    "from": "internal/oracle/testdata/review/agree/fxspptb_oct9_views_p49_union_destructure_wrong.a",
+    "to": "internal/oracle/testdata/views_v4_checked/fxspptb_oct9_views_p49_union_destructure_wrong.a",
+    "sha256": "591c2a2453e450e370f4bebe60d17c7877c911d7ef38195b2d4d77712008ad61",
+    "body_matches_base": true
+  }
+]
