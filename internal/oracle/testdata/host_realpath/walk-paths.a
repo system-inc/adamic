@@ -1,0 +1,7 @@
+import fs from 'node:fs';
+for (const path of ['dir/file/', 'chain/file', '.', '..', 'dir/../dir/file', 'dir', 'dir/café-雪']) {
+    console.log(fs.realpathSync(path));
+}
+const selected = fs.realpathSync;
+console.log(`${!!selected}|${selected === fs.realpathSync}|${selected !== fs.realpathSync.native}`);
+console.log(selected('chain/file'));

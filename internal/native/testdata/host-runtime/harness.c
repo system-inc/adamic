@@ -141,6 +141,24 @@ int main(int argc, char **argv) {
    printf("%.0f\n", adamic_thrown->slots[5].number);
    adamic_release(adamic_thrown); adamic_thrown = NULL;
   }
+ } else if (strcmp(mode,"realpath-walk-error") == 0) {
+  if (chdir(getenv("HOST_CHILD")) != 0) abort();
+  static adamic_string missing = ADAMIC_STRING("missing/child"), dangling = ADAMIC_STRING("dangling"), slash = ADAMIC_STRING("file/"), nul = ADAMIC_STRING("a\0b"), loop = ADAMIC_STRING("loop-a");
+  adamic_string *paths[] = {&missing, &dangling, &slash, &nul, &loop};
+  const char *fields[] = {"code", "syscall", "path", "message", "errno"};
+  for (size_t i = 0; i < 5; i++) {
+   adamic_string *value = adamic_node_fs_realpath(paths[i], false);
+   if (value != NULL) { print_text(value); adamic_release(value); continue; }
+   if (adamic_thrown == NULL) abort();
+   for (size_t field = 0; field < 5; field++) {
+    size_t slot = 0;
+    while (slot < adamic_thrown->shape->count && strcmp(adamic_thrown->shape->names[slot], fields[field]) != 0) slot++;
+    if (slot == adamic_thrown->shape->count) puts("undefined");
+    else if (field == 4) printf("%.0f\n", adamic_thrown->slots[slot].number);
+    else print_text(adamic_thrown->slots[slot].reference);
+   }
+   adamic_release(adamic_thrown); adamic_thrown = NULL;
+  }
  } else if (strcmp(mode,"eol") == 0) {
   adamic_string *eol = adamic_host_eol();
   if (equal(eol,"\n")) puts("\"\\n\""); else puts("wrong EOL");
