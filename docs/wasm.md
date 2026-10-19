@@ -286,8 +286,9 @@ asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`
 | `internal/oracle/testdata/write_stdout_order.a` | `args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, path_open, proc_exit` |
 
 `closure_convention_host24.a` and `node_fs_rm_options.a` call `fs.mkdtempSync`, which wasm32-wasi
-refuses by name (WASI has no temporary directory creation), so the build fails with a target refusal and
-the shim test skips them, as every `WASI` oracle does.
+refuses by name (WASI has no temporary directory creation). They are named in `shimRefusedFixtures`,
+asserted both ways and counted as `refused`, never skipped: a listed fixture that starts building fails,
+and so does an unlisted one that starts being refused.
 
 The differential command test uses the same expected witness as
 `internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and

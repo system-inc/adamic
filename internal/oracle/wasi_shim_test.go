@@ -15,6 +15,14 @@ import (
 // The fixtures that read or write files, which the shim refuses by design (docs/wasm.md). They are
 // left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
 // TestWASIAgreesWithNode runs these fixtures under node:wasi.
+// The fixtures wasm32-wasi refuses by name as it builds them (fs.mkdtempSync: WASI has no temporary directory
+// creation). They are left out by name too, asserted both ways: a listed fixture that starts building fails, and so
+// does an unlisted one that starts being refused.
+var shimRefusedFixtures = map[string]bool{
+	"internal/oracle/testdata/closure_convention_host24.a": true,
+	"internal/oracle/testdata/node_fs_rm_options.a":        true,
+}
+
 var shimFileFixtures = map[string]bool{
 	"internal/oracle/testdata/unknown_narrowing_host.a":     true,
 	"internal/oracle/testdata/write_stdout_order.a":         true,
@@ -33,7 +41,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	ran, agreed, skipped, excluded := 0, 0, 0, 0
+	ran, agreed, skipped, excluded, refusals := 0, 0, 0, 0, 0
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
 			if !fixture.lowers {
@@ -49,14 +57,18 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 				t.Fatal(err)
 			}
 			binary := filepath.Join(t.TempDir(), "program.wasm")
-			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-				// A fixture wasm32 refuses by name (buildWASI's rule) has no module to inventory or run.
-				var refused *native.TargetRefused
-				if errors.As(err, &refused) {
-					skipped++
-					t.Skipf("target refusal: %v", refused)
-				}
+			err = native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"})
+			var refused *native.TargetRefused
+			switch {
+			case errors.As(err, &refused) && shimRefusedFixtures[fixture.path]:
+				refusals++
+				return
+			case errors.As(err, &refused):
+				t.Fatalf("wasm32-wasi refuses it (%v): add it to shimRefusedFixtures with its reason in docs/wasm.md", refused)
+			case err != nil:
 				t.Fatal(err)
+			case shimRefusedFixtures[fixture.path]:
+				t.Fatalf("listed in shimRefusedFixtures but wasm32-wasi builds it: run it through the shim and drop it from the list")
 			}
 			inventory := execute(t, "node", "-e", `const fs=require('node:fs'); const m=new WebAssembly.Module(fs.readFileSync(process.argv[1])); console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
 			if inventory.exitCode != 0 {
@@ -105,7 +117,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 			}
 		})
 	}
-	t.Logf("SHIM COUNTS run=%d agreed=%d skipped=%d excluded=%d", ran, agreed, skipped, excluded)
+	t.Logf("SHIM COUNTS run=%d agreed=%d skipped=%d excluded=%d refused=%d", ran, agreed, skipped, excluded, refusals)
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
