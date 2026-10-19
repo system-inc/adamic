@@ -1,0 +1,60 @@
+{"kind":"accepted","path":"internal/oracle/testdata/spread_snapshot.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/spread_undefined.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/spreads.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/stack_forever.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/stack_over.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/stack_overflow.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/stack_tail_call.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/statements_small_parameters.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/statements_small_prefix.a","reason":""}
+{"kind":"NotYet","path":"internal/oracle/testdata/statements_small_stopped/capture.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/capture.a:2:11: stage 0 can't lower a function value that captures the variable its own initializer declares yet"}
+{"kind":"Refused","path":"internal/oracle/testdata/statements_small_stopped/nonnull.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/nonnull.a:2:1: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"NotYet","path":"internal/oracle/testdata/statements_small_stopped/structural_error.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/structural_error.a:3:11: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"}
+{"kind":"NotYet","path":"internal/oracle/testdata/statements_small_stopped/template.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_stopped/template.a:5:18: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/statements_small_throw.a","reason":""}
+{"kind":"Refused","path":"internal/oracle/testdata/statements_small_typescript/absent.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_typescript/absent.a:3:1: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"Refused","path":"internal/oracle/testdata/statements_small_typescript/missing.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_typescript/missing.a:3:1: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"Refused","path":"internal/oracle/testdata/statements_small_typescript/nonnull.a","reason":"/workspace/adamic/internal/oracle/testdata/statements_small_typescript/nonnull.a:2:1: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+{"kind":"accepted","path":"internal/oracle/testdata/status_of_stdout.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_append.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_boundaries.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_cached_reads.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_caches.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_calls.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_join.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_padding.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_build_repeat.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_index.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_limits.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_positions.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_too_long.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_calls.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_characters.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_holders.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_lifetime.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_loops.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_methods.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_policy.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_surrogates.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/string_views_throw.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/strings.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/strings_more.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/structural_statics_generic.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/structural_statics_inherited.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/structural_statics_instance.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/structural_statics_mixed.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/structural_statics_optional.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/structural_statics_static.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/sweeps/regexp_methods.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/dead_zone.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/dead_zone_write.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/fallthrough.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/neighbors.a","reason":""}
+{"kind":"NotYet","path":"internal/oracle/testdata/switch_case_declarations/overload.a","reason":"/workspace/adamic/internal/oracle/testdata/switch_case_declarations/overload.a:3:1: stage 0 can't lower a function without a body yet"}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/scanner.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_case_declarations/shared.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/switch_empty_neighbors.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/syntax_module_declarations.a","reason":""}
+{"kind":"accepted","path":"internal/oracle/testdata/syntax_substr.a","reason":""}

@@ -1,0 +1,143 @@
+[
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/generic-mutants.py",
+      "review/compiler/loom-slice-4-2/generic-mutants"
+    ],
+    "exit": 0,
+    "seconds": 39.48452770200001
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-slice-4-2/generator-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 140.429444998
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-slice-4-2/loader-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 134.92306424500003
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-slice-4-2/iteration-mutants.py",
+      "review/compiler/loom-slice-4-2/iteration-mutants"
+    ],
+    "exit": 0,
+    "seconds": 60.183363490999966
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-slice-4-2/extra-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 31.965794766000045
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/loom-slice-4-2/supplement-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 31.122880504000022
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant-selection"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant-markdown"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/parameters_test.py",
+      "/workspace/adamic/stage3/api/node_modules/typescript"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/parameters_test.py",
+      "/workspace/adamic/stage3/api/node_modules/typescript",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/resume.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/resume.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1
+  }
+]

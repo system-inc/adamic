@@ -1,0 +1,242 @@
+[
+  {
+    "file": "01_identity.a",
+    "tsc": [
+      "Reduced from TypeScript core.ts:1828, identity; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 01_identity",
+    "node": {
+      "stdout": "0 false genericgeneric true\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "02_optional_return.a",
+    "tsc": [
+      "Reduced from TypeScript core.ts:67, firstDefined; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 02_optional_return",
+    "node": {
+      "stdout": "0 false \nownedownedowned absent 77\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "03_callback_return.a",
+    "tsc": [
+      "Reduced from TypeScript core.ts:67, firstDefined; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 03_callback_return",
+    "node": {
+      "stdout": "0 texttexttext\n77\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "04_function_value.a",
+    "tsc": [
+      "Reduced from TypeScript core.ts:1937 and contains at :220; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 04_function_value",
+    "node": {
+      "stdout": "true false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "05_nested_class.a",
+    "tsc": [
+      "Authored slice 4 generics control; no upstream source copied"
+    ],
+    "reason": "Slice 4 generics witness: 05_nested_class",
+    "node": {
+      "stdout": "arenaarenaarena true\n0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "06_polymorphic_recursion.a",
+    "tsc": [
+      "Authored slice 4 generics control; no upstream source copied"
+    ],
+    "reason": "Slice 4 generics witness: 06_polymorphic_recursion",
+    "node": {
+      "stdout": "0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/generics/06_polymorphic_recursion.a:5:12: Adamic 0.1 refuses a generic function instantiated without end (polymorphic recursion); call it with the same type arguments it was called with, or write a function per type"
+    }
+  },
+  {
+    "file": "07_generic_cast.a",
+    "tsc": [
+      "Reduced from TypeScript core.ts:1778, tryCast; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 07_generic_cast",
+    "node": {
+      "stdout": "4\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/generics/07_generic_cast.a:4:49: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "file": "08_readonly_view.a",
+    "tsc": [
+      "Reduced from TypeScript utilities.ts:10644, setTextRangePos; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 08_readonly_view",
+    "node": {
+      "stdout": "2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/generics/08_readonly_view.a:6:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  },
+  {
+    "file": "09_recursive_optional.a",
+    "tsc": [
+      "Supplemental recursive stress for the core.ts:67 firstDefined result reduction."
+    ],
+    "reason": "Slice 4 generics witness: 09_recursive_optional",
+    "node": {
+      "stdout": "0 ownedownedowned\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "10_identifier_multimap.a",
+    "tsc": [
+      "Reduced from TypeScript transformers/utilities.ts:389 and :441; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 10_identifier_multimap",
+    "node": {
+      "stdout": "true ownedownedowned/secondsecond/third\n0/7\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "11_indexed_result.a",
+    "tsc": [
+      "Authored slice 4 generics control; no upstream source copied"
+    ],
+    "reason": "Slice 4 generics witness: 11_indexed_result",
+    "node": {
+      "stdout": "2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/generics/11_indexed_result.a:2:68: Adamic 0.1 refuses generic body return into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+    }
+  },
+  {
+    "file": "12_mixed_indexed_result.a",
+    "tsc": [
+      "Authored slice 4 generics control; no upstream source copied"
+    ],
+    "reason": "Slice 4 generics witness: 12_mixed_indexed_result",
+    "node": {
+      "stdout": "2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/generics/12_mixed_indexed_result.a:2:87: Adamic 0.1 refuses generic body return into slot U | T[\"value\"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+    }
+  },
+  {
+    "file": "13_constrained_local.a",
+    "tsc": [
+      "Authored slice 4 generics control; no upstream source copied"
+    ],
+    "reason": "Slice 4 generics witness: 13_constrained_local",
+    "node": {
+      "stdout": "2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/generics/13_constrained_local.a:3:11: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
+    }
+  },
+  {
+    "file": "14_optional_literal_union.a",
+    "tsc": [
+      "Authored slice 4 generics control; no upstream source copied"
+    ],
+    "reason": "Slice 4 generics witness: 14_optional_literal_union",
+    "node": {
+      "stdout": "0 4\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  },
+  {
+    "file": "15_array_callback.a",
+    "tsc": [
+      "Reduced from TypeScript core.ts:67, firstDefined; pin 050880ce."
+    ],
+    "reason": "Slice 4 generics witness: 15_array_callback",
+    "node": {
+      "stdout": "0\nfalse\n\nownedownedowned\nempty absent\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Compiles",
+      "what": ""
+    }
+  }
+]

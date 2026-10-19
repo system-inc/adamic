@@ -1,0 +1,4 @@
+// a-check: refused writing Symbol.iterator on a built-in or its prototype (adamic/intrinsic-iterator); use a separate object with its own Symbol.iterator method; built-in iteration cannot be overridden
+// Authored counterexample: the intrinsic's prototype affects every array.
+Array.prototype[Symbol.iterator] = () => [7].values();
+for (const value of [1, 2]) { console.log(String(value)); }

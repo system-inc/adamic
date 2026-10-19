@@ -1,0 +1,6 @@
+the t.Parallel analyzer failed: FAIL
+internal/lower/iteration_test.go TestIteratorBuiltInStorageViewsArePending: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state> above it
+internal/lower/iteration_test.go TestIteratorDeclaredNextHasNoRuntimeMethod: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state> above it
+internal/lower/iteration_test.go TestIteratorOptionalCloseResultMustBeObject: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state> above it
+a-check 13 .a files
+vet 6 packages

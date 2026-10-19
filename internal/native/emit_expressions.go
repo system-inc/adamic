@@ -12,6 +12,10 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
+	case ir.IteratorField:
+		return e.iteratorField(expression)
+	case ir.IteratorMethod:
+		return e.iteratorMethod(expression)
 	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
 		return e.typedArrayValue(expression)
 	case ir.HasProperty:
@@ -48,6 +52,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
+	case ir.GeneratorFrame:
+		e.line("/* generator frame: every reference slot owns its value */")
+		return e.value(expression.Value)
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
 	case ir.BooleanConstant:

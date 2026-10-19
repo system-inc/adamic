@@ -1,0 +1,56 @@
+[
+  {
+    "mutant": "field-pure-load",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-4/field-pure-load.json",
+      "./internal/fresh",
+      "-run",
+      "^TestIteratorFieldAccessorEscapesReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "receiver escape assertion"
+  },
+  {
+    "mutant": "method-pure-load",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-4/method-pure-load.json",
+      "./internal/fresh",
+      "-run",
+      "^TestIteratorMethodAccessorEscapesReceiver$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "receiver escape assertion"
+  },
+  {
+    "mutant": "unowned oracle operand",
+    "command": [
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/compiler/loom-r-slice-4/reader-audit.json",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "catcher": "unapproved call-target read"
+  }
+]

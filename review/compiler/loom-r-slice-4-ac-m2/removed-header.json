@@ -1,0 +1,32 @@
+{
+  "gate_sha": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": {
+    "/workspace/scratch/slice4-header-mutants/removed-header.a": {
+      "status": "refused",
+      "reason": "generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument",
+      "code": null,
+      "exit": 1,
+      "stderr": "adamic: /workspace/scratch/slice4-header-mutants/removed-header.a:1:78: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)\n",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 0.060055740001189406
+    }
+  },
+  "predicate": {
+    "/workspace/scratch/slice4-header-mutants/removed-header.a": {
+      "outcome": "refused",
+      "expected": "checked",
+      "first": "adamic: /workspace/scratch/slice4-header-mutants/removed-header.a:1:78: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type fro"
+    }
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\n/workspace/scratch/slice4-header-mutants/removed-header.a: refused, expected checked (adamic: /workspace/scratch/slice4-header-mutants/removed-header.a:1:78: Adamic 0.1 refuses generic body initializer into slot T[\"value\"] from source 2 is not proven for every allowed type argument; ch)",
+  "seconds": {
+    "a-check": 0.2
+  },
+  "counts": {
+    "refused": 1
+  }
+}

@@ -1,0 +1,12 @@
+from pathlib import Path
+import subprocess,json,time
+root=Path.cwd();out=root/'review/compiler/loom-r-slice-4-ac-m2';cases=[('generator-owner','internal/lower/functions.go','l.noteLocal(incoming, l.checker.GetTypeAtLocation(parameter), parameter)','// Deliberately omit whole generator parameter ownership.','./internal/lower','TestGeneratorDestructuredParameterCycle','got <nil>'),('union-layout','internal/lower/object.go','known && declared == ir.Union {','known && declared == ir.Union && false {','./internal/lower','TestFX5NumberLiteralRefused','got <nil>')]
+s=(root/'internal/ir/call_targets_guard_test.go').read_text();line=next(x for x in s.splitlines(True) if '"internal/oracle/iteration_dispatch_mutant_test.go:' in x);cases.append(('oracle-reader','internal/ir/call_targets_guard_test.go',line,'','./internal/ir','TestCallTargetReadersOracle','unapproved call-target read internal/oracle/iteration_dispatch_mutant_test.go'))
+prior=json.loads((out/'mutants.json').read_text()) if (out/'mutants.json').exists() else [];results=[]
+for name,file,old,new,pkg,test,witness in cases:
+ existing=next((x for x in prior if x['name']==name),None)
+ if existing:
+  decoded=''.join(json.loads(l).get('Output','') for l in (out/'logs'/(name+'-mutant.jsonl')).read_text().splitlines() if l.startswith('{'));existing['caught']=existing['exit']==1 and witness in decoded;assert existing['caught'],decoded;results.append(existing);(out/'mutants.json').write_text(json.dumps(results,indent=2)+'\n');print(json.dumps(existing),flush=True);continue
+ source=(root/file).read_text();assert source.count(old)==1,(name,source.count(old));target=out/(name+'.go.txt');target.write_text(source.replace(old,new,1));overlay=out/(name+'-overlay.json');overlay.write_text(json.dumps({'Replace':{str(root/file):str(target)}})+'\n');command=['go','test','-overlay',str(overlay),pkg,'-run','^'+test+'$','-count=1','-json','-timeout','90s','-parallel','4'];start=time.monotonic()
+ with (out/'logs'/(name+'-mutant.jsonl')).open('w') as log:r=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,timeout=120)
+ text=''.join(json.loads(l).get('Output','') for l in (out/'logs'/(name+'-mutant.jsonl')).read_text().splitlines() if l.startswith('{'));caught=r.returncode==1 and witness in text;results.append(dict(name=name,command=command,exit=r.returncode,witness=witness,caught=caught,seconds=round(time.monotonic()-start,3)));(out/'mutants.json').write_text(json.dumps(results,indent=2)+'\n');print(json.dumps(results[-1]),flush=True);assert caught,text

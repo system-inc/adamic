@@ -1,0 +1,16 @@
+=== RUN   TestGeneratorCancellation
+=== PAUSE TestGeneratorCancellation
+=== CONT  TestGeneratorCancellation
+    generators_test.go:9: gate cache node hit
+    generators_test.go:9: gate cache node miss
+    generators_test.go:9: JavaScript: stdout differs: 1
+        9
+        undefined
+        true
+--- FAIL: TestGeneratorCancellation (2.58s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.589s
+FAIL

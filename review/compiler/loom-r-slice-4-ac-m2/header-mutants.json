@@ -1,0 +1,30 @@
+[
+  {
+    "mutant": "removed-header",
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/adamic/review/compiler/loom-r-slice-4-ac-m2/check-headers.py",
+      "removed-header",
+      "/workspace/scratch/slice4-header-mutants/removed-header.a"
+    ],
+    "exit": 1,
+    "catcher": "unchanged Gate.aCheck",
+    "seconds": 0.269,
+    "program_body_sha256": "5c51f96405ed42405fa497c2c22a12ada380807a53b3697f57d83141e5d62579"
+  },
+  {
+    "mutant": "wrong-reason",
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/adamic/review/compiler/loom-r-slice-4-ac-m2/check-headers.py",
+      "wrong-reason",
+      "/workspace/scratch/slice4-header-mutants/wrong-reason.a"
+    ],
+    "exit": 1,
+    "catcher": "unchanged Gate.aCheck",
+    "seconds": 0.215,
+    "program_body_sha256": "5c51f96405ed42405fa497c2c22a12ada380807a53b3697f57d83141e5d62579"
+  }
+]

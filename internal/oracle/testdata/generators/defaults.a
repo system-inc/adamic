@@ -1,0 +1,17 @@
+let calls=0;
+function make(): string { calls++; console.log('default'); return 'owned'; }
+function* delayed(value: string=make()): Generator<string, string, string> {
+ yield value; return value;
+}
+const g=delayed();
+console.log(`${calls}`);
+console.log(`${g.next('ignored').value}`);
+console.log(`${g.next('sent').value}`);
+function* patterned({text}: {text: string}): Generator<string,string,undefined> {
+ yield text; return text;
+}
+const payload={text:'before'};
+const h=patterned(payload);
+payload.text='after';
+console.log(`${h.next().value}`);
+console.log(`${h.next().value}`);

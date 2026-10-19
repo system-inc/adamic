@@ -1,0 +1,4 @@
+snapshot-view caught: stdout
+strong-weak-slot caught: AddressSanitizer: SEGV
+allow-intrinsic-write caught: want ruled intrinsic iterator refusal
+widen-mutable-element caught: want nested mutable slot refusal

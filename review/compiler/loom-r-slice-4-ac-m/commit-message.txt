@@ -1,0 +1,9 @@
+Re-cut slice 4 with measured a-check headers
+
+Apply only 9655fccfbcaf22d6d16931e164a150338228d3ae own change on fixed dbdf977f5b. Add four missing refusal headers, expand twelve to their measured reasons and remove two obsolete generator refusal headers. Preserve every program body byte and update three diagnostic line pins.
+
+The explicit base remains fixed despite newer main. All 82 changed Adamic files pass pinned a-check; removed-header and wrong-reason mutants are caught. Affected tests, reader guard and vet pass. Count product preparation hit disk exhaustion; direct counted generator builds match both existing rows and counts.md is unchanged. Evidence in review/compiler/loom-r-slice-4-ac. #js89dcw #qk8rztp #p6afa8g
+
+Re-cut onto main 5a94465370ea0172e25aae8c13478e59e40c2bb4 (was f353ac21ba3bba9c45f6f85b5bedb283a98d43b3 on dbdf977f)
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

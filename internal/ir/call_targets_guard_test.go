@@ -26,6 +26,16 @@ import (
 type targetReader struct{ owner, reason string }
 
 var targetReaders = map[string]targetReader{
+	"internal/oracle/cast_test.go:TestCheckedCastMutants:Call.Function":                                       {"compiler", "selects the checked-cast function whose check the Node mutant removes"},
+	"internal/oracle/iteration_dispatch_mutant_test.go:TestIterationDispatchMutants:CallClosure.Closure":      {"compiler", "selects the cached next operand that the Node mutant rereads"},
+	"internal/oracle/method_values_mutant_test.go:runLibraryMethodValueMutantsShard:Call.Function":            {"compiler", "selects the library method wrapper mutated for Node comparison"},
+	"internal/oracle/notyet_library_string_bounds_test.go:TestNotYetLibraryStringBoundsMutants:Call.Function": {"compiler", "selects the string bounds function mutated for Node comparison"},
+	"internal/oracle/omitted_arguments_test.go:TestOmittedArgumentZeroMutantIsCaught:CallClosure.Closure":     {"compiler", "selects the closure call whose omitted argument the Node mutant changes"},
+	"internal/oracle/omitted_arguments_test.go:TestOmittedReaderZeroMutantIsCaught:CallClosure.Closure":       {"compiler", "selects the omitted-argument reader call mutated for Node comparison"},
+	"internal/oracle/parser_namespaces_test.go:TestParserCallableNamespaceMutant:Call.Function":               {"compiler", "selects the parser namespace callable mutated for Node comparison"},
+	"internal/oracle/private_generic_mutant_test.go:TestPrivateGenericMethodOwnerMutant:Call.Function":        {"compiler", "selects the private generic method owner mutated for Node comparison"},
+	"internal/oracle/syntax_substr_test.go:TestSyntaxSubstrMutants:Call.Function":                             {"compiler", "selects the substr wrapper mutated for Node comparison"},
+
 	"internal/native/arguments_length.go:spreadArguments:Call.Function":                               {"runtime", "names the spread call signature"},
 	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                                            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":                                {"compiler", "MayThrow and library failure propagation, routed in step 2"},
@@ -97,7 +107,7 @@ func checkCallTargetReaders(t *testing.T, selected string) {
 		if base != selected {
 			continue
 		}
-		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow") {
+		if pkg.ImportPath != "github.com/system-inc/adamic/internal/"+base || (base != "native" && base != "lower" && base != "fresh" && base != "flow" && base != "oracle") {
 			continue
 		}
 		for group, names := range [][]string{append(pkg.GoFiles, pkg.TestGoFiles...), pkg.XTestGoFiles} {
@@ -186,6 +196,7 @@ func checkCallTargetReaders(t *testing.T, selected string) {
 // tests included, a product built ahead so the test runs no go.
 func callTargetExports(t *testing.T, selected string) string {
 	t.Helper()
+	// Keep main's per-package export groups; oracle has its own owner below.
 	return buildcache.GoExports(t, "./internal/"+selected, "./internal/leakcheck")
 }
 
@@ -247,4 +258,19 @@ func TestCallTargetReadersFresh(t *testing.T) {
 func TestCallTargetReadersFlow(t *testing.T) {
 	t.Parallel()
 	checkCallTargetReaders(t, "flow")
+}
+
+// Not parallel: prepare the oracle export group before parallel reader checks.
+func TestCallTargetExportInputsOracle(t *testing.T) {
+	callTargetExports(t, "oracle")
+}
+
+func TestProduct_CallTargetReaderArchivesOracle(t *testing.T) {
+	t.Parallel()
+	callTargetExports(t, "oracle")
+}
+
+func TestCallTargetReadersOracle(t *testing.T) {
+	t.Parallel()
+	checkCallTargetReaders(t, "oracle")
 }

@@ -1,0 +1,2873 @@
+{
+  "inventories": {
+    "github.com/system-inc/adamic/internal/native": [
+      "TestNoReaderCallingConvention",
+      "TestAsyncHostPromisesAddress",
+      "TestAsyncHostPromisesThread",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestLongUnicodePortabilityClang",
+      "TestLongUnicodePortabilityGCC",
+      "TestLongUnicodeLiteralByteCoverage",
+      "TestCaseMappingMatchesNodePoints0To2FFFF",
+      "TestCaseMappingMatchesNodePoints30000To5FFFF",
+      "TestCaseMappingMatchesNodePoints60000To8FFFF",
+      "TestCaseMappingMatchesNodePoints90000ToCFFFF",
+      "TestCaseMappingMatchesNodePointsD0000To10FFFF",
+      "TestCaseMappingMatchesNodeContexts",
+      "TestCaseMappingPointRangesTile",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestClosureConventionOwnerRuntimeSites",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestConstantPortabilityClang",
+      "TestConstantPortabilityGCC",
+      "TestLongStringBytesMutant",
+      "TestStaticNumberInitializerMutant",
+      "TestStaticBooleanInitializerMutant",
+      "TestArithmeticIsNeverFused",
+      "TestProduct_DecodeASCIICorpus",
+      "TestProduct_DecodeASCIINative",
+      "TestProduct_DecodeASCIIWASI",
+      "TestDecodeASCIIUnit00",
+      "TestDecodeASCIIUnit01",
+      "TestDecodeASCIIUnit02",
+      "TestDecodeASCIIUnit03",
+      "TestDecodeASCIIUnit04",
+      "TestDecodeASCIIUnit05",
+      "TestDecodeASCIIUnit06",
+      "TestDecodeASCIIUnit07",
+      "TestDecodeASCIIUnit08",
+      "TestDecodeASCIIUnit09",
+      "TestDecodeASCIIUnit10",
+      "TestDecodeASCIIUnit11",
+      "TestDecodeASCIIUnit12",
+      "TestDecodeASCIIUnit13",
+      "TestDecodeASCIIUnit14",
+      "TestDecodeASCIIUnit15",
+      "TestDecodeASCIIUnit16",
+      "TestDecodeASCIIUnit17",
+      "TestDecodeASCIIUnit18",
+      "TestDecodeASCIIUnit19",
+      "TestDecodeASCIIUnit20",
+      "TestDecodeASCIIUnit21",
+      "TestDecodeASCIIUnit22",
+      "TestDecodeASCIIUnit23",
+      "TestDecodeASCIIUnit24",
+      "TestDecodeASCIIUnit25",
+      "TestDecodeASCIIUnit26",
+      "TestDecodeASCIIUnit27",
+      "TestDecodeASCIIUnit28",
+      "TestDecodeASCIIUnit29",
+      "TestDecodeASCIIUnit30",
+      "TestDecodeASCIIUnit31",
+      "TestDecodeASCIIUnit32",
+      "TestDecodeASCIIUnit33",
+      "TestDecodeASCIIUnit34",
+      "TestDecodeASCIIUnit35",
+      "TestDecodeASCIIUnit36",
+      "TestDecodeASCIIUnit37",
+      "TestDecodeASCIIUnit38",
+      "TestDecodeASCIIUnit39",
+      "TestDecodeASCIIUnit40",
+      "TestDecodeASCIIUnit41",
+      "TestDecodeASCIIUnit42",
+      "TestDecodeASCIIUnit43",
+      "TestDecodeASCIIUnit44",
+      "TestDecodeASCIIWASIUnit00",
+      "TestDecodeASCIIWASIUnit01",
+      "TestDecodeASCIIWASIUnit02",
+      "TestDecodeASCIIWASIUnit03",
+      "TestDecodeASCIIWASIUnit04",
+      "TestDecodeASCIIWASIUnit05",
+      "TestDecodeASCIIWASIUnit06",
+      "TestDecodeASCIIWASIUnit07",
+      "TestDecodeASCIIWASIUnit08",
+      "TestDecodeASCIIWASIUnit09",
+      "TestDecodeASCIIWASIUnit10",
+      "TestDecodeASCIIWASIUnit11",
+      "TestDecodeASCIIWASIUnit12",
+      "TestDecodeASCIIWASIUnit13",
+      "TestDecodeASCIIWASIUnit14",
+      "TestDecodeASCIIWASIUnit15",
+      "TestDecodeASCIIWASIUnit16",
+      "TestDecodeASCIIWASIUnit17",
+      "TestDecodeASCIIWASIUnit18",
+      "TestDecodeASCIIWASIUnit19",
+      "TestDecodeASCIIWASIUnit20",
+      "TestDecodeASCIIWASIUnit21",
+      "TestDecodeASCIIWASIUnit22",
+      "TestDecodeASCIIWASIUnit23",
+      "TestDecodeASCIIWASIUnit24",
+      "TestDecodeASCIIWASIUnit25",
+      "TestDecodeASCIIWASIUnit26",
+      "TestDecodeASCIIWASIUnit27",
+      "TestDecodeASCIIWASIUnit28",
+      "TestDecodeASCIIWASIUnit29",
+      "TestDecodeASCIIWASIUnit30",
+      "TestDecodeASCIIWASIUnit31",
+      "TestDecodeASCIIWASIUnit32",
+      "TestDecodeASCIIWASIUnit33",
+      "TestDecodeASCIIWASIUnit34",
+      "TestDecodeASCIIWASIUnit35",
+      "TestDecodeASCIIWASIUnit36",
+      "TestDecodeASCIIWASIUnit37",
+      "TestDecodeASCIIWASIUnit38",
+      "TestDecodeASCIIWASIUnit39",
+      "TestDecodeASCIIWASIUnit40",
+      "TestDecodeASCIIWASIUnit41",
+      "TestDecodeASCIIWASIUnit42",
+      "TestDecodeASCIIWASIUnit43",
+      "TestDecodeASCIIWASIUnit44",
+      "TestDevirtualizedCalls",
+      "TestExactReceiverRejectsAssignments",
+      "TestToExponentialAndToPrecisionMatchNode",
+      "TestToExponentialAndToPrecisionOutOfRangePanic",
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestProduct_RemoteScanRelease",
+      "TestProduct_RemoteScanSanitized",
+      "TestSerialSlabsSkipRemoteScans",
+      "TestSerialSlabsSkipRemoteScansSanitized",
+      "TestRemoteScanAlwaysMutant",
+      "TestRemoteScanNeverMutant",
+      "TestRemoteScanAlwaysMutantSanitized",
+      "TestRemoteScanNeverMutantSanitized",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCompilesHoldAJobserverTokenEach",
+      "TestAFailedCompileGivesItsTokenBack",
+      "TestAJobserverThatCantBeOpenedFailsTheCompile",
+      "TestTheJobserverMovesNoKey",
+      "TestJSONEncoderRecordView_000",
+      "TestJSONEncoderRecordView_001",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources",
+      "TestRuntimeKeyIncludesEveryInput",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRuntimeCacheKeepsCountFlags",
+      "TestRuntimeCacheRebuildsChangedSources",
+      "TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory",
+      "TestRuntimeCacheConcurrentBuilders",
+      "TestRuntimeCacheConcurrentProcesses",
+      "TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads",
+      "TestDependenciesReadClangsRules",
+      "TestARuntimeIsTheSameOnAnyNumberOfWorkers",
+      "TestASuppliedRuntimeIsAskedOncePerKey",
+      "TestARuntimesPortablePartsAreTheSameThroughEitherLink",
+      "TestStringLengthLimit",
+      "TestLoopBorrowPlan",
+      "TestNbodyBorrowedLoopC",
+      "TestGlobalArgumentLending",
+      "TestLoopArrayHoldC",
+      "TestLoopCallCoverage",
+      "TestNativeCachesWriteNothingUnderHome",
+      "TestCheckerBuildsNameNoPlaceOfTheArchive",
+      "TestSplitBuildsNameNoPlaceOfTheirInputs",
+      "TestMapHashProbeBoundMalloc",
+      "TestMapHashProbeBoundSlabs",
+      "TestMapHashAllocatorsEachHaveOneTest",
+      "TestMapHashProbeCatchesMutantsOldHash",
+      "TestMapHashProbeCatchesMutantsZeroNormalization",
+      "TestMapHashProbeCatchesMutantsNaNNormalization",
+      "TestMapHashMutantsEachHaveOneTest",
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeLongMeasurements",
+      "TestNormalizeRandomMatchesNode",
+      "TestProduct_NormalizationProbe",
+      "TestNormalizeMatchesNodePoints00",
+      "TestNormalizeMatchesNodePoints01",
+      "TestNormalizeMatchesNodePoints02",
+      "TestNormalizeMatchesNodePoints03",
+      "TestNormalizeMatchesNodePoints04",
+      "TestNormalizeMatchesNodePoints05",
+      "TestNormalizeMatchesNodePoints06",
+      "TestNormalizeMatchesNodePoints07",
+      "TestNormalizeMatchesNodePoints08",
+      "TestNormalizeMatchesNodePoints09",
+      "TestNormalizeMatchesNodePoints10",
+      "TestNormalizeMatchesNodePoints11",
+      "TestNormalizeMatchesNodePoints12",
+      "TestNormalizeMatchesNodePoints13",
+      "TestNormalizeMatchesNodePoints14",
+      "TestNormalizeMatchesNodePoints15",
+      "TestNormalizeMatchesNodePoints16",
+      "TestNormalizeMatchesNodeContexts0To86549",
+      "TestNormalizeMatchesNodeContexts86550To173099",
+      "TestNormalizeMatchesNodeContexts173100To259649",
+      "TestNormalizeMatchesNodeContexts259650To346199",
+      "TestNormalizeContextRangesTile",
+      "TestObjectMetadataCacheIsPerEmission",
+      "TestParallelMapCompilerABI",
+      "TestParallelMemory",
+      "TestParallelWorkerPanic",
+      "TestParallelLifecycle",
+      "TestParallelMutant_view_parent_units",
+      "TestParallelMutant_view_owner_count",
+      "TestParallelMutant_ascii_character_write",
+      "TestParallelMutant_skip_items_share",
+      "TestParallelMutant_lazy_cache",
+      "TestParallelMutant_plain_shared_count",
+      "TestParallelMutant_field_cache",
+      "TestParallelMutant_remote_free",
+      "TestParallelMutant_result_order",
+      "TestParallelMutant_reused_graph",
+      "TestParallelMutant_oversized_slot",
+      "TestParallelMutant_fixed_grain",
+      "TestParallelMutant_eager_strings",
+      "TestParallelMutant_one_worker",
+      "TestParallelMap_numbers",
+      "TestParallelMap_strings",
+      "TestParallelMap_objects",
+      "TestParallelMap_map",
+      "TestParallelMap_fresh",
+      "TestParallelMap_nested",
+      "TestParallelMap_exception",
+      "TestParallelMap_nested_exception",
+      "TestParallelMap_million",
+      "TestParallelMutant_fixture_shared_counter",
+      "TestNumbersParseExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "TestProductCompilerBytesAreIndependentOfDirectory",
+      "TestToStringWithARadixMatchesNode",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestRecordsAgainstNode",
+      "TestProduct_RecordMutants",
+      "TestRecordBenchmark",
+      "TestRecordMutantsUnit00",
+      "TestRecordMutantsUnit01",
+      "TestRecordMutantsUnit02",
+      "TestRecordMutantsUnit03",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit05",
+      "TestRecordReadMutantsUnit00",
+      "TestRecordReadMutantsUnit01",
+      "TestRecordReadMutantsUnit02",
+      "TestRegExpSearchNode",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpBytecodeTest262Bucket0Of32",
+      "TestRegExpBytecodeTest262Bucket1Of32",
+      "TestRegExpBytecodeTest262Bucket2Of32",
+      "TestRegExpBytecodeTest262Bucket3Of32",
+      "TestRegExpBytecodeTest262Bucket4Of32",
+      "TestRegExpBytecodeTest262Bucket5Of32",
+      "TestRegExpBytecodeTest262Bucket6Of32",
+      "TestRegExpBytecodeTest262Bucket7Of32",
+      "TestRegExpBytecodeTest262Bucket8Of32",
+      "TestRegExpBytecodeTest262Bucket9Of32",
+      "TestRegExpBytecodeTest262Bucket10Of32",
+      "TestRegExpBytecodeTest262Bucket11Of32",
+      "TestRegExpBytecodeTest262Bucket12Of32",
+      "TestRegExpBytecodeTest262Bucket13Of32",
+      "TestRegExpBytecodeTest262Bucket14Of32",
+      "TestRegExpBytecodeTest262Bucket15Of32",
+      "TestRegExpBytecodeTest262Bucket16Of32",
+      "TestRegExpBytecodeTest262Bucket17Of32",
+      "TestRegExpBytecodeTest262Bucket18Of32",
+      "TestRegExpBytecodeTest262Bucket19Of32",
+      "TestRegExpBytecodeTest262Bucket20Of32",
+      "TestRegExpBytecodeTest262Bucket21Of32",
+      "TestRegExpBytecodeTest262Bucket22Of32",
+      "TestRegExpBytecodeTest262Bucket23Of32",
+      "TestRegExpBytecodeTest262Bucket24Of32",
+      "TestRegExpBytecodeTest262Bucket25Of32",
+      "TestRegExpBytecodeTest262Bucket26Of32",
+      "TestRegExpBytecodeTest262Bucket27Of32",
+      "TestRegExpBytecodeTest262Bucket28Of32",
+      "TestRegExpBytecodeTest262Bucket29Of32",
+      "TestRegExpBytecodeTest262Bucket30Of32",
+      "TestRegExpBytecodeTest262Bucket31Of32",
+      "TestRegExpTest262BucketsEachHaveOneTest",
+      "TestProduct_RegExpBytecodeNative",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeShard00",
+      "TestRegExpBytecodeRandomNodeShard01",
+      "TestRegExpBytecodeRandomNodeShard02",
+      "TestRegExpBytecodeRandomNodeShard03",
+      "TestRegExpBytecodeRandomNodeShard04",
+      "TestRegExpBytecodeRandomNodeShard05",
+      "TestRegExpBytecodeRandomNodeShard06",
+      "TestRegExpBytecodeRandomNodeShard07",
+      "TestRegExpBytecodeRandomNodeShard08",
+      "TestRegExpBytecodeRandomNodeShard09",
+      "TestRegExpBytecodeRandomNodeShard10",
+      "TestRegExpBytecodeRandomNodeShard11",
+      "TestRegExpBytecodeRandomNodeShard12",
+      "TestRegExpBytecodeRandomNodeShard13",
+      "TestRegExpBytecodeRandomNodeShard14",
+      "TestRegExpBytecodeRandomNodeShard15",
+      "TestRegExpBytecodeRandomNodeShard16",
+      "TestRegExpBytecodeRandomNodeShard17",
+      "TestRegExpBytecodeRandomNodeShard18",
+      "TestRegExpBytecodeRandomNodeShard19",
+      "TestRegExpBytecodeRandomNodeShard20",
+      "TestRegExpBytecodeRandomNodeShard21",
+      "TestRegExpBytecodeRandomNodeShard22",
+      "TestRegExpBytecodeRandomNodeShard23",
+      "TestRegExpBytecodeRandomNodeShard24",
+      "TestRegExpBytecodeRandomNodeShard25",
+      "TestRegExpBytecodeRandomNodeShard26",
+      "TestRegExpBytecodeRandomNodeShard27",
+      "TestRegExpBytecodeRandomNodeShard28",
+      "TestRegExpBytecodeRandomNodeShard29",
+      "TestRegExpBytecodeRandomNodeShard30",
+      "TestRegExpBytecodeRandomNodeShard31",
+      "TestRegExpBytecodeRandomNodeShard32",
+      "TestRegExpBytecodeRandomNodeShard33",
+      "TestRegExpBytecodeRandomNodeShard34",
+      "TestRegExpBytecodeRandomNodeShard35",
+      "TestRegExpBytecodeRandomNodeShard36",
+      "TestRegExpBytecodeRandomNodeShard37",
+      "TestRegExpBytecodeRandomNodeShard38",
+      "TestRegExpBytecodeRandomNodeShard39",
+      "TestRegExpV8NativeShard0",
+      "TestRegExpV8NativeShard1",
+      "TestRegExpV8NativeShard2",
+      "TestRegExpV8NativeShard3",
+      "TestRegExpV8WASMShard0",
+      "TestRegExpV8WASMShard1",
+      "TestRegExpV8WASMShard2",
+      "TestRegExpV8WASMShard3",
+      "TestNonShippingFlagsStayIdentical",
+      "TestReleaseFlagsReachLink",
+      "TestReleaseArithmeticIsNeverFused",
+      "TestReleaseFixtureKeepsArithmeticUnfused",
+      "TestReleaseSplitFixtureAgreesWithNode",
+      "TestReleaseSharedValueAndUnsafeMutant",
+      "TestOwnershipInlining",
+      "TestBuildIsTheSameFromAnyDirectory",
+      "TestRuntimeStringEquality",
+      "TestRuntimeStaticsSignalAndExit",
+      "TestRuntimeStaticsStopWholeLines",
+      "TestRuntimeStaticsParallelUnit00",
+      "TestRuntimeStaticsParallelUnit01",
+      "TestRuntimeStaticsParallelUnit02",
+      "TestRuntimeStaticsParallelUnit03",
+      "TestRuntimeStaticsParallelUnit04",
+      "TestRuntimeStaticsParallelUnit05",
+      "TestRuntimeStaticsParallelUnit06",
+      "TestRuntimeStaticsParallelUnit07",
+      "TestRuntimeStaticsParallelUnit08",
+      "TestRuntimeStaticsParallelUnit09",
+      "TestRuntimeStaticsParallelUnit10",
+      "TestRuntimeStaticsParallelUnit11",
+      "TestRuntimeStaticsProtectionMutantsUnit00",
+      "TestRuntimeStaticsProtectionMutantsUnit01",
+      "TestRuntimeStaticsProtectionMutantsUnit02",
+      "TestRuntimeStaticsProtectionMutantsUnit03",
+      "TestRuntimeStaticsProtectionMutantsUnit04",
+      "TestRuntimeStaticsProtectionMutantsUnit05",
+      "TestRuntimeStaticsProtectionMutantsUnit06",
+      "TestRuntimeStaticsProtectionMutantsUnit07",
+      "TestRuntimeStaticsProtectionMutantsUnit08",
+      "TestRuntimeStaticsProtectionMutantsUnit09",
+      "TestRuntimeStaticsProtectionMutantsUnit10",
+      "TestRuntimeStaticsAreListed",
+      "TestRuntimeStaticsStorageScanner",
+      "TestParallelScaling",
+      "TestParallelCachePublication_asan",
+      "TestParallelCachePublication_asan_slabs",
+      "TestParallelCachePublication_count",
+      "TestParallelCachePublication_release",
+      "TestParallelCachePublication_tsan",
+      "TestParallelScalingGuardMutants",
+      "TestParallelSlotPairs",
+      "TestSlabQuarantineCatchesAStaleReadOfAReusedSlot",
+      "TestQuarantineIsPerThreadUnderTSan",
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNodeMixed",
+      "TestStringIndexMatchesNodeBMP",
+      "TestStringIndexMatchesNodeBMPLowHalves",
+      "TestStringIndexMatchesNodeASCII",
+      "TestStringIndexPatternsEachHaveOneTest",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestStringUnitsAreJavaScriptLengths",
+      "TestRuntimeStringViews",
+      "TestParallelStringViews",
+      "TestWASITargetFlags",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestOrdinaryToPrimitive",
+      "TestProduct_PrimitiveMutants",
+      "TestOrdinaryToPrimitiveMutants",
+      "TestOrdinaryToPrimitiveProtocolGuards",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestMeasureClangUnits",
+      "TestUnitsPreserveSharedState",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestUnitSystemHeaderProvenance",
+      "TestProduct_TSGoArchive",
+      "TestProduct_SplitTSGoSource",
+      "TestProduct_SplitTSGoBaseline",
+      "TestSplitTSGoAgreesUnit00",
+      "TestSplitTSGoAgreesUnit01",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWasiAsyncHostPromises",
+      "TestProduct_WASICompiler",
+      "TestProduct_StrictWASIRuntime",
+      "TestWASIUnit00",
+      "TestWASIUnit01",
+      "TestWASIUnit02",
+      "TestWASIUnit03",
+      "TestWASIUnit04",
+      "TestWASIUnit05",
+      "TestWASIUnit06",
+      "TestWASIUnit07",
+      "TestWASIUnit08",
+      "TestWASIUnit09",
+      "TestWASIUnit10",
+      "TestWASIUnit11",
+      "TestWASIUnit12",
+      "TestWASIUnit13",
+      "TestWASIUnit14",
+      "TestWASIUnit15",
+      "TestWASIUnit16",
+      "TestWASIUnit17",
+      "TestWASIUnit18",
+      "TestWASIUnit19",
+      "TestWASIUnit20",
+      "TestWASIUnit21",
+      "TestWASIUnit22",
+      "TestWASIUnit23",
+      "TestWASIUnit24",
+      "TestWASIUnit25",
+      "TestWASIUnit26",
+      "TestWASIUnit27",
+      "TestWASIUnit28",
+      "TestWASIUnit29",
+      "TestWASIUnit30",
+      "TestWASIUnit31",
+      "TestWASIUnit32",
+      "TestWASIUnit33",
+      "TestWASIUnit34",
+      "TestWASIUnit35",
+      "TestTheWASIBuildsNameNoBareClang",
+      "TestAWholeBuildNamesNoTemporaryObject",
+      "TestAsyncCompilerSuspensionsMatchNode",
+      "TestParallelCompilerSharedReferencesMatchNode",
+      "TestPrototypeNodeResearch",
+      "TestPrototypeMixedCountedCycleProbe",
+      "TestPrototypeDebugSiteRefusals"
+    ],
+    "github.com/system-inc/adamic/internal/native/runtimeproducts": [
+      "TestProduct_LeanCensusExports",
+      "TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+      "TestTheLeanCensusFollowsTheBuildAndFailsClosed",
+      "TestTheJobserverNeverReachesAnArchivesBytes",
+      "TestAnArchivesBuildIsJournaledAsRuntimeproducts"
+    ]
+  },
+  "terminal": [
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestAFailedCompileGivesItsTokenBack",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestAJobserverThatCantBeOpenedFailsTheCompile",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestARuntimeIsTheSameOnAnyNumberOfWorkers",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestARuntimesPortablePartsAreTheSameThroughEitherLink",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestASuppliedRuntimeIsAskedOncePerKey",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestAWholeBuildNamesNoTemporaryObject",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestArithmeticIsNeverFused",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestAsyncCompilerSuspensionsMatchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestAsyncHostPromisesAddress",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestAsyncHostPromisesThread",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestBorrowChainDeclarations",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestBorrowChainTargets",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestBuildIsTheSameFromAnyDirectory",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCEndsInNewline",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCallTargetsElementBorrowPlan",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNodeContexts",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNodePoints0To2FFFF",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNodePoints30000To5FFFF",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNodePoints60000To8FFFF",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNodePoints90000ToCFFFF",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNodePointsD0000To10FFFF",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingPointRangesTile",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseTablesMatchNodesUnicode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCheckerBuildsNameNoPlaceOfTheArchive",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestClosureConventionDropCount",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestClosureConventionOwnerRuntimeSites",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestClosureConventionRuntimeDropCount",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestClosureConventionWrongOrder",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCompilesHoldAJobserverTokenEach",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestConstantPortabilityClang",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestConstantPortabilityGCC",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit03",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit04",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit05",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit06",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit07",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit08",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit09",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit10",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit11",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit12",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit13",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit14",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit15",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit16",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit17",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit18",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit19",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit20",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit21",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit22",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit23",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit24",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit25",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit26",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit27",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit28",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit29",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit30",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit31",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit33",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit34",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit35",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit36",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit37",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit38",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit39",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit40",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit41",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit42",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit43",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIUnit44",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit00",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit01",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit02",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit03",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit04",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit05",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit06",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit07",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit08",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit09",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit10",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit11",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit12",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit13",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit14",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit15",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit16",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit17",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit18",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit19",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit20",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit21",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit22",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit23",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit24",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit25",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit26",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit27",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit28",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit29",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit30",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit31",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit32",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit33",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit34",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit35",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit36",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit37",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit38",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit39",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit40",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit41",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit42",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit43",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDecodeASCIIWASIUnit44",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDependenciesReadClangsRules",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDevirtualizeBorrowDocClaim",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestDevirtualizedCalls",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestExactReceiverRejectsAssignments",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestFreedValuesAreCaughtWithSlabs",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestGlobalArgumentLending",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestIeee754MatchesNodeBitForBit",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestInheritanceMemoryPlans",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestJSONEncoderRecordView_000",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestJSONEncoderRecordView_001",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLibraryMapSetIteratorResources",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLongStringBytesMutant",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLongUnicodeLiteralByteCoverage",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLongUnicodePortabilityClang",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLongUnicodePortabilityGCC",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLoopArrayHoldC",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLoopBorrowPlan",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestLoopCallCoverage",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashAllocatorsEachHaveOneTest",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashMutantsEachHaveOneTest",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeBoundMalloc",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeBoundSlabs",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutantsNaNNormalization",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutantsOldHash",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutantsZeroNormalization",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMathAndToFixedMatchJavaScript",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMaybeNumbersPackIntoOneDouble",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMeasureClangUnits",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNativeCachesWriteNothingUnderHome",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNbodyBorrowedLoopC",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNbodyIndexedElementsBorrow",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNoReaderCallingConvention",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNodeBufferRuntimeWithoutDeclarations",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNonShippingFlagsStayIdentical",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeContextRangesTile",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeLongMeasurements",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodeContexts0To86549",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodeContexts173100To259649",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodeContexts259650To346199",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodeContexts86550To173099",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints03",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints04",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints05",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints06",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints07",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints08",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints09",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints10",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints11",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints12",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints13",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints14",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints15",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeMatchesNodePoints16",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeRandomMatchesNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNumbersParseExactlyAsJavaScriptDoes",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestObjectMetadataCacheIsPerEmission",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestOptionalMethodThunksMatchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestOptionalWriteMissingSlotRemainsChecked",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestOrdinaryToPrimitive",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestOrdinaryToPrimitiveMutants",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestOrdinaryToPrimitiveProtocolGuards",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestOwnershipInlining",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelCachePublication_asan",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelCachePublication_asan_slabs",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelCachePublication_count",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelCachePublication_release",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelCachePublication_tsan",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelCompilerSharedReferencesMatchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelLifecycle",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMapCompilerABI",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_exception",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_fresh",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_map",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_million",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_nested",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_nested_exception",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_numbers",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_objects",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMap_strings",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMemory",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_ascii_character_write",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_eager_strings",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_field_cache",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_fixed_grain",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_fixture_shared_counter",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_lazy_cache",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_one_worker",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_oversized_slot",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_plain_shared_count",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_remote_free",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_result_order",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_reused_graph",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_skip_items_share",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_view_owner_count",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelMutant_view_parent_units",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelScaling",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelScalingGuardMutants",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelSlotPairs",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelStringViews",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParallelWorkerPanic",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestParserHasNoUnusedOptionalMethodThunks",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestPassThroughsAreNotConsumers",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProductCompilerBytesAreIndependentOfDirectory",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_DecodeASCIICorpus",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_DecodeASCIINative",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_DecodeASCIIWASI",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_NormalizationProbe",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_PrimitiveMutants",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_RecordMutants",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_RegExpBytecodeNative",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_RemoteScanRelease",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_RemoteScanSanitized",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_SplitTSGoBaseline",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_SplitTSGoSource",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_StrictWASIRuntime",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_TSGoArchive",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestProduct_WASICompiler",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestPrototypeDebugSiteRefusals",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestPrototypeMixedCountedCycleProbe",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestPrototypeNodeResearch",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestQuarantineIsPerThreadUnderTSan",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordBenchmark",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordMutantsUnit00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordMutantsUnit01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordMutantsUnit02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordMutantsUnit03",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordMutantsUnit04",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordMutantsUnit05",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutantsUnit00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutantsUnit01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutantsUnit02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordsAgainstNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodePatternUnits",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard03",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard04",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard05",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard06",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard07",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard08",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard09",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard10",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard11",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard12",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard13",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard14",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard15",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard16",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard17",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard18",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard19",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard20",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard21",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard22",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard23",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard24",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard25",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard26",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard27",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard28",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard29",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard30",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard31",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard33",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard34",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard35",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard36",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard37",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard38",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeRandomNodeShard39",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket0Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket10Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket11Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket12Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket13Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket14Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket15Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket16Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket17Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket18Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket19Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket1Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket20Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket21Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket22Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket23Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket24Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket25Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket26Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket27Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket28Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket29Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket2Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket30Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket31Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket3Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket4Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket5Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket6Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket7Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket8Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262Bucket9Of32",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpIteratorResultShape",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpLintPatternsNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpNativeStepLimitBoundary",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpSearchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpTest262BucketsEachHaveOneTest",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8NativeShard0",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8NativeShard1",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8NativeShard2",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8NativeShard3",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8WASMShard0",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8WASMShard1",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8WASMShard2",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpV8WASMShard3",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegexProgramsKeepCheckedFieldReads",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestReleaseArithmeticIsNeverFused",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestReleaseFixtureKeepsArithmeticUnfused",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestReleaseFlagsReachLink",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestReleaseSharedValueAndUnsafeMutant",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestReleaseSplitFixtureAgreesWithNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRemoteScanAlwaysMutant",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRemoteScanAlwaysMutantSanitized",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRemoteScanNeverMutant",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRemoteScanNeverMutantSanitized",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestResidentSetUnits",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRetainedSplitCoverage",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRetainedTopLevelCoverage",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeCacheConcurrentBuilders",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeCacheConcurrentProcesses",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeCacheKeepsCountFlags",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeCacheRebuildsChangedSources",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeFieldLayoutsAreIncluded",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeKeyIncludesEveryInput",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeKeyKeepsBoundaries",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsAreListed",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit03",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit04",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit05",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit06",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit07",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit08",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit09",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit10",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsParallelUnit11",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit02",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit03",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit04",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit05",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit06",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit07",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit08",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit09",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsProtectionMutantsUnit10",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsSignalAndExit",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsStopWholeLines",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStaticsStorageScanner",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStringEquality",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRuntimeStringViews",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSerialSlabsSkipRemoteScans",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSerialSlabsSkipRemoteScansSanitized",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestShardSelection",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSizeClassesShareTheirChunks",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSlabQuarantineCatchesAStaleReadOfAReusedSlot",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSplitBuildsNameNoPlaceOfTheirInputs",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSplitTSGoAgreesUnit00",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSplitTSGoAgreesUnit01",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSplitTokensDoNotRewriteLiterals",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestSplitUnitCoverage",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStaticBooleanInitializerMutant",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStaticNumberInitializerMutant",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringBuildingMatchesNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringIndexCacheStatesMatchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringIndexMatchesNodeASCII",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringIndexMatchesNodeBMP",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringIndexMatchesNodeBMPLowHalves",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringIndexMatchesNodeMixed",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringIndexPatternsEachHaveOneTest",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringLengthLimit",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringUnitsAreJavaScriptLengths",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringViewAfterAppendMatchesNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestStringsMatchJavaScript",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestTSGoBuildSeesTheProgramsFeatures",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestTheJobserverMovesNoKey",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestTheWASIBuildsNameNoBareClang",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestThrowElementBorrowPlan",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestToExponentialAndToPrecisionMatchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestToExponentialAndToPrecisionOutOfRangePanic",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestToStringWithARadixMatchesNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestToStringWithARadixOutOfRangePanics",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestTypedArrayRuntime",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestUniformFieldsMatchNode",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestUnitCacheFlagsHoldSanitizer",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestUnitSystemHeaderProvenance",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestUnitsPreserveSharedState",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestViewMixedUnionUnknownAndUnavailable",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIRefusesUnsupportedOptions",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASITargetFlags",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit00",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit01",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit02",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit03",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit04",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit05",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit06",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit07",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit08",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit09",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit10",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit11",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit12",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit13",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit14",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit15",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit16",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit17",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit18",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit19",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit20",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit21",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit22",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit23",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit24",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit25",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit26",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit27",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit28",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit29",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit30",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit31",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit32",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit33",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit34",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWASIUnit35",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestWasiAsyncHostPromises",
+      "status": "skip"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "test": "TestAnArchivesBuildIsJournaledAsRuntimeproducts",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "test": "TestProduct_LeanCensusExports",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "test": "TestTheJobserverNeverReachesAnArchivesBytes",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "test": "TestTheLeanCensusFollowsTheBuildAndFailsClosed",
+      "status": "pass"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+      "test": "TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+      "status": "pass"
+    }
+  ],
+  "missing": []
+}

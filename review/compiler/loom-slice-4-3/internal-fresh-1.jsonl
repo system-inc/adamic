@@ -1,0 +1,47 @@
+{"Time":"2026-10-16T08:28:58.248715272Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-16T08:28:58.260372964Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker"}
+{"Time":"2026-10-16T08:28:58.260465453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker","Output":"=== RUN   TestGeneratorChecker\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260491973Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker","Output":"=== PAUSE TestGeneratorChecker\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260494246Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker"}
+{"Time":"2026-10-16T08:28:58.260502689Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference"}
+{"Time":"2026-10-16T08:28:58.260505403Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference","Output":"=== RUN   TestGeneratorFirstReference\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260509309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference","Output":"=== PAUSE TestGeneratorFirstReference\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260510861Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference"}
+{"Time":"2026-10-16T08:28:58.260518583Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions"}
+{"Time":"2026-10-16T08:28:58.260520175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions","Output":"=== RUN   TestGeneratorCompletions\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260522519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions","Output":"=== PAUSE TestGeneratorCompletions\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260524071Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions"}
+{"Time":"2026-10-16T08:28:58.260527126Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver"}
+{"Time":"2026-10-16T08:28:58.260529429Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"=== RUN   TestIteratorFieldAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260532724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"=== PAUSE TestIteratorFieldAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260554166Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver"}
+{"Time":"2026-10-16T08:28:58.260557121Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver"}
+{"Time":"2026-10-16T08:28:58.260558873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"=== RUN   TestIteratorMethodAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.260561698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"=== PAUSE TestIteratorMethodAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.26056337Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver"}
+{"Time":"2026-10-16T08:28:58.260565443Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker"}
+{"Time":"2026-10-16T08:28:58.260574196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker","Output":"=== CONT  TestGeneratorChecker\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.262502695Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver"}
+{"Time":"2026-10-16T08:28:58.262514002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"=== CONT  TestIteratorFieldAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.262633011Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Output":"--- PASS: TestIteratorFieldAccessorEscapesReceiver (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.262641043Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorFieldAccessorEscapesReceiver","Elapsed":0}
+{"Time":"2026-10-16T08:28:58.26265257Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver"}
+{"Time":"2026-10-16T08:28:58.262654583Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"=== CONT  TestIteratorMethodAccessorEscapesReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.262660783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Output":"--- PASS: TestIteratorMethodAccessorEscapesReceiver (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.262663016Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestIteratorMethodAccessorEscapesReceiver","Elapsed":0}
+{"Time":"2026-10-16T08:28:58.26266598Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions"}
+{"Time":"2026-10-16T08:28:58.262667583Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions","Output":"=== CONT  TestGeneratorCompletions\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.267670513Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference"}
+{"Time":"2026-10-16T08:28:58.267689411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference","Output":"=== CONT  TestGeneratorFirstReference\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.412694208Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions","Output":"    generators_test.go:77: 125 writes, 114 proven not to close a cycle\n"}
+{"Time":"2026-10-16T08:28:58.412748139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions","Output":"--- PASS: TestGeneratorCompletions (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.419929323Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorCompletions","Elapsed":0.15}
+{"Time":"2026-10-16T08:28:58.419975362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker","Output":"    generators_test.go:67: 69 writes, 63 proven not to close a cycle\n"}
+{"Time":"2026-10-16T08:28:58.419988151Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker","Output":"--- PASS: TestGeneratorChecker (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.424168284Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorChecker","Elapsed":0.16}
+{"Time":"2026-10-16T08:28:58.424197078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference","Output":"    generators_test.go:72: 72 writes, 64 proven not to close a cycle\n"}
+{"Time":"2026-10-16T08:28:58.424211529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference","Output":"--- PASS: TestGeneratorFirstReference (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.424214354Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestGeneratorFirstReference","Elapsed":0.16}
+{"Time":"2026-10-16T08:28:58.424217118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:28:58.428338302Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.179s\n"}
+{"Time":"2026-10-16T08:28:58.428397501Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.18}

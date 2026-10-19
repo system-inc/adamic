@@ -1,0 +1,217 @@
+review/compiler/chain-slice-4/admission.log:45: new blank line at EOF.
+review/compiler/chain-slice-4/generator-mutants/admit-cycle/test.log:7: trailing whitespace.
++        
+review/compiler/chain-slice-4/generator-mutants/admit-cycle/test.log:10: trailing whitespace.
++        
+review/compiler/chain-slice-4/generator-mutants/admit-cycle/test.log:15: trailing whitespace.
++        
+review/compiler/chain-slice-4/generator-mutants/admit-cycle/test.log:19: trailing whitespace.
++        
+review/compiler/chain-slice-4/generator-mutants/admit-cycle/test.log:21: trailing whitespace.
++        
+review/compiler/chain-slice-4/iteration-mutants/allow-intrinsic-write.patch:4: trailing whitespace.
++ 
+review/compiler/chain-slice-4/iteration-mutants/allow-intrinsic-write.patch:8: space before tab in indent.
++ 	if node.Kind != ast.KindElementAccessExpression || !ast.IsAssignmentTarget(node) {
+review/compiler/chain-slice-4/iteration-mutants/allow-intrinsic-write.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/chain-slice-4/iteration-mutants/allow-intrinsic-write.patch:10: space before tab in indent.
++ 	}
+review/compiler/chain-slice-4/iteration-mutants/snapshot-view.patch:4: space before tab in indent.
++ 	value, err := l.value(node)
+review/compiler/chain-slice-4/iteration-mutants/snapshot-view.patch:5: space before tab in indent.
++ 	if err == nil {
+review/compiler/chain-slice-4/iteration-mutants/snapshot-view.patch:6: space before tab in indent.
++ 		err = l.readonlyArrayValue(node, value)
+review/compiler/chain-slice-4/iteration-mutants/snapshot-view.patch:10: space before tab in indent.
++ 	}
+review/compiler/chain-slice-4/iteration-mutants/snapshot-view.patch:11: space before tab in indent.
++ 	if err == nil {
+review/compiler/chain-slice-4/iteration-mutants/snapshot-view.patch:12: space before tab in indent.
++ 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.log:25: trailing whitespace.
++        
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.log:27: trailing whitespace.
++        rax = 0xa5a5f015def9ad60  rbx = 0x00007ffea57eeae0  rcx = 0x00007bd68c3e0020  rdx = 0x14b4be02bbdf35ac  
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.log:28: trailing whitespace.
++        rdi = 0xa5a5f015def9ad60  rsi = 0x00007bd68c3e0030  rbp = 0x00007ffea57eeba0  rsp = 0x00007ffea57eead0  
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.log:29: trailing whitespace.
++         r8 = 0x00007bd68c3e0020   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0xafffff00000fff01  
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.log:30: trailing whitespace.
++        r12 = 0x00007bd68c3e0020  r13 = 0x0000000000000000  r14 = 0x0000000000000000  r15 = 0x00007bd68c3e0080  
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.patch:4: space before tab in indent.
++ 		}
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.patch:5: space before tab in indent.
++ 		contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.patch:6: space before tab in indent.
++ 		if contextual != nil {
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.patch:10: space before tab in indent.
++ 		}
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.patch:11: space before tab in indent.
++ 		if contextual != nil && l.checker.IsArrayType(contextual) {
+review/compiler/chain-slice-4/iteration-mutants/strong-weak-slot.patch:12: space before tab in indent.
++ 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+review/compiler/chain-slice-4/iteration-mutants/widen-mutable-element.patch:4: space before tab in indent.
++ 	}
+review/compiler/chain-slice-4/iteration-mutants/widen-mutable-element.patch:5: space before tab in indent.
++ 	var found []*checker.Type
+review/compiler/chain-slice-4/iteration-mutants/widen-mutable-element.patch:6: space before tab in indent.
++ 	for _, member := range members {
+review/compiler/chain-slice-4/iteration-mutants/widen-mutable-element.patch:11: space before tab in indent.
++ 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+review/compiler/chain-slice-4/iteration-mutants/widen-mutable-element.patch:12: space before tab in indent.
++ 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+review/compiler/chain-slice-4/iteration-mutants/widen-mutable-element.patch:13: space before tab in indent.
++ 			found = append(found, member)
+review/compiler/chain-slice-4/main-refresh/members.log:130: trailing whitespace.
++    step20_iteration_test.go:76: collections.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:166: trailing whitespace.
++    step20_iteration_test.go:76: delegated_generator.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:203: trailing whitespace.
++    step20_iteration_test.go:76: generator.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:218: trailing whitespace.
++    step20_iteration_test.go:76: object_iteration.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:233: trailing whitespace.
++    step20_iteration_test.go:76: strings.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:244: trailing whitespace.
++    step20_iteration_test.go:76: user_forwarding.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:275: trailing whitespace.
++    step20_iteration_test.go:76: array_view_stress.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:289: trailing whitespace.
++    step20_iteration_test.go:76: array_view_weak.a: accepted 
+review/compiler/chain-slice-4/main-refresh/members.log:329: trailing whitespace.
++    step20_iteration_test.go:76: test262_array_views.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:212: trailing whitespace.
++    step20_iteration_test.go:76: collections.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:307: trailing whitespace.
++    step20_iteration_test.go:76: delegated_generator.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:309: trailing whitespace.
++    step20_iteration_test.go:76: generator.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:317: trailing whitespace.
++    step20_iteration_test.go:76: object_iteration.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:319: trailing whitespace.
++    step20_iteration_test.go:76: strings.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:321: trailing whitespace.
++    step20_iteration_test.go:76: user_forwarding.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:329: trailing whitespace.
++    step20_iteration_test.go:76: array_view_stress.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:331: trailing whitespace.
++    step20_iteration_test.go:76: array_view_weak.a: accepted 
+review/compiler/chain-slice-4/oracle-members-correct-cwd.log:333: trailing whitespace.
++    step20_iteration_test.go:76: test262_array_views.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:289: trailing whitespace.
++    step20_iteration_test.go:76: collections.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:350: trailing whitespace.
++    step20_iteration_test.go:76: delegated_generator.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:352: trailing whitespace.
++    step20_iteration_test.go:76: generator.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:360: trailing whitespace.
++    step20_iteration_test.go:76: object_iteration.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:362: trailing whitespace.
++    step20_iteration_test.go:76: strings.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:364: trailing whitespace.
++    step20_iteration_test.go:76: user_forwarding.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:372: trailing whitespace.
++    step20_iteration_test.go:76: array_view_stress.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:374: trailing whitespace.
++    step20_iteration_test.go:76: array_view_weak.a: accepted 
+review/compiler/chain-slice-4/oracle-members-final.log:376: trailing whitespace.
++    step20_iteration_test.go:76: test262_array_views.a: accepted 
+review/compiler/chain-slice-4/source-plan/commit-history.txt:1110: new blank line at EOF.
+review/compiler/chain-slice-4/source-plan/merge-history.txt:303: new blank line at EOF.
+review/compiler/loom-slice-4/generator-mutants/admit-cycle/test.log:7: trailing whitespace.
++        
+review/compiler/loom-slice-4/generator-mutants/admit-cycle/test.log:10: trailing whitespace.
++        
+review/compiler/loom-slice-4/generator-mutants/admit-cycle/test.log:15: trailing whitespace.
++        
+review/compiler/loom-slice-4/generator-mutants/admit-cycle/test.log:19: trailing whitespace.
++        
+review/compiler/loom-slice-4/generator-mutants/admit-cycle/test.log:21: trailing whitespace.
++        
+review/compiler/loom-slice-4/iteration-mutants/allow-intrinsic-write.patch:4: trailing whitespace.
++ 
+review/compiler/loom-slice-4/iteration-mutants/allow-intrinsic-write.patch:8: space before tab in indent.
++ 	if node.Kind != ast.KindElementAccessExpression || !ast.IsAssignmentTarget(node) {
+review/compiler/loom-slice-4/iteration-mutants/allow-intrinsic-write.patch:9: space before tab in indent.
++ 		return nil
+review/compiler/loom-slice-4/iteration-mutants/allow-intrinsic-write.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-slice-4/iteration-mutants/snapshot-view.patch:4: space before tab in indent.
++ 	value, err := l.value(node)
+review/compiler/loom-slice-4/iteration-mutants/snapshot-view.patch:5: space before tab in indent.
++ 	if err == nil {
+review/compiler/loom-slice-4/iteration-mutants/snapshot-view.patch:6: space before tab in indent.
++ 		err = l.readonlyArrayValue(node, value)
+review/compiler/loom-slice-4/iteration-mutants/snapshot-view.patch:10: space before tab in indent.
++ 	}
+review/compiler/loom-slice-4/iteration-mutants/snapshot-view.patch:11: space before tab in indent.
++ 	if err == nil {
+review/compiler/loom-slice-4/iteration-mutants/snapshot-view.patch:12: space before tab in indent.
++ 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+review/compiler/loom-slice-4/iteration-mutants/strong-weak-slot.patch:4: space before tab in indent.
++ 		}
+review/compiler/loom-slice-4/iteration-mutants/strong-weak-slot.patch:5: space before tab in indent.
++ 		contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+review/compiler/loom-slice-4/iteration-mutants/strong-weak-slot.patch:6: space before tab in indent.
++ 		if contextual != nil {
+review/compiler/loom-slice-4/iteration-mutants/strong-weak-slot.patch:10: space before tab in indent.
++ 		}
+review/compiler/loom-slice-4/iteration-mutants/strong-weak-slot.patch:11: space before tab in indent.
++ 		if contextual != nil && l.checker.IsArrayType(contextual) {
+review/compiler/loom-slice-4/iteration-mutants/strong-weak-slot.patch:12: space before tab in indent.
++ 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+review/compiler/loom-slice-4/iteration-mutants/widen-mutable-element.patch:4: space before tab in indent.
++ 	}
+review/compiler/loom-slice-4/iteration-mutants/widen-mutable-element.patch:5: space before tab in indent.
++ 	var found []*checker.Type
+review/compiler/loom-slice-4/iteration-mutants/widen-mutable-element.patch:6: space before tab in indent.
++ 	for _, member := range members {
+review/compiler/loom-slice-4/iteration-mutants/widen-mutable-element.patch:11: space before tab in indent.
++ 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
+review/compiler/loom-slice-4/iteration-mutants/widen-mutable-element.patch:12: space before tab in indent.
++ 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+review/compiler/loom-slice-4/iteration-mutants/widen-mutable-element.patch:13: space before tab in indent.
++ 			found = append(found, member)
+review/compiler/loom-slice-4/project-sources/chain-stock-build.log:1: trailing whitespace.
++8:28:20 AM - Projects in this build: 
+review/compiler/loom-slice-4/project-sources/chain-stock-build.log:2: trailing whitespace.
++    * review/compiler/loom-slice-4/project-sources/chain/leaf/tsconfig.json
+review/compiler/loom-slice-4/project-sources/chain-stock-build.log:3: trailing whitespace.
++    * review/compiler/loom-slice-4/project-sources/chain/middle/tsconfig.json
+review/compiler/loom-slice-4/project-sources/chain-stock-build.log:17: new blank line at EOF.
+review/compiler/loom-slice-4/project-sources/two-stock-build.log:1: trailing whitespace.
++8:28:03 AM - Projects in this build: 
+review/compiler/loom-slice-4/project-sources/two-stock-build.log:2: trailing whitespace.
++    * review/compiler/loom-slice-4/project-sources/two/dependency/tsconfig.json
+review/compiler/loom-slice-4/project-sources/two-stock-build.log:12: new blank line at EOF.
+stage3/fixtures/iteration/TEST262-LICENSE:1: trailing whitespace.
++Test262: ECMAScript Test Suite ("Software") is protected by copyright and is being 
+stage3/fixtures/iteration/TEST262-LICENSE:2: trailing whitespace.
++made available under the  "BSD License", included below. This Software may be subject to third party rights (rights 
+stage3/fixtures/iteration/TEST262-LICENSE:3: trailing whitespace.
++from parties other than Ecma International), including patent rights, and no licenses under such third party rights 
+stage3/fixtures/iteration/TEST262-LICENSE:4: trailing whitespace.
++are granted under this license even if the third party concerned is a member of Ecma International.  SEE THE ECMA 
+stage3/fixtures/iteration/TEST262-LICENSE:5: trailing whitespace.
++CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT https://www.ecma-international.org/ipr FOR 
+stage3/fixtures/iteration/TEST262-LICENSE:11: trailing whitespace.
++Redistribution and use in source and binary forms, with or without modification, are permitted provided that the 
+stage3/fixtures/iteration/TEST262-LICENSE:13: trailing whitespace.
++1.   Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
+stage3/fixtures/iteration/TEST262-LICENSE:15: trailing whitespace.
++2.   Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the 
+stage3/fixtures/iteration/TEST262-LICENSE:17: trailing whitespace.
++3.   Neither the name of the authors nor Ecma International may be used to endorse or promote products derived from 
+stage3/fixtures/iteration/TEST262-LICENSE:20: trailing whitespace.
++THIS SOFTWARE IS PROVIDED BY THE ECMA INTERNATIONAL "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+stage3/fixtures/iteration/TEST262-LICENSE:21: trailing whitespace.
++LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+stage3/fixtures/iteration/TEST262-LICENSE:22: trailing whitespace.
++SHALL ECMA INTERNATIONAL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+stage3/fixtures/iteration/TEST262-LICENSE:23: trailing whitespace.
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+stage3/fixtures/iteration/TEST262-LICENSE:24: trailing whitespace.
++INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+stage3/fixtures/iteration/TEST262-LICENSE:25: trailing whitespace.
++NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 

@@ -20,7 +20,6 @@ type refusal struct {
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
@@ -84,6 +83,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.genericBodyRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
 		}
@@ -94,6 +97,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil
+		}
+		if err := l.intrinsicIteratorWrite(node); err != nil {
+			found = err
+			return true
 		}
 		if err := l.enumerationIndexedWriteRefusal(node); err != nil {
 			found = err
@@ -159,8 +166,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		case ast.KindMethodDeclaration:
 			generator = node.AsMethodDeclaration().AsteriskToken != nil
 		}
-		if generator {
-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+		if generator && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+			found = &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use a synchronous generator; async resumption awaits the async ownership and cancellation model"}
 			return true
 		}
 		// Covered async syntax is lowered by async.go. Unsupported lifecycle and Promise

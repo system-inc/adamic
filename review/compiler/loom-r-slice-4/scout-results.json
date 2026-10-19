@@ -1,0 +1,103 @@
+[
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.11430840599996372
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.11459553000008782
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant-selection"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.11453955199999655
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/audit.py",
+      "--mutant-markdown"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.11439674500002184
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/parameters_test.py",
+      "/workspace/adamic/stage3/api/node_modules/typescript"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.264991603999988
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/parameters_test.py",
+      "/workspace/adamic/stage3/api/node_modules/typescript",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.264871411999934
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/resume.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.06434466799998972
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/resume.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.06413308900005177
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py",
+      "--test"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.11589618699997573
+  },
+  {
+    "command": [
+      "python3",
+      "review/compiler/chain-slice-4/source-generics-scout/docs/step-16-generics/retirement.py",
+      "--mutant"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.11435918699999092
+  }
+]

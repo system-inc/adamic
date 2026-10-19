@@ -1,0 +1,745 @@
+[
+  {
+    "label": "counts",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "600s",
+      "-parallel",
+      "4",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 97.982,
+    "passed": 1198,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "ir-prepare",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetExportInputs",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 1,
+    "seconds": 39.659,
+    "passed": 3,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "TestCallTargetExportInputsFlow",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.13
+      },
+      {
+        "test": "TestCallTargetExportInputsOracle",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.19
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "label": "internal_lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "600s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 1,
+    "seconds": 40.601,
+    "passed": 1456,
+    "skipped": 3,
+    "failures": [
+      {
+        "test": "TestProduct_LowerAgreementNative",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestTypedArrayFromEmptyArray",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestTypedArrayFromArray",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.26
+      },
+      {
+        "test": "TestRegExpUnicodeClassSourceAgreesWithNode",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestRegExpSlashClassSourceAgreesWithNode",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.26
+      },
+      {
+        "test": "TestRegExpEscapedSlashSourceAgreesWithNode",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestParameterPropertyValueMatchesNode",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.85
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/parser_every_result",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.98
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/parser_some_result",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_some",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_some_empty",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_some_false_valid",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_some_false_read",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_some_objects",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.07
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_some_true_only",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_callback",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_erased",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_checked",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_false",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.06
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_once",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_every",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_array_alias",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_assertion",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestPredicateOverloadRuntime/overload_nominal",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.08
+      },
+      {
+        "test": "TestPredicateOverloadRuntime",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 2
+      },
+      {
+        "test": "TestClassStaticSideEffectMatchesNode",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.2
+      },
+      {
+        "test": "TestFX5MixedLiteralAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestEnumMemberValuesAndReverseNameMatchNode",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.18
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/early_value",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.19
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/initialized_value",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.18
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/indirect_value",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.18
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/early_plain_class",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.19
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.17
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/early_extends",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks/initialized_extends",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.19
+      },
+      {
+        "test": "TestUndecidedCycleReadsUseReadyChecks",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 1.26
+      },
+      {
+        "test": "TestArrayNarrowingOptionalNumberAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.23
+      },
+      {
+        "test": "TestArrayNarrowingBooleanCallbackAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestArrayNarrowingPreservedUnionAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.25
+      },
+      {
+        "test": "TestArrayNarrowingFindLastIndexAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.24
+      },
+      {
+        "test": "TestArrayNarrowingSomeNegatedAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.23
+      },
+      {
+        "test": "TestArrayNarrowingOptionalStringAgrees",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.28
+      },
+      {
+        "test": "TestNativeAgreementRejectsWrongOutput",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.26
+      },
+      {
+        "test": "TestNativeAgreementRejectsWrongExit",
+        "package": "github.com/system-inc/adamic/internal/lower",
+        "action": "fail",
+        "seconds": 0.72
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "label": "internal_ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "180s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 1,
+    "seconds": 2.934,
+    "passed": 24,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "TestCallTargetExportInputsFlow",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.14
+      },
+      {
+        "test": "TestCallTargetExportInputsOracle",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.16
+      },
+      {
+        "test": "TestCallTargetReadersOracle",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestProduct_CallTargetReaderArchivesFlow",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestCallTargetReadersFlow",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestProduct_CallTargetReaderArchivesOracle",
+        "package": "github.com/system-inc/adamic/internal/ir",
+        "action": "fail",
+        "seconds": 0.01
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "label": "ir-prepare",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetExportInputs(Flow|Oracle)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 4.746,
+    "passed": 2,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "internal_lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "600s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 44.521,
+    "passed": 1500,
+    "skipped": 3,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "internal_ir",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "180s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 2.984,
+    "passed": 30,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "internal_flow",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "480s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 69.941,
+    "passed": 922,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "internal_fresh",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "480s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 17.583,
+    "passed": 955,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "internal_javascript",
+    "command": [
+      "go",
+      "test",
+      "./internal/javascript/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "180s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 0.569,
+    "passed": 7,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "internal_load",
+    "command": [
+      "go",
+      "test",
+      "./internal/load/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "300s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 10.517,
+    "passed": 86,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "stage3_project-loader_probe",
+    "command": [
+      "go",
+      "test",
+      "./stage3/project-loader/probe/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 0.164,
+    "passed": 0,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "stage3_fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "600s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 1,
+    "seconds": 74.934,
+    "passed": 729,
+    "skipped": 1,
+    "failures": [
+      {
+        "test": "TestFixtureDirectoriesHaveTopLevelTests",
+        "package": "github.com/system-inc/adamic/stage3/fixtures",
+        "action": "fail",
+        "seconds": 0.01
+      },
+      {
+        "test": "TestFixturesObjects/objects/25_map_generator.a/stage0",
+        "package": "github.com/system-inc/adamic/stage3/fixtures",
+        "action": "fail",
+        "seconds": 0
+      },
+      {
+        "test": "TestFixturesObjects/objects/25_map_generator.a",
+        "package": "github.com/system-inc/adamic/stage3/fixtures",
+        "action": "fail",
+        "seconds": 0.19
+      },
+      {
+        "test": "TestFixturesObjects/objects",
+        "package": "github.com/system-inc/adamic/stage3/fixtures",
+        "action": "fail",
+        "seconds": 0
+      },
+      {
+        "test": "TestFixturesObjects",
+        "package": "github.com/system-inc/adamic/stage3/fixtures",
+        "action": "fail",
+        "seconds": 0.12
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "label": "internal_native",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "840s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 1,
+    "seconds": 305.142,
+    "passed": 800,
+    "skipped": 92,
+    "failures": [
+      {
+        "test": "TestLongUnicodePortabilityGCC",
+        "package": "github.com/system-inc/adamic/internal/native",
+        "action": "fail",
+        "seconds": 0.86
+      },
+      {
+        "test": "TestSplitAttributedBindingsAgreeWithNode/wasm32-wasi",
+        "package": "github.com/system-inc/adamic/internal/native",
+        "action": "fail",
+        "seconds": 0
+      },
+      {
+        "test": "TestSplitAttributedBindingsAgreeWithNode",
+        "package": "github.com/system-inc/adamic/internal/native",
+        "action": "fail",
+        "seconds": 0.4
+      },
+      {
+        "test": "TestProduct_LeanCensusExports",
+        "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+        "action": "fail",
+        "seconds": 1.99
+      },
+      {
+        "test": "TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+        "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+        "action": "fail",
+        "seconds": 3.17
+      },
+      {
+        "test": "TestTheLeanCensusFollowsTheBuildAndFailsClosed",
+        "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+        "action": "fail",
+        "seconds": 4.13
+      },
+      {
+        "test": "TestTheJobserverNeverReachesAnArchivesBytes",
+        "package": "github.com/system-inc/adamic/internal/native/runtimeproducts",
+        "action": "fail",
+        "seconds": 7.15
+      }
+    ],
+    "over_60s": []
+  },
+  {
+    "label": "internal_oracle",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "1080s",
+      "-parallel",
+      "4",
+      "-p",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 550.667,
+    "passed": 5224,
+    "skipped": 291,
+    "failures": [],
+    "over_60s": []
+  },
+  {
+    "label": "guards",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^(TestEveryTestIsParallelOrSaysWhy|TestEveryDuplicatedProductDeclarationAgrees)$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4"
+    ],
+    "exit": 0,
+    "seconds": 1.924,
+    "passed": 2,
+    "skipped": 0,
+    "failures": [],
+    "over_60s": []
+  }
+]

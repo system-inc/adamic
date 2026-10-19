@@ -303,10 +303,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/25_map_generator.a:3:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
-    }
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/objects/25_map_generator.a:4:21: stage 0 can't lower an iterable object view of built-in storage needing a protocol adapter yet"}
   },
   {
     "file": "26_diagnostic_in.a",
