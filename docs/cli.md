@@ -196,8 +196,8 @@ policy, and that the two semantic flags never drop.
 | Target | Selected by | Tested on main by |
 | --- | --- | --- |
 | native, Linux x86_64 and arm64 | the host; no flag | `internal/oracle` `TestNativeAgreesWithNode_*` (`internal/oracle/families_generated_test.go:8`, body at `internal/oracle/oracle_test.go:696`), Linux-only leak checks (`internal/oracle/oracle_test.go:777`), `internal/native` `TestReleaseFlagsReachLink` (`internal/native/release_build_test.go:48`) |
-| native, macOS | the host; no flag | darwin branches in code (`internal/native/native.go:219-231`, `internal/native/library.go:623-627`) and darwin-only tests (`internal/oracle/moves_darwin_test.go`, `internal/native/whole_build_paths_test.go:30`, `internal/native/machine_paths_test.go:135,172`). These run only where someone runs the suite on a Mac |
-| wasm32-wasi | `--target wasm32-wasi` | parsing and refusals ungated (`cmd/adamic/target_test.go`, `cmd/adamic/command_guards_test.go:21-31`, `internal/native/target_test.go:11`); compiled programs only with `ADAMIC_ORACLE_WASI=1` (`internal/oracle/wasi_test.go:45`, `cmd/adamic/request_test.go:76-169`) or `ADAMIC_TEST_WASI=1` (`internal/native/wasm_test.go:64`), which neither `cloud/setup.sh` nor `cloud/write-env.sh` sets |
+| native, macOS | the host; no flag | darwin branches in code (`internal/native/native.go:219-231`, `internal/native/library.go:623-627`) and darwin-only tests (`internal/oracle/moves_darwin_test.go`, `internal/native/whole_build_paths_test.go:30`, `internal/native/machine_paths_test.go:135,172`). Loom's Go sources never name darwin, so as far as its code shows these run only where someone runs the suite on a Mac |
+| wasm32-wasi | `--target wasm32-wasi` | parsing and refusals ungated (`cmd/adamic/target_test.go`, `cmd/adamic/command_guards_test.go:21-31`, `internal/native/target_test.go:11`); compiled programs only with `ADAMIC_ORACLE_WASI=1` (`internal/oracle/wasi_test.go:45`, `cmd/adamic/request_test.go:76-169`) or `ADAMIC_TEST_WASI=1` (`internal/native/wasm_test.go:64`). Loom's gate sets both (`GateEnvironment` in loom's `planner/plan.go:20`); `cloud/setup.sh` and `cloud/write-env.sh` set neither, so a worker's own `go test` skips them |
 | JavaScript | `adamic js` | the oracle's third run of every fixture (`internal/oracle/oracle_test.go:572,727`), the fuzzer (`internal/fuzz/run.go:202`) |
 | tsgo-linked native | `--tsgo <archive>` | `bridge/tsgo/products_test.go:352` and the `TestBridge*` tests over it |
 
@@ -222,3 +222,14 @@ native Go branches on architecture. `cloud/setup.sh` provisions Linux x86_64 and
   the full form.
 - `README.md` says macOS and Linux today and JavaScript for the web, which matches; the JavaScript
   output still needs the oracle's `'adamic'` module to run.
+
+## Open gaps
+
+- A compiler panic exits 2, the same as a usage error (#wjz8bc3).
+- Exit 1 is both a refused program and a missing or failing toolchain (#z1ba56x).
+- No `--help` that exits 0 and no `--version` (#a733mfq).
+- Nothing checks the host clang's version, and wasm32 falls back to `PATH` clang silently (#h2vm51c).
+- `build`'s source and `-o` are positional (#21m2dv3).
+- `adamic js` output runs only under the oracle's loader (#qq5dkee).
+- Toolchain downloads carry no checksum, and there is no release of `adamic` (#xx66xas).
+- The other docs listed above (#gyg0wrm).
