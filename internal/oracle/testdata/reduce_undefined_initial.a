@@ -1,0 +1,7 @@
+// reduce whose initial value is undefined: the accumulator starts as the null constant.
+interface Item {
+	readonly name: string;
+}
+const items: Item[] = [{ name: `a${1}` }, { name: `b${2}` }];
+const last = items.reduce<Item | undefined>((previous, item) => (previous === undefined ? item : item), undefined);
+console.log(last?.name ?? '-');
