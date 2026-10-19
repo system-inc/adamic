@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	goruntime "runtime"
 	"slices"
 	"strconv"
 	"strings"
@@ -72,6 +73,49 @@ func recordCheckCounts(t *testing.T, stderr string) {
 	t.Log(strings.TrimSpace(stderr))
 }
 
+// recordPinnedCounts holds the workload's cost exactly, so a change that adds an allocation, a retain or
+// a release per operation fails here and names the count, even when every answer and leak check holds.
+// Linux is the gate of record: macOS's runtime takes other paths for the same fixture, so its rows aren't
+// pinned. A count that moves on purpose is re-pinned from the Linux failure, which prints all four.
+var recordPinnedCounts = map[string]struct{ allocations, retains, releases, peak uint64 }{
+	"workload-1000000": {0, 0, 0, 0},
+}
+
+func recordCheckPin(t *testing.T, name, stderr string) {
+	t.Helper()
+	pin, ok := recordPinnedCounts[name]
+	if !ok {
+		return
+	}
+	if goruntime.GOOS != "linux" {
+		t.Logf("%s's counts are pinned on Linux only", name)
+		return
+	}
+	counts := recordCounts.FindStringSubmatch(stderr)
+	if counts == nil {
+		t.Fatalf("want only a counts report, got:\n%s", stderr)
+	}
+	measured := make([]uint64, 6)
+	for index := range measured {
+		value, err := strconv.ParseUint(counts[index+1], 10, 64)
+		if err != nil {
+			t.Fatalf("count %d: %v", index, err)
+		}
+		measured[index] = value
+	}
+	for _, check := range []struct {
+		name          string
+		measured, pin uint64
+	}{{"allocations", measured[0], pin.allocations}, {"retains", measured[2], pin.retains}, {"releases", measured[3], pin.releases}, {"peak", measured[4], pin.peak}} {
+		if check.measured != check.pin {
+			t.Errorf("%s: %s %d, pinned %d", name, check.name, check.measured, check.pin)
+		}
+	}
+	if t.Failed() {
+		t.Fatalf("%s's counts moved: allocations %d retains %d releases %d peak %d; a rise is a cost regression, an intended change re-pins these from Linux", name, measured[0], measured[2], measured[3], measured[4])
+	}
+}
+
 // Every successful fixture is counted and run with ASan, UBSan and Linux LeakSanitizer enabled.
 // The oracle uses Node's own Object operations and for...in, never the runtime's sort algorithm.
 func TestRecordsAgainstNode(t *testing.T) {
@@ -87,6 +131,7 @@ func TestRecordsAgainstNode(t *testing.T) {
 				t.Fatalf("native: %v\n%s", err, stderr)
 			}
 			recordCheckCounts(t, stderr)
+			recordCheckPin(t, strings.Join(arguments, "-"), stderr)
 			want := recordNode(t, arguments...)
 			if arguments[0] == "bench" {
 				// Timing is observational. Only workload results are held byte for byte.
