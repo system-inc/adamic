@@ -2,6 +2,7 @@ package lint
 
 import (
 	"context"
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"os"
 	"path/filepath"
 	"strings"
@@ -53,7 +54,7 @@ func TestProfileArtifacts(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(directory, "oracle"), oracle, 0755); err != nil {
+	if err := executable.Write(filepath.Join(directory, "oracle"), oracle); err != nil {
 		t.Fatal(err)
 	}
 	buildProfile(t, directory)
