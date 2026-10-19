@@ -1189,6 +1189,69 @@ func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
 	}
 }
 
+// A set that would read its own product back is refused, never recorded, since no runner can value it (#p80h8e6,
+// #kfjqsnh: Eve's ab8e96b0's manifest found native-false and native-true, each built by its own test, and recorded each
+// reading the other; every runner missed both). Here native-true's set reads native-false, whose newest set reads
+// native-true: recordUnion refuses it as a cycle and keeps native-true's file as it was. With an older set of
+// native-false that doesn't read native-true and holds a product, native-false values by that set, as a runner's lookup
+// does, so native-true's set is recorded and a runner finds its product. Mutant: recordUnion valuing with its own name
+// key unmarked, today's write (the cycle is recorded).
+// Not parallel: newRig.
+func TestASetThatWouldReadItselfBackIsRefused(t *testing.T) {
+	for _, olderUpstream := range []bool{false, true} {
+		r := newRig(t)
+		nativeFalse, nativeTrue := fmt.Sprintf("%064x", 1), fmt.Sprintf("%064x", 2)
+		record := func(nameKey string, entries ...readEntry) {
+			t.Helper()
+			set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
+			evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+			set.Key = evaluated.key
+			if err := recordReads(r.cache, nameKey, nameKey[62:], set); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
+				t.Fatal(err)
+			}
+		}
+		// native-true's own test's set, which reads nothing of native-false's.
+		record(nativeTrue)
+		if olderUpstream {
+			record(nativeFalse)
+		}
+		// native-false as the manifest recorded it: reading native-true.
+		record(nativeFalse, readEntry{Kind: "product", Path: nativeTrue})
+		before, err := loadReads(r.cache, nativeTrue)
+		if err != nil {
+			t.Fatal(err)
+		}
+		set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: nativeFalse}})}
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(key string) string {
+			os.MkdirAll(filepath.Join(r.cache, key), 0o755)
+			return filepath.Join(r.cache, key)
+		})
+		after, _ := loadReads(r.cache, nativeTrue)
+		if !olderUpstream {
+			if err == nil || !strings.Contains(err.Error(), "cycle") {
+				t.Fatalf("native-true reading native-false, which reads it back: recorded %s, %v", evaluated.key, err)
+			}
+			if len(after.Sets) != len(before.Sets) || after.Sets[0].Key != before.Sets[0].Key {
+				t.Fatalf("a refused set changed native-true's file: %d sets, newest %s", len(after.Sets), after.Sets[0].Key)
+			}
+			continue
+		}
+		if err != nil || after.Sets[0].Key != evaluated.key {
+			t.Fatalf("native-false has an older set that doesn't read native-true: %v, newest %s", err, after.Sets[0].Key)
+		}
+		// A runner is a fresh process: nothing this one held answers for it.
+		if found, err := productFor(r.root, r.cache, nativeTrue, 0, productMemo{freshLookups: &productLookup{done: true}}); err != nil || found.key != evaluated.key {
+			t.Fatalf("a runner looking up native-true found %+v, %v; it was recorded as %s", found, err, evaluated.key)
+		}
+	}
+}
+
 // A product many others read is valued once per pass: 12 layers of 3 products, each reading the 3 below, is 3^12
 // evaluations without a memo (Home's dry run, Oct 11: nine traces settled for over two hours, ten deep) and 36 with
 // one. Two products reading each other fail at once, named as a cycle. Mutants: productFor without its memo (the graph

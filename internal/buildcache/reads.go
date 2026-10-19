@@ -842,11 +842,23 @@ type productLookup struct {
 	err    error
 }
 
+// freshLookups, a key in a productMemo, makes its pass look up every product afresh, never through readProducts or into
+// it: what Settle values as it records is valued against the sets it has just recorded, where a product held earlier in
+// the process was found by a set that may no longer be its newest (#p80h8e6). No name key is the empty string.
+const freshLookups = ""
+
+// freshMemo is a pass that looks up afresh (freshLookups) with nameKey's own lookup under way, as recordUnion values a
+// set it's about to record: a set that reaches nameKey again is a cycle.
+func freshMemo(nameKey string) productMemo {
+	return productMemo{freshLookups: &productLookup{done: true}, nameKey: &productLookup{}}
+}
+
 // productFor is the product nameKey names on the tree at root, once per pass (known: nil starts one). A product read
 // while it is still being looked up reads itself through others, a cycle no key can value, and fails at once rather
 // than at depth 16 down every branch.
 func productFor(root, cache, nameKey string, depth int, known productMemo) (found, error) {
-	held := heldForLife(root)
+	_, fresh := known[freshLookups]
+	held := heldForLife(root) && !fresh
 	// By every directory the lookup reads, so a process that reads a build cache through an output directory of its own
 	// and one that reads it alone never share an answer.
 	heldKey := root + "\x00" + strings.Join(location.ReadPlaces(cache), "\x00") + "\x00" + nameKey
