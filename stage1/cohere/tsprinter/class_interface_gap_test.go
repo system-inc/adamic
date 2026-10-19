@@ -5,7 +5,6 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
@@ -43,7 +42,10 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 	}
 	t.Logf("Node prints 17; lowering refuses before native emission: %s", err)
 	// A safe explicit callback is also the mutant proving this gap check can reject a normal run.
-	fixed := strings.Replace(strings.Replace(string(data), "read(): number", "readValue(): number", 1), "console.log(`${new Consumer(new Box()).run()}`);", "const box = new Box();\nconsole.log(`${new Consumer({read: () => box.readValue()}).run()}`);", 1)
+	fixed, err := rewritten(string(data), classInterfaceWorkaroundSource.replacements)
+	if err != nil {
+		t.Fatal(err)
+	}
 	workaround := filepath.Join(directory, "workaround.ts")
 	if err = os.WriteFile(workaround, []byte(fixed), 0644); err != nil {
 		t.Fatal(err)
@@ -56,7 +58,8 @@ func TestClassInterfaceMethodGap(t *testing.T) {
 	if err != nil || isGap(err) {
 		t.Fatalf("explicit callback mutant lowering: %v", err)
 	}
-	safe, binary := natively(t, program)
+	binary := filepath.Join(sourceSanitized(t, classInterfaceWorkaroundSource), "port")
+	safe := sanitizedRun(t, binary)
 	for _, result := range []oracles.Run{onNode(t, workaround), safe, onJavaScriptBackend(t, program)} {
 		if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != "17\n" {
 			t.Fatalf("explicit callback: %+v", result)
@@ -79,7 +82,8 @@ func TestClosedOptionalBooleanFunctionGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	nativeRun, binary := natively(t, program)
+	binary := filepath.Join(sourceSanitized(t, optionalBooleanFunctionSource), "port")
+	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
 		result oracles.Run
