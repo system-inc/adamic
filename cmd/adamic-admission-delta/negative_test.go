@@ -195,7 +195,7 @@ func TestNegativeEditedWitnessMandatory(t *testing.T) {
 		t.Fatal("edit retained exception")
 	}
 	p := entry{program: program{Path: "corpus/input.a"}, Corpus: "fixtures", Class: "accepted-by-both", Head: observation{Exit: 0}, NegativeRelated: true}
-	selected, omitted := sample([]entry{p}, "sha", 0.001, time.Second)
+	selected, omitted := sample([]entry{p}, headSeed("sha"), 0.001, time.Second)
 	if len(selected) != 1 || omitted != 0 {
 		t.Fatal("edited witness sampled away", selected, omitted)
 	}
