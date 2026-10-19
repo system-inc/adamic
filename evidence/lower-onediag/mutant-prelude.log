@@ -1,0 +1,5 @@
+--- FAIL: TestPreludeIteratorsInferTheirElement (0.26s)
+    prelude_iterator_test.go:33: Load: /tmp/adamic-gate/TestPreludeIteratorsInferTheirElement2567510031/001/main.ts:10:44: error TS18048: 'r' is possibly 'undefined'.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.279s
+FAIL
