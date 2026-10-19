@@ -1,0 +1,101 @@
+[
+  {
+    "name": "update-counts",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "600s",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 54.426
+  },
+  {
+    "name": "mutants",
+    "command": [
+      "python3",
+      "/workspace/adamic/review/compiler/oracle-counts-per-fixture/run-mutants.py"
+    ],
+    "exit": 0,
+    "seconds": 25.908
+  },
+  {
+    "name": "equality-after",
+    "command": [
+      "python3",
+      "/workspace/adamic/review/compiler/oracle-counts-per-fixture/equality-proof.py"
+    ],
+    "exit": 0,
+    "seconds": 0.064
+  },
+  {
+    "name": "ir-guard",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "TestCallTargetExportInputs|TestCallTargetReaders|TestEveryMapAProgramHoldsIsSorted",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 48.157
+  },
+  {
+    "name": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "TestEveryTestIsParallelOrSaysWhy",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 0.57
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/oracle"
+    ],
+    "exit": 0,
+    "seconds": 0.823
+  },
+  {
+    "name": "gofmt",
+    "command": [
+      "gofmt",
+      "-l",
+      "internal/oracle/cache_test.go",
+      "internal/oracle/counts_test.go",
+      "internal/oracle/families_test.go",
+      "internal/oracle/interface_cast_counts_test.go",
+      "internal/oracle/node_fs_rm_options_test.go",
+      "internal/oracle/non_null_checked_test.go",
+      "internal/oracle/non_null_migration_test.go",
+      "internal/oracle/predicate_counts_test.go",
+      "internal/oracle/statement_regions_test.go",
+      "internal/oracle/count_files_test.go"
+    ],
+    "exit": 0,
+    "seconds": 0.008
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "file": "changed-count-mutant.jsonl",
+    "sha256": "91b92f6615f38a43dbe1b212a5ba7e187497c6d4edff8ec8481ccbdc93066dfc",
+    "bytes": 56892,
+    "archive": "logs-archive/changed-count-mutant.jsonl.gz"
+  },
+  {
+    "file": "crlf-writer-mutant.jsonl",
+    "sha256": "46d2fcabcb6bafea43e9ee759a28d1e3386d841c90aa15ca30a67339d74c5857",
+    "bytes": 17076,
+    "archive": "logs-archive/crlf-writer-mutant.jsonl.gz"
+  },
+  {
+    "file": "determinism-census.jsonl",
+    "sha256": "b0d77af54483f1eb97e3d3f0b897087049580461b1f01a7d4ec242a9b2847d57",
+    "bytes": 22611,
+    "archive": "logs-archive/determinism-census.jsonl.gz"
+  },
+  {
+    "file": "equality-final.jsonl",
+    "sha256": "6d89bdb3f544fc2121d47b1f30f5dc3cfcb6c0d51897d33a63c352bb9f6955be",
+    "bytes": 196,
+    "archive": "logs-archive/equality-final.jsonl.gz"
+  },
+  {
+    "file": "equality-proof.jsonl",
+    "sha256": "6d89bdb3f544fc2121d47b1f30f5dc3cfcb6c0d51897d33a63c352bb9f6955be",
+    "bytes": 196,
+    "archive": "logs-archive/equality-proof.jsonl.gz"
+  },
+  {
+    "file": "gofmt.jsonl",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "logs-archive/gofmt.jsonl.gz"
+  },
+  {
+    "file": "ir-guard.jsonl",
+    "sha256": "23e18b11cb3de1f602c4dcae7fcdd85a46d3b9bfae4788ae8d29dfd3ce685f0e",
+    "bytes": 13636,
+    "archive": "logs-archive/ir-guard.jsonl.gz"
+  },
+  {
+    "file": "missing-counts-mutant.jsonl",
+    "sha256": "16c45898ef89182a1fbf85e29f2abb5021194a568ede85d2f8abd26051064b2d",
+    "bytes": 2476,
+    "archive": "logs-archive/missing-counts-mutant.jsonl.gz"
+  },
+  {
+    "file": "mutants.jsonl",
+    "sha256": "677b0196ccbef243fd3c969e67ccb971588212e93bb2ba189d5ae0a9854c94d6",
+    "bytes": 111,
+    "archive": "logs-archive/mutants.jsonl.gz"
+  },
+  {
+    "file": "oracle.jsonl",
+    "sha256": "c7a645b5b18bddb39f24baf10b96f5fcaf837d8aa68e8ff06cc363796c03ac1f",
+    "bytes": 13194987,
+    "archive": "logs-archive/oracle.jsonl.gz"
+  },
+  {
+    "file": "orphan-counts-mutant.jsonl",
+    "sha256": "4efa3bbe3564a327b940f1b1f5ffa3ed70c7dd7775405870b4d8d57d7c953282",
+    "bytes": 2400,
+    "archive": "logs-archive/orphan-counts-mutant.jsonl.gz"
+  },
+  {
+    "file": "parallel-guard.jsonl",
+    "sha256": "d4a0c412eb7d9e32e676ea6e9133a5dc24991f4619b99a5b6be46f5a051eb5e0",
+    "bytes": 5250,
+    "archive": "logs-archive/parallel-guard.jsonl.gz"
+  },
+  {
+    "file": "update-counts.jsonl",
+    "sha256": "d3483cdd08da58dcdd671bbd7f2f104945bb2c94798ad40dab9aa8e670bd0bd2",
+    "bytes": 2474348,
+    "archive": "logs-archive/update-counts.jsonl.gz"
+  },
+  {
+    "file": "vet.jsonl",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "archive": "logs-archive/vet.jsonl.gz"
+  }
+]

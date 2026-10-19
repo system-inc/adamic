@@ -18,7 +18,7 @@ func TestProduct_Adamic(t *testing.T) {
 	buildcache.AdamicBuiltElsewhere(t)
 }
 
-// Default cast fixtures use the same counted runtime and table as ordinary fixtures, each a row of counts.md.
+// Default cast fixtures use the same counted runtime and table as ordinary fixtures, each in its own committed count file.
 func interfaceCastCountCases() []countCase {
 	var cases []countCase
 	for _, path := range []string{"stage3/interface-downcasts/visitor.a", "stage3/interface-downcasts/wrong-kind.a"} {

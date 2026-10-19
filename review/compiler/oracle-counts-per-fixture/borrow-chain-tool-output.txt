@@ -1,0 +1,12 @@
+--- FAIL: TestCountsAreRecorded_007 (0.00s)
+    --- FAIL: TestCountsAreRecorded_007/internal/oracle/testdata/borrow_chain_walk.a (0.01s)
+        counts_test.go:448: regenerated counts differ in testdata/counts/runtime/internal/oracle/testdata/borrow_chain_walk.a.counts:
+            recorded: | internal/oracle/testdata/borrow_chain_walk.a | 16 | 16 | 8 | 16 | 12 | 0 |
+            regenerated: | internal/oracle/testdata/borrow_chain_walk.a | 16 | 16 | 7 | 16 | 12 | 0 |
+        counts_test.go:454: the counts changed and testdata/counts/runtime/internal/oracle/testdata/borrow_chain_walk.a.counts wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):
+            recorded: | internal/oracle/testdata/borrow_chain_walk.a | 16 | 16 | 8 | 16 | 12 | 0 |
+            measured: | internal/oracle/testdata/borrow_chain_walk.a | 16 | 16 | 7 | 16 | 12 | 0 |
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	17.983s
+FAIL
+

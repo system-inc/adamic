@@ -1,0 +1,8 @@
+oracle: counts are one committed file per fixture, so two changes to different fixtures never conflict (#ra6ah5s)
+
+Keep every existing runtime and predicate value in a greppable mirrored record. Read independent committed expectations, publish measured updates only on request, and regenerate measured bytes into temporary files in the existing bounded shards.
+
+Assume the census covers the existing countable fixture registry and its documented exclusions. Inputs and the planted witness retain their source keys; predicate rows each get a stable mirrored file. Preserve the historical non-null migration reader's coverage of both counter namespaces.
+
+Co-Authored-By: Ahra <ahra@ahra.ai>
+

@@ -450,8 +450,8 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 
 func TestMain(main *testing.M) {
 	status := main.Run()
-	// -update-counts' writer: the counts family's shards and TestCountsAreRecordedTable measured, and the table is
-	// written once, here, after every one of them has run (counts_test.go).
+	// -update-counts' writer: the runtime shards and predicate table measured independent
+	// rows; publish their individual files only after every selected test succeeds.
 	if *updateCounts && status == 0 {
 		if err := writeCounts(); err != nil {
 			fmt.Println(err)
