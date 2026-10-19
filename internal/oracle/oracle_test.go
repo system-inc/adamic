@@ -466,6 +466,19 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_comparator_spread.a", true, false},
 	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_move_before_ready.a", true, false},
+	{"internal/oracle/testdata/normalize_long.a", true, false},
+	{"internal/oracle/testdata/pad_infinity.a", true, false},
+	{"internal/oracle/testdata/repeat_huge.a", true, false},
+	{"internal/oracle/testdata/reduce_undefined_initial.a", true, false},
+	{"internal/oracle/testdata/coverage_plain_view.a", true, false},
+	{"internal/oracle/testdata/coverage_regexp_call.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_literal.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_new.a", false, false},
+	{"internal/oracle/testdata/coverage_view_array.a", false, false},
+	{"internal/oracle/testdata/coverage_view_boolean.a", false, false},
+	{"internal/oracle/testdata/coverage_view_closure.a", false, false},
+	{"internal/oracle/testdata/coverage_view_number.a", false, false},
+	{"internal/oracle/testdata/coverage_view_string.a", false, false},
 	{"internal/oracle/testdata/uncaught_names.a", true, false},
 	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
 	{"internal/oracle/testdata/coverage_uncaught_custom_empty.a", true, false},
@@ -711,6 +724,13 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 			program, err := lowered(t, path)
 			if refusedAdamicNonNullFixture(fixture.path) {
 				assertAdamicNonNullRefusal(t, err)
+				return
+			}
+			if runtimeBoundaryViewFixture(fixture.path) {
+				var refused *lower.Refused
+				if !errors.As(err, &refused) || refused.What != "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)" || refused.Fix != "copy the fields you mean by name" {
+					t.Fatalf("want library view spread refusal, got %v", err)
+				}
 				return
 			}
 			if !fixture.lowers {
