@@ -51,7 +51,7 @@ var shapeProducers = []struct{ name, path string }{
 	{"Directory", "runtime/directory.c"}, {"Input", "runtime/input.c"},
 	{"Exceptions", "runtime/exceptions.c"}, {"AsyncHost", "runtime/async_host_impl.h"},
 	{"Record", "runtime/record.c"}, {"RegExp", "runtime/regexp.c"},
-	{"TSGo", "runtime/tsgo.c"}, {"NodeProcess", "runtime/node_process.c"},
+	{"TSGo", "runtime/tsgo.c"}, {"NodeProcess", "runtime/node_process.c"}, {"ProcessStatus", "runtime/process.c"},
 	{"NodeFS", "runtime/node_fs_file.c"}, {"NodeCrypto", "runtime/node_crypto.c"},
 	{"Reflection", "runtime/library_object.c"}, {"Iterators", "runtime/map_set.c"},
 	{"CaptureGroups", ""}, {"Emitted", ""},
@@ -549,3 +549,5 @@ func TestShapeKindsNodeFSDirectory(t *testing.T) {
 	t.Parallel()
 	checkShapeProducer(t, "NodeFSDirectory")
 }
+
+func TestShapeKindsProcessStatus(t *testing.T) { t.Parallel(); checkShapeProducer(t, "ProcessStatus") }
