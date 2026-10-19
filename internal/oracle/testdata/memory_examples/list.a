@@ -1,0 +1,21 @@
+interface Item {
+	readonly value: number;
+	readonly next: Item | undefined;
+}
+function map(item: Item | undefined): Item | undefined {
+	if (item === undefined) return undefined;
+	return { ...item, value: item.value * 2, next: map(item.next) };
+}
+function sum(item: Item | undefined): number {
+	return item === undefined ? 0 : item.value + sum(item.next);
+}
+function run(): void {
+	let head: Item | undefined = undefined;
+	for (let value = 1; value <= 3; value++) {
+		head = { value, next: head };
+	}
+	console.log(`${sum(head)}`);
+	const mapped = map(head);
+	console.log(`${sum(mapped)}`);
+}
+run();
