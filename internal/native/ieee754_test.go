@@ -7,6 +7,7 @@ import (
 	"math/rand/v2"
 	"path/filepath"
 	"regexp"
+	goruntime "runtime"
 	"slices"
 	"strconv"
 	"strings"
@@ -273,7 +274,7 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		if bothNaN(native[index], oracle[index]) {
 			continue
 		}
-		if accounted, explained := fusion.handled(t, asked[index], native[index], oracle[index]); accounted {
+		if accounted, explained := fusion.handled(t, goruntime.GOARCH, asked[index], native[index], oracle[index]); accounted {
 			if explained {
 				held++
 			}

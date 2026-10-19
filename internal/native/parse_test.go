@@ -201,7 +201,7 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 	}
 	mismatches, held := 0, 0
 	for index, parse := range cases {
-		if accounted, explained := fusion.handled(t, asked[index], native[index], oracle[index]); accounted {
+		if accounted, explained := fusion.handled(t, goruntime.GOARCH, asked[index], native[index], oracle[index]); accounted {
 			if explained {
 				held++
 			}
