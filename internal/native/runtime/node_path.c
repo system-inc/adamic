@@ -119,15 +119,12 @@ adamic_string *adamic_node_path_resolve(size_t count,
 			break;
 		}
 	}
-	char *cwd = NULL;
+	adamic_string *cwd = NULL;
 	size_t length = 0;
 	if (!absolute) {
-		cwd = getcwd(NULL, 0);
-		if (cwd == NULL) {
-			adamic_node_fs_raise(NULL, errno, "uv_cwd");
-			return NULL;
-		}
-		length = strlen(cwd) + 1;
+		cwd = adamic_node_cwd();
+		if (cwd == NULL) { return NULL; }
+		length = cwd->length + 1;
 	}
 	for (size_t i = first; i < count; i++) {
 		length += paths[i]->length + 1;
@@ -135,9 +132,9 @@ adamic_string *adamic_node_path_resolve(size_t count,
 	char *bytes = allocate(length + 1);
 	size_t used = 0;
 	if (cwd != NULL) {
-		used = strlen(cwd);
-		memcpy(bytes, cwd, used);
-		free(cwd);
+		used = cwd->length;
+		memcpy(bytes, cwd->bytes, used);
+		adamic_release(cwd);
 	}
 	for (size_t i = first; i < count; i++) {
 		if (paths[i]->length == 0) {
