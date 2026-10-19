@@ -15,6 +15,7 @@ stage3/census/repro/r04/main.a: checked, and its first line promises refused a n
 stage3/census/repro/r16/main.a: checked, and its first line promises refused ||=
 stage3/census/repro/r21/main.a: checked, and its first line promises refused the comma operator
 stage3/census/repro/r23/main.a: checked, and its first line promises refused a namespace
+stage3/census/repro/r24/main.a: checked, and its first line promises refused an index signature (adamic: stage3/census/repro/r24/main.a:2:91: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet)
 stage3/census/repro/r32/main.a: checked, and its first line promises refused the void operator
 stage3/census/repro/r33/main.a: checked, and its first line promises refused a definite assignment assertion !
 stage3/census/repro/r34/main.a: checked, and its first line promises refused in
@@ -38,8 +39,9 @@ stage3/drivers/parser/native-debug-namespace.a: checked, and its first line prom
 stage3/drivers/parser/native-debugger-statement.a: checked, and its first line promises refused debugger
 stage3/drivers/parser/native-function-any-view-called-only.a: refused, and its first line promises refused a function taking number seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take (adamic: stage3/drivers/parser/native-function-any-view-called-only.a:6:56: Adamic 0.1 refuses a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable))
 stage3/drivers/parser/native-function-any-view.a: refused, and its first line promises refused a namespace (adamic: stage3/drivers/parser/native-function-any-view.a:5:56: Adamic 0.1 refuses a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable))
-stage3/drivers/parser/native-has-own-property.a: checked, and its first line promises refused a method read as a value (hasOwnProperty would lose its object, and this with it) (adamic: stage3/drivers/parser/native-has-own-property.a:5:12: stage 0 can't lower hasOwnProperty on a union of differently held members (mixed value descriptors are not represented) yet)
+stage3/drivers/parser/native-has-own-property.a: checked, and its first line promises refused a method read as a value (hasOwnProperty would lose its object, and this with it)
 stage3/drivers/parser/native-map-before-namespace.a: checked, and its first line promises refused a namespace
+stage3/drivers/parser/native-maplike-index.a: checked, and its first line promises refused an index signature
 stage3/drivers/parser/native-namespace-call-graph.a: checked, and its first line promises refused a namespace
 stage3/drivers/parser/native-namespace-class.a: checked, and its first line promises refused a namespace
 stage3/drivers/parser/native-namespace-object-receiver.a: checked, and its first line promises refused a namespace
@@ -52,6 +54,5 @@ stage3/drivers/parser/native-predicate-overload-result.a: refused, and its first
 stage3/drivers/parser/native-predicate-overload.a: checked, and its first line promises refused a type predicate whose return is not proven (there is no body proving this parameter)
 stage3/drivers/parser/native-process-next-tick-read.a: checked, and its first line promises type error TS2591 (adamic: stage3/drivers/parser/native-process-next-tick-read.a:7:52: stage 0 can't lower node:process.Process.nextTick yet)
 stage3/drivers/parser/native-some-predicate-overload.a: checked, and its first line promises refused a type predicate whose return is not proven (there is no body proving this parameter)
-stage3/drivers/parser/native-type-only-map-like.a: refused (adamic: stage3/drivers/parser/native-type-only-map-like.a:4:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added)
 stage3/drivers/parser/range-cases.a: type error (stage3/drivers/parser/range-cases.a:13:24: error TS7006: Parameter 'child' implicitly has an 'any' type.)
 stage3/drivers/parser/range-check.a: refused (adamic: stage3/drivers/parser/range-check.a:8:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
