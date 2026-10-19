@@ -1,0 +1,5 @@
+--- a/src/compiler/checker.ts
++++ b/src/compiler/checker.ts
+@@ -2127 +2127 @@
+-    var outofbandVarianceMarkerHandler: ((onlyUnreliable: boolean) => void) | undefined;
++    var outofbandVarianceMarkerHandler: ((onlyUnreliable: boolean) => boolean) | undefined;
