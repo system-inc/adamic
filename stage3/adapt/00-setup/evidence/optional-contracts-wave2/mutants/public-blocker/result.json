@@ -1,0 +1,217 @@
+{
+  "group": "public-blocker",
+  "status": "caught",
+  "witnesses": [
+    {
+      "witness": "check-internal.cjs",
+      "exit": 1
+    },
+    {
+      "witness": "check-nullable-return.cjs",
+      "exit": 0
+    }
+  ],
+  "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "mutant_helper_sha256": "05564ed70fc7dc639118a2fa5253da4bba74b72e3fde4762c66d6878c3dc2cca",
+  "runs": [
+    {
+      "run": "stock-no-prelude",
+      "count": 203,
+      "returned_ids": [],
+      "other_new_diagnostics": [
+        [
+          "src/compiler/moduleNameResolver.ts",
+          627,
+          9,
+          "TS2375",
+          "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+        ],
+        [
+          "src/compiler/commandLineParser.ts",
+          2668,
+          9,
+          "TS2375",
+          "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+        ],
+        [
+          "src/compiler/moduleNameResolver.ts",
+          286,
+          9,
+          "TS2322",
+          "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+        ]
+      ],
+      "removed_from_fixed": [
+        "D5af6153ea92f",
+        "Dcb3573ed8c8f",
+        "Da5c0ee2a5f85"
+      ]
+    },
+    {
+      "run": "stock-filtered-prelude",
+      "count": 204,
+      "returned_ids": [],
+      "other_new_diagnostics": [
+        [
+          "src/compiler/moduleNameResolver.ts",
+          627,
+          9,
+          "TS2375",
+          "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+        ],
+        [
+          "src/compiler/commandLineParser.ts",
+          2668,
+          9,
+          "TS2375",
+          "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+        ],
+        [
+          "src/compiler/moduleNameResolver.ts",
+          286,
+          9,
+          "TS2322",
+          "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+        ]
+      ],
+      "removed_from_fixed": [
+        "D5af6153ea92f",
+        "Dcb3573ed8c8f",
+        "Da5c0ee2a5f85"
+      ]
+    },
+    {
+      "run": "loader-no-prelude",
+      "count": 203,
+      "returned_ids": [],
+      "other_new_diagnostics": [
+        [
+          "src/compiler/moduleNameResolver.ts",
+          627,
+          9,
+          "TS2375",
+          "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+        ],
+        [
+          "src/compiler/commandLineParser.ts",
+          2668,
+          9,
+          "TS2375",
+          "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+        ],
+        [
+          "src/compiler/moduleNameResolver.ts",
+          286,
+          9,
+          "TS2322",
+          "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+        ]
+      ],
+      "removed_from_fixed": [
+        "D5af6153ea92f",
+        "Dcb3573ed8c8f",
+        "Da5c0ee2a5f85"
+      ]
+    },
+    {
+      "run": "loader-filtered-prelude",
+      "count": 204,
+      "returned_ids": [],
+      "other_new_diagnostics": [
+        [
+          "src/compiler/moduleNameResolver.ts",
+          627,
+          9,
+          "TS2375",
+          "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+        ],
+        [
+          "src/compiler/commandLineParser.ts",
+          2668,
+          9,
+          "TS2375",
+          "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+        ],
+        [
+          "src/compiler/moduleNameResolver.ts",
+          286,
+          9,
+          "TS2322",
+          "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+        ]
+      ],
+      "removed_from_fixed": [
+        "D5af6153ea92f",
+        "Dcb3573ed8c8f",
+        "Da5c0ee2a5f85"
+      ]
+    },
+    {
+      "run": "stock-no-unchecked-control",
+      "count": 104,
+      "returned_ids": [],
+      "other_new_diagnostics": [
+        [
+          "src/compiler/moduleNameResolver.ts",
+          627,
+          9,
+          "TS2375",
+          "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+        ],
+        [
+          "src/compiler/commandLineParser.ts",
+          2668,
+          9,
+          "TS2375",
+          "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+        ],
+        [
+          "src/compiler/moduleNameResolver.ts",
+          286,
+          9,
+          "TS2322",
+          "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+        ]
+      ],
+      "removed_from_fixed": [
+        "D5af6153ea92f",
+        "Dcb3573ed8c8f",
+        "Da5c0ee2a5f85"
+      ]
+    },
+    {
+      "run": "loader-original-prelude-mutant",
+      "count": 288,
+      "returned_ids": [],
+      "other_new_diagnostics": [
+        [
+          "src/compiler/moduleNameResolver.ts",
+          627,
+          9,
+          "TS2375",
+          "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'packageId' are incompatible.\n    Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n      Type 'undefined' is not assignable to type 'PackageId'."
+        ],
+        [
+          "src/compiler/commandLineParser.ts",
+          2668,
+          9,
+          "TS2375",
+          "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'project' are incompatible.\n    Type 'undefined' is not assignable to type 'string'."
+        ],
+        [
+          "src/compiler/moduleNameResolver.ts",
+          286,
+          9,
+          "TS2322",
+          "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'packageId' are incompatible.\n      Type 'PackageId | undefined' is not assignable to type 'PackageId'.\n        Type 'undefined' is not assignable to type 'PackageId'."
+        ]
+      ],
+      "removed_from_fixed": [
+        "D5af6153ea92f",
+        "Dcb3573ed8c8f",
+        "Da5c0ee2a5f85"
+      ]
+    }
+  ],
+  "group_ids_returned": []
+}

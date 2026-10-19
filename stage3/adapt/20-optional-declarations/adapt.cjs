@@ -73,6 +73,8 @@ let before;
 let final;
 let declined;
 const declinedOwners = new Map();
+let internalPhase = false;
+let internalDeferred = [];
 for (;;) {
     const program = ts.createProgram(roots, options);
     const checker = program.getTypeChecker();
@@ -82,11 +84,13 @@ for (;;) {
     const selected = new Set();
     const evidence = new Map();
     const excluded = [];
-    function select(symbol, value, finding) {
+    const internal = require("./resolve-internal.cjs")(ts, checker, owned, select, options, program);
+    function select(symbol, value, finding, instantiatedObject = false) {
         if (!symbol || !(symbol.flags & ts.SymbolFlags.Optional) || !value || !symbol.declarations?.length) return false;
         const values = parts(value);
         if (!values.some(undefinedPart)) return;
         const owners = symbol.declarations;
+        if (internalPhase && owners.some(owner => internal.isPublic(owner) || internal.isBlocked(owner))) return false;
         for (const owner of owners) {
             if (!(ts.isPropertySignature(owner) || ts.isPropertyDeclaration(owner) || ts.isMethodSignature(owner)) ||
                 !owner.questionToken || !owner.type || !owned.has(path.resolve(owner.getSourceFile().fileName))) return;
@@ -102,8 +106,14 @@ for (;;) {
                 ? checker.getNonNullableType(checker.getTypeOfSymbolAtLocation(symbol, owner))
                 : checker.getTypeFromTypeNode(owner.type);
             if ((target.flags & forbidden) || checker.isTypeAssignableTo(checker.getUndefinedType(), target)) return;
+            // Only a declared object (including arrays and callables) stays
+            // defined for every type argument. Bare T and conditional/indexed
+            // contracts retain the original exclusions above.
+            if (instantiatedObject && !(target.flags & ts.TypeFlags.Object)) return;
+            const comparison = instantiatedObject
+                ? checker.getNonNullableType(checker.getTypeOfSymbolAtLocation(symbol, owner)) : target;
             if (values.some(part => !undefinedPart(part) &&
-                ((part.flags & forbidden) || !checker.isTypeAssignableTo(part, target)))) return;
+                ((part.flags & forbidden) || !checker.isTypeAssignableTo(part, comparison)))) return;
         }
         for (const owner of owners) { selected.add(owner); evidence.set(owner, finding); }
         resolvedFindings.push({ ...finding, owners: owners.map(owner => {
@@ -145,7 +155,16 @@ for (;;) {
                 if (ts.isVariableDeclaration(n)) expression = n.initializer;
                 if (ts.isBinaryExpression(n) && n.operatorToken.kind === ts.SyntaxKind.EqualsToken) expression = n.right;
                 if (!expression || !ts.isExpressionNode(expression)) continue;
-                const target = checker.getContextualType(expression);
+                let target = checker.getContextualType(expression);
+                // A returned object cannot be the undefined arm of its contextual
+                // union. Resolve its single object arm before looking up slots.
+                // Other unions and argument/assignment contexts stay separate.
+                if (target?.isUnion() && target.types.length === 2 &&
+                    ts.isReturnStatement(n) && ts.isObjectLiteralExpression(expression) &&
+                    target.types.some(undefinedPart)) {
+                    const present = target.types.find(type => !undefinedPart(type));
+                    if (present.flags & ts.TypeFlags.Object) target = present;
+                }
                 if (!target || (target.flags & forbidden)) continue;
                 const properties = checker.getPropertiesOfType(target);
                 if (!properties.length) continue;
@@ -166,6 +185,11 @@ for (;;) {
             }
         }
         if (!resolved) excluded.push({ ...finding, reason });
+    }
+    if (!selected.size) {
+        internalPhase = true;
+        for (const diagnostic of diagnostics) internal.diagnostic(diagnostic, record(diagnostic));
+        if (!selected.size) internal.maskedConstructions(program, diagnostics);
     }
     // One object slot can be viewed through several inherited declarations.
     // Its proven present-undefined write must be truthful in every optional view.
@@ -197,7 +221,7 @@ for (;;) {
         }
     }
     if (!initiallyDeclined) initiallyDeclined = excluded;
-    if (!selected.size) { final = diagnostics.map(record); declined = excluded; break; }
+    if (!selected.size) { final = diagnostics.map(record); declined = excluded; internalDeferred = internal.deferred(); break; }
     const edits = new Map();
     for (const owner of selected) {
         const file = owner.getSourceFile();
@@ -224,4 +248,4 @@ const counts = rows => {
 };
 process.stdout.write(JSON.stringify({ typescript: ts.version, declarations_changed: declarations.length,
     declarations, resolved_findings: resolvedFindings, initially_declined: initiallyDeclined, before: counts(before), after: counts(final),
-    newly_exposed_consumers: final.filter(row => !prior.has(identity(row))), declined, declined_owners: [...declinedOwners.values()] }, null, 2) + '\n');
+    newly_exposed_consumers: final.filter(row => !prior.has(identity(row))), declined, declined_owners: [...declinedOwners.values()], internal_deferred_owners: internalDeferred }, null, 2) + '\n');

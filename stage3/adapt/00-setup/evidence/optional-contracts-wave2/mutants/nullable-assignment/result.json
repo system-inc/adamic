@@ -1,0 +1,106 @@
+{
+  "group": "nullable-assignment",
+  "status": "caught",
+  "witnesses": [
+    {
+      "witness": "check-internal.cjs",
+      "exit": 1
+    },
+    {
+      "witness": "check-nullable-return.cjs",
+      "exit": 0
+    }
+  ],
+  "original_helper_sha256": "bda0907a98ea721eeaabfb7e6882b152aa80e957d38a295671c25ef8ea76bf97",
+  "mutant_helper_sha256": "02dd375921a817f52a64260974f803402a57e26312d6d877f47c771401508dea",
+  "runs": [
+    {
+      "run": "stock-no-prelude",
+      "count": 209,
+      "returned_ids": [
+        "D12935f679493",
+        "D31a062fa64e8",
+        "D4c7cd2fa4786",
+        "D5977dd79a645",
+        "D664bf39bc400",
+        "Db18a6d195733"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-filtered-prelude",
+      "count": 210,
+      "returned_ids": [
+        "D12935f679493",
+        "D31a062fa64e8",
+        "D4c7cd2fa4786",
+        "D5977dd79a645",
+        "D664bf39bc400",
+        "Db18a6d195733"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-no-prelude",
+      "count": 209,
+      "returned_ids": [
+        "D12935f679493",
+        "D31a062fa64e8",
+        "D4c7cd2fa4786",
+        "D5977dd79a645",
+        "D664bf39bc400",
+        "Db18a6d195733"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-filtered-prelude",
+      "count": 210,
+      "returned_ids": [
+        "D12935f679493",
+        "D31a062fa64e8",
+        "D4c7cd2fa4786",
+        "D5977dd79a645",
+        "D664bf39bc400",
+        "Db18a6d195733"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "stock-no-unchecked-control",
+      "count": 110,
+      "returned_ids": [
+        "D12935f679493",
+        "D31a062fa64e8",
+        "D4c7cd2fa4786",
+        "D5977dd79a645",
+        "D664bf39bc400",
+        "Db18a6d195733"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    },
+    {
+      "run": "loader-original-prelude-mutant",
+      "count": 294,
+      "returned_ids": [
+        "D12935f679493",
+        "D31a062fa64e8",
+        "D4c7cd2fa4786",
+        "D5977dd79a645",
+        "D664bf39bc400",
+        "Db18a6d195733"
+      ],
+      "other_new_diagnostics": [],
+      "removed_from_fixed": []
+    }
+  ],
+  "group_ids_returned": [
+    "D4c7cd2fa4786",
+    "Db18a6d195733"
+  ]
+}
