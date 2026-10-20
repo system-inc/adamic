@@ -330,7 +330,7 @@ func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Ti
 func checkPortAnswerUnion(t *testing.T) {
 	preparePortFullAnswers(t)
 	ownStart := time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(ownStart).Seconds()) }()
+	defer func() { portMeasure(t, "own work %.3fs", time.Since(ownStart).Seconds()) }()
 	deadline := portHardDeadline(t, "union", 90*time.Second)
 	defer deadline.Stop()
 	if portComparisonShards+len(mutants) != testThePortAnswersAsGoCohereAndGitDoShards {
@@ -358,9 +358,18 @@ func checkPortAnswerUnion(t *testing.T) {
 	}
 }
 
+var portMeasureStart = time.Now()
+
+// portMeasure writes to standard error, which go test shows for a failing package, and the measuring run fails.
+func portMeasure(t *testing.T, format string, arguments ...any) {
+	fmt.Fprintf(os.Stderr, "measure %s at %.3fs: %s\n", t.Name(), time.Since(portMeasureStart).Seconds(), fmt.Sprintf(format, arguments...))
+}
+
 // Not parallel: owns cleanup of the package-wide shared corpus scratch.
 func TestMain(m *testing.M) {
 	code := m.Run()
+	fmt.Fprintf(os.Stderr, "measure: the package took %.3fs\n", time.Since(portMeasureStart).Seconds())
+	code = 1
 	if portShared.scratch != "" {
 		os.RemoveAll(portShared.scratch)
 	}
@@ -384,7 +393,7 @@ func preparePortAnswerInputs(t *testing.T) {
 		portShared.scratch = scratch
 		generateStart := time.Now()
 		asked := portAsked(t, oracle, scratch)
-		t.Logf("measure: generate %.3fs", time.Since(generateStart).Seconds())
+		portMeasure(t, "generate %.3fs", time.Since(generateStart).Seconds())
 		shards := portCaseShards(t, asked)
 		gitStart := time.Now()
 		gitAnswers := map[string][]string{}
@@ -406,11 +415,11 @@ func preparePortAnswerInputs(t *testing.T) {
 				realAnswers[tr.Name] = byQuery
 			}
 		}
-		t.Logf("measure: git check-ignore %.3fs", time.Since(gitStart).Seconds())
+		portMeasure(t, "git check-ignore %.3fs", time.Since(gitStart).Seconds())
 		portShared.asked, portShared.oracle = asked, oracle
 		portShared.gitAnswers, portShared.realAnswers = gitAnswers, realAnswers
 		portShared.shards = shards
-		t.Logf("shared setup ready: %.3fs", time.Since(start).Seconds())
+		portMeasure(t, "shared setup ready %.3fs", time.Since(start).Seconds())
 	})
 	if portShared.shards == nil {
 		t.Fatal("shared preparation failed")
@@ -425,10 +434,10 @@ func preparePortFullAnswers(t *testing.T) {
 	portShared.fullOnce.Do(func() {
 		start := time.Now()
 		portShared.fullPath = casesFile(t, portShared.scratch, portShared.asked)
-		t.Logf("measure: full cases file %.3fs", time.Since(start).Seconds())
+		portMeasure(t, "full cases file %.3fs", time.Since(start).Seconds())
 		portShared.fullWant = portGoAnswers(t, portShared.oracle, portShared.asked)
 		portShared.fullAnswered = true
-		t.Logf("shared full-corpus answers ready: %.3fs", time.Since(start).Seconds())
+		portMeasure(t, "shared full-corpus answers ready %.3fs", time.Since(start).Seconds())
 	})
 	if !portShared.fullAnswered {
 		t.Fatal("shared full-corpus answers failed")
@@ -439,6 +448,8 @@ func runPortAnswerShard(t *testing.T, index int) {
 	if !portSelected(t, index) {
 		return
 	}
+	testStart := time.Now()
+	defer func() { portMeasure(t, "test %.3fs", time.Since(testStart).Seconds()) }()
 	if portComparisonShards+len(mutants) != testThePortAnswersAsGoCohereAndGitDoShards {
 		t.Fatal("enumerated shard count differs from static planner count")
 	}
@@ -454,14 +465,14 @@ func runPortAnswerShard(t *testing.T, index int) {
 			t.Skip("ADAMIC_GITIGNORE_LARGEST enables the 100 MiB mutant")
 		}
 		applied = &m
-		t.Logf("measure: inputs wait %.3fs", time.Since(setupStart).Seconds())
+		portMeasure(t, "inputs wait %.3fs", time.Since(setupStart).Seconds())
 		preparePortFullAnswers(t)
-		t.Logf("measure: full answers wait %.3fs", time.Since(setupStart).Seconds())
+		portMeasure(t, "full answers wait %.3fs", time.Since(setupStart).Seconds())
 	}
 	product := portProducts(t, applied)
-	t.Logf("shared setup total: %.3fs", time.Since(setupStart).Seconds())
+	portMeasure(t, "shared setup total %.3fs", time.Since(setupStart).Seconds())
 	ownStart := time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(ownStart).Seconds()) }()
+	defer func() { portMeasure(t, "own work %.3fs", time.Since(ownStart).Seconds()) }()
 	deadline := portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 90*time.Second)
 	defer deadline.Stop()
 
@@ -490,7 +501,7 @@ func runPortAnswerShard(t *testing.T, index int) {
 	dir := product
 	sideStart := time.Now()
 	node := portNode(t, filepath.Join(dir, "main.ts"), path)
-	t.Logf("measure: Node %.3fs", time.Since(sideStart).Seconds())
+	portMeasure(t, "Node %.3fs", time.Since(sideStart).Seconds())
 	sideStart = time.Now()
 	// On Linux a comparison shard's one sanitized run is also its leak check: LeakSanitizer acts only at
 	// exit, so the run answers as it does with detection off, and a leak is a report on stderr and a
@@ -503,7 +514,7 @@ func runPortAnswerShard(t *testing.T, index int) {
 	} else {
 		nat = portNative(t, dir, path)
 	}
-	t.Logf("measure: native %.3fs", time.Since(sideStart).Seconds())
+	portMeasure(t, "native %.3fs", time.Since(sideStart).Seconds())
 	if index < portComparisonShards {
 		backend := portNode(t, filepath.Join(dir, "program.mjs"), path)
 		for _, side := range []struct {
