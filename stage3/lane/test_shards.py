@@ -1,5 +1,6 @@
 """Hold exact case selection, gate schema and executed union to failing witnesses."""
 from collections import Counter
+from contextlib import ExitStack
 import copy
 import gzip
 import io
@@ -132,17 +133,63 @@ class ShardTests(unittest.TestCase):
                     names_digest=shard_plan.names_digest([record]), baseline_diffs=[])
         return unit, record
 
-    def test_budget_can_fail_with_all_other_checks_green(self):
+    def run_observed_unit(self, root, code, grep):
         unit, record = self.valid_observation()
-        self.assertEqual(shard.validate_observation(unit, unit['expect'], [record], [], [], 29, 0), [])
-        errors = shard.validate_observation(unit, unit['expect'], [record], [], [], 30, 0)
-        self.assertEqual(len(errors), 1)
-        self.assertIn('invalid test unit', errors[0])
+        unit.update(tasks=[record['task']], inputs_hash='inputs')
+        if grep:
+            unit['grep'] = '^one$'
+        plan = dict(artifact='tree', units=[unit])
+        clock = [100.0]
+
+        def execute(command, tree, log, env, seconds):
+            self.assertEqual(seconds, 29.5)
+            clock[0] = 131.0
+            log.write_text('  1 passing\n  0 failing\n  0 pending\n')
+            if code != 124:
+                if grep:
+                    (log.parent / 'events.jsonl').write_text(json.dumps(record) + '\n')
+                else:
+                    worker = log.parent / 'worker'; worker.mkdir()
+                    (worker / 'tasks.jsonl').write_text(json.dumps(dict(
+                        task=record['task'], passes=[record], errors=[], passing=1)) + '\n')
+            return code
+
+        with ExitStack() as patches:
+            for probe in (patch.object(shard, 'check_unit_inputs'),
+                          patch.object(shard, 'adapted_inputs', return_value=(root, root, None, None)),
+                          patch.object(shard, 'make_view'),
+                          patch.object(shard, 'baseline_diff', return_value=([], '')),
+                          patch.object(shard, 'read_failures', return_value=[]),
+                          patch.object(shard, 'shard_seconds', return_value=30.0),
+                          patch.object(shard.time, 'monotonic', side_effect=lambda: clock[0]),
+                          patch.object(shard, 'execute', side_effect=execute)):
+                patches.enter_context(probe)
+            result = shard.run_unit(unit['name'], root, 'inputs', plan=plan)
+        report = json.loads((root / unit['name'] / 'report.json').read_text())
+        return result, report
+
+    def test_run_past_limit_passes_and_records_seconds(self):
+        for grep in (False, True):
+            with self.subTest(grep=grep), tempfile.TemporaryDirectory() as scratch:
+                result, report = self.run_observed_unit(Path(scratch), 0, grep)
+                self.assertEqual(report['errors'], [])
+                self.assertEqual(result, 0)
+                self.assertEqual(report['status'], 'pass')
+                self.assertEqual(report['counts'], {'pass': 1, 'fail': 0, 'skip': 0})
+                self.assertEqual(report['seconds'], 31.0)
+
+    def test_killed_at_limit_fails_naming_unit(self):
+        for grep in (False, True):
+            with self.subTest(grep=grep), tempfile.TemporaryDirectory() as scratch:
+                result, report = self.run_observed_unit(Path(scratch), 124, grep)
+                self.assertEqual(result, 1)
+                self.assertEqual(report['status'], 'fail')
+                self.assertEqual(report['errors'], ['one timed out after 31.0 seconds, past its 30 second limit'])
 
     def test_inventory_detects_swapped_case_with_unchanged_counts(self):
         unit, record = self.valid_observation()
         mutant = copy.deepcopy(record); mutant['name'][-1] = 'another baseline'
-        self.assertEqual(shard.validate_observation(unit, unit['expect'], [mutant], [], [], 1, 0),
+        self.assertEqual(shard.validate_observation(unit, unit['expect'], [mutant], [], [], 0),
                          ['selected test identities do not equal this unit inventory'])
 
     def test_input_hash_guard_detects_changed_harness(self):

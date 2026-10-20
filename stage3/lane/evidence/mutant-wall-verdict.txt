@@ -1,0 +1,186 @@
+cold wall verdict restored
+Command: timeout 20 python3 -B -m unittest test_shards.ShardTests.test_run_past_limit_passes_and_records_seconds -v (cwd stage3/lane)
+Exit: 1
+test_run_past_limit_passes_and_records_seconds (test_shards.ShardTests.test_run_past_limit_passes_and_records_seconds) ... {"name": "one", "status": "fail", "counts": {"pass": 1, "fail": 0, "skip": 0}, "seconds": 31.0, "errors": ["invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds"]}
+
+  test_run_past_limit_passes_and_records_seconds (test_shards.ShardTests.test_run_past_limit_passes_and_records_seconds) (grep=False) ... FAIL
+{"name": "one", "status": "fail", "counts": {"pass": 1, "fail": 0, "skip": 0}, "seconds": 31.0, "errors": ["invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds"]}
+  test_run_past_limit_passes_and_records_seconds (test_shards.ShardTests.test_run_past_limit_passes_and_records_seconds) (grep=True) ... FAIL
+
+======================================================================
+FAIL: test_run_past_limit_passes_and_records_seconds (test_shards.ShardTests.test_run_past_limit_passes_and_records_seconds) (grep=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 175, in test_run_past_limit_passes_and_records_seconds
+    self.assertEqual(report['errors'], [])
+AssertionError: Lists differ: ['invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds'
+
+- ['invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds']
++ []
+
+======================================================================
+FAIL: test_run_past_limit_passes_and_records_seconds (test_shards.ShardTests.test_run_past_limit_passes_and_records_seconds) (grep=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 175, in test_run_past_limit_passes_and_records_seconds
+    self.assertEqual(report['errors'], [])
+AssertionError: Lists differ: ['invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds'
+
+- ['invalid test unit: cold wall 31.000000 seconds exceeds 30 seconds']
++ []
+
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+FAILED (failures=2)
+
+timed_out calls removed
+Command: timeout 20 python3 -B -m unittest test_shards.ShardTests.test_killed_at_limit_fails_naming_unit -v (cwd stage3/lane)
+Exit: 1
+test_killed_at_limit_fails_naming_unit (test_shards.ShardTests.test_killed_at_limit_fails_naming_unit) ... {"name": "one", "status": "fail", "counts": {}, "seconds": 31.0, "errors": ["[Errno 2] No such file or directory: '/tmp/tmp4umgxpvi/one/oracle/worker/tasks.jsonl'"]}
+
+  test_killed_at_limit_fails_naming_unit (test_shards.ShardTests.test_killed_at_limit_fails_naming_unit) (grep=False) ... FAIL
+{"name": "one", "status": "fail", "counts": {}, "seconds": 31.0, "errors": ["[Errno 2] No such file or directory: '/tmp/tmphowqd19a/one/oracle/events.jsonl'"]}
+  test_killed_at_limit_fails_naming_unit (test_shards.ShardTests.test_killed_at_limit_fails_naming_unit) (grep=True) ... FAIL
+
+======================================================================
+FAIL: test_killed_at_limit_fails_naming_unit (test_shards.ShardTests.test_killed_at_limit_fails_naming_unit) (grep=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 187, in test_killed_at_limit_fails_naming_unit
+    self.assertEqual(report['errors'], ['one timed out after 31.0 seconds, past its 30 second limit'])
+AssertionError: Lists differ: ["[Errno 2] No such file or directory: '/t[42 chars]nl'"] != ['one timed out after 31.0 seconds, past i[15 chars]mit']
+
+First differing element 0:
+"[Errno 2] No such file or directory: '/t[41 chars]onl'"
+'one timed out after 31.0 seconds, past i[14 chars]imit'
+
++ ['one timed out after 31.0 seconds, past its 30 second limit']
+- ['[Errno 2] No such file or directory: '
+-  "'/tmp/tmp4umgxpvi/one/oracle/worker/tasks.jsonl'"]
+
+======================================================================
+FAIL: test_killed_at_limit_fails_naming_unit (test_shards.ShardTests.test_killed_at_limit_fails_naming_unit) (grep=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/lane/test_shards.py", line 187, in test_killed_at_limit_fails_naming_unit
+    self.assertEqual(report['errors'], ['one timed out after 31.0 seconds, past its 30 second limit'])
+AssertionError: Lists differ: ["[Errno 2] No such file or directory: '/t[36 chars]nl'"] != ['one timed out after 31.0 seconds, past i[15 chars]mit']
+
+First differing element 0:
+"[Errno 2] No such file or directory: '/t[35 chars]onl'"
+'one timed out after 31.0 seconds, past i[14 chars]imit'
+
++ ['one timed out after 31.0 seconds, past its 30 second limit']
+- ['[Errno 2] No such file or directory: '
+-  "'/tmp/tmphowqd19a/one/oracle/events.jsonl'"]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (failures=2)
+
+Baseline: 3da9f5f8d8c23472012d699ed8ffdf63b28676fe (current origin/main when fetched).
+Toolchain command: export GOPROXY='https://proxy.golang.org|direct'; timeout 840 bash cloud/setup.sh > /tmp/x2jdg33-setup.log 2>&1
+Setup exit: 124 during Go cache warming. Sourced /workspace/adamic-tools/env.sh; direct lane Go builds are the workaround.
+nproc: 5
+setup: go ready (0.259s)
+setup: node ready (0.343s)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.310s)
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.727s
+setup: markdown dependencies ready (2.444s)
+setup: submodules ready (355.487s)
+setup: shared cache off (opt in with ADAMIC_GOCACHE=1) (355.566s)
+Initial artifact preparation failed because ADAMIC_TYPESCRIPT_SOURCE was unset. Fetched pinned v6.0.3 (050880ce59e30b356b686bd3144efe24f875ebc8) into /workspace/scratch/x2jdg33-typescript and installed the locked stage3/api and stage3/typescript packages.
+Standalone control: timeout 60 python3 -B -m unittest test_shards -v > /tmp/x2jdg33-shards-python.log 2>&1 (cwd stage3/lane): 15 tests, OK.
+Initial Go wrapper attempt could not load the not-yet-ready cohere/TypeScript/tsc/go.mod. GOWORK=off allowed compilation while setup fetched the submodule.
+Concurrent wrapper attempt: GOWORK=off timeout 300 go test ./stage3/lane -run '^(TestLane.*Python|TestShardsMatchManifest)$' -count=1 -timeout 4m -v > /tmp/x2jdg33-go-suites-workaround.log 2>&1: TestLaneCheckPython and TestLaneShardsPython were killed by their 55-second limits during concurrent cold builds.
+
+Plan regeneration and preservation proof
+Command: timeout 120 python3 -B stage3/lane/shard_plan.py /workspace/scratch/x2jdg33-artifacts/923feeb7af9d1a8d059e6a293b7734fbcf5b3fa25bf06ca1dd32b29f0b0c6f83 > /tmp/x2jdg33-generate.log 2>&1
+Generator result: 377 units, 106366 passing, 1 sanctioned failure, 0 pending.
+Actual ready.json and shards-ready.json were read; neither was modified.
+Fresh producer phases: {"apply": {"exit": 0, "seconds": 120.771}, "build": {"exit": 0, "seconds": 171.339}, "harness": {"exit": 0, "seconds": 14.188}, "install": {"exit": 0, "seconds": 11.933}}
+Fresh producer total: 432.526 seconds.
+
+Observed: the fresh artifact key differs from main's existing binding. Main has also received non-lane stage3 meter changes since its last artifact regeneration. The broad artifact identity includes those files and installed packages.
+Raw generator diff with ONLY runtime and inputs_hash removed:
+--- origin/main masked
++++ generated masked
+@@ -1,6 +1,6 @@
+ {
+   "api_digest": "1512f1871eebe448dac94546c5a6337daa1cb64ff20c80f3d9e93f85a0f48dce",
+-  "artifact": "1cb7c82e910e3492a662724f8717110fac673260cbe30890a64df88c87aac292",
++  "artifact": "923feeb7af9d1a8d059e6a293b7734fbcf5b3fa25bf06ca1dd32b29f0b0c6f83",
+   "counts": {
+     "fail": 1,
+     "pass": 106366,
+
+Choice to honor the brief's field restriction: retain main's artifact and API bindings and call the same generator algorithm, shard_plan.build_plan(old['artifact'], old['api_digest']), then write shard-plan.json and gate_manifest(plan) with the generator's JSON formatting. No ready marker or unit definition was altered. This preservation step follows the literal generator command; the final plan does not select the freshly produced shared artifact. The Go shards use their separately built adapted-tree product.
+
+Final plan diff with ONLY runtime and inputs_hash removed:
+Diff result: empty, exit 0.
+Units equal: 377/377, including tasks, greps, counts, names digests, baselines and timing weights. All other top-level fields equal.
+All 377 inputs_hash values moved; runtime c471a366282d6f7187cf71e4eeb6aff4d7115cde33f2964058f1b4ee0185b5b1 -> bb6e7604653ccbf614dfd57d1291867663f3bb17d8ae0259b44172a183975359.
+The regenerated tests-and-units.jsonl.gz is byte-identical to main after decompression.
+
+Proof operations: json.loads(git show 3da9f5f8d8c23472012d699ed8ffdf63b28676fe:stage3/lane/shard-plan.json); recursively remove only keys runtime and inputs_hash; difflib.unified_diff sorted, indented JSON; assert the diff is empty. Assert each old/new inputs_hash differs and gzip.decompress(git show 3da9f5f8d8c23472012d699ed8ffdf63b28676fe:stage3/lane/evidence/case-shards/tests-and-units.jsonl.gz) equals the regenerated census. Full raw generated plan retained at /tmp/x2jdg33-fresh-shard-plan.json.
+
+Additional preparation and test observations
+The preliminary artifact producer correctly refused publication with ValueError: inputs changed while preparing the artifact, because it overlapped dependency installation. See /tmp/x2jdg33-prepare-ready.log. A supervised extension preserved its completed apply product; the final settled-input producer reused that verified product and completed with exit 0 (/tmp/x2jdg33-prepare-final.log).
+Final preparation command: source /workspace/adamic-tools/env.sh; export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/x2jdg33-typescript; timeout 840 python3 -B stage3/lane/prepare_shards.py /workspace/scratch/x2jdg33-artifacts > /tmp/x2jdg33-prepare-final.log 2>&1
+The first product-only attempt, timeout 840 go test ./stage3/lane -run '^TestProduct_Stage3AdaptedTree$' -count=1 -timeout 13m -v > /tmp/x2jdg33-go-product.log 2>&1, reached its outer deadline during cold adaptation (exit 124). The final three-shard run allows 30 minutes for the one-time product build.
+Serial wrapper retry: timeout 300 go test ./stage3/lane -run '^(TestLane.*Python|TestShardsMatchManifest)$' -parallel 1 -count=1 -timeout 4m -v > /tmp/x2jdg33-go-suites-serial.log 2>&1. Eight passed, including TestLaneShardsPython (30.27s); TestLaneCheckPython reached 55s while two adaptations were running.
+All Go commands source /workspace/adamic-tools/env.sh and export GOPROXY='https://proxy.golang.org|direct'. Shard commands additionally export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/x2jdg33-typescript.
+
+Final validation (cwd /workspace/adamic)
+Three-shard command: source /workspace/adamic-tools/env.sh; export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/x2jdg33-typescript; export GOPROXY='https://proxy.golang.org|direct'; timeout 1860 go test ./stage3/lane -run '^TestShard_Stage3Lane(File000|File001|SymlinkCase00)$' -parallel 1 -count=1 -timeout 30m -v > /tmp/x2jdg33-go-three-shards.log 2>&1
+Exit: 0
+=== RUN   TestShard_Stage3LaneFile000
+=== PAUSE TestShard_Stage3LaneFile000
+=== RUN   TestShard_Stage3LaneFile001
+=== PAUSE TestShard_Stage3LaneFile001
+=== RUN   TestShard_Stage3LaneSymlinkCase00
+=== PAUSE TestShard_Stage3LaneSymlinkCase00
+=== CONT  TestShard_Stage3LaneFile000
+    shards_generated_test.go:59: build stage3-adapted-tree 4baf232206a1 miss 1298.87
+--- PASS: TestShard_Stage3LaneFile000 (1332.63s)
+=== CONT  TestShard_Stage3LaneSymlinkCase00
+    shards_generated_test.go:1814: build stage3-adapted-tree 4baf232206a1 hit 0.23
+--- PASS: TestShard_Stage3LaneSymlinkCase00 (16.35s)
+=== CONT  TestShard_Stage3LaneFile001
+    shards_generated_test.go:64: build stage3-adapted-tree 4baf232206a1 hit 0.15
+--- PASS: TestShard_Stage3LaneFile001 (12.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/lane	1361.579s
+
+Final suite command: source /workspace/adamic-tools/env.sh; export GOPROXY='https://proxy.golang.org|direct'; timeout 300 go test ./stage3/lane -run '^(TestLane.*Python|TestShardsMatchManifest)$' -parallel 1 -count=1 -timeout 4m -v > /tmp/x2jdg33-go-suites-final.log 2>&1
+All eight TestLane Python wrappers passed. TestLaneCheckPython cleared its prior timeout at 54.31s. The command exited 1 solely because TestShardsMatchManifest found the generated Go checksum stale after manifest regeneration.
+--- PASS: TestLaneCheckPython (54.31s)
+--- PASS: TestLaneProfilePython (0.54s)
+--- PASS: TestLaneShardsPython (40.77s)
+--- PASS: TestLaneCaseObserverPython (0.32s)
+--- PASS: TestLaneMeasurePlanPython (2.36s)
+--- PASS: TestLaneArtifactPython (1.58s)
+--- PASS: TestLaneTablePython (0.78s)
+--- PASS: TestLaneWorkerEnvironmentPython (1.90s)
+
+Required derived-file addition to the brief's listed files: generate_shards.py embeds SHA-256(shards.json) in shards_generated_test.go. Refreshed it with timeout 60 python3 -B stage3/lane/generate_shards.py > /tmp/x2jdg33-generated-declarations.log 2>&1. Only its manifest checksum comment changed; all Go declarations are byte-identical (asserted against main after the first two header lines). This file remains under stage3/lane/.
+Manifest check command: source /workspace/adamic-tools/env.sh; export GOPROXY='https://proxy.golang.org|direct'; timeout 120 go test ./stage3/lane -run '^TestShardsMatchManifest$' -count=1 -timeout 90s -v > /tmp/x2jdg33-go-manifest-final.log 2>&1
+Exit: 0
+=== RUN   TestShardsMatchManifest
+=== PAUSE TestShardsMatchManifest
+=== CONT  TestShardsMatchManifest
+--- PASS: TestShardsMatchManifest (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/lane	0.251s
+
+Final git diff --check: exit 0. No full-repository Go gate was run.
