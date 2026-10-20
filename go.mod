@@ -45,4 +45,8 @@ require (
 	github.com/microsoft/TypeScript/tsc/shim/vfs v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs v0.0.0
 	github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs v0.0.0
+
+	// adamiclint's rules are go/analysis analyzers run by go vet (cmd/adamiclint). The version is the one the
+	// cohere submodule already requires, so the build graph gains no module.
+	golang.org/x/tools v0.49.0
 )
