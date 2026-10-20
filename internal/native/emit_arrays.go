@@ -271,7 +271,9 @@ func (e *emitter) constantArray(literal ir.ArrayLiteral) (string, bool) {
 	numbers, flat := constantNumbersOf(literal)
 	lengths := []int{}
 	if !flat {
-		if !literal.Element.IsReference() || len(literal.Elements) == 0 {
+		// A spread of rows would make an array of their elements, which a table of rows can't say. The
+		// checker refuses spreading numbers into an array of arrays; this doesn't lean on that.
+		if !literal.Element.IsReference() || len(literal.Elements) == 0 || slices.Contains(literal.Spread, true) {
 			return "", false
 		}
 		for _, element := range literal.Elements {
