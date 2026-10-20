@@ -109,25 +109,16 @@ func TestParallelMemory(t *testing.T) {
 	}
 }
 
-func parallelMapMode(t *testing.T, selected string) {
-	for _, build := range parallelBuilds(t) {
-		t.Run(build.name, func(t *testing.T) {
-			binary := parallelHarness(t, "map.c", build.options)
-			for _, mode := range []string{"numbers", "strings", "objects", "map", "fresh", "nested", "exception", "nested_exception", "million"} {
-				if mode != selected {
-					continue
-				}
-				t.Run(mode, func(t *testing.T) {
-					one, _ := parallelRun(t, binary, "1", mode)
-					many, _ := parallelRun(t, binary, "4", mode)
-					parallelLeaks(t, binary, build.options, "1", mode)
-					parallelLeaks(t, binary, build.options, "4", mode)
-					if one != many {
-						t.Fatalf("one worker %q, four workers %q", one, many)
-					}
-				})
-			}
-		})
+// Each build keeps both worker counts together for the output equality assertion.
+func parallelMapMode(t *testing.T, mode string, options Options) {
+	t.Helper()
+	binary := parallelHarness(t, "map.c", options)
+	one, _ := parallelRun(t, binary, "1", mode)
+	many, _ := parallelRun(t, binary, "4", mode)
+	parallelLeaks(t, binary, options, "1", mode)
+	parallelLeaks(t, binary, options, "4", mode)
+	if one != many {
+		t.Fatalf("one worker %q, four workers %q", one, many)
 	}
 }
 
@@ -442,49 +433,256 @@ func TestParallelMutant_one_worker(t *testing.T) {
 	parallelCheckMutant(t, "one_worker")
 }
 
-func TestParallelMap_numbers(t *testing.T) {
+func TestParallelMap_numbers_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "numbers")
+	parallelMapMode(t, "numbers", Options{Sanitize: true})
 }
 
-func TestParallelMap_strings(t *testing.T) {
+func TestParallelMap_numbers_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "strings")
+	parallelMapMode(t, "numbers", Options{Sanitize: true, slabs: true})
 }
 
-func TestParallelMap_objects(t *testing.T) {
+func TestParallelMap_numbers_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "objects")
+	parallelMapMode(t, "numbers", Options{Count: true})
 }
 
-func TestParallelMap_map(t *testing.T) {
+func TestParallelMap_numbers_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "map")
+	parallelMapMode(t, "numbers", Options{})
 }
 
-func TestParallelMap_fresh(t *testing.T) {
+func TestParallelMap_numbers_tsan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "fresh")
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "numbers", Options{ThreadSanitize: true})
 }
 
-func TestParallelMap_nested(t *testing.T) {
+func TestParallelMap_strings_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested")
+	parallelMapMode(t, "strings", Options{Sanitize: true})
 }
 
-func TestParallelMap_exception(t *testing.T) {
+func TestParallelMap_strings_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "exception")
+	parallelMapMode(t, "strings", Options{Sanitize: true, slabs: true})
 }
 
-func TestParallelMap_nested_exception(t *testing.T) {
+func TestParallelMap_strings_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested_exception")
+	parallelMapMode(t, "strings", Options{Count: true})
 }
 
-func TestParallelMap_million(t *testing.T) {
+func TestParallelMap_strings_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "million")
+	parallelMapMode(t, "strings", Options{})
+}
+
+func TestParallelMap_strings_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "strings", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_objects_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "objects", Options{Sanitize: true})
+}
+
+func TestParallelMap_objects_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "objects", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_objects_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "objects", Options{Count: true})
+}
+
+func TestParallelMap_objects_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "objects", Options{})
+}
+
+func TestParallelMap_objects_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "objects", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_map_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "map", Options{Sanitize: true})
+}
+
+func TestParallelMap_map_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "map", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_map_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "map", Options{Count: true})
+}
+
+func TestParallelMap_map_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "map", Options{})
+}
+
+func TestParallelMap_map_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "map", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_fresh_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "fresh", Options{Sanitize: true})
+}
+
+func TestParallelMap_fresh_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "fresh", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_fresh_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "fresh", Options{Count: true})
+}
+
+func TestParallelMap_fresh_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "fresh", Options{})
+}
+
+func TestParallelMap_fresh_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "fresh", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_nested_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested", Options{Sanitize: true})
+}
+
+func TestParallelMap_nested_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_nested_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested", Options{Count: true})
+}
+
+func TestParallelMap_nested_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested", Options{})
+}
+
+func TestParallelMap_nested_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "nested", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_exception_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "exception", Options{Sanitize: true})
+}
+
+func TestParallelMap_exception_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "exception", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_exception_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "exception", Options{Count: true})
+}
+
+func TestParallelMap_exception_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "exception", Options{})
+}
+
+func TestParallelMap_exception_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "exception", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_nested_exception_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested_exception", Options{Sanitize: true})
+}
+
+func TestParallelMap_nested_exception_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested_exception", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_nested_exception_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested_exception", Options{Count: true})
+}
+
+func TestParallelMap_nested_exception_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "nested_exception", Options{})
+}
+
+func TestParallelMap_nested_exception_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "nested_exception", Options{ThreadSanitize: true})
+}
+
+func TestParallelMap_million_asan(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "million", Options{Sanitize: true})
+}
+
+func TestParallelMap_million_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "million", Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelMap_million_count(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "million", Options{Count: true})
+}
+
+func TestParallelMap_million_release(t *testing.T) {
+	t.Parallel()
+	parallelMapMode(t, "million", Options{})
+}
+
+func TestParallelMap_million_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelMapMode(t, "million", Options{ThreadSanitize: true})
 }
 
 func TestParallelMutant_fixture_shared_counter(t *testing.T) {
