@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"slices"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -25,12 +26,13 @@ const jsonPortClassOrderKey = "cohere/internal/lint/rules/tailwind/collapse/test
 // jsonPortInventoryKey is the corpus's largest case, 17.5 MB, about 17 s of one core's work across the five sides
 // (its sanitized run 10.8 s, Golem, Oct 14). Hashed into _0760 with a 3 KB case, it was json#20/28's long pole, and
 // under the unit's 8-way contention its own run reached 77.6 s of the 90 s (#21kptp1). One case doesn't split, so it
-// runs as class order's does: alone in the unit, before the parallel shards resume (inventory_dedicated_test.go).
+// runs as class order's does: alone in the unit, before the parallel shards resume (dedicated_test.go).
 const jsonPortInventoryKey = "stage1/cohere/lint/inventory/inventory.json"
 
-// jsonPortDedicatedKeys are the cases taken out of the hash buckets, each owned by tests of its own. Taking one out
+// jsonPortDedicatedKeys are the cases taken out of the hash buckets, each owned by tests of its own: class order's, the
+// inventory's, and the three heavy cases each split between two parallel tests (dedicated_test.go). Taking one out
 // moves no other case: a bucket is chosen by the case's own key.
-var jsonPortDedicatedKeys = []string{jsonPortClassOrderKey, jsonPortInventoryKey}
+var jsonPortDedicatedKeys = []string{jsonPortClassOrderKey, jsonPortInventoryKey, jsonPortDefaultContractsKey, jsonPortVerdictSelectionKey, jsonPortAnyReturnsInspectionKey}
 
 func jsonPortDedicatedPartition(all []textCase) (ordinary []textCase, shards []nativeChunk, dedicated []textCase) {
 	for _, item := range all {
@@ -227,21 +229,27 @@ func TestPortMatchesGoCohereClassOrder_001(t *testing.T) {
 }
 
 // Every dedicated case leaves the hash buckets and is owned exactly once: class order by _000 and _001, inventory.json
-// by TestPortMatchesGoCohereInventory. A planted disagreement in either is caught by exactly one owner.
+// by TestPortMatchesGoCohereInventory, and each heavy case by its two parts, _000 and _001, which are the whole's sides
+// between them (TestJSONPortPartsAreTheWhole). A planted disagreement in any is caught by exactly one owner.
 func TestJSONDedicatedShardOwnership(t *testing.T) {
 	t.Parallel()
-	for _, group := range [][]textCase{nil, {{Name: "small.json", Text: "{}"}}, {{Name: jsonPortClassOrderKey, Text: "[]"}}, {{Name: jsonPortInventoryKey, Text: "{}"}}} {
+	groups := [][]textCase{nil, {{Name: "small.json", Text: "{}"}}}
+	all := []textCase{{Name: "small.json", Text: "{}"}}
+	for _, key := range jsonPortDedicatedKeys {
+		groups = append(groups, []textCase{{Name: key, Text: "{}"}})
+		all = append(all, textCase{Name: key, Text: "[]"})
+	}
+	for _, group := range groups {
 		ordinary, shards, dedicated := jsonPortDedicatedPartition(group)
 		if err := jsonPortDedicatedUnion(group, ordinary, shards, dedicated); err != nil {
 			t.Fatal(err)
 		}
 	}
-	all := []textCase{{Name: "small.json", Text: "{}"}, {Name: jsonPortClassOrderKey, Text: "[]"}, {Name: jsonPortInventoryKey, Text: "{}"}}
 	ordinary, shards, dedicated := jsonPortDedicatedPartition(all)
 	if err := jsonPortDedicatedUnion(all, ordinary, shards, dedicated); err != nil {
 		t.Fatal(err)
 	}
-	if len(dedicated) != 2 || len(ordinary) != 1 {
+	if len(dedicated) != len(jsonPortDedicatedKeys) || len(ordinary) != 1 {
 		t.Fatal("wrong dedicated ownership")
 	}
 	owner := jsonCaseShard("small.json", testPortMatchesGoCohereShards)
@@ -259,7 +267,7 @@ func TestJSONDedicatedShardOwnership(t *testing.T) {
 	}
 	// Agreement ownership includes each dedicated case exactly once: class order's _000 runs the Go oracle, release,
 	// Node and the JavaScript backend, and its sanitizer pass compares against the stored answer; inventory.json's one
-	// test runs all five sides.
+	// test runs all five sides; a heavy case's two parts run them between them, each against its own Go oracle run.
 	owners := [][]textCase{}
 	for _, shard := range shards {
 		owners = append(owners, ordinary[shard.start:shard.end])
@@ -296,20 +304,72 @@ func TestJSONDedicatedShardOwnership(t *testing.T) {
 			t.Fatalf("child %d missed planted failure", child)
 		}
 	}
+	// Each owner in dedicated_test.go is bound by its source to its key and part, so an owner lost, repeated, or bound to
+	// another case or part fails here: every dedicated case but class order's is run whole by one test or in its two
+	// parts by two.
+	constants := map[string]string{}
 	declared := map[string]bool{}
-	for _, file := range []string{"class_order_grain30_test.go", "inventory_dedicated_test.go"} {
+	owned := map[string][]string{}
+	for _, file := range []string{"class_order_grain30_test.go", "dedicated_test.go"} {
 		tree, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, decl := range tree.Decls {
-			if f, ok := decl.(*ast.FuncDecl); ok && (strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereClassOrder_") || strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereInventory")) {
-				declared[f.Name.Name] = true
+			if group, ok := decl.(*ast.GenDecl); ok && group.Tok == token.CONST {
+				for _, spec := range group.Specs {
+					value := spec.(*ast.ValueSpec)
+					for index, name := range value.Names {
+						if index < len(value.Values) {
+							if literal, ok := value.Values[index].(*ast.BasicLit); ok && literal.Kind == token.STRING {
+								constants[name.Name], _ = strconv.Unquote(literal.Value)
+							}
+						}
+					}
+				}
 			}
+			f, ok := decl.(*ast.FuncDecl)
+			if !ok || !strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohere") {
+				continue
+			}
+			declared[f.Name.Name] = true
+			if file != "dedicated_test.go" {
+				continue
+			}
+			statement, _ := f.Body.List[len(f.Body.List)-1].(*ast.ExprStmt)
+			if statement == nil {
+				t.Fatalf("%s: not a dedicated owner", f.Name.Name)
+			}
+			call, _ := statement.X.(*ast.CallExpr)
+			if call == nil || len(call.Args) != 3 {
+				t.Fatalf("%s: not a dedicated owner", f.Name.Name)
+			}
+			helper, _ := call.Fun.(*ast.Ident)
+			key, _ := call.Args[1].(*ast.Ident)
+			part, _ := call.Args[2].(*ast.Ident)
+			if helper == nil || helper.Name != "jsonPortDedicatedAgree" || key == nil || part == nil {
+				t.Fatalf("%s: not a dedicated owner", f.Name.Name)
+			}
+			owned[key.Name] = append(owned[key.Name], part.Name)
 		}
 	}
-	if len(declared) != 3 || !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] || !declared["TestPortMatchesGoCohereInventory"] {
+	if !declared["TestPortMatchesGoCohereClassOrder_000"] || !declared["TestPortMatchesGoCohereClassOrder_001"] {
 		t.Fatalf("dedicated shard declarations: %v", declared)
+	}
+	keys := map[string]bool{}
+	for name, parts := range owned {
+		key, ok := constants[name]
+		if !ok || key == jsonPortClassOrderKey || !slices.Contains(jsonPortDedicatedKeys, key) || keys[key] {
+			t.Fatalf("%s owned by %v is not a dedicated case of its own", name, parts)
+		}
+		keys[key] = true
+		slices.Sort(parts)
+		if !slices.Equal(parts, []string{"jsonPortWhole"}) && !slices.Equal(parts, []string{"jsonPortSanitized", "jsonPortUnsanitized"}) {
+			t.Fatalf("%s is owned by parts %v, want the whole once or each part once", key, parts)
+		}
+	}
+	if len(keys) != len(jsonPortDedicatedKeys)-1 {
+		t.Fatalf("%d of the %d dedicated cases besides class order have owners", len(keys), len(jsonPortDedicatedKeys)-1)
 	}
 	t.Log("dedicated union intact; a planted disagreement in each dedicated case caught by exactly one owner")
 }
