@@ -1,0 +1,24 @@
+interface Graph {
+	readonly value: number;
+	readonly next: Graph | undefined;
+}
+function build(value: number): Graph {
+	return { value, next: tail(value + 1) };
+}
+function tail(value: number): Graph {
+	return { value, next: undefined };
+}
+function sum(graph: Graph): number {
+	if (graph.next === undefined) return graph.value + 0;
+	return graph.value + graph.next.value;
+}
+function run(): void {
+	let total = 0;
+	for (let item = 0; item < 3; item++) {
+		total += sum(build(item));
+		const held = build(item);
+		total += sum(held);
+	}
+	console.log(`${total}`);
+}
+run();
