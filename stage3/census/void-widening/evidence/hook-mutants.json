@@ -1,0 +1,14 @@
+[
+  {
+    "name": "factory",
+    "exit": 1,
+    "change": "return 42; -> return undefined;",
+    "caught": true
+  },
+  {
+    "name": "allocator",
+    "exit": 1,
+    "change": "return 17; -> return undefined;",
+    "caught": true
+  }
+]
