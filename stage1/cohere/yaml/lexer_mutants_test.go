@@ -3,16 +3,22 @@ package yaml
 import (
 	"bytes"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
@@ -63,7 +69,9 @@ func goLexer(t *testing.T, cases string) []byte {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if err := os.WriteFile(filepath.Join(directory, "go-lexer"), data, 0755); err != nil {
+		// A program copied while sibling tests fork goes through the fork-safe writer, or a fork can hold its writable
+		// descriptor and a later exec of it fails with ETXTBSY (#6hjazy4).
+		if err := executable.Write(filepath.Join(directory, "go-lexer"), data); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -102,31 +110,164 @@ func TestProduct_YAMLLexerMutant002(t *testing.T) { t.Parallel(); lexerMutants.p
 func TestProduct_YAMLLexerMutant003(t *testing.T) { t.Parallel(); lexerMutants.product(t, 3) }
 func TestProduct_YAMLLexerMutant004(t *testing.T) { t.Parallel(); lexerMutants.product(t, 4) }
 
-func TestLexerMutants(t *testing.T) {
-	t.Parallel()
-	cases, _, _ := lexCases(t)
-	expected := goLexer(t, cases)
+// lexerMutantsShards is the count of lexerMutants.mutations, each its own top-level test so Loom's planner can cut
+// between mutants, which it can't between subtests.
+const lexerMutantsShards = 5
+
+// lexerMutantsAnswers holds what every mutant compares against, made once per process: the lexical cases and the Go
+// lexer's answer to them.
+var lexerMutantsAnswers struct {
+	once            sync.Once
+	cases, expected []byte
+}
+
+func lexerMutantsExpected(t *testing.T) ([]byte, []byte) {
+	t.Helper()
+	lexerMutantsAnswers.once.Do(func() {
+		// The cases file lives in the first caller's temporary directory, gone when that test ends, so its bytes are kept.
+		path, _, _ := lexCases(t)
+		cases, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		lexerMutantsAnswers.expected = goLexer(t, path)
+		lexerMutantsAnswers.cases = cases
+	})
+	if lexerMutantsAnswers.cases == nil {
+		t.Fatal("the Go lexer's answers failed earlier in this process")
+	}
+	return lexerMutantsAnswers.cases, lexerMutantsAnswers.expected
+}
+
+// lexerMutantsEnumeration reads the top-level wrappers themselves, so a missing, duplicated or miswired shard can't
+// leave a mutant unrun while the count still agrees.
+func lexerMutantsEnumeration(t *testing.T) []int {
+	t.Helper()
+	if len(lexerMutants.mutations) != lexerMutantsShards {
+		t.Fatalf("%d lexer mutants, but lexerMutantsShards is %d", len(lexerMutants.mutations), lexerMutantsShards)
+	}
+	file, err := parser.ParseFile(token.NewFileSet(), "lexer_mutants_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var plan []int
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, "TestLexerMutants_") {
+			continue
+		}
+		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestLexerMutants_"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		calls := 0
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			call, ok := node.(*ast.CallExpr)
+			if !ok {
+				return true
+			}
+			name, ok := call.Fun.(*ast.Ident)
+			if !ok || name.Name != "lexerMutantsShard" {
+				return true
+			}
+			if len(call.Args) != 2 {
+				t.Fatalf("%s: invalid shard call", function.Name.Name)
+			}
+			literal, ok := call.Args[1].(*ast.BasicLit)
+			if !ok {
+				t.Fatalf("%s: shard index must be a literal", function.Name.Name)
+			}
+			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+				t.Fatalf("%s runs mutant %s", function.Name.Name, literal.Value)
+			}
+			calls++
+			return true
+		})
+		if calls != 1 {
+			t.Fatalf("%s runs %d mutants, want one", function.Name.Name, calls)
+		}
+		plan = append(plan, shard)
+	}
+	return plan
+}
+
+// lexerMutantSurvived is a side's verdict: a mutant whose output still equals the Go lexer's was missed.
+func lexerMutantSurvived(side string, output, expected []byte) error {
+	if bytes.Equal(output, expected) {
+		return fmt.Errorf("%s missed mutant", side)
+	}
+	return nil
+}
+
+func lexerMutantsShard(t *testing.T, index int) {
+	t.Helper()
+	setup := time.Now()
+	mutant := lexerMutants.mutations[index]
+	product := lexerMutants.product(t, index)
+	corpus, expected := lexerMutantsExpected(t)
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(cases, corpus, 0644); err != nil {
+		t.Fatal(err)
+	}
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for index, mutant := range lexerMutants.mutations {
-		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
-		t.Run(mutant.name, func(t *testing.T) {
-			product := lexerMutants.product(t, index)
-			nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(product, "mutant"), cases)
-			// The mutant's emitted JavaScript must run cleanly, as it always had to; native and Node are compared with Go.
-			run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "mutant.mjs"), cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "lex_main.ts"), cases)
-			for _, side := range []struct {
-				name   string
-				output []byte
-			}{{"native", nativeOut}, {"Node", node}} {
-				if bytes.Equal(side.output, expected) {
-					t.Fatalf("%s missed mutant", side.name)
-				}
-				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.output, expected))
-			}
-		})
+	t.Logf("%s; setup %.3fs", mutant.name, time.Since(setup).Seconds())
+	nativeOut := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(product, "mutant"), cases)
+	// The mutant's emitted JavaScript must run cleanly, as it always had to; native and Node are compared with Go.
+	run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "mutant.mjs"), cases)
+	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "lex_main.ts"), cases)
+	for _, side := range []struct {
+		name   string
+		output []byte
+	}{{"native", nativeOut}, {"Node", node}} {
+		if err := lexerMutantSurvived(side.name, side.output, expected); err != nil {
+			t.Fatal(err)
+		}
+		t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.output, expected))
 	}
 }
+
+func TestLexerMutantsUnion(t *testing.T) {
+	t.Parallel()
+	visits := make([]int, len(lexerMutants.mutations))
+	for _, index := range lexerMutantsEnumeration(t) {
+		if index < 0 || index >= len(visits) {
+			t.Fatalf("TestLexerMutants_%03d names no mutant", index)
+		}
+		visits[index]++
+	}
+	for index, count := range visits {
+		if count != 1 {
+			t.Fatalf("mutant %d (%s) run by %d top-level tests, want one", index, lexerMutants.mutations[index].name, count)
+		}
+	}
+	t.Logf("union: all %d lexer mutants run, each by exactly one top-level test", len(visits))
+}
+
+func TestLexerMutantsPlantedFailure(t *testing.T) {
+	t.Parallel()
+	// Plant a survivor in one mutant's output. Exactly its owner must reject it; every other mutant differs from the Go
+	// lexer and stays accepted.
+	var caught []int
+	for _, shard := range lexerMutantsEnumeration(t) {
+		output := []byte("wrong bytes")
+		if shard == 2 {
+			output = []byte("Go lexer bytes")
+		}
+		if lexerMutantSurvived("native", output, []byte("Go lexer bytes")) != nil {
+			caught = append(caught, shard)
+		}
+	}
+	if len(caught) != 1 || caught[0] != 2 {
+		t.Fatalf("planted survivor caught by %v, want [2]", caught)
+	}
+	t.Log("planted survivor caught exactly by TestLexerMutants_002")
+}
+
+func TestLexerMutants_000(t *testing.T) { t.Parallel(); lexerMutantsShard(t, 0) }
+func TestLexerMutants_001(t *testing.T) { t.Parallel(); lexerMutantsShard(t, 1) }
+func TestLexerMutants_002(t *testing.T) { t.Parallel(); lexerMutantsShard(t, 2) }
+func TestLexerMutants_003(t *testing.T) { t.Parallel(); lexerMutantsShard(t, 3) }
+func TestLexerMutants_004(t *testing.T) { t.Parallel(); lexerMutantsShard(t, 4) }
