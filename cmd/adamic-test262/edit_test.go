@@ -12,6 +12,7 @@ import (
 
 func TestEditCacheSeparation(t *testing.T) {
 	t.Parallel()
+	// Reads: internal/lower/*.go
 	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
 	if err != nil {
 		t.Fatal(err)
@@ -70,6 +71,7 @@ func TestNodeHarnessIdentity(t *testing.T) {
 
 func TestWorkerLazyFallback(t *testing.T) {
 	t.Parallel()
+	// Reads: internal/lower/*.go
 	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), productAdamic(t), nil, true)
 	if err != nil {
 		t.Fatal(err)
