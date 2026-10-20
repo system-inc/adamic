@@ -1,0 +1,12 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+// An assignment that narrows the union to what was assigned isn't a recognized step, so a read
+// behind it stays refused even when a kind test after it is the read's last step.
+enum Kind { Text, Count }
+enum Extra { Only }
+interface X { readonly kind: Kind.Text; readonly extra: Extra; readonly text: string }
+interface Y { readonly kind: Kind.Count; readonly count: number }
+type Node = X | Y;
+let node: Node = { kind: Kind.Count, count: 41 };
+if (node.kind === Kind.Count) {
+	console.log(`${node.count + 1}`);
+}
