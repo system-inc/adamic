@@ -1,0 +1,4 @@
+// Spec: a program may not declare what it doesn't define
+// Expect: refused an ambient value declaration
+declare const secret: string;
+console.log(secret.toUpperCase());

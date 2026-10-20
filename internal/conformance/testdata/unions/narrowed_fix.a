@@ -1,0 +1,11 @@
+// Spec: A discriminant's intersection is `never`, so a discriminant is written only after narrowing
+// Expect: lowers
+type Cell = { kind: 'Text'; value: string } | { kind: 'Count'; value: number };
+function scribble(cell: Cell): void {
+	if (cell.kind === 'Text') {
+		cell.value = 'text';
+	}
+}
+const counter: Cell = { kind: 'Count', value: 1 };
+scribble(counter);
+console.log(counter.kind);
