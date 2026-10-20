@@ -27,6 +27,14 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/enum_tag_flow_admitted.a", true, false})
+	// A typed local written before its test, const node: Node = make(), leaves the declared union,
+	// so the kind test is the only step that narrows. Mutant: every assignment to the reference
+	// refusing, as part 1 had it, refuses this.
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/enum_tag_flow_typed_local.a", true, false})
 }
 
 // A refinement by a tag that can't prove the layout is refused. An open numeric enum tag is
@@ -46,7 +54,8 @@ func init() {
 // and all but getter_tag then print 1 natively where Node prints text1; a recognized comparison
 // passing without judging its incoming type lowers sequential, intersection, subset_union,
 // intersection_member, shared_beside_intersection and both cross_enum programs; a label walking
-// only its first path lowers join, which then prints 1.
+// only its first path lowers join, which then prints 1. assignment narrows the union to what
+// was assigned, a step the walk doesn't recognize; a narrowing assignment counted as proof lowers it.
 func TestEnumTagRefinementsAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/enum_tag_refused"
@@ -83,7 +92,7 @@ func TestEnumTagRefinementsAreRefused(t *testing.T) {
 			}
 		})
 	}
-	if programs != 14 {
-		t.Fatalf("%d programs in %s, want 14: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 15 {
+		t.Fatalf("%d programs in %s, want 15: a program added or removed needs this count changed with it", programs, directory)
 	}
 }
