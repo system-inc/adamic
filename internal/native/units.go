@@ -426,7 +426,7 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 	// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it was
 	// found.
 	if found, ok := cachedFile(object); ok {
-		if !unitChecked() {
+		if !keying.checked(unit) {
 			return found, nil
 		}
 		cached, err := os.ReadFile(found)
@@ -446,6 +446,7 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 				marked = "its mark couldn't be written: " + err.Error()
 			}
 			fmt.Fprintln(os.Stderr, unitMismatchLine(mismatch)+"; the unit cache is "+marked)
+			keying.mismatched.Store(true)
 			path := filepath.Join(directory, "checked-"+unit.name+".o")
 			return path, os.WriteFile(path, cold, 0o644)
 		}
@@ -503,6 +504,41 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 		return nil, fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
 	return os.ReadFile(filepath.Join(temporary, "unit.o"))
+}
+
+// compileUnits is every unit's object, jobs at once (compileUnit). Once any unit's cold check mismatches, the build's
+// cache is proved incomplete, not that unit's alone: every unit compiles again uncached, the hits already taken
+// included, so nothing is linked from keys this build caught short (Node's M4).
+func compileUnits(units []compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *Jobserver) ([]string, error) {
+	objects := make([]string, len(units))
+	failures := make([]error, len(units))
+	pass := func(keying *unitKeying) error {
+		work := make(chan int)
+		var workers sync.WaitGroup
+		for range jobs {
+			workers.Go(func() {
+				for index := range work {
+					objects[index], failures[index] = compileUnit(units[index], common, flags, compiler, keying, cache, directory, jobserver)
+				}
+			})
+		}
+		for index := range units {
+			work <- index
+		}
+		close(work)
+		workers.Wait()
+		return errors.Join(failures...)
+	}
+	if err := pass(keying); err != nil {
+		return nil, err
+	}
+	if keying != nil && keying.mismatched.Load() {
+		fmt.Fprintln(os.Stderr, "native: units compile uncached: a unit's cold check mismatched in this build, so every unit compiles again")
+		if err := pass(nil); err != nil {
+			return nil, err
+		}
+	}
+	return objects, nil
 }
 
 func buildUnits(source, output string, options Options) error {
@@ -583,28 +619,9 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 			return err
 		}
 	}
-	objects := make([]string, len(units))
-	failures := make([]error, len(units))
-	work := make(chan int)
-	var workers sync.WaitGroup
-	for j := 0; j < jobs; j++ {
-		workers.Add(1)
-		go func() {
-			defer workers.Done()
-			for index := range work {
-				objects[index], failures[index] = compileUnit(units[index], common, flags, compiler, keying, cache, directory, jobserver)
-			}
-		}()
-	}
-	for index := range units {
-		work <- index
-	}
-	close(work)
-	workers.Wait()
-	for _, err := range failures {
-		if err != nil {
-			return err
-		}
+	objects, err := compileUnits(units, common, flags, compiler, keying, cache, directory, jobs, jobserver)
+	if err != nil {
+		return err
 	}
 	// The link runs from the units' directory and gives it no input by its place on the machine: each unit's object,
 	// the runtime library and the checker archive go by a link's name there, and only the output by its absolute path,
