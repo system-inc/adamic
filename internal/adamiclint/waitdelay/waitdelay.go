@@ -12,8 +12,9 @@
 // or returns it, since a caller may buffer what it is handed: stage1/cohere/markdownblocks' leafCompositionCommand set
 // WaitDelay and returned the command, and its caller gave it bytes.Buffer outputs. childguard.Run wraps every output
 // in a writer of its own, never an *os.File, and childguard.CombinedOutput gives the command a bytes.Buffer, so exec
-// copies through pipes under both; childguard.Capture gives it *os.File pipes, so a command handed to it is not. A line carrying // WaitDelay: <reason>, on it or in the comment just above, is a use
-// someone has thought about, and the reason is what the next reader needs.
+// copies through pipes under both; childguard.Capture gives it *os.File pipes, so a command handed to it is not. A
+// line carrying // WaitDelay: <reason>, on it or in the comment just above, is a use someone has thought about, and
+// the reason is what the next reader needs.
 package waitdelay
 
 import (
