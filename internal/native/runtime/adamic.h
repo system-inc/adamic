@@ -169,6 +169,14 @@ typedef adamic_value adamic_code_function(adamic_closure *self, adamic_value *ar
 typedef adamic_code_function *adamic_code;
 typedef adamic_value adamic_counted_code_function(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 typedef adamic_counted_code_function *adamic_counted_code;
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// adamic_discard is what a call with no use for a closure's result does with it, fixed by the made
+// function's result type alone: a counted reference is released, and any other word holds nothing.
+enum adamic_discard {
+	adamic_discard_none,
+	adamic_discard_reference,
+};
+#endif
 struct adamic_closure {
 	adamic_heap heap;
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -180,6 +188,9 @@ struct adamic_closure {
 #endif
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  bool receiver;
+#endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+ uint8_t discard; // an adamic_discard
 #endif
 	size_t count;
 #ifdef ADAMIC_CANONICAL_CLOSURES
@@ -217,12 +228,30 @@ static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure,
  return adamic_closure_call(closure, received, argument_count + 1);
 }
 #endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// adamic_closure_discard lets go of what a void call through closure gave back, where the function
+// it holds can't be known at the call: a () => void slot may hold () => make(), whose reference comes
+// back owned, or () => 42, whose word is no reference, so the closure says which. An immortal closure
+// (count 0) is a library identity, a bare adamic_heap with no field to read, which lowering lets no
+// call reach; it holds nothing to let go either way.
+static inline void adamic_closure_discard(adamic_closure *closure, adamic_value result) {
+ if (adamic_reference_count(&closure->heap) == 0) { return; }
+ if (closure->discard == adamic_discard_reference) { adamic_release(result.reference); }
+}
+#endif
 
 #ifdef ADAMIC_CANONICAL_CLOSURES
+#ifdef ADAMIC_CLOSURE_DISCARDS
+// A canonical closure is given its discard (an adamic_discard) with the rest of what makes it, and
+// stores it once, when it's made rather than found in its frame's cache.
+#define ADAMIC_CANONICAL_DISCARD , uint8_t discard
+#else
+#define ADAMIC_CANONICAL_DISCARD
+#endif
 // Returns an owned canonical value; the frame cache holds no count on it.
-adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
 #ifdef ADAMIC_CLOSURE_CONVENTION
-adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
+adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD);
 #endif
 void adamic_closure_uncache(adamic_closure *closure);
 #endif
