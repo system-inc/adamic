@@ -355,15 +355,17 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		if symbol := l.flagValueSymbol(node); symbol != nil {
 			declared := l.checker.GetTypeOfSymbol(symbol)
 			observed := l.checker.GetTypeAtLocation(node)
+			// A refinement can land on an intersection member or a smaller union of members, so
+			// every member that isn't a primitive counts, and so does any refined shape that is.
 			objectMembers := 0
 			if declared.Flags()&checker.TypeFlagsUnion != 0 {
 				for _, member := range declared.Types() {
-					if member.Flags()&checker.TypeFlagsObject != 0 {
+					if member.Flags()&checker.TypeFlagsPrimitive == 0 {
 						objectMembers++
 					}
 				}
 			}
-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
+			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && refinedToObject(observed) {
 				for _, member := range declared.Types() {
 					for _, field := range l.checker.GetPropertiesOfType(member) {
 						tag := l.checker.GetTypeOfSymbol(field)
@@ -429,6 +431,19 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
 	}
 	return nil
+}
+
+// A refined type reaches an object when it is one, or is a union with a member that is one.
+func refinedToObject(refined *checker.Type) bool {
+	if refined.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range refined.Types() {
+			if refinedToObject(member) {
+				return true
+			}
+		}
+		return false
+	}
+	return refined.Flags()&(checker.TypeFlagsPrimitive|checker.TypeFlagsNever) == 0
 }
 
 // Compare runtime values, not spellings: numeric aliases denote the same union member. A default
