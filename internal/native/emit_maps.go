@@ -58,11 +58,20 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 		holds = append(holds, value+".reference")
 	}
 	holds = append(holds, iterator)
+	// A callback typed void may still return a value, which forEach lets go of as any void call does.
+	discard := ir.DiscardNothing
+	if visit.Returns == 0 {
+		discard = e.program.ClosureDiscard(visit)
+	}
 	if visit.Returns.IsReference() {
 		// A callback's result comes back owned, and forEach has no use for it.
 		e.line("adamic_value %s = %s;", answer, call)
 		e.closureThrown(holds...)
 		e.line("adamic_release(%s.reference);", answer)
+	} else if e.discarding(discard) {
+		e.line("adamic_value %s = %s;", answer, call)
+		e.closureThrown(holds...)
+		e.line("%s", e.discard(discard, callback, answer))
 	} else {
 		e.line("%s;", call)
 		e.closureThrown(holds...)

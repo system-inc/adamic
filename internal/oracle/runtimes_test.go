@@ -126,7 +126,7 @@ func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	// key is its features' flags, so these move every set's.
 	keys := map[string]string{buildcache.NameKey(root, runtimeproducts.Inputs(plain(t, native.Options{}))): "the plain release archive"}
 	asks := map[string]native.RuntimeRequest{}
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"} {
 		asks["the feature "+feature] = plain(t, native.Options{}, feature)
 	}
 	for _, option := range runtimeproducts.Variants {

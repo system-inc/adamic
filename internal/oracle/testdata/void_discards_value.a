@@ -1,0 +1,119 @@
+// A void call's result is released, never read: a () => void slot may hold a function that returns a
+// value, whose result comes back owned when it's a reference and holds nothing when it's a number.
+interface Box {
+	readonly label: string;
+}
+
+let made = 0;
+let last = "";
+
+function box(label: string): Box {
+	made++;
+	last = `${label}#${made}`;
+	return { label: last };
+}
+
+function makeBox(): Box {
+	return box("named");
+}
+
+// A named function through a () => void variable.
+const announce: () => void = makeBox;
+announce();
+console.log(`named ${made} ${last}`);
+
+// An arrow returning an object in a void slot, bounded by the const that holds it.
+const arrow: () => void = () => box("arrow");
+arrow();
+arrow();
+console.log(`arrow ${made} ${last}`);
+
+// A number through void: nothing to let go.
+let calls = 0;
+const count: () => void = () => {
+	calls++;
+	return calls * 10;
+};
+count();
+console.log(`count ${calls}`);
+
+// An object or a number, held as one boxed reference either way.
+let flip = false;
+const pick: () => void = () => {
+	flip = !flip;
+	return flip ? box("pick") : 1;
+};
+pick();
+pick();
+console.log(`pick ${made} ${flip} ${last}`);
+
+// One site that holds an object's function or a number's, whichever the condition chose.
+for (const chosen of [true, false]) {
+	const either: () => void = chosen ? makeBox : count;
+	either();
+}
+console.log(`either ${made} ${calls} ${last}`);
+
+// Unknown targets: a parameter called with different closures, and an array's elements.
+function twice(action: () => void): void {
+	action();
+	action();
+}
+twice(makeBox);
+twice(() => box("twice"));
+twice(count);
+twice(pick);
+console.log(`twice ${made} ${calls} ${last}`);
+
+const actions: Array<() => void> = [makeBox, arrow, count, pick, () => box(`element${made}`)];
+for (const action of actions) {
+	action();
+}
+console.log(`actions ${made} ${calls} ${last}`);
+
+// forEach with a callback typed void that returns an object, bounded and through a parameter.
+const each: (n: number) => void = (n) => box(`each${n}`);
+[1, 2, 3].forEach(each);
+function visitAll(values: number[], visit: (n: number) => void): void {
+	values.forEach(visit);
+}
+visitAll([4, 5], each);
+visitAll([6], (n) => n * 2);
+console.log(`each ${made} ${last}`);
+
+// A callback taking more than the elements are is called through an adapter, which is void as the
+// callback's type is, and lets go of what the callback gives back by the callback's own result.
+const widen: (value: Box | number) => void = (value) => box(typeof value === "number" ? `n${value}` : `w${value.label}`);
+const narrow: (value: Box | number) => void = (value) => (typeof value === "number" ? value : value.label.length);
+const boxes = [box("first"), box("second")];
+boxes.forEach(widen);
+boxes.forEach(narrow);
+console.log(`widen ${made} ${last}`);
+
+const tally = new Map<string, number>();
+tally.set("left", 1);
+tally.set("right", 2);
+const entry: (value: number, key: string) => void = (value, key) => box(`${key}${value}`);
+tally.forEach(entry);
+console.log(`tally ${made} ${last}`);
+
+// Through an interface whose implementation returns an object: a class's method, and a field.
+interface Action {
+	run(): void;
+}
+
+class Maker implements Action {
+	name: string;
+	constructor(name: string) {
+		this.name = name;
+	}
+	run(): Box {
+		return box(`maker${this.name}`);
+	}
+}
+
+const runners: Action[] = [new Maker("a"), new Maker(`b${made}`), { run: () => box("field") }];
+for (const runner of runners) {
+	runner.run();
+}
+console.log(`runners ${made} ${last}`);

@@ -67,9 +67,15 @@ func (l *lowering) adaptArrayCallback(node *ast.Node, callback ir.Expression, su
 	if !changed {
 		return callback, kind, nil
 	}
-	returns, known := l.representation(l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0])))
-	if !known {
-		return nil, 0, l.notYet(node, "an intrinsic callback with an unknown result representation")
+	// A void callback's adapter is void too, as callClosure's void call is: its slot may hold a
+	// function returning a reference or a number, which the adapter's own Returns couldn't say, so
+	// the call inside lets go of what comes back by the closure's own discard (ir.Discard).
+	var returns ir.Type
+	if result := l.concrete(l.checker.GetReturnTypeOfSignature(signatures[0])); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+		var known bool
+		if returns, known = l.representation(result); !known {
+			return nil, 0, l.notYet(node, "an intrinsic callback with an unknown result representation")
+		}
 	}
 	captured := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "intrinsic_callback", Type: ir.Closure, Function: l.functionIndex, Captured: true})
