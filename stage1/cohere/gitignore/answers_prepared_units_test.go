@@ -32,10 +32,35 @@ import (
 // ADAMIC_TEST_SHARD=i/n runs shard numbers congruent to i modulo n; unset runs all.
 // Sixteen comparison buckets leave headroom as the live repository grows. Real-tree
 // queries use repository-relative paths and directory mode, never walk positions.
-// The remaining eleven units are the fixed port mutants, each checked on the entire
-// live corpus, preserving their native and Node witnesses and Git comparisons.
+// The remaining eleven units are the fixed port mutants, each checked on its part of
+// the live corpus (portMutantCases), preserving their native and Node witnesses and
+// Git comparisons.
 const testThePortAnswersAsGoCohereAndGitDoShards = 27
 const portComparisonShards = 16
+
+// portLargestTree is the oracle's name for the tree holding an ignore file of exactly 100 MiB, asked about
+// only when largest says so.
+const portLargestTree = "an ignore file of exactly 100 MiB"
+
+// portMutantCases is the part of the live corpus a mutant is run over: the 100 MiB ignore file's tree alone
+// for a mutant only it can show (needsLargest), and the whole corpus but that tree for every other. Reading
+// 100 MiB natively under the sanitizers and on Node was most of each mutant's run, and that tree's two
+// queries and two patterns show none of the others, so dropping it only drops seconds: each mutant must
+// still differ from Go natively and on Node over its part, or its shard fails. git has no word on that tree,
+// so a mutant's disagreement with git stands on the same trees either way.
+func portMutantCases(asked cases, needsLargest bool) cases {
+	part := asked
+	part.Trees = nil
+	for _, tr := range asked.Trees {
+		if (tr.Name == portLargestTree) == needsLargest {
+			part.Trees = append(part.Trees, tr)
+		}
+	}
+	if needsLargest {
+		part.Patterns, part.Globs = nil, nil
+	}
+	return part
+}
 
 type portShard struct {
 	asked cases
@@ -314,12 +339,18 @@ var portShared struct {
 	totals          agreement
 	comparedShards  int
 
-	// The whole live corpus's cases file and Go cohere's answers to it, the same for the union and every
-	// mutant, so made once in a run: the 100 MiB ignore file alone takes seconds to write and answer.
-	fullOnce     sync.Once
-	fullPath     string
-	fullWant     string
-	fullAnswered bool
+	// Each of portMutantCases's two parts' cases files and Go cohere's answers to them, without the 100 MiB
+	// ignore file's tree first and then with it alone, the same for every mutant of the part (and the union,
+	// for the first), so made once in a run: the 100 MiB ignore file alone takes seconds to write and answer.
+	parts [2]portPart
+}
+
+type portPart struct {
+	once     sync.Once
+	asked    cases
+	path     string
+	want     string
+	answered bool
 }
 
 func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Timer {
@@ -328,7 +359,7 @@ func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Ti
 }
 
 func checkPortAnswerUnion(t *testing.T) {
-	preparePortFullAnswers(t)
+	rest := preparePortPartAnswers(t, false)
 	ownStart := time.Now()
 	defer func() { t.Logf("own work: %.3fs", time.Since(ownStart).Seconds()) }()
 	deadline := portHardDeadline(t, "union", 90*time.Second)
@@ -346,16 +377,48 @@ func checkPortAnswerUnion(t *testing.T) {
 	t.Logf("mutant union: %d cases, each in exactly one top-level shard", len(seenMutants))
 	asked := portShared.asked
 	portCaseShards(t, asked)
+	checkPortMutantParts(t, asked, largest())
 	// Check the non-vacuity requirement over the live full corpus, independently of
 	// which comparison shards the current gate invocation selects. Git's answers are
-	// setup's, which asked git check-ignore of every tree that runs it.
-	a := againstGit(asked, portShared.gitAnswers, portShared.fullWant)
+	// setup's, which asked git check-ignore of every tree that runs it; the 100 MiB
+	// ignore file's tree, the one tree outside rest, is not one of them.
+	a := againstGit(rest.asked, portShared.gitAnswers, rest.want)
 	if a.compared == 0 || a.ignored == 0 || a.reincluded == 0 {
 		t.Fatalf("git was asked too little: %+v", a)
 	}
 	for _, difference := range a.differences {
 		t.Error(difference)
 	}
+}
+
+// checkPortMutantParts holds portMutantCases's two parts to the corpus: every tree in exactly one, the 100 MiB
+// ignore file's tree in the second exactly when the corpus holds it (withLargest), and every pattern list and
+// glob in the first.
+func checkPortMutantParts(t *testing.T, asked cases, withLargest bool) {
+	t.Helper()
+	rest, alone := portMutantCases(asked, false), portMutantCases(asked, true)
+	owners := map[string]int{}
+	for _, part := range []cases{rest, alone} {
+		for _, tr := range part.Trees {
+			owners[tr.Name]++
+		}
+	}
+	for _, tr := range asked.Trees {
+		if owners[tr.Name] != 1 {
+			t.Fatalf("tree %q is in %d mutant parts", tr.Name, owners[tr.Name])
+		}
+	}
+	if len(rest.Trees)+len(alone.Trees) != len(asked.Trees) || len(rest.Patterns) != len(asked.Patterns) || len(rest.Globs) != len(asked.Globs) {
+		t.Fatalf("mutant parts: %d and %d trees of %d, %d pattern lists of %d, %d globs of %d", len(rest.Trees), len(alone.Trees), len(asked.Trees), len(rest.Patterns), len(asked.Patterns), len(rest.Globs), len(asked.Globs))
+	}
+	want := 0
+	if withLargest {
+		want = 1
+	}
+	if len(alone.Trees) != want || len(alone.Patterns) != 0 || len(alone.Globs) != 0 {
+		t.Fatalf("the 100 MiB part holds %d trees, %d pattern lists and %d globs, want %d tree alone", len(alone.Trees), len(alone.Patterns), len(alone.Globs), want)
+	}
+	t.Logf("mutant parts: %d trees, %d pattern lists and %d globs, and %d tree alone", len(rest.Trees), len(rest.Patterns), len(rest.Globs), len(alone.Trees))
 }
 
 // Not parallel: owns cleanup of the package-wide shared corpus scratch.
@@ -413,21 +476,31 @@ func preparePortAnswerInputs(t *testing.T) {
 	}
 }
 
-// preparePortFullAnswers writes the whole live corpus's cases file into the shared scratch, which TestMain
-// removes, and asks Go cohere its answers, once in a run.
-func preparePortFullAnswers(t *testing.T) {
+// preparePortPartAnswers writes portMutantCases's part's cases file into a directory of its own in the shared
+// scratch, which TestMain removes, and asks Go cohere its answers, once in a run.
+func preparePortPartAnswers(t *testing.T, needsLargest bool) *portPart {
 	t.Helper()
 	preparePortAnswerInputs(t)
-	portShared.fullOnce.Do(func() {
-		start := time.Now()
-		portShared.fullPath = casesFile(t, portShared.scratch, portShared.asked)
-		portShared.fullWant = portGoAnswers(t, portShared.oracle, portShared.asked)
-		portShared.fullAnswered = true
-		t.Logf("shared full-corpus answers ready: %.3fs", time.Since(start).Seconds())
-	})
-	if !portShared.fullAnswered {
-		t.Fatal("shared full-corpus answers failed")
+	part := &portShared.parts[0]
+	if needsLargest {
+		part = &portShared.parts[1]
 	}
+	part.once.Do(func() {
+		start := time.Now()
+		directory, err := os.MkdirTemp(portShared.scratch, "mutant-part-")
+		if err != nil {
+			t.Fatal(err)
+		}
+		part.asked = portMutantCases(portShared.asked, needsLargest)
+		part.path = casesFile(t, directory, part.asked)
+		part.want = portGoAnswers(t, portShared.oracle, part.asked)
+		part.answered = true
+		t.Logf("shared mutant part answers ready (100 MiB tree alone: %t): %.3fs", needsLargest, time.Since(start).Seconds())
+	})
+	if !part.answered {
+		t.Fatal("shared mutant part answers failed")
+	}
+	return part
 }
 
 func runPortAnswerShard(t *testing.T, index int) {
@@ -441,15 +514,16 @@ func runPortAnswerShard(t *testing.T, index int) {
 	// No leaf deadline is active while acquiring or building shared inputs.
 	setupStart := time.Now()
 	preparePortAnswerInputs(t)
-	asked, shards, oracle := portShared.asked, portShared.shards, portShared.oracle
+	shards, oracle := portShared.shards, portShared.oracle
 	var applied *mutant
+	var part *portPart
 	if index >= portComparisonShards {
 		m := mutants[index-portComparisonShards]
 		if m.needsLargest && !largest() {
 			t.Skip("ADAMIC_GITIGNORE_LARGEST enables the 100 MiB mutant")
 		}
 		applied = &m
-		preparePortFullAnswers(t)
+		part = preparePortPartAnswers(t, m.needsLargest)
 	}
 	product := portProducts(t, applied)
 	t.Logf("shared setup total: %.3fs", time.Since(setupStart).Seconds())
@@ -458,11 +532,14 @@ func runPortAnswerShard(t *testing.T, index int) {
 	deadline := portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 90*time.Second)
 	defer deadline.Stop()
 
-	subset, path, want := asked, portShared.fullPath, portShared.fullWant
+	var subset cases
+	var path, want string
 	if index < portComparisonShards {
 		subset = shards[index].asked
 		path = casesFile(t, t.TempDir(), subset)
 		want = portGoAnswers(t, oracle, subset)
+	} else {
+		subset, path, want = part.asked, part.path, part.want
 	}
 	gitAnswers := map[string][]string{}
 	for _, tr := range subset.Trees {
@@ -643,6 +720,20 @@ func TestThePortAnswersAsGoCohereAndGitDo_024(t *testing.T) { t.Parallel(); runP
 func TestThePortAnswersAsGoCohereAndGitDo_025(t *testing.T) { t.Parallel(); runPortAnswerShard(t, 25) }
 
 func TestThePortAnswersAsGoCohereAndGitDo_026(t *testing.T) { t.Parallel(); runPortAnswerShard(t, 26) }
+
+// The mutant parts split a corpus with the 100 MiB ignore file's tree and one without it, every case in exactly
+// one part, as the union test holds the live corpus's.
+func TestPortMutantPartsSplitTheCorpus(t *testing.T) {
+	t.Parallel()
+	asked := cases{
+		Trees:    []tree{{Name: "semantics"}, {Name: portLargestTree}, {Name: "real repository"}},
+		Patterns: []patterns{{Name: "house ignore"}},
+		Globs:    []glob{{Pattern: "foo", Text: "foo"}},
+	}
+	checkPortMutantParts(t, asked, true)
+	asked.Trees = []tree{asked.Trees[0], asked.Trees[2]}
+	checkPortMutantParts(t, asked, false)
+}
 
 func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(t *testing.T) {
 	t.Parallel()
