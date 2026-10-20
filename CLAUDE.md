@@ -46,10 +46,16 @@ Who holds what. The compiler is one Square, @system_adamic_compiler, and its Cir
 
 ## The gate
 
+Loom is the gate: `ahra loom check <sha>` gives one verdict on a pushed sha from a house box, and `ahra loom verify submit` runs main's whole suite uncached. No Go builds or tests run on Kirk's Mac.
+
+By hand, on a Linux box, the whole suite runs products first. A plain `go test ./...` fails: every consumer refuses with "product not built ahead". So:
+
 ```
 gofmt -l cmd internal
 go vet ./...
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
+# 1. Every TestProduct_* in waves: a product starts only after the products cloud/fast-gate/product-order.json says it waits for.
+# 2. Then everything else, reading those products:
+ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m -skip '^TestProduct_' ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
 
 The oracle caches fixture observations under the user cache directory. It still regenerates C and
