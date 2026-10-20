@@ -222,7 +222,7 @@ func whitespaceLayoutRunShard(t *testing.T, shard int) {
 		cases = append(cases, inputs[index])
 	}
 	fixture := whitespaceLayoutFixture(t, ctx, cases, products)
-	whitespaceLayoutPolicy(t, ctx, fixture.nativeCases, fixture.fork, policyProducts, false)
+	whitespaceLayoutPolicy(t, ctx, fixture.nativeCases, fixture.fork, policyProducts)
 	t.Logf("shard-%03d: %d cases", shard, len(cases))
 }
 
@@ -289,61 +289,63 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 	return products
 }
 
-func whitespaceLayoutMutants(t *testing.T, ctx context.Context, fixture *layoutFixture) {
+// whitespaceLayoutMutations are the output-only layout mutants of whitespace.ts, each run on source Node over the whole
+// whitespace corpus.
+var whitespaceLayoutMutations = []struct{ name, from, to string }{
+	{"preserved newline", "if(proseWrap === 'preserve' && frame.value === '\\n')", "if(proseWrap === 'never' && frame.value === '\\n')"},
+	{"space removal", "return arena.text(canBeSpace ? ' ' : '')", "return arena.text('')"},
+	{"ordered syntax", "value.endsWith('.')", "value.endsWith(':')"},
+}
+
+func whitespaceLayoutMutant(t *testing.T, ctx context.Context, fixture *layoutFixture, mutation struct{ name, from, to string }) {
+	t.Helper()
 	main, nativeCases, inputs := fixture.main, fixture.nativeCases, fixture.inputs
 	want := run{stdout: fixture.want}
-	mutations := []struct{ name, from, to string }{
-		{"preserved newline", "if(proseWrap === 'preserve' && frame.value === '\\n')", "if(proseWrap === 'never' && frame.value === '\\n')"},
-		{"space removal", "return arena.text(canBeSpace ? ' ' : '')", "return arena.text('')"},
-		{"ordered syntax", "value.endsWith('.')", "value.endsWith(':')"},
+	scratch := t.TempDir()
+	if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
+		t.Fatal(err)
 	}
-	for _, mutation := range mutations {
-		scratch := t.TempDir()
-		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-			t.Fatal(err)
-		}
-		for _, name := range []string{"inline.ts", "classes.ts"} {
-			content, err := os.ReadFile(filepath.Join("../markdowninline", name))
-			if err != nil {
-				t.Fatal(err)
-			}
-			write(t, filepath.Join(scratch, "markdowninline", name), content)
-		}
-		for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
-			content, err := os.ReadFile(name)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if name == "leaves.ts" {
-				content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
-			}
-			if name == "whitespace.ts" {
-				if strings.Count(string(content), mutation.from) != 1 {
-					t.Fatal("mutation site count")
-				}
-				content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
-			}
-			write(t, filepath.Join(scratch, name), content)
-		}
-		content, err := os.ReadFile(main)
+	if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"inline.ts", "classes.ts"} {
+		content, err := os.ReadFile(filepath.Join("../markdowninline", name))
 		if err != nil {
 			t.Fatal(err)
 		}
-		content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
-		mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
-		write(t, mutantMain, content)
-		result := whitespaceLayoutNode(t, ctx, mutantMain, nativeCases)
-		clean(t, "source Node layout mutant", result)
-		if whitespaceLayoutBytesEqual(result.stdout, want.stdout) {
-			t.Fatalf("whitespace mutant %s survived shard", mutation.name)
-		}
-		offset := firstDifference(string(result.stdout), string(want.stdout))
-		index := bytes.Count(want.stdout[:offset], []byte("\n"))
-		t.Logf("output-only source Node mutant %s caught by %q at byte %d", mutation.name, inputs[index].Name, offset)
+		write(t, filepath.Join(scratch, "markdowninline", name), content)
 	}
+	for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
+		content, err := os.ReadFile(name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if name == "leaves.ts" {
+			content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
+		}
+		if name == "whitespace.ts" {
+			if strings.Count(string(content), mutation.from) != 1 {
+				t.Fatal("mutation site count")
+			}
+			content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
+		}
+		write(t, filepath.Join(scratch, name), content)
+	}
+	content, err := os.ReadFile(main)
+	if err != nil {
+		t.Fatal(err)
+	}
+	content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
+	mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
+	write(t, mutantMain, content)
+	result := whitespaceLayoutNode(t, ctx, mutantMain, nativeCases)
+	clean(t, "source Node layout mutant", result)
+	if err := whitespaceLayoutMutantSurvived(result.stdout, want.stdout); err != nil {
+		t.Fatalf("whitespace mutant %s: %v", mutation.name, err)
+	}
+	offset := firstDifference(string(result.stdout), string(want.stdout))
+	index := bytes.Count(want.stdout[:offset], []byte("\n"))
+	t.Logf("output-only source Node mutant %s caught by %q at byte %d", mutation.name, inputs[index].Name, offset)
 }
 
 func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, products whitespaceLayoutProducts) *layoutFixture {
@@ -541,7 +543,9 @@ func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditIn
 	}
 }
 
-func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork string, products whitespaceLayoutProducts, mutants bool) {
+// whitespaceLayoutPolicyWant is Go's policy document classification, field 22 of every S row of cases, and the
+// number of whitespace nodes it names.
+func whitespaceLayoutPolicyWant(t *testing.T, cases string) ([]byte, int) {
 	t.Helper()
 	raw, err := os.ReadFile(cases)
 	if err != nil {
@@ -557,7 +561,12 @@ func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork strin
 		expected.WriteString(fields[22] + "\n")
 		count++
 	}
-	want := []byte(expected.String())
+	return []byte(expected.String()), count
+}
+
+func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork string, products whitespaceLayoutProducts) {
+	t.Helper()
+	want, count := whitespaceLayoutPolicyWant(t, cases)
 	main, err := filepath.Abs("testdata/whitespace_probe.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -577,41 +586,42 @@ func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork strin
 		equal(t, side.name, side.result.stdout, want)
 	}
 	clean(t, "whitespace native leak check", whitespaceLayoutExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases))
-	if !mutants {
-		return
-	}
-	for _, m := range []struct{ name, from, to string }{
-		{"policy CJ spacing tie", "return spaces > empties", "return spaces >= empties"},
-		{"policy Korean pair", "return (previous === 'k-letter'", "return (previous === 'non-cjk'"},
-		{"policy single line", "kind === 'tableCell' ||", "kind === 'missing-tableCell' ||"},
-	} {
-		t.Run(m.name, func(t *testing.T) {
-			scratch := t.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
-			}
-			for _, file := range []string{"whitespace.ts", "whitespaceCodec.ts", "codec.ts", "document.ts", "commandStack.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "testdata/whitespace_probe.ts"} {
-				b, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "whitespace.ts" {
-					if strings.Count(string(b), m.from) != 1 {
-						t.Fatal("mutation anchor")
-					}
-					b = []byte(strings.Replace(string(b), m.from, m.to, 1))
-				}
-				write(t, filepath.Join(scratch, file), b)
-			}
-			result := whitespaceLayoutNode(t, ctx, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
-			clean(t, m.name, result)
-			if bytes.Equal(result.stdout, want) {
-				t.Fatal("survived")
-			}
-			t.Log("caught by Go policy document classification")
-		})
-	}
 	t.Logf("%d whitespace nodes, six modes each, match Go and unchanged original private fork functions", count)
+}
+
+// whitespaceLayoutPolicyMutations are the output-only policy mutants of whitespace.ts, each run on source Node.
+var whitespaceLayoutPolicyMutations = []struct{ name, from, to string }{
+	{"policy CJ spacing tie", "return spaces > empties", "return spaces >= empties"},
+	{"policy Korean pair", "return (previous === 'k-letter'", "return (previous === 'non-cjk'"},
+	{"policy single line", "kind === 'tableCell' ||", "kind === 'missing-tableCell' ||"},
+}
+
+func whitespaceLayoutPolicyMutant(t *testing.T, ctx context.Context, cases string, m struct{ name, from, to string }) {
+	t.Helper()
+	want, _ := whitespaceLayoutPolicyWant(t, cases)
+	scratch := t.TempDir()
+	if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range []string{"whitespace.ts", "whitespaceCodec.ts", "codec.ts", "document.ts", "commandStack.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "testdata/whitespace_probe.ts"} {
+		b, err := os.ReadFile(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if file == "whitespace.ts" {
+			if strings.Count(string(b), m.from) != 1 {
+				t.Fatal("mutation anchor")
+			}
+			b = []byte(strings.Replace(string(b), m.from, m.to, 1))
+		}
+		write(t, filepath.Join(scratch, file), b)
+	}
+	result := whitespaceLayoutNode(t, ctx, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
+	clean(t, m.name, result)
+	if err := whitespaceLayoutMutantSurvived(result.stdout, want); err != nil {
+		t.Fatalf("%s: %v", m.name, err)
+	}
+	t.Logf("%s caught by Go policy document classification", m.name)
 }
 
 // loweringCompilerInputs are the in-repository sources the compiler that lowers a port links, and the module files
@@ -722,25 +732,68 @@ func whitespaceLayoutPolicySetup(t *testing.T, ctx context.Context) whitespaceLa
 	})
 	return whitespaceLayoutPolicyProducts
 }
-func TestMarkdownWhitespaceLayoutMutants(t *testing.T) {
-	t.Parallel()
+
+// TestMarkdownWhitespaceLayoutMutants' parts, each its own top-level test so Loom's planner can cut between them; in one
+// test the three layout mutants, three policy mutants and the full-corpus policy check ran one after another. The
+// layout mutants come first, then the policy mutants, then the policy check.
+const whitespaceLayoutMutantsShards = 7
+
+// whitespaceLayoutMutantsAnswers holds what every part compares against, made once per process: the corpus Go encoded
+// for the port and Go's layout of it.
+var whitespaceLayoutMutantsAnswers struct {
+	once              sync.Once
+	nativeCases, want []byte
+	inputs            []auditInput
+}
+
+func whitespaceLayoutMutantsExpected(t *testing.T, ctx context.Context, products whitespaceLayoutProducts) ([]byte, []byte, []auditInput) {
+	t.Helper()
+	whitespaceLayoutMutantsAnswers.once.Do(func() {
+		inputs, _ := whitespaceLayoutEnumerate(t)
+		dir := t.TempDir()
+		var batch bytes.Buffer
+		encoder := json.NewEncoder(&batch)
+		for _, input := range inputs {
+			if err := encoder.Encode(input); err != nil {
+				t.Fatal(err)
+			}
+		}
+		cases := filepath.Join(dir, "cases.jsonl")
+		write(t, cases, batch.Bytes())
+		nativeCases, canonical := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
+		want := whitespaceLayoutExecute(t, ctx, nil, products.goBinary, cases, nativeCases, canonical)
+		clean(t, "Go mutant fixtures", want)
+		// Go writes the port's cases into the first caller's temporary directory, gone when that test ends, so their
+		// bytes are kept.
+		encoded, err := os.ReadFile(nativeCases)
+		if err != nil {
+			t.Fatal(err)
+		}
+		whitespaceLayoutMutantsAnswers.want, whitespaceLayoutMutantsAnswers.inputs = want.stdout, inputs
+		whitespaceLayoutMutantsAnswers.nativeCases = encoded
+	})
+	if whitespaceLayoutMutantsAnswers.nativeCases == nil {
+		t.Fatal("the Go mutant fixtures failed earlier in this process")
+	}
+	return whitespaceLayoutMutantsAnswers.nativeCases, whitespaceLayoutMutantsAnswers.want, whitespaceLayoutMutantsAnswers.inputs
+}
+
+// whitespaceLayoutMutantSurvived is a mutant's verdict: one whose output still equals Go's was missed.
+func whitespaceLayoutMutantSurvived(output, want []byte) error {
+	if bytes.Equal(output, want) {
+		return fmt.Errorf("survived")
+	}
+	return nil
+}
+
+func whitespaceLayoutMutantsShard(t *testing.T, index int) {
+	t.Helper()
 	products, policyProducts := whitespaceLayoutReadyProducts(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	inputs, _ := whitespaceLayoutEnumerate(t)
-	dir := t.TempDir()
-	var batch bytes.Buffer
-	encoder := json.NewEncoder(&batch)
-	for _, input := range inputs {
-		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
-		}
-	}
-	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
-	nativeCases, canonical := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
-	want := whitespaceLayoutExecute(t, ctx, nil, products.goBinary, cases, nativeCases, canonical)
-	clean(t, "Go mutant fixtures", want)
+	encoded, want, inputs := whitespaceLayoutMutantsExpected(t, ctx, products)
+	nativeCases := filepath.Join(t.TempDir(), "native.txt")
+	write(t, nativeCases, encoded)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -753,9 +806,143 @@ func TestMarkdownWhitespaceLayoutMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fixture := &layoutFixture{main: main, nativeCases: nativeCases, inputs: inputs, want: want.stdout}
-	whitespaceLayoutMutants(t, ctx, fixture)
-	whitespaceLayoutPolicy(t, ctx, nativeCases, fork, policyProducts, true)
+	layout, policy := len(whitespaceLayoutMutations), len(whitespaceLayoutPolicyMutations)
+	switch {
+	case index < layout:
+		fixture := &layoutFixture{main: main, nativeCases: nativeCases, inputs: inputs, want: want}
+		whitespaceLayoutMutant(t, ctx, fixture, whitespaceLayoutMutations[index])
+	case index < layout+policy:
+		whitespaceLayoutPolicyMutant(t, ctx, nativeCases, whitespaceLayoutPolicyMutations[index-layout])
+	default:
+		whitespaceLayoutPolicy(t, ctx, nativeCases, fork, policyProducts)
+	}
+}
+
+// whitespaceLayoutMutantsEnumeration reads the top-level wrappers themselves, so a missing, duplicated or miswired
+// part can't go unrun while the count still agrees.
+func whitespaceLayoutMutantsEnumeration(t *testing.T) []int {
+	t.Helper()
+	if parts := len(whitespaceLayoutMutations) + len(whitespaceLayoutPolicyMutations) + 1; parts != whitespaceLayoutMutantsShards {
+		t.Fatalf("%d whitespace mutant parts, but whitespaceLayoutMutantsShards is %d", parts, whitespaceLayoutMutantsShards)
+	}
+	file, err := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var plan []int
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, "TestMarkdownWhitespaceLayoutMutants_") {
+			continue
+		}
+		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayoutMutants_"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		calls := 0
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			call, ok := node.(*ast.CallExpr)
+			if !ok {
+				return true
+			}
+			name, ok := call.Fun.(*ast.Ident)
+			if !ok || name.Name != "whitespaceLayoutMutantsShard" {
+				return true
+			}
+			if len(call.Args) != 2 {
+				t.Fatalf("%s: invalid shard call", function.Name.Name)
+			}
+			literal, ok := call.Args[1].(*ast.BasicLit)
+			if !ok {
+				t.Fatalf("%s: shard index must be a literal", function.Name.Name)
+			}
+			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+				t.Fatalf("%s runs part %s", function.Name.Name, literal.Value)
+			}
+			calls++
+			return true
+		})
+		if calls != 1 {
+			t.Fatalf("%s runs %d parts, want one", function.Name.Name, calls)
+		}
+		plan = append(plan, shard)
+	}
+	return plan
+}
+
+func TestMarkdownWhitespaceLayoutMutantsUnion(t *testing.T) {
+	t.Parallel()
+	visits := make([]int, whitespaceLayoutMutantsShards)
+	for _, index := range whitespaceLayoutMutantsEnumeration(t) {
+		if index < 0 || index >= len(visits) {
+			t.Fatalf("TestMarkdownWhitespaceLayoutMutants_%03d names no part", index)
+		}
+		visits[index]++
+	}
+	for index, count := range visits {
+		if count != 1 {
+			t.Fatalf("part %d run by %d top-level tests, want one", index, count)
+		}
+	}
+	t.Logf("union: all %d whitespace mutant parts run, each by exactly one top-level test", len(visits))
+}
+
+func TestMarkdownWhitespaceLayoutMutantsPlantedFailure(t *testing.T) {
+	t.Parallel()
+	// Plant a survivor in one mutant's output. Exactly its owner must reject it; every other mutant differs from Go
+	// and stays accepted. The last part, the policy check, compares rather than mutates.
+	var caught []int
+	for _, shard := range whitespaceLayoutMutantsEnumeration(t) {
+		if shard == whitespaceLayoutMutantsShards-1 {
+			continue
+		}
+		output := []byte("wrong bytes")
+		if shard == 4 {
+			output = []byte("Go layout bytes")
+		}
+		if whitespaceLayoutMutantSurvived(output, []byte("Go layout bytes")) != nil {
+			caught = append(caught, shard)
+		}
+	}
+	if len(caught) != 1 || caught[0] != 4 {
+		t.Fatalf("planted survivor caught by %v, want [4]", caught)
+	}
+	t.Log("planted survivor caught exactly by TestMarkdownWhitespaceLayoutMutants_004")
+}
+
+func TestMarkdownWhitespaceLayoutMutants_000(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 0)
+}
+
+func TestMarkdownWhitespaceLayoutMutants_001(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 1)
+}
+
+func TestMarkdownWhitespaceLayoutMutants_002(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 2)
+}
+
+func TestMarkdownWhitespaceLayoutMutants_003(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 3)
+}
+
+func TestMarkdownWhitespaceLayoutMutants_004(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 4)
+}
+
+func TestMarkdownWhitespaceLayoutMutants_005(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 5)
+}
+
+func TestMarkdownWhitespaceLayoutMutants_006(t *testing.T) {
+	t.Parallel()
+	whitespaceLayoutMutantsShard(t, 6)
 }
 
 func TestMarkdownWhitespaceLayout_012(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 12) }
