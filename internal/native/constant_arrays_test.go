@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/system-inc/adamic/internal/ir"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -120,4 +121,24 @@ func runConstantArrays(t *testing.T, code string) (string, string) {
 		return stdout.String(), fmt.Sprintf("%v: %s", err, stderr.String())
 	}
 	return stdout.String(), ""
+}
+
+// A literal of rows with a spread among them keeps the push path, whatever the checker would have
+// allowed: a table of rows can't say what a spread makes.
+func TestConstantArraysRefuseASpreadOfRows(t *testing.T) {
+	t.Parallel()
+	row := ir.ArrayLiteral{Element: ir.Number}
+	for value := range constantNumbers {
+		row.Elements = append(row.Elements, ir.NumberConstant{Value: float64(value)})
+	}
+	literal := ir.ArrayLiteral{Element: ir.Array, Elements: []ir.Expression{row, row}, Spread: []bool{false, true}}
+	emitter := &emitter{program: &ir.Program{}}
+	if _, constant := emitter.constantArray(literal); constant {
+		t.Fatal("a literal of rows with a spread was emitted as a table")
+	}
+	literal.Spread = nil
+	emitter.scopes = [][]string{nil}
+	if _, constant := emitter.constantArray(literal); !constant {
+		t.Fatal("the same rows without a spread weren't emitted as a table, so this proves nothing")
+	}
 }
