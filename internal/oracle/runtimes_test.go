@@ -63,6 +63,18 @@ func TestProduct_NativeRuntimesCounted2(t *testing.T) {
 func TestProduct_NativeRuntimesWASI0(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 0) }
 func TestProduct_NativeRuntimesWASI1(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 1) }
 func TestProduct_NativeRuntimesWASI2(t *testing.T) { t.Parallel(); runtimeproducts.Build(t, "wasm", 2) }
+func TestProduct_NativeRuntimesWASIRequest0(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "wasm-request", 0)
+}
+func TestProduct_NativeRuntimesWASIRequest1(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "wasm-request", 1)
+}
+func TestProduct_NativeRuntimesWASIRequest2(t *testing.T) {
+	t.Parallel()
+	runtimeproducts.Build(t, "wasm-request", 2)
+}
 
 // Each set in the table is one some program needs: its witness turns on exactly its features, so a set no program
 // needs any more fails here rather than staying to be built ahead for nothing. A program needing a set the table lacks
