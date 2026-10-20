@@ -1,0 +1,1938 @@
+[
+  {
+    "file": "internal/lower/detached_own_test.go",
+    "test": "TestDetachedOwnRefusals",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.51,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestDetachedOwnRefusals/let_own_=_Object.prototype.hasOwnProperty;_own.call({},_'x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.08,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_own('x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_own.bind({});",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_const_saved_=_{own};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/export_const_own_=_Object.prototype.hasOwnProperty;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/const_own_=_Object.prototype.hasOwnProperty;_const_call_=_own.call;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/Object.prototype.hasOwnProperty('x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/Object.prototype.hasOwnProperty?.call({},_'x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/Object.prototype?.hasOwnProperty.call({},_'x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRefusals/const_own=Object.prototype.hasOwnProperty;_own?.call({},_'x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/detached_own_test.go",
+    "test": "TestDetachedOwnRepresentation",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.26,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_console.log(String(own([],_'length')));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_const_r:Record<string,number>={};_console.log(String(own(r,'x')));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{return_Object.prototype.hasOwnProperty.call(map,key);}_console.log(String(own(()=>1,'name')));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRepresentation/const_own=Object.prototype.hasOwnProperty;_own.call(null,'x');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{const_view={map};_return_Object.prototype.hasOwnProperty.call(map,key);}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnRepresentation/function_own(map:_object,_key:_string):_boolean_{const_other=map;_return_Object.prototype.hasOwnProperty.call(map,key);}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/detached_own_test.go",
+    "test": "TestDetachedOwnAreaAdapters",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.14,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestDetachedOwnAreaAdapters/const_own=Object.prototype.hasOwnProperty;_console.log(`${own.apply({x:1},['x'])}`);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnAreaAdapters/const_own=Object.prototype.hasOwnProperty;_const_alias=own;_const_r:Record<string,number>={};_console.log(String(alias.call(r,'x')));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnAreaAdapters/const_own=Object.prototype.hasOwnProperty;_console.log(`${own.call([1],'length')}`);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnAreaAdapters/const_values=Object.values;_const_fixed={x:1};_console.log(values(fixed).join(','));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/entries_provenance_test.go",
+    "test": "TestEntriesAllocationProof",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.0,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestEntriesAllocationProof/const_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_[source]=[other];_Object.entries(source);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesAllocationProof/const_source={value:1,_hidden:'bad'};_const_view:{readonly_value:number}=source;_Object.entries(view);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesAllocationProof/function_entries(source:{readonly_value:number}):void_{Object.entries(source);}_entries({value:1});",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesAllocationProof/let_source:{readonly_value:number}={value:1};_const_other={value:2,_hidden:'bad'};_source=other;_Object.entries(source);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesAllocationProof/let_source={value:1,_hidden:2};_const_view:{readonly_value:number}=source;_Object.entries(view);",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/entries_provenance_test.go",
+    "test": "TestEntriesRecordBoundaries",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.0,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestEntriesRecordBoundaries/spread_into_record_storage",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesRecordBoundaries/dictionary_field_read",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestEntriesRecordBoundaries/dictionary_parameter_write",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/optional_indexing_test.go",
+    "test": "TestOptionalIndexingKeepsReadonlyIndexSignaturesNotYet",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.04,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/lower/optional_indexing_test.go",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.19,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_divergence_test.go",
+    "test": "TestRecordDivergenceSupportedNeighbors",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.35,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/lower/records_named_test.go",
+    "test": "TestNamedRecordReadTypes",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.08,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/lower/records_named_test.go",
+    "test": "TestNamedRecordRefusals",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.35,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named?:number[];[key:string]:number[]|string|undefined}_function_read(r:R):number|undefined_{return_r.named?.length;}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|boolean|null|undefined}_const_r:R={};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_function_write(r:R,k:string):void_{r[k]=\"wrong\";}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_const_r:R={};_const_view:Record<string,number|string|undefined>=r;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{readonly_named:number;[key:string]:number}_const_r:R={named:1};_const_view:Record<string,number>=r;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named:number;[key:string]:number}_const_fixed={named:1};_const_r:R=fixed;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named?:number;readonly_[key:string]:number|undefined}_const_r:R={};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordRefusals/interface_R_{named:number;[key:number]:number}_const_r:R={named:1};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_observation_test.go",
+    "test": "TestRecordDiscardedReadProof",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.3,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordDiscardedReadProof/const_r:Record<string,number>={};_r['toString'];",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.08,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordDiscardedReadProof/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'constructor'))_{console.log(String(r['constructor']));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordDiscardedReadProof/const_r:Record<string,number>={};_const_value_=_r['constructor'];",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordDiscardedReadProof/function_show(r:Record<string,number>):void_{const_value=r['constructor'];_if(Object.hasOwn(r,'constructor')){console.log(String(value));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordDiscardedReadProof/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,k)){console.log(String(value));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_observation_test.go",
+    "test": "TestRecordObservationMustNotEscapeGuard",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.29,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/const_r:Record<string,number>={};_const_value=r['toString'];_console.log(String(value));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'toString'))_{delete_r['toString'];_console.log(String(r['toString']));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'other'))_{console.log(String(r['toString']));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_console.log('between');_if(Object.hasOwn(r,k)){console.log(String(value));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,k)){console.log(String(value));}_else_{console.log(String(value));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,'other')){console.log(String(value));}}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationMustNotEscapeGuard/const_r:Record<string,number>={};_console.log(String(r['toString']_===_undefined));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_partial_test.go",
+    "test": "TestPartialRecordStorageRefusals",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.23,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestPartialRecordStorageRefusals/const_fixed={first:1};_const_cache:Partial<Record<'first'|'second',number>>=fixed;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.09,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestPartialRecordStorageRefusals/const_cache:Partial<Record<'first'|'second',number>>={};_const_fixed:{first?:number}=cache;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestPartialRecordStorageRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_cache:Partial<Record<'first'|'second',Dog>>={};_const_view:Record<string,Animal>=cache;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestPartialRecordStorageRefusals/const_cache:Partial<Record<'first'|'second',number>>={};_const_view:Record<string,number|undefined>=cache;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_test.go",
+    "test": "TestRecordForms",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.33,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordForms/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1};_console.log(String(r.named));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.07,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(','));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1});",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_test.go",
+    "test": "TestRecordRefusals",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.92,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.08,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));}",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.07,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_r:Record<string,string>={};_console.log(r_&&_'value');",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.07,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString());",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.07,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs};",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a;",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/lower/records_test.go",
+    "test": "TestRecordPrototypeLiteralNames",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.98,
+        "log": "lower-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.03,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString']));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r));",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "lower-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/native/json_replacer_duplicates_test.go",
+    "test": "TestJSONReplacerDuplicatesRecordMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 7.61,
+        "log": "native-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/native/json_replacer_duplicates_test.go",
+    "test": "TestJSONReplacerDuplicatesObjectMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 4.03,
+        "log": "native-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/detached_own_test.go",
+    "test": "TestDetachedOwnInheritedMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 2.81,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestDetachedOwnInheritedMutant/records",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 2.67,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestDetachedOwnInheritedMutant/objects",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.14,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/detached_own_test.go",
+    "test": "TestDetachedOwnReadinessMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.09,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordTypeGuardMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.1,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordAliasReadinessMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.29,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordJavaScriptAgreesWithNode",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.26,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestNamedRecordJavaScriptAgreesWithNode/options",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordJavaScriptAgreesWithNode/operations",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordJavaScriptAgreesWithNode/union",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordJavaScriptAgreesWithNode/intrinsics",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestNamedRecordJavaScriptAgreesWithNode/alias_unready",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/records_named_test.go",
+    "test": "TestNamedRecordAbsentEntryMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.34,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_observation_test.go",
+    "test": "TestRecordObservationGuardMutants",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.0,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordObservationGuardMutants/discarded",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.24,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationGuardMutants/compare_missing_scalar",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.28,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordObservationGuardMutants/guarded_snapshot",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.21,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/records_observation_test.go",
+    "test": "TestRecordCensusComparisonBuckets",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.4,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordCensusComparisonBuckets/17_compare_missing_object",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.15,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordCensusComparisonBuckets/18_compare_missing_scalar",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.11,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordCensusComparisonBuckets/19_compare_empty_objects",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.14,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/records_observation_test.go",
+    "test": "TestRecordHostEnvironmentObservation",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.03,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_partial_test.go",
+    "test": "TestPartialRecordJavaScriptAgreesWithNode",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.14,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestPartialRecordJavaScriptAgreesWithNode/parser",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestPartialRecordJavaScriptAgreesWithNode/views",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestPartialRecordJavaScriptAgreesWithNode/undefined",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.04,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/records_partial_test.go",
+    "test": "TestPartialRecordAbsentEntryMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.28,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalPrototypeRead",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.09,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalPrototypeIn",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.1,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalPrototypeSet",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.13,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalCompareLeft",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.09,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalCompareRight",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.09,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalEnvironment",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.15,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalNamedInvalidated",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.1,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_refusal_test.go",
+    "test": "TestRecordRefusalNarrowedNumber",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.1,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordJavaScriptAgreesWithNode",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 2.99,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordJavaScriptAgreesWithNode/operations",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 2.63,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordJavaScriptAgreesWithNode/ownership",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.09,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordJavaScriptAgreesWithNode/for_in",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.1,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordJavaScriptAgreesWithNode/census",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordJavaScriptAgreesWithNode/scalars",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.06,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordJavaScriptAgreesWithNode/optional",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.05,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordOperationMutants",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.0,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": [
+      {
+        "test": "TestRecordOperationMutants/read",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.26,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/stringify",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.29,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/for_in",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.24,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/entries",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.26,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/spread",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.31,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/keys",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.29,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/values",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.31,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/has_own",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.28,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/in",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.26,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/delete",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.26,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      },
+      {
+        "test": "TestRecordOperationMutants/write",
+        "observations": [
+          {
+            "status": "PASS",
+            "seconds": 0.26,
+            "log": "oracle-checks-final.log"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordPrototypeMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.15,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordOwnershipMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 2.54,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordCoalesceMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 2.57,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  },
+  {
+    "file": "internal/oracle/records_test.go",
+    "test": "TestRecordNarrowingMutant",
+    "observations": [
+      {
+        "status": "PASS",
+        "seconds": 0.13,
+        "log": "oracle-checks-final.log"
+      }
+    ],
+    "children": []
+  }
+]

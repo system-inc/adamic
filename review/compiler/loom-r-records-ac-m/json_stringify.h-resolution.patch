@@ -1,0 +1,7 @@
+diff --git a/internal/native/runtime/json_stringify.h b/internal/native/runtime/json_stringify.h
+index 0e73e80a..35c766cf 100644
+--- a/internal/native/runtime/json_stringify.h
++++ b/internal/native/runtime/json_stringify.h
+@@ -8 +8 @@ enum adamic_json_kind {
+-	adamic_json_tuple, adamic_json_object, adamic_json_toJSON
++	adamic_json_tuple, adamic_json_object, adamic_json_toJSON, adamic_json_record

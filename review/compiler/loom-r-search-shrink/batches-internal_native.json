@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-run",
+      "^(TestNormalizeMatchesNodeContexts0To86549|TestNormalizeMatchesNodeContexts173100To259649|TestNormalizeMatchesNodeContexts259650To346199|TestNormalizeMatchesNodeContexts86550To173099|TestNormalizeMatchesNodePoints00|TestNormalizeMatchesNodePoints01|TestNormalizeMatchesNodePoints02|TestNormalizeMatchesNodePoints03|TestNormalizeMatchesNodePoints04|TestNormalizeMatchesNodePoints05|TestNormalizeMatchesNodePoints06|TestNormalizeMatchesNodePoints07|TestNormalizeMatchesNodePoints08|TestNormalizeMatchesNodePoints09|TestNormalizeMatchesNodePoints10|TestNormalizeMatchesNodePoints11|TestNormalizeMatchesNodePoints12|TestNormalizeMatchesNodePoints13|TestNormalizeMatchesNodePoints14|TestNormalizeMatchesNodePoints15|TestNormalizeMatchesNodePoints16|TestProduct_NormalizationProbe)$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "log": "logs/batch-internal_native-0.jsonl",
+    "tests": [
+      "TestNormalizeMatchesNodeContexts0To86549",
+      "TestNormalizeMatchesNodeContexts173100To259649",
+      "TestNormalizeMatchesNodeContexts259650To346199",
+      "TestNormalizeMatchesNodeContexts86550To173099",
+      "TestNormalizeMatchesNodePoints00",
+      "TestNormalizeMatchesNodePoints01",
+      "TestNormalizeMatchesNodePoints02",
+      "TestNormalizeMatchesNodePoints03",
+      "TestNormalizeMatchesNodePoints04",
+      "TestNormalizeMatchesNodePoints05",
+      "TestNormalizeMatchesNodePoints06",
+      "TestNormalizeMatchesNodePoints07",
+      "TestNormalizeMatchesNodePoints08",
+      "TestNormalizeMatchesNodePoints09",
+      "TestNormalizeMatchesNodePoints10",
+      "TestNormalizeMatchesNodePoints11",
+      "TestNormalizeMatchesNodePoints12",
+      "TestNormalizeMatchesNodePoints13",
+      "TestNormalizeMatchesNodePoints14",
+      "TestNormalizeMatchesNodePoints15",
+      "TestNormalizeMatchesNodePoints16",
+      "TestProduct_NormalizationProbe"
+    ]
+  }
+]

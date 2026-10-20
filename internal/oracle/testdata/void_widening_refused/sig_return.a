@@ -1,0 +1,5 @@
+// a-check: refused a void-returning function at the initializer site through () seen as () => unknown
+const make: () => void = () => 42;
+const produce: () => (() => void) = () => make;
+const wide: () => (() => unknown) = produce;
+console.log(typeof wide()());

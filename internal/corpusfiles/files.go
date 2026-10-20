@@ -17,7 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
-const CohereCommit = "0183ccf8c57a775f874ca73be1adfc06e9ad1562"
+const CohereCommit = "06af2e399c6c1fb93fd570b774027942747400b4"
 const TypeScriptCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 const TypeScriptGoCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 const PrettierCommit = "cb4b33fba24a8428d00e54be85fc886288a374ea"

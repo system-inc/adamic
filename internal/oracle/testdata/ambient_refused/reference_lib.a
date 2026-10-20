@@ -1,0 +1,4 @@
+// a-check: refused a triple-slash reference lib directive
+/// <reference lib="es2024" />
+declare let limit: number;
+console.log(`${limit + 1}`);

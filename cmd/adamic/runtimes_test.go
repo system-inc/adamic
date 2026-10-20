@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 )
@@ -72,7 +73,11 @@ func commandRuntimeProduct(t *testing.T, name string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		build := func(directory string) error { return request.Build(directory, 4) }
+		jobserver, err := ccjobserver.Process()
+		if err != nil {
+			t.Fatal(err)
+		}
+		build := func(directory string) error { return request.Build(directory, 4, jobserver) }
 		if product.owner != "" {
 			buildcache.BuiltElsewhere(t, "the "+product.name+" command runtime archive", commandRuntimeInputs(request), product.owner, build)
 		} else {

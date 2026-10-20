@@ -1,0 +1,5 @@
+// a-check: refused a void-returning function at the assignment site seen as () => unknown
+const make: () => void = () => 42;
+let wider: () => unknown = () => 0;
+wider = make;
+console.log(typeof wider());

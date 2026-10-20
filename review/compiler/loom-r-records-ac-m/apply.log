@@ -1,0 +1,14 @@
+Auto-merging internal/ir/ir.go
+Auto-merging internal/lower/cycles.go
+Auto-merging internal/lower/invariance.go
+Auto-merging internal/lower/object.go
+Auto-merging internal/native/runtime/json_stringify.c
+CONFLICT (content): Merge conflict in internal/native/runtime/json_stringify.c
+Auto-merging internal/native/runtime/json_stringify.h
+CONFLICT (content): Merge conflict in internal/native/runtime/json_stringify.h
+Auto-merging internal/oracle/counts.md
+CONFLICT (content): Merge conflict in internal/oracle/counts.md
+error: could not apply e47a602d... Add a-check headers to the pinned records change
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: Disable this message with "git config set advice.mergeConflict false"

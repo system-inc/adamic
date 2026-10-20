@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./internal/lower",
+    "./internal/oracle",
+    "./internal/native",
+    "./internal/javascript",
+    "./internal/flow",
+    "./internal/ir"
+  ],
+  "exit": 0,
+  "seconds": 42.892,
+  "tests": []
+}

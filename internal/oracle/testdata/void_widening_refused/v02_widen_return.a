@@ -1,0 +1,7 @@
+// a-check: refused a void-returning function at the return site seen as () => unknown
+// A void callback returned as a function of unknown result.
+function widen(callback: () => void): () => unknown {
+	return callback;
+}
+const result = widen(() => 'kept')();
+console.log(typeof result);

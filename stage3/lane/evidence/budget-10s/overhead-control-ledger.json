@@ -1,0 +1,40 @@
+{
+  "concurrency": 1,
+  "load_processes": 0,
+  "mode": "adapted-tree product",
+  "adapted_tree": "/workspace/x2jdg33/products/local/04d979148f440864934c43358444f2a06603bb7149ddfd1153bf9360df7c4c56/tree",
+  "shard_limit_seconds": 30.0,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "cold": "fresh processes; NODE_DISABLE_COMPILE_CACHE=1; no result reuse; OS page cache retained",
+  "wall_seconds": 1.0696968719994402,
+  "units": [
+    {
+      "name": "stage3-lane-overhead-control",
+      "seconds": 1.0680970209996303,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/overhead-control/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/overhead-control",
+        "--unit",
+        "stage3-lane-overhead-control"
+      ]
+    }
+  ]
+}

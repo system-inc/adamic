@@ -1,0 +1,11 @@
+{
+  "path": "internal/native/runtime/json_stringify.h",
+  "beyond_source": [
+    "-\tadamic_json_tuple, adamic_json_object, adamic_json_toJSON",
+    "+\tadamic_json_tuple, adamic_json_object, adamic_json_toJSON, adamic_json_record"
+  ],
+  "source_lines_adapted": [
+    "-\tadamic_json_tuple, adamic_json_object",
+    "+\tadamic_json_tuple, adamic_json_object, adamic_json_record"
+  ]
+}

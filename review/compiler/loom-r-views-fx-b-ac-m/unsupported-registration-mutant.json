@@ -1,0 +1,20 @@
+{
+  "build_command": [
+    "go",
+    "build",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b-ac-m/unsupported-registration-overlay.json",
+    "-o",
+    "/tmp/views-b-unsupported-mutant",
+    "./cmd/adamic"
+  ],
+  "build_exit": 0,
+  "a_check_exit": 1,
+  "caught": true,
+  "paths": [
+    "review/compiler/loom-views-fx-b/native_p21.a",
+    "review/compiler/loom-views-fx-b/native_p37.a"
+  ],
+  "failure": "a-check failed for 2 files:\nreview/compiler/loom-views-fx-b/native_p21.a: checked, expected refused checked view read of field count with unsupported representation conversion contract ()\nreview/compiler/loom-views-fx-b/native_p37.a: checked, expected refused checked view read of field count with unsupported representation conversion contract ()",
+  "seconds": 10.729281373999584
+}

@@ -211,7 +211,7 @@ const (
 	// Semantic slot tags reserve null and undefined independently of storage.
 	NullRepresentation
 	UndefinedRepresentation
-	// Record is reserved for the dictionary slice; V2 does not admit it.
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
 	Record
 
 	// Typed arrays hold numbers in one flat buffer of the element width.
@@ -250,7 +250,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -746,17 +746,24 @@ type (
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
-	// element, its index and the array: forEach, filter, some, every, find and findIndex. The length
-	// is read once, before the first call, and an index the array no longer has when its turn comes
-	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
+	// element, its index and the array. The length is read once before the first call.
+	// Searches Get removed indices as undefined; the other visits skip them.
+	// Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		CallbackType int
-		Method       string
-		Array        Expression
-		Callback     Expression
-		Element      Type
-		Returns      Type
+		// SearchFirst and SearchUndefined preserve the callback's declared value contract.
+		// SearchElementName names the checker type in a failed search call.
+		// SearchNull preserves a present null when boxing nullable-reference storage.
+		SearchNull        bool
+		SearchFirst       Type
+		SearchUndefined   bool
+		SearchElementName string
+		CallbackType      int
+		Method            string
+		Array             Expression
+		Callback          Expression
+		Element           Type
+		Returns           Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields

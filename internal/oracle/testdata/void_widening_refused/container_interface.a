@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site through <1> seen as () => unknown
+interface Holder<Result> { readonly read: () => Result; }
+const make: () => void = () => 42;
+const holder: Holder<() => void> = { read: () => make };
+const wide: Holder<() => unknown> = holder;
+console.log(typeof wide.read()());

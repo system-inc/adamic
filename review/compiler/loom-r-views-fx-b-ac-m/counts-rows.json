@@ -1,0 +1,272 @@
+[
+  {
+    "path": "internal/lower/testdata/fx6/p35.a",
+    "before": null,
+    "after": [
+      " 6 ",
+      " 6 ",
+      " 8 ",
+      " 15 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p36.a",
+    "before": null,
+    "after": [
+      " 7 ",
+      " 7 ",
+      " 9 ",
+      " 17 ",
+      " 5 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p37.a",
+    "before": null,
+    "after": [
+      " 7 ",
+      " 7 ",
+      " 8 ",
+      " 15 ",
+      " 5 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p38.a",
+    "before": null,
+    "after": [
+      " 5 ",
+      " 5 ",
+      " 7 ",
+      " 13 ",
+      " 3 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p38_number.a",
+    "before": null,
+    "after": [
+      " 6 ",
+      " 6 ",
+      " 6 ",
+      " 13 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p51.a",
+    "before": null,
+    "after": [
+      " 4 ",
+      " 4 ",
+      " 8 ",
+      " 15 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p51_wrong.a",
+    "before": null,
+    "after": [
+      " 2 ",
+      " 0 ",
+      " 6 ",
+      " 4 ",
+      " 2 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/fx6/p53.a",
+    "before": null,
+    "after": [
+      " 5 ",
+      " 5 ",
+      " 9 ",
+      " 16 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/misfit_boolean.a",
+    "before": null,
+    "after": [
+      " 1 ",
+      " 0 ",
+      " 6 ",
+      " 4 ",
+      " 1 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/misfit_number.a",
+    "before": null,
+    "after": [
+      " 1 ",
+      " 0 ",
+      " 6 ",
+      " 4 ",
+      " 1 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/p54_b.a",
+    "before": null,
+    "after": [
+      " 3 ",
+      " 3 ",
+      " 6 ",
+      " 12 ",
+      " 2 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/p54_n.a",
+    "before": null,
+    "after": [
+      " 5 ",
+      " 5 ",
+      " 6 ",
+      " 14 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "internal/lower/testdata/scalar_union_views/p54_s.a",
+    "before": null,
+    "after": [
+      " 4 ",
+      " 4 ",
+      " 9 ",
+      " 14 ",
+      " 3 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "stage3/interface-downcasts/lane1/interfaces-good.a",
+    "before": [
+      " 5 ",
+      " 5 ",
+      " 6 ",
+      " 12 ",
+      " 4 ",
+      " 0 "
+    ],
+    "after": [
+      " 5 ",
+      " 5 ",
+      " 5 ",
+      " 11 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "stage3/interface-downcasts/lane1/objects-good.a",
+    "before": [
+      " 5 ",
+      " 5 ",
+      " 6 ",
+      " 12 ",
+      " 4 ",
+      " 0 "
+    ],
+    "after": [
+      " 5 ",
+      " 5 ",
+      " 4 ",
+      " 10 ",
+      " 4 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a",
+    "before": [
+      " 47 ",
+      " 47 ",
+      " 96 ",
+      " 144 ",
+      " 36 ",
+      " 0 "
+    ],
+    "after": [
+      " 47 ",
+      " 47 ",
+      " 84 ",
+      " 132 ",
+      " 36 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/option-element-source-good.a",
+    "before": [
+      " 19 ",
+      " 19 ",
+      " 40 ",
+      " 60 ",
+      " 15 ",
+      " 0 "
+    ],
+    "after": [
+      " 19 ",
+      " 19 ",
+      " 35 ",
+      " 55 ",
+      " 15 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "stage3/interface-downcasts/untagged/fixtures/structural-source-good.a",
+    "before": [
+      " 7 ",
+      " 7 ",
+      " 16 ",
+      " 24 ",
+      " 6 ",
+      " 0 "
+    ],
+    "after": [
+      " 7 ",
+      " 7 ",
+      " 14 ",
+      " 22 ",
+      " 6 ",
+      " 0 "
+    ]
+  },
+  {
+    "path": "stage3/interface-downcasts/visitor.a",
+    "before": [
+      " 21 ",
+      " 21 ",
+      " 32 ",
+      " 40 ",
+      " 13 ",
+      " 0 "
+    ],
+    "after": [
+      " 21 ",
+      " 21 ",
+      " 28 ",
+      " 36 ",
+      " 13 ",
+      " 0 "
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+// Spec: fix: narrow where you use it
+// Expect: lowers
+type Pet = { readonly kind: 'Cat'; readonly meow: () => string } | { readonly kind: 'Dog'; readonly bark: () => string };
+
+const pets: readonly Pet[] = [{ kind: 'Dog', bark: () => 'woof' }];
+for (const pet of pets) {
+	if (pet.kind === 'Cat') {
+		console.log(pet.meow());
+	}
+}

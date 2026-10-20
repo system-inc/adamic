@@ -1,6 +1,6 @@
 {
   "blocks": { "on": true, "budget": 4, "sizing": { "min": 3, "max": 16, "target": 0.8, "window": 20 }, "depth": 2 },
   "restack": { "on": true },
-  "first": ["chg_4ts6hhmxzb5zacxpjsdtxvy3as", "chg_ecxhk3jwkgjjz9rdhg8eb5mn6v", "chg_sqfhz32n1a1qaffat04w2v6b8g"],
-  "door": { "heavy": 1000 }
+  "first": ["chg_1c6mk7yv36tcqs9vkb0xceekkj"],
+  "door": { "heavy": 1000, "pacedAfter": 2, "waiting": 10, "files": 400 }
 }

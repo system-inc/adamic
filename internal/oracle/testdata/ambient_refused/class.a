@@ -1,0 +1,3 @@
+// a-check: refused an ambient class declaration
+declare class Missing { readonly value: number; }
+console.log(`${new Missing().value}`);

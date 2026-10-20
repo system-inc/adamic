@@ -1,0 +1,71 @@
+{
+  "status": "pass",
+  "typescript": "6.0.3",
+  "changedFiles": [
+    "src/compiler/checker.ts"
+  ],
+  "otherSourceFilesByteIdentical": 745,
+  "erasure": [
+    {
+      "removeComments": false,
+      "bytes": 2892419,
+      "beforeSha256": "786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e",
+      "afterSha256": "786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e"
+    },
+    {
+      "removeComments": true,
+      "bytes": 2354716,
+      "beforeSha256": "3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac",
+      "afterSha256": "3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac"
+    }
+  ],
+  "idempotent": true,
+  "census": {
+    "before": 491,
+    "after": 490,
+    "newSites": [],
+    "removed": [
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 23401,
+        "column": 28,
+        "expression": "originalHandler!(onlyUnreliable)",
+        "before": "void",
+        "after": "boolean"
+      }
+    ],
+    "unionBefore": 16,
+    "unionAfter": 16
+  },
+  "mutants": [
+    {
+      "name": "runtime-erasure",
+      "caught": true,
+      "check": "full checker.ts transpileModule bytes, comments retained and removed"
+    },
+    {
+      "name": "drop-marker",
+      "caught": true,
+      "sites": 491,
+      "restored": {
+        "file": "src/compiler/checker.ts",
+        "line": 23401,
+        "column": 28
+      }
+    },
+    {
+      "name": "new-void-read",
+      "caught": true,
+      "added": {
+        "file": "src/compiler/checker.ts",
+        "line": 54437,
+        "column": 28
+      }
+    },
+    {
+      "name": "non-true-writer",
+      "caught": true,
+      "check": "validated writer provenance before write"
+    }
+  ]
+}

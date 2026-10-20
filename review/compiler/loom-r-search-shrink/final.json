@@ -1,0 +1,257 @@
+{
+  "gate_sha": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": {
+    "internal/oracle/testdata/047cb0d_f_maybe.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4410,
+      "stdout_sha256": "8436338f7da8ac9310eda56424ed60d13d3fb79d3d2cca15f2689fa5cc5359e9",
+      "seconds": 0.148033297999973
+    },
+    "internal/oracle/testdata/047cb0d_f_maybe_ref.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5224,
+      "stdout_sha256": "6a63aeda5336b60ed3114e4bfb670b0064fa52c534c6d7d16b172e8007f88c6d",
+      "seconds": 0.04480631299975357
+    },
+    "internal/oracle/testdata/57f2d04_find_last_shrinks.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5277,
+      "stdout_sha256": "9f29261e5e195b7d8c649c62cb8b11db45d42655058822db872af8fa6f79f885",
+      "seconds": 0.10770356300054118
+    },
+    "internal/oracle/testdata/57f2d04_find_last_shrinks2.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5538,
+      "stdout_sha256": "e60007d363a628b7cf37f66c93ce74bdd86dfccd43c353481e9f8a364cddc18b",
+      "seconds": 0.10474770600012562
+    },
+    "internal/oracle/testdata/search_shrink_boolean.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5028,
+      "stdout_sha256": "951f77c0778acb050e2667a49a6ae4a68f1bca67b4fa12b15b21c98f77f26906",
+      "seconds": 0.10533067199958168
+    },
+    "internal/oracle/testdata/search_shrink_default.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4105,
+      "stdout_sha256": "2a214a1ad221b37b1b21f5aa656b8d3029dfc681f1e09549affc5479a49cf774",
+      "seconds": 0.12180634499964071
+    },
+    "internal/oracle/testdata/search_shrink_findIndex_checked.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4838,
+      "stdout_sha256": "f3e0a9079ed79aa353a3f47d2408ac3e9093afbdd285003c0fab0ad7fb1fa185",
+      "seconds": 0.10762506699938967
+    },
+    "internal/oracle/testdata/search_shrink_findLastIndex_maybe.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4647,
+      "stdout_sha256": "45ebdf323fe338646ae6dfac349a52697ce902d1449d2510948d90457157c418",
+      "seconds": 0.11777960099971096
+    },
+    "internal/oracle/testdata/search_shrink_findLast_maybe.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5147,
+      "stdout_sha256": "f8c07f89724fe8dfb8fb5e5b4001dfb965322d44f91af0913fb188472b0b014f",
+      "seconds": 0.0777741239999159
+    },
+    "internal/oracle/testdata/search_shrink_find_checked.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5333,
+      "stdout_sha256": "5a583ed48525d6344cea52d531de25ff729c3a8caf24f9786e0697442c5e2267",
+      "seconds": 0.06473290800022369
+    },
+    "internal/oracle/testdata/search_shrink_find_maybe.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5205,
+      "stdout_sha256": "f35ee40119ddb172b32aa3f8c3112eb7f3d0bb2d8f59a395727a5c89f61a29c2",
+      "seconds": 0.0983853520001503
+    },
+    "internal/oracle/testdata/search_shrink_found.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 13592,
+      "stdout_sha256": "35f1e30eacaf8754699c09d8af390b5730d4d9a400263b8c089e1726386bd497",
+      "seconds": 0.0655437780005741
+    },
+    "internal/oracle/testdata/search_shrink_nullable.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4895,
+      "stdout_sha256": "0a577a7d9ca0046dce0a77e70ab292cec1571fc2b52004a76892a68474aa7308",
+      "seconds": 0.08513995799967233
+    },
+    "internal/oracle/testdata/search_shrink_omitted.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 3397,
+      "stdout_sha256": "e85c429064b8dfcc5781e9d211adb539212aa6c02f20a16c4cbdc439bf9bb0b2",
+      "seconds": 0.057816145999822766
+    },
+    "internal/oracle/testdata/search_shrink_unknown.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 5935,
+      "stdout_sha256": "53f7121d3fda1528abb57a1aacca9edd0f7889588ba4b1326c4bc21f76da15ea",
+      "seconds": 0.10086482600036106
+    },
+    "review/compiler/loom-r-search-shrink/nullable-search.a": {
+      "status": "checked",
+      "reason": null,
+      "code": null,
+      "exit": 0,
+      "stderr": "",
+      "stdout_bytes": 4888,
+      "stdout_sha256": "1f1c5a35cb751aa8bda5117df857e3c68591530c4f998b609753d5ea9439fd34",
+      "seconds": 0.08965937499942811
+    }
+  },
+  "predicate": {
+    "internal/oracle/testdata/047cb0d_f_maybe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/047cb0d_f_maybe_ref.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/57f2d04_find_last_shrinks.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/57f2d04_find_last_shrinks2.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_boolean.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_default.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_findIndex_checked.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_findLastIndex_maybe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_findLast_maybe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_find_checked.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_find_maybe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_found.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_nullable.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_omitted.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/search_shrink_unknown.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "review/compiler/loom-r-search-shrink/nullable-search.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null,
+  "seconds": {
+    "a-check": 12.1
+  },
+  "counts": {
+    "checked": 16
+  }
+}

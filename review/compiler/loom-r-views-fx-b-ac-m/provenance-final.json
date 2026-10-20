@@ -1,0 +1,15 @@
+{
+  "branch": "compiler/loom-r-views-fx-b-ac-m",
+  "source": "36dbbd3571baac3dce31a6bc5e4a0db7467fbea6",
+  "base": "561aeb4b851ca0820f39440a09dc5fb3fd27ba40",
+  "conflicts": [],
+  "automatic_merges": [
+    "internal/lower/collections.go",
+    "internal/lower/object.go",
+    "internal/oracle/counts.md"
+  ],
+  "source_runtime_diff": "",
+  "new_runtime_diff": "",
+  "final_source_equals_tested_A_combination": true,
+  "previous_validation_base": "67733635b0252eb9d3bb3645c72262c7b18361e1"
+}

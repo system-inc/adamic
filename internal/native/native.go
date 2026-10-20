@@ -194,6 +194,10 @@ func buildOne(source string, output string, options Options, flags []string) err
 }
 
 func buildOneWithRuntime(source string, output string, options Options, flags []string, library string) error {
+	jobserver, err := defaultJobserver()
+	if err != nil {
+		return err
+	}
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
@@ -222,7 +226,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
 		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
 		var combined []byte
-		if err := withCompilerToken(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
+		if err := jobserver.Hold(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
 			return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 		}
 		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
@@ -231,6 +235,10 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 			return fmt.Errorf("native: %w", err)
 		}
 		program = "main.o"
+	}
+	compilerLink, err := regexpCompilerLinkFlags(source, options, directory)
+	if err != nil {
+		return err
 	}
 	arguments := append(linkFlags(compileFlags, options), "-o", output)
 	if !options.Request {
@@ -247,6 +255,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		// Runtime constructors precede module initialization at the same default priority.
 		arguments = append(arguments, program)
 	}
+	arguments = append(arguments, compilerLink...)
 	if program == "main.o" {
 		arguments = append(arguments, objectPrefixFlags()...)
 	}
@@ -256,7 +265,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	}
 	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
 	var combined []byte
-	if err := withCompilerToken(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
+	if err := jobserver.Hold(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
 	return nil

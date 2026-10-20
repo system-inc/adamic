@@ -1,0 +1,179 @@
+{
+  "concurrency": 4,
+  "load_processes": 5,
+  "mode": "adapted-tree product",
+  "adapted_tree": "/workspace/x2jdg33/products/local/04d979148f440864934c43358444f2a06603bb7149ddfd1153bf9360df7c4c56/tree",
+  "shard_limit_seconds": 50.0,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_max": "400000 100000",
+  "cold": "fresh processes; NODE_DISABLE_COMPILE_CACHE=1; no result reuse; OS page cache retained",
+  "wall_seconds": 100.65654345599978,
+  "units": [
+    {
+      "name": "stage3-lane-file-007",
+      "seconds": 36.81777489999968,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 653,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-007"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-010",
+      "seconds": 50.382968793000146,
+      "exit": 1,
+      "status": "fail",
+      "counts": {},
+      "errors": [
+        "stage3-lane-file-010 timed out after 49.5 seconds, past its 50 second limit"
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-010"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-018",
+      "seconds": 49.53457737400004,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 704,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-018"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-036",
+      "seconds": 41.058065789000466,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 835,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-036"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-049",
+      "seconds": 50.15211055200052,
+      "exit": 1,
+      "status": "fail",
+      "counts": {},
+      "errors": [
+        "stage3-lane-file-049 timed out after 49.5 seconds, past its 50 second limit"
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-049"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-057",
+      "seconds": 50.1634851230001,
+      "exit": 1,
+      "status": "fail",
+      "counts": {},
+      "errors": [
+        "stage3-lane-file-057 timed out after 49.6 seconds, past its 50 second limit"
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-057"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-063",
+      "seconds": 49.735916470999655,
+      "exit": 0,
+      "status": "pass",
+      "counts": {
+        "pass": 885,
+        "fail": 0,
+        "skip": 0
+      },
+      "errors": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-063"
+      ]
+    },
+    {
+      "name": "stage3-lane-file-109",
+      "seconds": 50.24369796999963,
+      "exit": 1,
+      "status": "fail",
+      "counts": {},
+      "errors": [
+        "stage3-lane-file-109 timed out after 49.5 seconds, past its 50 second limit"
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/adamic/stage3/lane/measure_budget.py",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded/plan.json",
+        "/workspace/x2jdg33/proofs-4cpu/before-loaded",
+        "--unit",
+        "stage3-lane-file-109"
+      ]
+    }
+  ]
+}

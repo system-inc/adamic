@@ -1,0 +1,8 @@
+// a-check: refused a write through a union of Person[K] into a slot that holds number in Person
+type Person = { name: string; age: number };
+function write<K extends keyof Person>(person: Person, key: K, value: Person[K]): void {
+	person[key] = value;
+}
+const person: Person = { name: 'Ada', age: 36 };
+write<keyof Person>(person, 'age', 'old');
+console.log(`${person.age.toFixed(1)}`);

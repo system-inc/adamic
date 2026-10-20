@@ -46,6 +46,28 @@ func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool {
 	return false
 }
 
+// iteratorResultField reports whether done or value is read off an iterator result whose only
+// library roots are IteratorReturnResult's: the plain object next returns, both fields required and
+// own, never a prototype member. The prelude's Map and Set iterators return one as their done arm,
+// so inference reads that arm as the iterator's return rather than its value.
+func (l *lowering) iteratorResultField(symbol *ast.Symbol) bool {
+	if symbol == nil || (symbol.Name != "done" && symbol.Name != "value") {
+		return false
+	}
+	for _, root := range l.checker.GetRootSymbols(symbol) {
+		for _, declaration := range root.Declarations {
+			if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+				continue
+			}
+			owner := declaration.Parent
+			if owner == nil || owner.Kind != ast.KindInterfaceDeclaration || owner.Name().Text() != "IteratorReturnResult" {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func (l *lowering) librarySymbol(symbol *ast.Symbol) bool {
 	if symbol == nil {
 		return false
@@ -119,6 +141,9 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 		}
 	}
 	if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
+		if of == ir.Record && name == "hasOwnProperty" {
+			return l.recordObjectCallArguments(node, "hasOwn", append([]*ast.Node{receiver}, written...))
+		}
 		if of != ir.Object {
 			return l.nonObjectOwnPropertyArguments(node, receiver, name, of, written)
 		}
@@ -182,6 +207,7 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 // Structural object views can hide an override, an Error, or an artificial absent-spread slot.
 // Until prototype dispatch and presence descriptors exist, refuse any compatible runtime shape
 // in the whole program with one of those hazards. This deliberately errs toward refusal.
+// An empty name tests own descriptors without dispatching an overridable receiver method.
 func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 	view := l.concrete(l.checker.GetTypeAtLocation(receiver))
 	modules, err := l.moduleOrder(l.program.Files()[0])
@@ -212,7 +238,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					return true
 				}
 				member := l.checker.GetPropertyOfType(shape, name)
-				if member != nil && !l.librarySymbol(member) {
+				if name != "" && member != nil && !l.librarySymbol(member) {
 					reason = "a user-defined " + name + " may be hidden by the view"
 					return true
 				}
@@ -223,7 +249,7 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 						return true
 					}
 				}
-				if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
+				if name == "" || name == "hasOwnProperty" || name == "propertyIsEnumerable" {
 					for _, field := range l.checker.GetPropertiesOfType(shape) {
 						if strings.ContainsRune(field.Name, 0) {
 							reason = "a field name contains NUL, which native shape names cannot represent"

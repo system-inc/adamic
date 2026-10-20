@@ -1,0 +1,207 @@
+=== RUN   TestFlowCorpusRemainder
+=== PAUSE TestFlowCorpusRemainder
+=== CONT  TestFlowCorpusRemainder
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/detached_own_objects.a
+    corpus_coverage_test.go:131: 16 functions: 0 phis, 2 values, 22 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 33 points walked, 64 events
+    corpus_coverage_test.go:131: 4 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/detached_own_parser.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 4 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 7 points walked, 16 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/detached_own_records.a
+    corpus_coverage_test.go:131: 10 functions: 0 phis, 1 values, 21 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 28 points walked, 57 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/detached_own_unready.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 2 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 2 points walked, 5 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/json_replacer_duplicates_object.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 4 points walked, 5 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_census.a
+    corpus_coverage_test.go:131: 5 functions: 0 phis, 3 values, 13 uses checked
+    corpus_coverage_test.go:131: 2 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 41 points walked, 56 events
+    corpus_coverage_test.go:131: 38 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_compare_missing_scalar.a
+    corpus_coverage_test.go:131: 15 functions: 0 phis, 38 values, 107 uses checked
+    corpus_coverage_test.go:131: 2 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 183 points walked, 242 events
+    corpus_coverage_test.go:131: 520 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_discarded.a
+    corpus_coverage_test.go:131: 6 functions: 0 phis, 0 values, 12 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 12 points walked, 23 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_for_in.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 4 values, 9 uses checked
+    corpus_coverage_test.go:131: 3 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 26 points walked, 30 events
+    corpus_coverage_test.go:131: 71 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_guarded_snapshot.a
+    corpus_coverage_test.go:131: 5 functions: 0 phis, 1 values, 17 uses checked
+    corpus_coverage_test.go:131: 2 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 38 points walked, 63 events
+    corpus_coverage_test.go:131: 19 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_json_replacer_duplicates.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 5 points walked, 6 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_named_alias_unready.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 1 values, 3 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 2 points walked, 5 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_named_intrinsics.a
+    corpus_coverage_test.go:131: 10 functions: 0 phis, 1 values, 14 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 19 points walked, 34 events
+    corpus_coverage_test.go:131: 3 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_named_operations.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 0 values, 2 uses checked
+    corpus_coverage_test.go:131: 1 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 18 points walked, 22 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_named_options.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 0 values, 1 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 4 points walked, 9 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_named_union.a
+    corpus_coverage_test.go:131: 6 functions: 0 phis, 0 values, 10 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 21 points walked, 36 events
+    corpus_coverage_test.go:131: 5 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_narrowed_reference.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 6 points walked, 9 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_operations.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 2 values, 6 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 62 points walked, 77 events
+    corpus_coverage_test.go:131: 91 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_optional.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 0 values, 3 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 11 points walked, 16 events
+    corpus_coverage_test.go:131: 3 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_ownership.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 3 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 24 points walked, 33 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_partial_parser.a
+    corpus_coverage_test.go:131: 2 functions: 0 phis, 0 values, 1 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 3 points walked, 6 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_partial_undefined.a
+    corpus_coverage_test.go:131: 7 functions: 0 phis, 0 values, 9 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 22 points walked, 39 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_partial_views.a
+    corpus_coverage_test.go:131: 4 functions: 0 phis, 2 values, 10 uses checked
+    corpus_coverage_test.go:131: 1 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 45 points walked, 63 events
+    corpus_coverage_test.go:131: 65 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_scalars.a
+    corpus_coverage_test.go:131: 3 functions: 0 phis, 0 values, 2 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 16 points walked, 27 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_type_only_composition.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 1 points walked, 2 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_type_only_scanner.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 1 points walked, 2 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_type_only_value.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 6 points walked, 7 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/release_fma.a
+    corpus_coverage_test.go:131: 1 functions: 0 phis, 0 values, 0 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 9 points walked, 10 events
+    corpus_coverage_test.go:131: 0 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a
+    corpus_coverage_test.go:131: 4 functions: 0 phis, 10 values, 12 uses checked
+    corpus_coverage_test.go:131: 0 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_coverage_test.go:131: 46 points walked, 57 events
+    corpus_coverage_test.go:131: 105 variable-and-point pairs checked
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_compare_properties_left.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_compare_properties_left.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_compare_properties_left.a:10:9: Adamic 0.1 refuses record read of toString: the record's prototype chain isn't modeled; check Object.hasOwn(record, key) immediately before reading its own value, or use a Map
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_compare_properties_right.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_compare_properties_right.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_compare_properties_right.a:10:20: Adamic 0.1 refuses record read of constructor: the record's prototype chain isn't modeled; check Object.hasOwn(record, key) immediately before reading its own value, or use a Map
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_environment_boundary.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_environment_boundary.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_environment_boundary.a:4:12: Adamic 0.1 refuses record read of toString: the record's prototype chain isn't modeled; check Object.hasOwn(record, key) immediately before reading its own value, or use a Map
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_named_invalidated.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_named_invalidated.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_named_invalidated.a:10:20: Adamic 0.1 refuses a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven; snapshot the value before the call, or read and recheck its type after the call
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_narrowed_number.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_narrowed_number.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_narrowed_number.a:4:58: Adamic 0.1 refuses a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven; snapshot the value before the call, or read and recheck its type after the call
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_prototype_in.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_prototype_in.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_prototype_in.a:3:53: Adamic 0.1 refuses record membership for constructor: the record's prototype chain isn't modeled; use Object.hasOwn(record, key) for own membership, or a Map
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_prototype_read.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_prototype_read.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_prototype_read.a:3:54: Adamic 0.1 refuses record read of toString: the record's prototype chain isn't modeled; check Object.hasOwn(record, key) immediately before reading its own value, or use a Map
+=== RUN   TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_prototype_set.a
+    corpus_coverage_test.go:131: ../oracle/testdata/records_refused/records_prototype_set.a: Lower: /workspace/adamic/internal/oracle/testdata/records_refused/records_prototype_set.a:3:34: Adamic 0.1 refuses record assignment to __proto__: its inherited setter isn't modeled; define an explicit computed own __proto__ data entry before assigning, or use a Map
+=== NAME  TestFlowCorpusRemainder
+    corpus_coverage_test.go:134: remainder ran 37 programs
+--- FAIL: TestFlowCorpusRemainder (4.17s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/detached_own_objects.a (0.15s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/detached_own_parser.a (0.15s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/detached_own_records.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/detached_own_unready.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/json_replacer_duplicates_object.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_census.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_compare_missing_scalar.a (0.15s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_discarded.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_for_in.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_guarded_snapshot.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_json_replacer_duplicates.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_named_alias_unready.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_named_intrinsics.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_named_operations.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_named_options.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_named_union.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_narrowed_reference.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_operations.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_optional.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_ownership.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_partial_parser.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_partial_undefined.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_partial_views.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_scalars.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_type_only_composition.a (0.14s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_type_only_scanner.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/records_type_only_value.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/release_fma.a (0.13s)
+    --- PASS: TestFlowCorpusRemainder/../oracle/testdata/string_destructuring.a (0.13s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_compare_properties_left.a (0.03s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_compare_properties_right.a (0.02s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_environment_boundary.a (0.03s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_named_invalidated.a (0.03s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_narrowed_number.a (0.03s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_prototype_in.a (0.03s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_prototype_read.a (0.03s)
+    --- FAIL: TestFlowCorpusRemainder/../oracle/testdata/records_refused/records_prototype_set.a (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	4.179s
+FAIL

@@ -1,0 +1,12 @@
+{
+  "command": "timeout 1900 go test -count=1 -timeout 30m ./...",
+  "exit": 143,
+  "result": "Interrupted with SIGTERM (exit 143) after confirmed disk exhaustion; this is not a complete or passing gate.",
+  "failures": [
+    "FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t1185.801s",
+    "FAIL\tgithub.com/system-inc/adamic/cmd/adamic\t56.933s",
+    "FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t235.025s",
+    "FAIL\tgithub.com/system-inc/adamic/internal/buildcache\t632.932s",
+    "FAIL\tgithub.com/system-inc/adamic/internal/dry\t103.647s"
+  ]
+}

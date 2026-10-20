@@ -1,0 +1,6 @@
+// a-check: refused a void-returning function at the initializer site seen as () => void | number
+// A void-typed function seen as returning a number or void, the shape tsc's state machine reads.
+const make: () => void = () => 42;
+const step: () => number | void = make;
+const next = step();
+console.log(next ? `next ${typeof next}` : 'none');

@@ -14,6 +14,7 @@ import (
 
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -122,45 +123,6 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 		t.Fatal(err)
 	}
 	return onNode(t, path, arguments...)
-}
-
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) oracles.Run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (oracles.Run, string) {
-	t.Helper()
-	binary := nativeBinary(t, program, t.TempDir())
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
-}
-
-// nativeBinary allows a corpus-owning test to build before starting its run units.
-// The owner supplies the directory so it outlives preparation.
-func nativeBinary(t *testing.T, program *ir.Program, directory string) string {
-	t.Helper()
-	binary, err := buildNative(program, directory)
-	if err != nil {
-		t.Fatal(err)
-	}
-	return binary
-}
-
-func buildNative(program *ir.Program, directory string) (string, error) {
-	binary := filepath.Join(directory, "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		return "", err
-	}
-	return binary, nil
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on

@@ -1,0 +1,55 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-overlay",
+    "/workspace/adamic/review/compiler/loom-r-views-fx-b/nullable-overlay.json",
+    "./internal/oracle",
+    "-run",
+    "TestCheckedViewOptionalReadBoundary|TestCheckedViewObjectPrimitiveSource/optional-receiver",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 1,
+  "seconds": 66.933,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary/native",
+      "Action": "fail",
+      "Elapsed": 0.17
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary/JavaScript",
+      "Action": "fail",
+      "Elapsed": 0.17
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "Action": "fail",
+      "Elapsed": 8.79
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewObjectPrimitiveSource",
+      "Action": "fail",
+      "Elapsed": 0.01
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary/ordinary_control",
+      "Action": "pass",
+      "Elapsed": 1.91
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestCheckedViewOptionalReadBoundary",
+      "Action": "fail",
+      "Elapsed": 8.53
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./internal/lower",
+    "./internal/oracle",
+    "-run",
+    "^TestFX6|^TestScalarUnionView|^TestPredicateBodyProof$",
+    "-count=1",
+    "-json",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "seconds": 57.985,
+  "tests": [
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P35",
+      "Action": "pass",
+      "Elapsed": 1.06
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P51",
+      "Action": "pass",
+      "Elapsed": 1.08
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P53",
+      "Action": "pass",
+      "Elapsed": 1.29
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P38Number",
+      "Action": "pass",
+      "Elapsed": 1.55
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/condition_assertion",
+      "Action": "pass",
+      "Elapsed": 0.28
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P38",
+      "Action": "pass",
+      "Elapsed": 0.92
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P36",
+      "Action": "pass",
+      "Elapsed": 1.11
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/true_branch_lies",
+      "Action": "pass",
+      "Elapsed": 0.29
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/typeof",
+      "Action": "pass",
+      "Elapsed": 0.37
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/false_branch_lies",
+      "Action": "pass",
+      "Elapsed": 0.27
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/helper",
+      "Action": "pass",
+      "Elapsed": 0.38
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFX6P37",
+      "Action": "pass",
+      "Elapsed": 1.22
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/kind_helpers_fixed_point",
+      "Action": "pass",
+      "Elapsed": 0.41
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/kind",
+      "Action": "pass",
+      "Elapsed": 0.37
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/condition_mutation",
+      "Action": "pass",
+      "Elapsed": 0.31
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/diagnostic_work_on_failure",
+      "Action": "pass",
+      "Elapsed": 0.4
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/default_changes_input",
+      "Action": "pass",
+      "Elapsed": 0.36
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/disabled_assertion",
+      "Action": "pass",
+      "Elapsed": 0.4
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/assertion",
+      "Action": "pass",
+      "Elapsed": 0.38
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/empty_assertion",
+      "Action": "pass",
+      "Elapsed": 0.31
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/empty_condition_assertion",
+      "Action": "pass",
+      "Elapsed": 0.27
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/recursive",
+      "Action": "pass",
+      "Elapsed": 0.29
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/alias_mutation",
+      "Action": "pass",
+      "Elapsed": 0.39
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/mutation",
+      "Action": "pass",
+      "Elapsed": 0.2
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof/returning_fail",
+      "Action": "pass",
+      "Elapsed": 0.26
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestPredicateBodyProof",
+      "Action": "pass",
+      "Elapsed": 0.12
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitNumberJavaScript",
+      "Action": "pass",
+      "Elapsed": 14.63
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitBooleanNative",
+      "Action": "pass",
+      "Elapsed": 14.94
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitNumberNative",
+      "Action": "pass",
+      "Elapsed": 0.56
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitNumberSanitized",
+      "Action": "pass",
+      "Elapsed": 0.97
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P35",
+      "Action": "pass",
+      "Elapsed": 15.9
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P51Wrong",
+      "Action": "pass",
+      "Elapsed": 15.92
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P38",
+      "Action": "pass",
+      "Elapsed": 1.42
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P51",
+      "Action": "pass",
+      "Elapsed": 1.58
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P49",
+      "Action": "pass",
+      "Elapsed": 1.95
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitBooleanJavaScript",
+      "Action": "pass",
+      "Elapsed": 0.43
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P53",
+      "Action": "pass",
+      "Elapsed": 2.6
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestScalarUnionViewMisfitBooleanSanitized",
+      "Action": "pass",
+      "Elapsed": 0.91
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P36",
+      "Action": "pass",
+      "Elapsed": 1.97
+    },
+    {
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Test": "TestFX6P37",
+      "Action": "pass",
+      "Elapsed": 1.89
+    }
+  ]
+}

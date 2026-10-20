@@ -2,6 +2,7 @@
 from collections import Counter
 import copy
 import gzip
+import io
 import json
 from pathlib import Path
 import tempfile
@@ -44,9 +45,68 @@ class ShardTests(unittest.TestCase):
         self.assertEqual(Counter(row['status'] for row in rows), Counter({'pass': 106366, 'fail': 1}))
         ownership = {}
         for row in rows:
-            if row['file'] != shard_plan.WATCHER:
+            if row['file'] != shard_plan.WATCHER and row['file'] not in shard_plan.CASE_PARTITIONS:
                 ownership.setdefault(row['file'], set()).add(row['unit'])
         self.assertTrue(all(len(units) == 1 for units in ownership.values()))
+
+    def test_generated_plan_preserves_every_execution(self):
+        plan = shard_plan.load_plan()
+        with gzip.open(shard_plan.LANE / 'evidence/shards/tests-and-shards.jsonl.gz', 'rt') as stream:
+            original = [json.loads(line) for line in stream]
+        with gzip.open(shard_plan.LANE / 'evidence/case-shards/tests-and-units.jsonl.gz', 'rt') as stream:
+            assigned = [json.loads(line) for line in stream]
+        self.assertEqual(shard_plan.names_digest(assigned), shard_plan.names_digest(original))
+        self.assertEqual(Counter(row['id'] for row in assigned), Counter(row['id'] for row in original))
+        self.assertEqual({row['unit'] for row in assigned}, {unit['name'] for unit in plan['units']})
+        by_unit = {}
+        for row in assigned:
+            by_unit.setdefault(row['unit'], []).append(row)
+        for unit in plan['units']:
+            rows = by_unit[unit['name']]
+            self.assertEqual(unit['names_digest'], shard_plan.names_digest(rows))
+            self.assertEqual(unit['expect'], {
+                'pass': sum(row['status'] == 'pass' for row in rows),
+                'fail': sum(row['status'] == 'fail' for row in rows), 'skip': 0})
+            tasks = {(task['runner'], task['file']) for task in unit['tasks']}
+            self.assertTrue({(row['task']['runner'], row['task']['file']) for row in rows} <= tasks)
+            if 'grep' in unit:
+                import re
+                pattern = re.compile(unit['grep'])
+                selected = [row['id'] for row in assigned if row['task']['runner'] == 'unittest'
+                            and pattern.search(shard_plan.title(row['name']))]
+                self.assertEqual(sorted(selected), sorted(row['id'] for row in rows))
+                self.assertIsNone(pattern.search(shard_plan.title(rows[0]['name']) + ' additional case'))
+        with gzip.open(shard_plan.LANE / 'evidence/shards/candidate-plan.json.gz', 'rt') as stream:
+            candidate = json.load(stream)
+        expected = Counter((row['task']['runner'], row['task']['file']) for row in candidate['tasks']
+                           if row['file'] != shard_plan.WATCHER and row['file'] not in shard_plan.CASE_PARTITIONS)
+        for row in candidate['tasks']:
+            if row['file'] in shard_plan.CASE_PARTITIONS:
+                expected[(row['task']['runner'], row['task']['file'])] += shard_plan.CASE_GROUPS
+        expected.update((row['task']['runner'], row['task']['file']) for row in original
+                        if row['file'] == shard_plan.WATCHER)
+        self.assertEqual(Counter((task['runner'], task['file']) for unit in plan['units']
+                                 for task in unit['tasks']), expected)
+
+    def test_case_partitions_reject_invalid_inventory(self):
+        for duplicate_task, short_titles, message in [
+                (True, False, 'exactly one upstream task'),
+                (False, True, 'too few selectable titles')]:
+            tasks, records = [], []
+            for index, file in enumerate(shard_plan.CASE_PARTITIONS):
+                task = dict(runner='unittest', file=f'root-{index}')
+                tasks.append(dict(file=file, task=task, seconds=1))
+                for case in range(1 if short_titles and index == 0 else shard_plan.CASE_GROUPS):
+                    records.append(dict(id=f'{index}/{case}', file=file, task=task,
+                                        name=[task['file'], f'family-{case}', f'case-{case}'], status='pass'))
+            if duplicate_task:
+                tasks.append(dict(file=next(iter(shard_plan.CASE_PARTITIONS)),
+                                  task=dict(runner='unittest', file='empty additional root'), seconds=0))
+            streams = [io.StringIO(json.dumps(dict(tasks=tasks))),
+                       io.StringIO(''.join(json.dumps(row) + '\n' for row in records))]
+            with self.subTest(message=message), patch.object(shard_plan.gzip, 'open', side_effect=streams):
+                with self.assertRaisesRegex(ValueError, message):
+                    shard_plan.build_plan('tree', 'api')
 
     def test_view_keeps_mutable_outputs_and_configuration_private(self):
         from view import make_view

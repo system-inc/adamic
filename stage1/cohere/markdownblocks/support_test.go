@@ -293,13 +293,6 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 	return onNode(t, path, arguments...)
 }
 
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
 // Output-only mutants need sanitizer checks, not repeated optimizer work on the
 // full formatter. The unchanged port is checked at -O1 and release -O2 separately.
 func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
@@ -331,19 +324,6 @@ func releaseRun(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
 	binary := nativeBinary(t, native.C(program), false)
 	return execute(t, nil, binary, arguments...)
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := nativeBinary(t, native.C(program), true)
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on

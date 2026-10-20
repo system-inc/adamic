@@ -331,5 +331,12 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 // checker's result type can authorize returning undefined at that end.
 func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
 	result := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
+	if result.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range result.Types() {
+			if member.Flags() == checker.TypeFlagsVoid {
+				return true
+			}
+		}
+	}
 	return result.Flags()&checker.TypeFlagsVoid != 0 || l.includesUndefined(result)
 }

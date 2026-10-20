@@ -396,8 +396,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/22_createHash_fallback.a:23:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
     }
   },
   {

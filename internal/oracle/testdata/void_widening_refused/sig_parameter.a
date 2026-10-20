@@ -1,0 +1,7 @@
+// a-check: refused a void-returning function at the initializer site through (0) seen as () => unknown
+const make: () => void = () => 42;
+function report(callback: () => unknown): void {
+	console.log(typeof callback());
+}
+const accept: (callback: () => void) => void = report;
+accept(make);

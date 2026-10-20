@@ -1,0 +1,15 @@
+{
+  "branch": "typescript/stage3-lane-shards-10s",
+  "base": "23ff023b9ed986834d20404d43e2c363667edf9b",
+  "artifact": "ca99f25d13bfb84fe9c89a4ba0eaf088b5a529c393a80eba07bdc326cbe48557",
+  "product": "04d979148f440864934c43358444f2a06603bb7149ddfd1153bf9360df7c4c56",
+  "api_diff_sha256": "3da14ced9f2c7eea0ae8b4dabbe6067a91510b0ab0d950ddb83903a9eb50fa28",
+  "runtime": "6a50ed7453428e6bcacfc6e4302c13e0036c3c153c13e912271147fa7ba884f3",
+  "note": "Normal Go product path measured serially. Shared-artifact timings retained separately. Available CPU quota is four, not eight.",
+  "requested_acceptance_complete": false,
+  "normal_product_all_shards_under_12": true,
+  "exact_eight_cpu_load_proof": false,
+  "legacy_shared_artifact_under_12_certified": false,
+  "production_limits_changed": false,
+  "repository_go_gate_exit": 143
+}
