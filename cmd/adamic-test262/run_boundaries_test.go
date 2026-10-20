@@ -39,3 +39,21 @@ func TestRunCommandExactCaptureCapacity(t *testing.T) {
 		})
 	}
 }
+
+func TestRunCommandCaptureLimit(t *testing.T) {
+	t.Parallel()
+	for _, one := range []struct {
+		name, command string
+		want          execution
+	}{
+		{"stdout", "printf abcd", execution{Stdout: "abc", Stderr: "command output exceeded capture limit\n", Exit: -1}},
+		{"stderr", "printf abcd >&2", execution{Stderr: "command output exceeded capture limit\n", Exit: -1}},
+	} {
+		t.Run(one.name, func(t *testing.T) {
+			t.Parallel()
+			if got := runCommandWithLimit(5*time.Second, nil, 3, "/bin/sh", "-c", one.command); got != one.want {
+				t.Fatalf("capture overflow: got %+v, want %+v", got, one.want)
+			}
+		})
+	}
+}
