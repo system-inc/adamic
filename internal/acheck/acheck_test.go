@@ -5,6 +5,9 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"go/build/constraint"
+	"go/parser"
+	"go/token"
 	"io/fs"
 	"os"
 	"os/exec"
@@ -191,9 +194,53 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
 	}
 }
 
+// A directory is a package only by a Go file some box builds, as go list had it: one whose only Go is //go:build ignore
+// holds none of its programs (stage3/drivers/scanner's, which build-metrics.go left unchecked), while a linux-only file
+// makes a package on every box, darwin too, as do !linux, linux && !darwin and ignore || linux, each true under some
+// tags, while linux && !linux, true under none, makes none; and a plain package holds its programs and its
+// subdirectories'. Mutants that fail it: the //go:build line not read, every Go file a package; the line evaluated with
+// every tag but ignore set (Node's reading), which drops the !linux file's package.
+func TestAnIgnoredGoFileMakesNoPackage(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	plant := func(path, content string) {
+		full := filepath.Join(root, path)
+		if err := os.MkdirAll(filepath.Dir(full), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(full, []byte(content), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	plant("go.mod", "module example.com/a\n")
+	plant("ignored/metrics.go", "//go:build ignore\n\n// Run this with go run.\npackage main\n")
+	plant("ignored/outside.a", "let a = 1;\n")
+	plant("linux/only.go", "//go:build linux\n\npackage linux\n")
+	plant("linux/owned.a", "owned\n")
+	plant("notlinux/only.go", "//go:build !linux\n\npackage notlinux\n")
+	plant("notlinux/owned.a", "owned\n")
+	plant("linuxnotdarwin/only.go", "//go:build linux && !darwin\n\npackage linuxnotdarwin\n")
+	plant("linuxnotdarwin/owned.a", "owned\n")
+	plant("ignoreorlinux/only.go", "//go:build ignore || linux\n\npackage ignoreorlinux\n")
+	plant("ignoreorlinux/owned.a", "owned\n")
+	plant("never/only.go", "//go:build linux && !linux\n\npackage never\n")
+	plant("never/outside.a", "let a = 1;\n")
+	plant("plain/p.go", "// Package p is plain.\npackage p\n")
+	plant("plain/owned.a", "owned\n")
+	plant("plain/sub/owned.a", "owned\n")
+	programs, err := programsOutsidePackages(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := []string{"ignored/outside.a", "never/outside.a"}; !slices.Equal(programs, want) {
+		t.Fatalf("found %q, want %q", programs, want)
+	}
+}
+
 // programsOutsidePackages is every .a program under root that no Go package holds, sorted, relative to root: none in a
 // package's directory or under it (its testdata, its subdirectories), as the gate's ownership has it, nor in a
-// submodule (a directory holding its own .git) or node_modules, which aren't the module's.
+// submodule (a directory holding its own .git) or node_modules, which aren't the module's. A directory is a package only
+// by a .go file some box builds (buildable), as go list had it, so one whose only Go is //go:build ignore holds nothing.
 func programsOutsidePackages(root string) ([]string, error) {
 	packages, programs := map[string]bool{}, []string{}
 	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
@@ -217,7 +264,7 @@ func programsOutsidePackages(root string) ([]string, error) {
 		}
 		switch filepath.Ext(entry.Name()) {
 		case ".go":
-			if !slices.Contains(strings.Split(filepath.ToSlash(relative), "/"), "testdata") {
+			if !slices.Contains(strings.Split(filepath.ToSlash(relative), "/"), "testdata") && buildable(path) {
 				packages[filepath.ToSlash(filepath.Dir(relative))] = true
 			}
 		case ".a":
@@ -246,6 +293,76 @@ func programsOutsidePackages(root string) ([]string, error) {
 	}
 	slices.Sort(outside)
 	return outside, nil
+}
+
+// buildable says whether the Go file at path builds on some box: its //go:build line, read from its header before
+// package as go/build reads it, holds under some assignment of its tags with ignore false (satisfiable, Node's ruling),
+// so a darwin-, linux- or !linux-only file counts on every box alike and only one no box builds, ignore's, doesn't. A
+// file with no
+// //go:build line counts, a // +build line alone too: that's the syntax before Go 1.17, which gofmt rewrites into a
+// //go:build line, so none is left to read here. A file whose header or //go:build line doesn't parse counts, as go
+// list still lists its package, with the error.
+func buildable(path string) bool {
+	file, err := parser.ParseFile(token.NewFileSet(), path, nil, parser.PackageClauseOnly|parser.ParseComments)
+	if err != nil {
+		return true
+	}
+	for _, group := range file.Comments {
+		if group.Pos() >= file.Package {
+			break
+		}
+		for _, comment := range group.List {
+			if !constraint.IsGoBuild(comment.Text) {
+				continue
+			}
+			expression, err := constraint.Parse(comment.Text)
+			if err != nil {
+				return true
+			}
+			return satisfiable(expression)
+		}
+	}
+	return true
+}
+
+// satisfiableTags is the most distinct tags satisfiable tries every assignment of; a constraint naming more counts as
+// buildable, since a file read as a package only leaves its programs to its package, never checks one it shouldn't.
+const satisfiableTags = 16
+
+// satisfiable says whether expression holds under some assignment of the tags it names, ignore held false: a file only
+// ignore gates, or one false under every assignment, is one no box builds.
+func satisfiable(expression constraint.Expr) bool {
+	tags := []string{}
+	var collect func(constraint.Expr)
+	collect = func(expression constraint.Expr) {
+		switch node := expression.(type) {
+		case *constraint.TagExpr:
+			if node.Tag != "ignore" && !slices.Contains(tags, node.Tag) {
+				tags = append(tags, node.Tag)
+			}
+		case *constraint.NotExpr:
+			collect(node.X)
+		case *constraint.AndExpr:
+			collect(node.X)
+			collect(node.Y)
+		case *constraint.OrExpr:
+			collect(node.X)
+			collect(node.Y)
+		}
+	}
+	collect(expression)
+	if len(tags) > satisfiableTags {
+		return true
+	}
+	for assignment := range 1 << len(tags) {
+		if expression.Eval(func(tag string) bool {
+			index := slices.Index(tags, tag)
+			return index >= 0 && assignment&(1<<index) != 0
+		}) {
+			return true
+		}
+	}
+	return false
 }
 
 // checked runs adamic c on program from the repository's root, as the gate did, and says how it broke its first
