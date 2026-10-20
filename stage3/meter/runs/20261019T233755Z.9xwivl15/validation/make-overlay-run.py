@@ -1,0 +1,161 @@
+"""Build a scratch-only lower overlay. Production Lower is disabled in this binary."""
+import json
+import pathlib
+import sys
+import subprocess
+
+repository = pathlib.Path(sys.argv[1]).resolve()
+scratch = pathlib.Path(sys.argv[2]).resolve()
+territory = pathlib.Path("/workspace/adamic/stage3/census/latent")
+scratch.mkdir(parents=True, exist_ok=True)
+# Run-local compatibility adapters, with exact-shape and nil-only guards.
+validation = pathlib.Path('/workspace/adamic/stage3/meter/runs/20261019T233755Z.9xwivl15/validation')
+for adapter in ('statecopy', 'refusalrewrite'):
+    (scratch / (adapter + '-run.go')).write_text((validation / (adapter + '-run.go.txt')).read_text())
+replace = {}
+
+def overlay(name, text):
+    output = scratch / name.replace('/', '_')
+    output.write_text(text)
+    replace[str(repository / name)] = str(output)
+
+original = (repository / 'internal/lower/lower.go').read_text()
+start = original.index('\tfiles := program.Files()')
+end = original.index('\n}\n\ntype lowering', start)
+original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurement only; no IR output")' + original[end:]
+original = original.replace('\n\t"path/filepath"', '')
+original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool\n latentAncestors map[*ast.Node]bool')
+overlay('internal/lower/lower.go', original)
+# Generate typed snapshots of all lowering-owned state; unknown shapes fail loudly.
+state_output = scratch / 'internal_lower_latent_state.go'
+subprocess.run(['go', 'run', str(scratch / 'statecopy-run.go'), str(repository),
+                str(scratch / 'internal_lower_lower.go'), str(state_output)], check=True, cwd=territory)
+replace[str(repository / 'internal/lower/latent_state.go')] = str(state_output)
+statement_output = scratch / 'internal_lower_statements.go'
+subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
+                str(repository / 'internal/lower/statements.go'), str(statement_output)], check=True, cwd=territory)
+replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
+overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
+overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
+
+# Parse the exact refusal function and its visitor scopes; fail on unsupported shapes.
+refusal_output = scratch / 'internal_lower_refusals.go'
+subprocess.run(['go', 'run', str(scratch / 'refusalrewrite-run.go'),
+                '-input', str(repository / 'internal/lower/refusals.go'),
+                '-output', str(refusal_output)], check=True, cwd=territory)
+# Capture the exact syntax visitor node, rather than guessing from a shared token.
+refusal_source = refusal_output.read_text()
+for binding in ('found', 'contractError'):
+    old = '\t\t\tlatentRecord(' + binding + ')\n'
+    new = '\t\t\tlatentRecordNode(' + binding + ', node)\n'
+    assert refusal_source.count(old) == 1, ('refusal visitor identity', binding)
+    refusal_source = refusal_source.replace(old, new)
+for visitor, phase in [('contracts', 'contract_scan'), ('visit', 'refusal_scan')]:
+    entry = visitor + ' = func(node *ast.Node) (latentStop bool) {'
+    assert refusal_source.count(entry) == 1
+    refusal_source = refusal_source.replace(entry, entry + '\n latentProgressScan(node, "' + phase + '")')
+refusal_output.write_text(refusal_source)
+replace[str(repository / 'internal/lower/refusals.go')] = str(refusal_output)
+# Keep all checker diagnostics and populated roots, but expose them only to measurement.
+loader = (repository / 'internal/load/load.go').read_text()
+loader = loader.replace('type Program struct {', 'type Program struct {\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
+needle = 'return nil, &CheckError{Diagnostics: diagnostics}'
+assert loader.count(needle) == 1
+loader = loader.replace(needle, 'loaded.latentDiagnostics = diagnostics')
+loader = loader.replace('formatted := make([]string, 0, len(all))', 'p.latentSites = all\n formatted := make([]string, 0, len(all))')
+# Rename the permissive API; ordinary Load and LoadOverlay cannot expose rejected programs.
+loader = loader.replace('func Load(paths []string)', 'func LatentLoad(paths []string)')
+loader = loader.replace('func LoadOverlay(paths []string, overlay map[string]string)', 'func latentLoadOverlay(paths []string, overlay map[string]string)')
+loader += '\nfunc Load(paths []string) (*Program, error) { return nil, fmt.Errorf("latent census: measurement loader only; no output path") }\nfunc LoadOverlay(paths []string, overlay map[string]string) (*Program, error) { return Load(paths) }\n'
+overlay('internal/load/load.go', loader)
+overlay('internal/load/latent_hook.go', (territory / 'load.go.txt').read_text())
+# Direct sibling calls need signatures, not sibling bodies. Prepare signatures lazily.
+expressions = (repository / 'internal/lower/expression.go').read_text()
+needle = 'func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {'
+assert needle in expressions
+expressions = expressions.replace(needle, needle + '\n if err := l.latentSignature(function); err != nil { return nil, err }')
+needle = 'func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {'
+assert needle in expressions
+expressions = expressions.replace(needle, needle + '\n if err := l.latentSignature(target); err != nil { return nil, err }')
+overlay('internal/lower/expression.go', expressions)
+functions = (repository / 'internal/lower/functions.go').read_text()
+needle = 'l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}'
+assert needle in functions
+functions = functions.replace(needle, needle + '\n if l.latentReady == nil { l.latentReady = map[int]bool{} }; l.latentReady[index] = true')
+# Generic dependency instantiations must also obey body skip policy.
+needle = 'func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {'
+functions = functions.replace(needle, needle + '\n if !latentSpeculativeEnabled() && len(l.latentBodyDiagnostics(declaration.Body())) > 0 { return &LatentDependencySkipped{Where:l.program.Where(declaration)} }')
+# Record actual body entry within a fully mapped concrete generic call. The
+# ledger is run-owned, so per-statement state rollback cannot erase a witness.
+functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 0 && latentInstantiated != nil { latentInstantiated[l.program.Where(declaration)] = true }')
+overlay('internal/lower/functions.go', functions)
+generic = (repository / 'internal/lower/generic.go').read_text()
+needle = 'if err := l.lowerFunction(index, declaration, -1); err != nil {'
+assert generic.count(needle) == 1, 'generic body entry hook'
+generic = generic.replace(needle, '''concreteWitness := len(concreteTypes) == len(declaration.TypeParameters())
+for _, concrete := range concreteTypes { if concrete.Flags() & checker.TypeFlagsTypeParameter != 0 { concreteWitness = false } }
+outerConcreteDepth := latentConcreteCallDepth
+if concreteWitness { latentConcreteCallDepth++ } else { latentConcreteCallDepth = 0 }
+defer func() { latentConcreteCallDepth = outerConcreteDepth }()
+''' + needle)
+overlay('internal/lower/generic.go', generic)
+locals_source = (repository / 'internal/lower/locals.go').read_text()
+needle = 'local, isLocal := l.locals[symbol]'
+assert locals_source.count(needle) == 1
+locals_source = locals_source.replace(needle, 'if latentFullEnabled() { l.latentLexicalLocal(identifier, symbol) }\n' + needle)
+overlay('internal/lower/locals.go', locals_source)
+
+hook = (territory / 'lower.go.txt').read_text()
+if (repository / 'internal/lower/enums.go').exists():
+    hook = hook.replace('// LATENT_ENUM_REGISTRATION', """case ast.KindEnumDeclaration:
+        if !ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+            func() {
+                defer func() { _ = recover() }()
+                if local, err := l.enumLocal(node); err == nil { l.result.Locals[local].Global = true }
+            }()
+        }""")
+overlay('internal/lower/latent_hook.go', hook)
+overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
+overlay('stage3/census/latent/replay/worker/main.go', (territory / 'replay/main.go.txt').read_text())
+# Main resolves signature returns inside signature rather than signatureReturn.
+# Adapt the scratch hook while leaving production source unchanged.
+function_output = pathlib.Path(replace[str(repository / 'internal/lower/functions.go')])
+function_source = function_output.read_text()
+if 'func (l *lowering) signatureReturn(' not in function_source:
+    signature = 'func (l *lowering) signature(index int, declaration *ast.Node, this int) error {'
+    assert function_source.count(signature) == 1
+    function_source = function_source.replace(signature, signature.replace(' signature(', ' latentMainSignatureRaw('))
+    function_source += '\nfunc (l *lowering) signature(index int, declaration *ast.Node, this int) error { return l.signatureReturn(index, declaration, this, nil) }\n'
+    function_source += '\nfunc (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error { return l.latentMainSignatureRaw(index, declaration, this) }\n'
+    function_output.write_text(function_source)
+# Speculative wrappers are emitted only into the existing guarded overlay.
+for name, signature, renamed in [
+    ('internal/lower/locals.go', 'func (l *lowering) declareLocal(name *ast.Node) (int, error) {', 'latentDeclareLocalRaw'),
+    ('internal/lower/expression.go', 'func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {', 'latentExpressionRaw'),
+    ('internal/lower/functions.go', 'func (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error {', 'latentSignatureReturnRaw'),
+]:
+    output = pathlib.Path(replace[str(repository / name)])
+    source = output.read_text()
+    assert source.count(signature) == 1, signature
+    source = source.replace(signature, signature.replace(' expression(', ' latentExpressionRaw(').replace(' signatureReturn(', ' latentSignatureReturnRaw(').replace(' declareLocal(', ' latentDeclareLocalRaw('))
+    if renamed == 'latentDeclareLocalRaw':
+        source += '\nfunc (l *lowering) declareLocal(name *ast.Node) (int,error) { return l.latentSpecDeclareLocal(name) }\n'
+    elif renamed == 'latentExpressionRaw':
+        source += '\nfunc (l *lowering) expression(node *ast.Node) (ir.Expression,error) { return l.latentSpecExpression(node) }\n'
+    else:
+        source += '\nfunc (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error { return l.latentSpecSignatureReturn(index,declaration,this,returns) }\n'
+    output.write_text(source)
+overlay('internal/lower/latent_piece.go', (territory / 'piece.go.txt').read_text())
+# Unassigned selected-file bodies are never lowered by generic dependency calls.
+output = pathlib.Path(replace[str(repository / 'internal/lower/functions.go')])
+source = output.read_text()
+needle = '\tpending := l.signed[index]'
+assert source.count(needle) == 1
+source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return nil }\n' + needle)
+output.write_text(source)
+overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
+overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
+
+(scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
+print(scratch / 'overlay.json')

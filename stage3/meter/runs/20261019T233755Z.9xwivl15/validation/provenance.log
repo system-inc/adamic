@@ -1,0 +1,10 @@
+{
+  "census.jsonl.gz": "identical after replacing tree prefix and excluding seconds",
+  "tsc/census.jsonl.gz": "identical after replacing tree prefix and excluding seconds",
+  "latent.jsonl.gz": "identical after replacing tree prefix and excluding seconds",
+  "tsc/latent.jsonl.gz": "identical after replacing tree prefix and excluding seconds",
+  "adapted_source_bytes": "all compiler inputs and tsc entry identical",
+  "aggregate_checker_lowering_and_latent_reasons": "identical after normalizing embedded adapted-root prefixes in reason keys"
+}
+ordinary binaries identical: True
+tracked compiler sources unchanged at 295df3bc6aa3d47933ccf675da1c33e745856313

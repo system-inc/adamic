@@ -1,0 +1,8 @@
+panic: populated query guard did not fail
+
+goroutine 1 [running]:
+main.main.func2()
+	./main.go:11 +0x4c
+main.main()
+	./main.go:13 +0xcf
+exit status 2

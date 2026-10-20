@@ -1,0 +1,8 @@
+latent refusal rewrite: lowering.refuse: unsupported outer refusal returns
+exit status 1
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/runs/20261019T233755Z.9xwivl15/validation/make-overlay-run.py", line 40, in <module>
+    subprocess.run(['go', 'run', str(territory / 'refusalrewrite/cmd'),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/adamic/stage3/census/latent/refusalrewrite/cmd', '-input', '/tmp/adamic-gate/stage3-meter.RXmuND/main-source/internal/lower/refusals.go', '-output', '/tmp/adamic-gate/stage3-meter.RXmuND/main-binaries/latent-overlay/internal_lower_refusals.go']' returned non-zero exit status 1.

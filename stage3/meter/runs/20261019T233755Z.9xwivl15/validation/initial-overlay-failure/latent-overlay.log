@@ -1,0 +1,14 @@
+panic: state copy: unsupported field type func(*ast.Node) *checker.Type
+
+goroutine 1 [running]:
+main.(*generator).copy(0x551c95b7960?, {0x629c30?, 0x551c9241a20}, {0x551c9145020?, 0x18?})
+	github.com/system-inc/adamic/stage3/census/latent/statecopy/main.go:81 +0x5f9
+main.main()
+	github.com/system-inc/adamic/stage3/census/latent/statecopy/main.go:140 +0xa28
+exit status 2
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/make_overlay.py", line 27, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/adamic/stage3/census/latent/statecopy', '/tmp/adamic-gate/stage3-meter.0n4KXt/main-source', '/tmp/adamic-gate/stage3-meter.0n4KXt/main-binaries/latent-overlay/internal_lower_lower.go', '/tmp/adamic-gate/stage3-meter.0n4KXt/main-binaries/latent-overlay/internal_lower_latent_state.go']' returned non-zero exit status 1.

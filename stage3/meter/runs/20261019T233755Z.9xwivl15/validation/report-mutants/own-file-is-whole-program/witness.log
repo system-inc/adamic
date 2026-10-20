@@ -1,0 +1,21 @@
+test_planted_diagnostic_changes_only_its_own_file (report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file) ... FAIL
+
+======================================================================
+FAIL: test_planted_diagnostic_changes_only_its_own_file (report_test.ReportTests.test_planted_diagnostic_changes_only_its_own_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/runs/20261019T233755Z.9xwivl15/validation/report-mutants/own-file-is-whole-program/report_test.py", line 57, in test_planted_diagnostic_changes_only_its_own_file
+    self.assertEqual(changed, ['src/compiler/good.ts'])
+AssertionError: Lists differ: ['src/compiler/good.ts', 'src/compiler/later.ts', 'src/compiler/refused.ts'] != ['src/compiler/good.ts']
+
+First list contains 2 additional elements.
+First extra element 1:
+'src/compiler/later.ts'
+
+- ['src/compiler/good.ts', 'src/compiler/later.ts', 'src/compiler/refused.ts']
++ ['src/compiler/good.ts']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

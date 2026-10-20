@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/runs/20261019T233755Z.9xwivl15/validation/provenance.py", line 66, in <module>
+    assert report['trees']['main']['latent_lowering']['per_reason'] == report['trees']['area']['latent_lowering']['per_reason']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

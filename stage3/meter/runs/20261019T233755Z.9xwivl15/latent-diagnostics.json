@@ -1,0 +1,46 @@
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/executeCommandLine.ts:1011:1",
+    "phase": "lowering",
+    "kind": "SkippedDependency",
+    "where": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/watch.ts:843:1",
+    "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+    "text": "latent census: skipped checker-diagnosed dependency at /tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/watch.ts:843:1"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/moduleSpecifiers.ts:335:1",
+    "phase": "lowering",
+    "kind": "panic",
+    "where": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/moduleSpecifiers.ts:335:1",
+    "reason": "runtime error: invalid memory address or nil pointer dereference",
+    "text": "runtime error: invalid memory address or nil pointer dereference"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/sys.ts:1463:1",
+    "phase": "lowering",
+    "kind": "SkippedDependency",
+    "where": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/sys.ts:1463:27",
+    "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+    "text": "latent census: skipped checker-diagnosed dependency at /tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/sys.ts:1463:27"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/declarations/diagnostics.ts:606:1",
+    "phase": "refusal_scan",
+    "kind": "panic",
+    "where": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/declarations/diagnostics.ts:1:1",
+    "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName",
+    "text": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+  }
+]

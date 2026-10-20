@@ -1,0 +1,25 @@
+test_table_groups_same_reason_across_kinds (report_test.LatentReportTests.test_table_groups_same_reason_across_kinds) ... FAIL
+
+======================================================================
+FAIL: test_table_groups_same_reason_across_kinds (report_test.LatentReportTests.test_table_groups_same_reason_across_kinds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/runs/20261019T233755Z.9xwivl15/validation/report-mutants/drop-refused/report_test.py", line 228, in test_table_groups_same_reason_across_kinds
+    self.assertEqual((group['NotYet'], group['Refused'], group['count']), (1, 1, 2))
+AssertionError: Tuples differ: (1, 0, 1) != (1, 1, 2)
+
+First differing element 1:
+0
+1
+
+- (1, 0, 1)
+?     ^  ^
+
++ (1, 1, 2)
+?     ^  ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

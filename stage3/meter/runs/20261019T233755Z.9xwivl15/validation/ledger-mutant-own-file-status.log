@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/meter-ledger-own-file-status-slfovv9q/validation/lower-ledger.py", line 59, in <module>
+    assert row['checker_own_file'] == (not diagnostics), row['file']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: src/compiler/binder.ts

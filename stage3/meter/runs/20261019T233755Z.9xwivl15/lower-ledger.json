@@ -1,0 +1,2045 @@
+{
+  "definition": "First primary diagnostic or NotYet/Refused by source line, UTF-16 column, then kind/reason. Findings are attributed to their actual file across all census attempts; both refusal_scan and lowering phases count.",
+  "first_stop_classes": {
+    "no NotYet/Refused observed (partial census)": 6,
+    "Refused: an object refinement using an open numeric enum as a literal tag": 7,
+    "TS2375": 3,
+    "TS2322": 2,
+    "TS2345": 7,
+    "TS2740": 1,
+    "accepted by ordinary lowering; no first stop": 1,
+    "TS2339": 1,
+    "Refused: optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields": 1,
+    "Refused: a cast the runtime can't check": 3,
+    "NotYet: new a ParenthesizedExpression": 2,
+    "Refused: a function taking Expression[] seen as one taking readonly Expression[] (tsc relates a method's parameters both ways), so it can be handed what it can't take": 1,
+    "NotYet: new an Identifier": 1,
+    "Refused: a function taking readonly T[] | undefined seen as one taking readonly T[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": 1,
+    "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)": 4,
+    "Refused: a function taking BinaryOperator seen as one taking SyntaxKind (tsc relates a method's parameters both ways), so it can be handed what it can't take": 1,
+    "NotYet: in when a possibly absent spread has no property presence descriptors": 1,
+    "NotYet: RegExp with a nonconstant pattern": 1,
+    "Refused: overload 1 of getDirectoryPath result Path cannot be served by implementation result string": 1,
+    "Refused: an ambient value declaration": 2,
+    "TS18046": 1,
+    "Refused: a value of type never[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where never is read": 1,
+    "TS2379": 1,
+    "Refused: Object enumeration with getter or accessor descriptors": 1,
+    "Refused: a value of type { major: number; minor: number; patch: number; prerelease: string; build: string; } seen as { major: string | number; minor: number; patch: number; prerelease: string | readonly string[]; build: string | readonly string[]; }, which can write string | number where number is read": 1,
+    "Refused: a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read": 1,
+    "TS2503": 1,
+    "NotYet: a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports": 1,
+    "TS2532": 4,
+    "NotYet: a function returning ClassThisAssignmentBlock": 1,
+    "Refused: a value of type VariableDeclaration | DestructuringAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": 1,
+    "Refused: an unproven predicate argument for parameter test (argument \"isExpression\")": 3,
+    "Refused: an unproven predicate argument for parameter test (argument \"isBlock\")": 1,
+    "NotYet: an indirect call of a checked predicate overload": 1,
+    "Refused: an unproven predicate argument for parameter test (argument \"isLeftHandSideExpression\")": 1,
+    "NotYet: a value of type NodeArray<ClassElement>": 1,
+    "NotYet: a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly)": 2,
+    "NotYet: an assignment value to a member": 1,
+    "NotYet: a value of type WrappedExpression<AnonymousFunctionDefinition>": 1,
+    "NotYet: a value of type NodeArray<ExportSpecifier> | NodeArray<ImportSpecifier>": 1,
+    "NotYet: a function returning ResolvedConfigFileName": 1,
+    "TS2412": 2,
+    "Refused: a type predicate whose return is not proven (there is no body proving this parameter)": 1,
+    "NotYet: an array of never": 1,
+    "Refused: overload 1 of visitNode parameter node cannot be served by implementation parameter node": 1
+  },
+  "files": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 1
+      },
+      "first_finding": null,
+      "first_stop_class": "no NotYet/Refused observed (partial census)"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.performance.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 1
+      },
+      "first_finding": null,
+      "first_stop_class": "no NotYet/Refused observed (partial census)"
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 77
+      },
+      "first_finding": null,
+      "first_stop_class": "no NotYet/Refused observed (partial census)"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 16
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/binder.ts:350:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/binder.ts:375:41",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/binder.ts:375:41: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/builder.ts:2273:9",
+        "code": "TS2375",
+        "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'outSignature' are incompatible.\n    Type 'EmitSignature | undefined' is not assignable to type 'EmitSignature'.\n      Type 'undefined' is not assignable to type 'EmitSignature'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 82,
+        "deferred_generic_instantiation": 2,
+        "skipped_checker_body": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/builder.ts:268:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/builder.ts:269:5",
+        "reason": "a type predicate whose return is not proven (true return narrows to ReusableBuilderProgramState, not BuilderProgramStateWithDefinedProgram)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/builder.ts:269:5: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to ReusableBuilderProgramState, not BuilderProgramStateWithDefinedProgram); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "TS2375"
+    },
+    {
+      "file": "src/compiler/builderPublic.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 16
+      },
+      "first_finding": null,
+      "first_stop_class": "no NotYet/Refused observed (partial census)"
+    },
+    {
+      "file": "src/compiler/builderState.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/builderState.ts:100:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/builderState.ts:254:60",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/builderState.ts:254:60: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3
+      },
+      "first_finding": null,
+      "first_stop_class": "no NotYet/Refused observed (partial census)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/checker.ts:1683:9",
+        "code": "TS2322",
+        "message": "Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 49,
+        "skipped_checker_body": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/checker.ts:1155:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:1155:7",
+        "reason": "a value of type __String & string",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/checker.ts:1155:7: stage 0 can't lower a value of type __String & string yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2322"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/commandLineParser.ts:2077:79",
+        "code": "TS2345",
+        "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 152,
+        "skipped_checker_body": 4,
+        "deferred_generic_instantiation": 12
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/commandLineParser.ts:132:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/commandLineParser.ts:132:30",
+        "reason": "Object enumeration with getter or accessor descriptors",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/commandLineParser.ts:132:30: Adamic 0.1 refuses Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/core.ts:1637:11",
+        "code": "TS2740",
+        "message": "Type '{ has(element: TElement): boolean; add(element: TElement): Set<TElement>; delete(element: TElement): boolean; clear(): void; ... 6 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<TElement>': union, intersection, difference, symmetricDifference, and 3 more."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 61,
+        "deferred_generic_instantiation": 201
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/core.ts:17:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:17:36",
+        "reason": "an array of never",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/core.ts:17:36: stage 0 can't lower an array of never yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2740"
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": true,
+      "ordinary_lowering_pass": true,
+      "ordinary_outcome": "accepted",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 9
+      },
+      "first_finding": null,
+      "first_stop_class": "accepted by ordinary lowering; no first stop"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/debug.ts:200:19",
+        "code": "TS2339",
+        "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/debug.ts:113:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/debug.ts:167:31",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/debug.ts:167:31: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "owner": "01a11410"
+      },
+      "first_stop_class": "TS2339"
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3
+      },
+      "first_finding": null,
+      "first_stop_class": "no NotYet/Refused observed (partial census)"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 48,
+        "deferred_generic_instantiation": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/emitter.ts:446:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/emitter.ts:454:66",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/emitter.ts:454:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 49,
+        "deferred_generic_instantiation": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/executeCommandLine.ts:105:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/executeCommandLine.ts:109:41",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/executeCommandLine.ts:109:41: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 9
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/expressionToTypeNode.ts:166:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/expressionToTypeNode.ts:167:12",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/expressionToTypeNode.ts:167:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "owner": "01a11410"
+      },
+      "first_stop_class": "Refused: a cast the runtime can't check"
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/baseNodeFactory.ts:26:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/factory/baseNodeFactory.ts:42:16",
+        "reason": "new a ParenthesizedExpression",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/baseNodeFactory.ts:42:16: stage 0 can't lower new a ParenthesizedExpression yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: new a ParenthesizedExpression"
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 45
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/emitHelpers.ts:148:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/emitHelpers.ts:156:9",
+        "reason": "a function taking Expression[] seen as one taking readonly Expression[] (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/emitHelpers.ts:156:9: Adamic 0.1 refuses a function taking Expression[] seen as one taking readonly Expression[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a function taking Expression[] seen as one taking readonly Expression[] (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+    },
+    {
+      "file": "src/compiler/factory/emitNode.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 18,
+        "deferred_generic_instantiation": 23
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/emitNode.ts:36:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/factory/emitNode.ts:43:40",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/emitNode.ts:43:40: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "owner": "01a11410"
+      },
+      "first_stop_class": "Refused: a cast the runtime can't check"
+    },
+    {
+      "file": "src/compiler/factory/nodeChildren.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 6
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/nodeChildren.ts:11:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/factory/nodeChildren.ts:11:34",
+        "reason": "new an Identifier",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/nodeChildren.ts:11:34: stage 0 can't lower new an Identifier yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: new an Identifier"
+    },
+    {
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/nodeConverters.ts:41:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/nodeConverters.ts:55:35",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/nodeConverters.ts:55:35: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 25,
+        "deferred_generic_instantiation": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/nodeFactory.ts:492:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/nodeFactory.ts:522:9",
+        "reason": "a function taking readonly T[] | undefined seen as one taking readonly T[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/nodeFactory.ts:522:9: Adamic 0.1 refuses a function taking readonly T[] | undefined seen as one taking readonly T[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a function taking readonly T[] | undefined seen as one taking readonly T[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+    },
+    {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 228
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/nodeTests.ts:235:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/nodeTests.ts:236:5",
+        "reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/nodeTests.ts:236:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)"
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/parenthesizerRules.ts:54:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/parenthesizerRules.ts:63:9",
+        "reason": "a function taking BinaryOperator seen as one taking SyntaxKind (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/parenthesizerRules.ts:63:9: Adamic 0.1 refuses a function taking BinaryOperator seen as one taking SyntaxKind (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a function taking BinaryOperator seen as one taking SyntaxKind (tsc relates a method's parameters both ways), so it can be handed what it can't take"
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 100,
+        "deferred_generic_instantiation": 8
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/utilities.ts:188:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/utilities.ts:190:75",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/utilities.ts:190:75: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3,
+        "deferred_generic_instantiation": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/factory/utilitiesPublic.ts:14:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/factory/utilitiesPublic.ts:16:5",
+        "reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/factory/utilitiesPublic.ts:16:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)"
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": true,
+      "ordinary_lowering_pass": true,
+      "ordinary_outcome": "accepted",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/hostErrors.ts:2:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/hostErrors.ts:3:59",
+        "reason": "in when a possibly absent spread has no property presence descriptors",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/hostErrors.ts:3:59: stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: in when a possibly absent spread has no property presence descriptors"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/moduleNameResolver.ts:132:13",
+        "code": "TS2375",
+        "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 143,
+        "skipped_checker_body": 5,
+        "deferred_generic_instantiation": 15
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/moduleNameResolver.ts:118:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/moduleNameResolver.ts:119:5",
+        "reason": "a method read as a value (trace would lose its object, and this with it)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/moduleNameResolver.ts:119:5: Adamic 0.1 refuses a method read as a value (trace would lose its object, and this with it); call it in an arrow that keeps the object: (value) => host.trace(value) (unbound-method)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2375"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 47,
+        "panic": 1,
+        "deferred_generic_instantiation": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/moduleSpecifiers.ts:133:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/moduleSpecifiers.ts:138:31",
+        "reason": "RegExp with a nonconstant pattern",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/moduleSpecifiers.ts:138:31: stage 0 can't lower RegExp with a nonconstant pattern yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: RegExp with a nonconstant pattern"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 53,
+        "deferred_generic_instantiation": 22
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/parser.ts:432:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/parser.ts:433:39",
+        "reason": "new a ParenthesizedExpression",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/parser.ts:433:39: stage 0 can't lower new a ParenthesizedExpression yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: new a ParenthesizedExpression"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 77,
+        "deferred_generic_instantiation": 4
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/utilitiesPublic.ts:693:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/path.ts:278:1",
+        "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/path.ts:278:1: Adamic 0.1 refuses overload 1 of getDirectoryPath result Path cannot be served by implementation result string; make the implementation result covariant with every overload result",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: overload 1 of getDirectoryPath result Path cannot be served by implementation result string"
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 24
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/performance.ts:15:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/performance.ts:15:1",
+        "reason": "an ambient value declaration",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/performance.ts:15:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an ambient value declaration"
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 12
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/performanceCore.ts:28:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/performanceCore.ts:28:1",
+        "reason": "an ambient value declaration",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/performanceCore.ts:28:1: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an ambient value declaration"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/program.ts:406:25",
+        "code": "TS18046",
+        "message": "'e' is of type 'unknown'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 74,
+        "skipped_checker_body": 5,
+        "deferred_generic_instantiation": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/program.ts:342:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/program.ts:364:17",
+        "reason": "assigning a field of a value",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/program.ts:364:17: stage 0 can't lower assigning a field of a value yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS18046"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/programDiagnostics.ts:89:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/programDiagnostics.ts:168:52",
+        "reason": "a value of type never[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where never is read",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/programDiagnostics.ts:168:52: Adamic 0.1 refuses a value of type never[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a value of type never[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where never is read"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/resolutionCache.ts:990:43",
+        "code": "TS2379",
+        "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 30,
+        "skipped_checker_body": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/resolutionCache.ts:258:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/resolutionCache.ts:258:17",
+        "reason": "a function returning Path | undefined",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/resolutionCache.ts:258:17: stage 0 can't lower a function returning Path | undefined yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2379"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 74,
+        "deferred_generic_instantiation": 10
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/scanner.ts:224:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/scanner.ts:224:29",
+        "reason": "Object enumeration with getter or accessor descriptors",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/scanner.ts:224:29: Adamic 0.1 refuses Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: Object enumeration with getter or accessor descriptors"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 29
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/semver.ts:46:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/semver.ts:60:59",
+        "reason": "a value of type { major: number; minor: number; patch: number; prerelease: string; build: string; } seen as { major: string | number; minor: number; patch: number; prerelease: string | readonly string[]; build: string | readonly string[]; }, which can write string | number where number is read",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/semver.ts:60:59: Adamic 0.1 refuses a value of type { major: number; minor: number; patch: number; prerelease: string; build: string; } seen as { major: string | number; minor: number; patch: number; prerelease: string | readonly string[]; build: string | readonly string[]; }, which can write string | number where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a value of type { major: number; minor: number; patch: number; prerelease: string; build: string; } seen as { major: string | number; minor: number; patch: number; prerelease: string | readonly string[]; build: string | readonly string[]; }, which can write string | number where number is read"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/sourcemap.ts:216:58",
+        "code": "TS2345",
+        "message": "Argument of type 'string | null | undefined' is not assignable to parameter of type 'string | null'.\n  Type 'undefined' is not assignable to type 'string | null'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 29,
+        "skipped_checker_body": 1,
+        "deferred_generic_instantiation": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/sourcemap.ts:404:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/sourcemap.ts:404:25",
+        "reason": "a value of type any",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/sourcemap.ts:404:25: stage 0 can't lower a value of type any yet",
+        "owner": "adaptation 40, stage 3"
+      },
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/symbolWalker.ts:30:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/symbolWalker.ts:49:23",
+        "reason": "a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/symbolWalker.ts:49:23: Adamic 0.1 refuses a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/sys.ts:51:68",
+        "code": "TS2503",
+        "message": "Cannot find namespace 'NodeJS'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 54,
+        "skipped_checker_body": 2,
+        "deferred_generic_instantiation": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/sys.ts:51:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/sys.ts:51:1",
+        "reason": "an ambient function declaration",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/sys.ts:51:1: Adamic 0.1 refuses an ambient function declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2503"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 10
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/tracing.ts:38:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "src/compiler/tracing.ts:96:19",
+        "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/tracing.ts:96:19: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+        "owner": "codex/namespaces-tsc"
+      },
+      "first_stop_class": "NotYet: a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformer.ts:367:9",
+        "code": "TS2532",
+        "message": "Object is possibly 'undefined'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 15,
+        "deferred_generic_instantiation": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformer.ts:127:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformer.ts:128:26",
+        "reason": "a value of type never[] seen as TransformerFactory<Bundle | SourceFile>[], which can write TransformerFactory<Bundle | SourceFile> where never is read",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformer.ts:128:26: Adamic 0.1 refuses a value of type never[] seen as TransformerFactory<Bundle | SourceFile>[], which can write TransformerFactory<Bundle | SourceFile> where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "TS2532"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/classFields.ts:1835:21",
+        "code": "TS2532",
+        "message": "Object is possibly 'undefined'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 22,
+        "skipped_checker_body": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/classFields.ts:3318:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/classFields.ts:3319:12",
+        "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/classFields.ts:3319:12: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2532"
+    },
+    {
+      "file": "src/compiler/transformers/classThis.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5,
+        "deferred_generic_instantiation": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/classThis.ts:33:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/classThis.ts:33:10",
+        "reason": "a function returning ClassThisAssignmentBlock",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/classThis.ts:33:10: stage 0 can't lower a function returning ClassThisAssignmentBlock yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: a function returning ClassThisAssignmentBlock"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/declarations.ts:1678:110",
+        "code": "TS2345",
+        "message": "Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 13,
+        "skipped_checker_body": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/declarations.ts:1891:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/declarations.ts:1892:5",
+        "reason": "a type predicate whose return is not proven (return paths through KindSwitchStatement are not verified)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/declarations.ts:1892:5: Adamic 0.1 refuses a type predicate whose return is not proven (return paths through KindSwitchStatement are not verified); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 8
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/declarations/diagnostics.ts:138:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/declarations/diagnostics.ts:139:5",
+        "reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/declarations/diagnostics.ts:139:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)"
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 22
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/destructuring.ts:99:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/destructuring.ts:107:31",
+        "reason": "a value of type VariableDeclaration | DestructuringAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/destructuring.ts:107:31: Adamic 0.1 refuses a value of type VariableDeclaration | DestructuringAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "Refused: a value of type VariableDeclaration | DestructuringAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/es2015.ts:2803:38",
+        "code": "TS2532",
+        "message": "Object is possibly 'undefined'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 12,
+        "skipped_checker_body": 1
+      },
+      "first_finding": null,
+      "first_stop_class": "TS2532"
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/es2016.ts:21:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/es2016.ts:63:52",
+        "reason": "an unproven predicate argument for parameter test (argument \"isExpression\")",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/es2016.ts:63:52: Adamic 0.1 refuses an unproven predicate argument for parameter test (argument \"isExpression\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an unproven predicate argument for parameter test (argument \"isExpression\")"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/es2017.ts:599:86",
+        "code": "TS2532",
+        "message": "Object is possibly 'undefined'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5,
+        "skipped_checker_body": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/es2017.ts:1059:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/es2017.ts:1064:5",
+        "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/es2017.ts:1064:5: stage 0 can't lower a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2532"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 4
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/es2018.ts:154:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/es2018.ts:399:148",
+        "reason": "an unproven predicate argument for parameter test (argument \"isExpression\")",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/es2018.ts:399:148: Adamic 0.1 refuses an unproven predicate argument for parameter test (argument \"isExpression\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an unproven predicate argument for parameter test (argument \"isExpression\")"
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/es2019.ts:17:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/es2019.ts:46:48",
+        "reason": "an unproven predicate argument for parameter test (argument \"isBlock\")",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/es2019.ts:46:48: Adamic 0.1 refuses an unproven predicate argument for parameter test (argument \"isBlock\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an unproven predicate argument for parameter test (argument \"isBlock\")"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/es2020.ts:42:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/es2020.ts:65:17",
+        "reason": "an indirect call of a checked predicate overload",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/es2020.ts:65:17: stage 0 can't lower an indirect call of a checked predicate overload yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: an indirect call of a checked predicate overload"
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/es2021.ts:25:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/es2021.ts:53:78",
+        "reason": "an unproven predicate argument for parameter test (argument \"isLeftHandSideExpression\")",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/es2021.ts:53:78: Adamic 0.1 refuses an unproven predicate argument for parameter test (argument \"isLeftHandSideExpression\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an unproven predicate argument for parameter test (argument \"isLeftHandSideExpression\")"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/esDecorators.ts:351:9",
+        "code": "TS2322",
+        "message": "Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 8,
+        "skipped_checker_body": 1
+      },
+      "first_finding": null,
+      "first_stop_class": "TS2322"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/esnext.ts:183:34",
+        "code": "TS2345",
+        "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 7,
+        "skipped_checker_body": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/esnext.ts:774:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/esnext.ts:775:5",
+        "reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/esnext.ts:775:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/generators.ts:1283:39",
+        "code": "TS2345",
+        "message": "Argument of type 'Statement | undefined' is not assignable to parameter of type 'Statement'.\n  Type 'undefined' is not assignable to type 'Statement'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 15,
+        "skipped_checker_body": 1
+      },
+      "first_finding": null,
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/jsx.ts:309:58",
+        "code": "TS2345",
+        "message": "Argument of type 'JsxChild | undefined' is not assignable to parameter of type 'JsxChild'.\n  Type 'undefined' is not assignable to type 'JsxChild'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2,
+        "skipped_checker_body": 1
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/jsx.ts:683:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/jsx.ts:683:26",
+        "reason": "Object enumeration with getter or accessor descriptors",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/jsx.ts:683:26: Adamic 0.1 refuses Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/legacyDecorators.ts:88:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/legacyDecorators.ts:183:73",
+        "reason": "a value of type NodeArray<ClassElement>",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/legacyDecorators.ts:183:73: stage 0 can't lower a value of type NodeArray<ClassElement> yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: a value of type NodeArray<ClassElement>"
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/transformers/module/esnextAnd2015.ts:100:46",
+        "code": "TS2345",
+        "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'FileReference | Node'.\n  Type 'undefined' is not assignable to type 'FileReference | Node'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 1,
+        "skipped_checker_body": 1
+      },
+      "first_finding": null,
+      "first_stop_class": "TS2345"
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/module/impliedNodeFormatDependent.ts:18:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/module/impliedNodeFormatDependent.ts:89:16",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts:89:16: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 3
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/module/module.ts:174:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/module/module.ts:204:42",
+        "reason": "a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/module/module.ts:204:42: stage 0 can't lower a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly) yet",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "NotYet: a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly)"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/module/system.ts:137:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/module/system.ts:206:22",
+        "reason": "an assignment value to a member",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/module/system.ts:206:22: stage 0 can't lower an assignment value to a member yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: an assignment value to a member"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 19,
+        "deferred_generic_instantiation": 2
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/namedEvaluation.ts:56:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/namedEvaluation.ts:56:78",
+        "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/namedEvaluation.ts:56:78: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: a value of type WrappedExpression<AnonymousFunctionDefinition>"
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/taggedTemplate.ts:35:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/taggedTemplate.ts:44:46",
+        "reason": "an unproven predicate argument for parameter test (argument \"isExpression\")",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/taggedTemplate.ts:44:46: Adamic 0.1 refuses an unproven predicate argument for parameter test (argument \"isExpression\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an unproven predicate argument for parameter test (argument \"isExpression\")"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/ts.ts:235:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/ts.ts:248:42",
+        "reason": "a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/ts.ts:248:42: stage 0 can't lower a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly) yet",
+        "owner": "adaptation 70, stage 3"
+      },
+      "first_stop_class": "NotYet: a CompilerOptions seen as Pick<CompilerOptions, \"module\" | \"target\"> (fixed objects and records have different storage; copy explicitly)"
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 6
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/typeSerializer.ts:132:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/transformers/typeSerializer.ts:213:64",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/typeSerializer.ts:213:64: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: an object refinement using an open numeric enum as a literal tag"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 44,
+        "deferred_generic_instantiation": 6
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/transformers/utilities.ts:124:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/transformers/utilities.ts:127:17",
+        "reason": "a value of type NodeArray<ExportSpecifier> | NodeArray<ImportSpecifier>",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a value of type NodeArray<ExportSpecifier> | NodeArray<ImportSpecifier> yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: a value of type NodeArray<ExportSpecifier> | NodeArray<ImportSpecifier>"
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/tsbuild.ts:177:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/tsbuild.ts:177:17",
+        "reason": "a function returning ResolvedConfigFileName",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/tsbuild.ts:177:17: stage 0 can't lower a function returning ResolvedConfigFileName yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: a function returning ResolvedConfigFileName"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/tsbuildPublic.ts:302:5",
+        "code": "TS2412",
+        "message": "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 34,
+        "deferred_generic_instantiation": 72
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/tsbuildPublic.ts:205:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/tsbuildPublic.ts:206:12",
+        "reason": "a method read as a value (now would lose its object, and this with it)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/tsbuildPublic.ts:206:12: Adamic 0.1 refuses a method read as a value (now would lose its object, and this with it); call it in an arrow that keeps the object: (value) => host.now(value) (unbound-method)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2412"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 875
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/types.ts:5902:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/types.ts:5913:37",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/types.ts:5913:37: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "Refused: a type predicate whose return is not proven (there is no body proving this parameter)"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 834,
+        "deferred_generic_instantiation": 59
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/utilities.ts:612:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/utilities.ts:612:45",
+        "reason": "an array of never",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/utilities.ts:612:45: stage 0 can't lower an array of never yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "NotYet: an array of never"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 242,
+        "deferred_generic_instantiation": 9
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/utilitiesPublic.ts:615:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/utilitiesPublic.ts:616:5",
+        "reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/utilitiesPublic.ts:616:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+        "owner": "01a1143b-d691"
+      },
+      "first_stop_class": "Refused: a type predicate whose return is not proven (return expression is not a trusted check on node)"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 28,
+        "deferred_generic_instantiation": 13
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/visitorPublic.ts:543:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "src/compiler/visitorPublic.ts:123:5",
+        "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "Refused: overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/watch.ts:756:11",
+        "code": "TS2375",
+        "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 36,
+        "deferred_generic_instantiation": 10
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/watch.ts:125:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:135:39",
+        "reason": "new an Identifier",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/watch.ts:135:39: stage 0 can't lower new an Identifier yet",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2375"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "checker_own_file": false,
+      "first_diagnostic": {
+        "where": "src/compiler/watchPublic.ts:125:5",
+        "code": "TS2412",
+        "message": "Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'."
+      },
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 17,
+        "skipped_checker_body": 1,
+        "deferred_generic_instantiation": 7
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/watchPublic.ts:106:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/watchPublic.ts:110:9",
+        "reason": "a method read as a value (getBuildInfo would lose its object, and this with it)",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/watchPublic.ts:110:9: Adamic 0.1 refuses a method read as a value (getBuildInfo would lose its object, and this with it); call it in an arrow that keeps the object: (value) => host.getBuildInfo(value) (unbound-method)",
+        "owner": "OWNER BLANK"
+      },
+      "first_stop_class": "TS2412"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "checker_own_file": true,
+      "first_diagnostic": null,
+      "ordinary_lowering_attempted": false,
+      "ordinary_lowering_pass": false,
+      "ordinary_outcome": "checker",
+      "latent_record_present": true,
+      "unit_statuses": {
+        "attempted": 21,
+        "deferred_generic_instantiation": 5
+      },
+      "first_finding": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "src/compiler/watchUtilities.ts:118:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "src/compiler/watchUtilities.ts:124:34",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/adamic-gate/stage3-meter.RXmuND/main-adapted/src/compiler/watchUtilities.ts:124:34: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "owner": "01a11410"
+      },
+      "first_stop_class": "Refused: a cast the runtime can't check"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+Main latent completed and coverage validated: {'exit': 0, 'proc_wait_status': 0, 'pid': 11038, 'totals': {'NotYet': 766, 'Refused': 4149, 'SkippedDependency': 2, 'error': 0, 'panic': 2}, 'coverage': '79 sources; validated by latent_summary', 'completed_utc': '2026-10-20T00:09:54.168063+00:00'}
+Retired paused controller after main latent exited 0; area continues independently.
+Paired measurement complete: {"exit": 0, "measured_commit": "295df3bc6aa3d47933ccf675da1c33e745856313", "started_epoch": 1792453578, "finished_epoch": 1792455716, "elapsed_seconds": 2138, "completed_utc": "2026-10-20T00:21:56.184162+00:00", "controller": "independent paired recovery; original controller retired only after main child exit 0", "ordinary_main_exit": 0, "area_exit": 0}

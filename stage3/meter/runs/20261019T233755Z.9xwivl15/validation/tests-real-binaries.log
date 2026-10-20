@@ -1,0 +1,21 @@
+.....F.........F....................
+======================================================================
+FAIL: test_reach_includes_dependency_outside_compiler_and_excludes_unused_file (entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/entry_test.py", line 147, in test_reach_includes_dependency_outside_compiler_and_excludes_unused_file
+    self.assertGreater(clean['lowering_census']['totals']['NotYet'], 0)
+AssertionError: 0 not greater than 0
+
+======================================================================
+FAIL: test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant (entry_test.FullEntryCensusTests.test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/entry_test.py", line 187, in test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant
+    self.assertEqual(full['lowering_census']['totals']['Refused'], 3)
+AssertionError: 1 != 3
+
+----------------------------------------------------------------------
+Ran 36 tests in 5.035s
+
+FAILED (failures=2)

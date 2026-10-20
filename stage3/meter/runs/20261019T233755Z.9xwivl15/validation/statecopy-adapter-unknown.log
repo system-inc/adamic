@@ -1,0 +1,7 @@
+panic: state copy: unsupported field type func()
+
+goroutine 1 [running]:
+main.(*generator).copy(0x181853113960?, {0x629c80?, 0x1818530b60e0}, {0x18185305c190?, 0xf?})
+	./statecopy.go:81 +0x5f9
+main.main()
+	./statecopy.go:147 +0xb28

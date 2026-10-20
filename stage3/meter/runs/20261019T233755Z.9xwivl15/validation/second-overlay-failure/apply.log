@@ -1,0 +1,33 @@
+stage3 product cache miss: a667bc57db32ab2d7756ad86e13d08572e3df25c24f010a3292bc1665ce512cb; building adapted tree locally
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 70, in restore_product
+    fetch(store, key + '.manifest', manifest_path)
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 55, in fetch
+    shutil.copyfile(Path(store) / name, destination)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/agent/.cache/adamic-stage3/products/a667bc57db32ab2d7756ad86e13d08572e3df25c24f010a3292bc1665ce512cb.manifest'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 386, in main
+    restore_product(store, key, out)
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 72, in restore_product
+    raise ProductMissing(f'product {key} missing from {store}') from error
+ProductMissing: product a667bc57db32ab2d7756ad86e13d08572e3df25c24f010a3292bc1665ce512cb missing from /home/agent/.cache/adamic-stage3/products
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 398, in <module>
+    main()
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 389, in main
+    build_product(out)
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 259, in build_product
+    source = typescript_source(pin)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/adamic-gate/stage3-meter.RXmuND/main-source/stage3/apply.py", line 175, in typescript_source
+    raise RuntimeError(f'set ADAMIC_TYPESCRIPT_SOURCE to the gate inputs\' TypeScript {pin["tag"]} '
+RuntimeError: set ADAMIC_TYPESCRIPT_SOURCE to the gate inputs' TypeScript v6.0.3 checkout at 050880ce59e30b356b686bd3144efe24f875ebc8
