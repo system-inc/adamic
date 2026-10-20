@@ -1,0 +1,7 @@
+// Spec: a program may not declare what it doesn't define
+// Expect: refused a module augmentation or ambient external module
+import { forty } from 'adamic';
+declare module 'adamic' {
+	export function forty(): number;
+}
+console.log(forty().toFixed(1));

@@ -1,0 +1,9 @@
+// Spec: a write to a slot reached through a union, at any depth or through a type parameter constrained to one, is accepted only when the value fits that slot in every member
+// Expect: refused a write through a union of
+type Nested = { inner: { value: string } } | { inner: { value: number } };
+function scribble(holder: Nested): void {
+	holder.inner.value = 'text';
+}
+const holder: { inner: { value: number } } = { inner: { value: 1 } };
+scribble(holder);
+console.log(`${holder.inner.value * 2}`);
