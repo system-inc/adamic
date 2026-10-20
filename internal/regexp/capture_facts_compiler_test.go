@@ -25,6 +25,7 @@ func TestCaptureFactsCompilerTable(t *testing.T) {
 	if err = json.Unmarshal(data, &table); err != nil {
 		t.Fatal(err)
 	}
+	// Reads: cohere
 	root := "../../cohere/TypeScript/tsc/testdata/fixtures/compiler"
 	var actual []captureLiteral
 	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
