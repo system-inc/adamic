@@ -1,0 +1,44 @@
+{
+  "sourceScanMutant": {
+    "before": 116,
+    "after": 117,
+    "added": [
+      {
+        "kind": "Refused",
+        "reason": "a void value at a return site whose function returns void | number",
+        "text": "src/compiler/core.ts:2601:50: Adamic 0.1 refuses a void value at a return site whose function returns void | number; declare the function's real return type (adamic/no-void-widening)",
+        "file": "src/compiler/core.ts",
+        "line": 2601,
+        "column": 50,
+        "refusals": [
+          {
+            "kind": "Refused",
+            "reason": "a void value at a return site whose function returns void | number",
+            "text": "src/compiler/core.ts:2601:50: Adamic 0.1 refuses a void value at a return site whose function returns void | number; declare the function's real return type (adamic/no-void-widening)"
+          }
+        ]
+      }
+    ]
+  },
+  "sourceScanReversion": {
+    "before": 5,
+    "after": 6,
+    "restored": [
+      {
+        "kind": "Refused",
+        "reason": "a void value at a return site whose function returns void | number | Symbol",
+        "text": "src/compiler/binder.ts:2995:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+        "file": "src/compiler/binder.ts",
+        "line": 2995,
+        "column": 24,
+        "refusals": [
+          {
+            "kind": "Refused",
+            "reason": "a void value at a return site whose function returns void | number | Symbol",
+            "text": "src/compiler/binder.ts:2995:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)"
+          }
+        ]
+      }
+    ]
+  }
+}
