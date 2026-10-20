@@ -605,7 +605,8 @@ export class Rules {
             this.walk(child);
         }
     }
-    run(): void {
+    // walk false prepares the links and options every other walk reads, without this walk's own rules (volume_suite.ts).
+    run(walk = true): void {
         const root = this.parser.file();
         while(this.parents.length < this.parser.nodes.length) {
             this.parents.push(-1);
@@ -626,7 +627,9 @@ export class Rules {
                 ),
             );
         }
-        this.walk(root);
+        if(walk) {
+            this.walk(root);
+        }
         this.queries += this.unary.queries;
         // Fixes are complete now. Render sort keys once; written() remains live.
         for(const finding of this.findings) {
