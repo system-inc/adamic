@@ -9,6 +9,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Artifact names a required file relative to the product directory. Executable files
@@ -24,10 +26,6 @@ type Artifact struct {
 // A product test runs traced, and under --pin-traced the probe shares one vCPU with
 // the tracer, so a large oracle's cold start needs room the box can't promise in 5 s.
 const artifactProbeDeadline = 30 * time.Second
-
-// A probed binary whose child keeps the output pipes open would hold CombinedOutput
-// past the context's kill; WaitDelay bounds that wait.
-const artifactProbeWaitDelay = 5 * time.Second
 
 // RequireArtifacts proves that a builder returned usable products. Probes should be
 // --help-like calls: whatever a probe reads joins the traced product's read set.
@@ -58,7 +56,6 @@ func requireArtifact(directory string, artifact Artifact) error {
 	ctx, cancel := context.WithTimeout(context.Background(), artifactProbeDeadline)
 	defer cancel()
 	command := exec.CommandContext(ctx, path, artifact.Arguments...)
-	command.WaitDelay = artifactProbeWaitDelay
 	command.Dir = directory
 	command.Stdin = strings.NewReader(artifact.Stdin)
 	if Tracing() {
@@ -67,7 +64,11 @@ func requireArtifact(directory string, artifact Artifact) error {
 		// run it untraced still check for leaks (#n1g5604, #yzeez0d).
 		command.Env = withoutLeakDetection(os.Environ())
 	}
-	output, err := command.CombinedOutput()
+	// Each stream is read to its end, the probe's process group killed once it exits (childguard.Capture), so a child
+	// that keeps an output pipe open can't hold the read past the probe, and no timer after the exit makes a slow drain
+	// red by chance, as a WaitDelay did (#n3gk22h, adamiclint's waitdelay).
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		return fmt.Errorf("probe: %w", ctx.Err())
 	}
