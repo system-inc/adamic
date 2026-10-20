@@ -382,8 +382,11 @@ func preparePortAnswerInputs(t *testing.T) {
 			t.Fatal(err)
 		}
 		portShared.scratch = scratch
+		generateStart := time.Now()
 		asked := portAsked(t, oracle, scratch)
+		t.Logf("measure: generate %.3fs", time.Since(generateStart).Seconds())
 		shards := portCaseShards(t, asked)
+		gitStart := time.Now()
 		gitAnswers := map[string][]string{}
 		realAnswers := map[string]map[query]string{}
 		for _, tr := range asked.Trees {
@@ -403,6 +406,7 @@ func preparePortAnswerInputs(t *testing.T) {
 				realAnswers[tr.Name] = byQuery
 			}
 		}
+		t.Logf("measure: git check-ignore %.3fs", time.Since(gitStart).Seconds())
 		portShared.asked, portShared.oracle = asked, oracle
 		portShared.gitAnswers, portShared.realAnswers = gitAnswers, realAnswers
 		portShared.shards = shards
@@ -421,6 +425,7 @@ func preparePortFullAnswers(t *testing.T) {
 	portShared.fullOnce.Do(func() {
 		start := time.Now()
 		portShared.fullPath = casesFile(t, portShared.scratch, portShared.asked)
+		t.Logf("measure: full cases file %.3fs", time.Since(start).Seconds())
 		portShared.fullWant = portGoAnswers(t, portShared.oracle, portShared.asked)
 		portShared.fullAnswered = true
 		t.Logf("shared full-corpus answers ready: %.3fs", time.Since(start).Seconds())
@@ -449,7 +454,9 @@ func runPortAnswerShard(t *testing.T, index int) {
 			t.Skip("ADAMIC_GITIGNORE_LARGEST enables the 100 MiB mutant")
 		}
 		applied = &m
+		t.Logf("measure: inputs wait %.3fs", time.Since(setupStart).Seconds())
 		preparePortFullAnswers(t)
+		t.Logf("measure: full answers wait %.3fs", time.Since(setupStart).Seconds())
 	}
 	product := portProducts(t, applied)
 	t.Logf("shared setup total: %.3fs", time.Since(setupStart).Seconds())
@@ -481,7 +488,10 @@ func runPortAnswerShard(t *testing.T, index int) {
 		}
 	}
 	dir := product
+	sideStart := time.Now()
 	node := portNode(t, filepath.Join(dir, "main.ts"), path)
+	t.Logf("measure: Node %.3fs", time.Since(sideStart).Seconds())
+	sideStart = time.Now()
 	// On Linux a comparison shard's one sanitized run is also its leak check: LeakSanitizer acts only at
 	// exit, so the run answers as it does with detection off, and a leak is a report on stderr and a
 	// nonzero exit, which the native side refuses. The 100 MiB ignore file made running twice cost
@@ -493,6 +503,7 @@ func runPortAnswerShard(t *testing.T, index int) {
 	} else {
 		nat = portNative(t, dir, path)
 	}
+	t.Logf("measure: native %.3fs", time.Since(sideStart).Seconds())
 	if index < portComparisonShards {
 		backend := portNode(t, filepath.Join(dir, "program.mjs"), path)
 		for _, side := range []struct {
