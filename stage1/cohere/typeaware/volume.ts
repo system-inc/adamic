@@ -683,8 +683,11 @@ export class Volume {
             this.walk(child);
         }
     }
-    run(): void {
-        this.walk(this.rules.parser.nodes.length - 1);
+    // walk false keeps only the closing sort, of every walk's findings, for a volume suite run without this walk's rules.
+    run(walk = true): void {
+        if(walk) {
+            this.walk(this.rules.parser.nodes.length - 1);
+        }
         for(const finding of this.rules.findings) {
             finding.sortKey = finding.written();
         }

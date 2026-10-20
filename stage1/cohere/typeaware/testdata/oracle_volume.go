@@ -97,6 +97,19 @@ func main() {
 		return
 	}
 	countOnly := len(args) > 2 && args[2] == "--count"
+	// --rules names a manifest of rules, as findings name them: only those subjects run, so one file's work splits by
+	// rule family, as volume_suite.ts's walks do. Without it every subject runs.
+	var selected []string
+	if at := slices.Index(args, "--rules"); at >= 0 {
+		if at+1 >= len(args) {
+			panic("missing rules manifest")
+		}
+		listed, err := os.ReadFile(args[at+1])
+		if err != nil {
+			panic(err)
+		}
+		selected = strings.Fields(string(listed))
+	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 	findings := 0
@@ -113,6 +126,18 @@ func main() {
 		var collected []rule.Diagnostic
 		subjects := []rule.Rule{rules.NoConfusingVoidExpression,
 			rules.ConsistentReturn, rules.UnboundMethod, rules.NoUnsafeAssignment, rules.NoShadow, rules.PreferNullishCoalescing, rules.NoUnsafeEnumComparison, rules.SwitchExhaustivenessCheck, rules.NoUnsafeTypeAssertion, rules.NoUnsafeMemberAccess, rules.NoUnsafeUnaryMinus, rules.RelatedGetterSetterPairs, rules.NoUnsafeDeclarationMerging, rules.NoUnsafeArgument, rules.RestrictPlusOperands, rules.NoUnnecessaryBooleanLiteralCompare}
+		if selected != nil {
+			var kept []rule.Rule
+			for _, subject := range subjects {
+				if slices.Contains(selected, subject.Name) {
+					kept = append(kept, subject)
+				}
+			}
+			if len(kept) != len(selected) {
+				panic(fmt.Sprintf("--rules names %d rules, %d of them subjects", len(selected), len(kept)))
+			}
+			subjects = kept
+		}
 		callbacks := map[ast.Kind][]func(*ast.Node){}
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {

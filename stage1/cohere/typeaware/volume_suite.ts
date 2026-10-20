@@ -19,6 +19,46 @@ if(manifest.kind === 'Error') {
     panic(manifest.message);
 }
 const paths = manifest.text.split('\n').filter((path) => path !== '');
+// --rules names a manifest of rules, as findings name them: only the walks that own one run, and only their findings
+// print, so one file's work splits by rule family (volume_agreement_corpus_shards_test.go). Without it every walk runs.
+const rulesAt = args.indexOf('--rules');
+let selected: string[] = [];
+if(rulesAt >= 0) {
+    const listed = readTextFile(args[rulesAt + 1] ?? panic('missing rules manifest'));
+    if(listed.kind === 'Error') {
+        panic(listed.message);
+    }
+    selected = listed.text.split('\n').filter((rule) => rule !== '');
+}
+const rulesWalk = [
+    '@typescript-eslint/no-unsafe-unary-minus',
+    '@typescript-eslint/related-getter-setter-pairs',
+    '@typescript-eslint/no-unsafe-declaration-merging',
+    '@typescript-eslint/no-unsafe-argument',
+    '@typescript-eslint/restrict-plus-operands',
+    '@typescript-eslint/no-unnecessary-boolean-literal-compare',
+];
+const volumeWalk = [
+    '@typescript-eslint/prefer-nullish-coalescing',
+    '@typescript-eslint/switch-exhaustiveness-check',
+    '@typescript-eslint/no-unsafe-enum-comparison',
+    '@typescript-eslint/no-unsafe-type-assertion',
+    '@typescript-eslint/no-unsafe-member-access',
+];
+const shadowWalk = ['@typescript-eslint/no-shadow'];
+const assignmentWalk = ['@typescript-eslint/no-unsafe-assignment'];
+const voidWalk = ['@typescript-eslint/no-confusing-void-expression'];
+const returnsWalk = ['@typescript-eslint/consistent-return'];
+const unboundWalk = ['@typescript-eslint/unbound-method'];
+const walks = [rulesWalk, volumeWalk, shadowWalk, assignmentWalk, voidWalk, returnsWalk, unboundWalk];
+for(const rule of selected) {
+    if(!walks.some((walk) => walk.includes(rule))) {
+        panic(`unknown rule in --rules: ${rule}`);
+    }
+}
+function runs(walk: string[]): boolean {
+    return rulesAt < 0 || walk.some((rule) => selected.includes(rule));
+}
 const program = tsgoProgram(config, paths);
 let findings = 0;
 let optionsChecked = false;
@@ -32,7 +72,7 @@ for(const path of paths) {
     const offsets = byteOffsets(source.text);
     const unary = new UnaryMinus(program, path, parser, scanner, offsets);
     const linter = new Rules(program, path, parser, scanner, offsets, unary);
-    linter.run();
+    linter.run(runs(rulesWalk));
     if(!optionsChecked) {
         const options = new Frames(linter.ask(parser.nodes.length - 1, 'strict-this'));
         header(options, 'strict-this');
@@ -45,20 +85,31 @@ for(const path of paths) {
     }
     const volume = new Volume(linter);
     const shadow = new Shadow(linter);
-    shadow.run();
+    if(runs(shadowWalk)) {
+        shadow.run();
+    }
     const assignment = new Assignment(linter, volume, shadow);
-    assignment.run();
+    if(runs(assignmentWalk)) {
+        assignment.run();
+    }
     const voidRule = new VoidRule(linter, volume);
-    voidRule.run();
+    if(runs(voidWalk)) {
+        voidRule.run();
+    }
     const returns = new Returns(linter, shadow);
-    returns.run();
+    if(runs(returnsWalk)) {
+        returns.run();
+    }
     const unbound = new Unbound(linter, shadow);
-    unbound.run();
-    volume.run();
-    findings += linter.findings.length;
+    if(runs(unboundWalk)) {
+        unbound.run();
+    }
+    volume.run(runs(volumeWalk));
+    const printed = linter.findings.filter((finding) => rulesAt < 0 || selected.includes(finding.rule));
+    findings += printed.length;
     if(!args.includes('--count')) {
         console.log(`file\t${written(path)}`);
-        for(const finding of linter.findings) {
+        for(const finding of printed) {
             console.log(finding.written());
         }
     }
