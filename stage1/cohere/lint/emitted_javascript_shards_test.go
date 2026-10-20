@@ -205,6 +205,20 @@ func emittedMismatchInputs(t *testing.T) []string {
 	// Checker baselines are not build inputs. Hash production sources and embeds,
 	// skipping corpus directories before visiting their tens of thousands of files.
 	var production []string
+	// Reads: cohere
+	// Reads: stage1/*.a
+	// Reads: stage1/*.ts
+	// Reads: stage1/typescript/parser/grammar.ts
+	// Reads: stage1/typescript/parser/jsx.ts
+	// Reads: stage1/typescript/parser/lookahead.ts
+	// Reads: stage1/typescript/parser/nodes.ts
+	// Reads: stage1/typescript/parser/parser.ts
+	// Reads: stage1/typescript/parser/statements.ts
+	// Reads: stage1/typescript/scanner/characters.ts
+	// Reads: stage1/typescript/scanner/scanner.ts
+	// Reads: stage1/typescript/scanner/tokens.ts
+	// Reads: internal/load/prelude.d.ts
+	// Reads: internal/native/runtime/*.[ch]
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

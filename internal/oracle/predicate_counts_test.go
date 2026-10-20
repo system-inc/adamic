@@ -10,6 +10,7 @@ import (
 func predicateCountKeys() ([]string, error) {
 	var keys []string
 	for _, extension := range []string{"a", "ts"} {
+		// Reads: internal/lower/testdata/*
 		paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*."+extension))
 		if err != nil {
 			return nil, err

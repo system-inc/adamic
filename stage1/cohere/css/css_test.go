@@ -43,6 +43,25 @@ func portDirectory(t *testing.T, applied *mutant) string {
 	t.Helper()
 	directory := t.TempDir()
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
+		// Reads: stage1/cohere/cssnumbers/*.ts
+		// Reads: stage1/cohere/cssnumbers/numbers.ts
+		// Reads: stage1/cohere/cssstrings/*.ts
+		// Reads: stage1/cohere/cssstrings/strings.ts
+		// Reads: stage1/cohere/mediaquery/*.ts
+		// Reads: stage1/cohere/mediaquery/index.ts
+		// Reads: stage1/cohere/mediaquery/nodes.ts
+		// Reads: stage1/cohere/mediaquery/parsers.ts
+		// Reads: stage1/cohere/mediaquery/whitespace.ts
+		// Reads: stage1/cohere/selector/*.ts
+		// Reads: stage1/cohere/selector/nodes.ts
+		// Reads: stage1/cohere/selector/parser.ts
+		// Reads: stage1/cohere/selector/source.ts
+		// Reads: stage1/cohere/selector/tokenize.ts
+		// Reads: stage1/cohere/values/*.ts
+		// Reads: stage1/cohere/values/nodes.ts
+		// Reads: stage1/cohere/values/parser.ts
+		// Reads: stage1/cohere/values/tokenize.ts
+		// Reads: stage1/cohere/values/values.ts
 		entries, err := os.ReadDir(filepath.Join("..", slice))
 		if err != nil {
 			t.Fatal(err)

@@ -152,6 +152,7 @@ func TestGeneratedListKeepsItsContract(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Reads: *
 	if err := checkGenerated("..", data); err != nil {
 		t.Fatal(err)
 	}
