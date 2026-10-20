@@ -1,0 +1,745 @@
+{
+  "typescript": "6.0.3",
+  "mainSha": "165f427eb629dda1b27553bca3c01e0328edcaa2",
+  "files": [
+    {
+      "file": "src/compiler/binder.ts",
+      "beforeSha256": "52433067d990791b86887480f2a54d876ccacbf6dbbfb3bcba5ae95ab91b8d4a",
+      "afterSha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+      "edits": [
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 1084,
+          "declarationStart": 51185,
+          "declarationText": "(node: Node) => void",
+          "start": 51201,
+          "end": 51205,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2751,
+          "declarationStart": 132000,
+          "declarationText": "function bind(node: Node | undefined): void {\r\n        if (!node) {\r\n            return;\r\n        }\r\n        setParent(node, parent);\r\n        if (tracing) (node as TracingNode).tracingPath = file.path;\r\n        const saveInStrictMode = inStrictMode;\r\n\r\n        // Even though in the AST the jsdoc @typedef node belongs to the current node,\r\n        // its symbol might be in the same scope with the current node's symbol. Consider:\r\n        //\r\n        //     /** @typedef {string | number} MyType */\r\n        //     function foo();\r\n        //\r\n        // Here the current node is \"foo\", which is a container, but the scope of \"MyType\" should\r\n        // not be inside \"foo\". Therefore we always bind @typedef before bind the parent node,\r\n        // and skip binding this tag later when binding all the other jsdoc tags.\r\n\r\n        // First we bind declaration nodes to a symbol if possible. We'll both create a symbol\r\n        // and then potentially add the symbol to an appropriate symbol table. Possible\r\n        // destination symbol tables are:\r\n        //\r\n        //  1) The 'exports' table of the current container's symbol.\r\n        //  2) The 'members' table of the current container's symbol.\r\n        //  3) The 'locals' table of the current container.\r\n        //\r\n        // However, not all symbols will end up in any of these tables. 'Anonymous' symbols\r\n        // (like TypeLiterals for example) will not be put in any table.\r\n        bindWorker(node);\r\n        // Then we recurse into the children of the node to bind them as well. For certain\r\n        // symbols we do specialized work when we recurse. For example, we'll keep track of\r\n        // the current 'container' node when it changes. This helps us know which symbol table\r\n        // a local should go into for example. Since terminal nodes are known not to have\r\n        // children, as an optimization we don't process those.\r\n        if (node.kind > SyntaxKind.LastToken) {\r\n            const saveParent = parent;\r\n            parent = node;\r\n            const containerFlags = getContainerFlags(node);\r\n            if (containerFlags === ContainerFlags.None) {\r\n                bindChildren(node);\r\n            }\r\n            else {\r\n                bindContainer(node as HasContainerFlags, containerFlags);\r\n            }\r\n            parent = saveParent;\r\n        }\r\n        else {\r\n            const saveParent = parent;\r\n            if (node.kind === SyntaxKind.EndOfFileToken) parent = node;\r\n            bindJSDoc(node);\r\n            parent = saveParent;\r\n        }\r\n        inStrictMode = saveInStrictMode;\r\n    }",
+          "start": 132039,
+          "end": 132043,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 1084,
+          "declarationStart": 51117,
+          "declarationText": "function bindEach(nodes: NodeArray<Node> | undefined, bindFunction: (node: Node) => void = bind): void {\r\n        if (nodes === undefined) {\r\n            return;\r\n        }\r\n\r\n        forEach(nodes, bindFunction);\r\n    }",
+          "start": 51215,
+          "end": 51219,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2558,
+          "declarationStart": 121800,
+          "declarationText": "function checkContextualIdentifier(node: Identifier) {\r\n        // Report error only if there are no parse errors in file\r\n        if (\r\n            !file.parseDiagnostics.length &&\r\n            !(node.flags & NodeFlags.Ambient) &&\r\n            !(node.flags & NodeFlags.JSDoc) &&\r\n            !isIdentifierName(node)\r\n        ) {\r\n            // strict mode identifiers\r\n            const originalKeywordKind = identifierToKeywordKind(node);\r\n            if (originalKeywordKind === undefined) {\r\n                return;\r\n            }\r\n\r\n            if (\r\n                inStrictMode &&\r\n                originalKeywordKind >= SyntaxKind.FirstFutureReservedWord &&\r\n                originalKeywordKind <= SyntaxKind.LastFutureReservedWord\r\n            ) {\r\n                file.bindDiagnostics.push(createDiagnosticForNode(node, getStrictModeIdentifierMessage(node), declarationNameToString(node)));\r\n            }\r\n            else if (originalKeywordKind === SyntaxKind.AwaitKeyword) {\r\n                if (isExternalModule(file) && isInTopLevelContext(node)) {\r\n                    file.bindDiagnostics.push(createDiagnosticForNode(node, Diagnostics.Identifier_expected_0_is_a_reserved_word_at_the_top_level_of_a_module, declarationNameToString(node)));\r\n                }\r\n                else if (node.flags & NodeFlags.AwaitContext) {\r\n                    file.bindDiagnostics.push(createDiagnosticForNode(node, Diagnostics.Identifier_expected_0_is_a_reserved_word_that_cannot_be_used_here, declarationNameToString(node)));\r\n                }\r\n            }\r\n            else if (originalKeywordKind === SyntaxKind.YieldKeyword && node.flags & NodeFlags.YieldContext) {\r\n                file.bindDiagnostics.push(createDiagnosticForNode(node, Diagnostics.Identifier_expected_0_is_a_reserved_word_that_cannot_be_used_here, declarationNameToString(node)));\r\n            }\r\n        }\r\n    }",
+          "start": 121852,
+          "end": 121852,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2609,
+          "declarationStart": 124485,
+          "declarationText": "function checkPrivateIdentifier(node: PrivateIdentifier) {\r\n        if (node.escapedText === \"#constructor\") {\r\n            // Report error only if there are no parse errors in file\r\n            if (!file.parseDiagnostics.length) {\r\n                file.bindDiagnostics.push(createDiagnosticForNode(node, Diagnostics.constructor_is_a_reserved_word, declarationNameToString(node)));\r\n            }\r\n        }\r\n    }",
+          "start": 124541,
+          "end": 124541,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2618,
+          "declarationStart": 124907,
+          "declarationText": "function checkStrictModeBinaryExpression(node: BinaryExpression) {\r\n        if (inStrictMode && isLeftHandSideExpression(node.left) && isAssignmentOperator(node.operatorToken.kind)) {\r\n            // ECMA 262 (Annex C) The identifier eval or arguments may not appear as the LeftHandSideExpression of an\r\n            // Assignment operator(11.13) or of a PostfixExpression(11.3)\r\n            checkStrictModeEvalOrArguments(node, node.left as Identifier);\r\n        }\r\n    }",
+          "start": 124971,
+          "end": 124971,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2626,
+          "declarationStart": 125386,
+          "declarationText": "function checkStrictModeCatchClause(node: CatchClause) {\r\n        // It is a SyntaxError if a TryStatement with a Catch occurs within strict code and the Identifier of the\r\n        // Catch production is eval or arguments\r\n        if (inStrictMode && node.variableDeclaration) {\r\n            checkStrictModeEvalOrArguments(node, node.variableDeclaration.name);\r\n        }\r\n    }",
+          "start": 125440,
+          "end": 125440,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2634,
+          "declarationStart": 125772,
+          "declarationText": "function checkStrictModeDeleteExpression(node: DeleteExpression) {\r\n        // Grammar checking\r\n        if (inStrictMode && node.expression.kind === SyntaxKind.Identifier) {\r\n            // When a delete operator occurs within strict mode code, a SyntaxError is thrown if its\r\n            // UnaryExpression is a direct reference to a variable, function argument, or function name\r\n            const span = getErrorSpanForNode(file, node.expression);\r\n            file.bindDiagnostics.push(createFileDiagnostic(file, span.start, span.length, Diagnostics.delete_cannot_be_called_on_an_identifier_in_strict_mode));\r\n        }\r\n    }",
+          "start": 125836,
+          "end": 125836,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2711,
+          "declarationStart": 130129,
+          "declarationText": "function checkStrictModePostfixUnaryExpression(node: PostfixUnaryExpression) {\r\n        // Grammar checking\r\n        // The identifier eval or arguments may not appear as the LeftHandSideExpression of an\r\n        // Assignment operator(11.13) or of a PostfixExpression(11.3) or as the UnaryExpression\r\n        // operated upon by a Prefix Increment(11.4.4) or a Prefix Decrement(11.4.5) operator.\r\n        if (inStrictMode) {\r\n            checkStrictModeEvalOrArguments(node, node.operand as Identifier);\r\n        }\r\n    }",
+          "start": 130205,
+          "end": 130205,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2721,
+          "declarationStart": 130659,
+          "declarationText": "function checkStrictModePrefixUnaryExpression(node: PrefixUnaryExpression) {\r\n        // Grammar checking\r\n        if (inStrictMode) {\r\n            if (node.operator === SyntaxKind.PlusPlusToken || node.operator === SyntaxKind.MinusMinusToken) {\r\n                checkStrictModeEvalOrArguments(node, node.operand as Identifier);\r\n            }\r\n        }\r\n    }",
+          "start": 130733,
+          "end": 130733,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2730,
+          "declarationStart": 131028,
+          "declarationText": "function checkStrictModeWithStatement(node: WithStatement) {\r\n        // Grammar checking for withStatement\r\n        if (inStrictMode) {\r\n            errorOnFirstToken(node, Diagnostics.with_statements_are_not_allowed_in_strict_mode);\r\n        }\r\n    }",
+          "start": 131086,
+          "end": 131086,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2737,
+          "declarationStart": 131288,
+          "declarationText": "function checkStrictModeLabeledStatement(node: LabeledStatement) {\r\n        // Grammar checking for labeledStatement\r\n        if (inStrictMode && getEmitScriptTarget(options) >= ScriptTarget.ES2015) {\r\n            if (isDeclarationStatement(node.statement) || isVariableStatement(node.statement)) {\r\n                errorOnFirstToken(node.label, Diagnostics.A_label_is_not_allowed_here);\r\n            }\r\n        }\r\n    }",
+          "start": 131352,
+          "end": 131352,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3759,
+          "declarationStart": 187493,
+          "declarationText": "function bindTypeParameter(node: TypeParameterDeclaration) {\r\n        if (isJSDocTemplateTag(node.parent)) {\r\n            const container: HasLocals | undefined = getEffectiveContainerForJSDocTemplateTag(node.parent);\r\n            if (container) {\r\n                Debug.assertNode(container, canHaveLocals);\r\n                container.locals ??= createSymbolTable();\r\n                declareSymbol(container.locals, /*parent*/ undefined, node, SymbolFlags.TypeParameter, SymbolFlags.TypeParameterExcludes);\r\n            }\r\n            else {\r\n                declareSymbolAndAddToSymbolTable(node, SymbolFlags.TypeParameter, SymbolFlags.TypeParameterExcludes);\r\n            }\r\n        }\r\n        else if (node.parent.kind === SyntaxKind.InferType) {\r\n            const container: HasLocals | undefined = getInferTypeContainer(node.parent);\r\n            if (container) {\r\n                Debug.assertNode(container, canHaveLocals);\r\n                container.locals ??= createSymbolTable();\r\n                declareSymbol(container.locals, /*parent*/ undefined, node, SymbolFlags.TypeParameter, SymbolFlags.TypeParameterExcludes);\r\n            }\r\n            else {\r\n                bindAnonymousDeclaration(node, SymbolFlags.TypeParameter, getDeclarationName(node)!); // TODO: GH#18217\r\n            }\r\n        }\r\n        else {\r\n            declareSymbolAndAddToSymbolTable(node, SymbolFlags.TypeParameter, SymbolFlags.TypeParameterExcludes);\r\n        }\r\n    }",
+          "start": 187551,
+          "end": 187551,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3684,
+          "declarationStart": 183880,
+          "declarationText": "function bindParameter(node: ParameterDeclaration | JSDocParameterTag) {\r\n        if (node.kind === SyntaxKind.JSDocParameterTag && container.kind !== SyntaxKind.JSDocSignature) {\r\n            return;\r\n        }\r\n        if (inStrictMode && !(node.flags & NodeFlags.Ambient)) {\r\n            // It is a SyntaxError if the identifier eval or arguments appears within a FormalParameterList of a\r\n            // strict mode FunctionLikeDeclaration or FunctionExpression(13.1)\r\n            checkStrictModeEvalOrArguments(node, node.name);\r\n        }\r\n\r\n        if (isBindingPattern(node.name)) {\r\n            bindAnonymousDeclaration(node, SymbolFlags.FunctionScopedVariable, \"__\" + (node as ParameterDeclaration).parent.parameters.indexOf(node as ParameterDeclaration) as __String);\r\n        }\r\n        else {\r\n            declareSymbolAndAddToSymbolTable(node, SymbolFlags.FunctionScopedVariable, SymbolFlags.ParameterExcludes);\r\n        }\r\n\r\n        // If this is a property-parameter, then also declare the property symbol into the\r\n        // containing class.\r\n        if (isParameterPropertyDeclaration(node, node.parent)) {\r\n            const classDeclaration = node.parent.parent;\r\n            declareSymbol(classDeclaration.symbol.members!, classDeclaration.symbol, node, SymbolFlags.Property | (node.questionToken ? SymbolFlags.Optional : SymbolFlags.None), SymbolFlags.PropertyExcludes);\r\n        }\r\n    }",
+          "start": 183950,
+          "end": 183950,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3648,
+          "declarationStart": 181658,
+          "declarationText": "function bindVariableDeclarationOrBindingElement(node: VariableDeclaration | BindingElement) {\r\n        if (inStrictMode) {\r\n            checkStrictModeEvalOrArguments(node, node.name);\r\n        }\r\n\r\n        if (!isBindingPattern(node.name)) {\r\n            const possibleVariableDecl = node.kind === SyntaxKind.VariableDeclaration ? node : node.parent.parent;\r\n            if (\r\n                isInJSFile(node) &&\r\n                isVariableDeclarationInitializedToBareOrAccessedRequire(possibleVariableDecl) &&\r\n                !getJSDocTypeTag(node) &&\r\n                !(getCombinedModifierFlags(node) & ModifierFlags.Export)\r\n            ) {\r\n                declareSymbolAndAddToSymbolTable(node as Declaration, SymbolFlags.Alias, SymbolFlags.AliasExcludes);\r\n            }\r\n            else if (isBlockOrCatchScoped(node)) {\r\n                bindBlockScopedDeclaration(node, SymbolFlags.BlockScopedVariable, SymbolFlags.BlockScopedVariableExcludes);\r\n            }\r\n            else if (isPartOfParameterDeclaration(node)) {\r\n                // It is safe to walk up parent chain to find whether the node is a destructuring parameter declaration\r\n                // because its parent chain has already been set up, since parents are set before descending into children.\r\n                //\r\n                // If node is a binding element in parameter declaration, we need to use ParameterExcludes.\r\n                // Using ParameterExcludes flag allows the compiler to report an error on duplicate identifiers in Parameter Declaration\r\n                // For example:\r\n                //      function foo([a,a]) {} // Duplicate Identifier error\r\n                //      function bar(a,a) {}   // Duplicate Identifier error, parameter declaration in this case is handled in bindParameter\r\n                //                             // which correctly set excluded symbols\r\n                declareSymbolAndAddToSymbolTable(node, SymbolFlags.FunctionScopedVariable, SymbolFlags.ParameterExcludes);\r\n            }\r\n            else {\r\n                declareSymbolAndAddToSymbolTable(node, SymbolFlags.FunctionScopedVariable, SymbolFlags.FunctionScopedVariableExcludes);\r\n            }\r\n        }\r\n    }",
+          "start": 181750,
+          "end": 181750,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3709,
+          "declarationStart": 185300,
+          "declarationText": "function bindFunctionDeclaration(node: FunctionDeclaration) {\r\n        if (!file.isDeclarationFile && !(node.flags & NodeFlags.Ambient)) {\r\n            if (isAsyncFunction(node)) {\r\n                emitFlags |= NodeFlags.HasAsyncFunctions;\r\n            }\r\n        }\r\n\r\n        checkStrictModeFunctionName(node);\r\n        if (inStrictMode) {\r\n            checkStrictModeFunctionDeclaration(node);\r\n            bindBlockScopedDeclaration(node, SymbolFlags.Function, SymbolFlags.FunctionExcludes);\r\n        }\r\n        else {\r\n            declareSymbolAndAddToSymbolTable(node, SymbolFlags.Function, SymbolFlags.FunctionExcludes);\r\n        }\r\n    }",
+          "start": 185359,
+          "end": 185359,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2400,
+          "declarationStart": 113262,
+          "declarationText": "function bindFunctionOrConstructorType(node: SignatureDeclaration | JSDocSignature): void {\r\n        // For a given function symbol \"<...>(...) => T\" we want to generate a symbol identical\r\n        // to the one we would get for: { <...>(...): T }\r\n        //\r\n        // We do that by making an anonymous type literal symbol, and then setting the function\r\n        // symbol as its sole member. To the rest of the system, this symbol will be indistinguishable\r\n        // from an actual type literal symbol you would have gotten had you used the long form.\r\n        const symbol = createSymbol(SymbolFlags.Signature, getDeclarationName(node)!); // TODO: GH#18217\r\n        addDeclarationToSymbol(symbol, node, SymbolFlags.Signature);\r\n\r\n        const typeLiteralSymbol = createSymbol(SymbolFlags.TypeLiteral, InternalSymbolName.Type);\r\n        addDeclarationToSymbol(typeLiteralSymbol, node, SymbolFlags.TypeLiteral);\r\n        typeLiteralSymbol.members = createSymbolTable();\r\n        typeLiteralSymbol.members.set(symbol.escapedName, symbol);\r\n    }",
+          "start": 113347,
+          "end": 113351,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2126,
+          "declarationStart": 99556,
+          "declarationText": "function bindJSDocClassTag(node: JSDocClassTag) {\r\n        bindEachChild(node);\r\n        const host = getHostSignatureFromJSDoc(node);\r\n        if (host && host.kind !== SyntaxKind.MethodDeclaration) {\r\n            addDeclarationToSymbol(host.symbol, host, SymbolFlags.Class);\r\n        }\r\n    }",
+          "start": 99603,
+          "end": 99603,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3398,
+          "declarationStart": 168115,
+          "declarationText": "function bindObjectDefinePropertyAssignment(node: BindableObjectDefinePropertyCall) {\r\n        let namespaceSymbol = lookupSymbolForPropertyAccess(node.arguments[0]);\r\n        const isToplevel = node.parent.parent.kind === SyntaxKind.SourceFile;\r\n        namespaceSymbol = bindPotentiallyMissingNamespaces(namespaceSymbol, node.arguments[0], isToplevel, /*isPrototypeProperty*/ false, /*containerIsClass*/ false);\r\n        bindPotentiallyNewExpandoMemberToNamespace(node, namespaceSymbol, /*isPrototypeProperty*/ false);\r\n    }",
+          "start": 168198,
+          "end": 168198,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3201,
+          "declarationStart": 156862,
+          "declarationText": "function bindObjectDefinePropertyExport(node: BindableObjectDefinePropertyCall) {\r\n        if (!setCommonJsModuleIndicator(node)) {\r\n            return;\r\n        }\r\n        const symbol = forEachIdentifierInEntityName(node.arguments[0], /*parent*/ undefined, (id, symbol) => {\r\n            if (symbol) {\r\n                addDeclarationToSymbol(symbol, id, SymbolFlags.Module | SymbolFlags.Assignment);\r\n            }\r\n            return symbol;\r\n        });\r\n        if (symbol) {\r\n            const flags = SymbolFlags.Property | SymbolFlags.ExportValue;\r\n            declareSymbol(symbol.exports!, symbol, node, flags, SymbolFlags.None);\r\n        }\r\n    }",
+          "start": 156941,
+          "end": 156941,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3371,
+          "declarationStart": 166539,
+          "declarationText": "function bindObjectDefinePrototypeProperty(node: BindableObjectDefinePropertyCall) {\r\n        const namespaceSymbol = lookupSymbolForPropertyAccess((node.arguments[0] as PropertyAccessExpression).expression as EntityNameExpression);\r\n        if (namespaceSymbol && namespaceSymbol.valueDeclaration) {\r\n            // Ensure the namespace symbol becomes class-like\r\n            addDeclarationToSymbol(namespaceSymbol, namespaceSymbol.valueDeclaration, SymbolFlags.Class);\r\n        }\r\n        bindPotentiallyNewExpandoMemberToNamespace(node, namespaceSymbol, /*isPrototypeProperty*/ true);\r\n    }",
+          "start": 166621,
+          "end": 166621,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3606,
+          "declarationStart": 179407,
+          "declarationText": "function bindClassLikeDeclaration(node: ClassLikeDeclaration) {\r\n        if (node.kind === SyntaxKind.ClassDeclaration) {\r\n            bindBlockScopedDeclaration(node, SymbolFlags.Class, SymbolFlags.ClassExcludes);\r\n        }\r\n        else {\r\n            const bindingName = node.name ? node.name.escapedText : InternalSymbolName.Class;\r\n            bindAnonymousDeclaration(node, SymbolFlags.Class, bindingName);\r\n            // Add name of class expression into the map for semantic classifier\r\n            if (node.name) {\r\n                classifiableNames.add(node.name.escapedText);\r\n            }\r\n        }\r\n\r\n        const { symbol } = node;\r\n\r\n        // TypeScript 1.0 spec (April 2014): 8.4\r\n        // Every class automatically contains a static property member named 'prototype', the\r\n        // type of which is an instantiation of the class type with type Any supplied as a type\r\n        // argument for each type parameter. It is an error to explicitly declare a static\r\n        // property member with the name 'prototype'.\r\n        //\r\n        // Note: we check for this here because this class may be merging into a module.  The\r\n        // module might have an exported variable called 'prototype'.  We can't allow that as\r\n        // that would clash with the built-in 'prototype' for the class.\r\n        const prototypeSymbol = createSymbol(SymbolFlags.Property | SymbolFlags.Prototype, \"prototype\" as __String);\r\n        const symbolExport = symbol.exports!.get(prototypeSymbol.escapedName);\r\n        if (symbolExport) {\r\n            if (node.name) {\r\n                setParent(node.name, node);\r\n            }\r\n            file.bindDiagnostics.push(createDiagnosticForNode(symbolExport.declarations![0]!, Diagnostics.Duplicate_identifier_0, symbolName(prototypeSymbol)));\r\n        }\r\n        symbol.exports!.set(prototypeSymbol.escapedName, prototypeSymbol);\r\n        prototypeSymbol.parent = symbol;\r\n    }",
+          "start": 179468,
+          "end": 179468,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2437,
+          "declarationStart": 115272,
+          "declarationText": "function bindBlockScopedDeclaration(node: Declaration, symbolFlags: SymbolFlags, symbolExcludes: SymbolFlags) {\r\n        switch (blockScopeContainer.kind) {\r\n            case SyntaxKind.ModuleDeclaration:\r\n                declareModuleMember(node, symbolFlags, symbolExcludes);\r\n                break;\r\n            case SyntaxKind.SourceFile:\r\n                if (isExternalOrCommonJsModule(container as SourceFile)) {\r\n                    declareModuleMember(node, symbolFlags, symbolExcludes);\r\n                    break;\r\n                }\r\n                // falls through\r\n            default:\r\n                Debug.assertNode(blockScopeContainer, canHaveLocals);\r\n                if (!blockScopeContainer.locals) {\r\n                    blockScopeContainer.locals = createSymbolTable();\r\n                    addToContainerChain(blockScopeContainer);\r\n                }\r\n                declareSymbol(blockScopeContainer.locals, /*parent*/ undefined, node, symbolFlags, symbolExcludes);\r\n        }\r\n    }",
+          "start": 115381,
+          "end": 115381,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3642,
+          "declarationStart": 181347,
+          "declarationText": "function bindEnumDeclaration(node: EnumDeclaration) {\r\n        return isEnumConst(node)\r\n            ? bindBlockScopedDeclaration(node, SymbolFlags.ConstEnum, SymbolFlags.ConstEnumExcludes)\r\n            : bindBlockScopedDeclaration(node, SymbolFlags.RegularEnum, SymbolFlags.RegularEnumExcludes);\r\n    }",
+          "start": 181398,
+          "end": 181398,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2352,
+          "declarationStart": 110705,
+          "declarationText": "function bindModuleDeclaration(node: ModuleDeclaration) {\r\n        setExportContextFlag(node);\r\n        if (isAmbientModule(node)) {\r\n            if (hasSyntacticModifier(node, ModifierFlags.Export)) {\r\n                errorOnFirstToken(node, Diagnostics.export_modifier_cannot_be_applied_to_ambient_modules_and_module_augmentations_since_they_are_always_visible);\r\n            }\r\n            if (isModuleAugmentationExternal(node)) {\r\n                declareModuleSymbol(node);\r\n            }\r\n            else {\r\n                let pattern: string | Pattern | undefined;\r\n                if (node.name.kind === SyntaxKind.StringLiteral) {\r\n                    const { text } = node.name;\r\n                    pattern = tryParsePattern(text);\r\n                    if (pattern === undefined) {\r\n                        errorOnFirstToken(node.name, Diagnostics.Pattern_0_can_have_at_most_one_Asterisk_character, text);\r\n                    }\r\n                }\r\n\r\n                const symbol = declareSymbolAndAddToSymbolTable(node, SymbolFlags.ValueModule, SymbolFlags.ValueModuleExcludes)!;\r\n                file.patternAmbientModules = append<PatternAmbientModule>(file.patternAmbientModules, pattern && !isString(pattern) ? { pattern, symbol } : undefined);\r\n            }\r\n        }\r\n        else {\r\n            const state = declareModuleSymbol(node);\r\n            if (state !== ModuleInstanceState.NonInstantiated) {\r\n                const { symbol } = node;\r\n                // if module was already merged with some function, class or non-const enum, treat it as non-const-enum-only\r\n                symbol.constEnumOnlyModule = (!(symbol.flags & (SymbolFlags.Function | SymbolFlags.Class | SymbolFlags.RegularEnum)))\r\n                    // Current must be `const enum` only\r\n                    && state === ModuleInstanceState.ConstEnumOnly\r\n                    // Can't have been set to 'false' in a previous merged symbol. ('undefined' OK)\r\n                    && symbol.constEnumOnlyModule !== false;\r\n            }\r\n        }\r\n    }",
+          "start": 110760,
+          "end": 110760,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3148,
+          "declarationStart": 154280,
+          "declarationText": "function bindNamespaceExportDeclaration(node: NamespaceExportDeclaration) {\r\n        if (some(node.modifiers)) {\r\n            file.bindDiagnostics.push(createDiagnosticForNode(node, Diagnostics.Modifiers_cannot_appear_here));\r\n        }\r\n        const diag = !isSourceFile(node.parent) ? Diagnostics.Global_module_exports_may_only_appear_at_top_level\r\n            : !isExternalModule(node.parent) ? Diagnostics.Global_module_exports_may_only_appear_in_module_files\r\n            : !node.parent.isDeclarationFile ? Diagnostics.Global_module_exports_may_only_appear_in_declaration_files\r\n            : undefined;\r\n        if (diag) {\r\n            file.bindDiagnostics.push(createDiagnosticForNode(node, diag));\r\n        }\r\n        else {\r\n            file.symbol.globalExports = file.symbol.globalExports || createSymbolTable();\r\n            declareSymbol(file.symbol.globalExports, file.symbol, node, SymbolFlags.Alias, SymbolFlags.AliasExcludes);\r\n        }\r\n    }",
+          "start": 154353,
+          "end": 154353,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3182,
+          "declarationStart": 156231,
+          "declarationText": "function bindImportClause(node: ImportClause) {\r\n        if (node.name) {\r\n            declareSymbolAndAddToSymbolTable(node, SymbolFlags.Alias, SymbolFlags.AliasExcludes);\r\n        }\r\n    }",
+          "start": 156276,
+          "end": 156276,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3165,
+          "declarationStart": 155251,
+          "declarationText": "function bindExportDeclaration(node: ExportDeclaration) {\r\n        if (!container.symbol || !container.symbol.exports) {\r\n            // Export * in some sort of block construct\r\n            bindAnonymousDeclaration(node, SymbolFlags.ExportStar, getDeclarationName(node)!);\r\n        }\r\n        else if (!node.exportClause) {\r\n            // All export * declarations are collected in an __export symbol\r\n            declareSymbol(container.symbol.exports, container.symbol, node, SymbolFlags.ExportStar, SymbolFlags.None);\r\n        }\r\n        else if (isNamespaceExport(node.exportClause)) {\r\n            // declareSymbol walks up parents to find name text, parent _must_ be set\r\n            // but won't be set by the normal binder walk until `bindChildren` later on.\r\n            setParent(node.exportClause, node);\r\n            declareSymbol(container.symbol.exports, container.symbol, node.exportClause, SymbolFlags.Alias, SymbolFlags.AliasExcludes);\r\n        }\r\n    }",
+          "start": 155306,
+          "end": 155306,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3126,
+          "declarationStart": 152979,
+          "declarationText": "function bindExportAssignment(node: ExportAssignment) {\r\n        if (!container.symbol || !container.symbol.exports) {\r\n            // Incorrect export assignment in some sort of block construct\r\n            bindAnonymousDeclaration(node, SymbolFlags.Value, getDeclarationName(node)!);\r\n        }\r\n        else {\r\n            const flags = exportAssignmentIsAlias(node)\r\n                // An export default clause with an EntityNameExpression or a class expression exports all meanings of that identifier or expression;\r\n                ? SymbolFlags.Alias\r\n                // An export default clause with any other expression exports a value\r\n                : SymbolFlags.Property;\r\n            // If there is an `export default x;` alias declaration, can't `export default` anything else.\r\n            // (In contrast, you can still have `export default function f() {}` and `export default interface I {}`.)\r\n            const symbol = declareSymbol(container.symbol.exports, container.symbol, node, flags, SymbolFlags.All);\r\n\r\n            if (node.isExportEquals) {\r\n                // Will be an error later, since the module already has other exports. Just make sure this has a valueDeclaration set.\r\n                setValueDeclaration(symbol, node);\r\n            }\r\n        }\r\n    }",
+          "start": 153032,
+          "end": 153032,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3108,
+          "declarationStart": 152237,
+          "declarationText": "function bindSourceFileIfExternalModule() {\r\n        setExportContextFlag(file);\r\n        if (isExternalModule(file)) {\r\n            bindSourceFileAsExternalModule();\r\n        }\r\n        else if (isJsonSourceFile(file)) {\r\n            bindSourceFileAsExternalModule();\r\n            // Create symbol equivalent for the module.exports = {}\r\n            const originalSymbol = file.symbol;\r\n            declareSymbol(file.symbol.exports!, file.symbol, file, SymbolFlags.Property, SymbolFlags.All);\r\n            file.symbol = originalSymbol;\r\n        }\r\n    }",
+          "start": 152278,
+          "end": 152278,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2822,
+          "declarationStart": 135069,
+          "declarationText": "function updateStrictModeStatementList(statements: NodeArray<Statement>) {\r\n        if (!inStrictMode) {\r\n            for (const statement of statements) {\r\n                if (!isPrologueDirective(statement)) {\r\n                    return;\r\n                }\r\n\r\n                if (isUseStrictPrologueDirective(statement as ExpressionStatement)) {\r\n                    inStrictMode = true;\r\n                    return;\r\n                }\r\n            }\r\n        }\r\n    }",
+          "start": 135141,
+          "end": 135141,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3263,
+          "declarationStart": 160143,
+          "declarationText": "function bindExportAssignedObjectMemberAlias(node: ShorthandPropertyAssignment) {\r\n        declareSymbol(file.symbol.exports!, file.symbol, node, SymbolFlags.Alias | SymbolFlags.Assignment, SymbolFlags.None);\r\n    }",
+          "start": 160222,
+          "end": 160222,
+          "before": "",
+          "after": ": undefined"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "beforeSha256": "a3e59ab71f1c98dca1cd08943e04d94e8b3ffeaf2c9a705d237094c6bcd5c419",
+      "afterSha256": "75fbb1868e174be02e8a927f0219077c2274c9187c19ef2535f84855f93e787f",
+      "edits": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8237,
+          "declarationStart": 456523,
+          "declarationText": "function bindElement(e: BindingElement): void {\r\n                                        if (isBindingPattern(e.name)) {\r\n                                            return bindPattern(e.name);\r\n                                        }\r\n                                        const symbol = getSymbolOfDeclaration(e);\r\n                                        add(symbol.escapedName, symbol);\r\n                                    }",
+          "start": 456564,
+          "end": 456568,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 8225,
+          "declarationStart": 455734,
+          "declarationText": "function bindPattern(p: BindingPattern): void {\r\n                                        forEach(p.elements, e => {\r\n                                            switch (e.kind) {\r\n                                                case SyntaxKind.OmittedExpression:\r\n                                                    return;\r\n                                                case SyntaxKind.BindingElement:\r\n                                                    return bindElement(e);\r\n                                                default:\r\n                                                    return Debug.assertNever(e);\r\n                                            }\r\n                                        });\r\n                                    }",
+          "start": 455775,
+          "end": 455779,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14836,
+          "declarationStart": 862886,
+          "declarationText": "function addMemberForKeyType(keyType: Type) {\r\n            const propNameType = nameType ? instantiateType(nameType, appendTypeMapping(type.mapper, typeParameter, keyType)) : keyType;\r\n            forEachType(propNameType, t => addMemberForKeyTypeWorker(keyType, t));\r\n        }",
+          "start": 862929,
+          "end": 862929,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14841,
+          "declarationStart": 863176,
+          "declarationText": "function addMemberForKeyTypeWorker(keyType: Type, propNameType: Type) {\r\n            // If the current iteration type constituent is a string literal type, create a property.\r\n            // Otherwise, for type string create a string index signature.\r\n            if (isTypeUsableAsPropertyName(propNameType)) {\r\n                const propName = getPropertyNameFromType(propNameType);\r\n                // String enum members from separate enums with identical values\r\n                // are distinct types with the same property name. Make the resulting\r\n                // property symbol's name type be the union of those enum member types.\r\n                const existingProp = members.get(propName) as MappedSymbol | undefined;\r\n                if (existingProp) {\r\n                    existingProp.links.nameType = getUnionType([existingProp.links.nameType!, propNameType]);\r\n                    existingProp.links.keyType = getUnionType([existingProp.links.keyType, keyType]);\r\n                }\r\n                else {\r\n                    const modifiersProp = isTypeUsableAsPropertyName(keyType) ? getPropertyOfType(modifiersType, getPropertyNameFromType(keyType)) : undefined;\r\n                    const isOptional = !!(templateModifiers & MappedTypeModifiers.IncludeOptional ||\r\n                        !(templateModifiers & MappedTypeModifiers.ExcludeOptional) && modifiersProp && modifiersProp.flags & SymbolFlags.Optional);\r\n                    const isReadonly = !!(templateModifiers & MappedTypeModifiers.IncludeReadonly ||\r\n                        !(templateModifiers & MappedTypeModifiers.ExcludeReadonly) && modifiersProp && isReadonlySymbol(modifiersProp));\r\n                    const stripOptional = strictNullChecks && !isOptional && modifiersProp && modifiersProp.flags & SymbolFlags.Optional;\r\n                    const lateFlag: CheckFlags = modifiersProp ? getIsLateCheckFlag(modifiersProp) : 0;\r\n                    const prop = createSymbol(SymbolFlags.Property | (isOptional ? SymbolFlags.Optional : 0), propName, lateFlag | CheckFlags.Mapped | (isReadonly ? CheckFlags.Readonly : 0) | (stripOptional ? CheckFlags.StripOptional : 0)) as MappedSymbol;\r\n                    prop.links.mappedType = type;\r\n                    prop.links.nameType = propNameType;\r\n                    prop.links.keyType = keyType;\r\n                    if (modifiersProp) {\r\n                        prop.links.syntheticOrigin = modifiersProp;\r\n                        prop.declarations = shouldLinkPropDeclarations ? modifiersProp.declarations : undefined;\r\n                    }\r\n                    members.set(propName, prop);\r\n                }\r\n            }\r\n            else if (isValidIndexKeyType(propNameType) || propNameType.flags & (TypeFlags.Any | TypeFlags.Enum)) {\r\n                const indexKeyType = propNameType.flags & (TypeFlags.Any | TypeFlags.String) ? stringType :\r\n                    propNameType.flags & (TypeFlags.Number | TypeFlags.Enum) ? numberType :\r\n                    propNameType;\r\n                const propType = instantiateType(templateType, appendTypeMapping(type.mapper, typeParameter, keyType));\r\n                const modifiersIndexInfo = getApplicableIndexInfo(modifiersType, propNameType);\r\n                const isReadonly = !!(templateModifiers & MappedTypeModifiers.IncludeReadonly ||\r\n                    !(templateModifiers & MappedTypeModifiers.ExcludeReadonly) && modifiersIndexInfo?.isReadonly);\r\n                const indexInfo = createIndexInfo(indexKeyType, propType, isReadonly);\r\n                indexInfos = appendIndexInfo(indexInfos, indexInfo, /*union*/ true);\r\n            }\r\n        }",
+          "start": 863245,
+          "end": 863245,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 17984,
+          "declarationStart": 1047952,
+          "declarationText": "(t, n) => addElement(t, type.target.elementFlags[n]!, type.target.labeledElementDeclarations?.[n])",
+          "start": 1047958,
+          "end": 1047958,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18012,
+          "declarationStart": 1049868,
+          "declarationText": "function addElement(type: Type, flags: ElementFlags, declaration: NamedTupleMember | ParameterDeclaration | undefined) {\r\n            if (flags & ElementFlags.Required) {\r\n                lastRequiredIndex = expandedFlags.length;\r\n            }\r\n            if (flags & ElementFlags.Rest && firstRestIndex < 0) {\r\n                firstRestIndex = expandedFlags.length;\r\n            }\r\n            if (flags & (ElementFlags.Optional | ElementFlags.Rest)) {\r\n                lastOptionalOrRestIndex = expandedFlags.length;\r\n            }\r\n            expandedTypes.push(flags & ElementFlags.Optional ? addOptionality(type, /*isProperty*/ true) : type);\r\n            expandedFlags.push(flags);\r\n            expandedDeclarations.push(declaration);\r\n        }",
+          "start": 1049986,
+          "end": 1049986,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18920,
+          "declarationStart": 1103241,
+          "declarationText": "function addMemberForKeyType(keyType: Type) {\r\n            const propNameType = nameType ? instantiateType(nameType, appendTypeMapping(type.mapper, typeParameter, keyType)) : keyType;\r\n            // `keyof` currently always returns `string | number` for concrete `string` index signatures - the below ternary keeps that behavior for mapped types\r\n            // See `getLiteralTypeFromProperties` where there's a similar ternary to cause the same behavior.\r\n            keyTypes.push(propNameType === stringType ? stringOrNumberType : propNameType);\r\n        }",
+          "start": 1103284,
+          "end": 1103284,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 30322,
+          "declarationStart": 1808550,
+          "declarationText": "function markNodeAssignments(node: Node) {\r\n        switch (node.kind) {\r\n            case SyntaxKind.Identifier:\r\n                const assigmentTarget = getAssignmentTargetKind(node);\r\n                if (assigmentTarget !== AssignmentKind.None) {\r\n                    const symbol = getResolvedSymbol(node as Identifier);\r\n                    const hasDefiniteAssignment = assigmentTarget === AssignmentKind.Definite || (symbol.lastAssignmentPos !== undefined && symbol.lastAssignmentPos < 0);\r\n                    if (isParameterOrMutableLocalVariable(symbol)) {\r\n                        if (symbol.lastAssignmentPos === undefined || Math.abs(symbol.lastAssignmentPos) !== Number.MAX_VALUE) {\r\n                            const referencingFunction = findAncestor(node, isFunctionOrSourceFile);\r\n                            const declaringFunction = findAncestor(symbol.valueDeclaration, isFunctionOrSourceFile);\r\n                            symbol.lastAssignmentPos = referencingFunction === declaringFunction ? extendAssignmentPosition(node, symbol.valueDeclaration!) : Number.MAX_VALUE;\r\n                        }\r\n                        if (hasDefiniteAssignment && symbol.lastAssignmentPos > 0) {\r\n                            symbol.lastAssignmentPos *= -1;\r\n                        }\r\n                    }\r\n                }\r\n                return;\r\n            case SyntaxKind.ExportSpecifier:\r\n                const exportDeclaration = (node as ExportSpecifier).parent.parent;\r\n                const name = (node as ExportSpecifier).propertyName || (node as ExportSpecifier).name;\r\n                if (!(node as ExportSpecifier).isTypeOnly && !exportDeclaration.isTypeOnly && !exportDeclaration.moduleSpecifier && name.kind !== SyntaxKind.StringLiteral) {\r\n                    const symbol = resolveEntityName(name, SymbolFlags.Value, /*ignoreErrors*/ true, /*dontResolveAlias*/ true);\r\n                    if (symbol && isParameterOrMutableLocalVariable(symbol)) {\r\n                        const sign = symbol.lastAssignmentPos !== undefined && symbol.lastAssignmentPos < 0 ? -1 : 1;\r\n                        symbol.lastAssignmentPos = sign * Number.MAX_VALUE;\r\n                    }\r\n                }\r\n                return;\r\n            case SyntaxKind.InterfaceDeclaration:\r\n            case SyntaxKind.TypeAliasDeclaration:\r\n            case SyntaxKind.EnumDeclaration:\r\n                return;\r\n        }\r\n        if (isTypeNode(node)) {\r\n            return;\r\n        }\r\n        forEachChild(node, markNodeAssignments);\r\n    }",
+          "start": 1808590,
+          "end": 1808590,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49052,
+          "declarationStart": 2866650,
+          "declarationText": "function checkSourceElement(node: Node | undefined): void {\r\n        if (node) {\r\n            const saveCurrentNode = currentNode;\r\n            const saveWithinUnreachableCode = withinUnreachableCode;\r\n            currentNode = node;\r\n            instantiationCount = 0;\r\n            checkSourceElementWorker(node);\r\n            currentNode = saveCurrentNode;\r\n            withinUnreachableCode = saveWithinUnreachableCode;\r\n        }\r\n    }",
+          "start": 2866703,
+          "end": 2866707,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 41991,
+          "declarationStart": 2481020,
+          "declarationText": "function checkParameter(node: ParameterDeclaration) {\r\n        // Grammar checking\r\n        // It is a SyntaxError if the Identifier \"eval\" or the Identifier \"arguments\" occurs as the\r\n        // Identifier in a PropertySetParameterList of a PropertyAssignment that is contained in strict code\r\n        // or if its FunctionBody is strict code(11.1.5).\r\n        checkGrammarModifiers(node);\r\n\r\n        checkVariableLikeDeclaration(node);\r\n        const func = getContainingFunction(node)!;\r\n        if (hasSyntacticModifier(node, ModifierFlags.ParameterPropertyModifier)) {\r\n            if (compilerOptions.erasableSyntaxOnly) {\r\n                error(node, Diagnostics.This_syntax_is_not_allowed_when_erasableSyntaxOnly_is_enabled);\r\n            }\r\n            if (!(func.kind === SyntaxKind.Constructor && nodeIsPresent(func.body))) {\r\n                error(node, Diagnostics.A_parameter_property_is_only_allowed_in_a_constructor_implementation);\r\n            }\r\n            if (func.kind === SyntaxKind.Constructor && isIdentifier(node.name) && node.name.escapedText === \"constructor\") {\r\n                error(node.name, Diagnostics.constructor_cannot_be_used_as_a_parameter_property_name);\r\n            }\r\n        }\r\n        if (!node.initializer && isOptionalDeclaration(node) && isBindingPattern(node.name) && (func as FunctionLikeDeclaration).body) {\r\n            error(node, Diagnostics.A_binding_pattern_parameter_cannot_be_optional_in_an_implementation_signature);\r\n        }\r\n        if (node.name && isIdentifier(node.name) && (node.name.escapedText === \"this\" || node.name.escapedText === \"new\")) {\r\n            if (func.parameters.indexOf(node) !== 0) {\r\n                error(node, Diagnostics.A_0_parameter_must_be_the_first_parameter, node.name.escapedText as string);\r\n            }\r\n            if (func.kind === SyntaxKind.Constructor || func.kind === SyntaxKind.ConstructSignature || func.kind === SyntaxKind.ConstructorType) {\r\n                error(node, Diagnostics.A_constructor_cannot_have_a_this_parameter);\r\n            }\r\n            if (func.kind === SyntaxKind.ArrowFunction) {\r\n                error(node, Diagnostics.An_arrow_function_cannot_have_a_this_parameter);\r\n            }\r\n            if (func.kind === SyntaxKind.GetAccessor || func.kind === SyntaxKind.SetAccessor) {\r\n                error(node, Diagnostics.get_and_set_accessors_cannot_declare_this_parameters);\r\n            }\r\n        }\r\n\r\n        // Only check rest parameter type if it's not a binding pattern. Since binding patterns are\r\n        // not allowed in a rest parameter, we already have an error from checkGrammarParameterList.\r\n        if (node.dotDotDotToken && !isBindingPattern(node.name) && !isTypeAssignableTo(getReducedType(getTypeOfSymbol(node.symbol)), anyReadonlyArrayType)) {\r\n            error(node, Diagnostics.A_rest_parameter_must_be_of_an_array_type);\r\n        }\r\n    }",
+          "start": 2481071,
+          "end": 2481071,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 46942,
+          "declarationStart": 2746496,
+          "declarationText": "function visit(node: Node) {\r\n            if (node.kind === SyntaxKind.TypeReference) {\r\n                const type = getTypeFromTypeReference(node as TypeReferenceNode);\r\n                if (type.flags & TypeFlags.TypeParameter) {\r\n                    for (let i = index; i < typeParameters.length; i++) {\r\n                        if (type.symbol === getSymbolOfDeclaration(typeParameters[i]!)) {\r\n                            error(node, Diagnostics.Type_parameter_defaults_can_only_reference_previously_declared_type_parameters);\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n            forEachChild(node, visit);\r\n        }",
+          "start": 2746522,
+          "end": 2746522,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48591,
+          "declarationStart": 2838945,
+          "declarationText": "function checkImportBinding(node: ImportEqualsDeclaration | ImportClause | NamespaceImport | ImportSpecifier) {\r\n        checkCollisionsForDeclarationName(node, node.name);\r\n        checkAliasSymbol(node);\r\n        if (node.kind === SyntaxKind.ImportSpecifier) {\r\n            checkModuleExportName(node.propertyName);\r\n            if (\r\n                moduleExportNameIsDefault(node.propertyName || node.name) &&\r\n                getESModuleInterop(compilerOptions) &&\r\n                host.getEmitModuleFormatOfFile(getSourceFileOfNode(node)) < ModuleKind.System\r\n            ) {\r\n                checkExternalEmitHelpers(node, ExternalEmitHelpers.ImportDefault);\r\n            }\r\n        }\r\n    }",
+          "start": 2839054,
+          "end": 2839054,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 48818,
+          "declarationStart": 2852712,
+          "declarationText": "function checkExportSpecifier(node: ExportSpecifier) {\r\n        checkAliasSymbol(node);\r\n        const hasModuleSpecifier = node.parent.parent.moduleSpecifier !== undefined;\r\n        checkModuleExportName(node.propertyName, hasModuleSpecifier);\r\n        checkModuleExportName(node.name);\r\n        if (getEmitDeclarations(compilerOptions)) {\r\n            collectLinkedAliases(node.propertyName || node.name, /*setVisibility*/ true);\r\n        }\r\n        if (!hasModuleSpecifier) {\r\n            const exportedName = node.propertyName || node.name;\r\n            if (exportedName.kind === SyntaxKind.StringLiteral) {\r\n                return; // Skip for invalid syntax like this: export { \"x\" }\r\n            }\r\n            // find immediate value referenced by exported name (SymbolFlags.Alias is set so we don't chase down aliases)\r\n            const symbol = resolveName(exportedName, exportedName.escapedText, SymbolFlags.Value | SymbolFlags.Type | SymbolFlags.Namespace | SymbolFlags.Alias, /*nameNotFoundMessage*/ undefined, /*isUse*/ true);\r\n            if (symbol && (symbol === undefinedSymbol || symbol === globalThisSymbol || symbol.declarations && isGlobalSourceFile(getDeclarationContainer(symbol.declarations[0]!)))) {\r\n                error(exportedName, Diagnostics.Cannot_export_0_Only_local_declarations_can_be_exported_from_a_module, idText(exportedName));\r\n            }\r\n            else {\r\n                markLinkedReferences(node, ReferenceHint.ExportSpecifier);\r\n            }\r\n        }\r\n        else {\r\n            if (\r\n                getESModuleInterop(compilerOptions) &&\r\n                host.getEmitModuleFormatOfFile(getSourceFileOfNode(node)) < ModuleKind.System &&\r\n                moduleExportNameIsDefault(node.propertyName || node.name)\r\n            ) {\r\n                checkExternalEmitHelpers(node, ExternalEmitHelpers.ImportDefault);\r\n            }\r\n        }\r\n    }",
+          "start": 2852764,
+          "end": 2852764,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44839,
+          "declarationStart": 2630886,
+          "declarationText": "function checkIfThisIsCapturedInEnclosingScope(node: Node): void {\r\n        findAncestor(node, current => {\r\n            if (getNodeCheckFlags(current) & NodeCheckFlags.CaptureThis) {\r\n                const isDeclaration = node.kind !== SyntaxKind.Identifier;\r\n                if (isDeclaration) {\r\n                    error(getNameOfDeclaration(node as Declaration), Diagnostics.Duplicate_identifier_this_Compiler_uses_variable_declaration_this_to_capture_this_reference);\r\n                }\r\n                else {\r\n                    error(node, Diagnostics.Expression_resolves_to_variable_declaration_this_that_compiler_uses_to_capture_this_reference);\r\n                }\r\n                return true;\r\n            }\r\n            return false;\r\n        });\r\n    }",
+          "start": 2630946,
+          "end": 2630950,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44855,
+          "declarationStart": 2631662,
+          "declarationText": "function checkIfNewTargetIsCapturedInEnclosingScope(node: Node): void {\r\n        findAncestor(node, current => {\r\n            if (getNodeCheckFlags(current) & NodeCheckFlags.CaptureNewTarget) {\r\n                const isDeclaration = node.kind !== SyntaxKind.Identifier;\r\n                if (isDeclaration) {\r\n                    error(getNameOfDeclaration(node as Declaration), Diagnostics.Duplicate_identifier_newTarget_Compiler_uses_variable_declaration_newTarget_to_capture_new_target_meta_property_reference);\r\n                }\r\n                else {\r\n                    error(node, Diagnostics.Expression_resolves_to_variable_declaration_newTarget_that_compiler_uses_to_capture_new_target_meta_property_reference);\r\n                }\r\n                return true;\r\n            }\r\n            return false;\r\n        });\r\n    }",
+          "start": 2631727,
+          "end": 2631731,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44921,
+          "declarationStart": 2635382,
+          "declarationText": "function checkWeakMapSetCollision(node: Node) {\r\n        const enclosingBlockScope = getEnclosingBlockScopeContainer(node);\r\n        if (getNodeCheckFlags(enclosingBlockScope) & NodeCheckFlags.ContainsClassWithPrivateIdentifiers) {\r\n            Debug.assert(isNamedDeclaration(node) && isIdentifier(node.name) && typeof node.name.escapedText === \"string\", \"The target of a WeakMap/WeakSet collision check should be an identifier\");\r\n            errorSkippedOn(\"noEmit\", node, Diagnostics.Compiler_reserves_name_0_when_emitting_private_identifier_downlevel, node.name.escapedText);\r\n        }\r\n    }",
+          "start": 2635427,
+          "end": 2635427,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 44938,
+          "declarationStart": 2636375,
+          "declarationText": "function checkReflectCollision(node: Node) {\r\n        let hasCollision = false;\r\n        if (isClassExpression(node)) {\r\n            // ClassExpression names don't contribute to their containers, but do matter for any of their block-scoped members.\r\n            for (const member of node.members) {\r\n                if (getNodeCheckFlags(member) & NodeCheckFlags.ContainsSuperPropertyInStaticInitializer) {\r\n                    hasCollision = true;\r\n                    break;\r\n                }\r\n            }\r\n        }\r\n        else if (isFunctionExpression(node)) {\r\n            // FunctionExpression names don't contribute to their containers, but do matter for their contents\r\n            if (getNodeCheckFlags(node) & NodeCheckFlags.ContainsSuperPropertyInStaticInitializer) {\r\n                hasCollision = true;\r\n            }\r\n        }\r\n        else {\r\n            const container = getEnclosingBlockScopeContainer(node);\r\n            if (container && getNodeCheckFlags(container) & NodeCheckFlags.ContainsSuperPropertyInStaticInitializer) {\r\n                hasCollision = true;\r\n            }\r\n        }\r\n        if (hasCollision) {\r\n            Debug.assert(isNamedDeclaration(node) && isIdentifier(node.name), \"The target of a Reflect collision check should be an identifier\");\r\n            errorSkippedOn(\"noEmit\", node, Diagnostics.Duplicate_identifier_0_Compiler_reserves_name_1_when_emitting_super_references_in_static_initializers, declarationNameToString(node.name), \"Reflect\");\r\n        }\r\n    }",
+          "start": 2636417,
+          "end": 2636417,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49710,
+          "declarationStart": 2897851,
+          "declarationText": "function checkSourceFileWithEagerDiagnostics(sourceFile: SourceFile, nodesToCheck?: Node[]) {\r\n        ensurePendingDiagnosticWorkComplete();\r\n        // then setup diagnostics for immediate invocation (as we are about to collect them, and\r\n        // this avoids the overhead of longer-lived callbacks we don't need to allocate)\r\n        // This also serves to make the shift to possibly lazy diagnostics transparent to serial command-line scenarios\r\n        // (as in those cases, all the diagnostics will still be computed as the appropriate place in the tree,\r\n        // thus much more likely retaining the same union ordering as before we had lazy diagnostics)\r\n        const oldAddLazyDiagnostics = addLazyDiagnostic;\r\n        addLazyDiagnostic = cb => cb();\r\n        checkSourceFile(sourceFile, nodesToCheck);\r\n        addLazyDiagnostic = oldAddLazyDiagnostics;\r\n    }",
+          "start": 2897942,
+          "end": 2897942,
+          "before": "",
+          "after": ": undefined"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "beforeSha256": "56b9970cba54c7dfce34e95f57d355a5c8e08c6de41a403eec703a76bb91fb30",
+      "afterSha256": "7be216d0f04aebcb91ce166181d06bea298a8b418848f7ea203b4ffaace2550d",
+      "edits": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 970,
+          "declarationStart": 37249,
+          "declarationText": "function collectLinkedAliases(node: Node) {\r\n        if (isExportAssignment(node)) {\r\n            if (node.expression.kind === SyntaxKind.Identifier) {\r\n                resolver.collectLinkedAliases(node.expression as Identifier, /*setVisibility*/ true);\r\n            }\r\n            return;\r\n        }\r\n        else if (isExportSpecifier(node)) {\r\n            resolver.collectLinkedAliases(node.propertyName || node.name, /*setVisibility*/ true);\r\n            return;\r\n        }\r\n        forEachChild(node, collectLinkedAliases);\r\n    }",
+          "start": 37290,
+          "end": 37290,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 5426,
+          "declarationStart": 231994,
+          "declarationText": "function generateMemberNames(node: Node | undefined) {\r\n        if (!node) return;\r\n        switch (node.kind) {\r\n            case SyntaxKind.PropertyAssignment:\r\n            case SyntaxKind.ShorthandPropertyAssignment:\r\n            case SyntaxKind.PropertyDeclaration:\r\n            case SyntaxKind.PropertySignature:\r\n            case SyntaxKind.MethodDeclaration:\r\n            case SyntaxKind.MethodSignature:\r\n            case SyntaxKind.GetAccessor:\r\n            case SyntaxKind.SetAccessor:\r\n                generateNameIfNeeded((node as NamedDeclaration).name);\r\n                break;\r\n        }\r\n    }",
+          "start": 232046,
+          "end": 232046,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 5340,
+          "declarationStart": 227784,
+          "declarationText": "function generateNames(node: Node | undefined) {\r\n        if (!node) return;\r\n        switch (node.kind) {\r\n            case SyntaxKind.Block:\r\n                forEach((node as Block).statements, generateNames);\r\n                break;\r\n            case SyntaxKind.LabeledStatement:\r\n            case SyntaxKind.WithStatement:\r\n            case SyntaxKind.DoStatement:\r\n            case SyntaxKind.WhileStatement:\r\n                generateNames((node as LabeledStatement | WithStatement | DoStatement | WhileStatement).statement);\r\n                break;\r\n            case SyntaxKind.IfStatement:\r\n                generateNames((node as IfStatement).thenStatement);\r\n                generateNames((node as IfStatement).elseStatement);\r\n                break;\r\n            case SyntaxKind.ForStatement:\r\n            case SyntaxKind.ForOfStatement:\r\n            case SyntaxKind.ForInStatement:\r\n                generateNames((node as ForStatement | ForInOrOfStatement).initializer);\r\n                generateNames((node as ForStatement | ForInOrOfStatement).statement);\r\n                break;\r\n            case SyntaxKind.SwitchStatement:\r\n                generateNames((node as SwitchStatement).caseBlock);\r\n                break;\r\n            case SyntaxKind.CaseBlock:\r\n                forEach((node as CaseBlock).clauses, generateNames);\r\n                break;\r\n            case SyntaxKind.CaseClause:\r\n            case SyntaxKind.DefaultClause:\r\n                forEach((node as CaseOrDefaultClause).statements, generateNames);\r\n                break;\r\n            case SyntaxKind.TryStatement:\r\n                generateNames((node as TryStatement).tryBlock);\r\n                generateNames((node as TryStatement).catchClause);\r\n                generateNames((node as TryStatement).finallyBlock);\r\n                break;\r\n            case SyntaxKind.CatchClause:\r\n                generateNames((node as CatchClause).variableDeclaration);\r\n                generateNames((node as CatchClause).block);\r\n                break;\r\n            case SyntaxKind.VariableStatement:\r\n                generateNames((node as VariableStatement).declarationList);\r\n                break;\r\n            case SyntaxKind.VariableDeclarationList:\r\n                forEach((node as VariableDeclarationList).declarations, generateNames);\r\n                break;\r\n            case SyntaxKind.VariableDeclaration:\r\n            case SyntaxKind.Parameter:\r\n            case SyntaxKind.BindingElement:\r\n            case SyntaxKind.ClassDeclaration:\r\n                generateNameIfNeeded((node as NamedDeclaration).name);\r\n                break;\r\n            case SyntaxKind.FunctionDeclaration:\r\n                generateNameIfNeeded((node as FunctionDeclaration).name);\r\n                if (getEmitFlags(node) & EmitFlags.ReuseTempVariableScope) {\r\n                    forEach((node as FunctionDeclaration).parameters, generateNames);\r\n                    generateNames((node as FunctionDeclaration).body);\r\n                }\r\n                break;\r\n            case SyntaxKind.ObjectBindingPattern:\r\n            case SyntaxKind.ArrayBindingPattern:\r\n                forEach((node as BindingPattern).elements, generateNames);\r\n                break;\r\n            case SyntaxKind.ImportDeclaration:\r\n                generateNames((node as ImportDeclaration).importClause);\r\n                break;\r\n            case SyntaxKind.ImportClause:\r\n                generateNameIfNeeded((node as ImportClause).name);\r\n                generateNames((node as ImportClause).namedBindings);\r\n                break;\r\n            case SyntaxKind.NamespaceImport:\r\n                generateNameIfNeeded((node as NamespaceImport).name);\r\n                break;\r\n            case SyntaxKind.NamespaceExport:\r\n                generateNameIfNeeded((node as NamespaceExport).name);\r\n                break;\r\n            case SyntaxKind.NamedImports:\r\n                forEach((node as NamedImports).elements, generateNames);\r\n                break;\r\n            case SyntaxKind.ImportSpecifier:\r\n                generateNameIfNeeded((node as ImportSpecifier).propertyName || (node as ImportSpecifier).name);\r\n                break;\r\n        }\r\n    }",
+          "start": 227830,
+          "end": 227830,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 5887,
+          "declarationStart": 253999,
+          "declarationText": "function emitLeadingSynthesizedComment(comment: SynthesizedComment) {\r\n        if (comment.hasLeadingNewline || comment.kind === SyntaxKind.SingleLineCommentTrivia) {\r\n            writer!.writeLine();\r\n        }\r\n        writeSynthesizedComment(comment);\r\n        if (comment.hasTrailingNewLine || comment.kind === SyntaxKind.SingleLineCommentTrivia) {\r\n            writer!.writeLine();\r\n        }\r\n        else {\r\n            writer!.writeSpace(\" \");\r\n        }\r\n    }",
+          "start": 254066,
+          "end": 254066,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 5900,
+          "declarationStart": 254476,
+          "declarationText": "function emitTrailingSynthesizedComment(comment: SynthesizedComment) {\r\n        if (!writer!.isAtStartOfLine()) {\r\n            writer!.writeSpace(\" \");\r\n        }\r\n        writeSynthesizedComment(comment);\r\n        if (comment.hasTrailingNewLine) {\r\n            writer!.writeLine();\r\n        }\r\n    }",
+          "start": 254544,
+          "end": 254544,
+          "before": "",
+          "after": ": undefined"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "beforeSha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+      "afterSha256": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af",
+      "edits": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1316,
+          "declarationStart": 74912,
+          "declarationText": "function addWorkItem(n: Node | NodeArray<Node>) {\r\n        children.unshift(n);\r\n    }",
+          "start": 74959,
+          "end": 74959,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10112,
+          "declarationStart": 507306,
+          "declarationText": "(node: Node) => void",
+          "start": 507322,
+          "end": 507326,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10096,
+          "declarationStart": 506639,
+          "declarationText": "function visitNode(node: Node) {\r\n            let text = \"\";\r\n            if (aggressiveChecks && shouldCheckNode(node)) {\r\n                text = oldText.substring(node.pos, node.end);\r\n            }\r\n\r\n            // Ditch any existing LS children we may have created.  This way we can avoid\r\n            // moving them forward.\r\n            unsetNodeChildren(node, origSourceFile);\r\n\r\n            setTextRangePosEnd(node, node.pos + delta, node.end + delta);\r\n\r\n            if (aggressiveChecks && shouldCheckNode(node)) {\r\n                Debug.assert(text === newText.substring(node.pos, node.end));\r\n            }\r\n\r\n            forEachChild(node, visitNode as (node: Node) => void, visitArray as (nodes: NodeArray<Node>) => void);\r\n            if (hasJSDocNodes(node)) {\r\n                for (const jsDocComment of node.jsDoc!) {\r\n                    visitNode(jsDocComment);\r\n                }\r\n            }\r\n            checkNodePositions(node, aggressiveChecks);\r\n        }",
+          "start": 506669,
+          "end": 506669,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10112,
+          "declarationStart": 507342,
+          "declarationText": "(nodes: NodeArray<Node>) => void",
+          "start": 507370,
+          "end": 507374,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10121,
+          "declarationStart": 507635,
+          "declarationText": "function visitArray(array: NodeArray<Node>) {\r\n            setTextRangePosEnd(array, array.pos + delta, array.end + delta);\r\n\r\n            for (const node of array) {\r\n                visitNode(node);\r\n            }\r\n        }",
+          "start": 507678,
+          "end": 507678,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10219,
+          "declarationStart": 512476,
+          "declarationText": "(child: Node) => {\r\n                Debug.assert(child.pos >= pos);\r\n                pos = child.end;\r\n            }",
+          "start": 512489,
+          "end": 512489,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10265,
+          "declarationStart": 514393,
+          "declarationText": "(node: Node) => void",
+          "start": 514409,
+          "end": 514413,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10246,
+          "declarationStart": 513254,
+          "declarationText": "function visitNode(child: Node) {\r\n            Debug.assert(child.pos <= child.end);\r\n            if (child.pos > changeRangeOldEnd) {\r\n                // Node is entirely past the change range.  We need to move both its pos and\r\n                // end, forward or backward appropriately.\r\n                moveElementEntirelyPastChangeRange(child, sourceFile, /*isArray*/ false, delta, oldText, newText, aggressiveChecks);\r\n                return;\r\n            }\r\n\r\n            // Check if the element intersects the change range.  If it does, then it is not\r\n            // reusable.  Also, we'll need to recurse to see what constituent portions we may\r\n            // be able to use.\r\n            const fullEnd = child.end;\r\n            if (fullEnd >= changeStart) {\r\n                markAsIntersectingIncrementalChange(child);\r\n                unsetNodeChildren(child, sourceFile);\r\n\r\n                // Adjust the pos or end (or both) of the intersecting element accordingly.\r\n                adjustIntersectingElement(child, changeStart, changeRangeOldEnd, changeRangeNewEnd, delta);\r\n                forEachChild(child, visitNode as (node: Node) => void, visitArray as (nodes: NodeArray<Node>) => void);\r\n                if (hasJSDocNodes(child)) {\r\n                    for (const jsDocComment of child.jsDoc!) {\r\n                        visitNode(jsDocComment);\r\n                    }\r\n                }\r\n                checkNodePositions(child, aggressiveChecks);\r\n                return;\r\n            }\r\n\r\n            // Otherwise, the node is entirely before the change range.  No need to do anything with it.\r\n            Debug.assert(fullEnd < changeStart);\r\n        }",
+          "start": 513285,
+          "end": 513285,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10265,
+          "declarationStart": 514429,
+          "declarationText": "(nodes: NodeArray<Node>) => void",
+          "start": 514457,
+          "end": 514461,
+          "before": "void",
+          "after": "undefined"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10279,
+          "declarationStart": 514947,
+          "declarationText": "function visitArray(array: NodeArray<Node>) {\r\n            Debug.assert(array.pos <= array.end);\r\n            if (array.pos > changeRangeOldEnd) {\r\n                // Array is entirely after the change range.  We need to move it, and move any of\r\n                // its children.\r\n                moveElementEntirelyPastChangeRange(array, sourceFile, /*isArray*/ true, delta, oldText, newText, aggressiveChecks);\r\n                return;\r\n            }\r\n\r\n            // Check if the element intersects the change range.  If it does, then it is not\r\n            // reusable.  Also, we'll need to recurse to see what constituent portions we may\r\n            // be able to use.\r\n            const fullEnd = array.end;\r\n            if (fullEnd >= changeStart) {\r\n                markAsIntersectingIncrementalChange(array);\r\n\r\n                // Adjust the pos or end (or both) of the intersecting array accordingly.\r\n                adjustIntersectingElement(array, changeStart, changeRangeOldEnd, changeRangeNewEnd, delta);\r\n                for (const node of array) {\r\n                    visitNode(node);\r\n                }\r\n                return;\r\n            }\r\n\r\n            // Otherwise, the array is entirely before the change range.  No need to do anything with it.\r\n            Debug.assert(fullEnd < changeStart);\r\n        }",
+          "start": 514990,
+          "end": 514990,
+          "before": "",
+          "after": ": undefined"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "beforeSha256": "f34112c624147a4adaf9f580d59acbb592687641194eb092f89a41724d10b13b",
+      "afterSha256": "be45803f3842bb2e14720aedda5cd3477e63050ba0a6d1d7e9b3fe28e0a603df",
+      "edits": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1782,
+          "declarationStart": 84548,
+          "declarationText": "(name, index) => processRootFile(name, /*isDefaultLib*/ false, { kind: FileIncludeKind.RootFile, index })",
+          "start": 84561,
+          "end": 84561,
+          "before": "",
+          "after": ": undefined"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3291,
+          "declarationStart": 164082,
+          "declarationText": "function processRootFile(fileName: string, isDefaultLib: boolean, reason: FileIncludeReason) {\r\n        processSourceFile(normalizePath(fileName), isDefaultLib, /*packageId*/ undefined, reason);\r\n    }",
+          "start": 164174,
+          "end": 164174,
+          "before": "",
+          "after": ": undefined"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "beforeSha256": "e9c78f8c78e5f78e893c9dd371a91c8bfdd8c98d2951c4b6174aa37d41475216",
+      "afterSha256": "f8dc15db9cc3afa950a3007f50d3456e91eeedb9891982f10a9e3c64a2a111e6",
+      "edits": [
+        {
+          "file": "src/compiler/symbolWalker.ts",
+          "line": 71,
+          "declarationStart": 2464,
+          "declarationText": "function visitType(type: Type | undefined): void {\r\n            if (!type) {\r\n                return;\r\n            }\r\n\r\n            if (visitedTypes[type.id]) {\r\n                return;\r\n            }\r\n            visitedTypes[type.id] = type;\r\n\r\n            // Reuse visitSymbol to visit the type's symbol,\r\n            //  but be sure to bail on recuring into the type if accept declines the symbol.\r\n            const shouldBail = visitSymbol(type.symbol);\r\n            if (shouldBail) return;\r\n\r\n            // Visit the type's related types, if any\r\n            if (type.flags & TypeFlags.Object) {\r\n                const objectType = type as ObjectType;\r\n                const objectFlags = objectType.objectFlags;\r\n                if (objectFlags & ObjectFlags.Reference) {\r\n                    visitTypeReference(type as TypeReference);\r\n                }\r\n                if (objectFlags & ObjectFlags.Mapped) {\r\n                    visitMappedType(type as MappedType);\r\n                }\r\n                if (objectFlags & (ObjectFlags.Class | ObjectFlags.Interface)) {\r\n                    visitInterfaceType(type as InterfaceType);\r\n                }\r\n                if (objectFlags & (ObjectFlags.Tuple | ObjectFlags.Anonymous)) {\r\n                    visitObjectType(objectType);\r\n                }\r\n            }\r\n            if (type.flags & TypeFlags.TypeParameter) {\r\n                visitTypeParameter(type as TypeParameter);\r\n            }\r\n            if (type.flags & TypeFlags.UnionOrIntersection) {\r\n                visitUnionOrIntersectionType(type as UnionOrIntersectionType);\r\n            }\r\n            if (type.flags & TypeFlags.Index) {\r\n                visitIndexType(type as IndexType);\r\n            }\r\n            if (type.flags & TypeFlags.IndexedAccess) {\r\n                visitIndexedAccessType(type as IndexedAccessType);\r\n            }\r\n        }",
+          "start": 2508,
+          "end": 2512,
+          "before": "void",
+          "after": "undefined"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "beforeSha256": "18dc472c3bda1fd9deb5a7d051e7a3bb36576c5408fbdf4caca7323299cd1eb5",
+      "afterSha256": "57ba4bc6ac88589c2f9605980301c7defcd19f082b4c27c1e087b6a79781019e",
+      "edits": [
+        {
+          "file": "src/compiler/transformers/es2017.ts",
+          "line": 611,
+          "declarationStart": 24184,
+          "declarationText": "function hoistVariable({ name }: VariableDeclaration | BindingElement) {\r\n        if (isIdentifier(name)) {\r\n            hoistVariableDeclaration(name);\r\n        }\r\n        else {\r\n            for (const element of name.elements) {\r\n                if (!isOmittedExpression(element)) {\r\n                    hoistVariable(element);\r\n                }\r\n            }\r\n        }\r\n    }",
+          "start": 24254,
+          "end": 24254,
+          "before": "",
+          "after": ": undefined"
+        }
+      ]
+    }
+  ]
+}

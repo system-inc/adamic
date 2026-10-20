@@ -1,0 +1,789 @@
+{
+  "measurementMode": "void-widening-only-source-scan",
+  "before": 142,
+  "after": 31,
+  "new": [],
+  "removed": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48688,
+      "column": 74,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ImportSpecifier, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42774,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3040,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2995,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5366,
+      "column": 54,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: CaseClause | DefaultClause, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 163,
+      "column": 48,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeParameter, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49640,
+      "column": 56,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42912,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: NamedTupleMember | TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2936,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3038,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3074,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47100,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ClassElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2882,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3054,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18903,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (t: Type) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49645,
+      "column": 53,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10112,
+      "column": 67,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42917,
+      "column": 29,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 127,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49602,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3091,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 17984,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49188,
+      "column": 36,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2959,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38174,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2962,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49635,
+      "column": 55,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47146,
+      "column": 61,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 17984,
+      "column": 39,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36582,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49630,
+      "column": 50,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10112,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3056,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44770,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2955,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5385,
+      "column": 73,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: VariableDeclaration, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3063,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 981,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2984,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8226,
+      "column": 61,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: BindingElement | OmittedExpression, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49756,
+      "column": 48,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10265,
+      "column": 72,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3652,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42494,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 37553,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42164,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46649,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 164,
+      "column": 47,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: BaseType, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1089,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2957,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3012,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3576,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ClassElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3001,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1093,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 119,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49669,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3446,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1313,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2946,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5370,
+      "column": 67,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48765,
+      "column": 53,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ExportSpecifier, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1782,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: string, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2620,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 4349,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5871,
+      "column": 53,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: SynthesizedComment, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3060,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5418,
+      "column": 58,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ImportSpecifier, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5864,
+      "column": 52,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: SynthesizedComment, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2948,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5402,
+      "column": 60,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: BindingElement | OmittedExpression, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14838,
+      "column": 39,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (t: Type) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3032,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1782,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 152,
+      "column": 47,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeParameter, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3070,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44774,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47087,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ClassElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3016,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2871,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "line": 608,
+      "column": 36,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: VariableDeclaration, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3251,
+      "column": 52,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ShorthandPropertyAssignment, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42995,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47127,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10265,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 45126,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: BindingElement | OmittedExpression, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5396,
+      "column": 71,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14832,
+      "column": 65,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (t: Type) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5344,
+      "column": 53,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 2403,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2938,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10228,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 45300,
+      "column": 36,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: VariableDeclaration, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 18910,
+      "column": 65,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (t: Type) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3058,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 30360,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 35577,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeNode, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2942,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8231,
+      "column": 60,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2940,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1313,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42863,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3014,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3036,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2944,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47854,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1093,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 3598,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14838,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49756,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: SourceFile, index: number) => void | undefined"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3034,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | number | Symbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46953,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined"
+    }
+  ],
+  "voidBefore": 116,
+  "voidAfter": 5,
+  "voidRemoved": 111,
+  "newRefused": []
+}
