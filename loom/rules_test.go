@@ -1,6 +1,7 @@
 package loom
 
 import (
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -69,6 +70,11 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"builders null", `{"blocks": {"on": true, "budget": 2, "builders": null}, "restack": {"on": false}}`, "a list of host names"},
 		{"builders a string", `{"blocks": {"on": true, "budget": 2, "builders": "Adam"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"builders not names", `{"blocks": {"on": true, "budget": 2, "builders": [1]}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"builders a digit first", `{"blocks": {"on": true, "budget": 2, "builders": ["0Adam"]}, "restack": {"on": false}}`, `not "0Adam"`},
+		{"builders past a token's length", `{"blocks": {"on": true, "budget": 2, "builders": ["A` + strings.Repeat("a", 32) + `"]}, "restack": {"on": false}}`, "each once, not"},
+		{"tipFirst null", `{"blocks": {"on": true, "budget": 2, "tipFirst": null}, "restack": {"on": false}}`, "true or false"},
+		{"tipFirst a string", `{"blocks": {"on": true, "budget": 2, "tipFirst": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"tipFirst a number", `{"blocks": {"on": true, "budget": 2, "tipFirst": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -138,6 +144,22 @@ func TestRulesTakeBuilders(t *testing.T) {
 	}
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Blocks.Builders != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+}
+
+// A tipFirst the lander takes reads here too (Loom 0.8.375, #fz4vetb): true or false, and absent as absent. Mutant: a null
+// taken as absent (TestRulesRefuseMistakes' "tipFirst null").
+func TestRulesTakeATipFirst(t *testing.T) {
+	t.Parallel()
+	for _, on := range []bool{true, false} {
+		rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "tipFirst": ` + strconv.FormatBool(on) + `}, "restack": {"on": false}}`))
+		if err != nil || rules.Blocks.TipFirst == nil || *rules.Blocks.TipFirst != on {
+			t.Fatalf("%+v, %v", rules.Blocks, err)
+		}
+	}
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.TipFirst != nil {
 		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 }

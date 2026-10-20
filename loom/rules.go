@@ -57,6 +57,9 @@ type BlocksRule struct {
 	// Builders: the boxes the queue leases whole blocks to, host names each once, at most MaximumBlocksBuilders. Optional,
 	// and never null; absent reads as no box leased (Loom 0.8.375, the one-box loop, #mxbymz5).
 	Builders []string `json:"builders"`
+	// TipFirst: a leased block plans its tip first, a green tip landing the whole block and a red one bisecting. Optional,
+	// and never null; absent reads as off (Loom 0.8.375, #fz4vetb).
+	TipFirst *bool `json:"tipFirst"`
 }
 
 // DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
@@ -89,8 +92,8 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders or a door the lander would refuse, or
-// anything after the object is refused, so a typo can't land as a rule nobody meant.
+// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst or a door the lander would
+// refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
@@ -146,6 +149,9 @@ func ParseRules(data []byte) (Rules, error) {
 			seen[box] = true
 		}
 	}
+	if tipFirst, present := raw.Blocks["tipFirst"]; present && (bytes.Equal(bytes.TrimSpace(tipFirst), []byte("null")) || rules.Blocks.TipFirst == nil) {
+		return Rules{}, fmt.Errorf("rules.json: blocks' tipFirst is %s, and it's true or false", tipFirst)
+	}
 	if raw.Door != nil {
 		var bounds map[string]json.RawMessage
 		if bytes.Equal(bytes.TrimSpace(raw.Door), []byte("null")) || json.Unmarshal(raw.Door, &bounds) != nil {
@@ -173,5 +179,6 @@ func ParseRules(data []byte) (Rules, error) {
 // changeIDPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
 var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
 
-// builderPattern is a box's host name as Loom's builder marks spell it (Loom's builder/claims.go boxPattern).
-var builderPattern = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9-]{0,62}$`)
+// builderPattern is a box name as a coordinator token's box claim carries it, the Loom Worker's Token.ts BoxPattern and
+// the lander's own (Node on #kqsehcq), so a rules name no token can carry is refused rather than never leased.
+var builderPattern = regexp.MustCompile(`^[A-Za-z][A-Za-z0-9-]{0,31}$`)
