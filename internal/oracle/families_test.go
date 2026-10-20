@@ -41,6 +41,15 @@ var families = []family{
 		"internal/oracle/testdata/bitwise_sweep.a",
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 	}},
+	// 579.6 s in Loom as one test: each fixture's wasm32 build, its import inventory, and runs on node:wasi, the shim
+	// and Node, so about TestWASIAgreesWithNode's cost and a half, over as many shards and the same solo fixtures.
+	{name: "TestWASIShimAgreesWithNode", shards: 128, runner: "runWASIShimShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "shim vs expected witness: stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
+		"internal/oracle/testdata/bitwise_sweep.a",
+		"internal/oracle/testdata/normalize_coverage_limit.a",
+	}},
+	// 60.1 s in Loom as one test over 8 input fixtures, each an adamic build of the runtime when uncached; at 8 shards
+	// the worst holds two.
+	{name: "TestWASIInputAgreesWithNode", shards: 8, runner: "runWASIInputShard", keys: inputFixturePaths, planted: "internal/oracle/testdata/read_files.a", caught: "read_files.a: stdout differs", requires: "ADAMIC_ORACLE_WASI"},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 rows of counts.md, each a counted build and run.
