@@ -29,6 +29,7 @@ const (
 // import taken out of a package that builds (internal/oracle's).
 func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 	t.Parallel()
+	// Reads: *.go
 	root, err := filepath.Abs(filepath.Join("..", ".."))
 	if err != nil {
 		t.Fatal(err)

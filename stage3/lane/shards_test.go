@@ -38,6 +38,7 @@ type unit struct {
 // repositoryRoot is the checkout's root, two directories above stage3/lane.
 func repositoryRoot(t testing.TB) string {
 	t.Helper()
+	// Reads: stage3/*
 	root, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)

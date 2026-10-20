@@ -57,6 +57,17 @@ func mutantNativeBuildFiles(t *testing.T) []string {
 	t.Helper()
 	files := append([]string(nil), tsprinterCompilerInputs...)
 	for _, directory := range []string{"stage1/cohere/tsprinter", "stage1/typescript/parser", "stage1/typescript/scanner"} {
+		// Reads: *.ts
+		// Reads: stage1/typescript/parser/grammar.ts
+		// Reads: stage1/typescript/parser/jsx.ts
+		// Reads: stage1/typescript/parser/lookahead.ts
+		// Reads: stage1/typescript/parser/nodes.ts
+		// Reads: stage1/typescript/parser/parser.ts
+		// Reads: stage1/typescript/parser/statements.ts
+		// Reads: stage1/typescript/scanner/characters.ts
+		// Reads: stage1/typescript/scanner/scanner.ts
+		// Reads: stage1/typescript/scanner/tokens.ts
+		// Reads: stage1/typescript/parser/*
 		entries, err := os.ReadDir(filepath.Join(oracles.Repository, directory))
 		if err != nil {
 			t.Fatal(err)

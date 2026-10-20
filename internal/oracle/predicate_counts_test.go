@@ -23,10 +23,12 @@ compiler proof counts, independent of the runtime allocation counts above.
 
 func predicateCountsTable(t *testing.T) string {
 	t.Helper()
+	// Reads: internal/lower/testdata/*
 	paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.a"))
 	if err != nil || len(paths) == 0 {
 		t.Fatalf("predicate fixtures: %v", err)
 	}
+	// Reads: internal/lower/testdata/*
 	typeScriptPaths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*.ts"))
 	if err != nil {
 		t.Fatal(err)
