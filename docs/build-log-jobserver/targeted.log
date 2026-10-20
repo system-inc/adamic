@@ -1,0 +1,13 @@
+=== RUN   TestRuntimeArchiveLogsItsCompilesAndItsHit
+    runtime_build_log_test.go:134: 4 units and ar logged as misses under the archive's key, the cache's archive as a hit, one archive's bytes
+--- PASS: TestRuntimeArchiveLogsItsCompilesAndItsHit (0.16s)
+=== RUN   TestOneUnitBuildLogsItsClang
+    runtime_build_log_test.go:188: logged cBuild program, and the binary is the same bytes without the log
+--- PASS: TestOneUnitBuildLogsItsClang (0.76s)
+=== RUN   TestSplitBuildLogsEachUnitAndTheLink
+    units_build_log_test.go:132: 3 units: off, miss and hit each logged once a unit with one link, and five binaries the same bytes
+--- PASS: TestSplitBuildLogsEachUnitAndTheLink (0.48s)
+=== RUN   TestBuildLogKeepsANameOnOneLine
+--- PASS: TestBuildLogKeepsANameOnOneLine (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	1.415s

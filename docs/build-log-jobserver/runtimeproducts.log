@@ -1,0 +1,26 @@
+=== RUN   TestProduct_LeanCensusExports
+=== PAUSE TestProduct_LeanCensusExports
+=== RUN   TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== PAUSE TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== RUN   TestTheLeanCensusFollowsTheBuildAndFailsClosed
+=== PAUSE TestTheLeanCensusFollowsTheBuildAndFailsClosed
+=== RUN   TestTheJobserverNeverReachesAnArchivesBytes
+=== PAUSE TestTheJobserverNeverReachesAnArchivesBytes
+=== RUN   TestAnArchivesBuildIsJournaledAsRuntimeproducts
+--- PASS: TestAnArchivesBuildIsJournaledAsRuntimeproducts (0.00s)
+=== CONT  TestProduct_LeanCensusExports
+=== CONT  TestTheLeanCensusFollowsTheBuildAndFailsClosed
+=== CONT  TestTheJobserverNeverReachesAnArchivesBytes
+=== CONT  TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+--- PASS: TestTheJobserverNeverReachesAnArchivesBytes (9.30s)
+=== NAME  TestProduct_LeanCensusExports
+    census_test.go:61: build go_list_-export__./internal/native_listing.json 757f41f27da2 miss 16.15
+--- PASS: TestProduct_LeanCensusExports (16.41s)
+=== NAME  TestTheLeanCensusFollowsTheBuildAndFailsClosed
+    census_test.go:778: build go_list_-export__./internal/native_listing.json 757f41f27da2 hit 16.15
+=== NAME  TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+    census_test.go:737: build go_list_-export__./internal/native_listing.json 757f41f27da2 hit 16.15
+--- PASS: TestTheLeanCensusFollowsTheBuildAndFailsClosed (16.55s)
+--- PASS: TestTheRuntimeBuildReachesOnlyItsDeclaredFiles (16.55s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native/runtimeproducts	16.569s
