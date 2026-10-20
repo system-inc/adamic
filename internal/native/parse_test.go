@@ -196,7 +196,7 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 				pending = append(pending, line)
 			}
 		}
-		writeFusion(t, "parseInt", "parseInt cases arm64 Node answers fused: V8's loop (v8ParseInt) gives the pinned value unfused and Node's fused.", listed, pending)
+		writeFusion(t, "parseInt", "parseInt cases arm64 Node answers fused: V8's loop (v8ParseInt) gives the pinned value unfused and Node's fused.", listed, nil, pending)
 		return
 	}
 	mismatches, held := 0, 0
