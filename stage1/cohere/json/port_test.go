@@ -207,10 +207,30 @@ type jsonPortBinaries struct {
 	oracle, entry, script, release, sanitized, runner string
 }
 
-// jsonPortAgree holds the port to the Go oracle over items, as a top shard and a dedicated owner both check them, and
-// returns the Go oracle's answers. With ADAMIC_JSON_ARTIFACTS set, the cases and each side's output go under
-// artifactName.
-func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, artifactName string) string {
+// jsonPortPart is which of a port agreement's sides one test runs. A top shard and the inventory owner run the whole.
+// A heavy case's owner is two tests, its unsanitized part and its sanitized part, which go test runs in parallel, so the
+// case's work isn't one test running five sides one after another. Each part runs the Go oracle, so each holds its own
+// sides to it.
+type jsonPortPart int
+
+const (
+	jsonPortWhole jsonPortPart = iota
+	jsonPortUnsanitized
+	jsonPortSanitized
+)
+
+// jsonPortPartSides are the sides each part runs, by jsonPortAgree's numbering: 0 the Go oracle, 1 Node, 2 release, 3
+// the sanitized port, 4 the JavaScript backend. The two parts are the whole between them (TestJSONPortPartsAreTheWhole).
+var jsonPortPartSides = map[jsonPortPart][]int{
+	jsonPortWhole:       {0, 1, 2, 3, 4},
+	jsonPortUnsanitized: {0, 1, 2, 4},
+	jsonPortSanitized:   {0, 3},
+}
+
+// jsonPortAgree holds the port to the Go oracle over items, as a top shard and a dedicated owner both check them, with
+// the sides part names, and returns the Go oracle's answers. With ADAMIC_JSON_ARTIFACTS set, the cases and each side's
+// output go under artifactName.
+func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, artifactName string, part jsonPortPart) string {
 	t.Helper()
 	input, _ := protocol(items, make([]answer, len(items)))
 	path := filepath.Join(t.TempDir(), "cases.txt")
@@ -233,6 +253,10 @@ func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, ar
 		sanitizedSide,
 		{"JavaScript backend", "node", []string{"--disable-warning=ExperimentalWarning", binaries.runner, binaries.script, "--cases", path}, nil},
 	}
+	runs := map[int]bool{}
+	for _, side := range jsonPortPartSides[part] {
+		runs[side] = true
+	}
 	waves := [][]int{{0, 1, 2, 4}, {3}}
 	results := make([]chunkResult, len(sides))
 	timings := make([]time.Duration, len(sides))
@@ -243,7 +267,7 @@ func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, ar
 	for _, wave := range waves {
 		var present []int
 		for _, side := range wave {
-			if side < len(sides) {
+			if side < len(sides) && runs[side] {
 				present = append(present, side)
 			}
 		}
@@ -258,7 +282,7 @@ func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, ar
 	// A sanitized side's time is its run alone, and its wait for the memory budget is said beside it: the wait
 	// is other shards' work, the one part of this test's 90 s it doesn't control (#q2qjes8).
 	for side, timing := range timings {
-		if sides[side].name == "" {
+		if sides[side].name == "" || !runs[side] {
 			continue
 		}
 		if wait := results[side].result.admissionWait; wait > 0 {
@@ -276,24 +300,26 @@ func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, ar
 		t.Fatalf("%s Go oracle did not answer all %d cases", t.Name(), len(items))
 	}
 	for side := 1; side < len(sides); side++ {
-		if sides[side].name == "" {
+		if sides[side].name == "" || !runs[side] {
 			continue
 		}
 		if results[side].err != nil {
 			t.Fatalf("%s %s: %v", t.Name(), sides[side].name, results[side].err)
 		}
 		compare(t, t.Name()+" "+sides[side].name, results[side].result, expected, items)
-		if side >= 3 {
+		// The sanitized part runs no release, and needs none: its output equal to the Go oracle's, byte for byte, is
+		// equal to release's, which the unsanitized part holds to the same answer.
+		if side >= 3 && runs[2] {
 			compare(t, t.Name()+" "+sides[side].name+" vs release", results[side].result, string(results[2].result.stdout), items)
 		}
 	}
-	if runtime.GOOS != "linux" {
+	if runtime.GOOS != "linux" && runs[2] {
 		report := execute(t, nil, "leaks", "--atExit", "--", binaries.release, "--cases", path)
 		if report.exitCode != 0 {
 			t.Fatalf("%s leaks: %s", t.Name(), report.stdout)
 		}
 	}
-	if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
+	if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" && runs[3] {
 		// Calibration uses the same per-case Go answers as mandatory comparisons.
 		answers, err := jsonPortAnswers(expected, len(items))
 		if err != nil {
@@ -308,6 +334,9 @@ func jsonPortAgree(t *testing.T, items []textCase, binaries jsonPortBinaries, ar
 		}
 		writeJSON(t, filepath.Join(directory, "cases.json"), items)
 		for side, s := range sides {
+			if !runs[side] {
+				continue
+			}
 			name := strings.NewReplacer("/", "-", " ", "-").Replace(s.name)
 			if err := os.WriteFile(filepath.Join(directory, name+".txt"), results[side].result.stdout, 0644); err != nil {
 				t.Fatal(err)
@@ -389,7 +418,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 				t.Log("empty hash bucket")
 				return
 			}
-			references[ordinal] = jsonPortAgree(t, items, binaries, fmt.Sprintf("shard-%04d", ordinal))
+			references[ordinal] = jsonPortAgree(t, items, binaries, fmt.Sprintf("shard-%04d", ordinal), jsonPortWhole)
 			t.Logf("case range [%d:%d]; %d cases; execution %.3fs; shared setup waited %.3fs; execution plus locally measured builds %.3fs", shard.start, shard.end, len(items), time.Since(start).Seconds(), setupTime.Seconds(), (time.Since(start) + setupTime).Seconds())
 		}(t)
 	}
