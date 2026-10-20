@@ -37,6 +37,9 @@
     "cmd/adamic TestProduct_CommandRuntimeWASI": [
       "internal/oracle TestProduct_NativeRuntimesWASI0"
     ],
+    "cmd/adamic TestProduct_CommandRuntimeWASICounted": [
+      "internal/oracle TestProduct_NativeRuntimesWASIRequest0"
+    ],
     "cmd/adamic-admission-delta TestProduct_AdmissionCompilerReady": [
       "cmd/adamic-admission-delta TestProduct_AdmissionCompiler"
     ],
