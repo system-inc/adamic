@@ -21,7 +21,7 @@ these files, and `go test ./internal/native -args -update-fusion`, run on arm64,
 |---|---:|---|---|
 | parseInt.txt | 4,598 | v8ParseInt, V8's HandleGenericCase loop in Go, fused and unfused | every architecture, no Node |
 | ieee754.txt | 1,406 | the fused twin (fusedTwin, Options.contract) gives arm64 Node's answer | arm64 |
-| ieee754-pending.txt | 163 | none yet: log2 101, atan 26, log1p 16, asinh 12, atanh 6, atan2 2 | red on arm64 |
+| ieee754-pending.txt | 164 | none yet: log2 99, atan 28, log1p 17, asinh 12, atanh 6, atan2 2 | red on arm64 |
 | parseInt-pending.txt | 0 | none needed | |
 
 On x86-64, Node must answer every listed case's pinned value. A fused answer there is red. That run is
