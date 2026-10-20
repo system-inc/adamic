@@ -39,17 +39,27 @@ adamic_environment *adamic_environment_new(size_t count) {
 	adamic_environment *environment = adamic_allocate(sizeof *environment + count * sizeof environment->cells[0], adamic_kind_environment);
 	environment->count = count;
 	environment->functions = NULL;
-	for (size_t index = 0; index < count; index++) {
-		environment->cells[index] = (adamic_cell){.heap = {.kind = adamic_kind_cell}, .owner = environment};
-	}
+	adamic_environment_initialize_cells(&environment->heap, environment->cells, count);
 	return environment;
+}
+
+void adamic_environment_initialize_cells(adamic_heap *owner, adamic_cell *cells, size_t count) {
+	for (size_t index = 0; index < count; index++) {
+		cells[index] = (adamic_cell){.heap = {.kind = adamic_kind_cell}, .owner = owner};
+	}
+}
+
+void adamic_environment_drop_cells(adamic_cell *cells, size_t count, void (*drop)(void *)) {
+	for (size_t index = 0; index < count; index++) {
+		if (cells[index].references) { drop(cells[index].value.reference); }
+	}
 }
 
 // A live value is unique for its code and activation. If no owner kept it, a
 // later reference can recreate it: no surviving reference can observe that gap.
 // Captured cells keep the frame alive; its cache never keeps a closure alive.
 adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
-	adamic_environment *owner = identity->owner;
+	adamic_environment *owner = (adamic_environment *)identity->owner;
 	for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
 #ifdef ADAMIC_CLOSURE_CONVENTION
         if (held->counted) { continue; }
@@ -74,7 +84,7 @@ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code co
 
 #ifdef ADAMIC_CLOSURE_CONVENTION
 adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
- adamic_environment *owner = identity->owner;
+ adamic_environment *owner = (adamic_environment *)identity->owner;
  for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
  if (held->counted && held->counted_code == code) { return adamic_retain(held); }
  }

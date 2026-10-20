@@ -1,0 +1,10 @@
+async function run(fail: boolean): Promise<string> {
+    try {
+        if (fail) { await Promise.reject<number>(new Error("branch")); return "missed"; }
+        return `value:${await Promise.resolve(7)}`;
+    } catch (error) {
+        if (error instanceof Error) { return `caught:${error.message}`; }
+        return "wrong error";
+    }
+}
+console.log(`${await run(false)}|${await run(true)}`);

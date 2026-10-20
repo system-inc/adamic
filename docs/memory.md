@@ -488,6 +488,94 @@ Its result may now name a placeholder too: `same(node)` returns the argument, pr
 
 The two masked mutants drop conditions that keep the abstract reach sound when code the callee can't see adds links. Every link such code could add is itself a write into a cycle-capable slot (every edge on a cycle is one), judged in that code with its parameters outside, and refused there; so no whole program is accepted by those mutants that the proof refuses. They're kept because the proof's argument rests on them, not because a probe needs them.
 
+## Async suspension ownership
+
+Async bodies use the ordinary IR and a counted suspension frame. The active
+caller owns the frame during the initial resume; thereafter a reaction owns it
+until its resume callback returns. That frame lifetime permits three borrows:
+
+- Reading an uncaptured slot needs no statement retain when the binding is not
+  assigned inside an expression. No callee can replace that binding while the
+  resume is running. Captured bindings and expression assignments keep the
+  ordinary read snapshot and its count.
+- A direct local alias of another stable slot in the same frame can borrow
+  across awaits. Both bindings must be uncaptured references of the same type,
+  with no assignments, expression writes, or repeated declarations in a loop.
+  The source slot owns the value through every use of the alias. Borrowed slots
+  advertise no owned child and are cleared without releasing their values.
+- An awaited reference can borrow the immutable payload of a stable promise
+  slot in that same frame. The promise owns its payload and the frame owns the
+  promise through every use, including a subsequent await. A repeated or mutable
+  promise slot, or a captured result, keeps the result's independent count.
+
+Conditional results, mutable/global sources, field and element reads, and
+captured aliases do not get this proof. Their snapshots own independent
+counts because the original place may change while suspended.
+
+Reference parameters still take a frame count on entry. An async call returns
+before its body finishes: its caller may release the argument's last count
+before the next resume. Ordinary synchronous parameter borrowing does not
+establish that longer lifetime. Captured slots also keep their owned values
+when the async body finishes, since escaped closures keep their interior cells
+and therefore the frame alive. Per-iteration captured cells are not yet
+supported in this tree; such sources are refused rather than borrowed.
+
+An await must queue a reaction even for an already settled promise. Each
+reaction owns its frame and its promise until after resume. For a settled
+promise, that promise count is sufficient: installing and immediately clearing
+an additional `frame.waiting` count is redundant. A pending await still needs
+its waiting edge and subscription registry ownership for settlement, cancellation
+and teardown. Settlement gives each reaction its promise count before clearing
+the waiting edge, so these queued owners protect the promise through registry
+removal. With no reactions there is no waiting or registry edge to remove. A
+separate temporary self-retain during settlement is consequently redundant.
+Abandonment keeps its temporary self-retain: cleanup can remove the waiting
+and registry owners without creating any replacement queued reaction.
+
+A promise owns a reference payload independently of the frame that produced it.
+The producer may finish before any waiter runs, and a resumed value may have to
+survive further awaits. Payload adoption therefore retains an existing borrowed
+value; it is not permission to borrow the producer's frame. The await result
+likewise takes an owned slot unless the same-frame promise proves its lifetime.
+Mutable operand snapshots and rejection values keep their counts
+across callback boundaries, catch bindings and suspended finally paths.
+
+A freshly built thrown Error already belongs to the throwing statement. The
+pending-exception word takes that owner before statement cleanup, rather than
+retaining and then releasing the same temporary. Borrowed thrown values still
+need a retain. At the entry module's uncaught-error report, the root promise
+remains owned and `adamic_uncaught` never returns; its payload can be borrowed
+for that report. Neither rule weakens catch or finally ownership.
+
+Empty slots are not owners. Initial stores do not release NULL, finishing clears
+uncaptured owned slots and disables their child flags, and frame/queue destructors
+skip empty edges. This removes release calls without a matching retain. It does
+not skip the release of an initialized owned value. A borrowed alias may be
+cleared after its owner without reading the now-stale pointer.
+
+The unit-1 closed grammar represented a rejection as its message string. The
+ordinary lowering represents an actual Error object so catch/finally and Error
+identity use the ordinary exception ABI; its name and message fields own their
+references. Those constructor retains are necessary under that ABI. Likewise,
+ordinary function values used by `typeof` may allocate a closure that the old
+closed grammar classified directly. These representation differences are not
+suspension borrow proofs and must not be hidden by changing the counter.
+
+A release count also differs from an ownership-edge count. Unit 1 released
+frame children through the destructor's uncounted drop callback. Unit 2 clears
+uncaptured owned slots explicitly at completion, since captured cells may keep
+the frame alive afterward. Those explicit releases are counted, including on
+error paths; an extra counted release does not imply an extra retained edge.
+
+The independent `TestAsyncCount*` witnesses run dynamic strings under ASan and
+against Node. Dropping a parameter, mutable-read snapshot, saved reassigned
+binding, borrowed rethrow retain, or root promise's frame-output retain must give
+an ASan use-after-free.
+`TestAsyncCount*Protocol` and the runtime owner mutants separately hold queued
+frames, queued promises, pending waiting edges and payload adoption. Every
+original async fixture has its own `TestAsyncOriginal*RetainBudget` against its
+unit-1 retain count, in addition to its existing differential fixture and count row.
+
 ## Exceptions, designed into counting
 
 `throw`, `try`, `catch` and `finally` are 0.2's (#zek5q21). Unwinding is where reference counting is hardest: every frame a throw leaves holds references (variables, a statement's temporaries, a loop's held array or map iterator), and each must be let go exactly once on the way out, or the program leaks or frees twice. This is the design; the first cut is below it.

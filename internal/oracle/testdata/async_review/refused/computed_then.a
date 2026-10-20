@@ -1,0 +1,5 @@
+async function f() {
+    const key: string = "th" + "en";
+    return { [key]: (resolve: (v: number) => void) => resolve(1) };
+}
+console.log(String(await f()));

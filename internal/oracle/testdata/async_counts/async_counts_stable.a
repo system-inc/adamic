@@ -1,0 +1,10 @@
+async function keep(seed: string): Promise<string> {
+    const held = seed;
+    const alias = held;
+    await Promise.resolve();
+    console.log(alias);
+    await Promise.resolve();
+    return alias + ':' + held;
+}
+function start(): Promise<string> { return keep(['dynamic', 'input'].join('-')); }
+console.log(await start());

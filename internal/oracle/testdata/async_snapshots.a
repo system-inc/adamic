@@ -1,0 +1,21 @@
+const object = { text: `before${1}`, extra: 1 };
+const items = [`left${2}`, `tail${3}`];
+async function change(): Promise<string> {
+    object.text = `after${4}`;
+    object.extra += 1;
+    await Promise.resolve();
+    return `result${5}`;
+}
+async function changeArray(): Promise<string> {
+    items[0] = `changed${6}`;
+    await Promise.resolve();
+    return `array${7}`;
+}
+async function run(): Promise<string> {
+    const earlier = object.text + await change();
+    const copy = { ...object, text: await change() };
+    const array = [...items, await changeArray()];
+    const fallback = object.text ?? await change();
+    return `${earlier}|${copy.text}:${copy.extra}|${array.join(",")}|${fallback}`;
+}
+console.log(await run());

@@ -1,0 +1,9 @@
+function condition(): boolean { throw new Error("condition"); }
+async function run(): Promise<string> {
+    try { return condition() ? await Promise.resolve("yes") : await Promise.resolve("no"); }
+    catch (error) {
+        if (error instanceof Error) { return `caught:${error.message}`; }
+        return "wrong error";
+    }
+}
+console.log(await run());
