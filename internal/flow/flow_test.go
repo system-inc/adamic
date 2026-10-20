@@ -51,7 +51,7 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return uninstrumentedAsyncFixture(path) || refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return runtimeBoundaryLoweringReason(path) != "" || uninstrumentedAsyncFixture(path) || refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
@@ -386,4 +386,15 @@ func uninstrumentedAsyncFixture(path string) bool {
 		return true
 	}
 	return false
+}
+
+// These boundary witnesses pin lowering refusals in the oracle and have no flow graph.
+func runtimeBoundaryLoweringReason(path string) string {
+	switch filepath.Base(path) {
+	case "coverage_regexp_call.a", "coverage_regexp_literal.a", "coverage_regexp_new.a":
+		return "stage 0 can't lower spreading a RegExp or its iterator yet"
+	case "coverage_view_array.a", "coverage_view_boolean.a", "coverage_view_closure.a", "coverage_view_number.a", "coverage_view_string.a":
+		return "Adamic 0.1 refuses an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties); copy the fields you mean by name"
+	}
+	return ""
 }
