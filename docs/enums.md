@@ -700,6 +700,21 @@ that open tag, and entered the checker's numeric-payload branch. Source Node
 printed `text1`; the unguarded native code printed `1`. This observation requires
 a soundness boundary beyond numeric-enum narrowing to never.
 
+A refinement of such a union is judged where it happens, not against the
+variable's declared union (#drwm5pj, ruled Oct 20): a value comparison proves a
+layout only when no member the incoming type keeps could hold that value with a
+different layout, and that holds only while every road from a number into a
+literal-tag slot is refused. At a read the checker narrowed, the lowering walks
+the flow graph back over every path. A comparison `r.f === x`, `!==`, `==`,
+`!=`, `switch (r.f)` or the truthiness of `r.f`, on a field read directly, passes
+when `f` can't lie in the type flowing into it. A step that changes nothing but
+null and undefined passes. Every other step that narrows (an alias, a
+destructured discriminant, an optional chain, a computed key, `switch (true)`,
+an accessor, a predicate, an assignment) and every flow node the walk doesn't
+know refuses, as before. So tsc's `kind` tests beside an open `templateFlags`
+compile, and a second test on an open tag after a first one doesn't
+(`enum_tag_flow_admitted.a`, `enum_tag_refused/`).
+
 The refusal holds wherever the refinement lands: on an intersection member, on
 a smaller union of members, and when the union's other member is an
 intersection. Until Oct 20 it looked only at plain object types, so each of
