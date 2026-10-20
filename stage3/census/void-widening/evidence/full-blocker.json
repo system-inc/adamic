@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-10-20T13:35:02Z",
+  "attempts": [
+    {
+      "name": "paired meter",
+      "pid": 8800,
+      "completedFileRecords": 0,
+      "exit": "not captured",
+      "state": "Z",
+      "cpuSeconds": 0.0
+    },
+    {
+      "name": "full before",
+      "pid": 11449,
+      "completedFileRecords": 0,
+      "exit": "not captured",
+      "state": "process absent"
+    },
+    {
+      "name": "full after",
+      "pid": 13109,
+      "completedFileRecords": 0,
+      "exit": "not captured",
+      "state": "R",
+      "cpuSeconds": 3430.31
+    }
+  ],
+  "memoryMax": "17179869184",
+  "memoryEvents": "low 0\nhigh 0\nmax 448869\noom 1\noom_kill 1\noom_group_kill 0\n",
+  "scope": "No full latent site count or no-new-refusal proof is established.",
+  "afterDisposition": "Stopped after the before measurement was lost; incomplete output is retained."
+}

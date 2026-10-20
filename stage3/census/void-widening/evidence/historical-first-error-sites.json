@@ -1,0 +1,706 @@
+[
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined",
+    "text": "src/compiler/binder.ts:1089:24: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Node, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 1089,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined",
+    "text": "src/compiler/binder.ts:1093:28: Adamic 0.1 refuses a void-returning function at the argument site seen as (node: Node) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 1093,
+    "column": 28
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined",
+    "text": "src/compiler/binder.ts:1093:34: Adamic 0.1 refuses a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 1093,
+    "column": 34
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2871:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2871,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2882:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2882,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2936:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2936,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2938:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2938,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2940:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2940,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2942:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2942,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2944:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2944,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2946:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2946,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2948:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2948,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2955:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2955,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2957:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2957,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2959:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2959,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2962:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2962,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2984:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2984,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2995:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2995,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3001:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3001,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3012:32: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3012,
+    "column": 32
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3014:32: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3014,
+    "column": 32
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3016:32: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3016,
+    "column": 32
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3032:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3032,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3034:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3034,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3036:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3036,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3038:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3038,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3040:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3040,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3054:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3054,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3056:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3056,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3058:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3058,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3060:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3060,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3063:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3063,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3070:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3070,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3074:28: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3074,
+    "column": 28
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:3091:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3091,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: ShorthandPropertyAssignment, index: number) => void | undefined",
+    "text": "src/compiler/binder.ts:3251:52: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: ShorthandPropertyAssignment, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 3251,
+    "column": 52
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined",
+    "text": "src/compiler/emitter.ts:981:28: Adamic 0.1 refuses a void-returning function at the argument site seen as (node: Node) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 981,
+    "column": 28
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:2403:31: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 2403,
+    "column": 31
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:2620:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 2620,
+    "column": 34
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:3446:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 3446,
+    "column": 34
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: ClassElement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:3576:31: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: ClassElement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 3576,
+    "column": 31
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:3598:31: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: TypeElement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 3598,
+    "column": 31
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:3652:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 3652,
+    "column": 34
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:4349:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 4349,
+    "column": 34
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5344:53: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5344,
+    "column": 53
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: CaseClause | DefaultClause, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5366:54: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: CaseClause | DefaultClause, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5366,
+    "column": 54
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5370:67: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Statement, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5370,
+    "column": 67
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: VariableDeclaration, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5385:73: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: VariableDeclaration, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5385,
+    "column": 73
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5396:71: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: ParameterDeclaration, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5396,
+    "column": 71
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: BindingElement | OmittedExpression, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5402:60: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: BindingElement | OmittedExpression, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5402,
+    "column": 60
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: ImportSpecifier, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5418:58: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: ImportSpecifier, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5418,
+    "column": 58
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: SynthesizedComment, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5864:52: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: SynthesizedComment, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5864,
+    "column": 52
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: SynthesizedComment, index: number) => void | undefined",
+    "text": "src/compiler/emitter.ts:5871:53: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: SynthesizedComment, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/emitter.ts",
+    "line": 5871,
+    "column": 53
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:579:16: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 579,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:584:16: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 584,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:589:16: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 589,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:594:16: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 594,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:599:16: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 599,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:605:20: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 605,
+    "column": 20
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:613:24: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 613,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:620:24: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 620,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:632:24: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 632,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:643:20: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 643,
+    "column": 20
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:663:24: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 663,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:667:20: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 667,
+    "column": 20
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:707:20: Adamic 0.1 refuses a void value at a return site whose function returns void | WatchOfConfigFile<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 707,
+    "column": 20
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:833:16: Adamic 0.1 refuses a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 833,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:839:16: Adamic 0.1 refuses a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 839,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:845:16: Adamic 0.1 refuses a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 845,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:850:16: Adamic 0.1 refuses a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 850,
+    "column": 16
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "text": "src/compiler/executeCommandLine.ts:899:12: Adamic 0.1 refuses a void value at a return site whose function returns void | SolutionBuilder<EmitAndSemanticDiagnosticsBuilderProgram>; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 899,
+    "column": 12
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined",
+    "text": "src/compiler/factory/nodeFactory.ts:1164:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1164,
+    "column": 34
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | undefined",
+    "text": "src/compiler/factory/nodeFactory.ts:1164:40: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 1164,
+    "column": 40
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined",
+    "text": "src/compiler/parser.ts:1313:24: Adamic 0.1 refuses a void-returning function at the argument site seen as (node: Node) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 1313,
+    "column": 24
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined",
+    "text": "src/compiler/parser.ts:1313:37: Adamic 0.1 refuses a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 1313,
+    "column": 37
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined",
+    "text": "src/compiler/parser.ts:10112:32: Adamic 0.1 refuses a void-returning function at the argument site seen as (node: Node) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 10112,
+    "column": 32
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined",
+    "text": "src/compiler/parser.ts:10112:67: Adamic 0.1 refuses a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 10112,
+    "column": 67
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined",
+    "text": "src/compiler/parser.ts:10228:32: Adamic 0.1 refuses a void-returning function at the argument site seen as (node: Node) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 10228,
+    "column": 32
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (node: Node) => void | undefined",
+    "text": "src/compiler/parser.ts:10265:37: Adamic 0.1 refuses a void-returning function at the argument site seen as (node: Node) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 10265,
+    "column": 37
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined",
+    "text": "src/compiler/parser.ts:10265:72: Adamic 0.1 refuses a void-returning function at the argument site seen as ((nodes: NodeArray<Node>) => void | undefined) | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/parser.ts",
+    "line": 10265,
+    "column": 72
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined",
+    "text": "src/compiler/symbolWalker.ts:119:45: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/symbolWalker.ts",
+    "line": 119,
+    "column": 45
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined",
+    "text": "src/compiler/symbolWalker.ts:127:33: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: Type, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/symbolWalker.ts",
+    "line": 127,
+    "column": 33
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: TypeParameter, index: number) => void | undefined",
+    "text": "src/compiler/symbolWalker.ts:152:47: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: TypeParameter, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/symbolWalker.ts",
+    "line": 152,
+    "column": 47
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: TypeParameter, index: number) => void | undefined",
+    "text": "src/compiler/symbolWalker.ts:163:48: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: TypeParameter, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/symbolWalker.ts",
+    "line": 163,
+    "column": 48
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: BaseType, index: number) => void | undefined",
+    "text": "src/compiler/symbolWalker.ts:164:47: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: BaseType, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/symbolWalker.ts",
+    "line": 164,
+    "column": 47
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the argument site seen as (element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined",
+    "text": "src/compiler/utilities.ts:8582:38: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/utilities.ts",
+    "line": 8582,
+    "column": 38
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | undefined",
+    "text": "src/compiler/utilities.ts:8582:44: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/utilities.ts",
+    "line": 8582,
+    "column": 44
+  },
+  {
+    "kind": "Refused",
+    "reason": "a void-returning function at the assignment site seen as (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any",
+    "text": "src/compiler/watch.ts:679:61: Adamic 0.1 refuses a void-returning function at the assignment site seen as (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/watch.ts",
+    "line": 679,
+    "column": 61
+  }
+]

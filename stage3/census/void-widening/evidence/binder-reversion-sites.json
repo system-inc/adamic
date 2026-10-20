@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "Refused",
+    "reason": "a void value at a return site whose function returns void | number | Symbol",
+    "text": "src/compiler/binder.ts:2995:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)",
+    "file": "src/compiler/binder.ts",
+    "line": 2995,
+    "column": 24,
+    "refusals": [
+      {
+        "kind": "Refused",
+        "reason": "a void value at a return site whose function returns void | number | Symbol",
+        "text": "src/compiler/binder.ts:2995:24: Adamic 0.1 refuses a void value at a return site whose function returns void | number | Symbol; declare the function's real return type (adamic/no-void-widening)"
+      }
+    ]
+  }
+]
