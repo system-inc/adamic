@@ -1,0 +1,19 @@
+// tsc writes a typed local before testing it: const node: Node = make() leaves the declared
+// union, so the kind test after it is the only step that narrows, and it proves the layout.
+enum Kind { Text, Count }
+enum Extra { Only }
+interface X { readonly kind: Kind.Text; readonly extra: Extra; readonly text: string }
+interface Y { readonly kind: Kind.Count; readonly count: number }
+type Node = X | Y;
+function numeric(): number { return 3; }
+function make(index: number): Node {
+	return index === 0 ? { kind: Kind.Text, extra: numeric(), text: 'ahra' } : { kind: Kind.Count, count: 41 };
+}
+for (let index = 0; index < 2; index++) {
+	const node: Node = make(index);
+	if (node.kind === Kind.Count) {
+		console.log(`${node.count + 1}`);
+	} else {
+		console.log(node.text);
+	}
+}
