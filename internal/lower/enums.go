@@ -374,6 +374,9 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 						}
 					}
 				}
+				if l.enumTagsShareValue(declared) {
+					return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
+				}
 			}
 		}
 	}
@@ -431,6 +434,46 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
 	}
 	return nil
+}
+
+// The checker never compares members of two enums, so it can exclude a member tagged Other.X
+// when the value is Kind.A, though both are 0 at run time. Members whose same-named tags come
+// from different enums with one value can't be told apart by that tag.
+func (l *lowering) enumTagsShareValue(union *checker.Type) bool {
+	type seen struct {
+		identity *ast.Symbol
+		member   int
+	}
+	tags := map[string]map[any]seen{}
+	for index, member := range union.Types() {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		for _, field := range l.checker.GetPropertiesOfType(member) {
+			tag := l.checker.GetTypeOfSymbol(field)
+			parts := []*checker.Type{tag}
+			if tag.Flags()&checker.TypeFlagsUnion != 0 {
+				parts = tag.Types()
+			}
+			for _, part := range parts {
+				if part.Flags()&checker.TypeFlagsNumberLiteral == 0 || part.Flags()&checker.TypeFlagsEnumLiteral == 0 {
+					continue
+				}
+				identity := l.enumIdentity(part)
+				value := part.AsLiteralType().Value()
+				if tags[field.Name] == nil {
+					tags[field.Name] = map[any]seen{}
+				}
+				first, found := tags[field.Name][value]
+				if !found {
+					tags[field.Name][value] = seen{identity: identity, member: index}
+				} else if first.identity != identity && first.member != index {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }
 
 // A refined type reaches an object when it is one, or is a union with a member that is one.

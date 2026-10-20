@@ -10,12 +10,13 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// A refinement by an open numeric enum tag is refused wherever it lands: on an intersection
-// member, on a smaller union of members, and when the union's other member is an intersection.
-// Each program prints text1 on Node, and main's native build printed 1, reading the string
-// payload as the number its refined type promised. Each program's whole diagnostic is pinned in
-// its .refused file. Mutant: enumRefusal counting and refining only plain object types, as it did,
-// which lowers every one of them.
+// A refinement by a tag that can't prove the layout is refused. An open numeric enum tag is
+// refused wherever the refinement lands: on an intersection member, on a smaller union of members,
+// and when the union's other member is an intersection. Tags from two enums that share a value
+// are refused too. Each program prints text1 on Node, and main's native build printed 1, reading
+// the string payload as the number its refined type promised. Each program's whole diagnostic is
+// pinned in its .refused file. Mutants: enumRefusal counting and refining only plain object types,
+// as it did, lowers the first three; enumTagsShareValue returning false lowers cross_enum.
 func TestEnumTagRefinementsAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/enum_tag_refused"
@@ -52,7 +53,7 @@ func TestEnumTagRefinementsAreRefused(t *testing.T) {
 			}
 		})
 	}
-	if programs != 3 {
-		t.Fatalf("%d programs in %s, want 3: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 4 {
+		t.Fatalf("%d programs in %s, want 4: a program added or removed needs this count changed with it", programs, directory)
 	}
 }

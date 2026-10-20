@@ -19,6 +19,7 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		{"cast", "enum SyntaxKind { First, Last } function kind(n: number): SyntaxKind { return n as SyntaxKind; }"},
 		{"containers", "enum E { A, B } const values: E[] = [E.A]; const numbers: number[] = values; numbers.push(77); const map = new Map<string, E>(); const wide: Map<string, number> = map; wide.set('x', 99);"},
 		{"optional_object", "enum E { A, B } function flags(box: { flags: E; other?: { flags: E } }): E { return box.other ? box.flags | box.other.flags : box.flags; }"},
+		{"distinct_enum_tags", "enum Kind { A, B } enum Other { X = 5, Y = 6 } interface P { readonly kind: Kind.A; readonly value: string } interface Q { readonly kind: Other.X; readonly value: number } function show(v: P | Q): void { if (v.kind === Other.X) { console.log(`${v.value + 1}`); } else { console.log(v.value); } } show({ kind: Kind.A, value: 'text' }); show({ kind: Other.X, value: 41 });"},
 	} {
 		t.Log(probe.name)
 		observation := "console.log(`${E.A}/${E[0]}`);"
@@ -37,6 +38,8 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 			observation += "console.log(`${values.join(',')}/${map.get('x')}`);"
 		case "optional_object":
 			observation += "console.log(`${flags({flags:E.A})}/${flags({flags:E.A,other:{flags:E.B}})}`);"
+		case "distinct_enum_tags":
+			observation = "console.log(`${Other.X}/${Kind[1]}`);"
 		}
 		lowersAndAgreesWithNode(t, probe.source+observation)
 	}
