@@ -107,7 +107,7 @@ func RuntimeRequestFor(options Options, features ...string) (RuntimeRequest, err
 
 // runtimeFeatures are the runtime's features a program's C turns on with a leading #define (cProgram), in the order
 // their -D flags are given.
-var runtimeFeatures = []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}
+var runtimeFeatures = []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"}
 
 // Features are the runtime features a program's C turns on, in runtimeFeatures' order.
 func Features(source string) []string {
