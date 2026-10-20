@@ -1,0 +1,16 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+// Two steps: kind narrows A | B | C to B | C, then tag, an open enum in B, narrows to C.
+enum Kind { A, B, C }
+enum BTag { B }
+enum CTag { C = 1, D = 2 }
+interface A { readonly kind: Kind.A; readonly value: boolean }
+interface B { readonly kind: Kind.B; readonly tag: BTag; readonly value: string }
+interface C { readonly kind: Kind.C; readonly tag: CTag; readonly value: number }
+function numeric(): number { return 1; }
+const b: B = { kind: Kind.B, tag: numeric(), value: 'text' };
+function show(v: A | B | C): void {
+	if (v.kind !== Kind.A) {
+		if (v.tag === CTag.C) { console.log(`${v.value + 1}`); }
+	}
+}
+show(b);
