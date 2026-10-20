@@ -222,6 +222,14 @@ func TestUnitKeyHoldsHasInclude(t *testing.T) {
 	flags := append(slices.Clone(unitKeyFlags), "-isystem", earlier, "-isystem", later)
 	unit := unitKeyProbe("MAYBE")
 	keying := testUnitKeying(t, unitFirst, common, flags, compiler, environment)
+	// The table names the absent header itself, wherever clang would look: clang's -M lists a file a __has_include
+	// found, so a plant moves the key through the closure too, but an absent one leaves only this line (Node's mutant:
+	// no __has_include name read).
+	for _, directory := range []string{earlier, later} {
+		if line := "candidate " + filepath.Join(directory, "maybe.h") + " absent"; !slices.Contains(keying.parts, line) {
+			t.Fatalf("the key doesn't hold %q", line)
+		}
+	}
 	directory := t.TempDir()
 	absent := compileUnitKey(t, unit, common, flags, compiler, keying, directory)
 	if got := observeUnitKey(t, compiler, absent); got != "0" {
@@ -337,8 +345,8 @@ func TestUnitKeyHoldsFrameworks(t *testing.T) {
 	}
 }
 
-// A header the key can't follow refuses the build's key: an include by a macro, whose name the key can't read, and a
-// header reading the time of the compile.
+// A header the key can't follow refuses the build's key: an include by a macro, whose name the key can't read, a
+// header reading the time of the compile, and an #embed or a __has_embed.
 func TestUnitKeyRefusesWhatItCannotFollow(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
@@ -352,6 +360,10 @@ func TestUnitKeyRefusesWhatItCannotFollow(t *testing.T) {
 		{"Date", []runtimeFile{{"units.h", []byte("static const char *adamic_when = __DATE__;\n")}}, "reads the time"},
 		{"Time", []runtimeFile{{"units.h", []byte("static const char *adamic_when = __TIME__;\n")}}, "reads the time"},
 		{"Timestamp", []runtimeFile{{"units.h", []byte("static const char *adamic_when = __TIMESTAMP__;\n")}}, "reads the time"},
+		// clang 20 reads a file for #embed and asks after one with __has_embed, neither of which the table follows
+		// (Node's M3).
+		{"Embed", []runtimeFile{{"units.h", []byte("static const unsigned char adamic_data[] = {\n#embed \"data.bin\"\n};\n")}, {"data.bin", []byte("1")}}, "#embed or __has_embed"},
+		{"HasEmbed", []runtimeFile{{"units.h", []byte("#if __has_embed(\"absent.bin\")\n#define VALUE 1\n#endif\n")}}, "#embed or __has_embed"},
 	} {
 		t.Run(plan.name, func(t *testing.T) {
 			t.Parallel()
@@ -391,6 +403,7 @@ func TestUnitSourceRefusal(t *testing.T) {
 		{"Directive", unitFirst + "int adamic_a;\n#define ADAMIC_B 1\n", "holds a directive past its first line"},
 		{"Time", unitFirst + "const char *adamic_t = __TIME__;\n", "reads __TIME__"},
 		{"HasInclude", unitFirst + "int adamic_a = __has_include(<stdio.h>);\n", "reads __has_include"},
+		{"HasEmbed", unitFirst + "int adamic_a = __has_embed(\"absent.bin\");\n", "reads __has_embed"},
 	} {
 		t.Run(plan.name, func(t *testing.T) {
 			t.Parallel()
@@ -415,27 +428,44 @@ func TestUnitSourceRefusal(t *testing.T) {
 	}
 }
 
-// writeUnitKeyWrapper writes an executable named clang in directory that runs compiler with its arguments.
-func writeUnitKeyWrapper(t *testing.T, directory string, compiler string) string {
+// copyUnitKeyProgram copies the program clang resolves to into directory, named clang and runnable, and is the copy.
+func copyUnitKeyProgram(t *testing.T, directory string, compiler string) string {
 	t.Helper()
-	wrapper := filepath.Join(directory, "clang")
-	writeUnitKeyFile(t, wrapper, fmt.Sprintf("#!/bin/sh\nexec %s \"$@\"\n", unitKeyQuote(compiler)))
-	if err := os.Chmod(wrapper, 0o755); err != nil {
+	program, err := filepath.EvalSymlinks(compiler)
+	if err != nil {
 		t.Fatal(err)
 	}
-	return wrapper
+	contents, err := os.ReadFile(program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	copied := filepath.Join(directory, "clang")
+	writeUnitKeyFile(t, copied, string(contents))
+	if err := os.Chmod(copied, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	signUnitKeyProgram(t, copied)
+	return copied
 }
 
-// unitKeyQuote quotes value for /bin/sh.
-func unitKeyQuote(value string) string {
-	return "'" + strings.ReplaceAll(value, "'", "'\\''") + "'"
+// signUnitKeyProgram signs program ad hoc on macOS, which kills a copied or rewritten program its signature no longer
+// covers; elsewhere it does nothing.
+func signUnitKeyProgram(t *testing.T, program string) {
+	t.Helper()
+	if goruntime.GOOS != "darwin" {
+		return
+	}
+	if output, err := exec.Command("codesign", "--force", "--sign", "-", program).CombinedOutput(); err != nil {
+		t.Fatalf("codesign: %v\n%s", err, output)
+	}
 }
 
-// clang's build is the key's by what its program holds, not where it is or what --version says: a wrapper that prints
-// the same version keys apart from clang itself, two copies of one wrapper key alike, and a config file beside the
-// program, or beside a link to it, moves the key. The clang here reads no config beside a wrapper, so the config's
-// part is only shown to move the key, not to change an object.
-// Not parallel: publish the executable wrappers before other tests fork.
+// clang's build is the key's by what its program holds and the config files beside it, each read again when it changes
+// under a running process: a config file written beside the program moves the key, as does one beside a link to it,
+// and the program rewritten with another byte at its end moves it too. A script standing in for clang refuses the key,
+// since the program it runs is one the key can't read. Mutants: the program's digest left out; the config files left out
+// of the memo's identity.
+// Not parallel: it publishes an executable copy before other tests fork.
 func TestUnitKeyHoldsClangsBuild(t *testing.T) {
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
@@ -445,32 +475,94 @@ func TestUnitKeyHoldsClangsBuild(t *testing.T) {
 		t.Helper()
 		return testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment).key(unit)
 	}
-	// Resolved, so a wrapper's program and the place it's spelled are one directory unless a link parts them.
 	root, err := filepath.EvalSymlinks(t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
-	wrapper := writeUnitKeyWrapper(t, filepath.Join(root, "wrapper"), compiler)
-	copied := writeUnitKeyWrapper(t, filepath.Join(root, "copied"), compiler)
-	configured := writeUnitKeyWrapper(t, filepath.Join(root, "configured"), compiler)
-	writeUnitKeyFile(t, filepath.Join(root, "configured", "clang.cfg"), "-DADAMIC_CONFIGURED=1\n")
-	linked := filepath.Join(root, "linked", "clang")
-	writeUnitKeyFile(t, filepath.Join(root, "linked", "clang.cfg"), "-DADAMIC_CONFIGURED=1\n")
-	if err := os.Symlink(wrapper, linked); err != nil {
+	copied := copyUnitKeyProgram(t, filepath.Join(root, "copied"), compiler)
+	plain := key(copied)
+	writeUnitKeyFile(t, filepath.Join(root, "copied", "clang.cfg"), "-DADAMIC_CONFIGURED=1\n")
+	if key(copied) == plain {
+		t.Fatal("a config file written beside clang's program left the key")
+	}
+	if err := os.Remove(filepath.Join(root, "copied", "clang.cfg")); err != nil {
 		t.Fatal(err)
 	}
-	clang, wrapped := key(compiler), key(wrapper)
-	if wrapped == clang {
-		t.Fatal("a wrapper printing clang's version keyed as clang does")
+	if key(copied) != plain {
+		t.Fatal("the config file removed, the key didn't come back")
 	}
-	if key(copied) != wrapped {
-		t.Fatal("two copies of one wrapper keyed apart")
+	linked := filepath.Join(root, "linked", "clang")
+	if err := os.MkdirAll(filepath.Dir(linked), 0o755); err != nil {
+		t.Fatal(err)
 	}
-	if key(configured) == wrapped {
-		t.Fatal("a config file beside clang's program left the key")
+	if err := os.Symlink(copied, linked); err != nil {
+		t.Fatal(err)
 	}
-	if key(linked) == wrapped {
-		t.Fatal("a config file beside a link to clang left the key")
+	beside := key(linked)
+	writeUnitKeyFile(t, filepath.Join(root, "linked", "clang.cfg"), "-DADAMIC_CONFIGURED=1\n")
+	if key(linked) == beside {
+		t.Fatal("a config file written beside a link to clang left the key")
+	}
+	script := filepath.Join(root, "script", "clang")
+	writeUnitKeyFile(t, script, fmt.Sprintf("#!/bin/sh\nexec '%s' \"$@\"\n", compiler))
+	if err := os.Chmod(script, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := newUnitKeying(unitFirst, common, unitKeyFlags, script, environment); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "neither ELF nor Mach-O") {
+		t.Fatalf("a script standing in for clang: want errUncachedUnit, got %v", err)
+	}
+	// A byte past the program's end changes no instruction it runs, so it still runs, and is another program by its
+	// bytes. macOS won't sign a program with bytes past its signature, so there this step is Linux's to show.
+	if goruntime.GOOS == "darwin" {
+		return
+	}
+	program, err := os.OpenFile(copied, os.O_APPEND|os.O_WRONLY, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := program.Write([]byte{0}); err != nil {
+		t.Fatal(err)
+	}
+	if err := program.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if key(copied) == plain {
+		t.Fatal("clang's program was rewritten and the key held")
+	}
+}
+
+// Flags that use clang modules refuse the key: module maps and the module cache are reads the resolution table doesn't
+// walk (Node's should 3).
+func TestUnitKeyRefusesModules(t *testing.T) {
+	t.Parallel()
+	compiler := unitKeyCompiler(t)
+	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	for _, flag := range []string{"-fmodules", "-fmodule-map-file=/adamic-none", "-fimplicit-module-maps"} {
+		if _, err := newUnitKeying(unitFirst, common, append(slices.Clone(unitKeyFlags), flag), compiler, unitKeyEnvironment()); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "modules") {
+			t.Fatalf("%s: want errUncachedUnit saying modules, got %v", flag, err)
+		}
+	}
+}
+
+// The house's clang links no LLVM or clang library, whose code its digest wouldn't cover (Node's should 1), and a
+// program that isn't there has no libraries to read.
+func TestUnitKeyReadsClangsLibraries(t *testing.T) {
+	t.Parallel()
+	program, err := filepath.EvalSymlinks(unitKeyCompiler(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	libraries, err := programLibraries(program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, library := range libraries {
+		if lower := strings.ToLower(library); strings.Contains(lower, "llvm") || strings.Contains(lower, "clang") {
+			t.Fatalf("this box's clang links %s, so every split build here compiles uncached", library)
+		}
+	}
+	if _, err := programLibraries(filepath.Join(t.TempDir(), "absent")); err == nil {
+		t.Fatal("a program that isn't there read as having no libraries")
 	}
 }
 
@@ -570,42 +662,16 @@ func TestUnitKeyHoldsEnvironment(t *testing.T) {
 	}
 }
 
-// unitKeyCompiles counts the compiles of the unit named name the wrapper logged in logs, one file a process.
-func unitKeyCompiles(t *testing.T, logs string, name string) int {
-	t.Helper()
-	entries, err := os.ReadDir(logs)
-	if err != nil {
-		t.Fatal(err)
-	}
-	count := 0
-	for _, entry := range entries {
-		contents, err := os.ReadFile(filepath.Join(logs, entry.Name()))
-		if err != nil {
-			t.Fatal(err)
-		}
-		count += strings.Count(string(contents), " -c "+name+" -o unit.o")
-	}
-	return count
-}
-
 // A unit's key is its own: two units compiled together, one body changed, and the other keys as it did and is taken
-// from the cache without clang compiling it. A hit is checked cold one time in unitCheckOneIn, which compiles it, and
-// nothing turns that off, so the unchanged unit gets a few tries to show one hit that ran no clang.
-// Not parallel: publish the executable wrapper before other tests fork.
+// from the cache without clang compiling it. Its cached object is planted with other bytes, so a hit that ran no clang
+// returns those bytes; one the sampled check compiled cold returns the cold object and marks the cache off, and that
+// mark is lifted and the build tried again, a few times.
+// Not parallel: it clears the mark a sampled check may leave in its own cache.
 func TestUnitKeyKeepsOtherUnits(t *testing.T) {
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
 	root := t.TempDir()
-	logs := filepath.Join(root, "logs")
-	if err := os.MkdirAll(logs, 0o755); err != nil {
-		t.Fatal(err)
-	}
-	// The wrapper can't see this test's environment (toolchain.Env filters it), so the log's place is in its text.
-	wrapper := filepath.Join(root, "bin", "clang")
-	writeUnitKeyFile(t, wrapper, fmt.Sprintf("#!/bin/sh\necho \" $*\" >> %s/$$.log\nexec %s \"$@\"\n", unitKeyQuote(logs), unitKeyQuote(compiler)))
-	if err := os.Chmod(wrapper, 0o755); err != nil {
-		t.Fatal(err)
-	}
+	cache := filepath.Join(root, "cache")
 	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
 	alpha := compilationUnit{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"}
 	beta := compilationUnit{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"}
@@ -616,13 +682,13 @@ func TestUnitKeyKeepsOtherUnits(t *testing.T) {
 	// As buildUnitsWithLibrary does: one keying a build, and the build's units compiled at once.
 	build := func(units ...compilationUnit) ([]string, *unitKeying) {
 		t.Helper()
-		keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, wrapper, environment)
+		keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
 		objects := make([]string, len(units))
 		failures := make([]error, len(units))
 		var compiles sync.WaitGroup
 		for index, unit := range units {
 			compiles.Go(func() {
-				objects[index], failures[index] = compileUnit(unit, common, unitKeyFlags, wrapper, keying, filepath.Join(root, "cache"), directory, nil)
+				objects[index], failures[index] = compileUnit(unit, common, unitKeyFlags, compiler, keying, cache, directory, nil)
 			})
 		}
 		compiles.Wait()
@@ -634,32 +700,33 @@ func TestUnitKeyKeepsOtherUnits(t *testing.T) {
 		return objects, keying
 	}
 	before, keying := build(alpha, beta)
-	if unitKeyCompiles(t, logs, "alpha.c") != 1 || unitKeyCompiles(t, logs, "beta.c") != 1 {
-		t.Fatalf("an empty cache compiled alpha.c %d times and beta.c %d times, want once each", unitKeyCompiles(t, logs, "alpha.c"), unitKeyCompiles(t, logs, "beta.c"))
+	planted := []byte("beta.c's object, from the cache\n")
+	if err := os.WriteFile(before[1], planted, 0o644); err != nil {
+		t.Fatal(err)
 	}
 	changed := compilationUnit{alpha.name, unitFirst + "int adamic_alpha(void) { return VALUE + 2; }\n"}
 	after, rekeyed := build(changed)
 	if rekeyed.key(beta) != keying.key(beta) {
 		t.Fatal("alpha.c's body changed and beta.c's key moved")
 	}
-	if after[0] == before[0] || unitKeyCompiles(t, logs, "alpha.c") < 2 {
+	if rekeyed.key(changed) == keying.key(alpha) || after[0] == before[0] {
 		t.Fatal("alpha.c's body changed and its object came from the cache")
 	}
 	for range 5 {
-		compiled := unitKeyCompiles(t, logs, "beta.c")
 		objects, _ := build(beta)
-		if objects[0] != before[1] {
-			t.Fatalf("beta.c was taken from %s, not its entry %s", objects[0], before[1])
-		}
-		if unitKeyCompiles(t, logs, "beta.c") == compiled {
+		if contents, err := os.ReadFile(objects[0]); err == nil && objects[0] == before[1] && string(contents) == string(planted) {
 			return
+		}
+		if err := os.Remove(filepath.Join(cache, unitCacheOffName)); err != nil && !errors.Is(err, os.ErrNotExist) {
+			t.Fatal(err)
 		}
 	}
 	t.Fatal("beta.c was compiled again on every one of five hits")
 }
 
 // A cold check compiles a hit again and compares: a hit whose bytes match passes, and one whose cached object was
-// planted with other bytes fails the build naming the unit, its key and both digests, and marks the cache off.
+// planted with other bytes builds green with the cold object, and marks the cache off naming the unit, its key and both
+// digests. Mutant: the mismatch returned as an error.
 // Not parallel: t.Setenv sets ADAMIC_NATIVE_UNIT_CHECK, which every compileUnit in the process reads.
 func TestUnitCacheColdCheck(t *testing.T) {
 	t.Setenv(unitCheckVariable, "every")
@@ -688,10 +755,17 @@ func TestUnitCacheColdCheck(t *testing.T) {
 	if err := os.WriteFile(object, planted, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	_, err = compileUnit(unit, common, unitKeyFlags, compiler, keying, cache, directory, nil)
+	// The hole is the house's, never the build's: a mismatched hit builds green with the cold object (Node's M2).
+	built, err := compileUnit(unit, common, unitKeyFlags, compiler, keying, cache, directory, nil)
+	if err != nil {
+		t.Fatalf("a planted object's checked hit failed the build: %v", err)
+	}
+	if contents, err := os.ReadFile(built); err != nil || string(contents) != string(cold) {
+		t.Fatalf("a planted object's checked hit built %s, not the cold object: %v", built, err)
+	}
 	want := fmt.Sprintf("native: unit cache mismatch: unit probe.c key %s cached %x cold %x", keying.key(unit), sha256.Sum256(planted), sha256.Sum256(cold))
-	if err == nil || !strings.Contains(err.Error(), want) {
-		t.Fatalf("a planted object's checked hit: want %q, got %v", want, err)
+	if line := unitMismatchLine(unitMismatch{Unit: "probe.c", Key: keying.key(unit), Cached: fmt.Sprintf("%x", sha256.Sum256(planted)), Cold: fmt.Sprintf("%x", sha256.Sum256(cold))}); line != want {
+		t.Fatalf("the mismatch's line is %q, want %q", line, want)
 	}
 	contents, err := os.ReadFile(filepath.Join(cache, unitCacheOffName))
 	if err != nil {
