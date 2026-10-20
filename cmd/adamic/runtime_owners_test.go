@@ -27,6 +27,7 @@ import (
 // Find cannot. A new producer or a private copy of the identity needs review here.
 func runtimeBuilderPackages(t *testing.T) []string {
 	t.Helper()
+	// Reads: *.go
 	return runtimeBuilderPackagesIn(t, filepath.Join("..", ".."))
 }
 

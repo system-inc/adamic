@@ -18,6 +18,10 @@ func TestCSSCorpusRootsHoldEveryCorpusFile(t *testing.T) {
 	if !slices.IsSorted(oracles.CorpusRoots()) {
 		t.Fatalf("cssCorpusRoots %v aren't sorted, so their walk wouldn't keep a whole-repository walk's order", oracles.CorpusRoots())
 	}
+	// Reads: *.[cC][sS][sS]
+	// Reads: *.[lL][eE][sS][sS]
+	// Reads: *.[sS][cC][sS][sS]
+	// Reads: cohere
 	repo, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

@@ -30,6 +30,16 @@ type mirror struct {
 
 func TestCohereMirrors(t *testing.T) {
 	t.Parallel()
+	// Reads: cohere
+	// Reads: *.go
+	// Reads: *.a
+	// Reads: *.ts
+	// Reads: *.c
+	// Reads: *.h
+	// Reads: *.js
+	// Reads: *.mjs
+	// Reads: *.py
+	// Reads: *.sh
 	problems, err := checkMirrors("../..")
 	if err != nil {
 		t.Fatal(err)

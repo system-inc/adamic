@@ -30,6 +30,7 @@ func wholeMutantBuildFiles(t *testing.T) []string {
 	t.Helper()
 	files := []string{"go.mod", "go.work"}
 	for _, root := range []string{"internal", "cohere"} {
+		// Reads: cohere
 		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
 				return err

@@ -67,6 +67,7 @@ var compilerSites = map[string]string{
 // compiler reds too, so the list says what is. Mutants: a hand-rolled clang call in a product; a stale entry.
 func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 	t.Parallel()
+	// Reads: *.go
 	root, err := filepath.Abs(filepath.Join("..", ".."))
 	if err != nil {
 		t.Fatal(err)
