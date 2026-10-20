@@ -1,6 +1,7 @@
 package loom
 
 import (
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -61,6 +62,19 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"door bound past the queue's", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"files": 9007199254740992}}`, "a whole number from 1 to 9007199254740991"},
 		{"door null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": null}`, "an object of bounds"},
 		{"door a list", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": [2]}`, "cannot unmarshal array"},
+		{"builders twice", `{"blocks": {"on": true, "budget": 2, "builders": ["Adam", "Adam"]}, "restack": {"on": false}}`, `each once, not "Adam"`},
+		{"builders past the queue's", `{"blocks": {"on": true, "budget": 2, "builders": ["a", "b", "c", "d", "e", "f", "g", "h", "i"]}, "restack": {"on": false}}`, "names 9 boxes, and it names at most 8"},
+		{"builders a path", `{"blocks": {"on": true, "budget": 2, "builders": ["Adam", "Eve/0"]}, "restack": {"on": false}}`, `not "Eve/0"`},
+		{"builders a leading dash", `{"blocks": {"on": true, "budget": 2, "builders": ["-Adam"]}, "restack": {"on": false}}`, `not "-Adam"`},
+		{"builders empty name", `{"blocks": {"on": true, "budget": 2, "builders": [""]}, "restack": {"on": false}}`, `not ""`},
+		{"builders null", `{"blocks": {"on": true, "budget": 2, "builders": null}, "restack": {"on": false}}`, "a list of host names"},
+		{"builders a string", `{"blocks": {"on": true, "budget": 2, "builders": "Adam"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"builders not names", `{"blocks": {"on": true, "budget": 2, "builders": [1]}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"builders a digit first", `{"blocks": {"on": true, "budget": 2, "builders": ["0Adam"]}, "restack": {"on": false}}`, `not "0Adam"`},
+		{"builders past a token's length", `{"blocks": {"on": true, "budget": 2, "builders": ["A` + strings.Repeat("a", 32) + `"]}, "restack": {"on": false}}`, "each once, not"},
+		{"tipFirst null", `{"blocks": {"on": true, "budget": 2, "tipFirst": null}, "restack": {"on": false}}`, "true or false"},
+		{"tipFirst a string", `{"blocks": {"on": true, "budget": 2, "tipFirst": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"tipFirst a number", `{"blocks": {"on": true, "budget": 2, "tipFirst": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
 	}
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -108,5 +122,44 @@ func TestRulesTakeADoor(t *testing.T) {
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Door != nil {
 		t.Fatalf("%+v, %v", rules.Door, err)
+	}
+}
+
+// Builders the lander takes read here too (Loom 0.8.375, the one-box loop, #mxbymz5): host names each once, at most 8,
+// an empty list as no box leased, and absent as absent, so today's file reads as it does. Mutant: the duplicate check
+// dropped (TestRulesRefuseMistakes' "builders twice").
+func TestRulesTakeBuilders(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": ["Adam", "Eve"]}, "restack": {"on": false}}`))
+	if err != nil || len(rules.Blocks.Builders) != 2 || rules.Blocks.Builders[0] != "Adam" || rules.Blocks.Builders[1] != "Eve" {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": ["a", "b", "c", "d", "e", "f", "g", "h"]}, "restack": {"on": false}}`))
+	if err != nil || len(rules.Blocks.Builders) != 8 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "builders": []}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Builders == nil || len(rules.Blocks.Builders) != 0 {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Builders != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+}
+
+// A tipFirst the lander takes reads here too (Loom 0.8.375, #fz4vetb): true or false, and absent as absent. Mutant: a null
+// taken as absent (TestRulesRefuseMistakes' "tipFirst null").
+func TestRulesTakeATipFirst(t *testing.T) {
+	t.Parallel()
+	for _, on := range []bool{true, false} {
+		rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "tipFirst": ` + strconv.FormatBool(on) + `}, "restack": {"on": false}}`))
+		if err != nil || rules.Blocks.TipFirst == nil || *rules.Blocks.TipFirst != on {
+			t.Fatalf("%+v, %v", rules.Blocks, err)
+		}
+	}
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.TipFirst != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 }
