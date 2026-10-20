@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"bytes"
 	"crypto/sha256"
+	"debug/elf"
+	"debug/macho"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -17,6 +19,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
 )
 
 // A split unit's object is keyed by everything its compile reads, found before clang compiles it (#m62spx0): the unit
@@ -75,9 +78,19 @@ type unitClangFacts struct {
 
 var unitClangs sync.Map
 
-// unitClang is clang's facts for compiler under flags and environment (unitClangFacts).
+// unitClang is clang's facts for compiler under flags and environment (unitClangFacts), read again when the program
+// the path resolves to, or a config file beside it, is another file or was rewritten, so a clang swapped or configured
+// under a long-lived process isn't keyed by the facts of the one before it.
 func unitClang(compiler string, flags []string, environment []string) (*unitClangFacts, error) {
-	value, _ := unitClangs.LoadOrStore(partsKey(append(append([]string{compiler}, flags...), environment...)), &unitClangFacts{})
+	identity := []string{compiler}
+	if program, err := filepath.EvalSymlinks(compiler); err == nil {
+		configs, _ := filepath.Glob(filepath.Join(filepath.Dir(program), "*.cfg"))
+		spelled, _ := filepath.Glob(filepath.Join(filepath.Dir(compiler), "*.cfg"))
+		for _, path := range append(append([]string{program}, configs...), spelled...) {
+			identity = append(identity, fileIdentity(path))
+		}
+	}
+	value, _ := unitClangs.LoadOrStore(partsKey(append(append(identity, flags...), environment...)), &unitClangFacts{})
 	facts := value.(*unitClangFacts)
 	facts.once.Do(func() { facts.parts, facts.search, facts.err = readUnitClang(compiler, flags, environment) })
 	return facts, facts.err
@@ -97,6 +110,17 @@ func readUnitClang(compiler string, flags []string, environment []string) ([]str
 		return nil, nil, fmt.Errorf("%w: reading clang: %v", errUncachedUnit, err)
 	}
 	parts := []string{"clang " + digest}
+	libraries, err := programLibraries(program)
+	if err != nil {
+		return nil, nil, fmt.Errorf("%w: reading clang's shared libraries: %v", errUncachedUnit, err)
+	}
+	for _, library := range libraries {
+		// An LLVM or clang library holds code generation the program's own digest doesn't: the house's clang links none.
+		if lower := strings.ToLower(library); strings.Contains(lower, "llvm") || strings.Contains(lower, "clang") {
+			return nil, nil, fmt.Errorf("%w: clang links %s, whose code the key doesn't read", errUncachedUnit, library)
+		}
+		parts = append(parts, "library "+library)
+	}
 	// clang reads <name>.cfg and <triple>-<name>.cfg beside its program, and each can add flags.
 	configs, err := filepath.Glob(filepath.Join(filepath.Dir(program), "*.cfg"))
 	if err != nil {
@@ -250,6 +274,9 @@ var unitDefinesName = regexp.MustCompile(`^[ \t]*#[ \t]*(define|undef)[ \t]+$`)
 // unitNameOperand is one quoted or bracketed header name, as an include spells it.
 var unitNameOperand = regexp.MustCompile(`^(?:"([^"\n]+)"|<([^>\n]+)>)`)
 
+// unitEmbeds are the forms that read or ask after a file the resolution table doesn't follow: #embed and __has_embed.
+var unitEmbeds = regexp.MustCompile(`(?m)^[ \t]*#[ \t]*embed\b|__has_embed\s*\(`)
+
 // unitTime are the predefined macros whose value is when the compile ran.
 var unitTime = regexp.MustCompile(`__(DATE|TIME|TIMESTAMP)__`)
 
@@ -320,6 +347,9 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 		}
 		if unitTime.Match(contents) {
 			return nil, fmt.Errorf("%w: %s reads the time of the compile", errUncachedUnit, header)
+		}
+		if unitEmbeds.Match(contents) {
+			return nil, fmt.Errorf("%w: %s reads a file by a form the key can't follow (#embed or __has_embed)", errUncachedUnit, header)
 		}
 		if !own {
 			parts = append(parts, fmt.Sprintf("system %s %x", header, sha256.Sum256(contents)))
@@ -406,7 +436,7 @@ func unitSourceRefusal(unit compilationUnit, first string) string {
 		if strings.HasPrefix(token.text, "#") {
 			return fmt.Sprintf("%s holds a directive past its first line", unit.name)
 		}
-		if unitTime.MatchString(token.text) || strings.HasPrefix(token.text, "__has_include") {
+		if unitTime.MatchString(token.text) || strings.HasPrefix(token.text, "__has_include") || strings.HasPrefix(token.text, "__has_embed") {
 			return fmt.Sprintf("%s reads %s", unit.name, token.text)
 		}
 	}
@@ -426,6 +456,12 @@ type unitKeying struct {
 
 // newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
 func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string) (*unitKeying, error) {
+	for _, flag := range flags {
+		// Clang modules read module maps and a module cache the resolution table doesn't walk.
+		if strings.HasPrefix(flag, "-fmodule") || strings.HasPrefix(flag, "-fimplicit-module") {
+			return nil, fmt.Errorf("%w: the flags use clang modules (%s)", errUncachedUnit, flag)
+		}
+	}
 	environmentParts, err := unitEnvironmentParts(environment)
 	if err != nil {
 		return nil, err
@@ -499,4 +535,50 @@ func treeDigests(root string) ([]string, error) {
 	})
 	sort.Strings(lines)
 	return lines, err
+}
+
+// programLibraries are the shared libraries program names for the dynamic loader, as its ELF or Mach-O header lists
+// them, sorted; none for a static program, and an error for one it can't read as either.
+func programLibraries(program string) ([]string, error) {
+	var libraries []string
+	if file, err := elf.Open(program); err == nil {
+		defer file.Close()
+		libraries, err = file.ImportedLibraries()
+		if err != nil {
+			return nil, err
+		}
+	} else if file, err := macho.Open(program); err == nil {
+		defer file.Close()
+		libraries, err = file.ImportedLibraries()
+		if err != nil {
+			return nil, err
+		}
+	} else if fat, err := macho.OpenFat(program); err == nil {
+		defer fat.Close()
+		for _, architecture := range fat.Arches {
+			more, err := architecture.ImportedLibraries()
+			if err != nil {
+				return nil, err
+			}
+			libraries = append(libraries, more...)
+		}
+	} else {
+		return nil, fmt.Errorf("%s is neither ELF nor Mach-O", program)
+	}
+	slices.Sort(libraries)
+	return slices.Compact(libraries), nil
+}
+
+// fileIdentity names the file at path as the system holds it, its place, size, modification time, device and inode, so
+// one rewritten or replaced there names another; a file that can't be read is named so.
+func fileIdentity(path string) string {
+	info, err := os.Stat(path)
+	if err != nil {
+		return path + " " + err.Error()
+	}
+	identity := fmt.Sprintf("%s %d %d", path, info.Size(), info.ModTime().UnixNano())
+	if system, ok := info.Sys().(*syscall.Stat_t); ok {
+		identity += fmt.Sprintf(" %d %d", system.Dev, system.Ino)
+	}
+	return identity
 }
