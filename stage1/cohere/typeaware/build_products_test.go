@@ -88,6 +88,14 @@ func TestProduct_six_facts_length_native(t *testing.T) {
 	h := typeAwareProductHarness(t)
 	h.mutantNative("facts-length", filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"), checkerMutantArchive(t, "facts-length"), true)
 }
+
+// Six's cross-file declaration-source mutant (TestSixRuleAgreementAndMutants_016), whose compile took 19 s of its
+// shard's own time under load; the corpus mutants' natives are sixMutantNativeProduct's.
+func TestProduct_six_declaration_source_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("declaration-source-suite", filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"), checkerMutantArchive(t, "declaration-source"), false)
+}
 func TestProduct_typeaware_wrong_node_native(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)

@@ -87,7 +87,7 @@ func suiteSources(t *testing.T, repository string) []string {
 	return keys
 }
 
-func suiteTSMutant(h *harness, stage0, normal, entry, name, relative, from, to string, imports ...string) string {
+func suiteTSMutant(h *harness, normal, entry, name, relative, from, to string, imports ...string) string {
 	h.t.Helper()
 	path := filepath.Join(h.repository, "stage1/cohere/typeaware", relative)
 	text, err := os.ReadFile(path)
@@ -119,7 +119,7 @@ func suiteTSMutant(h *harness, stage0, normal, entry, name, relative, from, to s
 	for _, file := range []string{"facts.ts", "diagnostic.ts", "unary_minus.ts", "rules.ts", "flags.ts", "frames.ts", "types.ts", "type_fact.ts", "parameters.ts"} {
 		main = strings.ReplaceAll(main, "./"+file, filepath.Join(h.repository, "stage1/cohere/typeaware", file))
 	}
-	return h.build(stage0, name, h.write(name+"-main.ts", main), normal, false)
+	return h.mutantNativeOf(name, h.loweredMutant(h.write(name+"-main.ts", main), name, "C six mutant "+name), normal, false)
 }
 
 // Builds are prepared once and shared before the parallel check units start.
@@ -225,7 +225,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	add("mutant/declaration-source", sixIDs("mutant/declaration-source", globalPaths), func(h *harness) {
 		t := h.t
 		globalArchive := typeAwareMutantArchive(h, "declaration-source")
-		globalMutant := typeAwareBuild(h, stage0, "declaration-source-suite", entry, globalArchive, false)
+		globalMutant := typeAwareMutantNative(h, "declaration-source-suite", entry, globalArchive, false)
 		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
 		if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
 			t.Fatal("cross-file declaration source mutant survived oracle")
@@ -581,7 +581,6 @@ func sixCorpusOnce(t *testing.T) *sixCorpus {
 // sixMutants are the 13 planted mutants that run over the generated corpus, by name.
 func sixMutants(h *harness, repository string) map[string]sixMutant {
 	t := h.t
-	stage0 := "" // Native builds use the in-process compiler.
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts")
 	mutants := map[string]sixMutant{}
@@ -591,7 +590,7 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 		{"nullable-default", "if(!plain || nullable)", "if(!plain && !nullable)"},
 	} {
 		mutants[change.name] = sixMutant{build: func(h *harness) string {
-			return typeAwareMutant(h, stage0, normal(h), entry, change.name, "rules.ts", change.from, change.to)
+			return typeAwareMutant(h, normal(h), entry, change.name, "rules.ts", change.from, change.to)
 		}}
 	}
 	// Union test mutates the facts consumer and reroutes the Rules import too.
@@ -624,11 +623,11 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 	}
 	parametersPath := h.write("union-parameters.ts", strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1))
 	mutants["union-members"] = sixMutant{build: func(h *harness) string {
-		return typeAwareMutant(h, stage0, normal(h), entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
+		return typeAwareMutant(h, normal(h), entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
 	}}
 	for _, name := range []string{"type-name", "raw-shape-constraint", "assignability-direction", "resolved-signature"} {
 		mutants[name] = sixMutant{build: func(h *harness) string {
-			return typeAwareBuild(h, stage0, name+"-suite", entry, typeAwareMutantArchive(h, name), false)
+			return typeAwareMutantNative(h, name+"-suite", entry, typeAwareMutantArchive(h, name), false)
 		}}
 	}
 	// Explicit C allocation length, not the native path's extra terminator.
@@ -645,7 +644,7 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 		{"facts-version", "unsupported checker facts schema"},
 	} {
 		mutants[change.name+"-bad"] = sixMutant{build: func(h *harness) string {
-			return typeAwareBuild(h, stage0, change.name+"-bad", entry, typeAwareMutantArchive(h, change.name+"-bad"), false)
+			return typeAwareMutantNative(h, change.name+"-bad", entry, typeAwareMutantArchive(h, change.name+"-bad"), false)
 		}, dies: func(r result) bool {
 			code, ok := r.err.(*exec.ExitError)
 			return ok && code.ExitCode() == 70 && bytes.Contains(r.stderr, []byte(change.message))
@@ -835,4 +834,66 @@ func TestProduct_six_witnesses_facts_length_bad(t *testing.T) {
 func TestProduct_six_witnesses_facts_version_bad(t *testing.T) {
 	t.Parallel()
 	sixWitnessProduct(t, "facts-version-bad")
+}
+
+// sixMutantNativeProduct builds one planted mutant's native ahead of the test units, by its sixMutants recipe, and a
+// rules mutant's emitted C with it (loweredMutant), so its shard and its witness product fetch them instead of lowering
+// and compiling inside their own time. Built in the shard, these natives held their shards at 16 to 26 s under load
+// (typeaware#1/7, future-87bcfd8d), while facts-length-asan's, already a product (TestProduct_six_facts_length_native),
+// took 3 s.
+func sixMutantNativeProduct(t *testing.T, name string) {
+	h := typeAwareProductHarness(t)
+	mutant, ok := sixMutants(h, h.repository)[name]
+	if !ok {
+		t.Fatalf("no six mutant %s", name)
+	}
+	mutant.build(h)
+}
+func TestProduct_six_wrong_node_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "wrong-node")
+}
+func TestProduct_six_last_declaration_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "last-declaration")
+}
+func TestProduct_six_nullable_default_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "nullable-default")
+}
+func TestProduct_six_union_members_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "union-members")
+}
+func TestProduct_six_type_name_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "type-name")
+}
+func TestProduct_six_raw_shape_constraint_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "raw-shape-constraint")
+}
+func TestProduct_six_assignability_direction_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "assignability-direction")
+}
+func TestProduct_six_resolved_signature_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "resolved-signature")
+}
+func TestProduct_six_facts_empty_bad_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "facts-empty-bad")
+}
+func TestProduct_six_facts_integer_bad_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "facts-integer-bad")
+}
+func TestProduct_six_facts_length_bad_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "facts-length-bad")
+}
+func TestProduct_six_facts_version_bad_native(t *testing.T) {
+	t.Parallel()
+	sixMutantNativeProduct(t, "facts-version-bad")
 }
