@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -98,21 +99,28 @@ func TestMicromarkInputChunks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program := lowered(t, main)
+	emitted := filepath.Join(probeEmitted(t, chunksProbe), "port.mjs")
 	binary := filepath.Join(probeNative(t, chunksProbe, native.Options{Sanitize: true}), "port")
+	fast := filepath.Join(probeNative(t, chunksProbe, native.Options{}), "port")
 	answer := sanitizedRun(t, binary, cases)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
 		{"actual original micromark preprocessing", execute(t, nil, "node", "testdata/chunks_library.mjs", fork, cases)},
-		{"native", answer}, {"source Node", onNode(t, main, cases)}, {"backend", onJavaScriptBackend(t, program, cases)},
+		{"native", answer}, {"source Node", onNode(t, main, cases)}, {"backend", onNode(t, emitted, cases)},
 	} {
 		clean(t, side.name, side.result)
 		equal(t, side.name, side.result.stdout, want.stdout)
 	}
-	if report := leaks(t, program, binary, cases); report != "" {
-		t.Fatal(report)
+	// The leak check reads the built ports, macOS's leaks tool on the release one or LeakSanitizer on Linux running the
+	// sanitized one again, as leaks does, without building a port inside this test.
+	if runtime.GOOS == "darwin" {
+		if report := execute(t, nil, "leaks", "--atExit", "--", fast, cases); report.exitCode != 0 {
+			t.Fatal(string(report.stdout))
+		}
+	} else if report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases); report.exitCode != 0 {
+		t.Fatalf("exit %d\n%s", report.exitCode, report.stderr)
 	}
 	for _, m := range []struct{ name, from, to string }{
 		{"initial BOM", "units[0] === 65279 ? 1 : 0", "units[0] === 65278 ? 1 : 0"},
@@ -156,7 +164,6 @@ func TestMicromarkInputChunks(t *testing.T) {
 			}
 		})
 	}
-	fast := filepath.Join(probeNative(t, chunksProbe, native.Options{}), "port")
 	for _, side := range []struct {
 		name, command string
 		args          []string
