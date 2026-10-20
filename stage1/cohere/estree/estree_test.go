@@ -40,6 +40,7 @@ func execute(t *testing.T, dir, name string, args ...string) []byte {
 }
 func root(t *testing.T) string {
 	t.Helper()
+	// Reads: internal/native/runtime/*.[ch]
 	path, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
