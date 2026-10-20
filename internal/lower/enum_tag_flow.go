@@ -101,8 +101,11 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			return true
 		case flow.Flags&ast.FlowFlagsAssignment != 0:
 			if predicateMatchingReference(w.l.checker, w.reference, flow.Node) {
-				// An assignment narrows to what was assigned, a step the rule doesn't recognize.
-				return false
+				// An assignment that leaves the declared type, like const node: Node = make(), narrows
+				// nothing, and nothing before it reaches the read. One that narrows to what was assigned
+				// isn't a recognized step.
+				assigned := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
+				return checker.Checker_isTypeIdenticalTo(w.l.checker, assigned, w.declared)
 			}
 			if enumTagContainsReference(w.l.checker, w.reference, flow.Node) {
 				return true
