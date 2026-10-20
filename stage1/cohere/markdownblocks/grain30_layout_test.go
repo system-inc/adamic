@@ -83,21 +83,50 @@ func runGrainLayout(t *testing.T, slice string, shard int) {
 		t.Logf("cases=%d", len(inputs))
 		return
 	}
-	dir := t.TempDir()
-	var batch bytes.Buffer
-	for _, input := range all {
-		if err := json.NewEncoder(&batch).Encode(input); err != nil {
+	encoded, want := grainLayoutMutantFixtures(t, products, all)
+	nativeCases := filepath.Join(t.TempDir(), "native.txt")
+	write(t, nativeCases, encoded)
+	fixture := &layoutFixture{main: products.main, mutantNativeCases: nativeCases, mutantInputs: all, mutantWant: want}
+	grainLayoutMutation(t, fixture, slice, shard-grainCorpusShards)
+}
+
+// grainLayoutMutantFixtures holds what every mutant shard of every slice compares against, made once per process:
+// the whole whitespace corpus Go encoded for the port, its width slots poisoned, and Go's layout of it. Every slice's
+// mutant shards read the same corpus, so each ran this same Go oracle over it before.
+var grainLayoutMutantAnswers struct {
+	once                sync.Once
+	nativeCases, stdout []byte
+}
+
+func grainLayoutMutantFixtures(t *testing.T, products leafCompositionProducts, all []auditInput) ([]byte, []byte) {
+	t.Helper()
+	grainLayoutMutantAnswers.once.Do(func() {
+		dir := t.TempDir()
+		var batch bytes.Buffer
+		for _, input := range all {
+			if err := json.NewEncoder(&batch).Encode(input); err != nil {
+				t.Fatal(err)
+			}
+		}
+		cases := filepath.Join(dir, "cases.jsonl")
+		write(t, cases, batch.Bytes())
+		nativeCases := filepath.Join(dir, "native.txt")
+		want := grainExecute(t, nil, products.goList, cases, nativeCases, filepath.Join(dir, "canonical.txt"))
+		clean(t, "Go mutant fixtures", want)
+		poisonLeafCompositionCases(t, nativeCases)
+		// Go writes the port's cases into the first caller's temporary directory, gone when that test ends, so their
+		// bytes are kept.
+		encoded, err := os.ReadFile(nativeCases)
+		if err != nil {
 			t.Fatal(err)
 		}
+		grainLayoutMutantAnswers.stdout = want.stdout
+		grainLayoutMutantAnswers.nativeCases = encoded
+	})
+	if grainLayoutMutantAnswers.nativeCases == nil {
+		t.Fatal("the Go mutant fixtures failed earlier in this process")
 	}
-	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
-	nativeCases := filepath.Join(dir, "native.txt")
-	want := grainExecute(t, nil, products.goList, cases, nativeCases, filepath.Join(dir, "canonical.txt"))
-	clean(t, "Go mutant fixtures", want)
-	poisonLeafCompositionCases(t, nativeCases)
-	fixture := &layoutFixture{main: products.main, mutantNativeCases: nativeCases, mutantInputs: all, mutantWant: want.stdout}
-	grainLayoutMutation(t, fixture, slice, shard-grainCorpusShards)
+	return grainLayoutMutantAnswers.nativeCases, grainLayoutMutantAnswers.stdout
 }
 func grainLayoutMutation(t *testing.T, fixture *layoutFixture, slice string, selected int) {
 	main := fixture.main
