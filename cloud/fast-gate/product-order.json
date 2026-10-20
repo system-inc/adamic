@@ -1834,6 +1834,10 @@
     ],
     "cmd/adamic TestProduct_CommandRuntimeCounted": [
       "internal/oracle TestProduct_NativeRuntimesCounted0"
+    ],
+    "internal/native TestProduct_RegExpWitnessClosureInventory": [
+      "internal/native TestProduct_RegExpBytecodeNativePart0",
+      "internal/native TestProduct_RegExpBytecodeNativePart1"
     ]
   }
 }
