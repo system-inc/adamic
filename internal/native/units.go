@@ -1,12 +1,19 @@
 package native
 
 import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"math/rand/v2"
 	"os"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -306,72 +313,134 @@ func splitC(source string) (string, []compilationUnit, error) {
 
 var unitBuilds sync.Map
 
-// Preprocessed source/header bytes, ordered flags, compiler identity/version and platform enter
-// the key. Preprocessing on every lookup also observes ambient and system include dependencies.
-func unitKey(files []runtimeFile, flags []string, compiler, version string) string {
-	// v3: units compile under toolchain.Env, not the caller's environment, so a v2 object isn't reused.
-	return runtimeKey(files, append([]string{"adamic-units-v3"}, flags...), compiler, version, "")
+// unitFirst is the line every split unit begins with (splitC), the probe its build's headers are read by.
+const unitFirst = "#include \"units.h\"\n"
+
+// unitCheckVariable sets how often a unit taken from the cache is compiled again to check its bytes: "every" checks
+// every hit; unset, one in unitCheckOneIn. Any other value checks every hit.
+const unitCheckVariable = "ADAMIC_NATIVE_UNIT_CHECK"
+
+// unitCheckOneIn is how many hits share one cold check, unless unitCheckVariable asks for every one.
+const unitCheckOneIn = 20
+
+// unitCacheOffVariable, set to "off", has every unit compile uncached, as a house-wide switch can set it.
+const unitCacheOffVariable = "ADAMIC_NATIVE_UNIT_CACHE"
+
+// unitCacheOffName is the mark a mismatched cold check leaves in the unit cache: while it stands where this process
+// writes or under the build cache, every unit compiles uncached, until a hand reads it and removes it.
+const unitCacheOffName = "off.json"
+
+// unitChecked says whether this hit is compiled again to check it (unitCheckVariable).
+func unitChecked() bool {
+	value := os.Getenv(unitCheckVariable)
+	if value == "" {
+		return rand.IntN(unitCheckOneIn) == 0
+	}
+	return true
 }
 
-func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool, jobserver *Jobserver) (string, error) {
-	// Preprocess the snapshotted source on every lookup: the result includes transitive system
-	// headers, ambient include paths, target macros and time-dependent predefined macros. Hash
-	// those exact bytes and compile that same snapshot, rather than reopening dependencies.
-	// Keep clang line markers: their system-header flag suppresses extension diagnostics inside
-	// platform headers under -pedantic -Werror. Flattening with -P loses that provenance.
-	temporary, err := os.MkdirTemp(directory, ".unit-")
-	if err != nil {
-		return "", err
+// unitCacheOff says why the unit cache is off here, when it is: unitCacheOffVariable, or a mismatch's mark standing in
+// cache (unitCacheOffName).
+func unitCacheOff(cache string) (string, bool) {
+	if os.Getenv(unitCacheOffVariable) == "off" {
+		return unitCacheOffVariable + "=off", true
 	}
-	defer os.RemoveAll(temporary)
-	for _, file := range files {
-		if err := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); err != nil {
-			return "", err
+	if mark, ok := cachedFile(filepath.Join(cache, unitCacheOffName)); ok {
+		contents, _ := os.ReadFile(mark)
+		return fmt.Sprintf("a cold check's mismatch is marked at %s: %s", mark, bytes.TrimSpace(contents)), true
+	}
+	return "", false
+}
+
+// A unitMismatch is a cached unit whose cold compile made other bytes: a key part missing, a hole, or a compile that
+// isn't deterministic. Any of them means the cache isn't trusted until it's read.
+type unitMismatch struct {
+	Unit   string    `json:"unit"`
+	Key    string    `json:"key"`
+	Cached string    `json:"cached"`
+	Cold   string    `json:"cold"`
+	At     time.Time `json:"at"`
+}
+
+// markUnitCacheOff leaves mismatch's mark in cache, made whole before it's in place.
+func markUnitCacheOff(cache string, mismatch unitMismatch) error {
+	content, err := json.Marshal(mismatch)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(cache, 0o755); err != nil {
+		return err
+	}
+	temporary, err := os.CreateTemp(cache, ".off-")
+	if err != nil {
+		return err
+	}
+	defer os.Remove(temporary.Name())
+	if _, err := temporary.Write(append(content, '\n')); err != nil {
+		temporary.Close()
+		return err
+	}
+	if err := temporary.Close(); err != nil {
+		return err
+	}
+	return os.Rename(temporary.Name(), filepath.Join(cache, unitCacheOffName))
+}
+
+// compileUnit is unit's object: from cache by its key under keying, or compiled from its .c in a directory of its own
+// under directory holding common beside it, and kept in cache. A nil keying, or a unit whose source the key can't take
+// (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off and fails
+// the build, naming the unit, the key and both digests.
+func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver) (string, error) {
+	environment := toolchain.Env()
+	if keying != nil {
+		environment = keying.environment
+		if why := unitSourceRefusal(unit, keying.first); why != "" {
+			fmt.Fprintf(os.Stderr, "native: unit %s compiles uncached: %s\n", unit.name, why)
+			keying = nil
 		}
 	}
-	preprocess := toolchain.CommandIn(temporary, compiler, append(append([]string{}, flags...), "-E", unit.name)...)
-	var diagnostic strings.Builder
-	preprocess.Stderr = &diagnostic
-	var preprocessed []byte
-	if err := jobserver.Hold(func() (err error) { preprocessed, err = preprocess.Output(); return err }); err != nil {
-		return "", fmt.Errorf("native: preprocessing unit %s: %w\n%s", unit.name, err, &diagnostic)
+	if keying == nil {
+		object, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver)
+		if err != nil {
+			return "", err
+		}
+		path := filepath.Join(directory, "uncached-"+unit.name+".o")
+		return path, os.WriteFile(path, object, 0o644)
 	}
-	key := unitKey([]runtimeFile{{unit.name, preprocessed}}, flags, compiler, version)
+	key := keying.key(unit)
 	entry := filepath.Join(cache, key)
 	object := filepath.Join(entry, "unit.o")
 	value, _ := unitBuilds.LoadOrStore(entry, &sync.Mutex{})
 	lock := value.(*sync.Mutex)
 	lock.Lock()
 	defer lock.Unlock()
-	if !uncached {
-		// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it
-		// was found.
-		if found, ok := cachedFile(object); ok {
+	// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it was
+	// found.
+	if found, ok := cachedFile(object); ok {
+		if !unitChecked() {
 			return found, nil
 		}
-	}
-	if err := os.WriteFile(filepath.Join(temporary, unit.name), preprocessed, 0o644); err != nil {
-		return "", err
-	}
-	// Macro options already took effect during preprocessing. clang warns when they are passed
-	// to a preprocessed input. They remain in the key, in their original order.
-	compileFlags := []string{}
-	for _, flag := range flags {
-		if !strings.HasPrefix(flag, "-D") && !strings.HasPrefix(flag, "-U") {
-			compileFlags = append(compileFlags, flag)
+		cached, err := os.ReadFile(found)
+		if err != nil {
+			return "", err
 		}
+		cold, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver)
+		if err != nil {
+			return "", err
+		}
+		if !bytes.Equal(cached, cold) {
+			mismatch := unitMismatch{Unit: unit.name, Key: key, Cached: fmt.Sprintf("%x", sha256.Sum256(cached)), Cold: fmt.Sprintf("%x", sha256.Sum256(cold)), At: time.Now().UTC()}
+			marked := "marked off at " + filepath.Join(cache, unitCacheOffName)
+			if err := markUnitCacheOff(cache, mismatch); err != nil {
+				marked = "its mark couldn't be written: " + err.Error()
+			}
+			return "", fmt.Errorf("native: unit cache mismatch: unit %s key %s cached %s cold %s; the unit cache is %s", mismatch.Unit, mismatch.Key, mismatch.Cached, mismatch.Cold, marked)
+		}
+		return found, nil
 	}
-	// Clang emits GNU line-marker syntax even for C11. Accept only that generated syntax;
-	// keep all other pedantic diagnostics, including extensions outside system headers.
-	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
-	command := toolchain.CommandIn(temporary, compiler, arguments...)
-	var output []byte
-	if err := jobserver.Hold(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
-		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
-	}
-	if uncached {
-		object = filepath.Join(directory, key+".o")
-		return object, os.Rename(filepath.Join(temporary, "unit.o"), object)
+	contents, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver)
+	if err != nil {
+		return "", err
 	}
 	if err := os.MkdirAll(cache, 0o755); err != nil {
 		return "", err
@@ -381,10 +450,6 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		return "", err
 	}
 	defer os.RemoveAll(published)
-	contents, err := os.ReadFile(filepath.Join(temporary, "unit.o"))
-	if err != nil {
-		return "", err
-	}
 	if err := os.WriteFile(filepath.Join(published, "unit.o"), contents, 0o644); err != nil {
 		return "", err
 	}
@@ -396,6 +461,35 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		return found, nil
 	}
 	return object, nil
+}
+
+// compileUnitObject compiles unit from its .c, in a directory of its own under directory holding common beside it,
+// under environment exactly, and is the object's bytes.
+func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []string, compiler string, environment []string, directory string, jobserver *Jobserver) ([]byte, error) {
+	temporary, err := os.MkdirTemp(directory, ".unit-")
+	if err != nil {
+		return nil, err
+	}
+	defer os.RemoveAll(temporary)
+	for _, file := range append([]runtimeFile{{unit.name, []byte(unit.source)}}, common...) {
+		if err := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); err != nil {
+			return nil, err
+		}
+	}
+	command := toolchain.CommandIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary)...)...)
+	// The environment the key read, with the directory CommandIn names as the compile's own.
+	working := []string{}
+	for _, setting := range command.Env {
+		if strings.HasPrefix(setting, "PWD=") {
+			working = append(working, setting)
+		}
+	}
+	command.Env = append(slices.Clone(environment), working...)
+	var output []byte
+	if err := jobserver.Hold(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
+		return nil, fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
+	}
+	return os.ReadFile(filepath.Join(temporary, "unit.o"))
 }
 
 func buildUnits(source, output string, options Options) error {
@@ -425,10 +519,6 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		}
 	}
 	compiler, err := toolchain.Path("clang")
-	if err != nil {
-		return err
-	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return err
 	}
@@ -467,8 +557,21 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	// A unit includes units.h, and through it adamic.h, before any of the program's own #defines
 	// (the checker build puts tsgo_runtime.h first), so its features come as flags.
 	flags := sourceFlags(source, options)
+	// The units' key is read once, before any of them compiles: a build the key can't account for, or one the cache is
+	// off for, compiles every unit uncached and says why.
+	var keying *unitKeying
+	if os.Getenv("ADAMIC_GATE_UNCACHED") != "1" {
+		if why, off := unitCacheOff(cache); off {
+			fmt.Fprintf(os.Stderr, "native: units compile uncached: %s\n", why)
+		} else if keying, err = newUnitKeying(unitFirst, common, flags, compiler, toolchain.Env()); errors.Is(err, errUncachedUnit) {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			keying = nil
+		} else if err != nil {
+			return err
+		}
+	}
 	objects := make([]string, len(units))
-	errors := make([]error, len(units))
+	failures := make([]error, len(units))
 	work := make(chan int)
 	var workers sync.WaitGroup
 	for j := 0; j < jobs; j++ {
@@ -476,9 +579,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		go func() {
 			defer workers.Done()
 			for index := range work {
-				unit := units[index]
-				files := append([]runtimeFile{{unit.name, []byte(unit.source)}}, common...)
-				objects[index], errors[index] = compileUnit(unit, files, flags, compiler, string(version), cache, directory, os.Getenv("ADAMIC_GATE_UNCACHED") == "1", jobserver)
+				objects[index], failures[index] = compileUnit(units[index], common, flags, compiler, keying, cache, directory, jobserver)
 			}
 		}()
 	}
@@ -487,7 +588,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	close(work)
 	workers.Wait()
-	for _, err := range errors {
+	for _, err := range failures {
 		if err != nil {
 			return err
 		}
