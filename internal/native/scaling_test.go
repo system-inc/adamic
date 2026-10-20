@@ -10,27 +10,52 @@ import (
 	"testing"
 )
 
-func TestParallelScaling(t *testing.T) {
-	t.Parallel()
-	for _, build := range parallelBuilds(t) {
-		t.Run(build.name, func(t *testing.T) {
-			binary := parallelHarness(t, "scaling.c", build.options)
-			for _, threads := range []string{"1", "4"} {
-				out, _ := parallelRun(t, binary, threads)
-				if out != "scaling clean\n" {
-					t.Fatal(out)
-				}
-				parallelLeaks(t, binary, build.options, threads)
-			}
-			command := exec.Command(binary, "high_pointer")
-			command.Env = parallelEnvironment("1", false)
-			out, err := command.CombinedOutput()
-			failure, ok := err.(*exec.ExitError)
-			if !ok || failure.ExitCode() != 70 || !strings.Contains(string(out), "shape address exceeds 48 bits") {
-				t.Fatalf("pointer guard: %v: %s", err, out)
-			}
-		})
+// Partition by build so the two worker counts and pointer guard share one binary.
+func parallelScaling(t *testing.T, options Options) {
+	t.Helper()
+	binary := parallelHarness(t, "scaling.c", options)
+	for _, threads := range []string{"1", "4"} {
+		out, _ := parallelRun(t, binary, threads)
+		if out != "scaling clean\n" {
+			t.Fatal(out)
+		}
+		parallelLeaks(t, binary, options, threads)
 	}
+	command := exec.Command(binary, "high_pointer")
+	command.Env = parallelEnvironment("1", false)
+	out, err := command.CombinedOutput()
+	failure, ok := err.(*exec.ExitError)
+	if !ok || failure.ExitCode() != 70 || !strings.Contains(string(out), "shape address exceeds 48 bits") {
+		t.Fatalf("pointer guard: %v: %s", err, out)
+	}
+}
+
+func TestParallelScaling_asan(t *testing.T) {
+	t.Parallel()
+	parallelScaling(t, Options{Sanitize: true})
+}
+
+func TestParallelScaling_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelScaling(t, Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelScaling_count(t *testing.T) {
+	t.Parallel()
+	parallelScaling(t, Options{Count: true})
+}
+
+func TestParallelScaling_release(t *testing.T) {
+	t.Parallel()
+	parallelScaling(t, Options{})
+}
+
+func TestParallelScaling_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelScaling(t, Options{ThreadSanitize: true})
 }
 
 // The snapshot hook stops every builder before publication, forcing the CAS
@@ -155,16 +180,41 @@ func TestParallelScalingGuardMutants(t *testing.T) {
 	})
 }
 
-func TestParallelSlotPairs(t *testing.T) {
-	t.Parallel()
-	for _, build := range parallelBuilds(t) {
-		t.Run(build.name, func(t *testing.T) {
-			binary := parallelHarness(t, "cache_pairs.c", build.options)
-			out, _ := parallelRun(t, binary, "4")
-			if out != "cache pairs clean\n" {
-				t.Fatal(out)
-			}
-			parallelLeaks(t, binary, build.options, "4")
-		})
+// Each build retains the complete four-reader cache-pair stress test.
+func parallelSlotPairs(t *testing.T, options Options) {
+	t.Helper()
+	binary := parallelHarness(t, "cache_pairs.c", options)
+	out, _ := parallelRun(t, binary, "4")
+	if out != "cache pairs clean\n" {
+		t.Fatal(out)
 	}
+	parallelLeaks(t, binary, options, "4")
+}
+
+func TestParallelSlotPairs_asan(t *testing.T) {
+	t.Parallel()
+	parallelSlotPairs(t, Options{Sanitize: true})
+}
+
+func TestParallelSlotPairs_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelSlotPairs(t, Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelSlotPairs_count(t *testing.T) {
+	t.Parallel()
+	parallelSlotPairs(t, Options{Count: true})
+}
+
+func TestParallelSlotPairs_release(t *testing.T) {
+	t.Parallel()
+	parallelSlotPairs(t, Options{})
+}
+
+func TestParallelSlotPairs_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelSlotPairs(t, Options{ThreadSanitize: true})
 }
