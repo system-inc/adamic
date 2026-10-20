@@ -2,10 +2,10 @@ package css
 
 import (
 	"fmt"
-	"math"
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -138,28 +138,37 @@ func cssPrinterPreflightCost(t *testing.T, binary, oracle string) error {
 	for index, path := range paths {
 		expected[index] = cssPrinterAnswers(t, oracle, path, "default")
 	}
-	best := [2]time.Duration{time.Duration(math.MaxInt64), time.Duration(math.MaxInt64)}
-	// Interleave sizes and keep the minimum of three samples of each, reducing
-	// scheduler noise without a machine-dependent absolute time floor.
+	// Each sample runs a small and a large input back to back and keeps their
+	// ratio, so the pair sees the same load; the verdict is the median of three
+	// pair ratios. Taking each size's minimum separately let load that moved
+	// between samples pair a quiet small run with a loaded large one, and a
+	// mutant scaling 7.6x in both pairs read 5.95x (Hot Loom, message 70368).
+	var ratios []float64
 	for sample := 0; sample < 3; sample++ {
+		var elapsed [2]time.Duration
 		for index, path := range paths {
 			started := time.Now()
 			if err := cssPrinterSanitizedAgreement(t, binary, expected[index], path, "output", "once", "default"); err != nil {
 				return err
 			}
-			elapsed := time.Since(started)
-			if elapsed < best[index] {
-				best[index] = elapsed
-			}
-			t.Logf("preflight scaling sample %d: bytes=%d sanitized=%s", sample+1, []int{cssPrinterPreflightSmallBytes, cssPrinterPreflightLargeBytes}[index], elapsed)
+			elapsed[index] = time.Since(started)
 		}
+		ratio := float64(elapsed[1]) / float64(elapsed[0])
+		ratios = append(ratios, ratio)
+		t.Logf("preflight scaling pair %d: small=%s large=%s ratio=%.3fx", sample+1, elapsed[0], elapsed[1], ratio)
 	}
-	ratio := float64(best[1]) / float64(best[0])
-	t.Logf("preflight scaling: small=%s large=%s ratio=%.3fx bound=%.2fx", best[0], best[1], ratio, cssPrinterPreflightScalingBound)
+	ratio := cssPrinterMedian(ratios)
+	t.Logf("preflight scaling: median pair ratio=%.3fx bound=%.2fx", ratio, cssPrinterPreflightScalingBound)
 	if ratio > cssPrinterPreflightScalingBound {
-		return fmt.Errorf("CSS preflight scaling %.3fx exceeds scaling bound %.2fx (small %s, large %s)", ratio, cssPrinterPreflightScalingBound, best[0], best[1])
+		return fmt.Errorf("CSS preflight scaling %.3fx exceeds scaling bound %.2fx (pair ratios %.3f)", ratio, cssPrinterPreflightScalingBound, ratios)
 	}
 	return nil
+}
+
+func cssPrinterMedian(values []float64) float64 {
+	sorted := slices.Clone(values)
+	slices.Sort(sorted)
+	return sorted[len(sorted)/2]
 }
 
 // Ordinary top-level tests are enumerated by adamic-gate's go test -list census;
