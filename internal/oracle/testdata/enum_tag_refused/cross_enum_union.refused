@@ -1,0 +1,1 @@
+internal/oracle/testdata/enum_tag_refused/cross_enum_union.a:10:43: Adamic 0.1 refuses an object refinement by tags from different numeric enums that share a value; give the members tags from one enum, or tags with distinct values (adamic/enum-tag)
