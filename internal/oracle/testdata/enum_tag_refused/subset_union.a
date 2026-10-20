@@ -1,0 +1,15 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+// The refinement lands on a smaller union, Y | Z. AKind is open, so x's tag can hold a number
+// other than AKind.A while x keeps its string payload: Node prints text1.
+enum AKind { A }
+enum BKind { B = 1 }
+enum CKind { C = 2 }
+interface X { readonly tag: AKind; readonly value: string }
+interface Y { readonly tag: BKind; readonly value: number }
+interface Z { readonly tag: CKind; readonly value: number }
+function numeric(): number { return 1; }
+const x: X = { tag: numeric(), value: 'text' };
+function show(value: X | Y | Z): void {
+	if (value.tag !== AKind.A) { console.log(`${value.value + 1}`); }
+}
+show(x);

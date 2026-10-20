@@ -688,6 +688,12 @@ that open tag, and entered the checker's numeric-payload branch. Source Node
 printed `text1`; the unguarded native code printed `1`. This observation requires
 a soundness boundary beyond numeric-enum narrowing to never.
 
+The refusal holds wherever the refinement lands: on an intersection member, on
+a smaller union of members, and when the union's other member is an
+intersection. Until Oct 20 it looked only at plain object types, so each of
+those three printed `1` natively where Node printed `text1`
+(`internal/oracle/testdata/enum_tag_refused`).
+
 `TestNumericEnumLiteralPromises` covers member slots, excluded-member narrowing,
 plain literals and singleton object tags. `TestNumericEnumsAreOpen` also proves
 singleton numeric assignments and genuine member-tagged object unions compile.
