@@ -20,6 +20,7 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		{"containers", "enum E { A, B } const values: E[] = [E.A]; const numbers: number[] = values; numbers.push(77); const map = new Map<string, E>(); const wide: Map<string, number> = map; wide.set('x', 99);"},
 		{"optional_object", "enum E { A, B } function flags(box: { flags: E; other?: { flags: E } }): E { return box.other ? box.flags | box.other.flags : box.flags; }"},
 		{"distinct_enum_tags", "enum Kind { A, B } enum Other { X = 5, Y = 6 } interface P { readonly kind: Kind.A; readonly value: string } interface Q { readonly kind: Other.X; readonly value: number } function show(v: P | Q): void { if (v.kind === Other.X) { console.log(`${v.value + 1}`); } else { console.log(v.value); } } show({ kind: Kind.A, value: 'text' }); show({ kind: Other.X, value: 41 });"},
+		{"union_literal_members", "enum Kind { Text, Count } enum Flags { None = 0, Dirty = 1 } type Node = { kind: Kind.Text; text: string } | { kind: Kind.Count; count: number }; function numeric(): number { return 5; } function show(node: Node): string { return node.kind === Kind.Count ? `${node.count + 1}` : node.text; } const nodes: Node[] = [{ kind: Kind.Text, text: 'ahra' }, { kind: Kind.Count, count: 41 }]; for (const node of nodes) { console.log(show(node)); } const box: { flags: Flags } = { flags: numeric() }; box.flags += 2; console.log(`${box.flags}`);"},
 	} {
 		t.Log(probe.name)
 		observation := "console.log(`${E.A}/${E[0]}`);"
@@ -40,6 +41,8 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 			observation += "console.log(`${flags({flags:E.A})}/${flags({flags:E.A,other:{flags:E.B}})}`);"
 		case "distinct_enum_tags":
 			observation = "console.log(`${Other.X}/${Kind[1]}`);"
+		case "union_literal_members":
+			observation = "console.log(`${Kind.Count}/${Flags[1]}`);"
 		}
 		lowersAndAgreesWithNode(t, probe.source+observation)
 	}

@@ -679,6 +679,15 @@ function remaining(k: Kind): Kind.A {
 }
 ```
 
+Every road from a number into such a slot is refused. An object literal written
+where a union goes is judged against the member it's built as: the union's own
+property for `{ kind: Kind.Text } | { kind: Kind.Count }` is the whole open
+enum, which takes any number, so `{ kind: raw, text }` is judged against each
+member's `kind`. A compound or update write (`node.kind += 1`, `node.kind++`)
+computes a number, so it's refused whenever a slot it can land in is one
+member. Until Oct 20 both slipped through, and native panicked where Node
+printed `NaN` (`internal/oracle/testdata/enum_literal_slot_refused`).
+
 A singleton enum remains open, so its whole type cannot prove an object's
 literal discriminant. Refinements of an object union carrying such a field are
 refused with `adamic/enum-tag`, unless every member that isn't a primitive has
