@@ -425,6 +425,23 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 		}
 		return true
 	}
+	// Two instances of one generic type store alike when their arguments do. Walking their members
+	// instead expands Promise's then and catch into fresh instantiations at every level, which no
+	// visited pair ever repeats: 1.3 million calls, 294,120 deep, for Promise<() => void>. The
+	// arguments decide outright, failing closed when they differ, since a pair this walk marked
+	// visited would read as alike to any member walk after it.
+	if from.ObjectFlags()&to.ObjectFlags()&checker.ObjectFlagsReference != 0 && from.Target() != nil && from.Target() == to.Target() {
+		a, b := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
+		if len(a) != len(b) {
+			return false
+		}
+		for i := range a {
+			if !l.sameRecordStorage(a[i], b[i], visited) {
+				return false
+			}
+		}
+		return true
+	}
 	for _, property := range l.checker.GetPropertiesOfType(to) {
 		if own := l.checker.GetPropertyOfType(from, property.Name); own != nil {
 			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property), visited) {
