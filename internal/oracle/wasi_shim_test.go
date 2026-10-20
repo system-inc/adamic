@@ -44,7 +44,7 @@ func runWASIShimShard(t *testing.T, shard int) {
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	ran, agreed, notYet, excluded := 0, 0, 0, 0
+	ran, agreed, notYet, refused, excluded := 0, 0, 0, 0, 0
 	for _, index := range rows {
 		fixture := fixtures[index]
 		t.Run(fixture.path, func(t *testing.T) {
@@ -53,6 +53,12 @@ func runWASIShimShard(t *testing.T, shard int) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			// Held to the refusal TestWASIAgreesWithNode holds them to (runtime_boundary_test.go).
+			if runtimeBoundaryViewFixture(fixture.path) {
+				assertRuntimeBoundaryViewRefusal(t, err)
+				refused++
+				return
+			}
 			if !fixture.lowers {
 				var refusal *lower.NotYet
 				if !errors.As(err, &refusal) {
@@ -128,7 +134,7 @@ func runWASIShimShard(t *testing.T, shard int) {
 			}
 		})
 	}
-	t.Logf("SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d excluded=%d", shard, ran, agreed, notYet, excluded)
+	t.Logf("SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d refused=%d excluded=%d", shard, ran, agreed, notYet, refused, excluded)
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
