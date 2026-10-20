@@ -371,6 +371,28 @@ func unitMismatchLine(mismatch unitMismatch) string {
 	return fmt.Sprintf("%sunit %s key %s cached %s cold %s", UnitMismatchPrefix, mismatch.Unit, mismatch.Key, mismatch.Cached, mismatch.Cold)
 }
 
+// unitBuildLog is the file a build's census lines go to, where Loom's builder reads each product's (adamic's
+// internal/buildcache note and record). A passing product test's own output is thrown away, so a mismatch's line goes
+// here too, or no builder hears of it (Node's M1).
+const unitBuildLog = "ADAMIC_BUILD_LOG"
+
+// noteUnitMismatch appends mismatch's line to the build log when one is named, in one write a line long.
+func noteUnitMismatch(mismatch unitMismatch) {
+	path := os.Getenv(unitBuildLog)
+	if path == "" {
+		return
+	}
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "native: the unit cache mismatch couldn't be noted in %s: %v\n", path, err)
+		return
+	}
+	defer file.Close()
+	if _, err := file.WriteString(unitMismatchLine(mismatch) + "\n"); err != nil {
+		fmt.Fprintf(os.Stderr, "native: the unit cache mismatch couldn't be noted in %s: %v\n", path, err)
+	}
+}
+
 // markUnitCacheOff leaves mismatch's mark in cache, made whole before it's in place.
 func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 	content, err := json.Marshal(mismatch)
@@ -446,6 +468,7 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 				marked = "its mark couldn't be written: " + err.Error()
 			}
 			fmt.Fprintln(os.Stderr, unitMismatchLine(mismatch)+"; the unit cache is "+marked)
+			noteUnitMismatch(mismatch)
 			keying.mismatched.Store(true)
 			path := filepath.Join(directory, "checked-"+unit.name+".o")
 			return path, os.WriteFile(path, cold, 0o644)
