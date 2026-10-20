@@ -1,0 +1,45 @@
+// Pure-region trees, outside children, and a nonescaping consumer that writes a heap child.
+interface Tree {
+	label: string;
+	readonly left: Tree | undefined;
+	readonly right: Tree | undefined;
+}
+function build(depth: number): Tree {
+	if (depth === 0) {
+		return { label: 'leaf', left: undefined, right: undefined };
+	}
+	return { label: 'branch', left: build(depth - 1), right: build(depth - 1) };
+}
+function count(tree: Tree | undefined): number {
+	return tree === undefined ? 0 : 1 + count(tree.left) + count(tree.right);
+}
+function replace(tree: Tree): number {
+	tree.label = `changed${count(tree)}`;
+	return tree.label.length;
+}
+function through(tree: Tree): number {
+	return replace(tree);
+}
+function labeled(depth: number): Tree {
+	return { label: `label${depth}`, left: build(depth), right: undefined };
+}
+function labelLength(tree: Tree): number {
+	return tree.label.length + count(tree);
+}
+function fail(depth: number): Tree {
+	throw new Error(`failed${depth}`);
+}
+function interrupted(depth: number): Tree {
+	return { label: `parent${depth}`, left: labeled(depth), right: fail(depth) };
+}
+console.log(`pure ${count(build(5))}`);
+console.log(`write ${through(build(3))}`);
+console.log(`outside ${labelLength(labeled(2))}`);
+try {
+	console.log(`interrupted ${count(interrupted(1))}`);
+} catch (error) {
+	if (error instanceof Error) {
+		console.log(error.message);
+	}
+}
+console.log(`after ${count(build(2))}`);
