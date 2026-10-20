@@ -1,0 +1,13 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+// X is an intersection, so it is the union's other non-primitive member. AKind is open, so x's
+// tag can hold BKind.B's number while x keeps its string payload: Node prints text1.
+enum AKind { A }
+enum BKind { B = 1 }
+type X = { readonly tag: AKind } & { readonly value: string };
+interface Y { readonly tag: BKind; readonly value: number }
+function numeric(): number { return 1; }
+const x: X = { tag: numeric(), value: 'text' };
+function show(value: X | Y): void {
+	if (value.tag === BKind.B) { console.log(`${value.value + 1}`); }
+}
+show(x);
