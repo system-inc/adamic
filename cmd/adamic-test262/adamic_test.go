@@ -10,6 +10,7 @@ import (
 // prepare is a subprocess engine over this checkout, running the shared stage 0 compiler product.
 func prepare(t testing.TB, test262 string, work string) (*engine, error) {
 	t.Helper()
+	// Reads: internal/lower/*.go
 	return prepareMode("../..", test262, work, productAdamic(t), nil, false)
 }
 

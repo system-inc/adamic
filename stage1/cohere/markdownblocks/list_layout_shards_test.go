@@ -99,6 +99,7 @@ func buildListLayoutSetup(t *testing.T) {
 		// still covers the unit (@system_adamic's ruling). Shards start their own deadline after it.
 		started := time.Now()
 		defer func() { t.Logf("Markdown list layout setup: %.3fs", time.Since(started).Seconds()) }()
+		// Reads: internal/native/*.go
 		root, err := filepath.Abs(repository)
 		if err != nil {
 			t.Fatal(err)
