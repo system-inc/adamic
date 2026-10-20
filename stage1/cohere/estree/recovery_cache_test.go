@@ -153,7 +153,7 @@ func recoveryStableNative(repo, directory, source string) error {
 	}
 	var features []string
 	enabled := map[string]bool{}
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"} {
 		if strings.Contains(source, "#define "+feature+" 1\n") {
 			features = append(features, "-D"+feature+"=1")
 			enabled[feature] = true

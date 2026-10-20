@@ -89,6 +89,11 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
+	// Last, once nothing more changes the program: its walk of the method tables is the one the
+	// emitter reads too (ir.Program's MethodsNamed).
+	if err := lowering.voidDiscards(); err != nil {
+		return nil, err
+	}
 	return lowering.result, nil
 }
 

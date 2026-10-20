@@ -294,7 +294,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				if e.program.PackedCountNeeded(expression.Function) {
 					constructor = "adamic_counted_closure_canonical"
 				}
-				return e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s})", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", ")))
+				discard := ""
+				if e.closureDiscards {
+					// Stored once, where the closure is made, not on each return of the cached one.
+					discard = ", " + e.discardOf(expression.Function)
+				}
+				return e.own(ir.Closure, fmt.Sprintf("%s(%s, %s, %d, (adamic_cell *const[]){%s}%s)", constructor, e.cellReference(identity-1), e.functionName(expression.Function), len(environment), strings.Join(cells, ", "), discard))
 			}
 		}
 		constructor := "adamic_closure_new"
@@ -305,6 +310,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if e.program.Functions[expression.Function].Receiver {
 			e.line("%s->receiver = true;", closure)
 		}
+		e.closureDiscard(closure, expression.Function)
 		for index, local := range environment {
 			e.line("%s->cells[%d] = adamic_retain(%s);", closure, index, e.cellReference(local))
 		}

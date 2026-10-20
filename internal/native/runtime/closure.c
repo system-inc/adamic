@@ -22,6 +22,11 @@ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  closure->receiver = false;
 #endif
+#ifdef ADAMIC_CLOSURE_DISCARDS
+	// The made function's result says otherwise where it's a reference: MakeClosure's emission, and
+	// the runtime's own closures that return one (map_set.c).
+	closure->discard = adamic_discard_none;
+#endif
 	closure->count = count;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	closure->canonical_owner = NULL;
@@ -48,7 +53,7 @@ adamic_environment *adamic_environment_new(size_t count) {
 // A live value is unique for its code and activation. If no owner kept it, a
 // later reference can recreate it: no surviving reference can observe that gap.
 // Captured cells keep the frame alive; its cache never keeps a closure alive.
-adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]) {
+adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD) {
 	adamic_environment *owner = identity->owner;
 	for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
 #ifdef ADAMIC_CLOSURE_CONVENTION
@@ -59,6 +64,9 @@ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code co
 		}
 	}
 	adamic_closure *closure = adamic_closure_new(code, count);
+#ifdef ADAMIC_CLOSURE_DISCARDS
+	closure->discard = discard;
+#endif
 	for (size_t index = 0; index < count; index++) {
 		closure->cells[index] = adamic_retain(cells[index]);
 	}
@@ -73,12 +81,15 @@ adamic_closure *(adamic_closure_canonical)(adamic_cell *identity, adamic_code co
 
 
 #ifdef ADAMIC_CLOSURE_CONVENTION
-adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]) {
+adamic_closure *(adamic_counted_closure_canonical)(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[] ADAMIC_CANONICAL_DISCARD) {
  adamic_environment *owner = identity->owner;
  for (adamic_closure *held = owner->functions; held != NULL; held = held->canonical_next) {
  if (held->counted && held->counted_code == code) { return adamic_retain(held); }
  }
  adamic_closure *closure = adamic_counted_closure_new(code, count);
+#ifdef ADAMIC_CLOSURE_DISCARDS
+ closure->discard = discard;
+#endif
  for (size_t index = 0; index < count; index++) { closure->cells[index] = adamic_retain(cells[index]); }
  closure->canonical_owner = owner;
  closure->canonical_next = owner->functions;
