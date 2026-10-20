@@ -17,6 +17,7 @@ import (
 	"time"
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -421,13 +422,10 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name 
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Env = childEnvironment(extra...)
-	command.WaitDelay = 2 * time.Second
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
 	stderr.limit = limit
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.CaptureTo(ctx, command, &stdout, &stderr)
 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
 	if stdout.exceeded || stderr.exceeded {
 		result.Exit = -1

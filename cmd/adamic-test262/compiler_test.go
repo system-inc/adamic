@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
@@ -24,18 +26,13 @@ func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
 		if err := os.WriteFile(source, []byte(program(body)), 0600); err != nil {
 			t.Fatal(err)
 		}
-		// The reference is our own compiler. Give its I/O drains time under load
-		// without weakening the comparison of completed compiler results.
+		// The reference is our own compiler. Drain both streams completely while
+		// retaining the deadline and bounded diagnostic capture.
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		command := exec.CommandContext(ctx, e.adamic, "c", source)
-		command.WaitDelay = 10 * time.Second
 		stdout, stderr := limitedBuffer{limit: 16 << 20}, limitedBuffer{limit: 16 << 20}
-		command.Stdout, command.Stderr = &stdout, &stderr
-		err := command.Run()
+		err := childguard.CaptureTo(ctx, command, &stdout, &stderr)
 		cancel()
-		if errors.Is(err, exec.ErrWaitDelay) {
-			t.Fatalf("reference compiler I/O still incomplete under load after 10s: %v", err)
-		}
 		var exitError *exec.ExitError
 		if err != nil && !errors.As(err, &exitError) {
 			t.Fatalf("reference compiler failed: %v", err)
