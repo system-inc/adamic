@@ -16,7 +16,8 @@ import (
 // are refused too. Each program prints text1 on Node, and main's native build printed 1, reading
 // the string payload as the number its refined type promised. Each program's whole diagnostic is
 // pinned in its .refused file. Mutants: enumRefusal counting and refining only plain object types,
-// as it did, lowers the first three; enumTagsShareValue returning false lowers cross_enum.
+// as it did, lowers the first three; enumTagsShareValue returning false lowers both cross_enum
+// programs; keeping only the first enum seen for a value lowers cross_enum_union.
 func TestEnumTagRefinementsAreRefused(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/enum_tag_refused"
@@ -53,7 +54,7 @@ func TestEnumTagRefinementsAreRefused(t *testing.T) {
 			}
 		})
 	}
-	if programs != 4 {
-		t.Fatalf("%d programs in %s, want 4: a program added or removed needs this count changed with it", programs, directory)
+	if programs != 5 {
+		t.Fatalf("%d programs in %s, want 5: a program added or removed needs this count changed with it", programs, directory)
 	}
 }

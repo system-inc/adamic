@@ -440,11 +440,10 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 // when the value is Kind.A, though both are 0 at run time. Members whose same-named tags come
 // from different enums with one value can't be told apart by that tag.
 func (l *lowering) enumTagsShareValue(union *checker.Type) bool {
-	type seen struct {
-		identity *ast.Symbol
-		member   int
-	}
-	tags := map[string]map[any]seen{}
+	// Each field and value keeps every enum it came from, so a member tagged Kind.A | Other.X still
+	// meets another member's Kind.A. Two distinct members per enum are enough to know one of them
+	// differs from any later member, which keeps tsc's 300-member node unions linear.
+	tags := map[string]map[any]map[*ast.Symbol][]int{}
 	for index, member := range union.Types() {
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
@@ -462,13 +461,21 @@ func (l *lowering) enumTagsShareValue(union *checker.Type) bool {
 				identity := l.enumIdentity(part)
 				value := part.AsLiteralType().Value()
 				if tags[field.Name] == nil {
-					tags[field.Name] = map[any]seen{}
+					tags[field.Name] = map[any]map[*ast.Symbol][]int{}
 				}
-				first, found := tags[field.Name][value]
-				if !found {
-					tags[field.Name][value] = seen{identity: identity, member: index}
-				} else if first.identity != identity && first.member != index {
-					return true
+				if tags[field.Name][value] == nil {
+					tags[field.Name][value] = map[*ast.Symbol][]int{}
+				}
+				for other, earlierMembers := range tags[field.Name][value] {
+					for _, earlier := range earlierMembers {
+						if other != identity && earlier != index {
+							return true
+						}
+					}
+				}
+				members := tags[field.Name][value][identity]
+				if len(members) < 2 && (len(members) == 0 || members[0] != index) {
+					tags[field.Name][value][identity] = append(members, index)
 				}
 			}
 		}
