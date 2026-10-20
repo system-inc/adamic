@@ -1,0 +1,10 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+enum AKind { A }
+enum BKind { B = 1, C = 2 }
+interface A { readonly tag: AKind; readonly value: string }
+interface B { readonly tag: BKind.B; readonly value: number }
+type Pair = A | B;
+function numeric(): number { return 1; }
+const a: A = { tag: numeric(), value: "text" };
+function show(v: Pair): void { const { tag } = v; if (tag === BKind.B) { console.log(`${v.value + 1}`); } }
+show(a);
