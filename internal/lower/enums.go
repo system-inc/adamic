@@ -424,6 +424,11 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 			updated = binary.Left
 		}
 	}
+	if updated != nil {
+		if slot := l.literalUpdateSlot(updated); slot != nil {
+			return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to a numeric literal or enum member slot " + l.checker.TypeToString(slot), Fix: "assign this slot's literal constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"}
+		}
+	}
 	if updated != nil && l.checker.GetTypeAtLocation(updated).Flags()&checker.TypeFlagsEnumLike != 0 && !l.numericEnum(l.enumIdentity(l.checker.GetTypeAtLocation(updated))) {
 		if l.flagUpdate(node, updated) {
 			return nil
@@ -511,6 +516,49 @@ func refinedToObject(refined *checker.Type) bool {
 		return false
 	}
 	return refined.Flags()&(checker.TypeFlagsPrimitive|checker.TypeFlagsNever) == 0
+}
+
+// A compound or update write computes a number, so it can't keep a member literal's promise. Numeric
+// enums are open, so writes back into a whole one stay admitted; a slot that is one member, or a
+// numeric literal, is refused. A field is judged in every member of its receiver's type, since the
+// union's own property for kind: Kind.Text | kind: Kind.Count is the whole open enum.
+func (l *lowering) literalUpdateSlot(updated *ast.Node) *checker.Type {
+	updated = ast.SkipParentheses(updated)
+	slots := []*checker.Type{}
+	if updated.Kind == ast.KindPropertyAccessExpression || updated.Kind == ast.KindElementAccessExpression {
+		var receiver *ast.Node
+		if updated.Kind == ast.KindPropertyAccessExpression {
+			receiver = updated.AsPropertyAccessExpression().Expression
+		} else {
+			receiver = updated.AsElementAccessExpression().Expression
+		}
+		field := l.symbol(updated)
+		if field == nil {
+			return nil
+		}
+		owner := l.checker.GetTypeAtLocation(receiver)
+		members := []*checker.Type{owner}
+		if owner.Flags()&checker.TypeFlagsUnion != 0 {
+			members = owner.Types()
+		}
+		for _, member := range members {
+			if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+				continue
+			}
+			if property := l.checker.GetPropertyOfType(member, field.Name); property != nil {
+				slots = append(slots, l.checker.GetTypeOfSymbol(property))
+			}
+		}
+	} else if symbol := l.symbol(updated); symbol != nil {
+		slots = append(slots, l.checker.GetTypeOfSymbol(symbol))
+	}
+	for _, slot := range slots {
+		slot = l.checker.GetNonNullableType(slot)
+		if (slot.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(slot))) && !l.openNumericEnumType(slot) {
+			return slot
+		}
+	}
+	return nil
 }
 
 // Compare runtime values, not spellings: numeric aliases denote the same union member. A default
