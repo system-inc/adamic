@@ -1,0 +1,9 @@
+{
+  "stdout": "caught by exact stdout/stderr/exit comparison",
+  "exit": "caught by exact stdout/stderr/exit comparison",
+  "stderr": "caught by exact stdout/stderr/exit comparison",
+  "gzip-roundtrip": "caught by decompressed-byte equality",
+  "brotli-roundtrip": "caught by Brotli round trip failed after compressing input plus !",
+  "reactor-response": "caught by source response comparison after adding ! to the observed response",
+  "empty-selection": "caught by nonzero oracle subtest guard"
+}
