@@ -1,0 +1,68 @@
+// Region paths no fixture reaches: a bare call statement, a region in an aside (conditional, &&),
+// a region literal holding heap objects, arrays and closures, a deep tree over several blocks, and a
+// fresh function with a try/finally around its return.
+interface Box {
+	readonly name: string;
+}
+
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+	readonly right: Node | undefined;
+	readonly box: Box;
+	readonly items: string[];
+	readonly say: () => string;
+}
+
+let made = 0;
+
+function box(depth: number): Box {
+	made = made + 1;
+	return { name: `box${depth}-${made}` };
+}
+
+function build(depth: number): Node {
+	const tag = `t${depth}`;
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined, right: undefined, box: box(depth), items: [`i${depth}`, tag], say: () => tag };
+	}
+	return { label: `node${depth}`, left: build(depth - 1), right: build(depth - 1), box: box(depth), items: [tag], say: () => `${tag}!` };
+}
+
+function count(node: Node | undefined): number {
+	if (node === undefined) {
+		return 0;
+	}
+	return 1 + count(node.left) + count(node.right) + node.box.name.length * 0 + node.items.length * 0;
+}
+
+function speak(node: Node): number {
+	return node.say().length + node.box.name.length + node.items.length;
+}
+
+function guarded(depth: number): Node {
+	try {
+		return { label: `g${depth}`, left: build(depth), right: undefined, box: box(depth), items: [], say: () => 'g' };
+	} finally {
+		made = made + 100;
+	}
+}
+
+let total = 0;
+count(build(2));
+console.log(`bare ${made}`);
+const flag = made > 0;
+const picked = flag ? count(build(3)) : 0;
+console.log(`picked ${picked}`);
+const both = flag && count(build(2)) > 3;
+console.log(`both ${both}`);
+total += count(build(10));
+console.log(`deep ${total}`);
+total += count(build(14));
+console.log(`deeper ${total}`);
+console.log(`${speak(build(3))} ${speak(build(0))}`);
+console.log(`${count(guarded(2))} ${made}`);
+for (let round = 0; round < 3; round++) {
+	total += count(build(round)) + speak(build(round));
+}
+console.log(`loop ${total} ${made}`);
