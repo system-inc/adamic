@@ -189,7 +189,9 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		// Any bits at all: every exponent, NaNs and subnormals included.
 		values = append(values, math.Float64frombits(random.Uint64()))
 		// The ranges people compute in: around ±1, ±10, ±1000, and every magnitude from 2^-60 to 2^60.
-		values = append(values, random.Float64()*2-1, random.Float64()*20-10, random.Float64()*2000-1000)
+		// Each product is converted before the subtraction, which Go's spec says no fused multiply-add
+		// may skip: arm64 Go would otherwise fuse it, and ask a different sweep than x86-64 does.
+		values = append(values, float64(random.Float64()*2)-1, float64(random.Float64()*20)-10, float64(random.Float64()*2000)-1000)
 		values = append(values, math.Ldexp(random.Float64()+0.5, random.IntN(121)-60)*float64(1-2*random.IntN(2)))
 	}
 
@@ -222,7 +224,7 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		ask("atan2", left, right)
 		ask("hypot", left, right)
 		ask("hypot", left, right, values[random.IntN(len(values))])
-		ask("hypot", random.Float64()*10-5, random.Float64()*10-5, random.Float64()*10-5, random.Float64()*10-5)
+		ask("hypot", float64(random.Float64()*10)-5, float64(random.Float64()*10)-5, float64(random.Float64()*10)-5, float64(random.Float64()*10)-5)
 	}
 	ask("hypot")
 	for _, value := range specials {
