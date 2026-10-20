@@ -43,6 +43,12 @@
     "cmd/adamic-test262 TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
+    "cmd/adamic-test262 TestProduct_RegExpRunnerNative": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized0"
+    ],
+    "cmd/adamic-test262 TestProduct_RegExpRunnerWASI": [
+      "internal/oracle TestProduct_NativeRuntimesWASI0"
+    ],
     "internal/fuzz TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
