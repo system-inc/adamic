@@ -16,10 +16,35 @@ import (
 )
 
 // The service oracle's claim is 100,000 generated requests through one instance, every response equal to Node's,
-// linear memory flat and, counted, nothing live after each request. It runs as four legs, each building what it needs,
-// so no leg can pass on another's setup: the plain and counted wasm runs, the sanitized native command's agreement
-// (opt-in, too long for the gate), and the mutants, one of which shrinks the request count and must be refused.
+// linear memory flat and, counted, nothing live after each request. It runs as legs, each building what it needs, so
+// no leg can pass on another's setup: the plain and counted wasm runs, the sanitized native command's agreement in four
+// quarters, and the mutants, one of which shrinks the request count and must be refused.
 const serviceRequests = 100000
+
+// serviceQuarters are the request ranges, [start, end), the sanitized native command answers, one test each. A
+// sanitized run of all 100,000 at once doesn't fit the gate's 60 s per-test budget, so every request is still checked
+// under ASan, but in four instances: the trade is that no sanitized native instance holds all 100,000, which the
+// counted wasm leg's single-instance live 0 still proves.
+var serviceQuarters = [][2]int{{0, 25000}, {25000, 50000}, {50000, 75000}, {75000, 100000}}
+
+// tileRequests refuses ranges that don't cover [0, total) exactly once, in order: a gap leaves requests unchecked and
+// an overlap checks some twice while the claim counts them once.
+func tileRequests(ranges [][2]int, total int) error {
+	next := 0
+	for index, span := range ranges {
+		if span[0] != next {
+			return fmt.Errorf("range %d starts at %d, want %d: a gap or an overlap", index, span[0], next)
+		}
+		if span[1] <= span[0] {
+			return fmt.Errorf("range %d, [%d, %d), is empty", index, span[0], span[1])
+		}
+		next = span[1]
+	}
+	if next != total {
+		return fmt.Errorf("ranges end at %d, want %d", next, total)
+	}
+	return nil
+}
 
 // serviceSetup is what every leg needs: the repository, the shared stage 0 compiler product, the service source and
 // host, a fresh directory, and whether the generated C ends statement regions.
@@ -112,14 +137,12 @@ func TestWASIServiceCounted(t *testing.T) {
 	newServiceSetup(t).wasmLeg(t, "1")
 }
 
-// The command imports the very same handler and answers the exact generated request file. A sanitized native run
-// of all 100,000 requests takes about 58 s on an idle Linux box and more than twice that on a loaded gate box, past
-// the gate's 60 s per-test budget even alone, so the ordinary gate skips it: the wasm legs hold the request count and
-// live 0, and this leg runs on its own with ADAMIC_WASI_SERVICE_NATIVE=1.
-func TestWASIServiceNativeAgrees(t *testing.T) {
-	t.Parallel()
-	if os.Getenv("ADAMIC_WASI_SERVICE_NATIVE") != "1" {
-		t.Skip("set ADAMIC_WASI_SERVICE_NATIVE=1 to run the sanitized native agreement over all 100,000 requests")
+// nativeQuarter has the host generate all the requests and Node's responses, then builds a sanitized native command
+// importing the very same handler and has it answer one quarter's exact lines of that request file.
+func nativeQuarter(t *testing.T, quarter int) {
+	t.Helper()
+	if err := tileRequests(serviceQuarters, serviceRequests); err != nil {
+		t.Fatal(err)
 	}
 	setup := newServiceSetup(t)
 	output, err := setup.runHost(setup.host, "-", "0")
@@ -129,6 +152,22 @@ func TestWASIServiceNativeAgrees(t *testing.T) {
 	if err := serviceReport(output, false); err != nil {
 		t.Fatal(err)
 	}
+	requests, err := os.ReadFile(filepath.Join(setup.directory, "requests.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	responses, err := os.ReadFile(filepath.Join(setup.directory, "responses.jsonl"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	requestLines := strings.Split(strings.TrimSuffix(string(requests), "\n"), "\n")
+	responseLines := strings.Split(strings.TrimSuffix(string(responses), "\n"), "\n")
+	if len(requestLines) != serviceRequests || len(responseLines) != serviceRequests {
+		t.Fatalf("generated %d requests and %d responses, want %d of each", len(requestLines), len(responseLines), serviceRequests)
+	}
+	span := serviceQuarters[quarter]
+	quarterRequests := filepath.Join(setup.directory, "quarter.jsonl")
+	writeWASIFile(t, quarterRequests, strings.Join(requestLines[span[0]:span[1]], "\n")+"\n")
 	commandSource := filepath.Join(setup.directory, "command.a")
 	writeWASIFile(t, commandSource, "import { handleRequest } from "+strconv.Quote(filepath.ToSlash(setup.source))+";\n"+
 		"import { programArguments, readTextFile } from 'adamic';\n"+
@@ -138,31 +177,71 @@ func TestWASIServiceNativeAgrees(t *testing.T) {
 	wasiCommand(t, setup.repository, setup.compiler, "build", commandSource, "-o", binary, "--sanitize")
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
-	native, err := exec.CommandContext(ctx, binary, filepath.Join(setup.directory, "requests.jsonl")).Output()
+	native, err := exec.CommandContext(ctx, binary, quarterRequests).Output()
 	if err != nil {
 		if failed, ok := err.(*exec.ExitError); ok {
 			t.Fatalf("native service: %v\n%s", err, failed.Stderr)
 		}
 		t.Fatalf("native service: %v", err)
 	}
-	expected, err := os.ReadFile(filepath.Join(setup.directory, "responses.jsonl"))
-	if err != nil {
+	actualLines := strings.Split(strings.TrimSuffix(string(native), "\n"), "\n")
+	for index := span[0]; index < span[1]; index++ {
+		if index-span[0] >= len(actualLines) {
+			t.Fatalf("native command ended before response %d", index)
+		}
+		if actualLines[index-span[0]] != responseLines[index] {
+			t.Fatalf("native response %d: got %q, want %q", index, actualLines[index-span[0]], responseLines[index])
+		}
+	}
+	if len(actualLines) != span[1]-span[0] {
+		t.Fatalf("native command emitted %d lines, want %d", len(actualLines), span[1]-span[0])
+	}
+	t.Logf("native sanitized command: responses %d to %d agree with Node", span[0], span[1]-1)
+}
+
+func TestWASIServiceNativeAgrees_0(t *testing.T) {
+	t.Parallel()
+	nativeQuarter(t, 0)
+}
+
+func TestWASIServiceNativeAgrees_1(t *testing.T) {
+	t.Parallel()
+	nativeQuarter(t, 1)
+}
+
+func TestWASIServiceNativeAgrees_2(t *testing.T) {
+	t.Parallel()
+	nativeQuarter(t, 2)
+}
+
+func TestWASIServiceNativeAgrees_3(t *testing.T) {
+	t.Parallel()
+	nativeQuarter(t, 3)
+}
+
+// The four tests above are one per quarter, so a fifth quarter would go unrun; and quarters with a gap or an overlap
+// must be refused, not passed.
+func TestWASIServiceQuartersTile(t *testing.T) {
+	t.Parallel()
+	if len(serviceQuarters) != 4 {
+		t.Fatalf("%d quarters, and TestWASIServiceNativeAgrees_0 to _3 run four", len(serviceQuarters))
+	}
+	if err := tileRequests(serviceQuarters, serviceRequests); err != nil {
 		t.Fatal(err)
 	}
-	if string(native) != string(expected) {
-		actualLines := strings.Split(string(native), "\n")
-		expectedLines := strings.Split(string(expected), "\n")
-		for index, line := range expectedLines {
-			if index >= len(actualLines) {
-				t.Fatalf("native command ended before response %d", index)
-			}
-			if actualLines[index] != line {
-				t.Fatalf("native response %d: got %q, want %q", index, actualLines[index], line)
-			}
+	for _, mutant := range []struct {
+		name   string
+		ranges [][2]int
+	}{
+		{"gap", [][2]int{{0, 25000}, {25001, 50000}, {50000, 75000}, {75000, 100000}}},
+		{"overlap", [][2]int{{0, 25000}, {24999, 50000}, {50000, 75000}, {75000, 100000}}},
+		{"short", [][2]int{{0, 25000}, {25000, 50000}, {50000, 75000}, {75000, 99999}}},
+		{"empty", [][2]int{{0, 25000}, {25000, 25000}, {25000, 75000}, {75000, 100000}}},
+	} {
+		if tileRequests(mutant.ranges, serviceRequests) == nil {
+			t.Errorf("%s quarters passed the tiling check", mutant.name)
 		}
-		t.Fatalf("native command emitted %d lines, want %d", len(actualLines), len(expectedLines))
 	}
-	t.Logf("native sanitized command: all %d responses agree with Node", serviceRequests)
 }
 
 func TestWASIServiceMutants(t *testing.T) {

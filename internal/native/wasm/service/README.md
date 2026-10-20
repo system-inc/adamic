@@ -47,15 +47,17 @@ source /workspace/adamic-tools/env.sh
 ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService' -count=1 -v -timeout 45m > /tmp/wasm-service-test.log 2>&1
 ```
 
-The oracle runs as four tests, each building what it needs, so the gate can hold each to
+The oracle runs as separate tests, each building what it needs, so the gate can hold each to
 its 60 s per-test budget: `TestWASIService` (release) and `TestWASIServiceCounted` serve the requests
-through the compiler's existing reactor ABI, `TestWASIServiceNativeAgrees` has the host
-generate the requests and Node's responses only (module `-`) and builds a temporary
-native `.a` command importing the same service with `adamic build --sanitize`. The
-native command reads the identical JSONL request file and its full stdout must match
-Node's response file, with ASan, UBSan and LeakSanitizer enabled. That leg took 57.5 s on an
-idle Linux box (wasm legs 23 to 24 s, mutants 23 s), too close to the budget on a loaded gate box,
-so the gate skips it and it runs with `ADAMIC_WASI_SERVICE_NATIVE=1`. Each mutant is built
+through the compiler's existing reactor ABI, and `TestWASIServiceNativeAgrees_0` to `_3` each have the
+host generate the requests and Node's responses only (module `-`) and build a temporary
+native `.a` command importing the same service with `adamic build --sanitize`. Each native
+command reads one quarter of the identical JSONL request file, 25,000 lines, and its stdout must match
+those lines of Node's response file, with ASan, UBSan and LeakSanitizer enabled. All 100,000 in one
+sanitized run took 57.5 s on an idle Linux box (wasm legs 23 to 24 s, mutants 23 s), past the budget on
+a loaded gate box, so every request is checked under ASan in four instances rather than one; the
+counted wasm leg still holds live 0 over all 100,000 in a single instance.
+`TestWASIServiceQuartersTile` refuses quarters with a gap, an overlap, a short end or an empty range. Each mutant is built
 from an isolated temporary `.a` source while the Node oracle keeps the original source.
 A mutant must compile successfully and fail its named runtime assertion
 (`TestWASIServiceMutants`). Every leg refuses a host report of fewer than 100,000 requests,
