@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "drop-dtoa",
+    "Test": "TestRegExpWitnessRuntimeClosure",
+    "Diagnostic": "number.c calls adamic_number_shortest_digits, defined in dtoa.c, which regexWitnessRuntimeSources leaves out"
+  },
+  {
+    "Name": "call-normalize",
+    "Test": "TestRegExpWitnessRuntimeClosure",
+    "Diagnostic": "weak.c calls adamic_string_normalize, defined in normalize.c, which regexWitnessRuntimeSources leaves out"
+  }
+]
