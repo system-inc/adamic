@@ -1,0 +1,12 @@
+// a-check: refused an object refinement by tags from different numeric enums that share a value
+// P's tag is Kind.A | Other.X, both 0. A test against Other.X narrows to P alone, though q's
+// Kind.A equals it at run time: Node prints undefined for q's number's length.
+enum Kind { A, B }
+enum Other { X, Y }
+interface P { readonly kind: Kind.A | Other.X; readonly value: string }
+interface Q { readonly kind: Kind.A; readonly value: number }
+const q: Q = { kind: Kind.A, value: 41 };
+function show(v: P | Q): void {
+	if (v.kind === Other.X) { console.log(`${v.value.length}`); }
+}
+show(q);
