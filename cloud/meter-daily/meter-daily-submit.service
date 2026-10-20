@@ -1,0 +1,16 @@
+# Commits, pushes and submits the daily meter's finished run, as ahra (cloud/meter-daily/README.md).
+# Started by meter-daily.service's OnSuccess=; exits 3 "not configured" until submit.env names both secrets.
+[Unit]
+Description=Adamic stage 3 daily meter: commit, push and submit the run, as ahra (#badrnrf)
+Wants=network-online.target
+After=network-online.target meter-daily.service
+
+[Service]
+Type=oneshot
+User=ahra
+StateDirectory=adamic-meter-submit
+StateDirectoryMode=0700
+UMask=0077
+EnvironmentFile=-/etc/adamic-meter/submit.env
+ExecStart=/usr/bin/bash /opt/adamic-meter/submit.sh
+TimeoutStartSec=15min
