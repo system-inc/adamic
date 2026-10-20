@@ -366,16 +366,14 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 				}
 			}
 			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && refinedToObject(observed) {
-				for _, member := range declared.Types() {
-					for _, field := range l.checker.GetPropertiesOfType(member) {
-						tag := l.checker.GetTypeOfSymbol(field)
-						if l.openNumericEnumType(tag) && !sharedByEveryMember(l.checker, declared, field.Name, tag) {
-							return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
-						}
+				// A union whose tags can lie is admitted only where every step that refined this read
+				// is a comparison its incoming type proves (enum_tag_flow.go).
+				hazard := l.enumTagHazardOf(declared, "")
+				if hazard != enumTagNoHazard && !l.enumTagRefinementProven(node, declared) {
+					if hazard == enumTagSharedValueHazard {
+						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
 					}
-				}
-				if l.enumTagsShareValue(declared) {
-					return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
+					return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
 				}
 			}
 		}
@@ -461,7 +459,7 @@ func sharedByEveryMember(typeChecker *checker.Checker, union *checker.Type, name
 // The checker never compares members of two enums, so it can exclude a member tagged Other.X
 // when the value is Kind.A, though both are 0 at run time. Members whose same-named tags come
 // from different enums with one value can't be told apart by that tag.
-func (l *lowering) enumTagsShareValue(union *checker.Type) bool {
+func (l *lowering) enumTagsShareValue(union *checker.Type, only string) bool {
 	// Each field and value keeps every enum it came from, so a member tagged Kind.A | Other.X still
 	// meets another member's Kind.A. Two distinct members per enum are enough to know one of them
 	// differs from any later member, which keeps tsc's 300-member node unions linear.
@@ -471,6 +469,9 @@ func (l *lowering) enumTagsShareValue(union *checker.Type) bool {
 			continue
 		}
 		for _, field := range l.checker.GetPropertiesOfType(member) {
+			if only != "" && field.Name != only {
+				continue
+			}
 			tag := l.checker.GetTypeOfSymbol(field)
 			parts := []*checker.Type{tag}
 			if tag.Flags()&checker.TypeFlagsUnion != 0 {
