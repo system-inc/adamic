@@ -217,7 +217,8 @@ class LatentReportTests(unittest.TestCase):
                               'a boolean | undefined as a condition': '01a113e3-a058',
                               'a namespace object used as a value': 'codex/namespaces-tsc',
                               'an index signature': '01a113e7', 'a value of type any': 'adaptation 40, stage 3',
-                              "a cast the runtime can't check": '01a11410', 'a value of type unknown': '01a114ab'}.items():
+                              "a cast the runtime can't check": '01a11410', 'a value of type unknown': '01a114ab',
+                              'an object refinement using an open numeric enum as a literal tag': '#drwm5pj (Lower)'}.items():
             self.assertEqual(reason_owner(reason, owners), owner)
         self.assertEqual(reason_owner('unmatched', owners), 'OWNER BLANK')
         self.assertEqual(reason_owner('reading SyntaxKind', {'reading': 'general', 'reading SyntaxKind': 'specific'}), 'specific')

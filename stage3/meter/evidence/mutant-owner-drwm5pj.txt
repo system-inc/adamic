@@ -1,0 +1,19 @@
+# Mutant evidence for the open-numeric-enum literal tag owner entry in stage3/meter/owners.json (Task: #badrnrf)
+# Test: report_test.LatentReportTests.test_exact_prefix_and_variance_owners
+
+## With the entry (expected pass)
+Ran 1 test in 0.002s
+
+OK
+exit=0
+
+## Mutant 1: a planted wrong owner (01a11410) for the class (expected red)
+AssertionError: '01a11410' != '#drwm5pj (Lower)'
+FAILED (failures=1)
+
+## Mutant 2: the entry removed (expected red, owner blank)
+AssertionError: 'OWNER BLANK' != '#drwm5pj (Lower)'
+FAILED (failures=1)
+
+## Restored (expected pass)
+OK (skipped=2)
