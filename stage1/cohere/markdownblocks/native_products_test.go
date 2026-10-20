@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/compilerinputs"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -48,6 +49,13 @@ func TestProduct_MarkdownblocksProbesRelease(t *testing.T) {
 	}
 }
 
+func TestProduct_MarkdownblocksProbesEmitted(t *testing.T) {
+	t.Parallel()
+	for _, probe := range emittedProbes {
+		buildcache.RequireArtifacts(t, probeEmitted(t, probe), buildcache.Artifact{Name: "port.mjs"})
+	}
+}
+
 func requirePort(t *testing.T, directory string) {
 	t.Helper()
 	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port"})
@@ -62,6 +70,10 @@ const (
 // nativeProbes are the probes TestMicromarkInputChunks, TestFrontMatterStage and TestMarkdownParserPrefixes run
 // natively, sanitized for parity and release for throughput.
 var nativeProbes = []string{chunksProbe, frontMatterProbe, prefixProbe}
+
+// emittedProbes are the probes whose lowering a test runs on the JavaScript backend: TestMicromarkInputChunks, which
+// lowered it inside its own clock.
+var emittedProbes = []string{chunksProbe}
 
 // gapSanitized is the gap at path, relative to this package, lowered in this process and built by clang under the
 // sanitizers, keyed by the compiler's paths, the gap's import closure and the native build.
@@ -85,6 +97,24 @@ func probeNative(t *testing.T, path string, options native.Options) string {
 	inputs := loweredNativeInputs("markdownblocks probe "+path+" native "+mode, options, importClosure(t, path)...)
 	return buildcache.Product(t, inputs, func(directory string) error {
 		return buildLoweredNative(path, directory, options)
+	})
+}
+
+// probeEmitted is the probe at path, relative to this package, lowered in this process and emitted as JavaScript into
+// directory/port.mjs, keyed by the compiler's paths and the probe's import closure.
+func probeEmitted(t *testing.T, path string) string {
+	t.Helper()
+	inputs := loweredEmittedInputs("markdownblocks probe "+path+" emitted JavaScript", importClosure(t, path)...)
+	return buildcache.Product(t, inputs, func(directory string) error {
+		entry, err := filepath.Abs(path)
+		if err != nil {
+			return err
+		}
+		program, err := loweredResult(entry)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
 }
 
@@ -149,6 +179,18 @@ func loweredNativeInputs(name string, options native.Options, sources ...string)
 		Files:     append(files, "stage1/cohere/markdownblocks/native_products_test.go"),
 		Flags:     flags,
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+	}
+}
+
+// loweredEmittedInputs keys a lowering emitted as JavaScript in this process: as loweredNativeInputs, without the
+// native build's options, the environment clang reads, or clang.
+func loweredEmittedInputs(name string, sources ...string) buildcache.Inputs {
+	files := append(compilerinputs.Lowering(), sources...)
+	return buildcache.Inputs{
+		Name:      name,
+		Files:     append(files, "stage1/cohere/markdownblocks/native_products_test.go"),
+		Flags:     []string{"load.Load", "lower.Lower", "javascript.JavaScript"},
+		Toolchain: []string{runtime.Version()},
 	}
 }
 
