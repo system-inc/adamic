@@ -21,6 +21,21 @@ func ownedWitnessInputs(t *testing.T) ([]string, []string) {
 	t.Helper()
 	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "stage1/cohere/lint/owned_witness_products_test.go"}
 	for _, root := range []string{"internal", "stage1/typescript", "cohere/rule_runner", "cohere/schema", "cohere/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc"} {
+		// Reads: cohere
+		// Reads: stage1/*.a
+		// Reads: stage1/*.ts
+		// Reads: stage1/typescript/parser/grammar.ts
+		// Reads: stage1/typescript/parser/jsx.ts
+		// Reads: stage1/typescript/parser/lookahead.ts
+		// Reads: stage1/typescript/parser/nodes.ts
+		// Reads: stage1/typescript/parser/parser.ts
+		// Reads: stage1/typescript/parser/statements.ts
+		// Reads: stage1/typescript/parser/testdata/oracle.go
+		// Reads: stage1/typescript/scanner/characters.ts
+		// Reads: stage1/typescript/scanner/scanner.ts
+		// Reads: stage1/typescript/scanner/tokens.ts
+		// Reads: internal/load/prelude.d.ts
+		// Reads: internal/native/runtime/*.[ch]
 		err := filepath.WalkDir(filepath.Join(repository, root), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
 				return err

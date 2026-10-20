@@ -110,6 +110,7 @@ func jsxStableCaseKeys(t *testing.T, paths []string) map[string]string {
 		if packages[d.UpstreamPackage] == nil {
 			declarations := map[string]string{}
 			relative := filepath.Join("cohere/internal/lint/rules", d.UpstreamPackage)
+			// Reads: cohere
 			files, err := filepath.Glob(filepath.Join(repository, relative, "*_test.go"))
 			if err != nil {
 				t.Fatal(err)

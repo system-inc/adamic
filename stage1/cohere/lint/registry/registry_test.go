@@ -14,6 +14,7 @@ import (
 func copyRules(t *testing.T) string {
 	t.Helper()
 	root := t.TempDir()
+	// Reads: stage1/cohere/lint/rules/*
 	err := filepath.WalkDir("../rules", func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -142,10 +143,12 @@ func TestAdamicRuleModule(t *testing.T) {
 // every lint test process ran; it is this test's now, and lint-registry's (#s57yq6y).
 func TestEveryRuleHasAWitness(t *testing.T) {
 	t.Parallel()
+	// Reads: stage1/cohere/lint/rules/*
 	descriptors, err := Discover("..")
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Reads: stage1/cohere/lint/rules/*
 	if err := CheckWitnesses("..", descriptors); err != nil {
 		t.Fatal(err)
 	}
