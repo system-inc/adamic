@@ -137,7 +137,14 @@ func main() {
 					panic("state copy: " + name + ": embedded field unsupported")
 				}
 				for _, id := range field.Names {
-					expr := g.copy(field.Type, "value."+id.Name)
+					var expr string
+					if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
+						// Production leaves this test query nil. A closure needs an audited copier.
+						fmt.Fprint(&body, "if value.impliedTargetQuery != nil {panic(\"latent state copy: populated impliedTargetQuery is unsupported\")};")
+						expr = "value." + id.Name
+					} else {
+						expr = g.copy(field.Type, "value."+id.Name)
+					}
 					if expr != "value."+id.Name {
 						fmt.Fprintf(&body, "result.%s=%s;", id.Name, expr)
 					}

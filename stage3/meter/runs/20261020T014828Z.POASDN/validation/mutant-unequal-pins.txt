@@ -1,0 +1,15 @@
+F
+======================================================================
+FAIL: test_different_pins_fail_before_output (compiler_test.CompilerSelectionTests.test_different_pins_fail_before_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 247, in test_different_pins_fail_before_output
+    self.assert_pin_failure(self.main, self.area, 'different shas')
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 238, in assert_pin_failure
+    self.assertNotEqual(result.returncode, 0)
+AssertionError: 0 == 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.943s
+
+FAILED (failures=1)

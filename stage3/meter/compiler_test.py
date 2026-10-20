@@ -93,6 +93,8 @@ class CompilerSelectionTests(unittest.TestCase):
         self.env.pop('STAGE3_METER_COMPILER', None)
         self.env.pop('STAGE3_METER_RUNS', None)
         self.env.pop('STAGE3_METER_LATENT', None)
+        self.env.pop('STAGE3_METER_MAIN_REF', None)
+        self.env.pop('STAGE3_METER_AREA_REF', None)
         self.command('git', 'init', '-b', 'main')
         source = Path(__file__).resolve().parent
         for name in ('report.py', 'owners.json'):
@@ -152,7 +154,7 @@ class CompilerSelectionTests(unittest.TestCase):
         report = json.loads((run / 'report.json').read_text())
         for label in ('main', 'area'):
             tree = report['trees'][label]
-            self.assertEqual(tree['tree_commit'], self.main if label == 'main' else self.area)
+            self.assertEqual(tree['tree_commit'], self.main)
         return run, report
 
     def test_default_uses_checkout_compiler_for_both_trees(self):
@@ -171,31 +173,31 @@ class CompilerSelectionTests(unittest.TestCase):
     def test_per_ref_builds_and_runs_each_pinned_compiler(self):
         run, result = self.measure('per-ref')
         self.assertEqual(result['compiler_mode'], 'per-ref')
-        self.assertEqual(result['adamic_commit'], self.area)
-        for label, sha, count in [('main', self.main, 2), ('area', self.area, 1)]:
+        self.assertEqual(result['adamic_commit'], self.main)
+        for label, sha, count in [('main', self.main, 2), ('area', self.main, 2)]:
             tree = result['trees'][label]
             self.assertEqual(tree['adamic_commit'], sha)
             self.assertEqual(tree['totals']['checker_own_file'], count)
-            self.assertEqual(tree['latent_lowering']['per_reason'], {'NotYet: compiled with ' + label: 1})
-            self.assertIn('compiled with ' + label, (run / label / 'census.log').read_text())
+            self.assertEqual(tree['latent_lowering']['per_reason'], {'NotYet: compiled with main': 1})
+            self.assertIn('compiled with main', (run / label / 'census.log').read_text())
             entry = tree['tsc_entry']
-            self.assertEqual(entry['checker_whole_program'], label == 'main')
-            self.assertEqual(entry['whole_program_diagnostics'], 0 if label == 'main' else 1)
+            self.assertEqual(entry['checker_whole_program'], True)
+            self.assertEqual(entry['whole_program_diagnostics'], 0)
             if label == 'main':
                 self.assertEqual(entry['lowering_census']['source_files'], 2)
             else:
                 self.assertEqual(entry['lowering_census']['source_files'], 2)
-                self.assertEqual(entry['lowering_census']['measurement'], 'measured on a checker-rejected entry-root program')
+                self.assertEqual(entry['lowering_census']['measurement'], 'measured on a checker-clean entry-root program')
             self.assertTrue((run / label / 'tsc/census.log').exists())
-            self.assertIn('compiled with ' + label, (run / label / 'latent.log').read_text())
+            self.assertIn('compiled with main', (run / label / 'latent.log').read_text())
             self.assertTrue((run / label / 'build.log').exists())
         self.assertFalse((run / 'build.log').exists())
         text = (run / 'report.md').read_text()
-        self.assertEqual(text.splitlines()[:2], ['Whole program: main: 2/2; area: 0/2', 'Own file: main: 2/2; area: 1/2'])
-        self.assertIn('tsc entry: main: pass; area: fail', text)
-        self.assertIn('tsc entry diagnostics: main: 0; area: 1', text)
+        self.assertEqual(text.splitlines()[:2], ['Whole program: main: 2/2; area: 2/2', 'Own file: main: 2/2; area: 2/2'])
+        self.assertIn('tsc entry: main: pass; area: pass', text)
+        self.assertIn('tsc entry diagnostics: main: 0; area: 0', text)
         self.assertIn('Main measured with Adamic ' + self.main, text)
-        self.assertIn('area measured with Adamic ' + self.area, text)
+        self.assertIn('area measured with Adamic ' + self.main, text)
         # A claimed per-ref compiler must agree with the actual source pin.
         metadata = json.loads((run / 'compiler-mode.json').read_text())
         metadata['commits']['main'] = self.checkout
@@ -208,7 +210,7 @@ class CompilerSelectionTests(unittest.TestCase):
         self.env['STAGE3_METER_LATENT']='first-error'
         run,result=self.measure('per-ref')
         self.assertEqual(result['trees']['main']['latent_lowering']['latent_mode'],'first-error')
-        self.assertIsNone(result['trees']['area']['tsc_entry']['lowering_census'])
+        self.assertEqual(result['trees']['area']['tsc_entry']['lowering_census']['latent_mode'], 'first-error')
         for path in run.rglob('*.jsonl.gz'):
             path.with_suffix('').write_bytes(gzip.decompress(path.read_bytes()))
         metadata=json.loads((run/'compiler-mode.json').read_text())
@@ -216,7 +218,7 @@ class CompilerSelectionTests(unittest.TestCase):
         (run/'compiler-mode.json').write_text(json.dumps(metadata))
         with self.assertRaisesRegex(ValueError,'latent overlay mode does not match requested mode'):
             report_pair(Path(result['trees']['main']['adapted_tree']),
-                        Path(result['trees']['area']['adapted_tree']),run,'stamp',self.main,self.area)
+                        Path(result['trees']['area']['adapted_tree']),run,'stamp',self.main,self.main)
 
     def test_invalid_latent_mode_fails_before_creating_a_run(self):
         self.env['STAGE3_METER_LATENT']='typo'
@@ -226,6 +228,45 @@ class CompilerSelectionTests(unittest.TestCase):
         self.assertEqual(result.returncode,2)
         self.assertIn('invalid STAGE3_METER_LATENT',(self.root/'invalid-latent.log').read_text())
         self.assertFalse((self.repository/'stage3/meter/runs').exists())
+
+    def assert_pin_failure(self, main, area, message):
+        self.env.update(STAGE3_METER_MAIN_REF=main, STAGE3_METER_AREA_REF=area)
+        path = self.root / 'pin-failure.log'
+        with path.open('w') as log:
+            result = subprocess.run(['bash', 'stage3/meter/twice-daily.sh'], cwd=self.repository,
+                                    env=self.env, stdout=log, stderr=log, timeout=30)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(message, path.read_text())
+        self.assertNotIn('run:', path.read_text())
+        self.assertFalse((self.repository / 'stage3/meter/runs').exists())
+
+    def test_unreachable_pin_fails_before_output(self):
+        self.assert_pin_failure('f' * 40, self.main, 'cannot pin main')
+
+    def test_different_pins_fail_before_output(self):
+        self.assert_pin_failure(self.main, self.area, 'different shas')
+
+    def test_explicit_pin_uses_requested_commit(self):
+        self.env.update(STAGE3_METER_MAIN_REF=self.main, STAGE3_METER_AREA_REF=self.main)
+        self.measure('per-ref')
+
+    def test_missing_local_dependency_transport_retries_recorded_origins(self):
+        git = shutil.which('git')
+        folder = self.root / 'bin'
+        folder.mkdir()
+        wrapper = folder / 'git'
+        wrapper.write_text('#!/usr/bin/env python3\nimport os,sys\n'
+                           'if "submodule" in sys.argv and "update" in sys.argv and any(arg.startswith("url.file://") for arg in sys.argv):\n'
+                           ' print("local transport miss witness",file=sys.stderr);sys.exit(1)\n'
+                           'if "submodule" in sys.argv and "update" in sys.argv: print("recorded origin retry witness",file=sys.stderr)\n'
+                           'os.execv(' + repr(git) + ',[' + repr(git) + ']+sys.argv[1:])\n')
+        wrapper.chmod(0o755)
+        self.env['PATH'] = str(folder) + os.pathsep + self.env['PATH']
+        run, result = self.measure('per-ref')
+        for label in ('main', 'area'):
+            self.assertIn('local transport miss witness', (run / label / 'submodules.log').read_text())
+            self.assertIn('recorded origin retry witness', (run / label / 'submodules.log').read_text())
+            self.assertEqual(result['trees'][label]['adamic_commit'], self.main)
 
     def test_invalid_mode_fails_before_creating_a_run(self):
         self.env['STAGE3_METER_COMPILER'] = 'typo'

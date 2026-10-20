@@ -1,0 +1,18 @@
+F
+======================================================================
+FAIL: test_nil_populated_unknown_and_permissive_mutant (generator_test.HookTests.test_nil_populated_unknown_and_permissive_mutant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/generator_test.py", line 49, in test_nil_populated_unknown_and_permissive_mutant
+    self.assertEqual(code, 0, log)
+AssertionError: 1 != 0 : --- FAIL: TestPopulated (0.00s)
+    copy_test.go:4: populated hook accepted
+FAIL
+FAIL	probe	0.003s
+FAIL
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.337s
+
+FAILED (failures=1)

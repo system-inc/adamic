@@ -1,0 +1,27 @@
+F
+======================================================================
+FAIL: test_oct19_beside_committed_oct8 (report_test.PreviousRunTests.test_oct19_beside_committed_oct8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/report_test.py", line 343, in test_oct19_beside_committed_oct8
+    write_readme(run, current, revision)
+  File "/tmp/adamic-gate/tmpfafee35o/report.py", line 288, in write_readme
+    tracked = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', 'stage3/meter/runs'], text=True).splitlines()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/meter/report_test.py", line 340, in pinned_inventory
+    self.assertIn(revision, args)
+AssertionError: 'pinned-main-witness' not found in ['git', 'ls-tree', '-r', '--name-only', 'HEAD', '--', 'stage3/meter/runs']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

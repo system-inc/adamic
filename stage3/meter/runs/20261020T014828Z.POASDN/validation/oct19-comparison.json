@@ -1,0 +1,30 @@
+{
+  "current": {
+    "sha": "8c318e4528bffb67019116408a819c06e83df9fa",
+    "totals": {
+      "files": 82,
+      "source_files": 79,
+      "checker": 2,
+      "lowering": 2,
+      "checker_whole_program": 2,
+      "checker_own_file": 57
+    },
+    "tsc_entry_diagnostics": 175
+  },
+  "oct19_fixture": {
+    "sha": "295df3bc6aa3d47933ccf675da1c33e745856313",
+    "totals": {
+      "files": 82,
+      "source_files": 79,
+      "checker": 2,
+      "lowering": 2,
+      "checker_whole_program": 2,
+      "checker_own_file": 56
+    },
+    "tsc_entry_diagnostics": 235
+  },
+  "own_file_additions": [
+    "src/compiler/debug.ts"
+  ],
+  "own_file_losses": []
+}

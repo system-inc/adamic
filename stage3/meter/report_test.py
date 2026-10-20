@@ -4,8 +4,9 @@ import subprocess
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from report import report, report_pair, latent_summary, MEASUREMENT, reason_owner, unowned_table
+from report import report, report_pair, latent_summary, MEASUREMENT, reason_owner, unowned_table, write_readme
 
 
 class ReportTests(unittest.TestCase):
@@ -315,3 +316,31 @@ class CensusAttributionTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class PreviousRunTests(unittest.TestCase):
+    def test_oct19_beside_committed_oct8(self):
+        root = Path(__file__).resolve().parent
+        old = root / 'runs/20261008T171021Z.iBLy18/report.json'
+        current = json.loads((root / 'testdata/oct19-report.json').read_text())
+        with tempfile.TemporaryDirectory() as temporary:
+            run = Path(temporary) / '20261019T233755Z.9xwivl15'
+            run.mkdir()
+            # Isolate the inventory from future committed runs.
+            real = subprocess.check_output
+            def inventory(args, **kwargs):
+                if args[:2] == ['git', 'ls-tree']:
+                    return str(old.relative_to(root.parents[1])) + '\n'
+                return real(args, **kwargs)
+            revision = 'pinned-main-witness'
+            def pinned_inventory(args, **kwargs):
+                if args[:2] == ['git', 'show']:
+                    self.assertTrue(args[2].startswith(revision + ':'))
+                    return real(['git', 'show', 'HEAD:' + args[2].split(':', 1)[1]], **kwargs)
+                if args[:2] == ['git', 'ls-tree']:
+                    self.assertIn(revision, args)
+                return inventory(args, **kwargs)
+            with patch('report.subprocess.check_output', side_effect=pinned_inventory):
+                write_readme(run, current, revision)
+            text = (run / 'README.md').read_text()
+            self.assertIn('| Current | 295df3bc6aa3d47933ccf675da1c33e745856313 | 2/79 | 56/79 | 2/79 | 235 |', text)
+            self.assertIn('| 20261008T171021Z.iBLy18 | 45487a809f89885a3fc651cd590e7dabf31362dc | 2/79 | 56/79 | 0/79 | 320 |', text)

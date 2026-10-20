@@ -1,17 +1,25 @@
 # Twice-daily meter
 
-Run from any directory after sourcing the toolchain env.sh:
+The daily command, after the toolchain is installed, is:
 
 ```sh
-stage3/meter/twice-daily.sh > /tmp/stage3-meter.log 2>&1
+source /workspace/adamic-tools/env.sh && STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error timeout --kill-after=60s 7200 bash /workspace/adamic/stage3/meter/twice-daily.sh > /tmp/stage3-meter-daily.log 2>&1
 ```
 
-Every invocation fetches and pins `origin/main` and `origin/area/stage3`.
-It snapshots each ref's stage3 directory and runs that ref's own apply.sh and
-adaptations into a fresh tree. A single census binary built from the current
-checkout measures both trees with ordinary stage 0 options and prelude. This is
-the default (`STAGE3_METER_COMPILER=single`); fetching a newer main does not change
-the compiler built from the current checkout.
+Every invocation fetches only `origin/main`, then resolves one immutable commit.
+`STAGE3_METER_MAIN_REF` can select an explicit commit; its default is the fetched
+`origin/main`. The retired area tree is measured as a second independent copy of
+that same main commit, retaining the historical `area` reporter label.
+`STAGE3_METER_AREA_REF`, if supplied, must resolve to the same SHA.
+Unresolvable or unequal pins fail before creating an output directory.
+Cold runs clone the pinned upstream TypeScript tag when
+`ADAMIC_TYPESCRIPT_SOURCE` is unset and install each snapshot's API lockfile with
+`npm ci`. Apply validates the upstream SHA and package digest. All preparation
+runs unattended and its logs remain beside the measurement.
+
+The default compiler mode remains `single`, using the launcher checkout's
+compiler. The daily command selects `per-ref` so both compilers come from the
+measured SHA. Each snapshot uses its own apply script and adaptations.
 
 Set `STAGE3_METER_COMPILER=per-ref` to build both the ordinary census and latent
 census separately from each pinned ref's own compiler. Detached scratch worktrees
@@ -22,8 +30,8 @@ Scratch worktrees are retained for inspection, including on failure.
 building. Paired JSON records `compiler_mode` and each tree's `adamic_commit`;
 the root `adamic_commit` remains the area's compiler for compatibility. Markdown
 names both compilers in per-ref mode. Its first two lines keep the same format.
-Per-ref mode compares both source adaptations and compiler versions, so its
-changes cannot be attributed to adaptations alone. Unknown modes fail before
+Across daily runs, per-ref mode changes both adaptations and compiler versions,
+so a score change cannot be attributed to adaptations alone. Unknown modes fail before
 creating a run directory.
 
 ```sh
@@ -116,7 +124,7 @@ For morning and evening execution, a host can use this cron entry with its own
 repository/toolchain paths:
 
 ```cron
-0 8,20 * * * . /workspace/adamic-tools/env.sh && /workspace/adamic/stage3/meter/twice-daily.sh >> /tmp/stage3-meter-cron.log 2>&1
+0 8 * * * . /workspace/adamic-tools/env.sh && STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error timeout --kill-after=60s 7200 bash /workspace/adamic/stage3/meter/twice-daily.sh >> /tmp/stage3-meter-cron.log 2>&1
 ```
 
 This unit does not install cron or send messages to @system_adamic.
@@ -136,8 +144,9 @@ CENSUS_BINARY=/tmp/stage3-census python3 -m unittest discover -s stage3/meter -p
 
 `compiler_test.py` also runs the meter against local Git refs with real Go
 compiler witnesses. The default must build the worker checkout for both trees;
-per-ref mode must produce each pinned compiler's distinct checker and latent
-results and record its SHA. Point the test-only `METER_SCRIPT_UNDER_TEST` at a
+per-ref mode must produce main's compiler witness for both labels and record
+the same pinned SHA. A missing local dependency transport retries the recorded
+origins without changing either gitlink pin. Point the test-only `METER_SCRIPT_UNDER_TEST` at a
 scratch copy of twice-daily.sh to exercise a mutant that builds the worker
 checkout in place of each ref. The per-ref probe must reject that mutant even
 when its metadata claims the correct SHAs.
@@ -210,3 +219,9 @@ The local content store can be copied to another worker at the same repository
 path with the same keyed inputs; this helper does not configure remote storage.
 See [the full timing report](../fixtures/SHARD-REPORT.md) for measured failures
 and limits. The audit is an orchestrator, not one gate test unit.
+
+Each run's README compares main's whole-program, own-file and ordinary lowering
+counts and tsc entry diagnostic count with the latest earlier paired report
+committed in the measured main revision. Both measured SHAs are printed. Uncommitted scratch runs cannot
+become the previous baseline. The Oct 19 report fixture retains the relevant
+fields from commit 11a32835 and is tested beside the committed Oct 8 iBLy18 run.

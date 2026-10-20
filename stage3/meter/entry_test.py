@@ -124,7 +124,7 @@ class EntryCensusTests(unittest.TestCase):
             entry = tree / 'src/tsc/tsc.ts'
             entry.parent.mkdir(parents=True)
             dependency = tree / 'src/executeCommandLine.a'
-            dependency.write_text('export function target(): number { debugger; return 1; }\n')
+            dependency.write_text('export function target(): number { var x = 1; return x; }\n')
             unused = tree / 'src/unused.a'
             unused.write_text('export const value: number = "unused error";\n')
             entry.write_text('import { target } from "../executeCommandLine.a"; target();\n')
@@ -144,7 +144,7 @@ class EntryCensusTests(unittest.TestCase):
             clean, planted = observations
             self.assertTrue(clean['checker_whole_program'])
             self.assertEqual(clean['lowering_census']['source_files'], 2)
-            self.assertGreater(clean['lowering_census']['totals']['NotYet'], 0)
+            self.assertGreater(clean['lowering_census']['totals']['Refused'], 0)
             self.assertFalse(planted['checker_whole_program'])
             self.assertEqual(planted['whole_program_diagnostics'], 1)
             self.assertFalse(planted['lowering_attempted'])
@@ -162,7 +162,7 @@ class FullEntryCensusTests(unittest.TestCase):
             dependency = tree / 'src/executeCommandLine.a'
             dependency.write_text('''export function root(text: string, count: number): void {
  const impossible: number = "wrong";
- function safe(): void { var x = 1; if (text) { } if (count) { } }
+ function safe(): void { var x = 1; var y = 2; var z = 3; }
 }
 ''')
             entry.write_text('import { root } from "../executeCommandLine.a"; root("x", 1);\n')

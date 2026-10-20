@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_oct19_beside_committed_oct8 (report_test.PreviousRunTests.test_oct19_beside_committed_oct8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/report_test.py", line 346, in test_oct19_beside_committed_oct8
+    self.assertIn('| 20261008T171021Z.iBLy18 | 45487a809f89885a3fc651cd590e7dabf31362dc | 2/79 | 56/79 | 0/79 | 320 |', text)
+AssertionError: '| 20261008T171021Z.iBLy18 | 45487a809f89885a3fc651cd590e7dabf31362dc | 2/79 | 56/79 | 0/79 | 320 |' not found in '# Stage 3 meter 20261019T233755Z\n\nThe area label repeats the pinned main tree for reporter compatibility.\n\n| Run | Main SHA | Whole program | Own file | Lowering | tsc entry diagnostics |\n| --- | --- | ---: | ---: | ---: | ---: |\n| Current | 295df3bc6aa3d47933ccf675da1c33e745856313 | 2/79 | 56/79 | 2/79 | 235 |\n\nLowering counts ordinary successful IR lowering. No native output is claimed.\n'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (failures=1)

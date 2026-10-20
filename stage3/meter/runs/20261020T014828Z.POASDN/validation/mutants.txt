@@ -1,0 +1,7 @@
+ignore-pin: caught
+unequal-pins: caught
+checkout-compiler: caught
+omit-previous: caught
+any-hook: caught
+any-preflight: caught
+All six daily guard mutants caught; generator_test.py also kills the permissive-hook mutant.

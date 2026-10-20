@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_missing_local_dependency_transport_retries_recorded_origins (compiler_test.CompilerSelectionTests.test_missing_local_dependency_transport_retries_recorded_origins)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 268, in test_missing_local_dependency_transport_retries_recorded_origins
+    self.assertIn('recorded origin retry witness', (run / label / 'submodules.log').read_text())
+AssertionError: 'recorded origin retry witness' not found in 'local transport miss witness\n'
+
+----------------------------------------------------------------------
+Ran 1 test in 2.271s
+
+FAILED (failures=1)

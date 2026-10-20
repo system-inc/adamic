@@ -282,6 +282,41 @@ def report(tree, run, stamp, compiler_commit=None):
     return result
 
 
+def write_readme(run, result, revision='HEAD'):
+    """Compare against the latest earlier report tracked by Git, never scratch output."""
+    tracked = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', 'stage3/meter/runs'], text=True).splitlines()
+    repository = Path(subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], text=True).strip())
+    candidates = []
+    for name in tracked:
+        if not name.endswith('/report.json'):
+            continue
+        path = repository / name
+        if path.parent == run or path.parent.name >= run.name:
+            continue
+        old = json.loads(subprocess.check_output(['git', 'show', revision + ':' + name], text=True))
+        if 'trees' in old:
+            candidates.append((path.parent.name, old))
+    previous = max(candidates, default=None, key=lambda item: item[0])
+    lines = ['# Stage 3 meter ' + result['timestamp_utc'], '',
+             'The area label repeats the pinned main tree for reporter compatibility.', '',
+             '| Run | Main SHA | Whole program | Own file | Lowering | tsc entry diagnostics |',
+             '| --- | --- | ---: | ---: | ---: | ---: |']
+    observations = [('Current', result)]
+    if previous:
+        observations.append((previous[0], previous[1]))
+    for label, observation in observations:
+        tree = observation['trees']['main']
+        totals = tree['totals']
+        counts = [str(totals[key]) + '/' + str(totals['source_files'])
+                  for key in ('checker_whole_program', 'checker_own_file', 'lowering')]
+        lines.append('| ' + ' | '.join([label, tree['tree_commit'], *counts,
+                                      str(tree['tsc_entry']['whole_program_diagnostics'])]) + ' |')
+    if not previous:
+        lines += ['', 'No previous committed paired run was found.']
+    lines += ['', 'Lowering counts ordinary successful IR lowering. No native output is claimed.', '']
+    (run / 'README.md').write_text('\n'.join(lines))
+
+
 def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
     metadata_path = run / 'compiler-mode.json'
     metadata = json.loads(metadata_path.read_text()) if metadata_path.exists() else None
@@ -299,7 +334,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
     trees = {}
     for label, tree, commit in [('main', main_tree, main_commit), ('area', area_tree, area_commit)]:
         trees[label] = report(tree, run / label, stamp, metadata['commits'][label] if metadata else None)
-        trees[label]['tree_ref'] = 'origin/main' if label == 'main' else 'origin/area/stage3'
+        trees[label]['tree_ref'] = 'origin/main' if main_commit == area_commit or label == 'main' else 'origin/area/stage3'
         trees[label]['tree_commit'] = commit
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
         trees[label]['tsc_entry'] = entry_summary(tree, run / label / 'tsc')
@@ -332,7 +367,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
                      f"area measured with Adamic {trees['area']['adamic_commit']}. "
                      'Each compiler is built from its pinned ref with ordinary stage 0 options.')
     lines += ['', f'Stage 3 meter {stamp}', '',
-              f'Main: origin/main at {main_commit}. Area: origin/area/stage3 at {area_commit}.',
+              f'Main: origin/main at {main_commit}. Area compatibility label at {area_commit}.',
               compilers, '',
               '| File | Main whole program | Main own file | Area whole program | Area own file |',
               '| --- | --- | --- | --- | --- |']
@@ -353,6 +388,7 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
               'Global and external diagnostics are counted separately in JSON; they have no compiler-file location.',
               'Non-source inputs fail the extension gate and are excluded from source denominators.', '']
     (run / 'report.md').write_text('\n'.join(lines))
+    write_readme(run, result, main_commit if metadata else 'HEAD')
     return result
 
 

@@ -1,0 +1,15 @@
+F
+======================================================================
+FAIL: test_unreachable_pin_fails_before_output (compiler_test.CompilerSelectionTests.test_unreachable_pin_fails_before_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 244, in test_unreachable_pin_fails_before_output
+    self.assert_pin_failure('f' * 40, self.main, 'cannot pin main')
+  File "/workspace/adamic/stage3/meter/compiler_test.py", line 238, in assert_pin_failure
+    self.assertNotEqual(result.returncode, 0)
+AssertionError: 0 == 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.994s
+
+FAILED (failures=1)

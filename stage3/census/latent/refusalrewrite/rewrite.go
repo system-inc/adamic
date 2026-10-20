@@ -187,6 +187,22 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
 	if directives != 1 {
 		return nil, fail("expected one directive scan, found %d", directives)
 	}
+	// Only these exact module preflights may return their local err.
+	preflightReturns := map[*ast.ReturnStmt]bool{}
+	for _, statement := range clone.Body.List {
+		conditional, ok := statement.(*ast.IfStmt)
+		if !ok || conditional.Init == nil || conditional.Else != nil || printed(conditional.Cond) != "err != nil" || len(conditional.Body.List) != 1 {
+			continue
+		}
+		init := printed(conditional.Init)
+		if init != "err := l.referenceRefusal(module)" && init != "err := l.parallelPreflight(module)" {
+			continue
+		}
+		ret, ok := conditional.Body.List[0].(*ast.ReturnStmt)
+		if ok && len(ret.Results) == 1 && ident(ret.Results[0], "err") {
+			preflightReturns[ret] = true
+		}
+	}
 	outerReturns := 0
 	var badReturn bool
 	ast.Inspect(clone.Body, func(node ast.Node) bool {
@@ -202,7 +218,7 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
 			return false
 		}
 		value := ret.Results[0]
-		allowed := ident(value, "found") || ident(value, "contractError")
+		allowed := ident(value, "found") || ident(value, "contractError") || preflightReturns[ret]
 		if unary, ok := value.(*ast.UnaryExpr); ok && unary.Op == token.AND {
 			if literal, ok := unary.X.(*ast.CompositeLit); ok && ident(literal.Type, "Refused") {
 				allowed = true
