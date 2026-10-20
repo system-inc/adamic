@@ -1,0 +1,14 @@
+interface Step {
+	readonly name: string;
+	readonly seen: Set<Step>;
+}
+const attach = (start: Step): void => {
+	start.seen.add({ name: 'fresh', seen: new Set<Step>() }).add(start); // closes the cycle
+};
+let total = 0;
+for (let i = 0; i < 100; i++) {
+	const start: Step = { name: `s${i}`, seen: new Set<Step>() };
+	attach(start);
+	total += start.seen.size;
+}
+console.log(`${total}`);
