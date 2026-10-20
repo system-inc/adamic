@@ -169,27 +169,30 @@ func (h *harness) archive(name string, sanitize bool) string {
 	return path
 }
 
+// lowerToC is entry's emitted C, by the same load, lowering and TSGo emission pipeline as stage zero.
+func (h *harness) lowerToC(entry, name string) (string, error) {
+	started := time.Now()
+	loaded, err := load.Load([]string{entry})
+	h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
+	if err != nil {
+		return "", err
+	}
+	loaded.EnableTSGo()
+	started = time.Now()
+	program, err := lower.Lower(context.Background(), loaded)
+	h.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
+	if err != nil {
+		return "", err
+	}
+	started = time.Now()
+	source, err := native.TSGoC(program)
+	h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
+	return source, err
+}
+
 func (h *harness) lowered(entry, name string) string {
 	h.t.Helper()
-	build := func(_ string) (string, error) {
-		started := time.Now()
-		loaded, err := load.Load([]string{entry})
-		h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
-		if err != nil {
-			return "", err
-		}
-		loaded.EnableTSGo()
-		started = time.Now()
-		program, err := lower.Lower(context.Background(), loaded)
-		h.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
-		if err != nil {
-			return "", err
-		}
-		started = time.Now()
-		source, err := native.TSGoC(program)
-		h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
-		return source, err
-	}
+	build := func(_ string) (string, error) { return h.lowerToC(entry, name) }
 	var source string
 	var err error
 	if strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) {
@@ -202,6 +205,19 @@ func (h *harness) lowered(entry, name string) string {
 		// Generated mutants belong to their check; scratch paths cannot be gate products.
 		source, err = build("")
 	}
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	return source
+}
+
+// loweredMutant is lowered for a mutant entry written outside the repository, its emitted C a product under key. The
+// key names no path and needs none: every file the entry reads is one typeAwareSharedInputs names, or one this
+// package's tests write from those by an edit their own source holds, and emission names no path. Lowering a six
+// mutant took 16 to 20 s of its shard's own time under load (Pupa, load 13), the native already a product.
+func (h *harness) loweredMutant(entry, name, key string) string {
+	h.t.Helper()
+	source, err := cachedTypeAwareProduct(key, func(_ string) (string, error) { return h.lowerToC(entry, name) })
 	if err != nil {
 		h.t.Fatal(err)
 	}
@@ -256,11 +272,16 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 // (wrong-node's ASan link took 22.0 s of TestTypeAwareAgreementAndMutants_003's 24.4 s, and facts-length's 25.6 s of
 // TestSixRuleAgreementAndMutants_028's 26.1 s, alone on one core). Its key is typeAwareNativeKey's, as h.build's
 // cached natives' is: the emitted C's hash (emission names no path, so the same mutant lowered from two directories is
-// the same C) and the archive's. Its TestProduct_ makes it ahead; any other mutant still compiles inside its own check,
-// as h.build does.
+// the same C) and the archive's. Its TestProduct_ makes it ahead. Every six mutant's native is one (sixMutants, and
+// declaration-source's); any other mutant still compiles inside its own check, as h.build does.
 func (h *harness) mutantNative(name, entry, archive string, sanitize bool) string {
 	h.t.Helper()
-	source := h.lowered(entry, name)
+	return h.mutantNativeOf(name, h.lowered(entry, name), archive, sanitize)
+}
+
+// mutantNativeOf is mutantNative for a mutant whose C is already emitted (loweredMutant).
+func (h *harness) mutantNativeOf(name, source, archive string, sanitize bool) string {
+	h.t.Helper()
 	key, err := typeAwareNativeKey("mutant native "+name, source, archive, sanitize)
 	if err != nil {
 		h.t.Fatal(err)

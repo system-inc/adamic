@@ -59,10 +59,16 @@ func typeAwareMutantArchive(h *harness, name string) string {
 func typeAwareBuild(h *harness, stage0, name, entry, archive string, sanitize bool) string {
 	return typeAwareSetup(h, name, func() string { return h.build(stage0, name, entry, archive, sanitize) })
 }
+
+// typeAwareMutantNative is typeAwareBuild for a mutant's native, made as a product (mutantNative) so its TestProduct_
+// builds it ahead and its check only fetches it.
+func typeAwareMutantNative(h *harness, name, entry, archive string, sanitize bool) string {
+	return typeAwareSetup(h, name, func() string { return h.mutantNative(name, entry, archive, sanitize) })
+}
 func typeAwareProduct(h *harness, name string, command *exec.Cmd) string {
 	return typeAwareSetup(h, name, func() string { return h.sixBuildProduct(name, command) })
 }
-func typeAwareMutant(h *harness, stage0, archive, entry, name, relative, from, to string, imports ...string) string {
+func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string, imports ...string) string {
 	return typeAwareSetup(h, name, func() string {
 		if filepath.Base(entry) == "sharded_suite.ts" {
 			data, err := os.ReadFile(entry)
@@ -75,7 +81,7 @@ func typeAwareMutant(h *harness, stage0, archive, entry, name, relative, from, t
 			}
 			entry = h.write(name+"-driver.ts", driver)
 		}
-		return suiteTSMutant(h, stage0, archive, entry, name, relative, from, to, imports...)
+		return suiteTSMutant(h, archive, entry, name, relative, from, to, imports...)
 	})
 }
 
