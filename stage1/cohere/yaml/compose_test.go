@@ -2,10 +2,19 @@ package yaml
 
 import (
 	"bytes"
+	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"path/filepath"
+	"strconv"
+	"strings"
+	"sync"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
@@ -19,8 +28,13 @@ func goCompose(t *testing.T, cases string) []byte {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
 			t.Fatal(err)
 		}
-		executable, err := os.ReadFile(binary)
+		program, err := os.ReadFile(binary)
 		if err != nil {
+			t.Fatal(err)
+		}
+		// A program copied while sibling tests fork goes through the fork-safe writer, or a fork can hold its writable
+		// descriptor and a later exec of it fails with ETXTBSY (#6hjazy4).
+		if err := executable.Write(filepath.Join(artifacts, "go-compose"), program); err != nil {
 			t.Fatal(err)
 		}
 		inputs, err := os.ReadFile(cases)
@@ -31,7 +45,7 @@ func goCompose(t *testing.T, cases string) []byte {
 			name string
 			data []byte
 			mode os.FileMode
-		}{{"go-compose", executable, 0755}, {"compose-cases.txt", inputs, 0644}, {"compose-expected.txt", expected, 0644}} {
+		}{{"compose-cases.txt", inputs, 0644}, {"compose-expected.txt", expected, 0644}} {
 			if err := os.WriteFile(filepath.Join(artifacts, file.name), file.data, file.mode); err != nil {
 				t.Fatal(err)
 			}
@@ -98,29 +112,160 @@ func TestProduct_YAMLComposeMutant000(t *testing.T) { t.Parallel(); composeMutan
 func TestProduct_YAMLComposeMutant001(t *testing.T) { t.Parallel(); composeMutants.product(t, 1) }
 func TestProduct_YAMLComposeMutant002(t *testing.T) { t.Parallel(); composeMutants.product(t, 2) }
 
-func TestComposeMutants(t *testing.T) {
-	t.Parallel()
-	cases, _, _ := composeCases(t)
-	expected := goCompose(t, cases)
+// composeMutantsShards is the count of composeMutants.mutations, each its own top-level test so Loom's planner can cut
+// between mutants, which it can't between subtests.
+const composeMutantsShards = 3
+
+// composeMutantsAnswers holds what every mutant compares against, made once per process: the composition cases and
+// the Go composer's answer to them.
+var composeMutantsAnswers struct {
+	once            sync.Once
+	cases, expected []byte
+}
+
+func composeMutantsExpected(t *testing.T) ([]byte, []byte) {
+	t.Helper()
+	composeMutantsAnswers.once.Do(func() {
+		// The cases file lives in the first caller's temporary directory, gone when that test ends, so its bytes are kept.
+		path, _, _ := composeCases(t)
+		cases, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		composeMutantsAnswers.expected = goCompose(t, path)
+		composeMutantsAnswers.cases = cases
+	})
+	if composeMutantsAnswers.cases == nil {
+		t.Fatal("the Go composer's answers failed earlier in this process")
+	}
+	return composeMutantsAnswers.cases, composeMutantsAnswers.expected
+}
+
+// composeMutantsEnumeration reads the top-level wrappers themselves, so a missing, duplicated or miswired shard can't
+// leave a mutant unrun while the count still agrees.
+func composeMutantsEnumeration(t *testing.T) []int {
+	t.Helper()
+	if len(composeMutants.mutations) != composeMutantsShards {
+		t.Fatalf("%d compose mutants, but composeMutantsShards is %d", len(composeMutants.mutations), composeMutantsShards)
+	}
+	file, err := parser.ParseFile(token.NewFileSet(), "compose_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var plan []int
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, "TestComposeMutants_") {
+			continue
+		}
+		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestComposeMutants_"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		calls := 0
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			call, ok := node.(*ast.CallExpr)
+			if !ok {
+				return true
+			}
+			name, ok := call.Fun.(*ast.Ident)
+			if !ok || name.Name != "composeMutantsShard" {
+				return true
+			}
+			if len(call.Args) != 2 {
+				t.Fatalf("%s: invalid shard call", function.Name.Name)
+			}
+			literal, ok := call.Args[1].(*ast.BasicLit)
+			if !ok {
+				t.Fatalf("%s: shard index must be a literal", function.Name.Name)
+			}
+			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
+				t.Fatalf("%s runs mutant %s", function.Name.Name, literal.Value)
+			}
+			calls++
+			return true
+		})
+		if calls != 1 {
+			t.Fatalf("%s runs %d mutants, want one", function.Name.Name, calls)
+		}
+		plan = append(plan, shard)
+	}
+	return plan
+}
+
+// composeMutantSurvived is a side's verdict: a mutant whose output still equals the Go composer's was missed.
+func composeMutantSurvived(side string, output, expected []byte) error {
+	if bytes.Equal(output, expected) {
+		return fmt.Errorf("%s missed mutant", side)
+	}
+	return nil
+}
+
+func composeMutantsShard(t *testing.T, index int) {
+	t.Helper()
+	setup := time.Now()
+	mutant := composeMutants.mutations[index]
+	product := composeMutants.product(t, index)
+	corpus, expected := composeMutantsExpected(t)
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(cases, corpus, 0644); err != nil {
+		t.Fatal(err)
+	}
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for index, mutant := range composeMutants.mutations {
-		// Not parallel: one mutant at a time keeps this test to one child at a time, its share.
-		t.Run(mutant.name, func(t *testing.T) {
-			product := composeMutants.product(t, index)
-			nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
-			node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "compose_main.ts"), cases)
-			for _, side := range []struct {
-				name string
-				out  []byte
-			}{{"native", nativeOut}, {"Node", node}} {
-				if bytes.Equal(side.out, expected) {
-					t.Fatalf("%s missed mutant", side.name)
-				}
-				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))
-			}
-		})
+	t.Logf("%s; setup %.3fs", mutant.name, time.Since(setup).Seconds())
+	nativeOut := run(t, "", nil, filepath.Join(product, "mutant"), cases)
+	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(product, "sources", "compose_main.ts"), cases)
+	for _, side := range []struct {
+		name string
+		out  []byte
+	}{{"native", nativeOut}, {"Node", node}} {
+		if err := composeMutantSurvived(side.name, side.out, expected); err != nil {
+			t.Fatal(err)
+		}
+		t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))
 	}
 }
+
+func TestComposeMutantsUnion(t *testing.T) {
+	t.Parallel()
+	visits := make([]int, len(composeMutants.mutations))
+	for _, index := range composeMutantsEnumeration(t) {
+		if index < 0 || index >= len(visits) {
+			t.Fatalf("TestComposeMutants_%03d names no mutant", index)
+		}
+		visits[index]++
+	}
+	for index, count := range visits {
+		if count != 1 {
+			t.Fatalf("mutant %d (%s) run by %d top-level tests, want one", index, composeMutants.mutations[index].name, count)
+		}
+	}
+	t.Logf("union: all %d compose mutants run, each by exactly one top-level test", len(visits))
+}
+
+func TestComposeMutantsPlantedFailure(t *testing.T) {
+	t.Parallel()
+	// Plant a survivor in one mutant's output. Exactly its owner must reject it; every other mutant differs from the Go
+	// composer and stays accepted.
+	var caught []int
+	for _, shard := range composeMutantsEnumeration(t) {
+		output := []byte("wrong bytes")
+		if shard == 1 {
+			output = []byte("Go composer bytes")
+		}
+		if composeMutantSurvived("native", output, []byte("Go composer bytes")) != nil {
+			caught = append(caught, shard)
+		}
+	}
+	if len(caught) != 1 || caught[0] != 1 {
+		t.Fatalf("planted survivor caught by %v, want [1]", caught)
+	}
+	t.Log("planted survivor caught exactly by TestComposeMutants_001")
+}
+
+func TestComposeMutants_000(t *testing.T) { t.Parallel(); composeMutantsShard(t, 0) }
+func TestComposeMutants_001(t *testing.T) { t.Parallel(); composeMutantsShard(t, 1) }
+func TestComposeMutants_002(t *testing.T) { t.Parallel(); composeMutantsShard(t, 2) }
