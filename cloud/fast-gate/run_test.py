@@ -38,7 +38,7 @@ def stage(command):
     if command[:2] == ["go", "run"]:
         return "census"
     if command[:2] == ["go", "test"] and "-c" not in command:
-        return "wasi" if any("^" in part and "TestWASI" in part for part in command) and "-run" in command else ("smoke" if any(run.smokeTest in part for part in command) else "tests")
+        return "wasi" if any("^" in part and "TestWASI" in part for part in command) and "-run" in command else "tests"
     return "tests"
 
 
@@ -81,7 +81,7 @@ def landingProblems(sha, parts):
             problems.append("%s: %s" % (kind.replace("_", " "), " ".join(fast[kind])))
     if fast.get("uncached_tests") is not True:
         problems.append("its tests weren't run uncached")
-    planned = ("build", "vet", "tests", "smoke", "census")
+    planned = ("build", "vet", "tests", "census")
     ran = fast.get("steps_seconds") or {}
     missing = [stage for stage in planned if stage not in ran]
     if missing:
@@ -101,10 +101,6 @@ def landingProblems(sha, parts):
 
 
 class FakeProcess:
-    # What a fake smoke run passes, as smoke.txt's fixture under a member of its lane's family (75a273db37's layout);
-    # a test sets it to name what the run passed instead.
-    smokePasses = ["TestNativeAgreesWithNode_000/internal/oracle/testdata/a.a"]
-
     def __init__(self, command, stdout):
         self.pid = 0
         self.returncode = 0
@@ -120,8 +116,6 @@ class FakeProcess:
                 name = "TestWASI/" + ("requests" if "requests" in command[command.index("-run") + 1] else "a.a")
             package = command[command.index("-p") + 1] if "test2json" in command and "-p" in command else "p"
             lines = [json.dumps({"Action": "pass", "Package": package, "Test": name}) + "\n"]
-            if stage(command) == "smoke":
-                lines = [json.dumps({"Action": "pass", "Package": package, "Test": test}) + "\n" for test in self.smokePasses]
         self.lines = lines
         self.stdout = io.StringIO("".join(lines)) if stdout == subprocess.PIPE else None
 
@@ -140,8 +134,6 @@ class FailClosed(unittest.TestCase):
         self.directory = tempfile.mkdtemp()
         self.tree = os.path.join(self.directory, "tree")
         os.makedirs(os.path.join(self.tree, "cloud/fast-gate"))
-        with open(os.path.join(self.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
-            handle.write("internal/oracle/testdata/a.a\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("inert *.md\nstage3 stage3/*\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/tools.txt"), "w") as handle:
@@ -172,7 +164,7 @@ class FailClosed(unittest.TestCase):
         with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: (mock.Mock(stdout="p\t" + self.tree + "\n") if "-f" in command else listing) if command[:2] == ["go", "list"] else realRun(command, **options)), \
-                mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
+                mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "oracle", run.oracle), \
                 mock.patch.object(run.Gate, failing, lambda gate, *arguments: gate.fail(failing, "planted failure")) if failing else mock.patch.object(run, "longTestSeconds", run.longTestSeconds), \
                 mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
                 mock.patch.object(sys, "argv", ["run.py"]), mock.patch("builtins.print"):
@@ -218,7 +210,7 @@ class FailClosed(unittest.TestCase):
             self.assertEqual(result["budget_over"], [])
 
     def test_every_stage_raising_is_red(self):
-        for full, stages in ((False, ["build", "vet", "tests", "smoke", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
+        for full, stages in ((False, ["build", "vet", "tests", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
             for broken in stages:
                 with self.subTest(full=full, stage=broken):
                     gate, status, result = self.gate(full=full, broken=broken)
@@ -306,7 +298,9 @@ class FailClosed(unittest.TestCase):
         # The tests' environment is the gate's own: uncached, with the sampling the landing gate uses.
         self.assertEqual(selection["env"]["ADAMIC_GATE_UNCACHED"], "1")
         self.assertEqual(selection["env"]["ADAMIC_GATE_SAMPLE"], self.sha)
-        self.assertIn("smoke", selection["executors_beyond_go_tests"])
+        # The oracle smoke set and the a-check are Go tests now (internal/oracle's and internal/acheck's), so nothing
+        # beyond them is named for a change that touches nothing.
+        self.assertEqual(selection["executors_beyond_go_tests"], [])
         # Nothing but git ran: no build, vet or test.
         self.assertEqual([command[0] for command in launched if command[0] != "git"], [])
 
@@ -341,7 +335,7 @@ class FailClosed(unittest.TestCase):
                                         "steps_seconds": {"tests": 1}, "stages_exit": {"tests": 0}})
 
     def test_fast_phases_plan_only_themselves(self):
-        for phase in ("coverage", "tools", "build", "vet", "smoke", "census", "catalog"):
+        for phase in ("coverage", "tools", "build", "vet", "census", "catalog"):
             with self.subTest(phase=phase):
                 extra = {"phase": phase}
                 if phase == "census":
@@ -357,9 +351,8 @@ class FailClosed(unittest.TestCase):
 
     def test_conditional_fast_phases_dispatch_only_their_selected_work(self):
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "a") as handle:
-            handle.write("workers workers/*\na-check probes/*\n")
+            handle.write("workers workers/*\n")
         for phase, path, method in (("workers", "workers/probe.mjs", "workers"),
-                                    ("a-check", "probes/probe.a", "aCheck"),
                                     ("catalog-apply", "probe.md", "catalogApply")):
             calls = []
             def execute(gate, inputs):
@@ -374,22 +367,22 @@ class FailClosed(unittest.TestCase):
             self.assertEqual(result["stages_exit"], {phase: 0})
             self.assertEqual(set(result["steps_seconds"]), {phase})
             self.assertEqual(len(calls), 1)
-            self.assertIn("workers" if phase == "workers" else path if phase == "a-check" else "01.patch", calls[0])
+            self.assertIn("workers" if phase == "workers" else "01.patch", calls[0])
 
     def test_fast_inventory_uses_the_base_diff_for_conditional_phases(self):
         base = self.sha
-        for path in ("stage3/probe.md", "workers/probe.mjs", "probes/probe.a"):
+        for path in ("stage3/probe.md", "workers/probe.mjs"):
             os.makedirs(os.path.dirname(os.path.join(self.tree, path)), exist_ok=True)
             with open(os.path.join(self.tree, path), "w") as handle:
                 handle.write("probe\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "a") as handle:
-            handle.write("workers workers/*\na-check probes/*\ninert cloud/*\n")
+            handle.write("workers workers/*\ninert cloud/*\n")
         for command in (["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "conditional"]):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
         with mock.patch.object(run.Gate, "touched", lambda gate, paths: ([], paths)), \
                 mock.patch.object(run.Gate, "npmCli", side_effect=AssertionError("listing installs nothing")):
-            self.assertEqual(run.fastUnits(self.tree, base, self.sha), run.fastBasePhases + ["workers", "a-check"])
+            self.assertEqual(run.fastUnits(self.tree, base, self.sha), run.fastBasePhases + ["workers"])
             self.assertEqual(run.fastUnits(self.tree, self.sha, self.sha), run.fastBasePhases)
         gate, status, result = self.gate(base=base, extra={"phase": "coverage"})
         self.assertTrue(status.startswith("green:"), status)
@@ -397,7 +390,8 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["planned_stages"], ["coverage"])
 
     def test_unknown_and_whole_only_fast_phases_are_red(self):
-        for phase in ("no-such-phase", "wasi", "tests", "workers", "a-check", "catalog-apply", "darwin"):
+        # smoke and a-check retired to Go tests (internal/oracle's and internal/acheck's): no gate has them now.
+        for phase in ("no-such-phase", "wasi", "tests", "workers", "catalog-apply", "darwin", "smoke", "a-check"):
             with self.subTest(phase=phase):
                 gate, status, result = self.gate(extra={"phase": phase})
                 self.assertTrue(status.startswith("red:"), status)
@@ -431,32 +425,30 @@ class FailClosed(unittest.TestCase):
         self.assertIn("requested tests ran: 0 in q: TestNoSuchFamily", gate.failure["detail"])
 
     def test_several_fast_phases_complete_the_pool_landing_record(self):
-        gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
         self.assertTrue(status.startswith("green:"), status)
-        self.assertEqual(result["planned_stages"], ["build", "vet", "smoke", "census"])
+        self.assertEqual(result["planned_stages"], ["build", "vet", "census"])
         self.assertEqual(result["stages_exit"], {phase: 0 for phase in result["planned_stages"]})
         self.assertEqual(landingProblems(self.sha, [self.poolPart(), (status, result)]), [])
         with open(os.path.join(gate.arguments.out, "test.jsonl")) as handle:
-            log = handle.read()
-        self.assertIn("TestPool", log)
-        self.assertIn(FakeProcess.smokePasses[0], log)  # smoke appended, rather than overwriting the pool's log
+            self.assertIn("TestPool", handle.read())
 
-    def test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record(self):
-        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
+    def test_a_missing_census_or_red_vet_cannot_complete_the_pool_record(self):
+        gate, status, result = self.gate(extra={"phases": "build,vet"})
         self.assertTrue(status.startswith("green:"), status)
-        self.assertTrue(any("smoke" in problem for problem in landingProblems(self.sha, [self.poolPart(), (status, result)])))
-        gate, status, result = self.gate(failing="vet", extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        self.assertTrue(any("census" in problem for problem in landingProblems(self.sha, [self.poolPart(), (status, result)])))
+        gate, status, result = self.gate(failing="vet", extra={"phases": "build,vet,census", "census": self.poolLog()})
         self.assertIn("first failure at vet", status)
         self.assertFalse(result["vet_ok"])
         self.assertTrue(landingProblems(self.sha, [self.poolPart(), (status, result)]))
-        gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
         result["sha"] = "b" * 40
         self.assertTrue(landingProblems(self.sha, [self.poolPart(), (status, result)]))
 
     def test_a_silent_fast_phase_is_red_even_in_a_combined_record(self):
-        for method, phase in (("build", "build"), ("vet", "vet"), ("smoke", "smoke"), ("checkCensus", "census")):
+        for method, phase in (("build", "build"), ("vet", "vet"), ("checkCensus", "census")):
             with self.subTest(phase=phase):
-                gate, status, result = self.gate(silent=method, extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+                gate, status, result = self.gate(silent=method, extra={"phases": "build,vet,census", "census": self.poolLog()})
                 self.assertTrue(status.startswith("red:"), status)
                 self.assertIn(phase, result["failure"]["step"])
 
@@ -660,9 +652,8 @@ class Products(unittest.TestCase):
                 self.assertIn("-test.timeout=30m", commands[1])
 
     def test_all_fast_stages_start_concurrently(self):
-        barrier = threading.Barrier(5)
-        stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests",
-                  "smoke": "smoke"}
+        barrier = threading.Barrier(4)
+        stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests"}
         def target(stage):
             def concurrent(gate, *args):
                 barrier.wait(2)
@@ -869,125 +860,90 @@ class Coverage(FailClosed):
         self.assertTrue(status.startswith("green:"), status)
         self.assertEqual(result["executors"], {"inert": 1})
 
-    def test_a_ruled_corpus_is_exempt_from_a_check_and_named(self):
-        # The exemption line comes first, so a path it matches would take it as its executor if the
-        # map read it as one; the path must still be covered by stage3.
-        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
-            handle.write("a-check-exempt stage3/corpus/*\ninert *.md\nstage3 stage3/*\n")
-        os.makedirs(os.path.join(self.tree, "stage3/corpus"))
-        for path in ("stage3/corpus/upstream.a", "stage3/probe.a"):
-            with open(os.path.join(self.tree, path), "w") as handle:
-                handle.write("const x = 1\n")
-        gate, status, result = self.gate(unowned=["stage3/corpus/upstream.a", "stage3/probe.a"])
-        self.assertEqual(result["unchecked_a_files"], ["stage3/probe.a"])
-        self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
-        self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
-        self.assertEqual(result["executors"], {"stage3": 2})
 
+class RetiredPhases(unittest.TestCase):
+    """The a-check and smoke phases retired to Go tests on adamic main: internal/acheck's
+    TestEveryProgramOutsideAPackageKeepsItsPromise checks every .a outside a package against stage 0's product, and
+    internal/oracle's TestEverySmokeEntryRunsInAnOracleUnit holds every smoke.txt entry to an oracle unit that runs it.
+    So no plan lists either phase, and the gate tools' executors.txt keys each package on what its test reads:
+    internal/acheck on every .a in the tree, internal/oracle on smoke.txt. Mutants that each fail it: the phases left in
+    the plan; the internal/acheck reads line removed, or narrowed to one directory's glob; the smoke.txt reads line
+    removed."""
+    setUp = FailClosed.setUp
+    gate = FailClosed.gate
+    tools = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+    acheck, oracle = run.module + "/internal/acheck", run.module + "/internal/oracle"
+    # One program outside a package from each directory that held them on main 074aed1bb4.
+    outside = ["dedication/dedication.a", "docs/verification/enums-open/enums-open-tag-probe.a", "notes/devirtualize/union_refused.a",
+               "review/host_nullable_date.a", "stage3/adapt/20-optional-declarations/testdata/nullable-return.a",
+               "stage3/adapt/48-memoize/a.a", "stage3/adapt/65-temporary-node-builtins/evidence/previous-process-host-types.a",
+               "stage3/adapt/71-writable-views/language-questions/node-flags.a", "stage3/adapt/75-optional-widening/probes/read-write.a",
+               "stage3/adapt/76-truthful-casts/same-map-proposal.a", "stage3/area-stack/held/error_classes_repeat.a",
+               "stage3/census/repro/support.a", "stage3/census/speculative/control/nested.a",
+               "stage3/census/tsc-closure/fixtures/src/outside.a", "stage3/drivers/parser/main.a", "stage3/drivers/tsc/tiny/clean.a",
+               "stage3/drivers/tsc-entry/probes/14-void-result.a", "stage3/evidence/two-writes/typed-witness.a",
+               "stage3/interface-downcasts/nodes.a", "stage3/namespace-init-sys/cwd.a", "stage3/namespace-live-export/live.a",
+               "stage3/namespace-parser-stops/native-namespace-class.a", "stage3/namespaces/shapes/Debug.a",
+               "stage3/records-maplike-main/corePublic-MapLike.a", "stage3/scouts/step09/nonnull/01_erased.a"]
 
-class SmokeShards(unittest.TestCase):
-    """#v5fgqc4's split moved TestNativeAgreesWithNode's fixtures under shard subtests, and smoke went red on 2aff1aa5
-    with 'smoke entries that didn't run' (Oct 9 13:41Z): smoke selects and reads a fixture under either layout."""
-    entries = [("TestNativeAgreesWithNode", "internal/oracle/testdata/bitwise"),
-               ("TestNativeAgreesWithNode", "internal/oracle/testdata/array_from_length.a")]
+    def declared(self, unowned, changed):
+        """The gate over this change with the gate tools' own executors.txt: cover's extraPackages are the packages its
+        reads lines and package: executors run beyond those the change touches, and its result names what's uncovered."""
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tools)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        gate.cover(unowned, changed, record=False)
+        return gate
 
-    def selects(self, name):
-        # go test -run: the pattern and the name split on '/', each level matched by its own expression, and a name
-        # shorter than the pattern ignores the levels past its end.
-        levels = run.smokePattern(self.entries).split("/")
-        return all(re.search(levels[index], part) for index, part in enumerate(name.split("/")) if index < len(levels))
+    def test_internal_acheck_s_inputs_move_on_every_program_outside_a_package(self):
+        for path in self.outside:
+            with self.subTest(path=path):
+                gate = self.declared([path], [path])
+                self.assertIn(self.acheck, gate.extraPackages)
+                self.assertEqual(gate.result["uncovered_files"], [])
+                self.assertIn(path, [read for row in gate.result["reads"] if row["package"] == "internal/acheck" for read in row["paths"]])
+        # The programs that broke their promise when the test came, which only shrink.
+        self.assertIn(self.acheck, self.declared([], ["internal/acheck/known.txt"]).extraPackages)
 
-    def test_a_fixture_is_selected_directly_under_its_lane_or_under_a_shard(self):
-        for name in ("TestNativeAgreesWithNode/internal/oracle/testdata/bitwise",
-                     "TestNativeAgreesWithNode/shard-003-0/internal/oracle/testdata/bitwise",
-                     "TestNativeAgreesWithNode/shard-019/internal/oracle/testdata/array_from_length.a",
-                     "TestNativeAgreesWithNode/shard-003-0"):
-            self.assertTrue(self.selects(name), name)
-        for name in ("TestNativeAgreesWithNode/internal/oracle/testdata/other",
-                     "TestNativeAgreesWithNode/shard-003-0/internal/oracle/testdata/other",
-                     "TestNativeAgreesWithNode/part-003/internal/oracle/testdata/bitwise",
-                     "TestInputAgreesWithNode/internal/oracle/testdata/bitwise"):
-            self.assertFalse(self.selects(name), name)
+    def test_internal_acheck_s_inputs_move_on_a_program_in_a_new_directory_and_on_one_a_package_owns(self):
+        """The test's walker decides which programs are outside a package, so the key moves on every .a: a program in a
+        directory no one has named yet is checked by the test, and a key that stood on it would reuse a pass over a
+        program no run checked, a silent false green. Over-selection is the safe direction: a package's own program
+        moves the key too, and costs only a rerun of the check."""
+        for path, unowned in (("probes-not-yet-named/fresh/main.a", True), ("stage3/a-directory-of-tomorrow/main.a", True),
+                              ("internal/oracle/testdata/gaps.a", False), ("stage3/fixtures/host/17_write.a", False)):
+            with self.subTest(path=path):
+                gate = self.declared([path] if unowned else [], [path])
+                self.assertIn(self.acheck, gate.extraPackages)
+                self.assertEqual(gate.result["uncovered_files"], [])
+                # A reads line, not the package: coverage line, since the planner keys a unit on its reads lines alone.
+                self.assertIn(path, [read for row in gate.result["reads"] if row["package"] == "internal/acheck" for read in row["paths"]])
 
-    def test_a_sharded_fixture_s_pass_counts_as_its_entry(self):
-        self.assertEqual(run.smokeFixture("shard-003-0/internal/oracle/testdata/bitwise"), "internal/oracle/testdata/bitwise")
-        self.assertEqual(run.smokeFixture("internal/oracle/testdata/bitwise"), "internal/oracle/testdata/bitwise")
-        # A shard alone isn't a fixture, and only a shard level is dropped.
-        self.assertEqual(run.smokeFixture("shard-003-0"), "shard-003-0")
-        self.assertEqual(run.smokeFixture("part-003/internal/oracle/testdata/bitwise"), "part-003/internal/oracle/testdata/bitwise")
+    def test_internal_oracle_s_inputs_move_on_the_smoke_list(self):
+        # smoke.txt sits in the cloud package's tree, so a change to it is owned and never unowned.
+        self.assertIn(self.oracle, self.declared([], ["cloud/fast-gate/smoke.txt"]).extraPackages)
 
-
-class SmokeTruth(unittest.TestCase):
-    """From 75a273db37 oracle's lanes are families (TestNativeAgreesWithNode_000 and on), smoke's pattern named only
-    the bare lanes, and every smoke selected nothing and passed: a lane that didn't run was only listed as absent
-    (Tests, Oct 13, #rmp2hdj). Smoke now takes a family's members as its lane, and an entry that didn't pass is red."""
-    entries = [("TestNativeAgreesWithNode", "internal/oracle/testdata/bitwise.a"),
-               ("TestInputAgreesWithNode", "internal/oracle/testdata/walk.a")]
-
-    def test_a_family_member_is_its_lane_and_nothing_else_is(self):
-        lanes = sorted({lane for lane, _ in self.entries})
-        for name, lane in (("TestNativeAgreesWithNode", "TestNativeAgreesWithNode"),
-                           ("TestNativeAgreesWithNode_000", "TestNativeAgreesWithNode"),
-                           ("TestNativeAgreesWithNode_127", "TestNativeAgreesWithNode"),
-                           ("TestNativeAgreesWithNode_user_iterators", "TestNativeAgreesWithNode"),
-                           ("TestInputAgreesWithNode", "TestInputAgreesWithNode"),
-                           ("TestNativeAgreesWithNodeAgain", None),
-                           ("TestNativeAgreesWithNode_", None),
-                           ("TestWASIAgreesWithNode_000", None)):
-            self.assertEqual(run.smokeLane(name, lanes), lane, name)
-        # The longest lane owns a name both could claim.
-        self.assertEqual(run.smokeLane("TestA_b_000", ["TestA", "TestA_b"]), "TestA_b")
-
-    def test_the_pattern_selects_a_fixture_under_a_family_member(self):
-        levels = run.smokePattern(self.entries).split("/")
-
-        def selects(name):
-            return all(re.search(levels[index], part) for index, part in enumerate(name.split("/")) if index < len(levels))
-        for name in ("TestNativeAgreesWithNode_000/internal/oracle/testdata/bitwise.a",
-                     "TestNativeAgreesWithNode_user_iterators/internal/oracle/testdata/bitwise.a",
-                     "TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a",
-                     "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"):
-            self.assertTrue(selects(name), name)
-        for name in ("TestNativeAgreesWithNodeAgain/internal/oracle/testdata/bitwise.a",
-                     "TestNativeAgreesWithNode_000/internal/oracle/testdata/other.a",
-                     "TestWASIAgreesWithNode_000/internal/oracle/testdata/bitwise.a"):
-            self.assertFalse(selects(name), name)
-
-    def smoke(self, passes):
-        with mock.patch.object(FakeProcess, "smokePasses", passes):
-            gate, status, result = FailClosed.gate(self.closed)
-        return status, result
-
-    def setUp(self):
-        self.closed = FailClosed()
-        self.closed.setUp()
-        with open(os.path.join(self.closed.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
-            handle.write("internal/oracle/testdata/a.a\nTestInputAgreesWithNode internal/oracle/testdata/walk.a\n")
-
-    def test_every_entry_passing_in_its_lane_or_a_family_member_is_green(self):
-        status, result = self.smoke(["TestNativeAgreesWithNode_031/internal/oracle/testdata/a.a",
-                                     "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"])
+    def test_no_plan_lists_a_check_or_smoke(self):
+        base = self.sha
+        changed = ["dedication/dedication.a", "stage3/interface-downcasts/nodes.a", "cloud/fast-gate/smoke.txt"]
+        for path in changed:
+            os.makedirs(os.path.dirname(os.path.join(self.tree, path)), exist_ok=True)
+            with open(os.path.join(self.tree, path), "a") as handle:
+                handle.write("let a = 1;\n")
+        for command in (["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "programs and the smoke list"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        # The planner's --list-units with --base, --sha and --tools: the .a files outside a package, smoke.txt owned.
+        with mock.patch.object(run.Gate, "touched", lambda gate, paths: ([], [path for path in paths if path.endswith(".a")])), \
+                mock.patch.object(run.Gate, "npmCli", side_effect=AssertionError("listing installs nothing")):
+            units = run.fastUnits(self.tree, base, self.sha, self.tools)
+        self.assertEqual(units, run.fastBasePhases)
+        self.assertNotIn("a-check", units)
+        self.assertNotIn("smoke", units)
+        # The fast gate itself plans neither, over a change to a program outside a package.
+        gate, status, result = self.gate(unowned=["stage3/probe.a"])
         self.assertTrue(status.startswith("green:"), status)
-        self.assertEqual((result["smoke_passed"], result["smoke_absent_lanes"]), (2, []))
-
-    def test_a_smoke_that_ran_no_fixture_is_red(self):
-        # The hole itself: nothing selected, every lane absent. Before #rmp2hdj this was green.
-        status, result = self.smoke([])
-        self.assertTrue(status.startswith("red:"), status)
-        self.assertIn("first failure at smoke", status)
-        self.assertEqual(result["smoke_passed"], 0)
-        self.assertIn("smoke passed 0 of its 2 entries", json.dumps(result["failure"]))
-        self.assertIn("no test of lane TestInputAgreesWithNode, TestNativeAgreesWithNode ran", json.dumps(result["failure"]))
-
-    def test_one_entry_short_is_red_naming_it(self):
-        for passes, missing in ((["TestNativeAgreesWithNode_031/internal/oracle/testdata/a.a"], "TestInputAgreesWithNode internal/oracle/testdata/walk.a"),
-                                (["TestNativeAgreesWithNode_031/internal/oracle/testdata/b.a",
-                                  "TestInputAgreesWithNode/internal/oracle/testdata/walk.a"], "TestNativeAgreesWithNode internal/oracle/testdata/a.a")):
-            with self.subTest(missing=missing):
-                status, result = self.smoke(passes)
-                self.assertTrue(status.startswith("red:"), status)
-                self.assertEqual(result["smoke_passed"], 1)
-                self.assertIn(missing, json.dumps(result["failure"]))
+        self.assertFalse({"a-check", "smoke"} & set(result["planned_stages"]), result["planned_stages"])
 
 
 class GateRuns(unittest.TestCase):
@@ -1083,28 +1039,6 @@ class GateRunsDeferred(unittest.TestCase):
         self.assertEqual(gate.deferred[native], {"TestSplitTSGoAgrees"})
 
 
-class DeletedAFiles(unittest.TestCase):
-    def test_a_deleted_a_file_is_not_checked_and_does_not_crash_the_gate(self):
-        with tempfile.TemporaryDirectory() as tree:
-            with open(os.path.join(tree, "kept.a"), "w") as handle:
-                handle.write("const x = 1\n")
-            gate = run.Gate.__new__(run.Gate)
-            gate.arguments = types.SimpleNamespace(tree=tree, out=tree)
-            gate.result, gate.steps, gate.exits, gate.failure = {}, {}, {}, None
-            ran = []
-
-            def spawn(command, stdout, stderr=None, directory=None, environment=None):
-                ran.append(command[-1])
-                return types.SimpleNamespace(communicate=lambda: ("", ""), returncode=0)
-
-            with mock.patch.object(gate, "step", lambda *arguments: True), mock.patch.object(gate, "spawn", spawn):
-                gate.aCheck(["kept.a", "stage3/interface-downcasts/default-boxed-write.a"])
-            self.assertIsNone(gate.failure)
-            self.assertEqual(ran, ["kept.a"])
-            self.assertEqual(gate.result["a_check"]["stage3/interface-downcasts/default-boxed-write.a"]["outcome"], "deleted")
-            self.assertEqual(gate.exits["a-check"], 0)
-
-
 class CompleteMode(unittest.TestCase):
     """Landing and area gates run on after a failure (run.py --complete): every test and fixture still
     runs and the verdict names them all; an ordinary fast gate still stops everything at the first."""
@@ -1144,7 +1078,7 @@ class CompleteMode(unittest.TestCase):
             gate.arguments.full = full
             gate.status = lambda line: None
             with mock.patch("builtins.print"):
-                gate.fail("a-check", "Traceback (most recent call last):\n  File run.py\nFileNotFoundError: x.a")
+                gate.fail("catalog-apply", "Traceback (most recent call last):\n  File run.py\nFileNotFoundError: x.patch")
             self.assertEqual(gate.killed, 1, "full=%s" % full)
             self.assertTrue(gate.failure["tool_crash"])
         gate = self.gate(True)
@@ -2268,7 +2202,6 @@ class PhaseUnitTests(unittest.TestCase):
         listed = realRun([sys.executable, run.__file__, "--list-units", "--tree", "/unused"],
                          capture_output=True, text=True, check=True, timeout=90).stdout.splitlines()
         self.assertEqual(listed, run.fastBasePhases)
-        self.assertIn("smoke", listed)
         self.assertIn("census", listed)
         self.assertNotIn("tests", listed)
         self.assertNotIn("wasi", listed)
@@ -2490,7 +2423,7 @@ class CacheDrains(unittest.TestCase):
                 self.assertIn("store unavailable", row["detail"])
                 self.assertEqual(result["fail"], 0)
                 self.assertLess(calls.index("audit"), calls.index("upload"))
-                self.assertTrue(all(name not in ("tests", "wasi", "smoke") for name in calls[calls.index("audit"):]))
+                self.assertTrue(all(name not in ("tests", "wasi") for name in calls[calls.index("audit"):]))
                 for name in ("audit", "upload"):
                     self.assertIn(name, result["planned_stages"])
                     self.assertIn(name, result["steps_seconds"])
@@ -2704,10 +2637,11 @@ class PhaseInputs(unittest.TestCase):
             if full:
                 command.append("--full")
             expected = realRun(command, input=base, capture_output=True, text=True, check=True, timeout=90).stdout
-            # The determinism phase retired to internal/oracle's TestStage0EmitsDeterministically (#86znq4s), and stage 3's
-            # to stage3/lane's tests (#4gp2ytz): the lines the base lists that this doesn't.
+            # The determinism phase retired to internal/oracle's TestStage0EmitsDeterministically (#86znq4s), stage 3's
+            # to stage3/lane's tests (#4gp2ytz), and smoke to internal/oracle's TestEverySmokeEntryRunsInAnOracleUnit: the
+            # lines the base lists that this doesn't.
             expected = "".join(line for line in expected.splitlines(keepends=True)
-                               if line != "determinism\n" and line != "stage3\n" and not line.startswith("stage3 "))
+                               if line not in ("determinism\n", "stage3\n", "smoke\n") and not line.startswith("stage3 "))
             self.assertEqual(self.listing(full), expected)
 
     def test_every_listed_unit_has_nonempty_inputs(self):

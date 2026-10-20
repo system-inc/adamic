@@ -2,15 +2,14 @@
 """The fast gate, run on the gate box against a checkout of the candidate.
 
 It builds and vets the whole repository, tests every package affected by the candidate (reverse imports and declared compiler
-dependencies, from its diff against the base), runs the oracle smoke set, and checks the skip census over the
-run's log. It stops at the first failure: the first failing test or package build is printed
-first, every other step is killed, and status.txt goes red naming it. Tests always run with
--count=1; only compiles are reused, from Go's build cache.
+dependencies, from its diff against the base), and checks the skip census over the run's log. It stops at the
+first failure: the first failing test or package build is printed first, every other step is killed, and
+status.txt goes red naming it. Tests always run with -count=1; only compiles are reused, from Go's build cache.
 
 Usage: run.py --tree <checkout of the candidate> --sha <candidate> --base <main sha>
               --tools <tools checkout> --out <directory>
 
-For pool work, --phase <name> runs one non-test stage, and --phases build,vet,smoke,census
+For pool work, --phase <name> runs one non-test stage, and --phases build,vet,census
 writes one record of those stages. Pass --census <pool test.jsonl> to include the pool's tests in
 that census. --list-units --tree <tree> lists the unconditional fast units; supply --base, --sha
 and --tools (as for --select) to include this change's conditional executors.
@@ -80,7 +79,6 @@ unitKillSeconds = 90
 # budget is listed beside the verdict, never red (@system_adamic, Oct 9 00:41 MDT, live on Loom's pool first: the boxes'
 # 90 s product kill at load 53 redded every candidate on main's own products).
 productKillSeconds = 600
-smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
 toolLiteral = re.compile(r'exec\.(?:Command\(|CommandContext\([A-Za-z_.()]+, |LookPath\()"([^"]+)"')
@@ -604,7 +602,7 @@ class Gate:
         self.exits = {}
         self.watchers = []
         self.planned = (["coverage", "tools", "build", "vet", "tests", "wasi", "catalog", "census"] if arguments.full
-                        else ["coverage", "tools", "build", "vet", "tests", "smoke", "census"])
+                        else ["coverage", "tools", "build", "vet", "tests", "census"])
         if os.path.isfile(os.path.join(arguments.tree, "internal/buildcache/cmd/buildcache-publish/main.go")):
             index = self.planned.index("tests") + 1
             self.planned[index:index] = ["audit", "upload"]
@@ -675,7 +673,6 @@ class Gate:
         if self.arguments.full:
             self.runFull()
             return
-        smoke, smokeSource = self.smokeList()
         self.deferred = self.deferredList()
         self.runRequested()
         # Unquoted, so a path with non-ASCII bytes is itself and can match its package or a rule.
@@ -716,7 +713,7 @@ class Gate:
                          "env": dict(gateEnvironment, **self.sampling),
                          "deferred": {package: sorted(names) for package, names in sorted(self.deferred.items()) if package in packages},
                          "only_tests": {package: sorted(names) for package, names in sorted(self.onlyTests.items())},
-                         "executors_beyond_go_tests": sorted(executors | ({"smoke"} if smoke else set()))}
+                         "executors_beyond_go_tests": sorted(executors)}
             with open(os.path.join(self.arguments.out, "select.json"), "w") as handle:
                 json.dump(selection, handle, indent=2)
                 handle.write("\n")
@@ -725,26 +722,15 @@ class Gate:
             "changed_files": changed,
             "packages": packages,
             "unowned_files": unowned,
-            "smoke_list": "cloud/fast-gate/smoke.txt",
-            "smoke_list_source": smokeSource,
-            "smoke_list_blob": self.git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
-            "smoke_fixtures": ["%s %s" % entry for entry in smoke],
         })
-        if not smoke:
-            self.fail("smoke", "no smoke list in the gated tree or the tools checkout")
-            return
         # Everything starts at once: the tests compile what they need through the same build cache,
         # and the first failure of any step still stops all of them.
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
         threads = [self.guarded("tools", self.toolsDeclared), self.guarded("build", self.build), self.guarded("vet", self.vet),
-                   self.guarded("tests", self.testSplit, packages, log),
-                   self.guarded("smoke", self.smoke, smoke, log)]
+                   self.guarded("tests", self.testSplit, packages, log)]
         if executors & {"workers", "bench-workers"}:
             self.planned.append("workers")
             threads.append(self.guarded("workers", self.workers, executors))
-        if "a-check" in executors and self.result.get("unchecked_a_files"):
-            self.planned.append("a-check")
-            threads.append(self.guarded("a-check", self.aCheck, self.result["unchecked_a_files"]))
         staling = self.catalogEntriesTouched(changed)
         if staling:
             self.planned.append("catalog-apply")
@@ -785,7 +771,7 @@ class Gate:
     def runPhase(self):
         """Pool phases share the gate's stage implementations and fail-closed record writer.
 
-        A supplied pool log is copied before smoke appends to it; census runs last so it sees both.
+        A supplied pool log is copied before wasi appends to it; census runs last so it sees both.
         """
         census = vars(self.arguments).get("census")
         allowed = wholePhases + ["products", "census"] if self.arguments.full else fastPhases
@@ -812,7 +798,7 @@ class Gate:
             except OSError:
                 self.fail("census", traceback.format_exc())
                 return
-        elif any(phase in self.planned for phase in ("smoke", "wasi")):
+        elif "wasi" in self.planned:
             # A reused output directory must not carry a previous run's test verdicts into this census.
             with open(logPath, "w"):
                 pass
@@ -862,16 +848,6 @@ class Gate:
                 self.catalogFull()
             else:
                 self.step("catalog", ["bash", "-n", "verify/catalog/check.sh"])
-        elif phase == "smoke":
-            smoke, source = self.smokeList()
-            if not smoke:
-                self.fail(phase, "no smoke list in the gated tree or the tools checkout")
-                return
-            self.result.update({"smoke_list": "cloud/fast-gate/smoke.txt", "smoke_list_source": source,
-                                "smoke_list_blob": self.git(source["root"], "hash-object", os.path.join(source["root"], "cloud/fast-gate/smoke.txt")),
-                                "smoke_fixtures": ["%s %s" % entry for entry in smoke]})
-            with open(logPath, "a") as log:
-                self.smoke(smoke, log)
         elif phase == "census":
             if not os.path.isfile(logPath):
                 self.fail("census", "no test.jsonl: supply the pool's merged log with --census")
@@ -884,17 +860,12 @@ class Gate:
                 self.runRequested()
                 self.checkCensus()
                 self.requestedRan()
-        elif phase in ("workers", "a-check", "catalog-apply"):
+        elif phase in ("workers", "catalog-apply"):
             changed, executors = self.fastPhaseInputs()
             if phase == "workers":
                 if not executors & {"workers", "bench-workers"}:
                     raise ValueError("workers has no work for this change")
                 self.workers(executors)
-            elif phase == "a-check":
-                paths = self.result.get("unchecked_a_files", [])
-                if not paths:
-                    raise ValueError("a-check has no work for this change")
-                self.aCheck(paths)
             else:
                 patches = self.catalogEntriesTouched(changed)
                 if not patches:
@@ -1031,10 +1002,7 @@ class Gate:
                     readers.append((number, fields[1], fields[2], len(fields) == 4))
                 elif fields and not fields[0].startswith("#") and fields[0] != "mode":
                     rules.append((fields[0], fields[1]))
-        # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
-        exempt = [glob for name, glob in rules if name == "a-check-exempt"]
-        rules = [rule for rule in rules if rule[0] != "a-check-exempt"]
-        executors, covered, uncovered, unchecked = set(), {}, [], []
+        executors, covered, uncovered = set(), {}, []
         self.result["reads"] = []
         readerPackages = set()
         mapChanged = "cloud/fast-gate/executors.txt" in changed
@@ -1066,14 +1034,6 @@ class Gate:
 
                 if executor == "darwin" and path not in self.result.get("needs_darwin", []):
                     self.result.setdefault("needs_darwin", []).append(path)
-        # Every changed .a outside a package gets a-check, beside whatever else runs for it (stage3's
-        # probes too): the extension promises proven types wherever the file sits.
-        # A ruled exemption is named in the result, never dropped silently.
-        unchecked = [path for path in unowned if path.endswith(".a") and not any(fnmatch.fnmatchcase(path, glob) for glob in exempt)]
-        if unchecked:
-            executors.add("a-check")
-        self.result["unchecked_a_files"] = unchecked
-        self.result["a_check_exempt"] = [path for path in unowned if path.endswith(".a") and path not in unchecked]
         # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
         self.extraPackages = sorted(readerPackages | {module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:")})
         self.result["executors"] = covered
@@ -1133,53 +1093,6 @@ class Gate:
         self.exits["workers"] = 1 if failed else 0
         if failed:
             self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
-
-    @declaresInputs("a-check", lambda tree, unit, full: treeInputs("conditional source programs may import outside their directories"))
-    def aCheck(self, paths):
-        """Each changed .a outside a package through stage 0's front end (adamic c: the checker's proven
-        types, then the refusal pass; it stops before C): a clean result or a "can't lower ... yet" stop
-        passes, since nothing was refused. A file whose first line is "// a-check: refused <rule>" or
-        "// a-check: type error <code>" must fail exactly that way instead."""
-        started = time.monotonic()
-        adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic-acheck"
-        if self.step("a-check-build", ["go", "build", "-o", adamic, "./cmd/adamic"]) is False:
-            self.exits["a-check"] = 1
-            return
-        results, failed = {}, []
-        for path in paths:
-            # A change that deletes a .a has nothing left to check there (views slice 1, Oct 8, deleted five).
-            if not os.path.isfile(os.path.join(self.arguments.tree, path)):
-                results[path] = {"outcome": "deleted", "expected": "deleted", "first": ""}
-                continue
-            with open(os.path.join(self.arguments.tree, path), errors="replace") as handle:
-                header = handle.readline().strip()
-            expect = header[len("// a-check:"):].strip() if header.startswith("// a-check:") else ""
-            process = self.spawn([adamic, "c", path], subprocess.PIPE, subprocess.PIPE)
-            _, errors = process.communicate()
-            if process.returncode == 0 or ("can't lower" in errors and " yet" in errors):
-                outcome = "checked"
-            elif "Adamic 0.1 refuses" in errors:
-                outcome = "refused"
-            elif " error TS" in errors:
-                outcome = "type error"
-            else:
-                outcome = "failed"
-            first = errors.strip().splitlines()[0] if errors.strip() else ""
-            if expect.startswith("refused"):
-                ok = outcome == "refused" and expect[len("refused"):].strip() in errors
-            elif expect.startswith("type error"):
-                code = expect[len("type error"):].strip()
-                ok = outcome == "type error" and (not code or ("error " + code) in errors)
-            else:
-                ok = outcome == "checked"
-            results[path] = {"outcome": outcome, "expected": expect or "checked", "first": first[:300]}
-            if not ok:
-                failed.append("%s: %s, expected %s (%s)" % (path, outcome, expect or "checked", first[:200]))
-        self.result["a_check"] = results
-        self.steps["a-check"] = round(time.monotonic() - started, 1)
-        self.exits["a-check"] = 1 if failed else 0
-        if failed:
-            self.fail("a-check", "a-check failed for %d file%s:\n%s" % (len(failed), "" if len(failed) == 1 else "s", "\n".join(failed[:50])))
 
     def catalogEntriesTouched(self, changed):
         """The bug catalog's entries whose undo patch edits a file this change touches."""
@@ -1420,7 +1333,7 @@ class Gate:
     def deferredList(self):
         """Tests the landing gate leaves to the full gate on main (cloud/fast-gate/deferred.txt, by
         @system_adamic's ruling): each over 15 s warm and a mutant test, a randomized or differential
-        sweep, or a whole external suite. Read like the smoke list, from the gated tree first."""
+        sweep, or a whole external suite. Read from the gated tree first, then the tools checkout."""
         for root in (self.arguments.tree, self.arguments.tools):
             path = os.path.join(root, "cloud/fast-gate/deferred.txt")
             if os.path.exists(path):
@@ -1476,16 +1389,6 @@ class Gate:
         unproven = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
         if unproven:
             self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven))
-
-    def smokeList(self):
-        for root, name in ((self.arguments.tree, "gated tree"), (self.arguments.tools, "tools checkout")):
-            path = os.path.join(root, "cloud/fast-gate/smoke.txt")
-            if os.path.exists(path):
-                with open(path) as handle:
-                    # "fixture" runs in TestNativeAgreesWithNode; "Lane fixture" in that lane.
-                    fixtures = [(line.split() if len(line.split()) == 2 else [smokeTest, line.strip()]) for line in handle if line.strip() and not line.startswith("#")]
-                return [tuple(entry) for entry in fixtures], {"root": root, "from": name}
-        return [], {"root": self.arguments.tools, "from": "missing"}
 
     def touched(self, changed):
         """Each changed file's package: its own directory's, one that embeds it, or the nearest package
@@ -1747,9 +1650,9 @@ class Gate:
     def selectOracle(self):
         """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed
         fixture in every lane, the Test functions of test files it adds (their init registers the
-        fixture), TestCountsAreRecorded whole when counts.md changed, and the smoke set as always. The
-        same coverage as the whole package for such a change, since nothing else in the package moved.
-        Anything it can't classify (a changed helper, a deleted file, any other file) runs it whole."""
+        fixture), and TestCountsAreRecorded whole when counts.md changed. The same coverage as the whole
+        package for such a change, since nothing else in the package moved. Anything it can't classify (a
+        changed helper, a deleted file, any other file) runs it whole."""
         tree, base, sha = self.arguments.tree, self.arguments.base, self.arguments.sha
         whole = lambda reason: {"whole": True, "reason": reason}
         statuses = [line.split("\t") for line in self.git(tree, "diff", "--name-status", "%s...%s" % (base, sha), "--", "internal/oracle").splitlines() if line]
@@ -2131,44 +2034,6 @@ class Gate:
             self.fail("tests", "%s exited %d\n%s" % (" ".join(command), process.returncode, (output + errors)[-4000:]))
             return None
         return output
-
-    @declaresInputs("smoke", lambda tree, unit, full: treeInputs("smoke source programs and their runtime/import reads are not yet bounded"))
-    def smoke(self, smoke, log):
-        """The pinned smoke set in one process, then a check that every entry passed in its lane: an entry
-        that didn't run is red, whether its fixture was missing from a lane that ran or its lane didn't run at
-        all, so a smoke can never be green on fewer fixtures than its list. A lane split into a family
-        (TestNativeAgreesWithNode_000 and on, 75a273db37) runs each fixture under one of its members, and
-        that member's pass is the lane's. Until Oct 13 a lane that didn't run was only listed as absent,
-        and from 75a273db37 on every smoke selected nothing and passed: 130 s of compiling and no fixture
-        (Tests, #rmp2hdj)."""
-        lanes = sorted({lane for lane, _ in smoke})
-        passed, seen = set(), set()
-
-        def watch(line):
-            try:
-                event = json.loads(line)
-            except ValueError:
-                return
-            test = event.get("Test") or ""
-            lane = smokeLane(test.split("/", 1)[0], lanes)
-            if lane:
-                seen.add(lane)
-                if event.get("Action") == "pass" and "/" in test:
-                    passed.add((lane, smokeFixture(test.split("/", 1)[1])))
-
-        self.watchers.append(watch)
-        self.test("smoke", ["go", "test", "-count=1"] + ([] if self.complete else ["-failfast"]) + ["-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)
-        if self.exits.get("smoke") != 0:
-            return
-        absent = sorted("%s %s" % entry for entry in smoke if entry[0] not in seen)
-        missing = sorted("%s %s" % entry for entry in smoke if entry not in passed)
-        self.result["smoke_absent_lanes"] = absent
-        self.result["smoke_passed"] = len([entry for entry in smoke if entry in passed])
-        if missing:
-            self.exits["smoke"] = 1
-            self.fail("smoke", "smoke passed %d of its %d entries; these didn't run: %s%s" % (
-                self.result["smoke_passed"], len(smoke), ", ".join(missing),
-                " (no test of lane %s ran)" % ", ".join(sorted({entry.split(" ", 1)[0] for entry in absent})) if absent else ""))
 
     def test(self, name, command, log, environment=None):
         started = time.monotonic()
@@ -2618,14 +2483,10 @@ class Gate:
             steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
             if self.result.get("gate_samples"):
                 steps += "; sampled: %s" % "; ".join(sorted(set(self.result["gate_samples"]))[:10])
-            if self.result.get("a_check_exempt"):
-                steps += "; a-check exempt by ruling: %d .a files (fast.json a_check_exempt)" % len(self.result["a_check_exempt"])
-            if self.result.get("unchecked_a_files") and "a_check" not in self.result:
-                steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
         if getattr(self, "stopped", None) and self.failure is None:
             self.status("void: stopped before a verdict: " + self.stopped["reason"])
         elif green:
-            self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
+            self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"]))
         else:
             crash = " (the gate tool crashed, not the change)" if self.failure.get("tool_crash") else ""
             cancelled = ", cancelled after first failure" if getattr(self, "cancelled", False) else ""
@@ -2858,8 +2719,8 @@ def longTests(units):
 # The whole gate's phases a pool unit can run alone (run.py --full --phase); the Go test set is the pool's own.
 wholePhases = ["coverage", "tools", "build", "vet", "wasi", "catalog"]
 # The unconditional non-test units; conditional executors are listed with --base.
-fastBasePhases = ["coverage", "tools", "build", "vet", "smoke", "census"]
-fastPhases = fastBasePhases + ["workers", "a-check", "catalog-apply", "catalog", "darwin"]
+fastBasePhases = ["coverage", "tools", "build", "vet", "census"]
+fastPhases = fastBasePhases + ["workers", "catalog-apply", "catalog", "darwin"]
 
 
 def fastUnits(tree, base=None, sha=None, tools=None):
@@ -2878,8 +2739,6 @@ def fastUnits(tree, base=None, sha=None, tools=None):
         changed, executors = gate.fastPhaseInputs()
         if executors & {"workers", "bench-workers"}:
             units.append("workers")
-        if "a-check" in executors and gate.result.get("unchecked_a_files"):
-            units.append("a-check")
         if gate.catalogEntriesTouched(changed):
             units.append("catalog-apply")
         if "catalog" in executors:
@@ -2960,8 +2819,9 @@ wasiSkip = "^TestWASI(Unit[0-9]+)?$"
 
 
 def fixturePattern(prefix, fixtures):
-    """A -run pattern for these fixtures' subtests under the test and parent subtests in prefix,
-    level by level, as smokePattern builds it."""
+    """A -run pattern for these fixtures' subtests under the test and parent subtests in prefix, level by level.
+    Go splits both the pattern and each subtest name on '/' and matches level by level, so alternation can't span a
+    slash: each level gets its own alternation."""
     levels = [[part] for part in prefix]
     for fixture in fixtures:
         for depth, part in enumerate(fixture.split("/"), start=len(prefix)):
@@ -2970,51 +2830,6 @@ def fixturePattern(prefix, fixtures):
             if part not in levels[depth]:
                 levels[depth].append(part)
     return "/".join("^(%s)$" % "|".join(re.escape(part) for part in level) for level in levels)
-
-
-# A lane split into shards (#v5fgqc4: TestNativeAgreesWithNode/shard-003-0/<fixture>) runs each fixture one level down.
-smokeShard = re.compile(r"shard-[0-9]+(-[0-9]+)?$")
-# A lane split into a family of top-level tests (75a273db37: TestNativeAgreesWithNode_000, _001, ... and named solos such
-# as TestNativeAgreesWithNode_user_iterators) runs each fixture under one member: the suffix after the lane's name.
-smokeFamily = re.compile(r"_[0-9A-Za-z_]+")
-
-
-def smokeLane(name, lanes):
-    """The smoke lane a top-level test belongs to: the lane itself, or a member of its family. The longest lane wins,
-    so a lane whose name extends another's (TestInputAgreesWithNode_x) is never read as the shorter's member."""
-    owners = [lane for lane in lanes if name == lane or (name.startswith(lane) and smokeFamily.fullmatch(name[len(lane):]))]
-    return max(owners, key=len) if owners else None
-
-
-def smokeFixture(name):
-    """A smoke subtest's fixture, the shard level dropped: shard-003-0/bitwise is the fixture bitwise."""
-    head, _, rest = name.partition("/")
-    return rest if rest and smokeShard.match(head) else name
-
-
-def smokePattern(entries):
-    """A -run pattern for exactly these (lane, fixture) entries. Go splits both the pattern and each
-    subtest name on '/' and matches level by level, so alternation can't span a slash: each level gets
-    its own alternation, and a name shorter than the pattern ignores the levels past its end. A lane
-    may also run another lane's fixture that it has; the check after the run reads only its own.
-    A sharded lane holds its fixtures one level down (lane/shard-003-0/<fixture>), so the first level
-    also takes a shard name and every later level also takes the part one level up. A lane split into
-    a family of top-level tests (lane_000/<fixture>) is taken at the first level by its members' names.
-    What the wider pattern selects beyond the entries is only ever read by the exact check after the run."""
-    parts = [fixture.split("/") for _, fixture in entries]
-    depth = max((len(fixture) for fixture in parts), default=0)
-    # A lane's family members run its fixtures too: lane_000 and on, and a named solo such as lane_user_iterators.
-    levels = [["%s(%s)?" % (lane, smokeFamily.pattern) for lane in sorted({lane for lane, _ in entries})]]
-    for level in range(1, depth + 2):
-        names = []
-        for fixture in parts:
-            for index in (level - 1, level - 2):
-                if 0 <= index < len(fixture) and fixture[index].replace(".", "\\.") not in names:
-                    names.append(fixture[index].replace(".", "\\."))
-        if level == 1:
-            names.append(smokeShard.pattern.rstrip("$"))
-        levels.append(names)
-    return "/".join("^(%s)$" % "|".join(level) for level in levels)
 
 
 def git(directory, *arguments):

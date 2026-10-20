@@ -25,7 +25,7 @@ inert       documentation/velocity/*
 inert       stage3/meter/runs/*
 # Standalone design prototypes (runtime's async ownership study, Oct 8): run by hand, referenced by
 # nothing, so no gate executes them. A prototype a gate should trust moves into a Go package. Their .a
-# programs keep the a-check.
+# programs are internal/acheck's, as every .a outside a package is (below).
 inert       prototypes/*.py
 inert       prototypes/*.c
 inert       cloud/reports/*
@@ -52,7 +52,7 @@ cohere      CohereSettings.json
 cohere      cohere-mirrors.json
 cohere      stage1/cohere/config/*
 # Read by path from outside a package's tree: the Node oracle runners the oracle's tests start, and
-# the root tsconfig.json, the compiler options internal/load gives every program (the smoke set runs too).
+# the root tsconfig.json, the compiler options internal/load gives every program.
 package:internal/oracle  oracle/*
 package:internal/load    tsconfig.json
 # A .gitignore outside a package isn't inert: a line that matched a tracked file would hide it from every
@@ -70,12 +70,12 @@ bench-workers  bench/workers/*.mjs
 # the full gate on every main, a syntax check in the fast gate. Coverage measurement is records.
 catalog        verify/catalog/*
 inert          verify/coverage/*
-# An .a file promises proven types wherever it sits: every changed .a outside a package (stage3's
-# probes included, beside the lane) is loaded by stage 0's front end, its types must check and its
-# refusal pass find nothing, or it fails exactly as a first-line header says
-# (// a-check: refused <rule> | // a-check: type error <code>). This line covers .a files no other
-# line does; a-check runs for the others too.
-a-check        *.a
+# An .a file promises proven types wherever it sits: every .a outside a package is loaded by stage 0's
+# front end, its types must check and its refusal pass find nothing, or it fails exactly as a first-line
+# header says (// a-check: refused <rule> | // a-check: type error <code>). internal/acheck's
+# TestEveryProgramOutsideAPackageKeepsItsPromise checks them all, so it runs for the .a files no line
+# above covers, and the reads lines for internal/acheck below key it on every one of them.
+package:internal/acheck  *.a
 
 # Additive file readers inventoried on origin/main. These never cover a path.
 # reads <package dir> <glob>: run its tests for every matching changed path,
@@ -1719,3 +1719,15 @@ reads stage1/cohere/graphql/printer stage1/cohere/graphql/testdata/*.mjs
 reads stage1/cohere/markdownblocks stage1/cohere/markdowninline/*
 reads stage1/cohere/tsprinter stage1/typescript/parser/*
 reads stage1/typescript/parser stage1/typescript/scanner/*
+
+# internal/acheck's TestEveryProgramOutsideAPackageKeepsItsPromise reads every .a outside a Go package, the programs
+# the retired a-check phase checked when a change touched them, and known.txt, the programs that broke their promise
+# when the test came. It keys on every .a in the tree on purpose: the test's walker decides which are outside a package,
+# and a narrower glob would miss a program in a new directory, so a pass would be reused over a program no run checked.
+# Keying on a package's own programs too only reruns the check.
+reads internal/acheck internal/acheck/known.txt
+reads internal/acheck *.a
+
+# internal/oracle's TestEverySmokeEntryRunsInAnOracleUnit reads the smoke set and holds each entry to the oracle unit
+# that runs it, the coverage that retired the smoke phase, so an edit to the list moves the oracle units that read it.
+reads internal/oracle cloud/fast-gate/smoke.txt
