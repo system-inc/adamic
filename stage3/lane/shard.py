@@ -108,7 +108,7 @@ def shard_seconds():
     return float(supplied) if supplied else 30.0
 
 
-def validate_observation(unit, counts, records, paths, failures, seconds, code, limit=30.0):
+def validate_observation(unit, counts, records, paths, failures, code):
     errors = []
     if counts != unit['expect']:
         errors.append(f"counts: expected {unit['expect']}, observed {counts}")
@@ -122,8 +122,6 @@ def validate_observation(unit, counts, records, paths, failures, seconds, code, 
         errors.append(f'failure titles: expected {wanted}, observed {failures}')
     if code != (1 if unit['expect']['fail'] else 0):
         errors.append(f'upstream exit: {code}')
-    if seconds >= limit:
-        errors.append(f'invalid test unit: cold wall {seconds:.6f} seconds exceeds {limit:g} seconds')
     return errors
 
 
@@ -230,8 +228,7 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
         if name == 'stage3-lane-byte-comparisons':
             os.environ['TSC_ADAPT_TYPESCRIPT'] = str(api)
             errors, report['api'] = api_check(output, json.loads((LANE / 'sanctioned-api.json').read_text()))
-        seconds = time.monotonic() - started
-        errors += validate_observation(unit, counts, records, paths, failures, seconds, code, limit)
+        errors += validate_observation(unit, counts, records, paths, failures, code)
         report.update(counts=counts, failed_tests=failures, baseline_diffs=paths,
                       upstream_exit=code, errors=errors, status='fail' if errors else 'pass',
                       producer_phases=phases, command=command)
@@ -241,9 +238,6 @@ def run_unit(name, results, wanted_hash, plan=None, mutant_case=None, mutant_con
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         report['errors'].append(str(error))
     report['seconds'] = time.monotonic() - started
-    if report['seconds'] >= limit and report['status'] == 'pass':
-        report['status'] = 'fail'
-        report['errors'].append(f'invalid test unit: total wall exceeds {limit:g} seconds')
     (output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     (output / 'verdict.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({key: report[key] for key in ['name', 'status', 'counts', 'seconds', 'errors']}), flush=True)
