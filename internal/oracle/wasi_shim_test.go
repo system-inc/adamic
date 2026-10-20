@@ -2,11 +2,13 @@ package oracle
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -25,29 +27,56 @@ var shimFileFixtures = map[string]bool{
 	"internal/oracle/testdata/node_options_widening.a":      true,
 }
 
-// Not parallel: the import inventory and final counts follow fixture order.
-func TestWASIShimAgreesWithNode(t *testing.T) {
+// TestWASIShimAgreesWithNode runs every fixture's wasm32 build through the shim, as a family (families_test.go):
+// TestWASIShimAgreesWithNode_000 and on each run the fixtures their shard owns, since all of them in one test ran
+// 579.6 s in Loom against its 60 s budget. Within a shard the fixtures run in order, so its counts and import
+// inventory read top to bottom, and each shard logs its own counts.
+func runWASIShimShard(t *testing.T, shard int) {
+	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	rows := familyCases(t, "TestWASIShimAgreesWithNode", shard, fixturePaths())
+	if len(rows) == 0 {
+		return
+	}
+	planted, probing := familyProbe("TestWASIShimAgreesWithNode")
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	ran, agreed, skipped, excluded := 0, 0, 0, 0
-	for _, fixture := range fixtures {
+	ran, agreed, notYet, excluded := 0, 0, 0, 0
+	for _, index := range rows {
+		fixture := fixtures[index]
 		t.Run(fixture.path, func(t *testing.T) {
-			if !fixture.lowers {
-				skipped++
-				t.Skip("fixture does not lower")
-			}
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if !fixture.lowers {
+				var refusal *lower.NotYet
+				if !errors.As(err, &refusal) {
+					t.Fatalf("want NotYet, got %v", err)
+				}
+				notYet++
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
+			}
+			// The witness comes from the program as lowered, before the probe's mutant can reach it.
+			witness := func() run {
+				if fixture.checked {
+					return onJavaScriptBackend(t, program)
+				}
+				return onNode(t, path)
+			}
+			var expected run
+			mutant := probing && fixture.path == planted
+			if mutant {
+				// TestFamiliesCatchAPlantedCase's mutant: one byte more in the program the shim and node:wasi run.
+				expected = witness()
+				program.Strings[0] += "!"
 			}
 			binary := filepath.Join(t.TempDir(), "program.wasm")
 			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
@@ -88,9 +117,8 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 			if difference := disagreement(reference, actual); difference != "" {
 				t.Errorf("shim vs node:wasi: %s\nreference: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, reference.exitCode, reference.stdout, reference.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
-			expected := onNode(t, path)
-			if fixture.checked {
-				expected = onJavaScriptBackend(t, program)
+			if !mutant {
+				expected = witness()
 			}
 			if difference := disagreement(expected, actual); difference != "" {
 				t.Errorf("shim vs expected witness: %s\nwitness: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
@@ -100,7 +128,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 			}
 		})
 	}
-	t.Logf("SHIM COUNTS run=%d agreed=%d skipped=%d excluded=%d", ran, agreed, skipped, excluded)
+	t.Logf("SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d excluded=%d", shard, ran, agreed, notYet, excluded)
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.

@@ -96,20 +96,48 @@ func runWASIInputFixture(t *testing.T, compiler, fixture string, arguments []str
 	return limited
 }
 
-// Not parallel: deterministic counts and one runtime compilation at a time.
-func TestWASIInputAgreesWithNode(t *testing.T) {
+// inputFixturePaths is every input fixture's path, in the order inputFixtures runs them.
+func inputFixturePaths() []string {
+	paths := make([]string, len(inputFixtures))
+	for index, fixture := range inputFixtures {
+		paths[index] = fixture.path
+	}
+	return paths
+}
+
+// TestWASIInputAgreesWithNode runs every input fixture's wasm32 build on V8, as a family (families_test.go):
+// TestWASIInputAgreesWithNode_000 and on each run the fixtures their shard owns, since each is an adamic build of
+// the whole runtime when the gate runs uncached, and all eight in one test ran past Loom's 60 s budget. Within a
+// shard the fixtures run in order, and each shard logs its own counts.
+func runWASIInputShard(t *testing.T, shard int) {
+	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
+	rows := familyCases(t, "TestWASIInputAgreesWithNode", shard, inputFixturePaths())
+	if len(rows) == 0 {
+		return
+	}
+	planted, probing := familyProbe("TestWASIInputAgreesWithNode")
 	compiler := filepath.Join(sharedDirectory(t), "adamic")
 	if output, err := bounded(t, "go", "build", "-o", compiler, filepath.Join(repository, "cmd", "adamic")).CombinedOutput(); err != nil {
 		t.Fatalf("%v: %s", err, output)
 	}
 	pass, limits, fail, skip := 0, 0, 0, 0
 	defer func() {
-		t.Logf("V8 input fixtures=%d pass=%d limitations=%d fail=%d skip=%d", pass+limits+fail+skip, pass, limits, fail, skip)
+		t.Logf("V8 input shard=%d fixtures=%d pass=%d limitations=%d fail=%d skip=%d", shard, pass+limits+fail+skip, pass, limits, fail, skip)
 	}()
-	for _, fixture := range inputFixtures {
+	for _, index := range rows {
+		fixture := inputFixtures[index]
+		engine := v8Engine
+		if probing && fixture.path == planted {
+			// TestFamiliesCatchAPlantedCase's mutant: one byte more on what V8 printed.
+			engine.run = func(t *testing.T, how inputRun, binary string) run {
+				actual := onV8Input(t, how, binary)
+				actual.stdout = append(actual.stdout, '!')
+				return actual
+			}
+		}
 		t.Run(fixture.path, func(t *testing.T) {
 			limited := false
 			defer func() {
@@ -127,7 +155,7 @@ func TestWASIInputAgreesWithNode(t *testing.T) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, compiler, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, v8Engine)
+			limited = runWASIInputFixture(t, compiler, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
 		})
 	}
 }
