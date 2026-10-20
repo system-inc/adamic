@@ -694,6 +694,13 @@ intersection. Until Oct 20 it looked only at plain object types, so each of
 those three printed `1` natively where Node printed `text1`
 (`internal/oracle/testdata/enum_tag_refused`).
 
+Tags from two numeric enums that share a value are refused the same way. The
+checker never compares members of different enums, so with tags `Kind.A` and
+`Other.X`, both 0, a test against `Other.X` excludes the `Kind.A` member that
+matches it at run time. A string literal against a string enum member, aliases
+in one enum, and a plain number against an enum member all compare as
+overlapping, so the checker keeps both members and needs no refusal.
+
 `TestNumericEnumLiteralPromises` covers member slots, excluded-member narrowing,
 plain literals and singleton object tags. `TestNumericEnumsAreOpen` also proves
 singleton numeric assignments and genuine member-tagged object unions compile.

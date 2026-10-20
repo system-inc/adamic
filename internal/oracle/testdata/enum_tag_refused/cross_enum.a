@@ -1,0 +1,12 @@
+// a-check: refused an object refinement by tags from different numeric enums that share a value
+// Kind.A and Other.X are both 0. The checker excludes P from the branch, though p's tag equals
+// Other.X at run time: Node prints text1.
+enum Kind { A, B }
+enum Other { X, Y }
+interface P { readonly kind: Kind.A; readonly value: string }
+interface Q { readonly kind: Other.X; readonly value: number }
+const p: P = { kind: Kind.A, value: 'text' };
+function show(v: P | Q): void {
+	if (v.kind === Other.X) { console.log(`${v.value + 1}`); }
+}
+show(p);
