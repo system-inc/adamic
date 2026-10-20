@@ -428,36 +428,36 @@ func TestUnitSourceRefusal(t *testing.T) {
 	}
 }
 
-// copyUnitKeyProgram copies the program clang resolves to into directory, named clang and runnable, and is the copy.
+// copyUnitKeyProgram puts the program clang resolves to into directory, named clang and runnable, and is the copy. On
+// macOS it's a hard link, the same file under a new name, since the kernel kills a copy its signature no longer covers
+// and signing one would run codesign, a tool the gate's list doesn't declare (chg_qv6ny4dd's tools red): the link is
+// still clang's program by its bytes, in a directory of the test's own for config files. Elsewhere it's a copy, so a
+// test that rewrites it never writes the toolchain's clang through a link; macOS's caller rewrites nothing.
 func copyUnitKeyProgram(t *testing.T, directory string, compiler string) string {
 	t.Helper()
 	program, err := filepath.EvalSymlinks(compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
+	copied := filepath.Join(directory, "clang")
+	if goruntime.GOOS == "darwin" {
+		if err := os.MkdirAll(directory, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.Link(program, copied); err != nil {
+			t.Skip("clang's program can't be linked beside the test, and a copy of it would need signing: ", err)
+		}
+		return copied
+	}
 	contents, err := os.ReadFile(program)
 	if err != nil {
 		t.Fatal(err)
 	}
-	copied := filepath.Join(directory, "clang")
 	writeUnitKeyFile(t, copied, string(contents))
 	if err := os.Chmod(copied, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	signUnitKeyProgram(t, copied)
 	return copied
-}
-
-// signUnitKeyProgram signs program ad hoc on macOS, which kills a copied or rewritten program its signature no longer
-// covers; elsewhere it does nothing.
-func signUnitKeyProgram(t *testing.T, program string) {
-	t.Helper()
-	if goruntime.GOOS != "darwin" {
-		return
-	}
-	if output, err := exec.Command("codesign", "--force", "--sign", "-", program).CombinedOutput(); err != nil {
-		t.Fatalf("codesign: %v\n%s", err, output)
-	}
 }
 
 // clang's build is the key's by what its program holds and the config files beside it, each read again when it changes
