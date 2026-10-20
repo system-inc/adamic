@@ -1325,6 +1325,706 @@ func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
 	catchPlantedCase(t, "TestWASIAgreesWithNode")
 }
 
+func TestWASIShimAgreesWithNode_000(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 0)
+}
+
+func TestWASIShimAgreesWithNode_001(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 1)
+}
+
+func TestWASIShimAgreesWithNode_002(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 2)
+}
+
+func TestWASIShimAgreesWithNode_003(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 3)
+}
+
+func TestWASIShimAgreesWithNode_004(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 4)
+}
+
+func TestWASIShimAgreesWithNode_005(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 5)
+}
+
+func TestWASIShimAgreesWithNode_006(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 6)
+}
+
+func TestWASIShimAgreesWithNode_007(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 7)
+}
+
+func TestWASIShimAgreesWithNode_008(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 8)
+}
+
+func TestWASIShimAgreesWithNode_009(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 9)
+}
+
+func TestWASIShimAgreesWithNode_010(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 10)
+}
+
+func TestWASIShimAgreesWithNode_011(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 11)
+}
+
+func TestWASIShimAgreesWithNode_012(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 12)
+}
+
+func TestWASIShimAgreesWithNode_013(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 13)
+}
+
+func TestWASIShimAgreesWithNode_014(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 14)
+}
+
+func TestWASIShimAgreesWithNode_015(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 15)
+}
+
+func TestWASIShimAgreesWithNode_016(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 16)
+}
+
+func TestWASIShimAgreesWithNode_017(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 17)
+}
+
+func TestWASIShimAgreesWithNode_018(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 18)
+}
+
+func TestWASIShimAgreesWithNode_019(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 19)
+}
+
+func TestWASIShimAgreesWithNode_020(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 20)
+}
+
+func TestWASIShimAgreesWithNode_021(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 21)
+}
+
+func TestWASIShimAgreesWithNode_022(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 22)
+}
+
+func TestWASIShimAgreesWithNode_023(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 23)
+}
+
+func TestWASIShimAgreesWithNode_024(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 24)
+}
+
+func TestWASIShimAgreesWithNode_025(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 25)
+}
+
+func TestWASIShimAgreesWithNode_026(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 26)
+}
+
+func TestWASIShimAgreesWithNode_027(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 27)
+}
+
+func TestWASIShimAgreesWithNode_028(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 28)
+}
+
+func TestWASIShimAgreesWithNode_029(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 29)
+}
+
+func TestWASIShimAgreesWithNode_030(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 30)
+}
+
+func TestWASIShimAgreesWithNode_031(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 31)
+}
+
+func TestWASIShimAgreesWithNode_032(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 32)
+}
+
+func TestWASIShimAgreesWithNode_033(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 33)
+}
+
+func TestWASIShimAgreesWithNode_034(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 34)
+}
+
+func TestWASIShimAgreesWithNode_035(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 35)
+}
+
+func TestWASIShimAgreesWithNode_036(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 36)
+}
+
+func TestWASIShimAgreesWithNode_037(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 37)
+}
+
+func TestWASIShimAgreesWithNode_038(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 38)
+}
+
+func TestWASIShimAgreesWithNode_039(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 39)
+}
+
+func TestWASIShimAgreesWithNode_040(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 40)
+}
+
+func TestWASIShimAgreesWithNode_041(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 41)
+}
+
+func TestWASIShimAgreesWithNode_042(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 42)
+}
+
+func TestWASIShimAgreesWithNode_043(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 43)
+}
+
+func TestWASIShimAgreesWithNode_044(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 44)
+}
+
+func TestWASIShimAgreesWithNode_045(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 45)
+}
+
+func TestWASIShimAgreesWithNode_046(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 46)
+}
+
+func TestWASIShimAgreesWithNode_047(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 47)
+}
+
+func TestWASIShimAgreesWithNode_048(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 48)
+}
+
+func TestWASIShimAgreesWithNode_049(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 49)
+}
+
+func TestWASIShimAgreesWithNode_050(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 50)
+}
+
+func TestWASIShimAgreesWithNode_051(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 51)
+}
+
+func TestWASIShimAgreesWithNode_052(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 52)
+}
+
+func TestWASIShimAgreesWithNode_053(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 53)
+}
+
+func TestWASIShimAgreesWithNode_054(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 54)
+}
+
+func TestWASIShimAgreesWithNode_055(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 55)
+}
+
+func TestWASIShimAgreesWithNode_056(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 56)
+}
+
+func TestWASIShimAgreesWithNode_057(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 57)
+}
+
+func TestWASIShimAgreesWithNode_058(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 58)
+}
+
+func TestWASIShimAgreesWithNode_059(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 59)
+}
+
+func TestWASIShimAgreesWithNode_060(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 60)
+}
+
+func TestWASIShimAgreesWithNode_061(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 61)
+}
+
+func TestWASIShimAgreesWithNode_062(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 62)
+}
+
+func TestWASIShimAgreesWithNode_063(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 63)
+}
+
+func TestWASIShimAgreesWithNode_064(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 64)
+}
+
+func TestWASIShimAgreesWithNode_065(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 65)
+}
+
+func TestWASIShimAgreesWithNode_066(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 66)
+}
+
+func TestWASIShimAgreesWithNode_067(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 67)
+}
+
+func TestWASIShimAgreesWithNode_068(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 68)
+}
+
+func TestWASIShimAgreesWithNode_069(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 69)
+}
+
+func TestWASIShimAgreesWithNode_070(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 70)
+}
+
+func TestWASIShimAgreesWithNode_071(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 71)
+}
+
+func TestWASIShimAgreesWithNode_072(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 72)
+}
+
+func TestWASIShimAgreesWithNode_073(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 73)
+}
+
+func TestWASIShimAgreesWithNode_074(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 74)
+}
+
+func TestWASIShimAgreesWithNode_075(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 75)
+}
+
+func TestWASIShimAgreesWithNode_076(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 76)
+}
+
+func TestWASIShimAgreesWithNode_077(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 77)
+}
+
+func TestWASIShimAgreesWithNode_078(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 78)
+}
+
+func TestWASIShimAgreesWithNode_079(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 79)
+}
+
+func TestWASIShimAgreesWithNode_080(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 80)
+}
+
+func TestWASIShimAgreesWithNode_081(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 81)
+}
+
+func TestWASIShimAgreesWithNode_082(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 82)
+}
+
+func TestWASIShimAgreesWithNode_083(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 83)
+}
+
+func TestWASIShimAgreesWithNode_084(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 84)
+}
+
+func TestWASIShimAgreesWithNode_085(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 85)
+}
+
+func TestWASIShimAgreesWithNode_086(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 86)
+}
+
+func TestWASIShimAgreesWithNode_087(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 87)
+}
+
+func TestWASIShimAgreesWithNode_088(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 88)
+}
+
+func TestWASIShimAgreesWithNode_089(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 89)
+}
+
+func TestWASIShimAgreesWithNode_090(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 90)
+}
+
+func TestWASIShimAgreesWithNode_091(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 91)
+}
+
+func TestWASIShimAgreesWithNode_092(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 92)
+}
+
+func TestWASIShimAgreesWithNode_093(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 93)
+}
+
+func TestWASIShimAgreesWithNode_094(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 94)
+}
+
+func TestWASIShimAgreesWithNode_095(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 95)
+}
+
+func TestWASIShimAgreesWithNode_096(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 96)
+}
+
+func TestWASIShimAgreesWithNode_097(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 97)
+}
+
+func TestWASIShimAgreesWithNode_098(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 98)
+}
+
+func TestWASIShimAgreesWithNode_099(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 99)
+}
+
+func TestWASIShimAgreesWithNode_100(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 100)
+}
+
+func TestWASIShimAgreesWithNode_101(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 101)
+}
+
+func TestWASIShimAgreesWithNode_102(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 102)
+}
+
+func TestWASIShimAgreesWithNode_103(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 103)
+}
+
+func TestWASIShimAgreesWithNode_104(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 104)
+}
+
+func TestWASIShimAgreesWithNode_105(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 105)
+}
+
+func TestWASIShimAgreesWithNode_106(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 106)
+}
+
+func TestWASIShimAgreesWithNode_107(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 107)
+}
+
+func TestWASIShimAgreesWithNode_108(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 108)
+}
+
+func TestWASIShimAgreesWithNode_109(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 109)
+}
+
+func TestWASIShimAgreesWithNode_110(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 110)
+}
+
+func TestWASIShimAgreesWithNode_111(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 111)
+}
+
+func TestWASIShimAgreesWithNode_112(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 112)
+}
+
+func TestWASIShimAgreesWithNode_113(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 113)
+}
+
+func TestWASIShimAgreesWithNode_114(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 114)
+}
+
+func TestWASIShimAgreesWithNode_115(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 115)
+}
+
+func TestWASIShimAgreesWithNode_116(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 116)
+}
+
+func TestWASIShimAgreesWithNode_117(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 117)
+}
+
+func TestWASIShimAgreesWithNode_118(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 118)
+}
+
+func TestWASIShimAgreesWithNode_119(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 119)
+}
+
+func TestWASIShimAgreesWithNode_120(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 120)
+}
+
+func TestWASIShimAgreesWithNode_121(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 121)
+}
+
+func TestWASIShimAgreesWithNode_122(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 122)
+}
+
+func TestWASIShimAgreesWithNode_123(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 123)
+}
+
+func TestWASIShimAgreesWithNode_124(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 124)
+}
+
+func TestWASIShimAgreesWithNode_125(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 125)
+}
+
+func TestWASIShimAgreesWithNode_126(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 126)
+}
+
+func TestWASIShimAgreesWithNode_127(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, 127)
+}
+
+func TestWASIShimAgreesWithNode_bitwise_sweep(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, -1)
+}
+
+func TestWASIShimAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+	t.Parallel()
+	runWASIShimShard(t, -2)
+}
+
+func TestFamiliesCatchAPlantedCase_WASIShimAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestWASIShimAgreesWithNode")
+}
+
+func TestWASIInputAgreesWithNode_000(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 0)
+}
+
+func TestWASIInputAgreesWithNode_001(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 1)
+}
+
+func TestWASIInputAgreesWithNode_002(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 2)
+}
+
+func TestWASIInputAgreesWithNode_003(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 3)
+}
+
+func TestWASIInputAgreesWithNode_004(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 4)
+}
+
+func TestWASIInputAgreesWithNode_005(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 5)
+}
+
+func TestWASIInputAgreesWithNode_006(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 6)
+}
+
+func TestWASIInputAgreesWithNode_007(t *testing.T) {
+	t.Parallel()
+	runWASIInputShard(t, 7)
+}
+
+func TestFamiliesCatchAPlantedCase_WASIInputAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestWASIInputAgreesWithNode")
+}
+
 func TestReviewProgramsAgreeWithNode_000(t *testing.T) {
 	t.Parallel()
 	runReviewAgreeShard(t, 0)
