@@ -1,0 +1,9 @@
+// Spec: a write to a slot reached through a union, at any depth or through a type parameter constrained to one, is accepted only when the value fits that slot in every member
+// Expect: refused a write through a union of
+type Cell = { value: string } | { value: number };
+function scribble(cell: Cell): void {
+	cell.value = 'text';
+}
+const counter: { value: number } = { value: 1 };
+scribble(counter);
+console.log(`${counter.value * 2}`);
