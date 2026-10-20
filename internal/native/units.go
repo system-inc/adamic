@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -333,7 +334,11 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	var diagnostic strings.Builder
 	preprocess.Stderr = &diagnostic
 	var preprocessed []byte
-	if err := jobserver.Hold(func() (err error) { preprocessed, err = preprocess.Output(); return err }); err != nil {
+	// clang is the seconds clang ran for this unit, its preprocessing and any compile, for its line in the build log.
+	var clang time.Duration
+	if err := jobserver.Hold(func() error {
+		return timed(&clang, func() (err error) { preprocessed, err = preprocess.Output(); return err })
+	}); err != nil {
 		return "", fmt.Errorf("native: preprocessing unit %s: %w\n%s", unit.name, err, &diagnostic)
 	}
 	key := unitKey([]runtimeFile{{unit.name, preprocessed}}, flags, compiler, version)
@@ -347,6 +352,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 		// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it
 		// was found.
 		if found, ok := cachedFile(object); ok {
+			buildLog("cCompile", unit.name, key, "hit", clang)
 			return found, nil
 		}
 	}
@@ -366,13 +372,21 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
 	arguments := append(append([]string{}, compileFlags...), "-Wno-gnu-line-marker", "-fdebug-prefix-map="+temporary+"=/adamic-units", "-x", "cpp-output", "-c", unit.name, "-o", "unit.o")
 	command := toolchain.CommandIn(temporary, compiler, arguments...)
 	var output []byte
-	if err := jobserver.Hold(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
+	if err := jobserver.Hold(func() error {
+		return timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
+	}); err != nil {
 		return "", fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
 	if uncached {
 		object = filepath.Join(directory, key+".o")
-		return object, os.Rename(filepath.Join(temporary, "unit.o"), object)
+		if err := os.Rename(filepath.Join(temporary, "unit.o"), object); err != nil {
+			return "", err
+		}
+		buildLog("cCompile", unit.name, key, "off", clang)
+		return object, nil
 	}
+	// clang compiled it, so it is a miss even when another process published the same entry first.
+	buildLog("cCompile", unit.name, key, "miss", clang)
 	if err := os.MkdirAll(cache, 0o755); err != nil {
 		return "", err
 	}
@@ -528,8 +542,12 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	arguments = append(arguments, "-lm")
 	link := toolchain.CommandIn(directory, compiler, arguments...)
 	var linked []byte
-	if err := jobserver.Hold(func() (err error) { linked, err = link.CombinedOutput(); return err }); err != nil {
+	var linking time.Duration
+	if err := jobserver.Hold(func() error {
+		return timed(&linking, func() (err error) { linked, err = link.CombinedOutput(); return err })
+	}); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, linked)
 	}
+	buildLog("cLink", filepath.Base(output), "", "off", linking)
 	return nil
 }
