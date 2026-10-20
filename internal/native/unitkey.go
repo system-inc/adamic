@@ -19,6 +19,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"syscall"
 )
 
@@ -452,6 +453,18 @@ type unitKeying struct {
 	// first is the line every unit begins with, the probe's whole source.
 	first       string
 	environment []string
+	// check, when set, says which hits are compiled again to check them, in place of unitChecked: a test's seam.
+	check func(unit compilationUnit) bool
+	// mismatched is whether any unit's cold check in this build made other bytes (compileUnits).
+	mismatched atomic.Bool
+}
+
+// checked says whether unit's hit is compiled again to check it.
+func (keying *unitKeying) checked(unit compilationUnit) bool {
+	if keying.check != nil {
+		return keying.check(unit)
+	}
+	return unitChecked()
 }
 
 // newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
