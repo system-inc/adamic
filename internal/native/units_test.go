@@ -55,22 +55,24 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		t.Fatal(err)
-	}
 	directory := t.TempDir()
 	cache := filepath.Join(directory, "cache")
 	unit := compilationUnit{"probe.c", `int adamic_probe(int input) { return input + 2147483647; }` + "\n"}
-	files := []runtimeFile{{unit.name, []byte(unit.source)}}
-	release, err := compileUnit(unit, files, Flags(Options{}), compiler, string(version), cache, directory, false, nil)
-	if err != nil {
-		t.Fatal(err)
+	// The unit is its own first line, and nothing else is beside it.
+	compile := func(flags []string) string {
+		t.Helper()
+		keying, err := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env())
+		if err != nil {
+			t.Fatal(err)
+		}
+		object, err := compileUnit(unit, nil, flags, compiler, keying, cache, directory, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return object
 	}
-	sanitized, err := compileUnit(unit, files, Flags(Options{Sanitize: true}), compiler, string(version), cache, directory, false, nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	release := compile(Flags(Options{}))
+	sanitized := compile(Flags(Options{Sanitize: true}))
 	// Do not assert that paths differ: the runtime sanitizer observation is the proof.
 	_ = release
 	main := filepath.Join(directory, "main.c")
@@ -136,21 +138,26 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
-	if err != nil {
-		t.Fatal(err)
-	}
 	directory := t.TempDir()
 	cache := filepath.Join(directory, "cache")
 	// Clang accepts this extension in a system header, including when compiling cpp-output
 	// with line markers. -P exposes it as user code and -pedantic -Werror must reject it.
 	header := "#pragma clang system_header\nstruct probe_file { int (* _Nullable close)(void *); };\n#define PROBE_VALUE 1\n"
-	unit := compilationUnit{"probe.c", "#include \"probe-system.h\"\nint adamic_probe(void) { return PROBE_VALUE; }\n"}
+	firstLine := "#include \"probe-system.h\"\n"
+	unit := compilationUnit{"probe.c", firstLine + "int adamic_probe(void) { return PROBE_VALUE; }\n"}
 	flags := append(Flags(Options{}), "-Wno-system-headers")
+	// The header is one of the files beside the unit, so a change to it moves the key by its file part.
 	compile := func(header string, uncached bool) string {
 		t.Helper()
-		files := []runtimeFile{{unit.name, []byte(unit.source)}, {"probe-system.h", []byte(header)}}
-		object, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, uncached, nil)
+		files := []runtimeFile{{"probe-system.h", []byte(header)}}
+		var keying *unitKeying
+		if !uncached {
+			var err error
+			if keying, err = newUnitKeying(firstLine, files, flags, compiler, toolchain.Env()); err != nil {
+				t.Fatal(err)
+			}
+		}
+		object, err := compileUnit(unit, files, flags, compiler, keying, cache, directory, nil)
 		if err != nil {
 			t.Fatalf("system-header provenance lost: %v", err)
 		}
@@ -181,8 +188,8 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	// The same extension must remain an error outside a system header. This prevents fixing
 	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
 	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
-	files := []runtimeFile{{unit.name, []byte(unit.source)}, {"probe-system.h", []byte(userHeader)}}
-	if _, err := compileUnit(unit, files, flags, compiler, string(version), cache, directory, true, nil); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
+	files := []runtimeFile{{"probe-system.h", []byte(userHeader)}}
+	if _, err := compileUnit(unit, files, flags, compiler, nil, cache, directory, nil); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
 		t.Fatalf("user-header extension must be rejected: %v", err)
 	}
 	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")
