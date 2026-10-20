@@ -80,6 +80,7 @@ func buildProfile(t *testing.T, directory string) {
 	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
+	// Reads: internal/native/runtime/*.[ch]
 	runtime := filepath.Join(repository, "internal/native/runtime")
 	entries, err := os.ReadDir(runtime)
 	if err != nil {
