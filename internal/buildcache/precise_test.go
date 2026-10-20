@@ -1566,6 +1566,74 @@ func TestARingOfProductsIsOneComponent(t *testing.T) {
 	}
 }
 
+// A ring shaped like lower agreement v2's 14 natives (#gjfdj0n, Hot's #zzrkp2c: about one line run in four red by Go's
+// map order) is decided from the files alone: each native's newest set reads the next and its older set reads none, so
+// every newest set reads into its own component and each native is found by its older set, whichever is asked first.
+// One pass, sharing its memo as find.go's batch does, asks all 14 from each start in turn, and every native's key is
+// the same from every start. Node's case on #gjfdj0n, a ring head B whose newest set reads A and whose older set reads
+// none, beside an A whose only set reads B: B is found by its older set and A by none, asked first or second. Mutants,
+// each red: the component rule dropped (a set reading back is looked up, so the memo answers by order); the rule cut to
+// a set naming its own product.
+// Not parallel: newRig.
+func TestALowerAgreementRingIsDecidedFromEveryStart(t *testing.T) {
+	r := newRig(t)
+	// record keeps set under nameKey, keyed as it values now in a pass of its own, with its product holding content.
+	record := func(nameKey, content string, entries ...readEntry) string {
+		t.Helper()
+		forgetHeldForLife()
+		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
+		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		set.Key = evaluated.key
+		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
+			t.Fatal(err)
+		}
+		write(t, filepath.Join(r.cache, evaluated.key), "out", content)
+		return evaluated.key
+	}
+	ring := []string{}
+	for index := range 14 {
+		ring = append(ring, fmt.Sprintf("%064x", 0x100+index))
+	}
+	plain := map[string]string{}
+	for _, nameKey := range ring {
+		plain[nameKey] = record(nameKey, "older "+nameKey[60:])
+	}
+	for index, nameKey := range ring {
+		record(nameKey, "newest "+nameKey[60:], readEntry{Kind: "product", Path: ring[(index+1)%len(ring)]})
+	}
+	for start := range ring {
+		forgetHeldForLife()
+		known := productMemo{}
+		for step := range ring {
+			nameKey := ring[(start+step)%len(ring)]
+			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
+			if err != nil || looked.key != plain[nameKey] {
+				t.Errorf("from %s, %s gave %q (%s), %v; its older set's key is %q", ring[start][60:], nameKey[60:], looked.key, looked.why, err, plain[nameKey])
+			}
+		}
+	}
+
+	head, follower := fmt.Sprintf("%064x", 0x200), fmt.Sprintf("%064x", 0x201)
+	headPlain := record(head, "head's older")
+	// The follower first, so the head's newest set values while its follower is found, as a ring forms in a tree.
+	record(follower, "follower", readEntry{Kind: "product", Path: head})
+	record(head, "head's newest", readEntry{Kind: "product", Path: follower})
+	for _, order := range [][]string{{head, follower}, {follower, head}} {
+		forgetHeldForLife()
+		known := productMemo{}
+		for _, nameKey := range order {
+			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
+			want := map[string]string{head: headPlain, follower: ""}[nameKey]
+			if err != nil || looked.key != want || nameKey == follower && looked.directory != "" {
+				t.Errorf("order %s: %s gave %q (%s), %v; want %q", orderNames(order), nameKey[60:], looked.key, looked.why, err, want)
+			}
+		}
+	}
+}
+
 // orderNames is an order of name keys by their last four digits, for a failure's message.
 func orderNames(order []string) string {
 	names := []string{}
