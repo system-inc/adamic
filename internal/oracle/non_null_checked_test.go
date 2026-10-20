@@ -4,7 +4,6 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
-	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -151,7 +150,7 @@ func TestCheckedNonNullAdamicRefusal(t *testing.T) {
 // Measure the new rows independently without rewriting the area's existing counts.
 func TestCheckedNonNullCounts(t *testing.T) {
 	t.Parallel()
-	recorded, err := os.ReadFile(countsPath)
+	recorded, err := recordedCounts()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -160,7 +159,7 @@ func TestCheckedNonNullCounts(t *testing.T) {
 		_, measure := counted(t, path, false, nil, false, false)
 		row := measure()
 		t.Log(row)
-		if !strings.Contains(string(recorded), row+"\n") {
+		if recorded[path] != row {
 			t.Errorf("missing recorded row: %s", row)
 		}
 	}
@@ -169,7 +168,7 @@ func TestCheckedNonNullCounts(t *testing.T) {
 		_, measure := counted(t, path, false, nil, false, false)
 		row := measure()
 		t.Log(row)
-		if !strings.Contains(string(recorded), row+"\n") {
+		if recorded[path] != row {
 			t.Errorf("missing recorded row: %s", row)
 		}
 	}
