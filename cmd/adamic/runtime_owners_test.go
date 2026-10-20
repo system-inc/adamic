@@ -181,7 +181,7 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 		}
 		key := buildcache.NameKey(root, commandRuntimeInputs(request))
 		var builders []string
-		if runtimeproducts.Declared(request) == nil {
+		if productsBuildKey(t, root, key, product.features) {
 			builders = append(builders, packages...)
 		}
 		if product.owner == "" {
@@ -196,6 +196,30 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 		}
 		t.Logf("%s native-runtime name key %s builder %s", product.name, key, builders[0])
 	}
+}
+
+// productsBuildKey says whether runtimeproducts builds the archive with this name key ahead, under any variant of
+// the feature set. It compares keys, not options: commandRuntime drops Request, so the wasm-request variant over
+// the empty set builds the key of cmd/adamic's wasm-counted row although their options differ, and comparing
+// options let both packages build it (#eh4ym89). Mutant: clear wasm-counted's owner, and this finds two builders.
+func productsBuildKey(t *testing.T, root, key string, features []string) bool {
+	t.Helper()
+	if !slices.ContainsFunc(runtimeproducts.Sets, func(set runtimeproducts.Set) bool { return slices.Equal(set.Features, features) }) {
+		return false
+	}
+	for _, variant := range runtimeproducts.Variants {
+		if variant.Options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
+			continue
+		}
+		request, err := native.RuntimeRequestFor(variant.Options, features...)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if buildcache.NameKey(root, runtimeproducts.Inputs(request)) == key {
+			return true
+		}
+	}
+	return false
 }
 
 // A shared product must already exist when its finder starts. Mutant: remove the
