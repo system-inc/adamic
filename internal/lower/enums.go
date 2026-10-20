@@ -369,7 +369,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 				for _, member := range declared.Types() {
 					for _, field := range l.checker.GetPropertiesOfType(member) {
 						tag := l.checker.GetTypeOfSymbol(field)
-						if l.openNumericEnumType(tag) {
+						if l.openNumericEnumType(tag) && !sharedByEveryMember(l.checker, declared, field.Name, tag) {
 							return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
 						}
 					}
@@ -434,6 +434,23 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 		return &Refused{Where: l.program.Where(node), What: "arithmetic assigned back into an enum; the result need not be one of its members", Fix: "assign a declared member, or keep arithmetic results in a number (adamic/enum-members)"}
 	}
 	return nil
+}
+
+// An open enum field is a hazard only as a tag: two members could hold the same number while the
+// checker excludes one of them. A field of one type in every member, like tsc's flags: NodeFlags,
+// can't tell members apart, so no refinement rests on it. Only primitive members are passed over;
+// an intersection or anything else must carry the same field too.
+func sharedByEveryMember(typeChecker *checker.Checker, union *checker.Type, name string, tag *checker.Type) bool {
+	for _, member := range union.Types() {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		field := typeChecker.GetPropertyOfType(member, name)
+		if field == nil || typeChecker.GetTypeOfSymbol(field) != tag {
+			return false
+		}
+	}
+	return true
 }
 
 // The checker never compares members of two enums, so it can exclude a member tagged Other.X

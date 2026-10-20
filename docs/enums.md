@@ -681,7 +681,10 @@ function remaining(k: Kind): Kind.A {
 
 A singleton enum remains open, so its whole type cannot prove an object's
 literal discriminant. Refinements of an object union carrying such a field are
-conservatively refused with `adamic/enum-tag`. Use member-specific tags from a
+refused with `adamic/enum-tag`, unless every member that isn't a primitive has
+the field with the same type, as tsc's `flags: NodeFlags` does: a test on a field
+every member shares can't tell members apart, so no refinement rests on it
+(`enum_tag_passenger.a`, Oct 20). Use member-specific tags from a
 multi-member enum, string enums, or ordinary literal tags. An adversarial probe
 used an object declared with string payload and enum tag A, stored numeric B in
 that open tag, and entered the checker's numeric-payload branch. Source Node

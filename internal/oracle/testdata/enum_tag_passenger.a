@@ -1,0 +1,26 @@
+// tsc's node shape: every member is told apart by a member-specific kind, and carries one open
+// flags field of the same type. The flags can hold any number, but no refinement rests on them.
+enum SyntaxKind { Identifier, NumericLiteral, Block }
+enum NodeFlags { None = 0, Synthesized = 1 << 3, Ambient = 1 << 5 }
+interface Identifier { readonly kind: SyntaxKind.Identifier; readonly flags: NodeFlags; readonly text: string }
+interface NumericLiteral { readonly kind: SyntaxKind.NumericLiteral; readonly flags: NodeFlags; readonly value: number }
+type Block = { readonly kind: SyntaxKind.Block; readonly flags: NodeFlags } & { readonly statements: number };
+type Node = Identifier | NumericLiteral | Block;
+function computed(): number { return 77; }
+function describe(node: Node): string {
+	if (node.kind === SyntaxKind.Identifier) {
+		return `identifier ${node.text} ${node.flags}`;
+	}
+	if (node.kind === SyntaxKind.NumericLiteral) {
+		return `number ${node.value + 1} ${node.flags & NodeFlags.Synthesized}`;
+	}
+	return `block ${node.statements} ${node.flags}`;
+}
+const nodes: Node[] = [
+	{ kind: SyntaxKind.Identifier, flags: computed(), text: 'name' },
+	{ kind: SyntaxKind.NumericLiteral, flags: NodeFlags.Synthesized | NodeFlags.Ambient, value: 41 },
+	{ kind: SyntaxKind.Block, flags: NodeFlags.None, statements: 3 },
+];
+for (const node of nodes) {
+	console.log(describe(node));
+}
