@@ -51,6 +51,20 @@ var rulesAgreeBuildInputs buildcache.Inputs
 // not inputs to lowering and must not turn a warm fetch into a cold rebuild.
 func rulesAgreeSourceInputs(t *testing.T) []string {
 	t.Helper()
+	// Reads: cohere
+	// Reads: stage1/*.a
+	// Reads: stage1/*.ts
+	// Reads: stage1/typescript/parser/grammar.ts
+	// Reads: stage1/typescript/parser/jsx.ts
+	// Reads: stage1/typescript/parser/lookahead.ts
+	// Reads: stage1/typescript/parser/nodes.ts
+	// Reads: stage1/typescript/parser/parser.ts
+	// Reads: stage1/typescript/parser/statements.ts
+	// Reads: stage1/typescript/scanner/characters.ts
+	// Reads: stage1/typescript/scanner/scanner.ts
+	// Reads: stage1/typescript/scanner/tokens.ts
+	// Reads: internal/load/prelude.d.ts
+	// Reads: internal/native/runtime/*.[ch]
 	return rulesAgreeSourceInputsAt(t, filepath.Clean(repository))
 }
 

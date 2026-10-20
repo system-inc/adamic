@@ -212,6 +212,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				if err := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); err != nil {
 					return err
 				}
+				// Reads: internal/native/runtime/*.[ch]
 				entries, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
 				if err != nil {
 					return err
