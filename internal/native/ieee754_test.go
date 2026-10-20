@@ -245,14 +245,17 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	}
 	fused := fusedTwin(t, ieee754Harness, input.String())
 	fusion := readFusion(t, "ieee754")
-	for question := range fusion.cases {
-		if !approximatedIEEE754(question) {
-			t.Errorf("the ieee754 fusion list names %q, which isn't a function ECMAScript lets an engine approximate", question)
+	for _, cases := range []map[string]fusionCase{fusion.cases, fusion.derived} {
+		for question := range cases {
+			if !approximatedIEEE754(question) {
+				t.Errorf("the ieee754 fusion list names %q, which isn't a function ECMAScript lets an engine approximate", question)
+			}
 		}
 	}
 	if *updateFusion && fused != nil {
-		// Audited by the fused twin: a difference it reproduces is listed, any other pending.
-		listed, pending := []string{}, []string{}
+		// Audited by the fused twin: a difference it reproduces is listed, any other derived, under the
+		// rule of record, which the x86-64 run then holds to x86-64 Node.
+		listed, derived := []string{}, []string{}
 		for index, question := range asked {
 			if native[index] == oracle[index] || bothNaN(native[index], oracle[index]) || !approximatedIEEE754(question) {
 				continue
@@ -260,11 +263,11 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 			line := question + "\t" + native[index] + "\t" + oracle[index] + "\n"
 			if fused[index] == oracle[index] && !slices.Contains(listed, line) {
 				listed = append(listed, line)
-			} else if fused[index] != oracle[index] && !slices.Contains(pending, line) {
-				pending = append(pending, line)
+			} else if fused[index] != oracle[index] && !slices.Contains(derived, line) {
+				derived = append(derived, line)
 			}
 		}
-		writeFusion(t, "ieee754", "IEEE 754 cases arm64 Node answers fused: the fused twin (fusedTwin) reproduces Node's answer, and native, unfused, gives the pinned one.", listed, pending)
+		writeFusion(t, "ieee754", "IEEE 754 cases arm64 Node answers fused: the fused twin (fusedTwin) reproduces Node's answer, and native, unfused, gives the pinned one.", listed, derived, nil)
 		return
 	}
 	mismatches := map[string]int{}

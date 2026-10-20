@@ -28,9 +28,12 @@ import (
 // A list lives in testdata/fusion/<name>.txt, one case a line, tab-separated: the sweep's question as
 // its harness reads it, the unfused value native must answer on every architecture, and arm64 Node's
 // fused answer. A parseInt case is audited by V8's own loop, emulated both ways (v8ParseInt), on every
-// architecture; an IEEE 754 case by the fused twin (fusedTwin), on arm64. A difference no audit
-// reproduces goes in <name>-pending.txt, which allows nothing: it's red on arm64 until an auditor
-// explains it (#t3rw158 owes the GCC one).
+// architecture; an IEEE 754 case by the fused twin (fusedTwin), on arm64. An IEEE 754 difference the
+// twin doesn't reproduce, in a function ECMAScript lets an engine approximate, goes in
+// <name>-derived.txt under Correctness's rule of record (Adamic's ruling on #4z1nx1s): its pinned value
+// is native's unfused answer and x86-64 Node's, which the x86-64 run of the same sweep proves, and
+// arm64 Node's answer is logged beside it on every arm64 run. #t3rw158's GCC auditor may move such a
+// case onto <name>.txt. Any other difference goes in <name>-pending.txt, which allows nothing.
 
 // updateFusion rewrites the fusion lists from an arm64 run's differences, each sorted by its audit.
 var updateFusion = flag.Bool("update-fusion", false, "rewrite testdata/fusion from this arm64 run's differences from Node")
@@ -44,16 +47,24 @@ type fusionCase struct {
 type fusionList struct {
 	name    string
 	cases   map[string]fusionCase
+	derived map[string]fusionCase
 	pending map[string]fusionCase
 	asked   map[string]bool
 }
 
 func readFusion(t *testing.T, name string) *fusionList {
 	t.Helper()
-	list := &fusionList{name: name, cases: readFusionCases(t, name+".txt"), pending: readFusionCases(t, name+"-pending.txt"), asked: map[string]bool{}}
-	for question := range list.pending {
-		if _, listed := list.cases[question]; listed {
-			t.Errorf("fusion list %s: %q is both audited and pending", name, question)
+	list := &fusionList{name: name, cases: readFusionCases(t, name+".txt"), derived: readFusionCases(t, name+"-derived.txt"), pending: readFusionCases(t, name+"-pending.txt"), asked: map[string]bool{}}
+	seen := map[string]string{}
+	for _, file := range []struct {
+		kind  string
+		cases map[string]fusionCase
+	}{{"audited", list.cases}, {"derived", list.derived}, {"pending", list.pending}} {
+		for question := range file.cases {
+			if kind, listed := seen[question]; listed {
+				t.Errorf("fusion list %s: %q is both %s and %s", name, question, kind, file.kind)
+			}
+			seen[question] = file.kind
 		}
 	}
 	return list
@@ -92,6 +103,7 @@ func readFusionCases(t *testing.T, file string) map[string]fusionCase {
 type fusionReporter interface {
 	Helper()
 	Errorf(format string, arguments ...any)
+	Logf(format string, arguments ...any)
 }
 
 // handled holds one of the sweep's answers to the list, on architecture (GOARCH). A listed question
@@ -100,14 +112,18 @@ type fusionReporter interface {
 // a fused answer there is red: it's the only independent proof of a pinned value -update-fusion took
 // from native's own arm64 answer. accounted says the answer was dealt with here, explained or
 // reported, so the sweep doesn't count it again, and explained that Node differed and an audited case
-// says why. A pending question is reported where Node differs, with what it waits on.
+// says why. A derived case explains it the same way on arm64, logging both answers. A pending question
+// is reported where Node differs, with what it waits on.
 func (list *fusionList) handled(t fusionReporter, architecture, question, native, oracle string) (accounted, explained bool) {
 	t.Helper()
 	listed, audited := list.cases[question]
+	derived := false
 	if !audited {
-		var pending bool
-		if listed, pending = list.pending[question]; !pending {
-			return false, false
+		if listed, derived = list.derived[question]; !derived {
+			var pending bool
+			if listed, pending = list.pending[question]; !pending {
+				return false, false
+			}
 		}
 	}
 	list.asked[question] = true
@@ -122,6 +138,9 @@ func (list *fusionList) handled(t fusionReporter, architecture, question, native
 		t.Errorf("%s: Node on %s gives %s, the fused value the %s fusion list records for arm64, where only the pinned %s is the unfused answer", question, architecture, oracle, list.name, listed.pinned)
 	case oracle == listed.fused && audited:
 		return true, true
+	case oracle == listed.fused && derived:
+		t.Logf("%s: native %s, the unfused value x86-64 Node gives; arm64 Node %s (derived on the %s fusion list)", question, native, oracle, list.name)
+		return true, true
 	case oracle == listed.fused:
 		t.Errorf("%s: native %s, arm64 Node %s; pending on the %s fusion list, which no auditor has explained yet (#t3rw158)", question, native, oracle, list.name)
 	default:
@@ -133,7 +152,7 @@ func (list *fusionList) handled(t fusionReporter, architecture, question, native
 // complete says every listed question was asked: a list over cases the sweep no longer asks is stale.
 func (list *fusionList) complete(t *testing.T) {
 	t.Helper()
-	for _, cases := range []map[string]fusionCase{list.cases, list.pending} {
+	for _, cases := range []map[string]fusionCase{list.cases, list.derived, list.pending} {
 		for question := range cases {
 			if !list.asked[question] {
 				t.Errorf("fusion list %s names %q, which the sweep no longer asks", list.name, question)
@@ -142,14 +161,16 @@ func (list *fusionList) complete(t *testing.T) {
 	}
 }
 
-// writeFusion writes a list and its pending list, each in the sweep's order, under -update-fusion.
-func writeFusion(t *testing.T, name, header string, audited, pending []string) {
+// writeFusion writes a list, its derived list and its pending list, each in the sweep's order, under
+// -update-fusion.
+func writeFusion(t *testing.T, name, header string, audited, derived, pending []string) {
 	t.Helper()
 	for _, file := range []struct {
 		name, why string
 		lines     []string
 	}{
 		{name + ".txt", header, audited},
+		{name + "-derived.txt", "Differences from arm64 Node the fused twin doesn't reproduce, in functions ECMAScript lets an engine approximate. Each pinned value is native's unfused answer and x86-64 Node's, which the x86-64 run of the sweep proves; arm64 Node's answer is logged beside it (#4z1nx1s, the rule of record). Correctness reads each entry.", derived},
 		{name + "-pending.txt", "Differences from arm64 Node no auditor reproduces yet. These allow nothing: each is red on arm64 until it's audited onto " + name + ".txt or fixed (#t3rw158).", pending},
 	} {
 		contents := "# " + file.why + "\n# Generated by go test ./internal/native -args -update-fusion on arm64 (fusion_test.go).\n" + strings.Join(file.lines, "")
@@ -157,7 +178,7 @@ func writeFusion(t *testing.T, name, header string, audited, pending []string) {
 			t.Fatal(err)
 		}
 	}
-	t.Logf("fusion list %s rewritten: %d audited, %d pending", name, len(audited), len(pending))
+	t.Logf("fusion list %s rewritten: %d audited, %d derived, %d pending", name, len(audited), len(derived), len(pending))
 }
 
 // fusedTwin is, on arm64, what harness answers to input when built as Node's arm64 release is: with
@@ -342,13 +363,15 @@ func (recorder *fusionRecorder) Errorf(format string, arguments ...any) {
 	recorder.errors = append(recorder.errors, fmt.Sprintf(format, arguments...))
 }
 
+func (recorder *fusionRecorder) Logf(format string, arguments ...any) {}
+
 // A listed case explains a fused answer from Node only on arm64. On x86-64 that answer is red: the x86
 // run is the only independent proof of an IEEE 754 pinned value, which -update-fusion took from
 // native's own arm64 answer, so an unfused bug whose fused twin happened to match Node would otherwise
 // pass there. The mutant that drops the arm64 condition makes the amd64 case go green, and this red.
 func TestFusionListExplainsOnlyOnArm64(t *testing.T) {
 	t.Parallel()
-	list := &fusionList{name: "probe", cases: map[string]fusionCase{"cos 1 3ff0000000000000": {"3fe14a280fb5068c", "3fe14a280fb5068b"}}, pending: map[string]fusionCase{}, asked: map[string]bool{}}
+	list := &fusionList{name: "probe", cases: map[string]fusionCase{"cos 1 3ff0000000000000": {"3fe14a280fb5068c", "3fe14a280fb5068b"}}, derived: map[string]fusionCase{"log2 1 4000000000000001": {"3ff0000000000001", "3ff0000000000002"}}, pending: map[string]fusionCase{}, asked: map[string]bool{}}
 	for _, run := range []struct {
 		architecture, oracle string
 		explained            bool
@@ -364,6 +387,41 @@ func TestFusionListExplainsOnlyOnArm64(t *testing.T) {
 		accounted, explained := list.handled(recorder, run.architecture, "cos 1 3ff0000000000000", "3fe14a280fb5068c", run.oracle)
 		if !accounted || explained != run.explained || len(recorder.errors) != run.errors {
 			t.Errorf("%s, Node %s: accounted %t, explained %t, %d errors %q; want explained %t and %d errors", run.architecture, run.oracle, accounted, explained, len(recorder.errors), recorder.errors, run.explained, run.errors)
+		}
+	}
+	// A derived case: explained on arm64 alone, and a native answer off its pin is red everywhere.
+	for _, run := range []struct {
+		architecture, native, oracle string
+		explained                    bool
+		errors                       int
+	}{
+		{"arm64", "3ff0000000000001", "3ff0000000000002", true, 0},
+		{"amd64", "3ff0000000000001", "3ff0000000000002", false, 1},
+		{"amd64", "3ff0000000000001", "3ff0000000000001", false, 0},
+		{"arm64", "3ff0000000000000", "3ff0000000000002", false, 1},
+		{"amd64", "3ff0000000000000", "3ff0000000000001", false, 1},
+	} {
+		recorder := &fusionRecorder{}
+		accounted, explained := list.handled(recorder, run.architecture, "log2 1 4000000000000001", run.native, run.oracle)
+		if !accounted || explained != run.explained || len(recorder.errors) != run.errors {
+			t.Errorf("derived, %s, native %s, Node %s: accounted %t, explained %t, %d errors %q; want explained %t and %d errors", run.architecture, run.native, run.oracle, accounted, explained, len(recorder.errors), recorder.errors, run.explained, run.errors)
+		}
+	}
+}
+
+// Every derived case is one ulp from arm64 Node's answer, with the same sign. A derived case carries no
+// twin's or emulation's audit, only x86-64 Node's equality, so a larger difference in one of these
+// functions stays red rather than being listed (Correctness, #4z1nx1s). It reads the lists alone, so it
+// holds on every architecture.
+func TestDerivedFusionIsOneUlp(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"ieee754", "parseInt"} {
+		for question, listed := range readFusion(t, name).derived {
+			pinned, pinnedErr := strconv.ParseUint(listed.pinned, 16, 64)
+			fused, fusedErr := strconv.ParseUint(listed.fused, 16, 64)
+			if pinnedErr != nil || fusedErr != nil || pinned>>63 != fused>>63 || max(pinned, fused)-min(pinned, fused) != 1 {
+				t.Errorf("%s fusion list: %q pins %s and records arm64 Node's %s, which aren't one ulp apart", name, question, listed.pinned, listed.fused)
+			}
 		}
 	}
 }
