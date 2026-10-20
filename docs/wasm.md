@@ -229,3 +229,107 @@ Setup printed `go ready`, `clang ready`, `node ready` and `submodules ready` at
 0 s, `build cache warm` at 106 s, and `done in 106s on 5 processors` (`nproc` = 5,
 cgroup quota four CPUs, 17.6 GB reported memory). Go was 1.27.1 and native clang
 20.1.8. The setup environment was `/workspace/adamic-tools/env.sh`.
+
+## Imports
+
+Inventory of October 18, 2026, on `wasm/land-slice-main-three` at
+`65841eb681d26f99f949fa4799e08145dd59302c` (the slice on main `dd5009aa`), WASI SDK 27,
+on a Linux Codex box, uncached. The inventory uses `WebAssembly.Module.imports` on each
+actual linked module, filters `wasi_snapshot_preview1`, and sorts names. No imports are
+inferred from C sources. Commands use `native.Build` with `wasm32-wasi`; the compiler
+request reactor uses `native.WASI` and `Request: true, Count: true`.
+
+These are exact sets, not subsets. Every file-free command the shim runs, all 1,013 of
+them, imports set C; the compiler request reactor imports set R. Both gained
+`clock_time_get` when main's runtime began reading its clock origin at startup (561aeb4b).
+
+| Set | Exact `wasi_snapshot_preview1` imports |
+| --- | --- |
+| C | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
+| R | `clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, proc_exit` |
+
+`internal/native/wasm/shim.mjs` is 44 physical lines including comments and
+blank lines, has no Node imports, and exports `wasiShim({ stdout, stderr })`.
+Instantiate with `shim.imports`, call `shim.attach(instance)`, then call `_start`
+for a command or `_initialize` once for a reactor before using request exports.
+The caller must discard an instance after `AdamicExit`; the shim does not unwind
+or reset libc state. Callbacks synchronously consume owned `Uint8Array` copies.
+They receive raw bytes, preserving NULs, malformed UTF-8 and iovec boundaries.
+Do not decode each callback separately if UTF-8 may span iovecs.
+
+| Import | Choice and reason |
+| --- | --- |
+| `fd_write` | Decode all wasm32 little-endian pointer/length iovecs, copy their bytes to stdout for fd 1 or stderr for fd 2, write the total byte count, return 0. Other fds return EBADF (8). Reacquire memory views for every call and after callbacks. |
+| `proc_exit` | Throw exported `AdamicExit`, with `.name = 'AdamicExit'` and `.code` set to the WASI exit code, so termination cannot silently resume. |
+| `fd_prestat_get` | EBADF (8), so libc discovers no preopened directories. |
+| `fd_prestat_dir_name`, `fd_close`, `fd_seek`, `fd_fdstat_get` | EBADF (8). No directory, seekable file or terminal descriptor metadata is available. Output still works via `fd_write`. |
+| Every other `fd_*` and `path_*`, including `fd_read`, `fd_filestat_get`, `fd_readdir`, `path_open` | EBADF (8), without touching output memory or granting host file access. |
+| `args_sizes_get`, `environ_sizes_get` | Write zero count and zero buffer size, return 0: this host has an empty argument vector and environment. |
+| `args_get`, `environ_get` | Return 0 without writes: zero entries require zero bytes. |
+| `clock_time_get` | The host's real clocks as a 64-bit nanosecond count: realtime (0) from `Date.now()` in exact integer math, monotonic (1) from `performance.now()`; any other clock returns EINVAL (28). Every module reads both as it starts (the runtime's clock origin, since main 561aeb4b), so refusing it would refuse every module. Fake time is what would be wrong, not real time. `TestWASIShimClockReadsTheHost` holds it to node:wasi with a probe, and a shim that returns without writing the time, or serves monotonic from the wall clock, fails it. |
+| `random_get` | Throw `AdamicUnsupportedWASI` naming the import. Predictable random bytes would not satisfy the service, and no file-free fixture calls it. |
+| Other imports | Throw `AdamicUnsupportedWASI` naming the import; no success stub. |
+
+No inventoried file-free fixture requires an import that the shim cannot
+satisfy. File fixtures cannot run honestly without file access, so the test
+leaves these eight out by name (`shimFileFixtures`), without a skip. It still
+asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`,
+`fd_readdir` or `fd_filestat_get` fails, and so does an unlisted one that starts.
+
+| Excluded fixture | Exact imports |
+| --- | --- |
+| `internal/oracle/testdata/closure_convention_host24.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_sync, fd_write, path_create_directory, path_filestat_get, path_open, path_remove_directory, path_unlink_file, proc_exit, random_get` |
+| `internal/oracle/testdata/node_fs_rm_options.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_readdir, fd_seek, fd_sync, fd_write, path_create_directory, path_filestat_get, path_open, path_remove_directory, path_unlink_file, proc_exit, random_get` |
+| `internal/oracle/testdata/node_options_const_capture.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
+| `internal/oracle/testdata/node_options_widening.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit` |
+| `internal/oracle/testdata/prompt_then_read.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit` |
+| `internal/oracle/testdata/unknown_narrowing_host.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_create_directory, path_filestat_get, path_open, proc_exit` |
+| `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
+| `internal/oracle/testdata/write_stdout_order.a` | `args_get, args_sizes_get, clock_time_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
+
+The differential command test uses the same expected witness as
+`internal/oracle/wasi_test.go`: Node running source for ordinary fixtures, and
+`onJavaScriptBackend` for the 10 fixtures with `checked=true`. The backend
+carries Adamic's inserted checks; source Node continues where those checks panic.
+The test reports both commands run and actual three-way agreements, plus skips.
+On October 18 (`65841eb6`, on main `dd5009aa`) it read `run=1013 agreed=1013
+skipped=36 excluded=8`, with no mismatches. The first strict run, October 7, read
+`run=305 agreed=305 skipped=3`.
+
+`TestWASIShimCheckedWitnessControl` holds `writes_past_end.a` to the checked
+backend and separately compares it to source Node. The backend and shim must
+agree with exit 70; source must exit 0 and produce `exit codes differ`. Choosing
+the source witness for a checked fixture therefore remains a detected error.
+
+`TestWASIShimRequest` compares the compiler reactor under the shim, Node WASI,
+and the source handler: empty input, Unicode, echo/reassignment, 1 KiB input,
+NULs, dependency/module initialization, and stable counted live values relative
+to the module's initialized globals. It passes. The earlier prototype's
+100,000-request test also passes under its existing Node WASI host.
+
+| Mutant | Named check that fails |
+| --- | --- |
+| `fd_write` omits the last iovec | `TestWASIShimContractsAndMutants/iovecs`, assertion `all iovecs, exact bytes` |
+| `proc_exit` returns instead of throwing | `TestWASIShimContractsAndMutants/exit`, assertion `exit must terminate` |
+| `fd_prestat_get` returns success and a fake directory | `TestWASIShimContractsAndMutants/preopens`, assertion `no preopened directory` |
+| `clock_time_get` returns without writing the time | `TestWASIShimContractsAndMutants/clock`, assertion `realtime is the host clock in nanoseconds`; and `TestWASIShimClockReadsTheHost`, whose probe then prints 0 where node:wasi prints 1 |
+| monotonic served from the wall clock | `TestWASIShimContractsAndMutants/monotonic`, assertion `monotonic is not the wall clock`; and `TestWASIShimClockReadsTheHost`'s probe line of the same name |
+
+Every control passed; every isolated mutant process exited 1 with the named
+AssertionError. The test also checks empty environment/arguments, named traps,
+stdout and stderr independently, byte counts, and memory growth.
+
+Run the command comparison and checked-witness, contract, and request checks with:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASIShim' \
+  -count=1 -v -timeout 30m > /tmp/wasm-shim-oracle.log 2>&1
+```
+
+`ADAMIC_SHIM_INVENTORY_ONLY=1` collects the command import table without running
+comparisons. Do not use that option as evidence of execution parity.
+
+Every file-free command imports set C. One that imports a service the shim refuses
+fails `TestWASIShimAgreesWithNode`, and the shim's `AdamicUnsupportedWASI` error names the
+import.

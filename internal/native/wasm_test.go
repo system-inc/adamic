@@ -76,6 +76,10 @@ func runWASIUnit(t *testing.T, unit int) {
 			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
 		}
 	}
+	// The toolchain is pinned: a clang other than wasi-sdk 27's fails here, by name, rather than skipping.
+	if _, err := WASIClang(); err != nil {
+		t.Fatal(err)
+	}
 	phase := time.Now()
 	directory := t.TempDir()
 	repository, err := filepath.Abs("../..")
@@ -270,6 +274,10 @@ func strictWASIRuntime(t *testing.T) string {
 	sysroot := os.Getenv("WASI_SYSROOT")
 	if sysroot == "" {
 		t.Fatal("WASI_SYSROOT missing")
+	}
+	// The runtime compiles only with wasi-sdk 27's clang, refused by name otherwise, and its version keys the product.
+	if _, err := WASIClang(); err != nil {
+		t.Fatal(err)
 	}
 	flags := wasiFlags(sysroot)
 	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
