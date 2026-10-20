@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
@@ -533,33 +534,26 @@ func poisonLeafCompositionCases(t *testing.T, protocolPath string) {
 	write(t, protocolPath, []byte(strings.Join(lines, "\n")))
 }
 
-// Preparation has no local deadline; the unit runner bounds the whole process.
-func leafCompositionCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// Preparation has no local deadline; the unit runner bounds the whole process. Output is read through
+// childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second WaitDelay
+// reported exec.ErrWaitDelay whenever Node's reads hadn't reached EOF a second after it exited, and that failed
+// TestMarkdownRootLayout_005 under load in chg_7jt635t4's run (#n3gk22h's shape).
+func leafCompositionExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
 	t.Helper()
 	ctx, cancel := context.WithCancel(context.Background())
 	t.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = time.Second
-	return command
-}
-func leafCompositionExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
-	t.Helper()
-	command := leafCompositionCommand(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil {
 		if _, ok := err.(*exec.ExitError); !ok {
 			return run{}, fmt.Errorf("running %s: %v", name, err)
 		}
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 func leafCompositionExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
