@@ -444,17 +444,68 @@ def launcherRefusal(source, runs):
 compilerMarker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic(?![A-Za-z0-9_])|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"')
 launchMarker = re.compile(r'"os/exec"|os\.StartProcess|syscall\.Exec')
 
+# The package whose MemoryLimit reads the unit's cgroup limit, the share a test sizes itself from (the memory floor census).
+testguardImport = "github.com/system-inc/adamic/internal/testguard"
+
+
+def memoryReader(source):
+    """Whether a Go file calls internal/testguard's MemoryLimit, by the name it imports the package as: testguard, its
+    alias, or bare under a dot import. A comment or a string naming the call is no read."""
+    if "MemoryLimit" not in source:
+        return False  # Every call names it, so a file without the word reads nothing, and the census costs no parse.
+    code, calls = goCode(source), goCode(source, strings=False)
+    for imported in re.finditer(r'(?:^|[\s(])(?:([\w.]+)\s+)?"' + re.escape(testguardImport) + '"', code):
+        # A single import line's `import` keyword sits where an alias would; the package's own name is testguard.
+        name = imported.group(1) if imported.group(1) not in (None, "import") else "testguard"
+        qualifier = "" if name == "." else re.escape(name) + r"\s*\.\s*"
+        if re.search(r"(?<![\w.])" + qualifier + r"MemoryLimit\s*\(", calls):
+            return True
+    return False
+
+
+def unitFloors(text, name):
+    """Each package's memory floor, its memoryMegabytes under units, in a unit-needs table read from name. A table that
+    can't be read raises ValueError, never reads as no floors, since every reader would then pass the census."""
+    try:
+        needs = json.loads(text)
+    except ValueError:
+        raise ValueError("invalid unit needs: " + name + " is not JSON")
+    if not isinstance(needs, dict) or needs.get("version") != 1 or not isinstance(needs.get("units"), list):
+        raise ValueError("invalid unit needs: " + name)
+    floors = {}
+    for unit in needs["units"]:
+        if not isinstance(unit, dict):
+            raise ValueError("invalid unit needs: " + name + ": a unit that isn't an object")
+        # A need may name a test unit (name) rather than a package; only a package's floor is a reader's.
+        if "package" not in unit or "memoryMegabytes" not in unit:
+            continue
+        floor = unit["memoryMegabytes"]
+        if not isinstance(unit["package"], str) or not unit["package"] or isinstance(floor, bool) or not isinstance(floor, int) or floor <= 0:
+            raise ValueError("invalid unit needs: " + name + ": %r needs a package and a positive whole memoryMegabytes" % unit.get("package"))
+        floors[unit["package"]] = floor
+    return floors
+
 
 class ChangeRefusal(ValueError):
-    """A refusal that's the change's own to fix, never the gate tools': the compiler dependency census's. The gate reds
-    the change with it; --list-units exits RefusalExit with its line, so the planner sends it to the change's owner as
-    a red (Queue's unplannable, Loom's ruling of Oct 14) instead of failing every plan of it."""
+    """A refusal that's the change's own to fix, never the gate tools': the compiler dependency census's, and the memory
+    floor census's (MemoryFloorRefusal). The gate reds the change with it; --list-units exits RefusalExit with its line,
+    so the planner sends it to the change's owner as a red (Queue's unplannable, Loom's ruling of Oct 14) instead of
+    failing every plan of it."""
 
     def hint(self):
         return ("%s. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: under packages, its "
                 "package, then the compiler packages it exercises; or, for a package that launches processes and never "
                 "the compiler, under launchers, its package with the executables it runs and why (entries there add to "
                 "the gate tools' map)." % self)
+
+
+class MemoryFloorRefusal(ChangeRefusal):
+    """The memory floor census's refusal, whose fix is a floor, never a compiler declaration."""
+
+    def hint(self):
+        return ("%s. A package whose tests read their memory limit holds a floor the planner's fit (--fit-memory) never "
+                "shares it under: under units in the gate tools' cloud/fast-gate/unit-needs.json, its package with the "
+                "memoryMegabytes its tests need to start." % self)
 
 
 # The exit status of --list-units refusing the change for its own reason (ChangeRefusal), with one line on stderr,
@@ -1481,6 +1532,7 @@ class Gate:
                     else:
                         testEmbedded.add(path)
         dependencies = self.compilerDependencies(directories, changed)
+        self.memoryFloors(changed)
         for package, inputs in dependencies.items():
             for dependency in inputs:
                 reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
@@ -1642,6 +1694,55 @@ class Gate:
             raise ChangeRefusal("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
         self.result["compiler_dependency_map"] = {"root": root, "path": name}
         return packages
+
+    # The memory floor census (the planner's --fit-memory, Node's ruling): it finds the files that call testguard's
+    # MemoryLimit by name. It doesn't chase a call through a func value (f := testguard.MemoryLimit), MemoryLimit
+    # re-exported from another package, or a cgroup read by hand outside internal/testguard: each reads its limit unseen.
+    def memoryFloors(self, changed=()):
+        """A package whose tests size themselves from the unit's memory limit refuses to start under what they need, so
+        the planner's fit to a measured peak must never share it under a floor its unit needs declare. A reader with no
+        floor fails selection before any tests start, and so does a change that lowers or removes a reader's floor.
+        """
+        name = "cloud/fast-gate/unit-needs.json"
+        tools = os.path.join(self.arguments.tools, name)
+        if not os.path.exists(tools):
+            raise ValueError("invalid unit needs: no " + tools)
+        with open(tools) as handle:
+            floors = unitFloors(handle.read(), tools)
+        readers = {}
+        for path in self.git(self.arguments.tree, "ls-files").splitlines():
+            if not path.endswith(".go") or path.startswith("internal/testguard/"):
+                continue  # testguard's own MemoryLimit and its tests are the reading, not a reader of it.
+            with open(os.path.join(self.arguments.tree, path)) as handle:
+                if memoryReader(handle.read()):
+                    readers.setdefault(os.path.dirname(path), []).append(path)
+        touchedFiles, refusals = set(changed), []
+        undeclared = [(path, package) for package, paths in sorted(readers.items()) if package not in floors for path in paths]
+        # As the compiler census: only readers this change adds or edits can refuse it; any already on the base are named.
+        onBase = [path for path, package in undeclared if path not in touchedFiles]
+        if onBase:
+            self.result["memory_readers_undeclared_on_base"] = onBase
+        refusals += ["%s reads its memory limit (testguard.MemoryLimit) and %s declares no memoryMegabytes in %s" % (path, package, name)
+                     for path, package in undeclared if path in touchedFiles]
+        # Once the gate tools live on adamic main the tree carries the floors too, and a change to them is the change's:
+        # one that lowers or removes a reader's floor lets the fit share it under what its tests need.
+        if name in touchedFiles and os.path.exists(os.path.join(self.arguments.tree, name)):
+            with open(os.path.join(self.arguments.tree, name)) as handle:
+                text = handle.read()
+            try:
+                proposed = unitFloors(text, name + " in this change")
+            except ValueError as invalid:
+                raise MemoryFloorRefusal("memory floor census: " + str(invalid))
+            onBaseTree = self.git(self.arguments.tree, "ls-tree", "--name-only", self.arguments.base, "--", name)
+            based = unitFloors(self.git(self.arguments.tree, "show", "%s:%s" % (self.arguments.base, name)), name + " on the base") if onBaseTree else {}
+            for package in sorted(readers):
+                if package not in based or proposed.get(package, 0) >= based[package]:
+                    continue
+                change = "lowers its memoryMegabytes to %d" % proposed[package] if package in proposed else "removes its memoryMegabytes"
+                refusals.append("%s reads its memory limit (testguard.MemoryLimit) and this change %s in %s (%d on the base)"
+                                % (package, change, name, based[package]))
+        if refusals:
+            raise MemoryFloorRefusal("memory floor census: " + "; ".join(refusals))
 
     def selectOracle(self):
         """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed

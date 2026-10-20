@@ -42,6 +42,15 @@ def stage(command):
     return "tests"
 
 
+def writeUnitNeeds(root, floors=None):
+    """root's cloud/fast-gate/unit-needs.json, giving each package of floors its memoryMegabytes: the memory floor
+    census reads the gate tools' table on every selection, and a tools checkout without one is a bad table."""
+    path = os.path.join(root, "cloud/fast-gate/unit-needs.json")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as handle:
+        json.dump({"version": 1, "units": [{"package": package, "memoryMegabytes": floor, "cpus": 8} for package, floor in (floors or {}).items()]}, handle)
+
+
 def landingProblems(sha, parts):
     """Fixture of push-main's --also-gate union and fast VERDICT checks (969092f5)."""
     problems = []
@@ -1911,6 +1920,7 @@ class ReverseDependencies(unittest.TestCase):
         self.gate.command = mock.Mock(return_value=types.SimpleNamespace(returncode=0, stdout="".join(json.dumps(p) for p in self.packages)))
         self.gate.git = lambda tree, *args: run.git(tree, *args)
         self.declare({"stage1/gaps": ["internal/load"], "internal/oracle": ["internal/load"]})
+        writeUnitNeeds(self.tree)
 
     def declare(self, packages):
         path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
@@ -2041,6 +2051,7 @@ class ReverseDependencies(unittest.TestCase):
         os.makedirs(os.path.join(tools, "cloud/fast-gate"))
         with open(os.path.join(tools, "cloud/fast-gate/compiler-dependencies.json"), "w") as handle:
             json.dump({"version": 1, "packages": {"internal/oracle": ["internal/load"]}}, handle)
+        writeUnitNeeds(tools)
         self.gate.arguments = types.SimpleNamespace(tree=self.tree, tools=tools)
         path = os.path.join(self.tree, "stage1/gaps/probe_test.go")
         with open(path, "w") as handle:
@@ -2120,6 +2131,7 @@ class SelectionModule(unittest.TestCase):
             "d/d.go": "package d\n",
             "d/d_test.go": 'package d_test\nimport _ "' + run.module + '/c"\n',
             "cloud/fast-gate/compiler-dependencies.json": '{"version":1,"packages":{}}',
+            "cloud/fast-gate/unit-needs.json": '{"version":1,"units":[]}',
         }
         for name, source in sources.items():
             path = os.path.join(self.tree, name)
@@ -2882,4 +2894,114 @@ class CensusLaunchers(unittest.TestCase):
         for declaration in ({"runs": ["node", "adamic"], "why": "x"}, {"runs": ["node"]}, {"runs": [], "why": "x"}):
             with self.assertRaises(ValueError, msg=declaration) as raised:
                 self.census(self.launcher % 'exec.Command("node")', {"tool/launch": declaration})
+            self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
+
+
+class CensusMemoryFloors(unittest.TestCase):
+    """A package whose tests size themselves from the unit's memory limit (testguard.MemoryLimit) refuses to start under
+    what they need, so the planner's fit (--fit-memory) must never share it under a declared floor (Node's ruling). A file
+    the change touches that reads its limit, by testguard, an alias or a dot import, in a package with no memoryMegabytes
+    refuses; one on the base is named; testguard itself, comments and strings are no read; a change lowering or removing
+    a reader's floor refuses; a table that can't be read is a bad table, never no floors. Mutants: the alias unfollowed;
+    comments unstripped; the touched reader named, never refused; the floor-lowering compare skipped; a missing table
+    or a floor of 0 read as no floors."""
+
+    reader = ('package json\n\nimport (\n\t"testing"\n\n\t"github.com/system-inc/adamic/internal/testguard"\n)\n\n'
+              'func TestBudget(t *testing.T) {\n\tif limit, ok := testguard.MemoryLimit(); ok {\n\t\tt.Log(limit)\n\t}\n}\n')
+    needs = "cloud/fast-gate/unit-needs.json"
+
+    def census(self, files, floors=None, changed=None, edits=None):
+        """memoryFloors over a tree of files, the gate tools' table giving floors (none: no table), changed defaulting
+        to every file. With edits, files are the base's commit and edits the change's over it."""
+        with tempfile.TemporaryDirectory() as root:
+            tree, tools = os.path.join(root, "tree"), os.path.join(root, "tools")
+            os.makedirs(tools)
+            if floors is not None:
+                writeUnitNeeds(tools, floors)
+            realRun(["git", "init", "-q", tree], check=True)
+            commits = []
+            for layer in [files] + ([edits] if edits is not None else []):
+                for path, source in layer.items():
+                    os.makedirs(os.path.dirname(os.path.join(tree, path)), exist_ok=True)
+                    with open(os.path.join(tree, path), "w") as handle:
+                        handle.write(source)
+                realRun(["git", "-C", tree, "add", "-A"], check=True)
+                realRun(["git", "-C", tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"], check=True)
+                commits.append(run.git(tree, "rev-parse", "HEAD"))
+            gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=tree, tools=tools, base=commits[0], sha=commits[-1]), result={},
+                                         git=lambda directory, *arguments: realRun(["git", "-C", directory] + list(arguments), capture_output=True, text=True, check=True).stdout.strip())
+            run.Gate.memoryFloors(gate, list((edits or files).keys()) if changed is None else changed)
+            return gate.result
+
+    def refused(self, files, floors=None, **options):
+        with self.assertRaises(run.ChangeRefusal, msg=files) as raised:
+            self.census(files, {} if floors is None else floors, **options)
+        return str(raised.exception)
+
+    def test_a_touched_reader_without_a_floor_refuses_naming_its_file_and_package(self):
+        """A file the change adds that reads its memory limit, in a package with no floor, refuses, naming both."""
+        with self.assertRaises(run.MemoryFloorRefusal) as raised:
+            self.census({"stage1/cohere/fresh/budget_test.go": self.reader}, {"stage1/cohere/json": 8192})
+        self.assertEqual(str(raised.exception), "memory floor census: stage1/cohere/fresh/budget_test.go reads its memory limit (testguard.MemoryLimit) "
+                                                "and stage1/cohere/fresh declares no memoryMegabytes in cloud/fast-gate/unit-needs.json")
+        self.assertIn("cloud/fast-gate/unit-needs.json, its package with the memoryMegabytes", raised.exception.hint())
+        self.assertNotIn("compiler-dependencies.json", raised.exception.hint())
+
+    def test_a_reader_with_a_floor_passes(self):
+        """The same reader passes once its package has a floor in the gate tools' needs."""
+        self.assertEqual(self.census({"stage1/cohere/fresh/budget_test.go": self.reader}, {"stage1/cohere/fresh": 8192}), {})
+
+    def test_an_aliased_import_is_followed(self):
+        """A reader that imports testguard under an alias, in a block or on one line, still refuses."""
+        block = self.reader.replace('\t"github.com', '\ttg "github.com').replace("testguard.MemoryLimit()", "tg.MemoryLimit()")
+        line = block.replace('import (\n\t"testing"\n\n\ttg "github.com/system-inc/adamic/internal/testguard"\n)',
+                             'import "testing"\nimport tg "github.com/system-inc/adamic/internal/testguard"')
+        self.assertNotEqual(line, block)
+        for source in (block, line):
+            self.assertIn("stage1/cohere/fresh declares no memoryMegabytes", self.refused({"stage1/cohere/fresh/budget_test.go": source}), source)
+
+    def test_a_dot_import_counts_a_bare_call(self):
+        """Under a dot import of testguard, a bare MemoryLimit() call is a read and refuses."""
+        source = self.reader.replace('\t"github.com', '\t. "github.com').replace("testguard.MemoryLimit()", "MemoryLimit()")
+        self.assertIn("stage1/cohere/fresh declares no memoryMegabytes", self.refused({"stage1/cohere/fresh/budget_test.go": source}))
+
+    def test_a_comment_or_string_is_no_read(self):
+        """A file that imports testguard and names testguard.MemoryLimit() only in comments and strings passes."""
+        source = self.reader.replace("if limit, ok := testguard.MemoryLimit(); ok {", "if limit, ok := testguard.Share(); ok {") + (
+            "\n// The budget follows the unit's limit (testguard.MemoryLimit, 16 GiB on a runner).\n// testguard.MemoryLimit() sizes it.\n"
+            "/* testguard.MemoryLimit() */\nvar why = \"testguard.MemoryLimit()\"\nvar raw = `testguard.MemoryLimit()`\n")
+        self.assertEqual(self.census({"stage1/cohere/fresh/budget_test.go": source}, {}), {})
+
+    def test_an_undeclared_reader_on_the_base_is_named_not_refused(self):
+        """A reader with no floor that the change didn't touch is named in the record and never refuses."""
+        result = self.census({"stage1/cohere/fresh/budget_test.go": self.reader, "stage1/other/other.go": "package other\n"}, {},
+                             changed=["stage1/other/other.go"])
+        self.assertEqual(result, {"memory_readers_undeclared_on_base": ["stage1/cohere/fresh/budget_test.go"]})
+
+    def test_testguard_itself_is_exempt(self):
+        """internal/testguard's own files calling MemoryLimit are the reading, never a reader of it."""
+        files = {"internal/testguard/memory.go": "package testguard\n\nfunc MemoryLimit() (int64, bool) { return 0, false }\n\nfunc share() { MemoryLimit() }\n",
+                 "internal/testguard/memory_test.go": self.reader.replace("package json", "package testguard_test")}
+        self.assertEqual(self.census(files, {}), {})
+
+    def test_a_change_lowering_or_removing_a_readers_floor_refuses(self):
+        """With the floors in the tree, a change lowering a reader's floor or removing it refuses naming the package;
+        raising it, or adding the table where the base had none, passes."""
+        def table(floors):
+            return json.dumps({"version": 1, "units": [{"package": package, "memoryMegabytes": floor, "cpus": 8} for package, floor in floors.items()]})
+        base = {"stage1/cohere/json/memory_budget_test.go": self.reader, self.needs: table({"stage1/cohere/json": 8192})}
+        floors = {"stage1/cohere/json": 8192}
+        self.assertIn("stage1/cohere/json reads its memory limit (testguard.MemoryLimit) and this change lowers its memoryMegabytes to 4096 in "
+                      "cloud/fast-gate/unit-needs.json (8192 on the base)", self.refused(base, floors, edits={self.needs: table({"stage1/cohere/json": 4096})}))
+        self.assertIn("stage1/cohere/json reads its memory limit (testguard.MemoryLimit) and this change removes its memoryMegabytes in "
+                      "cloud/fast-gate/unit-needs.json (8192 on the base)", self.refused(base, floors, edits={self.needs: table({})}))
+        self.assertEqual(self.census(base, floors, edits={self.needs: table({"stage1/cohere/json": 16384})}), {})
+        self.assertEqual(self.census({"stage1/cohere/json/memory_budget_test.go": self.reader, "stage1/other/other.go": "package other\n"}, floors,
+                                     edits={self.needs: table({"stage1/cohere/json": 4096})}), {})
+
+    def test_a_table_that_cant_be_read_is_a_bad_table_not_a_refusal(self):
+        """A missing gate tools table, or one with a floor of 0, raises ValueError, never ChangeRefusal or no floors."""
+        for floors in (None, {"stage1/cohere/fresh": 0}):
+            with self.assertRaises(ValueError, msg=floors) as raised:
+                self.census({"stage1/cohere/fresh/budget_test.go": self.reader}, floors, changed=[])
             self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
