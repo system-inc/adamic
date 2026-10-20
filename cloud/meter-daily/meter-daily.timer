@@ -1,0 +1,11 @@
+# Starts meter-daily.service once a day at 06:17 in Denver; a box that was off at 06:17 runs it when it is back.
+[Unit]
+Description=Adamic stage 3 daily meter, 06:17 America/Denver (#badrnrf)
+
+[Timer]
+OnCalendar=*-*-* 06:17:00 America/Denver
+Persistent=true
+Unit=meter-daily.service
+
+[Install]
+WantedBy=timers.target
