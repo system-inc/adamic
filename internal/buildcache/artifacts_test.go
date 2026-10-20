@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"slices"
 	"testing"
+	"time"
 )
 
 func TestRequireArtifacts(t *testing.T) {
@@ -40,6 +41,23 @@ func TestRequireArtifacts(t *testing.T) {
 	RequireArtifacts(t, directory, Artifact{Name: "probe", Executable: true, Stdin: "built\n", ExitCode: 7})
 	if err := requireArtifact(directory, Artifact{Name: "probe", Executable: true, Stdin: "built\n"}); err == nil {
 		t.Fatal("accepted wrong exit")
+	}
+}
+
+// A probe that exits well while a child it started still holds the output pipe passes, and soon: its process group goes
+// once it exits (childguard.Capture), so the child can't hold the read, and no WaitDelay after the exit makes the drain red
+// by chance (#n3gk22h, adamiclint's waitdelay on artifacts.go). Mutant: CombinedOutput with the 5 s WaitDelay back, red
+// (exec's WaitDelay error, the probe failed).
+func TestAProbeWhoseChildHoldsItsOutputPasses(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	writeExecutable(t, filepath.Join(directory, "probe"), "#!/bin/sh\nsleep 30 &\necho ready\nexit 0\n")
+	started := time.Now()
+	if err := requireArtifact(directory, Artifact{Name: "probe", Executable: true}); err != nil {
+		t.Fatalf("a probe whose child holds its output: %v", err)
+	}
+	if elapsed := time.Since(started); elapsed > 20*time.Second {
+		t.Fatalf("the probe took %v, held by its child", elapsed)
 	}
 }
 
