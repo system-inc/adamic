@@ -178,6 +178,7 @@ func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
 	// Hash implementation sources, excluding unrelated tests and evidence trees.
+	// Reads: internal/native/runtime/*.[ch]
 	err := filepath.WalkDir(filepath.Join(repository, "internal"), func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err

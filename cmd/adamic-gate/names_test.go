@@ -65,6 +65,14 @@ type nameCensusRefusal struct {
 
 func TestEveryTestHasOneDescriptiveName(t *testing.T) {
 	t.Parallel()
+	// Reads: stage1/cohere/typeaware/volume_test.go
+	// Reads: internal/native/normalize_test.go
+	// Reads: internal/native/string_index_test.go
+	// Reads: internal/oracle/input_test.go
+	// Reads: internal/oracle/oracle_test.go
+	// Reads: stage1/cohere/css/print_test.go
+	// Reads: stage1/cohere/lint/lint_test.go
+	// Reads: *_test.go
 	root := parallelCheckRoot(t)
 	var tests []nameCensusTest
 	err := parallelCheckEachTest(root, func(rel string, fn *ast.FuncDecl, _ string, _ *token.FileSet, _ []string) {

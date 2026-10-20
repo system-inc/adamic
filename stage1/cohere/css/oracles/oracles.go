@@ -355,6 +355,10 @@ func ContentIdentity(t *testing.T, path string) string {
 func CachedParserOutputs(t *testing.T) (string, string) {
 	t.Helper()
 	oracle := cssParserOracle(t)
+	// Reads: *.[cC][sS][sS]
+	// Reads: *.[lL][eE][sS][sS]
+	// Reads: *.[sS][cC][sS][sS]
+	// Reads: cohere
 	repo, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)

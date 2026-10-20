@@ -28,6 +28,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	expected := printerAnswers(t, cases, "default")
 	narrow := printerAnswers(t, cases, "narrow")
 	script, _ := filepath.Abs("testdata/print_library.mjs")
+	// Reads: internal/native/runtime/*.c
 	repo, _ := filepath.Abs(repository)
 	original := execute(t, nil, "node", script, filepath.Join(repo, "cohere/internal/format/prettier/bundles"), cases, "default", "fork")
 	if original.exitCode != 0 || len(original.stderr) != 0 {
