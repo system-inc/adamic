@@ -1,5 +1,4 @@
 __pycache__/
+# Raw census JSONL stays out; the gzipped copies are the record Correctness reads (census classes, site counts), so a run commits them.
 runs/**/census.jsonl
-runs/**/census.jsonl.gz
 runs/**/latent.jsonl
-runs/**/latent.jsonl.gz
