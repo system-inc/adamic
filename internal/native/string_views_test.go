@@ -2,6 +2,7 @@ package native
 
 import (
 	"path/filepath"
+	"sync"
 	"testing"
 )
 
@@ -78,20 +79,52 @@ int main(void) {
 	}
 }
 
+var parallelStringViewsWant struct {
+	sync.Once
+	output string
+}
+
 // First-use character reads overlap on every worker; Node fixes the byte order independently.
-func TestParallelStringViews(t *testing.T) {
-	t.Parallel()
-	want := runWithInput(t, "", "node", "--eval", `const hash=Array.from({length:128},(_,i)=>i).reduce((s,c)=>(s*33+c)%1000003,0);for(let i=0;i<128;i++)console.log(hash);`)
-	for _, build := range parallelBuilds(t) {
-		t.Run(build.name, func(t *testing.T) {
-			binary := parallelHarness(t, "string_views.c", build.options)
-			for _, threads := range []string{"1", "4"} {
-				got, _ := parallelRun(t, binary, threads)
-				if got != want {
-					t.Fatalf("threads %s: character bytes differ from Node", threads)
-				}
-				parallelLeaks(t, binary, build.options, threads)
-			}
-		})
+func parallelStringViews(t *testing.T, options Options) {
+	t.Helper()
+	parallelStringViewsWant.Do(func() {
+		parallelStringViewsWant.output = runWithInput(t, "", "node", "--eval", `const hash=Array.from({length:128},(_,i)=>i).reduce((s,c)=>(s*33+c)%1000003,0);for(let i=0;i<128;i++)console.log(hash);`)
+	})
+	want := parallelStringViewsWant.output
+	binary := parallelHarness(t, "string_views.c", options)
+	for _, threads := range []string{"1", "4"} {
+		got, _ := parallelRun(t, binary, threads)
+		if got != want {
+			t.Fatalf("threads %s: character bytes differ from Node", threads)
+		}
+		parallelLeaks(t, binary, options, threads)
 	}
+}
+
+func TestParallelStringViews_asan(t *testing.T) {
+	t.Parallel()
+	parallelStringViews(t, Options{Sanitize: true})
+}
+
+func TestParallelStringViews_asan_slabs(t *testing.T) {
+	t.Parallel()
+	parallelStringViews(t, Options{Sanitize: true, slabs: true})
+}
+
+func TestParallelStringViews_count(t *testing.T) {
+	t.Parallel()
+	parallelStringViews(t, Options{Count: true})
+}
+
+func TestParallelStringViews_release(t *testing.T) {
+	t.Parallel()
+	parallelStringViews(t, Options{})
+}
+
+func TestParallelStringViews_tsan(t *testing.T) {
+	t.Parallel()
+	if !parallelTSan(t) {
+		t.Skip("TSan is unavailable on this platform; see capability probe")
+	}
+	parallelStringViews(t, Options{ThreadSanitize: true})
 }
