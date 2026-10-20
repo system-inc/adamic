@@ -1,9 +1,11 @@
 # The .a programs outside a Go package that broke their first line's promise when
 # TestEveryProgramOutsideAPackageKeepsItsPromise came (#7xsbxbk, Oct 18), one a line as "<path>: <how it broke>", so a
 # listed program that starts breaking another way is named, never sheltered. It only shrinks: a listed program that
-# keeps its promise again is named and must come off, and none is added. Each is its owner's to settle: its header
+# keeps its promise again is named and must come off, and none is added but by a ruling. Each is its owner's to settle: its header
 # updated, its directory exempted as evidence, or the compiler's regression fixed (TypeScript holds the stage3 rows as
-# #95revar; Compiler rechecks stage3/adapt/48-memoize after #s5sn3eg).
+# #95revar; Compiler rechecks stage3/adapt/48-memoize after #s5sn3eg). The 29 under stage3/drivers/scanner came on Oct 20,
+# when a directory whose only Go is //go:build ignore stopped reading as a package, so its programs, which the gate's
+# a-check phase checked when a change touched them, are checked here too (Node's ruling on #7xsbxbk): TypeScript's.
 
 stage3/adapt/48-memoize/a-explicit.a: refused (adamic: stage3/adapt/48-memoize/a-explicit.a:1:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable))
 stage3/adapt/48-memoize/a.a: refused (adamic: stage3/adapt/48-memoize/a.a:1:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable))
@@ -62,3 +64,32 @@ stage3/drivers/parser/native-require-perf-hooks.a: refused, and its first line p
 stage3/drivers/parser/native-some-predicate-overload.a: checked, and its first line promises refused a type predicate whose return is not proven (there is no body proving this parameter)
 stage3/drivers/parser/range-cases.a: type error (stage3/drivers/parser/range-cases.a:13:24: error TS7006: Parameter 'child' implicitly has an 'any' type.)
 stage3/drivers/parser/range-check.a: refused (adamic: stage3/drivers/parser/range-check.a:8:13: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/01-index.a: checked, and its first line promises refused an index signature
+stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/02-namespace.a: checked, and its first line promises refused a namespace
+stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/05-comma.a: checked, and its first line promises refused the comma operator
+stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/15-condition.a: checked, and its first line promises refused a value as a condition
+stage3/drivers/scanner/evidence/combined-records-library/witnesses/01-index.a: checked, and its first line promises refused an index signature
+stage3/drivers/scanner/evidence/combined-records-library/witnesses/02-namespace.a: checked, and its first line promises refused a namespace
+stage3/drivers/scanner/evidence/combined-records-library/witnesses/05-comma.a: checked, and its first line promises refused the comma operator
+stage3/drivers/scanner/evidence/combined-records-library/witnesses/15-condition.a: checked, and its first line promises refused a value as a condition
+stage3/drivers/scanner/evidence/land-area-next/witnesses/01-index.a: checked, and its first line promises refused an index signature
+stage3/drivers/scanner/evidence/native3-records/witnesses/01-index.a: checked, and its first line promises refused an index signature
+stage3/drivers/scanner/evidence/native3-records/witnesses/02-namespace.a: checked, and its first line promises refused a namespace
+stage3/drivers/scanner/evidence/native3-records/witnesses/05-comma.a: checked, and its first line promises refused the comma operator
+stage3/drivers/scanner/evidence/native3-records/witnesses/15-condition.a: checked, and its first line promises refused a value as a condition
+stage3/drivers/scanner/evidence/native3/witnesses/01-index.a: checked, and its first line promises refused an index signature
+stage3/drivers/scanner/evidence/native3/witnesses/02-namespace.a: checked, and its first line promises refused a namespace
+stage3/drivers/scanner/evidence/native3/witnesses/05-comma.a: checked, and its first line promises refused the comma operator
+stage3/drivers/scanner/evidence/native3/witnesses/15-condition.a: checked, and its first line promises refused a value as a condition
+stage3/drivers/scanner/probes/assert-failure.a: type error (stage3/drivers/scanner/probes/assert-failure.a:2:31: error TS2307: Cannot find module './adapted/src/compiler/scanner.ts' or its corresponding type declarations.)
+stage3/drivers/scanner/probes/capture-stack-marker.a: type error (stage3/drivers/scanner/probes/capture-stack-marker.a:4:42: error TS2740: Type '{}' is missing the following properties from type 'Function': apply, call, bind, prototype, and 5 more.)
+stage3/drivers/scanner/probes/discovery-captured-literal.a: refused (adamic: stage3/drivers/scanner/probes/discovery-captured-literal.a:2:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/probes/discovery-explicit-undefined-method.a: refused (adamic: stage3/drivers/scanner/probes/discovery-explicit-undefined-method.a:8:63: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/probes/discovery-optional-method-trace.a: refused (adamic: stage3/drivers/scanner/probes/discovery-optional-method-trace.a:9:63: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/probes/discovery-optional-method.a: refused (adamic: stage3/drivers/scanner/probes/discovery-optional-method.a:8:63: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/probes/discovery-property.a: refused (adamic: stage3/drivers/scanner/probes/discovery-property.a:1:64: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/probes/error-constructor-value.a: refused (adamic: stage3/drivers/scanner/probes/error-constructor-value.a:2:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast))
+stage3/drivers/scanner/probes/scanner-captured-token-value.a: refused (adamic: stage3/drivers/scanner/probes/scanner-captured-token-value.a:2:5: Adamic 0.1 refuses var; use const or let)
+stage3/drivers/scanner/probes/scanner-lazy-text.a: refused (adamic: stage3/drivers/scanner/probes/scanner-lazy-text.a:3:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
+stage3/drivers/scanner/probes/scanner-state.a: type error (stage3/drivers/scanner/probes/scanner-state.a:12:28: error TS2554: Expected 1 arguments, but got 2.)
+stage3/drivers/scanner/probes/uninitialized-non-null.a: refused (adamic: stage3/drivers/scanner/probes/uninitialized-non-null.a:2:20: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case)
