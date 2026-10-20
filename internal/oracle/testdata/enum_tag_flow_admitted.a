@@ -1,0 +1,38 @@
+// A union with a tag that can lie (X's extra, an open enum Y lacks, like tsc's templateFlags)
+// refined only by steps its incoming types prove: each read below is admitted and agrees with Node.
+enum Kind { Text, Count }
+enum Extra { Only }
+interface X { readonly kind: Kind.Text; readonly extra: Extra; readonly text: string }
+interface Y { readonly kind: Kind.Count; readonly count: number }
+type Node = X | Y;
+function numeric(): number { return 3; }
+const nodes: Node[] = [{ kind: Kind.Text, extra: numeric(), text: 'ahra' }, { kind: Kind.Count, count: 41 }];
+let calls = 0;
+function compared(v: Node): string {
+	if (v.kind === Kind.Count) { return `${v.count + 1}`; }
+	return v.text;
+}
+function switched(v: Node): string {
+	switch (v.kind) {
+		case Kind.Count: return `${v.count + 2}`;
+		default: return `${v.text}!`;
+	}
+}
+function present(v: Node | undefined): string {
+	if (v && v.kind === Kind.Count) { return `${v.count + 3}`; }
+	return 'other';
+}
+function unrelated(v: Node): string {
+	calls++;
+	if (calls > 0 && v.kind !== Kind.Text) { return `${v.count + 4}`; }
+	return 'text';
+}
+function afterOne(v: Node): string {
+	if (v.kind !== Kind.Text) { return `${v.count + 5}`; }
+	if (v.extra === Extra.Only) { return `${v.text} only`; }
+	return `${v.text} other`;
+}
+for (const node of nodes) {
+	console.log(`${compared(node)} ${switched(node)} ${present(node)} ${unrelated(node)} ${afterOne(node)}`);
+}
+console.log(present(undefined));
