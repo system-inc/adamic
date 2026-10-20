@@ -1,0 +1,151 @@
+{
+  "typescript": "6.0.3",
+  "files": [
+    "src/compiler/binder.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/program.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/transformers/es2017.ts"
+  ],
+  "erasure": [
+    {
+      "file": "src/compiler/binder.ts",
+      "removeComments": false,
+      "bytes": 175666,
+      "sha256": "bda6c9db9dfd0fff3b2e7ccf3587927d4a1d83cd69f808fdb86d2b160b63b45e"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "removeComments": true,
+      "bytes": 139469,
+      "sha256": "4512f8f1aa7779af879421b9c996aa46e5b018ed98ed11c85273f49f4bbb3376"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "removeComments": false,
+      "bytes": 2892419,
+      "sha256": "786ee138ff00765ab7c7ea7651de48df32c5981ec2c0810c68e302570d566f6e"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "removeComments": true,
+      "bytes": 2354716,
+      "sha256": "3664a2f5fb2aba0e839a3153e6ff4d093b530db890b5b2433be6cd38e6e91aac"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "removeComments": false,
+      "bytes": 236357,
+      "sha256": "ecc6ee944e584a713d453305212583318e95d1870d636f703de16264d8571386"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "removeComments": true,
+      "bytes": 209105,
+      "sha256": "b06e2aa3ed5e10c13d6158307cca6564326758d2ea2cb4f206b37c13820d3c1f"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "removeComments": false,
+      "bytes": 475550,
+      "sha256": "587003642951bfcba9a0c56c9816299d49e27b2707083f8a11dbe578c582be63"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "removeComments": true,
+      "bytes": 369026,
+      "sha256": "3668e29c23fe8e2c2a65138b08575ea2c5595c7bb09b32250ae3c93d152978cd"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "removeComments": false,
+      "bytes": 230895,
+      "sha256": "4b3ae9d8eadd82655941bd11f61a313f50729856e098a3cd2a93cbd0c29a7b80"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "removeComments": true,
+      "bytes": 198236,
+      "sha256": "898f030f282fbdf89753b8af061c52de615bc80ae6e3700cb3614ac6e1478e1d"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "removeComments": false,
+      "bytes": 6635,
+      "sha256": "8e2063f73cb9c30b719e9db867b3f16c88cda3ab0661d0b5e796b16cd025b267"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "removeComments": true,
+      "bytes": 5949,
+      "sha256": "85732328720dac5e7eef524c696476f5def1624e5972e546518a71414e4042f3"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "removeComments": false,
+      "bytes": 41832,
+      "sha256": "a2637edfee50e32caa487fe351f796f45e9fa6fd98ef5d8e334c99d513602de3"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "removeComments": true,
+      "bytes": 35830,
+      "sha256": "c5e639069fa8719ea9249f44831b160f342f8c300b9a654c86bb46ad290a50ad"
+    }
+  ],
+  "diagnostics": {
+    "before": 140,
+    "after": 140,
+    "introduced": [],
+    "mutant": 141
+  },
+  "mutants": [
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/binder.ts",
+      "caught": true
+    },
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/checker.ts",
+      "caught": true
+    },
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/emitter.ts",
+      "caught": true
+    },
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/parser.ts",
+      "caught": true
+    },
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/program.ts",
+      "caught": true
+    },
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/symbolWalker.ts",
+      "caught": true
+    },
+    {
+      "kind": "runtime erasure",
+      "file": "src/compiler/transformers/es2017.ts",
+      "caught": true
+    },
+    {
+      "kind": "moved declaration",
+      "file": "src/compiler/binder.ts",
+      "caught": true
+    },
+    {
+      "kind": "checker diagnostics",
+      "code": 2322,
+      "caught": true
+    }
+  ]
+}
