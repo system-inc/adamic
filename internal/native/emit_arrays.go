@@ -76,7 +76,12 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("adamic_value %s = {.%s = %s};", argument, member(visit.SearchFirst), slotted(visit.SearchFirst, fmt.Sprintf("(%s) ? %s : %s", present, value, absent)))
 	}
 	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-	if visit.Method == "forEach" && !visit.Returns.IsReference() {
+	// A callback typed void may still return a value, which forEach lets go of as any void call does.
+	discard := ir.DiscardNothing
+	if visit.Method == "forEach" && visit.Returns == 0 {
+		discard = e.program.ClosureDiscard(visit)
+	}
+	if visit.Method == "forEach" && !visit.Returns.IsReference() && !e.discarding(discard) {
 		e.line("%s;", call)
 	} else {
 		e.line("adamic_value %s = %s;", answer, call)
@@ -100,6 +105,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		if visit.Returns.IsReference() {
 			// A callback's result comes back owned, and forEach has no use for it.
 			e.line("adamic_release(%s.reference);", answer)
+		}
+		if e.discarding(discard) {
+			e.line("%s", e.discard(discard, callback, answer))
 		}
 		release()
 	case "filter":

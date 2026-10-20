@@ -292,6 +292,12 @@ func (e *emitter) arguments(call ir.Call) []string {
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
 	method := ""
 	exactCount := false
+	// What a void call releases of its result: closureArm where it calls closure (or the proven
+	// method), methodArm where the object's class's method ran instead.
+	closureArm, methodArm := ir.DiscardNothing, ir.DiscardNothing
+	if expression.Returns == 0 {
+		closureArm = e.program.ClosureDiscard(expression)
+	}
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
 		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
@@ -299,7 +305,13 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
 			exactCount = e.program.PackedCountNeeded(function)
+			if expression.Returns == 0 {
+				closureArm = e.program.ReturnsDiscard([]int{function})
+			}
 		} else {
+			if expression.Returns == 0 {
+				methodArm = e.program.MethodDiscard(expression)
+			}
 			method = e.temporary()
 			if e.program.ClosureConventionNeeded() {
 				e.line("adamic_method_entry %s = {0};", method)
@@ -351,9 +363,37 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		}
 	}
 
-	if expression.Returns == 0 {
+	if expression.Returns == 0 && !e.discarding(closureArm) && !e.discarding(methodArm) {
 		e.line("%s;", call)
 		e.closureThrown()
+		return "0"
+	}
+	if expression.Returns == 0 {
+		// A void call's result is released, never read: its function value may hold one that
+		// returns a value, a reference owned as every closure's result is. A throw gives back a zero
+		// value and leaves before the release.
+		result := e.temporary()
+		e.line("adamic_value %s = %s;", result, call)
+		e.closureThrown()
+		if receiver == "" || closure == "" {
+			// A function value, or the proven method alone.
+			e.line("%s", e.discard(closureArm, closure, result))
+			return "0"
+		}
+		// Whichever arm ran: closure is NULL where the class's method did.
+		if e.discarding(closureArm) {
+			e.line("if (%s != NULL) {", closure)
+			e.line("\t%s", e.discard(closureArm, closure, result))
+			if e.discarding(methodArm) {
+				e.line("} else {")
+				e.line("\t%s", e.discard(methodArm, "", result))
+			}
+			e.line("}")
+		} else {
+			e.line("if (%s == NULL) {", closure)
+			e.line("\t%s", e.discard(methodArm, "", result))
+			e.line("}")
+		}
 		return "0"
 	}
 	result := e.temporary()
@@ -365,4 +405,45 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))
 	}
 	return e.snapshot(expression.Returns, unslotted(expression.Returns, result+"."+member(expression.Returns)))
+}
+
+// discarding reports whether a void call has something of its result to let go of (discard).
+func (e *emitter) discarding(discard ir.Discard) bool {
+	return discard == ir.DiscardReference || discard == ir.DiscardFlagged && e.closureDiscards || discard == ir.DiscardMixed
+}
+
+// discard is the C that lets go of result, what a void call gave back, as ir.Discard says: released,
+// never read. closure is the function value called, whose own discard field says where the call's
+// targets are Unknown or disagree. ADAMIC_CLOSURE_DISCARDS is off only where no such call is made or
+// no closure made returns a reference, so such a call's result then holds nothing.
+func (e *emitter) discard(discard ir.Discard, closure, result string) string {
+	switch discard {
+	case ir.DiscardReference:
+		return fmt.Sprintf("adamic_release(%s.reference);", result)
+	case ir.DiscardFlagged:
+		if e.closureDiscards {
+			return fmt.Sprintf("adamic_closure_discard(%s, %s);", closure, result)
+		}
+	case ir.DiscardMixed:
+		// Lowering says not yet to such a call (voidDiscards): it never reaches the emitter.
+		panic("native: a void call whose targets disagree on releasing their result")
+	}
+	return ""
+}
+
+// closureDiscard stores in a closure just made how a void call that can't know its function lets go
+// of its result: by the made function's Returns, whose adamic_value member the type alone fixes.
+// adamic_closure_new stores nothing to let go; a canonical closure takes its discard as it's made.
+func (e *emitter) closureDiscard(closure string, function int) {
+	if discard := e.discardOf(function); e.closureDiscards && discard != "adamic_discard_none" {
+		e.line("%s->discard = %s;", closure, discard)
+	}
+}
+
+// discardOf is the adamic_discard a closure of function is made with.
+func (e *emitter) discardOf(function int) string {
+	if e.program.Functions[function].Returns.IsReference() {
+		return "adamic_discard_reference"
+	}
+	return "adamic_discard_none"
 }

@@ -82,7 +82,8 @@ func TestProfileArtifacts(t *testing.T) {
 			units = append(units, path)
 		}
 	}
-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
+	// The runtime's units are compiled with the program's features as flags, as main.c's #defines say.
+	flags := append(native.SourceFlags(source, native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
 	flags = append(flags, "-lm")
 	execute(t, "", "clang", flags...)
