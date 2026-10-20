@@ -54,13 +54,20 @@ type BlocksRule struct {
 	// Depth: the most blocks in flight, each pipelined on the last prefix of the one below it, from DefaultBlocksDepth to
 	// MaximumBlocksDepth. Optional, and never null; absent reads as 2 (Loom 0.8.71, #wpcbqpd).
 	Depth *int `json:"depth"`
+	// Builders: the boxes the queue leases whole blocks to, host names each once, at most MaximumBlocksBuilders. Optional,
+	// and never null; absent reads as no box leased (Loom 0.8.375, the one-box loop, #mxbymz5).
+	Builders []string `json:"builders"`
+	// TipFirst: a leased block plans its tip first, a green tip landing the whole block and a red one bisecting. Optional,
+	// and never null; absent reads as off (Loom 0.8.375, #fz4vetb).
+	TipFirst *bool `json:"tipFirst"`
 }
 
-// DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower
-// (Loom's lander/rules.go).
+// DefaultBlocksDepth and MaximumBlocksDepth are the queue's: one standing block and one on it, and the deepest tower;
+// MaximumBlocksBuilders the most boxes it leases blocks to (Loom's lander/rules.go).
 const (
-	DefaultBlocksDepth = 2
-	MaximumBlocksDepth = 32
+	DefaultBlocksDepth    = 2
+	MaximumBlocksDepth    = 32
+	MaximumBlocksBuilders = 8
 )
 
 // SizingRule is a block-size policy: the largest block whose chance of coming back all green, at the red rate of the last
@@ -85,8 +92,8 @@ func ReadRules() (Rules, error) {
 }
 
 // ParseRules reads a rules file strictly: a rule the queue doesn't know, a field a rule doesn't take, a missing field,
-// a budget that isn't a whole number of 1 or more, a sizing, a depth or a door the lander would refuse, or anything after
-// the object is refused, so a typo can't land as a rule nobody meant.
+// a budget that isn't a whole number of 1 or more, a sizing, a depth, builders, a tipFirst or a door the lander would
+// refuse, or anything after the object is refused, so a typo can't land as a rule nobody meant.
 func ParseRules(data []byte) (Rules, error) {
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
@@ -127,6 +134,24 @@ func ParseRules(data []byte) (Rules, error) {
 			return Rules{}, fmt.Errorf("rules.json: blocks' depth is %d, and it's from %d to %d", *rules.Blocks.Depth, DefaultBlocksDepth, MaximumBlocksDepth)
 		}
 	}
+	if builders, present := raw.Blocks["builders"]; present {
+		if bytes.Equal(bytes.TrimSpace(builders), []byte("null")) {
+			return Rules{}, errors.New("rules.json: blocks' builders is null, and it's a list of host names")
+		}
+		if len(rules.Blocks.Builders) > MaximumBlocksBuilders {
+			return Rules{}, fmt.Errorf("rules.json: blocks' builders names %d boxes, and it names at most %d", len(rules.Blocks.Builders), MaximumBlocksBuilders)
+		}
+		seen := map[string]bool{}
+		for _, box := range rules.Blocks.Builders {
+			if !builderPattern.MatchString(box) || seen[box] {
+				return Rules{}, fmt.Errorf("rules.json: blocks' builders names host names, each once, not %q", box)
+			}
+			seen[box] = true
+		}
+	}
+	if tipFirst, present := raw.Blocks["tipFirst"]; present && (bytes.Equal(bytes.TrimSpace(tipFirst), []byte("null")) || rules.Blocks.TipFirst == nil) {
+		return Rules{}, fmt.Errorf("rules.json: blocks' tipFirst is %s, and it's true or false", tipFirst)
+	}
 	if raw.Door != nil {
 		var bounds map[string]json.RawMessage
 		if bytes.Equal(bytes.TrimSpace(raw.Door), []byte("null")) || json.Unmarshal(raw.Door, &bounds) != nil {
@@ -153,3 +178,7 @@ func ParseRules(data []byte) (Rules, error) {
 
 // changeIDPattern is a change id as the queue mints it, the lander's own test (Loom's lander/rules.go).
 var changeIDPattern = regexp.MustCompile(`^chg_[0-9a-hjkmnp-tv-z]{26}$`)
+
+// builderPattern is a box name as a coordinator token's box claim carries it, the Loom Worker's Token.ts BoxPattern and
+// the lander's own (Node on #kqsehcq), so a rules name no token can carry is refused rather than never leased.
+var builderPattern = regexp.MustCompile(`^[A-Za-z][A-Za-z0-9-]{0,31}$`)
