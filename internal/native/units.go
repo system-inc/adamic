@@ -362,6 +362,15 @@ type unitMismatch struct {
 	At     time.Time `json:"at"`
 }
 
+// UnitMismatchPrefix opens the one line a cold check's mismatch prints, which Loom's builder reads to turn the unit
+// cache off for every builder (#m62spx0, Node's M1).
+const UnitMismatchPrefix = "native: unit cache mismatch: "
+
+// unitMismatchLine is mismatch as that line says it: the unit, its key and both digests.
+func unitMismatchLine(mismatch unitMismatch) string {
+	return fmt.Sprintf("%sunit %s key %s cached %s cold %s", UnitMismatchPrefix, mismatch.Unit, mismatch.Key, mismatch.Cached, mismatch.Cold)
+}
+
 // markUnitCacheOff leaves mismatch's mark in cache, made whole before it's in place.
 func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 	content, err := json.Marshal(mismatch)
@@ -388,8 +397,8 @@ func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 
 // compileUnit is unit's object: from cache by its key under keying, or compiled from its .c in a directory of its own
 // under directory holding common beside it, and kept in cache. A nil keying, or a unit whose source the key can't take
-// (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off and fails
-// the build, naming the unit, the key and both digests.
+// (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off, prints
+// UnitMismatchPrefix's line naming the unit, the key and both digests, and is the cold object, never an error.
 func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver) (string, error) {
 	environment := toolchain.Env()
 	if keying != nil {
@@ -430,11 +439,15 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 		}
 		if !bytes.Equal(cached, cold) {
 			mismatch := unitMismatch{Unit: unit.name, Key: key, Cached: fmt.Sprintf("%x", sha256.Sum256(cached)), Cold: fmt.Sprintf("%x", sha256.Sum256(cold)), At: time.Now().UTC()}
+			// The cold bytes were compiled fresh from this unit's sources, so they're its object: the build goes on with
+			// them, green, and the hole is the house's to read, never a red charged to whatever change was building.
 			marked := "marked off at " + filepath.Join(cache, unitCacheOffName)
 			if err := markUnitCacheOff(cache, mismatch); err != nil {
 				marked = "its mark couldn't be written: " + err.Error()
 			}
-			return "", fmt.Errorf("native: unit cache mismatch: unit %s key %s cached %s cold %s; the unit cache is %s", mismatch.Unit, mismatch.Key, mismatch.Cached, mismatch.Cold, marked)
+			fmt.Fprintln(os.Stderr, unitMismatchLine(mismatch)+"; the unit cache is "+marked)
+			path := filepath.Join(directory, "checked-"+unit.name+".o")
+			return path, os.WriteFile(path, cold, 0o644)
 		}
 		return found, nil
 	}
