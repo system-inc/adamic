@@ -14,6 +14,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -62,7 +63,7 @@ type RuntimeRequest struct {
 // never the process's, and a nil one bounds none (#yzwm4rj): so the archive's build reads no state set outside its own
 // initializers, and its key, which the jobserver never enters, is all its bytes depend on.
 func (request RuntimeRequest) Build(directory string, workers int, jobserver *Jobserver) error {
-	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers, jobserver)
+	return compileRuntime(request.files, request.flags, request.Compiler, directory, workers, jobserver, partsKey(request.Parts))
 }
 
 // runtimeSupplier, when set, supplies every archive of the embedded runtime this process links, in place of the
@@ -421,6 +422,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	lock.Lock()
 	defer lock.Unlock()
 	if found, ok := cachedFile(library); ok {
+		buildLog("cArchive", "runtime.a", filepath.Base(directory), "hit", 0)
 		return found, nil
 	}
 	if err := os.MkdirAll(cache, 0o755); err != nil {
@@ -438,7 +440,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 	if err != nil {
 		return "", err
 	}
-	if err := compileRuntime(files, flags, compiler, temporary, 1, jobserver); err != nil {
+	if err := compileRuntime(files, flags, compiler, temporary, 1, jobserver, filepath.Base(directory)); err != nil {
 		return "", err
 	}
 	// Publish everything together. A competing process may already have published this key; its
@@ -455,8 +457,9 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 
 // compileRuntime compiles the runtime's files with flags into directory, up to workers translation units at once, each
 // holding a token of jobserver (nil bounds none, and is never the process's), and archives them as runtime.a there, in
-// the files' order whatever order they finished in.
-func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int, jobserver *Jobserver) error {
+// the files' order whatever order they finished in. key is the archive's, which names each of its compiles and its
+// archiving in the build log (buildLog).
+func compileRuntime(files []runtimeFile, flags []string, compiler string, directory string, workers int, jobserver *Jobserver, key string) error {
 	for _, feature := range runtimeFeatures {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
@@ -496,9 +499,14 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
 			command := toolchain.CommandIn(directory, compiler, arguments...)
 			var output []byte
-			if err := jobserver.Hold(func() (err error) { output, err = command.CombinedOutput(); return err }); err != nil {
+			var clang time.Duration
+			if err := jobserver.Hold(func() error {
+				return timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
+			}); err != nil {
 				failures[index] = fmt.Errorf("native: compiling runtime %s: %w\n%s", source, err, output)
+				return
 			}
+			buildLog("cCompile", "runtime/"+source, key, "miss", clang)
 		})
 	}
 	compiles.Wait()
@@ -511,9 +519,12 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 	arguments := append([]string{"rcs", filepath.Join(directory, "runtime.a")}, objects...)
 	archive := toolchain.Command(archiverName(compiler), arguments...)
 	archive.Env = append(archive.Env, "ZERO_AR_DATE=1")
-	if output, err := archive.CombinedOutput(); err != nil {
+	var archiving time.Duration
+	var output []byte
+	if err := timed(&archiving, func() (err error) { output, err = archive.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: archiving runtime: %w\n%s", err, output)
 	}
+	buildLog("cArchive", "runtime.a", key, "miss", archiving)
 	return nil
 }
 
@@ -649,4 +660,45 @@ func slicesContain(values []string, wanted string) bool {
 		}
 	}
 	return false
+}
+
+// buildLog appends one line about a clang step to $ADAMIC_BUILD_LOG when it is set, beside buildcache's census lines
+// (internal/buildcache's record): '<kind> <name> <key12> hit|miss|off <seconds>'. kind is cCompile for a translation
+// unit, cArchive for the runtime's archive, cLink for a link, and cBuild for one clang call that compiles a program's one
+// unit and links it (a one-unit build off macOS), so neither half is taken for the other. name is the unit, archive or
+// output it made; key12 is the first 12 of the cache key the step was looked up by, or - when nothing keys it. hit is an
+// object or archive the cache held, miss one made into the cache, off a step that read no cache. seconds is how long the
+// tool ran for it, a wait for a compile token left out: a split unit's hit is its preprocessing, an archive's hit runs
+// nothing and is 0, and an archive's miss is ar alone, its units' compiles each on their own cCompile line. Loom reads
+// these lines to put C compile and link on a run's critical path (#s0jdsaa); every reader of the census matches its own
+// kind of line, so these pass them by.
+//
+// It lives in this file because compileRuntime reaches it, and an archive's product declares the files its build
+// reaches (runtimeproducts' runtimeFiles, held by TestTheRuntimeBuildReachesOnlyItsDeclaredFiles).
+//
+// The line never reaches what is built: nothing it writes is an input to clang, and a log that can't be opened writes
+// nothing and fails nothing, as record's doesn't.
+func buildLog(kind, name, key, outcome string, seconds time.Duration) {
+	path := os.Getenv("ADAMIC_BUILD_LOG")
+	if path == "" {
+		return
+	}
+	if key == "" {
+		key = "-"
+	}
+	// Every whitespace character in name becomes _, so an output path holding a tab or a newline can neither split the
+	// line nor write a second one.
+	line := fmt.Sprintf("%s %s %s %s %.3f\n", kind, strings.Join(strings.Fields(name), "_"), key[:min(12, len(key))], outcome, seconds.Seconds())
+	if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
+		file.WriteString(line)
+		file.Close()
+	}
+}
+
+// timed runs step and adds how long it took to total.
+func timed(total *time.Duration, step func() error) error {
+	started := time.Now()
+	err := step()
+	*total += time.Since(started)
+	return err
 }
