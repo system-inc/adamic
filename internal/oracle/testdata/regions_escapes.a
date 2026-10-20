@@ -1,0 +1,77 @@
+// Ways a parameter escapes that regions.a doesn't hold: into an array element, through a call to a
+// function that keeps it, through a local, into a closure, pushed onto an array, into a map, and
+// through a method. Each kept value is read after its statement, with labels built at runtime.
+interface Node {
+	readonly label: string;
+	readonly left: Node | undefined;
+}
+
+function build(depth: number): Node {
+	if (depth === 0) {
+		return { label: `leaf${depth}`, left: undefined };
+	}
+	return { label: `node${depth}`, left: build(depth - 1) };
+}
+
+const slots: Node[] = [build(0)];
+const pushed: Node[] = [];
+const byName: Map<string, Node> = new Map<string, Node>();
+let kept: Node | undefined = undefined;
+let later: () => string = () => '-';
+
+function intoSlot(node: Node): number {
+	slots[0] = node;
+	return 1;
+}
+
+function keep(node: Node): number {
+	kept = node;
+	return 2;
+}
+
+function through(node: Node): number {
+	return keep(node) + 1;
+}
+
+function viaLocal(node: Node): number {
+	const held = node;
+	kept = held;
+	return 4;
+}
+
+function capture(node: Node): number {
+	later = () => node.label;
+	return 5;
+}
+
+function push(node: Node): number {
+	pushed.push(node);
+	return 6;
+}
+
+function remember(node: Node): number {
+	byName.set('one', node);
+	return 7;
+}
+
+class Keeper {
+	held: Node | undefined = undefined;
+	take(node: Node): number {
+		this.held = node;
+		return 8;
+	}
+}
+
+const keeper = new Keeper();
+
+function keptLabel(): string {
+	return kept?.label ?? '-';
+}
+
+console.log(`${intoSlot(build(2))} ${slots[0]?.label ?? "-"}`);
+console.log(`${through(build(2))} ${keptLabel()}`);
+console.log(`${viaLocal(build(1))} ${keptLabel()}`);
+console.log(`${capture(build(2))} ${later()}`);
+console.log(`${push(build(1))} ${pushed[0]?.label ?? "-"}`);
+console.log(`${remember(build(2))} ${byName.get('one')?.label ?? '-'}`);
+console.log(`${keeper.take(build(1))} ${keeper.held?.label ?? '-'}`);
