@@ -444,6 +444,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		}
 		own, contextual = l.checker.GetTypeAtLocation(node.Name()), l.checker.GetTypeOfSymbol(property)
 		found = l.freshOrWidened(node.Name(), own, contextual)
+		if found == nil {
+			contextual, found = l.memberLiteralSlotWidened(node.Name(), own, literal, node.Name().Text(), contextual)
+		}
 	case node.Kind == ast.KindSpreadAssignment:
 		// { ...kennel } copies kennel's fields, not what they hold: each field not written again after
 		// it is kennel's value seen as the literal's field.
@@ -490,11 +493,50 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		}
 		own = l.checker.GetTypeAtLocation(node)
 		found = l.freshOrWidened(node, own, contextual)
+		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
+			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
+				if literal := l.checker.GetContextualType(node.Parent.Parent, checker.ContextFlagsNone); literal != nil {
+					contextual, found = l.memberLiteralSlotWidened(node, own, literal, name.Text(), contextual)
+				}
+			}
+		}
 	}
 	if found == nil {
 		return nil
 	}
 	return l.wideningRefusal(node, own, contextual, found)
+}
+
+// An object literal written where a union goes is built as one of its members, so a property is
+// judged against each member's own slot, not the union's property. For { kind: Kind.Text } |
+// { kind: Kind.Count } that property is Kind.Text | Kind.Count, the whole open enum, which takes any
+// number; the member it's built as promises one literal. Each member-literal slot the value can be
+// assigned to is judged as if it were the only one; the union's own property stays the answer when
+// none of them refuses.
+func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checker.Type, name string, contextual *checker.Type) (*checker.Type, *widening) {
+	if literal.Flags()&checker.TypeFlagsUnion == 0 {
+		return contextual, nil
+	}
+	for _, member := range literal.Types() {
+		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+			continue
+		}
+		property := l.checker.GetPropertyOfType(member, name)
+		if property == nil {
+			continue
+		}
+		slot := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(property))
+		if slot.Flags()&checker.TypeFlagsNumberLiteral == 0 && !l.numericEnum(l.enumIdentity(slot)) || l.openNumericEnumType(slot) {
+			continue
+		}
+		if !l.checker.IsTypeAssignableTo(own, slot) {
+			continue
+		}
+		if found := l.freshOrWidened(node, own, slot); found != nil {
+			return slot, found
+		}
+	}
+	return contextual, nil
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
