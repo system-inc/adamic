@@ -13,8 +13,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -34,8 +36,9 @@ func main() {
 }
 
 // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
-// be compiled, 2 for a usage error.
-func run(arguments []string) int {
+// be compiled, 2 for a usage error, 4 when the compiler itself panicked.
+func run(arguments []string) (code int) {
+	defer reportCompilerBug(&code, os.Stderr)
 	// Explanation goes to stderr so C/JavaScript output remains usable.
 	explain := false
 	filtered := make([]string, 0, len(arguments))
@@ -98,6 +101,16 @@ func run(arguments []string) int {
 	}
 	fmt.Fprintln(os.Stderr, usage)
 	return 2
+}
+
+// reportCompilerBug turns a panic on the command's goroutine into exit 4 with its stack. Unrecovered, Go
+// exits 2, which a script reads as its own usage mistake rather than the compiler's. A panic on another
+// goroutine, such as native's compiles, still ends the process with 2 (#4mwb9et).
+func reportCompilerBug(code *int, output io.Writer) {
+	if failure := recover(); failure != nil {
+		fmt.Fprintf(output, "adamic: compiler bug: %v\n%s", failure, debug.Stack())
+		*code = 4
+	}
 }
 
 // check loads a program, printing why when it can't. A nil program comes with the exit code.
