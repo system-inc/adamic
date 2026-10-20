@@ -1,0 +1,15 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+// X and Y share one open tag type, but the intersection Z doesn't carry it, so the tag can
+// still tell Z from them. AKind is open, so x's tag can hold BKind.B's number while x keeps
+// its string payload: Node prints text1.
+enum AKind { A }
+enum BKind { B = 1, C = 2 }
+interface X { readonly tag: AKind; readonly value: string }
+interface Y { readonly tag: AKind; readonly value: string; readonly more: string }
+type Z = { readonly tag: BKind.B } & { readonly value: number };
+function numeric(): number { return 1; }
+const x: X = { tag: numeric(), value: 'text' };
+function show(value: X | Y | Z): void {
+	if (value.tag === BKind.B) { console.log(`${value.value + 1}`); }
+}
+show(x);
