@@ -1,0 +1,25 @@
+# The stage 3 meter once on main's tip, as adamicmeter: network, no keys, no push rights, no sudo
+# (cloud/meter-daily/README.md).
+# Installed to /etc/systemd/system with run.sh and submit.sh in /opt/adamic-meter. Never on a Mac.
+[Unit]
+Description=Adamic stage 3 daily meter on main, as adamicmeter (#badrnrf)
+Wants=network-online.target
+After=network-online.target
+# The finished run goes to the Queue only after this exits 0; a failed run pushes nothing.
+OnSuccess=meter-daily-submit.service
+
+[Service]
+Type=oneshot
+User=adamicmeter
+# /var/lib/adamic-meter carries an ACL (and a default ACL) for ahra, so the submit step can read the run.
+StateDirectory=adamic-meter
+StateDirectoryMode=0750
+UMask=0027
+# Each run's scratch worktrees (a few GB) live in a /tmp of its own, removed when the run ends.
+PrivateTmp=yes
+# The box's toolchain, read through an ACL: traverse on /home/ahra, read on ~/adamic-tools.
+Environment=ADAMIC_METER_TOOLS_ENV=/home/ahra/adamic-tools/env.sh
+ExecStart=/usr/bin/bash /opt/adamic-meter/run.sh
+# run.sh gives the meter 2 h (timeout 7200); this leaves room for the clone, fetch, submodules and npm around it.
+TimeoutStartSec=2h30m
+Nice=10
