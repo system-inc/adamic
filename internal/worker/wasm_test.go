@@ -11,25 +11,17 @@ import (
 	"testing"
 )
 
-func wasmCompiler(t *testing.T) string {
+func requireWasm(t *testing.T) {
 	t.Helper()
 	if os.Getenv("WASI_SYSROOT") == "" {
-		t.Skip("Wasm Workers require WASI_SYSROOT; run bash cloud/setup.sh --wasi-sdk")
+		t.Skip("Wasm Workers require WASI_SYSROOT")
 	}
-	binary := filepath.Join(t.TempDir(), "adamic")
-	command := exec.Command("go", "build", "-o", binary, "../../cmd/adamic")
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("build CLI: %v\n%s", err, output)
-	}
-	return binary
 }
 
-func wasmCommand(t *testing.T, binary, entry, directory, names string) {
+func wasmCompiler(t *testing.T) string {
 	t.Helper()
-	command := exec.Command(binary, "worker", entry, "--out", directory, "--wasm", names)
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("Wasm Worker build: %v\n%s", err, output)
-	}
+	requireWasm(t)
+	return workerCompilerProduct(t, activeMutation(t), false)
 }
 
 func wasmOracle(t *testing.T, directory, entry string) string {
@@ -80,16 +72,20 @@ func wasmObserve(t *testing.T, directory, requests, stress string, expectedCalls
 	return stdout.String(), stderr.String(), evidence
 }
 
-func TestWasmWorkers(t *testing.T) {
-	t.Parallel()
-	binary := wasmCompiler(t)
-	for _, fixture := range []struct{ name, function string }{{"sieve", "sieve"}, {"stats", "stats"}, {"words", "words"}, {"transform", "transform"}, {"panic", "danger"}} {
+func runWasmWorkersShard(t *testing.T, shard int) {
+	requireWasm(t)
+	for _, fixture := range wasmVariants {
+		if fixture.counted || fixture.name == "multiple" {
+			continue
+		}
+		if !familyOwns("TestWasmWorkers", shard, fixture.name) {
+			continue
+		}
 		t.Run(fixture.name, func(t *testing.T) {
 			t.Parallel()
 			entry := filepath.Join("testdata", "wasm", fixture.name+".a")
 			requests, _ := filepath.Abs(strings.TrimSuffix(entry, ".a") + ".jsonl")
-			directory := t.TempDir()
-			wasmCommand(t, binary, entry, directory, fixture.function)
+			directory := workerWasmProduct(t, fixture.name, activeMutation(t), false)
 			actual, stderr, evidence := wasmObserve(t, directory, requests, "", 0)
 			expected, oracleStderr := node(t, wasmOracle(t, directory, entry), requests, true)
 			if actual != expected || stderr != oracleStderr {
@@ -132,23 +128,21 @@ func TestWasmWorkers(t *testing.T) {
 	}
 }
 
-func TestWasmWorkerMemory(t *testing.T) {
-	t.Parallel()
-	binary := wasmCompiler(t)
-	entry := "testdata/wasm/transform.a"
-	directory := t.TempDir()
-	wasmCommand(t, binary, entry, directory, "transform")
-	// Rebuild only the module with counters; this is the same entry and ABI.
-	command := exec.Command(binary, "build", "--target", "wasm32-wasi", entry, "-o", filepath.Join(directory, "handler.wasm"), "--export", "transform", "--abi-json", filepath.Join(directory, "abi.json"), "--count")
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("counted Wasm: %v\n%s", err, output)
+func runWasmWorkerMemoryShard(t *testing.T, shard int) {
+	requireWasm(t)
+	if !familyOwns("TestWasmWorkerMemory", shard, "transform") {
+		return
 	}
-	requests, _ := filepath.Abs("testdata/wasm/transform.jsonl")
-	_, _, evidence := wasmObserve(t, directory, requests, entry, 0)
-	if evidence.BaselineMemory != evidence.MaximumMemory || evidence.Live != 0 {
-		t.Fatalf("10,000 requests leaked: %#v", evidence)
-	}
-	t.Logf("10,000 requests: flat linear memory=%d, live=%d, real Wasm calls=%d", evidence.MaximumMemory, evidence.Live, evidence.Calls)
+	t.Run("transform", func(t *testing.T) {
+		entry := "testdata/wasm/transform.a"
+		directory := workerWasmProduct(t, "counted", activeMutation(t), false)
+		requests, _ := filepath.Abs("testdata/wasm/transform.jsonl")
+		_, _, evidence := wasmObserve(t, directory, requests, entry, 0)
+		if evidence.BaselineMemory != evidence.MaximumMemory || evidence.Live != 0 {
+			t.Fatalf("10,000 requests leaked: %#v", evidence)
+		}
+		t.Logf("10,000 requests: flat linear memory=%d, live=%d, real Wasm calls=%d", evidence.MaximumMemory, evidence.Live, evidence.Calls)
+	})
 }
 
 func TestWasmPurity(t *testing.T) {
@@ -184,25 +178,14 @@ func TestWasmPurity(t *testing.T) {
 	}
 }
 
-func TestWasmMultipleFunctions(t *testing.T) {
-	t.Parallel()
-	binary := wasmCompiler(t)
-	entry := filepath.Join(t.TempDir(), "multiple.a")
-	write(t, entry, `
-import type { HttpRequest, HttpResponse } from 'adamic/http';
-function offset(value: number): number { return value + 7; }
-export function multiply(left: number, right: number): number { return offset(left) * right; }
-let starts = 0;
-starts += 1;
-const startup = offset(1);
-export function handle(request: HttpRequest): HttpResponse {
- return {status: 200, headers: [], body: String(starts + startup + multiply(Number(request.body), 3) + offset(2))};
-}
-`)
-	requests := filepath.Join(t.TempDir(), "requests.jsonl")
-	write(t, requests, string(mustJSON(t, map[string]any{"method": "POST", "url": "https://worker.test/", "body": "0"}))+"\n"+string(mustJSON(t, map[string]any{"method": "POST", "url": "https://worker.test/", "body": "2"}))+"\n")
-	directory := t.TempDir()
-	wasmCommand(t, binary, entry, directory, "offset,multiply")
+func runWasmMultipleFunctionsShard(t *testing.T, shard int) {
+	requireWasm(t)
+	if !familyOwns("TestWasmMultipleFunctions", shard, "multiple") {
+		return
+	}
+	entry := "testdata/wasm/multiple.a"
+	requests, _ := filepath.Abs("testdata/wasm/multiple.jsonl")
+	directory := workerWasmProduct(t, "multiple", activeMutation(t), false)
 	actual, stderr, evidence := wasmObserve(t, directory, requests, "", 5)
 	expected, oracleStderr := node(t, wasmOracle(t, directory, entry), requests, true)
 	if actual != expected || stderr != oracleStderr || evidence.Instances != 1 {

@@ -28,7 +28,7 @@ response per request, with status, headers as ordered pairs, and body. Requests
 provide method, URL, headers as pairs, and an optional body. Tests use the same
 bridge against source stripped by Node and the compiled handler.
 
-Run `ADAMIC_WORKER_MUTANTS=1 go test -count=1 -v ./internal/worker -run '^TestWorkerMutants$'`
+Run `ADAMIC_WORKER_MUTANTS=1 go test -count=1 -v ./internal/worker -run '^TestWorkerMutants_'`
 to prove the named checks catch each mutant in a scratch compiler copy. Ordinary
 test runs skip this opt-in test.
 
@@ -60,3 +60,38 @@ compares the same generated bridge over Wasm and stripped source, checks refusal
 and verifies 10,000 requests have flat linear memory and zero live values.
 Set `ADAMIC_WORKER_MUTANTS=1` and select `TestWasmWorkerMutants` to run the four
 Wasm integration mutants in scratch compiler copies.
+
+## Test products and top-level families
+
+Build test products before running behavior units (this invokes Go tests, not a gate):
+
+```sh
+export CC=clang CXX=clang++
+go test ./internal/worker -run '^TestProduct_Worker(Compiler|Checks)$' -count=1
+go test ./internal/worker -run '^TestProduct_WorkerWasmTransform$' -count=1
+go test ./internal/worker -run '^TestProduct_WorkerWasm_[0-9]' -count=1
+ADAMIC_WORKER_MUTANTS=1 go test ./internal/worker -run '^TestProduct_Worker(Wasm)?Mutants_' -count=1
+ADAMIC_WORKER_MUTANTS=1 go test ./internal/worker -run '^Test(WorkerMutants_|Wasm)' -count=1
+```
+
+The slow Worker tests are FNV-64a families of top-level `<name>_000` wrappers.
+`families_test.go` mirrors oracle's test-only generator, which cannot be imported.
+`TestWorkerFamilyWrappersAreCurrent` checks the generated source;
+`TestWorkerFamiliesOwnEveryCaseOnce` checks unique keys and exact-once ownership.
+Regenerate wrappers with that first test and `-args -update-worker-family-wrappers`.
+The one-case memory and multiple-function families retain their complete workloads.
+
+`TestProduct_Worker*` builds input-keyed CLI/test executables, including each mutant,
+and ordinary/counted Wasm Workers once per input hash. Behavior units only find
+products and run fresh witnesses: verdicts, response corpora, and memory observations
+are never cached. Compiler products use buildcache's Go dependency/overlay keys;
+Wasm products also key the fixture, selected names, count mode, build recipe,
+WASI runtime/header identity, pinned clang/archiver, and Node version.
+Use the same CC/CXX configuration for building and reading products; Go test
+otherwise injects its gcc/g++ defaults when those variables are unset, whereas
+the repository toolchain defaults to clang/clang++. Both configurations are keyed.
+Product order seeds the ordinary runtime before the other compiler processes run,
+and counted memory products reuse the ordinary bridge instead of rebuilding it.
+Both the immutable Wasm products and mutant binaries travel with the build cache;
+a missing product fails with a build-ahead diagnostic rather than rebuilding inside
+a behavior unit's clock. All 10,000 memory requests and mutant failure witnesses remain.

@@ -67,11 +67,7 @@ func header(result response, name string) string {
 // TestWorkers runs the public command, then the same bridge over untouched source.
 // Explicit expectations hold the shared bridge itself to the platform contract.
 func TestWorkers(t *testing.T) {
-	binary := filepath.Join(t.TempDir(), "adamic")
-	command := exec.Command("go", "build", "-o", binary, "../../cmd/adamic")
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("build CLI: %v\n%s", err, output)
-	}
+	binary := workerCompilerProduct(t, activeMutation(t), false)
 	fixtures, err := filepath.Glob("testdata/*.a")
 	if err != nil {
 		t.Fatal(err)
