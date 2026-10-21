@@ -19,7 +19,7 @@ import (
 func checkMutationRangesProgram(t *testing.T, path string) {
 	t.Helper()
 	invalid := 0
-	run := traced(t, path)
+	run := traced(t, path, true)
 	ranges := map[int]*MutableRanges{}
 	values := map[int]map[InstructionId]map[DeclarationId]IdentifierId{}
 	for function, graph := range run.graphs {
