@@ -645,24 +645,49 @@ func TestNativeAgreesWithNode_127(t *testing.T) {
 	runNativeAgreesShard(t, 127)
 }
 
-func TestNativeAgreesWithNode_bitwise_sweep(t *testing.T) {
+func TestNativeAgreesWithNode_little_streams(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -1)
 }
 
-func TestNativeAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+func TestNativeAgreesWithNode_lots_streams(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -2)
 }
 
-func TestNativeAgreesWithNode_normalize_coverage_long(t *testing.T) {
+func TestNativeAgreesWithNode_stderr_only(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -3)
 }
 
-func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
+func TestNativeAgreesWithNode_panic_edges(t *testing.T) {
 	t.Parallel()
 	runNativeAgreesShard(t, -4)
+}
+
+func TestNativeAgreesWithNode_read_after_print(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -5)
+}
+
+func TestNativeAgreesWithNode_bitwise_sweep(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -6)
+}
+
+func TestNativeAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -7)
+}
+
+func TestNativeAgreesWithNode_normalize_coverage_long(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -8)
+}
+
+func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -9)
 }
 
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
@@ -1310,14 +1335,39 @@ func TestWASIAgreesWithNode_127(t *testing.T) {
 	runWASIAgreesShard(t, 127)
 }
 
-func TestWASIAgreesWithNode_bitwise_sweep(t *testing.T) {
+func TestWASIAgreesWithNode_little_streams(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -1)
 }
 
-func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+func TestWASIAgreesWithNode_lots_streams(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -2)
+}
+
+func TestWASIAgreesWithNode_stderr_only(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -3)
+}
+
+func TestWASIAgreesWithNode_panic_edges(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -4)
+}
+
+func TestWASIAgreesWithNode_read_after_print(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -5)
+}
+
+func TestWASIAgreesWithNode_bitwise_sweep(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -6)
+}
+
+func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -7)
 }
 
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
@@ -2248,6 +2298,31 @@ func TestCountsAreRecorded_030(t *testing.T) {
 func TestCountsAreRecorded_031(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, 31)
+}
+
+func TestCountsAreRecorded_little_streams(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -1)
+}
+
+func TestCountsAreRecorded_lots_streams(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -2)
+}
+
+func TestCountsAreRecorded_stderr_only(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -3)
+}
+
+func TestCountsAreRecorded_panic_edges(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -4)
+}
+
+func TestCountsAreRecorded_read_after_print(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -5)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {
