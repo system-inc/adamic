@@ -1,0 +1,182 @@
+[
+  {
+    "test": "TestAssignmentProofScannerKeyword",
+    "exit": 0,
+    "seconds": 15.644279334999737,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofScannerKeyword$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofScannerKeywordMutant",
+    "exit": 0,
+    "seconds": 2.6779280499977176,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofScannerKeywordMutant$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofIfNarrowing",
+    "exit": 0,
+    "seconds": 2.825490820003324,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofIfNarrowing$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofIfNarrowingMutant",
+    "exit": 0,
+    "seconds": 2.7248912700015353,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofIfNarrowingMutant$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofReturnDefined",
+    "exit": 0,
+    "seconds": 2.829338113995618,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofReturnDefined$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofReturnDefinedMutant",
+    "exit": 0,
+    "seconds": 2.7741072150020045,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofReturnDefinedMutant$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofChained",
+    "exit": 0,
+    "seconds": 2.727894677002041,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofChained$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofChainedMutant",
+    "exit": 0,
+    "seconds": 2.7834778889955487,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofChainedMutant$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofCompound",
+    "exit": 0,
+    "seconds": 2.672471140998823,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofCompound$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofCompoundMutant",
+    "exit": 0,
+    "seconds": 2.731392216999666,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofCompoundMutant$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofWiderTarget",
+    "exit": 0,
+    "seconds": 2.77672992299631,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofWiderTarget$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  },
+  {
+    "test": "TestAssignmentProofWiderTargetMutant",
+    "exit": 0,
+    "seconds": 2.8289526459993795,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestAssignmentProofWiderTargetMutant$",
+      "-count=1",
+      "-v",
+      "-timeout=55s"
+    ]
+  }
+]

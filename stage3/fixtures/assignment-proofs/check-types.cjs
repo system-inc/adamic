@@ -1,0 +1,14 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const ts = require('typescript');
+assert.equal(ts.version, '6.0.3');
+const file = path.resolve(process.argv[2]) + '.ts';
+const source = fs.readFileSync(process.argv[2], 'utf8') + '\ndeclare const console: { log: (text: string) => void };\n';
+const options = { strict: true, noUncheckedIndexedAccess: true, exactOptionalPropertyTypes: true, moduleDetection: ts.ModuleDetectionKind.Force, target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, lib: ['lib.es2024.d.ts'], types: [], noEmit: true };
+const host = ts.createCompilerHost(options), get = host.getSourceFile;
+host.getSourceFile = (name, version, error, fresh) => name === file ? ts.createSourceFile(name, source, version, true) : get(name, version, error, fresh);
+const diagnostics = ts.getPreEmitDiagnostics(ts.createProgram([file], options, host));
+assert.equal(diagnostics.length, 0, diagnostics.map(diagnostic => ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')).join('\n'));
+console.log('PASS stock TypeScript 6.0.3, zero diagnostics');
