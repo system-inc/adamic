@@ -15,11 +15,18 @@ typedef enum adamic_encode_kind {
 	adamic_encode_object
 } adamic_encode_kind;
 
+// The encoder's own memory of where its field was in the last shape it read: runtime's slot cache
+// packs a shape and a slot into one word, which this loop's names-only lookup doesn't need.
+typedef struct adamic_encode_cache {
+	const adamic_shape *shape;
+	size_t index;
+} adamic_encode_cache;
+
 typedef struct adamic_encode_field {
 	const char *name;
 	size_t node;
 	bool optional;
-	adamic_slot_cache cache;
+	adamic_encode_cache cache;
 } adamic_encode_field;
 
 typedef struct adamic_encode_node {
