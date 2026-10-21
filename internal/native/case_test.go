@@ -3,6 +3,7 @@ package native
 import (
 	"bufio"
 	"context"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -345,9 +346,13 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	command.WaitDelay = 5 * time.Second
-	var stderr strings.Builder
-	command.Stderr = &stderr
+	// stderr goes to a file and stdout is read here to its end, so exec copies nothing and no timer
+	// decides when either is complete (#n3gk22h).
+	stderr, err := os.CreateTemp(t.TempDir(), "stderr")
+	if err != nil {
+		t.Fatal(err)
+	}
+	command.Stderr = stderr
 	stdout, err := command.StdoutPipe()
 	if err != nil {
 		t.Fatal(err)
@@ -361,8 +366,11 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 		// Drain what's left, so a side that stopped early can't block the other on a full pipe.
 		for scanner.Scan() {
 		}
-		if err := command.Wait(); err != nil {
-			t.Errorf("%s: %v\n%s", arguments[0], err, stderr.String())
+		err := command.Wait()
+		stderr.Close()
+		if err != nil {
+			written, _ := os.ReadFile(stderr.Name())
+			t.Errorf("%s: %v\n%s", arguments[0], err, written)
 		}
 	}
 }
