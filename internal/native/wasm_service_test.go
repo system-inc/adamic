@@ -1,14 +1,12 @@
 package native
 
 import (
-	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -98,13 +96,14 @@ func serviceOptedIn(t *testing.T) string {
 	return serviceRepository(t)
 }
 
-// runServiceHost runs host over module ("-" generates the requests and Node's responses only) with the original
-// service source as its oracle, writing the requests and Node's responses into directory, and returns its output.
-func runServiceHost(repository, host, module, directory, counted, regions string) ([]byte, error) {
+// runServiceHost runs host over module with the original service source as its oracle, and returns its output. Module
+// "-" generates the requests and Node's responses only, writing those in span, [start, end), into directory; a module
+// serves every request, so its span must be all of them, and it writes nothing.
+func runServiceHost(repository, host, module, directory, counted, regions string, span [2]int) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 	command := programCommand(ctx, repository, "node", "--disable-warning=ExperimentalWarning", host, module, filepath.Join(repository, serviceSource),
-		filepath.Join(directory, "requests.jsonl"), filepath.Join(directory, "responses.jsonl"), counted, regions)
+		filepath.Join(directory, "requests.jsonl"), filepath.Join(directory, "responses.jsonl"), counted, regions, strconv.Itoa(span[0]), strconv.Itoa(span[1]))
 	return command.CombinedOutput()
 }
 
@@ -205,40 +204,34 @@ func serviceNative(t *testing.T) string {
 	return filepath.Join(directory, "service-native")
 }
 
-// generatedRange is the lines in span, [start, end), of a file the host generated, and how many lines it holds: read as
-// a stream, so a part holds only its own lines rather than the whole request file, about 400 MB.
-func generatedRange(path string, span [2]int) ([]string, int, error) {
-	file, err := os.Open(path)
+// generatedLines is the lines of a file the host generated, which holds only one part's span, so a part never holds
+// the whole request file, about 400 MB.
+func generatedLines(path string) ([]string, error) {
+	contents, err := os.ReadFile(path)
 	if err != nil {
-		return nil, 0, err
+		return nil, err
 	}
-	defer file.Close()
-	reader := bufio.NewReaderSize(file, 1<<20)
-	var lines []string
-	count := 0
-	for {
-		line, err := reader.ReadString('\n')
-		if line != "" {
-			if count >= span[0] && count < span[1] {
-				lines = append(lines, strings.TrimSuffix(line, "\n"))
-			}
-			count++
-		}
-		if err == io.EOF {
-			return lines, count, nil
-		}
-		if err != nil {
-			return nil, 0, err
-		}
+	if len(contents) == 0 {
+		return nil, nil
 	}
+	return strings.Split(strings.TrimSuffix(string(contents), "\n"), "\n"), nil
+}
+
+// serviceReportLine is the host's closing line, its report.
+func serviceReportLine(output []byte) (map[string]any, error) {
+	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
+	var report map[string]any
+	if err := json.Unmarshal([]byte(lines[len(lines)-1]), &report); err != nil {
+		return nil, fmt.Errorf("service report: %v\n%s", err, output)
+	}
+	return report, nil
 }
 
 // serviceReport reads the host's closing line; a run that served fewer than all the requests is no evidence.
 func serviceReport(output []byte, counted bool) error {
-	lines := strings.Split(strings.TrimSpace(string(output)), "\n")
-	var report map[string]any
-	if err := json.Unmarshal([]byte(lines[len(lines)-1]), &report); err != nil {
-		return fmt.Errorf("service report: %v\n%s", err, output)
+	report, err := serviceReportLine(output)
+	if err != nil {
+		return err
 	}
 	if requests, _ := report["requests"].(float64); requests != serviceRequests {
 		return fmt.Errorf("service served %v requests, want %d\n%s", report["requests"], serviceRequests, output)
@@ -258,7 +251,7 @@ func wasmLeg(t *testing.T, counted string) {
 	if counted == "1" {
 		module = "service-counted.wasm"
 	}
-	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), filepath.Join(modules, module), t.TempDir(), counted, serviceRegions(t, modules))
+	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), filepath.Join(modules, module), t.TempDir(), counted, serviceRegions(t, modules), [2]int{0, serviceRequests})
 	if err != nil {
 		t.Fatalf("service counted=%s: %v\n%s", counted, err, output)
 	}
@@ -278,8 +271,8 @@ func TestWASIServiceCounted(t *testing.T) {
 	wasmLeg(t, "1")
 }
 
-// nativePart has the host generate all the requests and Node's responses, then has the product's sanitized native
-// command answer one part's exact lines of that request file, each held to Node's response line for it.
+// nativePart has the host step through all the requests and write one part's, and Node's responses to them, then has
+// the product's sanitized native command answer that request file, each line held to Node's response line for it.
 func nativePart(t *testing.T, part int) {
 	t.Helper()
 	if err := tileRequests(serviceParts, serviceRequests); err != nil {
@@ -287,27 +280,34 @@ func nativePart(t *testing.T, part int) {
 	}
 	repository := serviceOptedIn(t)
 	directory := t.TempDir()
-	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), "-", directory, "0", "0")
+	span := serviceParts[part]
+	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), "-", directory, "0", "0", span)
 	if err != nil {
 		t.Fatalf("generate: %v\n%s", err, output)
 	}
 	if err := serviceReport(output, false); err != nil {
 		t.Fatal(err)
 	}
-	span := serviceParts[part]
-	requestLines, requests, err := generatedRange(filepath.Join(directory, "requests.jsonl"), span)
+	report, err := serviceReportLine(output)
 	if err != nil {
 		t.Fatal(err)
 	}
-	responseLines, responses, err := generatedRange(filepath.Join(directory, "responses.jsonl"), span)
+	generated, _ := report["range"].([]any)
+	if len(generated) != 2 || generated[0] != float64(span[0]) || generated[1] != float64(span[1]) || report["lines"] != float64(span[1]-span[0]) {
+		t.Fatalf("host generated range %v in %v lines, want [%d %d] in %d\n%s", report["range"], report["lines"], span[0], span[1], span[1]-span[0], output)
+	}
+	partRequests := filepath.Join(directory, "requests.jsonl")
+	requestLines, err := generatedLines(partRequests)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if requests != serviceRequests || responses != serviceRequests {
-		t.Fatalf("generated %d requests and %d responses, want %d of each", requests, responses, serviceRequests)
+	responseLines, err := generatedLines(filepath.Join(directory, "responses.jsonl"))
+	if err != nil {
+		t.Fatal(err)
 	}
-	partRequests := filepath.Join(directory, "part.jsonl")
-	writeWASIFile(t, partRequests, strings.Join(requestLines, "\n")+"\n")
+	if len(requestLines) != span[1]-span[0] || len(responseLines) != span[1]-span[0] {
+		t.Fatalf("generated %d requests and %d responses for [%d, %d), want %d of each", len(requestLines), len(responseLines), span[0], span[1], span[1]-span[0])
+	}
 	binary := serviceNative(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
@@ -460,7 +460,7 @@ func serviceMutant(t *testing.T, name string) {
 		t.Fatalf("no service mutant %s", name)
 	}
 	modules := serviceModules(t)
-	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), filepath.Join(modules, name+".wasm"), t.TempDir(), "1", serviceRegions(t, modules))
+	output, err := runServiceHost(repository, filepath.Join(repository, serviceHost), filepath.Join(modules, name+".wasm"), t.TempDir(), "1", serviceRegions(t, modules), [2]int{0, serviceRequests})
 	if err == nil || !strings.Contains(string(output), serviceMutants[index].caught) {
 		t.Fatalf("mutant not caught by %q: %v\n%s", serviceMutants[index].caught, err, output)
 	}
@@ -491,14 +491,14 @@ func TestWASIServiceMutantShrunkCount(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	shrunk := strings.Replace(string(original), "Array.from({length:100000}", "Array.from({length:1000}", 1)
-	if shrunk == string(original) {
-		t.Fatal("shrunk-count mutant did not change the host")
+	if strings.Count(string(original), "const requestCount = 100000;") != 1 {
+		t.Fatal("shrunk-count mutant must change the host's one request count")
 	}
+	shrunk := strings.Replace(string(original), "const requestCount = 100000;", "const requestCount = 1000;", 1)
 	directory := t.TempDir()
 	host := filepath.Join(directory, "host-shrunk.mjs")
 	writeWASIFile(t, host, shrunk)
-	output, err := runServiceHost(repository, host, "-", directory, "0", "0")
+	output, err := runServiceHost(repository, host, "-", directory, "0", "0", [2]int{0, 1000})
 	if err != nil {
 		t.Fatalf("shrunk host: %v\n%s", err, output)
 	}

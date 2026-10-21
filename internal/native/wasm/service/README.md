@@ -25,19 +25,30 @@ for this program, so the region advance assertion is conditional on emitted C us
 `host.mjs` seeds an LCG with `0x6a09e667` and generates 100,000 request lines. It includes
 valid orders, invalid fields/products/quantities, six routes, unknown routes, malformed
 JSON, escaped and literal Unicode, lone surrogates, control characters, 128-item orders,
-large summaries and oversized bodies. It writes the request file and expected response
-file for the native check. Node imports the same `.a` file through type stripping.
-Independent expected-response pins hold the health response, tax/rounding and Unicode
-escapes; Node's JSON.parse and default string sort additionally judge malformed inputs
-and successful listings.
+large summaries and oversized bodies. It streams them, holding one request at a time: each
+generated request draws exactly one number from the LCG, in index order, so every pass
+reseeds and generates the same sequence again, and a range skips the indices below it by
+drawing their numbers without building their text. Holding all 100,000 at once peaked at
+about 2 GiB per host. With module `-` it steps through all 100,000 and writes only the
+requests in its range, `[start, end)`, and Node's responses to them, as JSONL files for the
+native check, reporting the range and the lines written. Node imports the same `.a` file
+through type stripping. Independent expected-response pins hold the health response,
+tax/rounding and Unicode escapes; Node's JSON.parse and default string sort additionally
+judge malformed inputs and successful listings, on every request either mode generates.
 
 Each release or counted run initializes one WASI reactor, with no filesystem preopens,
-once. It warms that instance with the first 1,000 generated requests, which hold all
-20 request shapes 50 times each, then measures all 100,000 calls on the same instance. The host allocates borrowed UTF-8 input, copies the
-owned response through the ABI, and releases both. Every measured response must equal
-Node exactly, and every measured memory capacity must equal the post-warmup capacity.
-The counted run also requires zero live counted values after every warmup and measured
-request. This is reusable memory capacity, not a claim that memory shrinks.
+once, and writes no files. It warms that instance with the first 1,000 generated requests,
+which hold all 20 request shapes 50 times each, then measures all 100,000 calls on the same
+instance. The host allocates borrowed UTF-8 input, copies the owned response through the
+ABI, and releases both. Every measured response must equal Node exactly, and every measured
+memory capacity must equal the post-warmup capacity. The counted run also requires zero
+live counted values after every warmup and measured request. This is reusable memory
+capacity, not a claim that memory shrinks. A plain pass then answers the same requests in
+Node again, each held to the length and 32-bit FNV-1a hash of its measured pass response,
+and the two passes' summed response lengths must agree. The wasm rate times each handle
+call and its comparison with Node's response; the Node rate times each `handleRequest` call
+and its add to the checksum. Generating requests, computing the expected responses, the
+JSON.parse checks, the live and memory probes, and hashing fall outside both.
 
 Run:
 
@@ -53,9 +64,10 @@ no test builds anything: the tree builds two products ahead, outside any test's 
 source mutant, and whether the emitted C uses statement regions; `TestProduct_WASIServiceNative`
 builds `command.a`, a native command importing the same service, once with `adamic build --sanitize`.
 `TestWASIService` (release) and `TestWASIServiceCounted` serve the requests through the compiler's
-existing reactor ABI, and `TestWASIServiceNativeAgrees_0` to `_7` each have the host generate the
-requests and Node's responses only (module `-`). Each native part reads one eighth of the identical
-JSONL request file, 12,500 lines, and its stdout must match those lines of Node's response file,
+existing reactor ABI, and `TestWASIServiceNativeAgrees_0` to `_7` each have the host generate
+the requests and Node's responses only (module `-`), for its own range alone. Each native part's
+host steps through all 100,000 and writes one eighth, 12,500 lines, whose report must name that
+range and line count, and the command's stdout must match Node's response file line for line,
 with ASan, UBSan and LeakSanitizer enabled. All 100,000 in one sanitized run took 57.5 s on an idle
 Linux box (wasm legs 23 to 24 s, mutants 23 s), and a quarter about 14 s, past the 30 s aim on a
 loaded gate box, so every request is checked under ASan in eight instances rather than one; the
@@ -86,7 +98,9 @@ values after every generated request, and zero region objects (no regions emitte
 The native package and WASI oracle were running concurrently during these service
 measurements. Rates include exact-response assertions; Wasm includes UTF-8 boundary
 copies, allocation/release, memory and lifetime probes. These are synchronous service
-observations on a shared machine, not HTTP throughput or a speedup.
+observations on a shared machine, not HTTP throughput or a speedup. They predate the
+streaming host, whose rates time only the handle calls and comparisons described above, so
+they don't compare directly with its reports.
 
 Every requested mutant compiled and failed at execution, against the original Node source:
 
