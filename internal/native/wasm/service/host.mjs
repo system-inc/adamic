@@ -1,11 +1,17 @@
 import assert from 'node:assert/strict';
-import { readFile, writeFile } from 'node:fs/promises';
+import { closeSync, openSync, writeFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { stripTypeScriptTypes } from 'node:module';
 import { performance } from 'node:perf_hooks';
 import { cpus, loadavg, totalmem } from 'node:os';
 import { WASI } from 'node:wasi';
 
-const [modulePath, sourcePath, requestPath, responsePath, counted = '1', regionsUsed = '0'] = process.argv.slice(2);
+// The claim's request count, the one place it is written.
+const requestCount = 100000;
+const [modulePath, sourcePath, requestPath, responsePath, counted = '1', regionsUsed = '0', rangeStart = '0', rangeEnd = String(requestCount)] = process.argv.slice(2);
+const start = Number(rangeStart), end = Number(rangeEnd);
+assert.ok(Number.isInteger(start) && Number.isInteger(end) && 0<=start && start<=end && end<=requestCount, `range [${rangeStart}, ${rangeEnd}) must lie within [0, ${requestCount}]`);
+assert.ok(modulePath==='-' || (start===0 && end===requestCount), 'a module serves the full range');
 const source = stripTypeScriptTypes(await readFile(sourcePath, 'utf8'));
 const plain = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
 const loadStart = loadavg();
@@ -36,7 +42,28 @@ function generate(index) {
 		default: return JSON.stringify({method:'POST',path:'/summary',body:{text:'x'.repeat(65537)}});
 	}
 }
-const requests = Array.from({length:100000},(_,index)=>generate(index));
+// requests steps the one request sequence from its seed through all requestCount indices, handing each index in [from,
+// to) and its request to each, and returns the indices it stepped. generate calls random() exactly once per index, in
+// index order, and nothing else calls it, so an index outside the range needs only its random() for every later request
+// to come out byte for byte the same, and no pass ever holds more than one request.
+function requests(from, to, each) {
+	seed = 0x6a09e667;
+	let stepped = 0;
+	for (let index=0;index<requestCount;index++,stepped++) {
+		if (index<from || index>=to) random();
+		else each(index, generate(index));
+	}
+	return stepped;
+}
+// lines appends lines to a file in batches of about 4 MB, so a file is never one joined string.
+function lines(path) {
+	const descriptor = openSync(path, 'w');
+	let batch = '';
+	return {
+		write(line) { batch += line + '\n'; if (batch.length >= 1<<22) { writeFileSync(descriptor, batch); batch = ''; } },
+		close() { writeFileSync(descriptor, batch); closeSync(descriptor); },
+	};
+}
 // Independent semantic pins keep a shared parser/handler bug from becoming its own oracle.
 const pins = [
 	['{"method":"GET","path":"/health"}', '{"status":200,"service":"orders"}'],
@@ -45,23 +72,37 @@ const pins = [
 	['{"method":"POST","path":"/quote","body":{"amount":01}}', '{"status":400,"error":"invalid JSON"}'],
 ];
 for (const [request, expected] of pins) assert.equal(plain.handleRequest(request), expected, 'source semantic pin');
-assert.ok(requests.every(request=>!request.includes('\n') && !request.includes('\r')), 'each generated request must occupy one JSONL line');
-await writeFile(requestPath, requests.join('\n') + '\n');
-const expected = requests.map(request=>plain.handleRequest(request));
-for (let index=0;index<requests.length;index++) {
+// checkRequest holds a request to one JSONL line and Node's response for it, expected, to Node's own JSON.parse: a
+// request it rejects must be answered 400, and a listing answered 200 must list the input names sorted.
+function checkRequest(index, request, expected) {
+	assert.ok(!request.includes('\n') && !request.includes('\r'), `each generated request must occupy one JSONL line, and request ${index} doesn't`);
 	let input;
 	let malformed=false;
-	try { input=JSON.parse(requests[index]); } catch { malformed=true; }
-	const response=JSON.parse(expected[index]);
+	try { input=JSON.parse(request); } catch { malformed=true; }
+	const response=JSON.parse(expected);
 	if (malformed) assert.equal(response.status,400,`Node JSON.parse rejected request ${index}`);
 	if (input?.method==='POST' && input?.path==='/listing' && response.status===200) {
 		assert.deepEqual(response.names,[...input.body.names].sort(),`Node JSON.parse/string sort ${index}`);
 	}
 }
-
-await writeFile(responsePath, expected.join('\n') + '\n');
-// '-' for the module generates the requests and Node's responses only, for the native agreement leg.
-if (modulePath === '-') { console.log(JSON.stringify({requests:requests.length,seed:'0x6a09e667',generated:true})); process.exit(0); }
+// '-' for the module generates the requests in [start, end) and Node's responses only, for the native agreement leg.
+if (modulePath === '-') {
+	const requestLines = lines(requestPath), responseLines = lines(responsePath);
+	let written = 0;
+	const stepped = requests(start, end, (index, request)=>{
+		const expected = plain.handleRequest(request);
+		checkRequest(index, request, expected);
+		requestLines.write(request);
+		responseLines.write(expected);
+		written++;
+	});
+	requestLines.close();
+	responseLines.close();
+	console.log(JSON.stringify({requests:stepped,seed:'0x6a09e667',generated:true,range:[start,end],lines:written}));
+	process.exit(0);
+}
+// A module serves every request and its report is all a wasm leg reads, so nothing is written to requestPath or
+// responsePath here.
 const bytes = await readFile(modulePath);
 const wasi = new WASI({version:'preview1',args:[],env:{},preopens:{},returnOnExit:true});
 const instance = await WebAssembly.instantiate(bytes, wasi.getImportObject());
@@ -82,31 +123,54 @@ function handle(request) {
 // Warm every generated size and shape, including the maximum body, in this same instance: the first 1,000
 // requests hold all 20 shapes 50 times each, and the measured pass below still checks all of them.
 for (const [request,response] of pins) assert.equal(handle(request),response,'wasm semantic pin');
-for (let index=0;index<1000;index++) {
-	assert.equal(handle(requests[index]),expected[index],`warmup response ${index}`);
+requests(0, 1000, (index, request)=>{
+	const expected = plain.handleRequest(request);
+	checkRequest(index, request, expected);
+	assert.equal(handle(request),expected,`warmup response ${index}`);
 	if (counted==='1') assert.equal(api.adamic_live(),0,`warmup ${index} retained a live allocation`);
-}
+});
 const baseline = api.memory.buffer.byteLength;
 const regionStart = counted==='1' ? api.adamic_regions() : 0;
+// hash is 32-bit FNV-1a over a response's UTF-16 code units, which with its length stands in for a response the plain
+// pass no longer holds.
+function hash(text) {
+	let value = 0x811c9dc5;
+	for (let index=0;index<text.length;index++) value = Math.imul(value ^ text.charCodeAt(index), 0x01000193) >>> 0;
+	return value;
+}
+// Each pass generates its requests again rather than holding them, so the rates time only the handle loops: the wasm
+// rate times each handle call and its comparison with Node's response, and the plain rate each plain.handleRequest call
+// and its add to the checksum. Generating a request, Node's expected response in the measured pass, the JSON.parse
+// checks, the live and memory probes, and hashing and comparing in the plain pass fall outside both.
+const expectedLengths = new Int32Array(requestCount), expectedHashes = new Uint32Array(requestCount);
 let checksum=0;
-const wasmStarted = performance.now();
-for (let index=0;index<requests.length;index++) {
-	const response=handle(requests[index]);
-	assert.equal(response,expected[index],`response ${index}`);
+let wasmMilliseconds=0;
+const served = requests(0, requestCount, (index, request)=>{
+	const expected = plain.handleRequest(request);
+	checkRequest(index, request, expected);
+	const wasmStarted = performance.now();
+	const response=handle(request);
+	assert.equal(response,expected,`response ${index}`);
+	wasmMilliseconds+=performance.now()-wasmStarted;
 	if (counted==='1') assert.equal(api.adamic_live(),0,`request ${index} retained a live allocation`);
 	assert.equal(api.memory.buffer.byteLength,baseline,`linear memory grew at request ${index}`);
-	checksum+=response.length;
-}
-const wasmMilliseconds=performance.now()-wasmStarted;
-const plainStarted=performance.now();
+	checksum+=expected.length;
+	expectedLengths[index]=expected.length;
+	expectedHashes[index]=hash(expected);
+});
+// The plain pass answers the same requests again, each held to its expected response's length and hash, and its
+// running checksum of their lengths must equal the measured pass's.
 let plainChecksum=0;
-for (let index=0;index<requests.length;index++) {
-	const response=plain.handleRequest(requests[index]);
-	assert.equal(response,expected[index],`plain response ${index}`);
+let plainMilliseconds=0;
+requests(0, requestCount, (index, request)=>{
+	const plainStarted=performance.now();
+	const response=plain.handleRequest(request);
 	plainChecksum+=response.length;
-}
-const plainMilliseconds=performance.now()-plainStarted;
+	plainMilliseconds+=performance.now()-plainStarted;
+	assert.equal(response.length,expectedLengths[index],`plain response ${index}`);
+	assert.equal(hash(response),expectedHashes[index],`plain response ${index}`);
+});
 assert.equal(checksum,plainChecksum);
 const regions = counted==='1' ? api.adamic_regions()-regionStart : 0;
 if (counted==='1' && regionsUsed==='1') assert.ok(regions>0,'statement regions must advance');
-console.log(JSON.stringify({requests:requests.length,seed:'0x6a09e667',counted:counted==='1',moduleBytes:bytes.length,memoryMinimum:baseline,memoryMaximum:api.memory.buffer.byteLength,live:counted==='1'?api.adamic_live():null,regions,wasmRequestsPerSecond:requests.length*1000/wasmMilliseconds,plainRequestsPerSecond:requests.length*1000/plainMilliseconds,node:process.version,cpu:cpus()[0].model,logicalCPUs:cpus().length,totalMemory:totalmem(),loadStart,loadEnd:loadavg()}));
+console.log(JSON.stringify({requests:served,seed:'0x6a09e667',counted:counted==='1',moduleBytes:bytes.length,memoryMinimum:baseline,memoryMaximum:api.memory.buffer.byteLength,live:counted==='1'?api.adamic_live():null,regions,wasmRequestsPerSecond:served*1000/wasmMilliseconds,plainRequestsPerSecond:served*1000/plainMilliseconds,node:process.version,cpu:cpus()[0].model,logicalCPUs:cpus().length,totalMemory:totalmem(),loadStart,loadEnd:loadavg()}));
