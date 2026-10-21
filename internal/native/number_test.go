@@ -1,12 +1,13 @@
 package native
 
 import (
-	"bytes"
 	"context"
 	"strings"
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // numberHarness formats doubles, given as hexadecimal bit patterns on stdin, one per line.
@@ -46,17 +47,14 @@ func runWithInput(t *testing.T, input string, name string, arguments ...string) 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	t.Cleanup(cancel)
 	command := programCommand(ctx, "", name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	command.WaitDelay = 5 * time.Second
 	command.Stdin = strings.NewReader(input)
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
-		t.Fatalf("%s: %v\n%s", name, err, stderr.String())
+	// Each stream read to its end, with no timer deciding when (childguard.Capture, #n3gk22h).
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	if err != nil {
+		t.Fatalf("%s: %v\n%s", name, err, stderr)
 	}
-	return stdout.String()
+	return string(stdout)
 }
