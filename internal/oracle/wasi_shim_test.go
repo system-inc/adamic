@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -29,8 +30,9 @@ var shimFileFixtures = map[string]bool{
 
 // TestWASIShimAgreesWithNode runs every fixture's wasm32 build through the shim, as a family (families_test.go):
 // TestWASIShimAgreesWithNode_000 and on each run the fixtures their shard owns, since all of them in one test ran
-// 579.6 s in Loom against its 60 s budget. Within a shard the fixtures run in order, so its counts and import
-// inventory read top to bottom, and each shard logs its own counts.
+// 579.6 s in Loom against its 60 s budget. Within a shard the fixtures run in parallel, as TestWASIAgreesWithNode's
+// do, since one after another a shard of 15 ran 34 s on a loaded box, and each shard logs its own counts once they
+// have all finished.
 func runWASIShimShard(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
@@ -44,10 +46,15 @@ func runWASIShimShard(t *testing.T, shard int) {
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	ran, agreed, notYet, refused, excluded := 0, 0, 0, 0, 0
+	var ran, agreed, notYet, refused, excluded atomic.Int32
+	// Cleanups run after the parallel subtests, so the counts are the shard's whole.
+	t.Cleanup(func() {
+		t.Logf("SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d refused=%d excluded=%d", shard, ran.Load(), agreed.Load(), notYet.Load(), refused.Load(), excluded.Load())
+	})
 	for _, index := range rows {
 		fixture := fixtures[index]
 		t.Run(fixture.path, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
@@ -56,7 +63,7 @@ func runWASIShimShard(t *testing.T, shard int) {
 			// Held to the refusal TestWASIAgreesWithNode holds them to (runtime_boundary_test.go).
 			if runtimeBoundaryViewFixture(fixture.path) {
 				assertRuntimeBoundaryViewRefusal(t, err)
-				refused++
+				refused.Add(1)
 				return
 			}
 			if !fixture.lowers {
@@ -64,7 +71,7 @@ func runWASIShimShard(t *testing.T, shard int) {
 				if !errors.As(err, &refusal) {
 					t.Fatalf("want NotYet, got %v", err)
 				}
-				notYet++
+				notYet.Add(1)
 				return
 			}
 			if err != nil {
@@ -108,13 +115,13 @@ func runWASIShimShard(t *testing.T, shard int) {
 				if fileAccess == "" {
 					t.Fatalf("listed in shimFileFixtures but imports no file access: run it through the shim and drop it from the list")
 				}
-				excluded++
+				excluded.Add(1)
 				return
 			}
 			if fileAccess != "" {
 				t.Fatalf("imports %s, file access the shim refuses: add it to shimFileFixtures with its reason in docs/wasm.md", fileAccess)
 			}
-			ran++
+			ran.Add(1)
 			if os.Getenv("ADAMIC_SHIM_INVENTORY_ONLY") == "1" {
 				return
 			}
@@ -130,11 +137,10 @@ func runWASIShimShard(t *testing.T, shard int) {
 				t.Errorf("shim vs expected witness: %s\nwitness: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
 			if disagreement(reference, actual) == "" && disagreement(expected, actual) == "" {
-				agreed++
+				agreed.Add(1)
 			}
 		})
 	}
-	t.Logf("SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d refused=%d excluded=%d", shard, ran, agreed, notYet, refused, excluded)
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
