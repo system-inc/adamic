@@ -92,8 +92,10 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 			}
 			switch match[1] {
 			case "cCompile":
-				if match[4] != outcome || match[3] == "-" {
-					t.Fatalf("%s: %q, want a keyed %s", name, line, outcome)
+				// An uncached unit is never keyed (#m62spx0: a unit's key reads clang's facts before clang runs, which an
+				// uncached build skips), so its line names none; a cached one's always does.
+				if match[4] != outcome || (match[3] == "-") != (outcome == "off") {
+					t.Fatalf("%s: %q, want %s, keyed unless off", name, line, outcome)
 				}
 				if compiled[match[2]+" "+match[3]] {
 					t.Fatalf("%s: %s logged twice", name, match[2])
