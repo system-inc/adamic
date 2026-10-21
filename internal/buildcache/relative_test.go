@@ -619,6 +619,47 @@ func TestANameWhosePartIsGoneFailsAsNotBuilt(t *testing.T) {
 	}
 }
 
+// Two local products whose records name each other are a cycle no record can settle: checking either one's parts meets
+// it again while its own check is under way, so it doesn't hold, and the check returns rather than recursing until the
+// stack overflows (#z8mg5ks). The check runs in a goroutine the test waits on for 10 seconds, so a check that recurses
+// fails the test rather than hanging the suite; a recursion that overflows the stack first crashes the test binary,
+// red either way. The product then misses, and is built again.
+// Mutant: partsHoldChecking without its checking set.
+// Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
+func TestLocalProductsNamingEachOtherDontHold(t *testing.T) {
+	r := newRig(t)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetHeld(t)
+	first := Inputs{Name: "cycle first", Files: []string{"source"}}
+	second := Inputs{Name: "cycle second", Files: []string{"include"}}
+	builds := 0
+	build := func(directory string) error {
+		builds++
+		return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
+	}
+	firstProduct, secondProduct := Product(t, first, build), Product(t, second, build)
+	// Each record names the other where it is, as if each one's bytes named the other.
+	write(t, filepath.Dir(firstProduct), filepath.Base(partsPath(firstProduct)),
+		`{"`+NameKey(r.root, second)+`":"local/`+filepath.Base(secondProduct)+`"}`)
+	write(t, filepath.Dir(secondProduct), filepath.Base(partsPath(secondProduct)),
+		`{"`+NameKey(r.root, first)+`":"local/`+filepath.Base(firstProduct)+`"}`)
+	forgetHeld(t)
+	held := make(chan bool, 1)
+	go func() { held <- partsHold(firstProduct) }()
+	select {
+	case holds := <-held:
+		if holds {
+			t.Fatal("a local product whose parts name it back holds")
+		}
+	case <-time.After(10 * time.Second):
+		t.Fatal("checking a local product whose parts name it back didn't return in 10 seconds")
+	}
+	forgetHeld(t)
+	if Product(t, first, build); builds != 3 {
+		t.Fatalf("a local product whose parts name it back built %d times in all, want a miss built again", builds)
+	}
+}
+
 // A traced build is scanned like any other: one naming the machine that built it is refused, and nothing is placed.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
 func TestATracedProductNamingItsMachineIsRefused(t *testing.T) {

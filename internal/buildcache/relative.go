@@ -85,6 +85,12 @@ func productDirectory(nameKey string) string {
 
 // productPlace is productDirectory's place for nameKey, or an ErrNotBuilt error naming the product when it has none.
 func productPlace(nameKey string) (string, error) {
+	return productPlaceChecking(nameKey, map[string]bool{})
+}
+
+// productPlaceChecking is productPlace while checking holds the local products whose parts are being checked further up
+// this lookup (partsHoldChecking).
+func productPlaceChecking(nameKey string, checking map[string]bool) (string, error) {
 	if directory, ok := productKeys.Load(nameKey); ok {
 		return directory.(string), nil
 	}
@@ -99,7 +105,7 @@ func productPlace(nameKey string) (string, error) {
 	var directory string
 	var upstreams []upstream
 	if root, err := repositoryRoot(); err == nil {
-		keying(func() { directory, upstreams = namedProduct(root, output, nameKey) })
+		keying(func() { directory, upstreams = namedProductChecking(root, output, nameKey, checking) })
 	}
 	if directory == "" {
 		var settled string
@@ -133,6 +139,12 @@ func notBuiltPart(cache, nameKey, why string) error {
 // namedProduct is productDirectory's place for nameKey, with the upstreams of the set that found it there, if a set did.
 // cache is where this process writes products, and each place is looked for there and then in the build cache.
 func namedProduct(root, cache, nameKey string) (string, []upstream) {
+	return namedProductChecking(root, cache, nameKey, map[string]bool{})
+}
+
+// namedProductChecking is namedProduct while checking holds the local products whose parts are being checked further up
+// this lookup (partsHoldChecking).
+func namedProductChecking(root, cache, nameKey string, checking map[string]bool) (string, []upstream) {
 	if looked, err := productFor(root, cache, nameKey, 0, nil); err == nil && looked.directory != "" {
 		return looked.directory, looked.upstreams
 	}
@@ -145,7 +157,7 @@ func namedProduct(root, cache, nameKey string) (string, []upstream) {
 		if key, err := Key(root, inputs); err == nil {
 			// Only one whose parts are still where they were when it was built (partsHold, #z8mg5ks).
 			for _, place := range location.ReadPlaces(filepath.Join(cache, "local", key)) {
-				if isDirectory(place) && partsHold(place) {
+				if isDirectory(place) && partsHoldChecking(place, checking) {
 					return place, nil
 				}
 			}
@@ -213,6 +225,19 @@ func recordParts(target, nameKey string, named []string) error {
 // elsewhere), and the product holding its old name is stale; a product with no record was built before records were
 // kept. Either misses, and is built again (#z8mg5ks).
 func partsHold(directory string) bool {
+	return partsHoldChecking(directory, map[string]bool{})
+}
+
+// partsHoldChecking is partsHold while checking holds the local products whose parts are being checked further up this
+// lookup. A product met again while its own check is under way names itself through its parts, a cycle no record can
+// settle: it doesn't hold, so the products in the cycle miss and are built again, rather than the check recursing
+// until the stack overflows.
+func partsHoldChecking(directory string, checking map[string]bool) bool {
+	if checking[directory] {
+		return false
+	}
+	checking[directory] = true
+	defer delete(checking, directory)
 	content, err := os.ReadFile(partsPath(directory))
 	if err != nil {
 		return false
@@ -222,7 +247,7 @@ func partsHold(directory string) bool {
 		return false
 	}
 	for part, recorded := range parts {
-		found, err := productPlace(part)
+		found, err := productPlaceChecking(part, checking)
 		if err != nil || !isDirectory(found) {
 			return false
 		}
