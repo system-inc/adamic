@@ -1,11 +1,14 @@
 package buildcache
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"slices"
 	"strings"
 	"testing"
@@ -67,8 +70,10 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 		return nil
 	})
 
-	// The same names, written relative to the roots a reader supplies, build; Absolute reads each back here.
+	// The same names, written relative to the roots a reader supplies, build; Absolute reads each back here. The other
+	// product is there, as a settled key names itself: one found nowhere fails the read (#z8mg5ks).
 	other := filepath.Join(cache, strings.Repeat("ab", 32), "main.ts")
+	write(t, filepath.Dir(other), "main.ts", "")
 	var own string
 	product := Product(t, inputs("relative"), writes(func(directory string) string {
 		own = Relative(filepath.Join(directory, "main.go"))
@@ -334,6 +339,30 @@ func TestAKeyNamesAProductByItsKeyWhereverItIs(t *testing.T) {
 	}
 }
 
+// notBuiltLine is Loom's judge's pattern for adamic's not-built line, copied from the judge (#z8mg5ks): a test whose
+// output holds it failed for want of a product, which the judge charges to the tree.
+var notBuiltLine = regexp.MustCompile(`product (.+?) \(name key ([0-9a-f]{12})\) is not built: `)
+
+// readBackFails reads name back and wants it to fail as productDirectory fails, by a panic carrying ErrNotBuilt whose
+// line the judge reads as nameKey's, and returns the line.
+func readBackFails(t *testing.T, name, nameKey string) string {
+	t.Helper()
+	var recovered any
+	var got string
+	func() {
+		defer func() { recovered = recover() }()
+		got = Absolute(name)
+	}()
+	err, ok := recovered.(error)
+	if !ok || !errors.Is(err, ErrNotBuilt) {
+		t.Fatalf("%s read back as %q (recovered %v), want a not-built failure", name, got, recovered)
+	}
+	if match := notBuiltLine.FindStringSubmatch(err.Error()); match == nil || match[2] != nameKey[:12] {
+		t.Fatalf("the failure %q isn't the judge's not-built line for %s", err, nameKey[:12])
+	}
+	return err.Error()
+}
+
 // forgetHeld drops what this process holds by name key, as a process that never got these products starts.
 func forgetHeld(t *testing.T) {
 	t.Helper()
@@ -349,8 +378,9 @@ func forgetHeld(t *testing.T) {
 // One product names itself by its name key, and the name reads back wherever the reader's cache holds it (#tqrqx60 with
 // #vt46geg): while its traced build is pending, once settled under its read set's key (what Loom's runner unpacks, the
 // key's directory and the name key's read sets, read with no network), and built for this machine alone under local/.
-// Each read is from a process holding none of them. A name whose read set no longer values to a cached product reads
-// as <cache>/<name key>, which holds nothing.
+// Each read is from a process holding none of them. A name whose read set no longer values to a cached product, or
+// whose local product's declared files changed, fails as not built, never read back as a place that isn't there
+// (#z8mg5ks). A traced product records no parts, pending or settled; a local one does.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
 func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
 	r := newRig(t)
@@ -367,6 +397,9 @@ func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
 	forgetHeld(t)
 	if got := Absolute(own); got != filepath.Join(pending, "product") {
 		t.Fatalf("pending, the name read back as %s, want %s", got, filepath.Join(pending, "product"))
+	}
+	if _, err := os.Stat(partsPath(pending)); err == nil {
+		t.Fatalf("a pending traced product recorded parts at %s", partsPath(pending))
 	}
 	// Under the trace, the directory a name reads back to, and a resolved copy of it, are journaled as that product's,
 	// so a build reading there reads the product (trace.go).
@@ -404,14 +437,15 @@ func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
 	if content, _ := os.ReadFile(filepath.Join(settled, "product")); string(content) != own {
 		t.Fatalf("the settled product holds %q, want its own name %q, never its key", content, own)
 	}
+	if _, err := os.Stat(partsPath(settled)); err == nil {
+		t.Fatalf("a settled product recorded parts at %s", partsPath(settled))
+	}
 
 	// A read changed: no set values to a cached product, so the name finds nothing rather than a stale product.
 	write(t, r.root, "source/a.c", "int a2;\n")
 	forgetTracked()
 	forgetHeld(t)
-	if got := Absolute(own); got != filepath.Join(r.cache, nameKey, "product") {
-		t.Fatalf("after a read changed, the name read back as %s, want the empty %s", got, filepath.Join(r.cache, nameKey, "product"))
-	}
+	readBackFails(t, own, nameKey)
 
 	// Built for this machine alone: found by the inputs its name key points to, keyed on the tree at hand.
 	local := Inputs{Name: "local port", Files: []string{"source"}}
@@ -420,6 +454,9 @@ func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
 	})
 	if filepath.Dir(product) != filepath.Join(r.cache, "local") {
 		t.Fatalf("an untraced product is at %s, want under local/", product)
+	}
+	if parts, err := os.ReadFile(partsPath(product)); err != nil || string(parts) != "{}" {
+		t.Fatalf("a local product naming no other records parts %q, %v; want {}", parts, err)
 	}
 	forgetHeld(t)
 	localName := "<build cache>/" + NameKey(r.root, local) + "/product"
@@ -433,8 +470,152 @@ func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
 	write(t, r.root, "source/b.c", "int b2;\n")
 	forgetTracked()
 	forgetHeld(t)
-	if got := Absolute(localName); got == filepath.Join(product, "product") {
-		t.Fatalf("after a declared file changed, the name still read back as the old local product %s", got)
+	readBackFails(t, localName, NameKey(r.root, local))
+}
+
+// recordedParts is the parts record beside a local product, name key to place.
+func recordedParts(t *testing.T, product string) map[string]string {
+	t.Helper()
+	content, err := os.ReadFile(partsPath(product))
+	if err != nil {
+		t.Fatalf("no parts record beside %s: %v", product, err)
+	}
+	var parts map[string]string
+	if err = json.Unmarshal(content, &parts); err != nil {
+		t.Fatalf("the parts record beside %s reads %q: %v", product, content, err)
+	}
+	return parts
+}
+
+// A product built for this machine alone is keyed by its own declared files, never its parts', so it records where each
+// part it names was when it was built and is a hit only while each is still there (#z8mg5ks: on Home,
+// markdown-list-layout-shared-v4 hit by its own files and named sanitized-v3, whose files had moved, and 16 tests ran a
+// binary that wasn't there). A part built again elsewhere, or not built at all, misses the composite, which builds again
+// naming the part's new place. Each lookup is from a process holding nothing.
+// Mutant: partsHold asking only that each part is there, never where.
+// Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
+func TestALocalCompositeWhosePartMovedIsBuiltAgain(t *testing.T) {
+	r := newRig(t)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetHeld(t)
+	part := Inputs{Name: "composite part", Files: []string{"source"}}
+	composite := Inputs{Name: "composite", Files: []string{"include"}}
+	partBuilds, compositeBuilds := 0, 0
+	partProduct := func() string {
+		return Product(t, part, func(directory string) error {
+			partBuilds++
+			return os.WriteFile(filepath.Join(directory, "binary"), []byte(fmt.Sprintf("part %d", partBuilds)), 0o644)
+		})
+	}
+	compositeProduct := func() string {
+		return Product(t, composite, func(directory string) error {
+			compositeBuilds++
+			return os.WriteFile(filepath.Join(directory, "manifest"), []byte(Relative(filepath.Join(partProduct(), "binary"))), 0o644)
+		})
+	}
+	partName := NameKey(r.root, part)
+	// The composite names its part's binary and reads it back here, and its record says where the part was.
+	readsPart := func(product, want string) {
+		t.Helper()
+		manifest, err := os.ReadFile(filepath.Join(product, "manifest"))
+		if err != nil || string(manifest) != "<build cache>/"+partName+"/binary" {
+			t.Fatalf("the composite names %q, %v; want its part's binary by name key", manifest, err)
+		}
+		if binary, err := os.ReadFile(Absolute(string(manifest))); err != nil || string(binary) != want {
+			t.Fatalf("the composite's part reads %q, %v; want %q", binary, err, want)
+		}
+		if parts := recordedParts(t, product); len(parts) != 1 || parts[partName] != "local/"+key(t, r.root, part) {
+			t.Fatalf("the composite records parts %v, want %s at local/%s", parts, partName[:12], key(t, r.root, part))
+		}
+	}
+	first := compositeProduct()
+	readsPart(first, "part 1")
+	forgetHeld(t)
+	if compositeProduct(); compositeBuilds != 1 || partBuilds != 1 {
+		t.Fatalf("with nothing changed, the composite built %d times and its part %d, want once each", compositeBuilds, partBuilds)
+	}
+
+	// The part's declared file changed and the part was built again first: the composite's own files are unchanged, so
+	// it keys where it did, but the part it names is elsewhere.
+	write(t, r.root, "source/a.c", "int a2;\n")
+	forgetTracked()
+	forgetHeld(t)
+	partProduct()
+	forgetHeld(t)
+	second := compositeProduct()
+	if compositeBuilds != 2 || second != first {
+		t.Fatalf("the composite whose part moved built %d times, at %s then %s; want a miss built again where it was", compositeBuilds, first, second)
+	}
+	forgetHeld(t)
+	readsPart(second, "part 2")
+
+	// Changed again, and the part not built: Home's case, a part found nowhere. The composite misses and builds it.
+	write(t, r.root, "source/a.c", "int a3;\n")
+	forgetTracked()
+	forgetHeld(t)
+	third := compositeProduct()
+	if compositeBuilds != 3 || partBuilds != 3 {
+		t.Fatalf("the composite whose part was built nowhere built %d times and its part %d, want 3 each", compositeBuilds, partBuilds)
+	}
+	forgetHeld(t)
+	readsPart(third, "part 3")
+}
+
+// A local product built before parts were recorded has no record: it misses once, is built again with one, and hits
+// after. One that names no other product records an empty list, and hits.
+// Mutant: a missing record taken as a hit.
+// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
+func TestALocalProductWithNoPartsRecordMissesOnce(t *testing.T) {
+	cached(t)
+	forgetHeld(t)
+	inputs := thisPackage
+	inputs.Name = "no parts record"
+	builds := 0
+	build := func(directory string) error {
+		builds++
+		return os.WriteFile(filepath.Join(directory, "product"), []byte("built"), 0o644)
+	}
+	product := Product(t, inputs, build)
+	if err := os.Remove(partsPath(product)); err != nil {
+		t.Fatal(err)
+	}
+	forgetHeld(t)
+	if again := Product(t, inputs, build); builds != 2 || again != product {
+		t.Fatalf("a local product with no parts record built %d times, at %s then %s; want a miss built again where it was", builds, product, again)
+	}
+	if parts := recordedParts(t, product); len(parts) != 0 {
+		t.Fatalf("a product naming no other records parts %v, want none", parts)
+	}
+	forgetHeld(t)
+	if Product(t, inputs, build); builds != 2 {
+		t.Fatalf("a local product with its parts record built %d times, want a hit after the one miss", builds)
+	}
+}
+
+// A part whose place is gone fails the read of its name as not built, in the line Loom's judge reads as the tree's,
+// never read back as <cache>/<name key>, which isn't there (#z8mg5ks).
+// Mutant: productDirectory's fallback returned when it isn't there.
+// Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
+func TestANameWhosePartIsGoneFailsAsNotBuilt(t *testing.T) {
+	r := newRig(t)
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetHeld(t)
+	part := Inputs{Name: "gone part", Files: []string{"source"}}
+	product := Product(t, part, func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "binary"), []byte("part"), 0o644)
+	})
+	nameKey := NameKey(r.root, part)
+	name := "<build cache>/" + nameKey + "/binary"
+	forgetHeld(t)
+	if got := Absolute(name); got != filepath.Join(product, "binary") {
+		t.Fatalf("the part read back as %s, want %s", got, filepath.Join(product, "binary"))
+	}
+	forgetHeld(t)
+	if err := os.RemoveAll(product); err != nil {
+		t.Fatal(err)
+	}
+	if line := readBackFails(t, name, nameKey); notBuiltLine.FindStringSubmatch(line)[1] != part.Name {
+		t.Fatalf("the not-built line %q doesn't name the product %q", line, part.Name)
 	}
 }
 

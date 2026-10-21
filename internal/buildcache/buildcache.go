@@ -218,7 +218,8 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	keying(func() { nameKey = NameKey(root, inputs) })
 	// Every build site, uncached, traced or for this machine alone, builds through relocating, and every directory
 	// returned is held under its name key: a product names itself and every other product by name key (relative.go).
-	build = relocating(inputs, nameKey, build)
+	var named []string
+	build = relocating(inputs, nameKey, build, &named)
 	if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
 		directory, err := os.MkdirTemp("", "adamic-build-")
 		if err != nil {
@@ -271,7 +272,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	if storeAddress() != "" {
 		for index, key := range looked.keys {
 			outcome := "fetched"
-			product, _, err := filled(filepath.Join(cache, key), described, func(scratch string) error {
+			product, _, err := filled(filepath.Join(cache, key), described, nil, func(scratch string) error {
 				if err := fetch(key, scratch); err != nil {
 					return err
 				}
@@ -300,7 +301,7 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	case traceDirectory() != "":
 		// Built here under the trace, and found by every process under it, until Settle keys it by what it read.
 		var id string
-		product, built, err := filled(filepath.Join(pendingDirectory(cache), nameKey), described, func(scratch string) (err error) {
+		product, built, err := filled(filepath.Join(pendingDirectory(cache), nameKey), described, nil, func(scratch string) (err error) {
 			_, id, err = tracedBuild(root, inputs, scratch, build)
 			return err
 		})
@@ -325,7 +326,16 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild) (st
 	if err != nil {
 		return "", "", err
 	}
-	product, built, err := filled(filepath.Join(cache, "local", key), described, build)
+	// Its key is its own declared Files, never its parts': a product naming another is a hit only while each part it
+	// names is where it was when it was built (partsHold), and its record is written before it is placed, so a placed
+	// one always has it (#z8mg5ks).
+	target := filepath.Join(cache, "local", key)
+	product, built, err := filled(target, described, partsHold, func(scratch string) error {
+		if err := build(scratch); err != nil {
+			return err
+		}
+		return recordParts(target, nameKey, named)
+	})
 	if err != nil {
 		return "", "", err
 	}
@@ -367,8 +377,12 @@ func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lea
 // and a product already at the same place in the output directory or the build cache is the product, looked for
 // before anything is made or locked, so a hit in a build cache this process only reads writes nothing there. It returns
 // where the product is, and whether this call filled it.
-func filled(target, inputs string, fill func(scratch string) error) (string, bool, error) {
-	if placed, ok := existingPlace(target); ok {
+//
+// holds, when not nil, says whether a product found is still the product (partsHold): one that isn't is a miss, and
+// one at target is taken away under the lock before it is filled again. One in a build cache this process only reads
+// stays, and the product filled at target is read before it.
+func filled(target, inputs string, holds func(placed string) bool, fill func(scratch string) error) (string, bool, error) {
+	if placed, ok := heldPlace(target, holds); ok {
 		return placed, false, nil
 	}
 	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
@@ -379,8 +393,13 @@ func filled(target, inputs string, fill func(scratch string) error) (string, boo
 		return "", false, err
 	}
 	defer unlock()
-	if placed, ok := existingPlace(target); ok {
+	if placed, ok := heldPlace(target, holds); ok {
 		return placed, false, nil
+	}
+	if holds != nil {
+		if err = setAside(target); err != nil {
+			return "", false, err
+		}
 	}
 	name := filepath.Base(target)
 	scratch, err := os.MkdirTemp(filepath.Dir(target), ".building-"+name[:min(12, len(name))]+"-")
@@ -404,6 +423,35 @@ func filled(target, inputs string, fill func(scratch string) error) (string, boo
 		return "", false, err
 	}
 	return target, true, nil
+}
+
+// heldPlace is the first place target is at that holds (filled's holds, every one when nil), the output directory's
+// first (location.ReadPlaces).
+func heldPlace(target string, holds func(placed string) bool) (string, bool) {
+	for _, place := range location.ReadPlaces(target) {
+		if _, err := os.Stat(place); err == nil && (holds == nil || holds(place)) {
+			return place, true
+		}
+	}
+	return "", false
+}
+
+// setAside takes away a product at target that no longer holds, under target's lock: renamed whole into a scratch
+// directory beside it, then removed, so target is never half there.
+func setAside(target string) error {
+	if _, err := os.Lstat(target); err != nil {
+		return nil
+	}
+	name := filepath.Base(target)
+	aside, err := os.MkdirTemp(filepath.Dir(target), ".stale-"+name[:min(12, len(name))]+"-")
+	if err != nil {
+		return err
+	}
+	if err = os.Rename(target, filepath.Join(aside, name)); err != nil {
+		os.RemoveAll(aside)
+		return err
+	}
+	return os.RemoveAll(aside)
 }
 
 // lockTarget takes target's lock, which every process that places a product at target holds from its look to its

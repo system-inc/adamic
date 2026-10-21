@@ -3,6 +3,7 @@ package buildcache
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -48,13 +49,14 @@ func holding(nameKey, directory string) string {
 // relocating wraps a product's build. While it builds, its directory is <build cache>/<name key> to Relative; when it
 // has built, relocatable reads what it made, under keying so the check's reads are never the build's own or a later
 // build's (trace.go). The scratch directory is forgotten either way: filled renames it, and get holds the product
-// where it ends up.
-func relocating(inputs Inputs, nameKey string, build func(directory string) error) func(directory string) error {
+// where it ends up. named is set to the name key of each product its bytes name (relocatable), so get can record where
+// each was for a product it builds for this machine alone (recordParts).
+func relocating(inputs Inputs, nameKey string, build func(directory string) error, named *[]string) func(directory string) error {
 	return func(directory string) error {
 		located(nameKey, directory)
 		err := build(directory)
 		if err == nil {
-			keying(func() { err = relocatable(inputs, directory) })
+			keying(func() { *named, err = relocatable(inputs, directory) })
 		}
 		forgotten(nameKey, directory)
 		return err
@@ -64,20 +66,35 @@ func relocating(inputs Inputs, nameKey string, build func(directory string) erro
 // productDirectory is where the product named nameKey is on this machine: the directory this process holds it in;
 // else the one its read sets name in the cache (settled, as Loom's runner unpacks it), the one this trace built and
 // hasn't settled (pending), or the one built here for this machine alone (local), in that order; else <cache>/<name>,
-// as a settled key names itself. Each is looked for in the output directory first, then in the build cache
-// (location.ReadPlaces). What it finds is held, and journaled as found, so a build reading there under a trace reads
-// that product (trace.go). Looking it up reads read sets, the tree and declared files, all under keying.
+// as a settled key names itself, when it is there. Each is looked for in the output directory first, then in the build
+// cache (location.ReadPlaces). What it finds is held, and journaled as found, so a build reading there under a trace
+// reads that product (trace.go). Looking it up reads read sets, the tree and declared files, all under keying.
+//
+// It never answers with a place that isn't there (#z8mg5ks: on Home, markdown-list-layout-shared-v4 named a part whose
+// declared files had moved, <cache>/<name key> was read back, and 16 tests ran a missing binary, charged to the change).
+// A product found nowhere panics with productPlace's ErrNotBuilt error, since Absolute, the make file's hook that calls
+// it, answers with a string: the panic reaches the test that read the name back and fails it with adamic's not-built
+// line, which Loom's judge reads as the tree's.
 func productDirectory(nameKey string) string {
+	directory, err := productPlace(nameKey)
+	if err != nil {
+		panic(err)
+	}
+	return directory
+}
+
+// productPlace is productDirectory's place for nameKey, or an ErrNotBuilt error naming the product when it has none.
+func productPlace(nameKey string) (string, error) {
 	if directory, ok := productKeys.Load(nameKey); ok {
-		return directory.(string)
+		return directory.(string), nil
 	}
 	cache, err := cacheLocation()
 	if err != nil {
-		return filepath.Join(cache, nameKey)
+		return "", notBuiltPart(cache, nameKey, err.Error())
 	}
 	output, err := outputLocation()
 	if err != nil {
-		return filepath.Join(cache, nameKey)
+		return "", notBuiltPart(cache, nameKey, err.Error())
 	}
 	var directory string
 	var upstreams []upstream
@@ -85,18 +102,32 @@ func productDirectory(nameKey string) string {
 		keying(func() { directory, upstreams = namedProduct(root, output, nameKey) })
 	}
 	if directory == "" {
-		settled := filepath.Join(cache, nameKey)
-		if output != cache {
-			keying(func() {
-				if found, ok := existingPlace(filepath.Join(output, nameKey)); ok {
-					settled = found
-				}
-			})
+		var settled string
+		var ok bool
+		keying(func() { settled, ok = existingPlace(filepath.Join(output, nameKey)) })
+		if !ok {
+			return "", notBuiltPart(output, nameKey, fmt.Sprintf("no read set, pending build or product built for this machine "+
+				"alone finds it, and %s holds nothing", strings.Join(location.ReadPlaces(filepath.Join(output, nameKey)), " nor ")))
 		}
-		return settled
+		return settled, nil
 	}
 	journalFound(nameKey, "", directory, upstreams)
-	return holding(nameKey, directory)
+	return holding(nameKey, directory), nil
+}
+
+// notBuiltPart is the ErrNotBuilt error for a product read back by its name key alone, in get's words for a missing
+// product, which Loom's judge matches (`product (.+?) \(name key ([0-9a-f]{12})\) is not built: `). The product is
+// named as its local pointer or its read sets name it, when either does, else by the name it was read back by.
+func notBuiltPart(cache, nameKey, why string) error {
+	name := "<build cache>/" + nameKey
+	keying(func() {
+		if inputs, ok := localInputs(cache, nameKey); ok && inputs.Name != "" {
+			name = inputs.Name
+		} else if file, err := loadReads(cache, nameKey); err == nil && file.Name != "" {
+			name = file.Name
+		}
+	})
+	return fmt.Errorf("product %s (name key %s) is %w: %s", name, nameKey[:min(12, len(nameKey))], ErrNotBuilt, why)
 }
 
 // namedProduct is productDirectory's place for nameKey, with the upstreams of the set that found it there, if a set did.
@@ -112,12 +143,111 @@ func namedProduct(root, cache, nameKey string) (string, []upstream) {
 	}
 	if inputs, ok := localInputs(cache, nameKey); ok {
 		if key, err := Key(root, inputs); err == nil {
-			if built, ok := directoryPlace(filepath.Join(cache, "local", key)); ok {
-				return built, nil
+			// Only one whose parts are still where they were when it was built (partsHold, #z8mg5ks).
+			for _, place := range location.ReadPlaces(filepath.Join(cache, "local", key)) {
+				if isDirectory(place) && partsHold(place) {
+					return place, nil
+				}
 			}
 		}
 	}
 	return "", nil
+}
+
+// partsPath is where a product built for this machine alone records its parts, beside it: the products its bytes name
+// by <build cache>/<name key>, each with the place, relative to the cache, it was at when the product was built
+// (local/<key>, <key> for a settled set's, pending/<trace>/<name key>), as JSON, name key to place. Loom ships only a
+// settled product's <key>/ and <key>.inputs, and a runner never builds a local product, so the record never leaves
+// the machine.
+func partsPath(directory string) string {
+	return directory + ".parts"
+}
+
+// recordParts writes target's parts record, whole by rename, for a product just built and not yet placed at target:
+// each of named but nameKey (the product's own) with where productPlace finds it now (#z8mg5ks). A product that
+// names none records an empty one. A part found nowhere, or outside the cache (an uncached build's directory), leaves
+// no record, so the product misses next time and is built again rather than hit with a part no record can check.
+func recordParts(target, nameKey string, named []string) error {
+	parts := map[string]string{}
+	for _, part := range named {
+		if part == nameKey {
+			continue
+		}
+		directory, err := productPlace(part)
+		if err == nil {
+			if place, ok := cachePlace(directory); ok {
+				parts[part] = place
+				continue
+			}
+		}
+		note("parts %s: %s is in no cache place (%v), so it is built again next time", nameKey[:12], part[:12], err)
+		if err = os.Remove(partsPath(target)); err != nil && !errors.Is(err, fs.ErrNotExist) {
+			return err
+		}
+		return nil
+	}
+	encoded, err := json.Marshal(parts)
+	if err != nil {
+		return err
+	}
+	temporary, err := os.CreateTemp(filepath.Dir(target), ".parts-")
+	if err != nil {
+		return err
+	}
+	if _, err = temporary.Write(encoded); err == nil {
+		err = temporary.Close()
+	}
+	if err == nil {
+		err = os.Chmod(temporary.Name(), 0o644)
+	}
+	if err != nil {
+		os.Remove(temporary.Name())
+		return err
+	}
+	return os.Rename(temporary.Name(), partsPath(target))
+}
+
+// partsHold says whether the product built for this machine alone at directory is still the one its parts make: its
+// parts record is there, and every part in it is found now, as productDirectory finds it, at exactly the place it was
+// recorded at, a directory that is there. A part found elsewhere moved (its declared files changed, so it keys
+// elsewhere), and the product holding its old name is stale; a product with no record was built before records were
+// kept. Either misses, and is built again (#z8mg5ks).
+func partsHold(directory string) bool {
+	content, err := os.ReadFile(partsPath(directory))
+	if err != nil {
+		return false
+	}
+	var parts map[string]string
+	if err = json.Unmarshal(content, &parts); err != nil {
+		return false
+	}
+	for part, recorded := range parts {
+		found, err := productPlace(part)
+		if err != nil || !isDirectory(found) {
+			return false
+		}
+		if place, ok := cachePlace(found); !ok || place != recorded {
+			return false
+		}
+	}
+	return true
+}
+
+// cachePlace is directory relative to the root that holds it (location.Roots), slash-separated, so a place recorded
+// under the output directory is the same place once Loom copies it into the build cache. A directory under no root has
+// none.
+func cachePlace(directory string) (string, bool) {
+	roots, err := location.Roots()
+	if err != nil {
+		return "", false
+	}
+	for _, root := range roots {
+		relative, err := filepath.Rel(root, directory)
+		if err == nil && relative != "." && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			return filepath.ToSlash(relative), true
+		}
+	}
+	return "", false
 }
 
 func isDirectory(path string) bool {
@@ -214,11 +344,20 @@ func localInputs(cache, nameKey string) (Inputs, bool) {
 // product's own declared inputs (its Files, read on this tree) is that input's text, which the product carries (#arw7837:
 // json's pinned corpus is the repository's JSON, whose reports name /tmp/adamic-gate/... runs). It passes. A token naming
 // the build cache or a product directory never does, since no input can vouch for where this machine builds.
-func relocatable(inputs Inputs, directory string) error {
+//
+// It returns the name key of each product the files it reads name by <build cache>/<name key>, once each, in the order
+// first met: the product's parts, whose places a product built for this machine alone records (recordParts).
+func relocatable(inputs Inputs, directory string) ([]string, error) {
 	places := machinePlaces()
 	vouching := declaredText(inputs.Files)
-	return readFiles(directory, true, func(file string, content []byte, _ fs.FileMode) error {
+	var named []string
+	err := readFiles(directory, true, func(file string, content []byte, _ fs.FileMode) error {
 		text := string(content)
+		for _, name := range productName.FindAllString(text, -1) {
+			if nameKey := strings.TrimPrefix(name, "<build cache>/"); !slices.Contains(named, nameKey) {
+				named = append(named, nameKey)
+			}
+		}
 		// In data, the byte before a string is its length, any byte at all, so a path there starts wherever it is found.
 		data := slices.Contains(dataFormats, filepath.Ext(file))
 		for _, place := range places {
@@ -235,6 +374,7 @@ func relocatable(inputs Inputs, directory string) error {
 		}
 		return nil
 	})
+	return named, err
 }
 
 // pathTokens are the whole path tokens of text in which path stands as a whole path, by replacePath's rule: each runs

@@ -483,7 +483,7 @@ func TestASettledPlacementWaitsForAFillOfItsKey(t *testing.T) {
 	group.Add(1)
 	go func() {
 		defer group.Done()
-		_, built, fillError = filled(product, "inputs", func(scratch string) error {
+		_, built, fillError = filled(product, "inputs", nil, func(scratch string) error {
 			close(filling)
 			<-release
 			return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
@@ -525,7 +525,7 @@ func TestAFillThatLosesItsRenameFindsTheProduct(t *testing.T) {
 	t.Parallel()
 	cache := t.TempDir()
 	product := filepath.Join(cache, strings.Repeat("cd", 32))
-	placed, built, err := filled(product, "inputs", func(scratch string) error {
+	placed, built, err := filled(product, "inputs", nil, func(scratch string) error {
 		write(t, product, "product", "placed")
 		return os.WriteFile(filepath.Join(scratch, "product"), []byte("fetched"), 0o644)
 	})
