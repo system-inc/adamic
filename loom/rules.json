@@ -1,10 +1,9 @@
 {
-  "blocks": { "on": true, "budget": 4, "sizing": { "min": 3, "max": 16, "target": 0.8, "window": 20 }, "depth": 2, "builders": ["Adam", "Eve"] },
+  "blocks": { "on": true, "budget": 1, "depth": 2, "builders": ["Adam", "Eve"] },
   "restack": { "on": true },
   "first": [
-    "chg_5q4s8rehy8tqn34strv4v0j6yh",
-    "chg_0cqdq1dnpbmezav09chf1fk74j",
-    "chg_q400f2qdrts1xgk5z56888rp1s"
+    "chg_kwhmgbs97nfxd26z7ntawv8080",
+    "chg_w7p0j3mm00esny82daf5yfjwv0"
   ],
   "door": { "heavy": 1000, "pacedAfter": 2, "waiting": 10, "files": 400 }
 }
