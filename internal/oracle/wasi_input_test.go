@@ -39,24 +39,30 @@ type wasmEngine struct {
 
 var v8Engine = wasmEngine{run: onV8Input}
 
-func buildEngineFixture(t *testing.T, compiler, path, directory string) string {
+// buildEngineFixture builds the fixture's wasm32 command in process, as TestWASIAgreesWithNode does, from the runtime
+// products built ahead. It once built cmd/adamic and ran adamic build, and on Loom's uncached boxes every shard
+// building the whole compiler at once ran each past its 60 s budget.
+func buildEngineFixture(t *testing.T, path, directory string) string {
 	t.Helper()
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
 	binary := filepath.Join(directory, "program.wasm")
-	command := bounded(t, compiler, "build", "--target", "wasm32-wasi", path, "-o", binary)
-	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("adamic build: %v\n%s", err, output)
+	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		t.Fatal(err)
 	}
 	return binary
 }
 
-func runWASIInputFixture(t *testing.T, compiler, fixture string, arguments []string, unreadable, writes bool, engine wasmEngine) bool {
+func runWASIInputFixture(t *testing.T, fixture string, arguments []string, unreadable, writes bool, engine wasmEngine) bool {
 	t.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
 		t.Fatal(err)
 	}
 	shared := sharedDirectory(t)
-	binary := buildEngineFixture(t, compiler, path, shared)
+	binary := buildEngineFixture(t, path, shared)
 	how := inputRun{directory: filepath.Dir(path), arguments: append([]string{}, arguments...)}
 	if os.Geteuid() == 0 {
 		how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
@@ -119,9 +125,8 @@ func runWASIInputShard(t *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWASIInputAgreesWithNode")
-	compiler := filepath.Join(sharedDirectory(t), "adamic")
-	if output, err := bounded(t, "go", "build", "-o", compiler, filepath.Join(repository, "cmd", "adamic")).CombinedOutput(); err != nil {
-		t.Fatalf("%v: %s", err, output)
+	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+		t.Fatal(err)
 	}
 	pass, limits, fail, skip := 0, 0, 0, 0
 	defer func() {
@@ -155,7 +160,7 @@ func runWASIInputShard(t *testing.T, shard int) {
 					t.Log("PASS", fixture.path)
 				}
 			}()
-			limited = runWASIInputFixture(t, compiler, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
+			limited = runWASIInputFixture(t, fixture.path, fixture.arguments, fixture.unreadable, fixture.writes, engine)
 		})
 	}
 }
