@@ -996,6 +996,10 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 	var directions predicateTruth
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
+		if predicateCannotMatch(node, argument) {
+			node.ForEachChild(visit)
+			return false
+		}
 		if l.predicateSameReference(node, argument) && !ast.IsDeclarationName(node) && !predicateWriteOnly(node) && !ast.IsPartOfTypeNode(node) {
 			actual := l.checker.GetTypeAtLocation(node)
 			if !checker.Checker_isTypeIdenticalTo(l.checker, actual, declared) {
@@ -1021,6 +1025,15 @@ func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argume
 		file.AsNode().ForEachChild(visit)
 	}
 	return directions
+}
+
+// An identifier argument matches only an identifier resolving to its symbol, so one spelled the
+// same, or a declaration of it; the checker resolves each other identifier it's asked about, and
+// a property name like the b in a.b resolves to nothing, so it then computes spelling suggestions
+// it throws away: 94% of tsc's mapToTypeNodes. A declaration of the symbol isn't an identifier, so
+// it still reaches the checker.
+func predicateCannotMatch(node, argument *ast.Node) bool {
+	return argument.Kind == ast.KindIdentifier && node.Kind == ast.KindIdentifier && node.Text() != argument.Text()
 }
 
 func (l *lowering) predicateSameReference(a, b *ast.Node) bool {
