@@ -132,6 +132,82 @@ func TestGoModReplacementsAreGosForEveryTrackedGoMod(t *testing.T) {
 
 // goModEditReplacements is go's answer for the go.mod at name: each replacement's New path that names no version, in
 // the order go mod edit -json lists them. A file go refuses fails the test, since no go.mod holds it.
+// The tree's go.work.sum holds every checksum the workspace needs, so go never writes one beside the go.work: a product's
+// key runs go list in the tree's root workspace (goRequest.keyInputs), and a unit's source is shared by every later unit
+// of its tree on the box, so a sum go wrote there was one unit's write reaching the next (#2t2zgkf). It's checked as a
+// runner's closed source would meet it: a copy of the root go.work naming the same modules by their absolute paths,
+// beside a copy of the tree's go.work.sum, both read-only, listed by go itself over every package of the workspace and
+// their tests, which must read and write nothing more. Mutant: any one line of the sums left out, red on the write.
+func TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork(t *testing.T) {
+	t.Parallel()
+	root := repositoryRootForTest(t)
+	work, sums := filepath.Join(t.TempDir(), "workspace"), ""
+	if err := os.Mkdir(work, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.Chmod(work, 0o755) })
+	run := func(arguments ...string) []byte {
+		t.Helper()
+		command := toolchain.CommandIn(root, "go", arguments...)
+		command.Env = append(command.Env, "GOWORK="+filepath.Join(work, "go.work"))
+		output, err := command.Output()
+		if err != nil {
+			var exit *exec.ExitError
+			if errors.As(err, &exit) {
+				t.Fatalf("go %s: %v\n%s", strings.Join(arguments, " "), err, exit.Stderr)
+			}
+			t.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+		}
+		return output
+	}
+	for _, name := range []string{"go.work", "go.work.sum"} {
+		content, err := os.ReadFile(filepath.Join(root, name))
+		if err != nil {
+			t.Fatalf("the tree's %s: %v", name, err)
+		}
+		if name == "go.work.sum" {
+			sums = string(content)
+		}
+		if err := os.WriteFile(filepath.Join(work, name), content, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var file struct {
+		Use []struct{ DiskPath string }
+	}
+	if err := json.Unmarshal(run("work", "edit", "-json"), &file); err != nil {
+		t.Fatal(err)
+	}
+	if len(file.Use) == 0 {
+		t.Fatal("the root go.work uses no module")
+	}
+	edit := []string{"work", "edit"}
+	for _, use := range file.Use {
+		module := filepath.Join(root, filepath.FromSlash(use.DiskPath))
+		if _, err := os.Stat(filepath.Join(module, "go.mod")); err != nil {
+			t.Fatalf("the workspace's module %s isn't in this tree, as a checkout without its submodules: %v", use.DiskPath, err)
+		}
+		edit = append(edit, "-dropuse="+use.DiskPath, "-use="+module)
+	}
+	run(edit...)
+	for _, name := range []string{"go.work", "go.work.sum"} {
+		if err := os.Chmod(filepath.Join(work, name), 0o444); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := os.Chmod(work, 0o555); err != nil {
+		t.Fatal(err)
+	}
+	run("list", "-deps", "-test", "-json", "all")
+	after, err := os.ReadFile(filepath.Join(work, "go.work.sum"))
+	if err != nil || string(after) != sums {
+		t.Fatalf("go changed the workspace's sums (%v):\n%s", err, after)
+	}
+	if entries, err := os.ReadDir(work); err != nil || len(entries) != 2 {
+		t.Fatalf("the workspace holds %d entries after go list, want its go.work and go.work.sum alone (%v)", len(entries), err)
+	}
+}
+
 func goModEditReplacements(t *testing.T, name string) []string {
 	t.Helper()
 	output, err := toolchain.CommandIn(filepath.Dir(name), "go", "mod", "edit", "-json", name).Output()
