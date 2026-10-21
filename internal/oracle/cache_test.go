@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/oracletest"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -199,7 +200,7 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
-		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/internal/native/native.go", repository+"/internal/native/library.go", repository+"/internal/leakcheck/leakcheck.go")
+		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/oracle/json_decode.mjs", repository+"/oracle/json_encode.mjs", repository+"/oracle/json_types.go", repository+"/internal/native/native.go", repository+"/internal/native/library.go", repository+"/internal/leakcheck/leakcheck.go")
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -449,21 +450,23 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 }
 
 func TestMain(main *testing.M) {
-	status := main.Run()
-	// -update-counts' writer: the counts family's shards and TestCountsAreRecordedTable measured, and the table is
-	// written once, here, after every one of them has run (counts_test.go).
-	if *updateCounts && status == 0 {
-		if err := writeCounts(); err != nil {
-			fmt.Println(err)
-			status = 1
+	os.Exit(oracletest.Run(func() int {
+		status := main.Run()
+		// -update-counts' writer: the counts family's shards and TestCountsAreRecordedTable measured, and the table is
+		// written once, here, after every one of them has run (counts_test.go).
+		if *updateCounts && status == 0 {
+			if err := writeCounts(); err != nil {
+				fmt.Println(err)
+				status = 1
+			}
 		}
-	}
-	if gate.cache != nil {
-		for index, kind := range resultKinds {
-			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+		if gate.cache != nil {
+			for index, kind := range resultKinds {
+				fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+			}
 		}
-	}
-	os.Exit(status)
+		return status
+	}))
 }
 
 // Changing generated C is the lowering-change case: the source and both toolchains stay put.
