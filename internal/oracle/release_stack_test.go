@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -57,10 +58,10 @@ int main(void) {
 		if err := os.WriteFile(path, []byte(harness), 0600); err != nil {
 			t.Fatal(err)
 		}
-		command := bounded(t, "clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-I", runtimeDirectory, path, "-o", binary)
+		ctx, command := bounded(t, "clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-I", runtimeDirectory, path, "-o", binary)
 		command.Env = toolchain.Env()
-		if output, err := command.CombinedOutput(); err != nil {
-			t.Fatalf("compile mutant=%v: %v\n%s", mutant, err, output)
+		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
+			t.Fatalf("compile mutant=%v: %v\n%s%s", mutant, err, stdout, stderr)
 		}
 		got := execute(t, binary)
 		if !mutant && got.exitCode != 0 {

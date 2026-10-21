@@ -54,7 +54,7 @@ func sanitized(t *testing.T, fixture string) (string, string, string) {
 // what it wrote to stderr when stderr isn't one of them.
 func withStreams(t *testing.T, stdout *os.File, stderr *os.File, name string, arguments ...string) int {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	_, command := bounded(t, name, arguments...)
 	command.Stdout = stdout
 	command.Stderr = stderr
 	if runtime.GOOS == "linux" {
@@ -183,11 +183,16 @@ func firstDifference(left []byte, right []byte) int {
 // through it, in the order it came.
 func onePipe(t *testing.T, name string, arguments ...string) (int, []byte) {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	_, command := bounded(t, name, arguments...)
 	var both bytes.Buffer
 	// The same writer for both: os/exec gives them one pipe.
 	command.Stdout = &both
 	command.Stderr = &both
+	// WaitDelay: the order the two streams interleave in is what this compares, and
+	// childguard.Capture reads each stream from a pipe of its own, so only exec's one shared pipe
+	// keeps it; the delay bounds a pipe still held after the exit until childguard can capture both
+	// streams on one pipe.
+	command.WaitDelay = 5 * time.Second
 	if runtime.GOOS == "linux" {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
@@ -238,7 +243,7 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 		path, binary, script := sanitized(t, "internal/oracle/testdata/prompt_then_read.a")
 		runner := filepath.Join(repository, "oracle", "node.mjs")
 		converse := func(name string, arguments ...string) (bool, string) {
-			command := bounded(t, name, arguments...)
+			_, command := bounded(t, name, arguments...)
 			if runtime.GOOS == "linux" {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			}
@@ -319,12 +324,16 @@ func TestASignalLeavesWhatWasPrinted(t *testing.T) {
 							arguments = append([]string{"-c", `trap "" TERM INT HUP; exec "$0" "$@"`, name}, arguments...)
 							name = "sh"
 						}
-						command := bounded(t, name, arguments...)
+						_, command := bounded(t, name, arguments...)
 						if runtime.GOOS == "linux" {
 							command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 						}
 						var stdout, stderr lockedBuffer
 						command.Stdout, command.Stderr = &stdout, &stderr
+						// WaitDelay: stdout is read while the program runs, to know when to signal it, and
+						// childguard.Capture gives the output only once the command has exited; the delay bounds a
+						// pipe still held after the signal, and Wait's error isn't what this judges.
+						command.WaitDelay = 5 * time.Second
 						if err := command.Start(); err != nil {
 							t.Fatal(err)
 						}

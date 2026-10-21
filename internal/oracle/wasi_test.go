@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -135,9 +136,9 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 		if err := os.WriteFile(source, []byte(fmt.Sprintf("#include <stdio.h>\nint main(void) { fputs(%q, stdout); return %d; }\n", text, exit)), 0644); err != nil {
 			t.Fatal(err)
 		}
-		command := bounded(t, compiler, "--target=wasm32-wasi", "--sysroot="+sysroot, "-O2", "-mexec-model=command", source, "-o", binary)
-		if output, err := command.CombinedOutput(); err != nil {
-			t.Fatalf("probe build: %v\n%s", err, output)
+		ctx, command := bounded(t, compiler, "--target=wasm32-wasi", "--sysroot="+sysroot, "-O2", "-mexec-model=command", source, "-o", binary)
+		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
+			t.Fatalf("probe build: %v\n%s%s", err, stdout, stderr)
 		}
 		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
 	}
