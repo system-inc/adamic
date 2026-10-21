@@ -29,6 +29,9 @@ func TestMainPartsCutBetweenStatements(t *testing.T) {
 		"\tif (true) {\n\t\tdouble inner = 4;\n\t}\n",
 		"\tadamic_use(held);\n",
 		"\tif (true) {\n\t\tdouble inner = 5;\n\t}\n",
+		"\tif (adamic_thrown != NULL) {\n\t\tgoto adamic_done_9;\n\t}\n",
+		"\tadamic_use(6);\n",
+		"\tadamic_done_9:;\n",
 		"",
 	}
 	got := mainParts(statements, 1)
@@ -38,6 +41,8 @@ func TestMainPartsCutBetweenStatements(t *testing.T) {
 		statements[3] + statements[4],
 		statements[5] + statements[6] + statements[7],
 		statements[8],
+		// A goto ahead of its label keeps everything between them with it.
+		statements[9] + statements[10] + statements[11],
 	}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("parts:\n%q\nwant:\n%q", got, want)
