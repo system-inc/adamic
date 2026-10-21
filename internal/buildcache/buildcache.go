@@ -436,22 +436,25 @@ func heldPlace(target string, holds func(placed string) bool) (string, bool) {
 	return "", false
 }
 
-// setAside takes away a product at target that no longer holds, under target's lock: renamed whole into a scratch
-// directory beside it, then removed, so target is never half there.
+// setAside takes away a product at target that no longer holds, under target's lock: renamed whole into a directory
+// beside it, .stale-<pid>-<key>-..., so target is never half there, and kept (Node's ruling on #z8mg5ks). A lookup
+// never removes a product: on Linux a binary of it already running survives the rename, and a process that read its
+// path but hasn't run it yet fails, which is right, since a part it names moved. Removing it is the cache's own trim,
+// which buildcache doesn't have yet, so it stays until one does or it is removed by hand.
 func setAside(target string) error {
 	if _, err := os.Lstat(target); err != nil {
 		return nil
 	}
 	name := filepath.Base(target)
-	aside, err := os.MkdirTemp(filepath.Dir(target), ".stale-"+name[:min(12, len(name))]+"-")
+	aside, err := os.MkdirTemp(filepath.Dir(target), fmt.Sprintf(".stale-%d-%s-", os.Getpid(), name[:min(12, len(name))]))
 	if err != nil {
 		return err
 	}
 	if err = os.Rename(target, filepath.Join(aside, name)); err != nil {
-		os.RemoveAll(aside)
+		os.Remove(aside)
 		return err
 	}
-	return os.RemoveAll(aside)
+	return nil
 }
 
 // lockTarget takes target's lock, which every process that places a product at target holds from its look to its

@@ -72,9 +72,12 @@ func relocating(inputs Inputs, nameKey string, build func(directory string) erro
 //
 // It never answers with a place that isn't there (#z8mg5ks: on Home, markdown-list-layout-shared-v4 named a part whose
 // declared files had moved, <cache>/<name key> was read back, and 16 tests ran a missing binary, charged to the change).
-// A product found nowhere panics with productPlace's ErrNotBuilt error, since Absolute, the make file's hook that calls
-// it, answers with a string: the panic reaches the test that read the name back and fails it with adamic's not-built
-// line, which Loom's judge reads as the tree's.
+// A product found nowhere panics with productPlace's ErrNotBuilt error, and the panic is deliberate: Absolute, the make
+// file's hook that calls it, answers with a string, and answering with an error would re-key every product to fix a
+// path Loom's runners never take, since they read settled products by sum. The panic reaches the test that read the
+// name back and fails it with adamic's not-built line as the whole of its message, which go test writes as that test's
+// output, so Loom's judge reads it as that miss, the tree's, never the change's (#z8mg5ks; a panic in TestMain, which
+// fails no test, is #rf855c8's).
 func productDirectory(nameKey string) string {
 	directory, err := productPlace(nameKey)
 	if err != nil {

@@ -473,6 +473,23 @@ func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
 	readBackFails(t, localName, NameKey(r.root, local))
 }
 
+// keptAside is every stale copy of the local product at product this process set aside, each kept whole where setAside
+// renamed it: .stale-<pid>-<key>-.../<key>, holding the file named file.
+func keptAside(t *testing.T, product, file string) []string {
+	t.Helper()
+	name := filepath.Base(product)
+	copies, err := filepath.Glob(filepath.Join(filepath.Dir(product), fmt.Sprintf(".stale-%d-%s-*", os.Getpid(), name[:12]), name))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, copy := range copies {
+		if _, err := os.Stat(filepath.Join(copy, file)); err != nil {
+			t.Fatalf("the stale product set aside at %s wasn't kept whole: %v", copy, err)
+		}
+	}
+	return copies
+}
+
 // recordedParts is the parts record beside a local product, name key to place.
 func recordedParts(t *testing.T, product string) map[string]string {
 	t.Helper()
@@ -491,7 +508,8 @@ func recordedParts(t *testing.T, product string) map[string]string {
 // part it names was when it was built and is a hit only while each is still there (#z8mg5ks: on Home,
 // markdown-list-layout-shared-v4 hit by its own files and named sanitized-v3, whose files had moved, and 16 tests ran a
 // binary that wasn't there). A part built again elsewhere, or not built at all, misses the composite, which builds again
-// naming the part's new place. Each lookup is from a process holding nothing.
+// naming the part's new place; the stale one is renamed aside and kept, never removed by the lookup. Each lookup is
+// from a process holding nothing.
 // Mutant: partsHold asking only that each part is there, never where.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
 func TestALocalCompositeWhosePartMovedIsBuiltAgain(t *testing.T) {
@@ -546,6 +564,9 @@ func TestALocalCompositeWhosePartMovedIsBuiltAgain(t *testing.T) {
 	if compositeBuilds != 2 || second != first {
 		t.Fatalf("the composite whose part moved built %d times, at %s then %s; want a miss built again where it was", compositeBuilds, first, second)
 	}
+	if aside := keptAside(t, second, "manifest"); len(aside) != 1 {
+		t.Fatalf("the stale composite was set aside as %v, want one copy kept", aside)
+	}
 	forgetHeld(t)
 	readsPart(second, "part 2")
 
@@ -557,12 +578,15 @@ func TestALocalCompositeWhosePartMovedIsBuiltAgain(t *testing.T) {
 	if compositeBuilds != 3 || partBuilds != 3 {
 		t.Fatalf("the composite whose part was built nowhere built %d times and its part %d, want 3 each", compositeBuilds, partBuilds)
 	}
+	if aside := keptAside(t, third, "manifest"); len(aside) != 2 {
+		t.Fatalf("the stale composites were set aside as %v, want both copies kept", aside)
+	}
 	forgetHeld(t)
 	readsPart(third, "part 3")
 }
 
-// A local product built before parts were recorded has no record: it misses once, is built again with one, and hits
-// after. One that names no other product records an empty list, and hits.
+// A local product built before parts were recorded has no record: it misses once, is set aside and kept, is built again
+// with one, and hits after. One that names no other product records an empty list, and hits.
 // Mutant: a missing record taken as a hit.
 // Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
 func TestALocalProductWithNoPartsRecordMissesOnce(t *testing.T) {
@@ -582,6 +606,9 @@ func TestALocalProductWithNoPartsRecordMissesOnce(t *testing.T) {
 	forgetHeld(t)
 	if again := Product(t, inputs, build); builds != 2 || again != product {
 		t.Fatalf("a local product with no parts record built %d times, at %s then %s; want a miss built again where it was", builds, product, again)
+	}
+	if aside := keptAside(t, product, "product"); len(aside) != 1 {
+		t.Fatalf("the product with no parts record was set aside as %v, want one copy kept", aside)
 	}
 	if parts := recordedParts(t, product); len(parts) != 0 {
 		t.Fatalf("a product naming no other records parts %v, want none", parts)
