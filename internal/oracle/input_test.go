@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/leakcheck"
@@ -66,21 +67,18 @@ func executeInput(t *testing.T, how inputRun, environment []string, name string,
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, path}, arguments...)...)
+	ctx, command := bounded(t, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, path}, arguments...)...)
 	command.Dir = how.directory
 	command.SysProcAttr.Credential = how.credential
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err = command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 	rememberRun(t, result)
 	return result
 }
