@@ -221,6 +221,10 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 		// GNU ld synthesizes the ASan section boundaries; weak undefined references
 		// to these are emitted by clang's instrumentation, not by runtime C calls.
 		inventory.External = append(inventory.External, "__start_asan_globals", "__stop_asan_globals")
+		// The libraries' symbols were gathered from maps, in Go's random order: sort them so one key always makes one
+		// symbols.json (#6r7v4ye: unsorted, every rebuild of this product made different bytes and voided its block).
+		slices.Sort(inventory.External)
+		inventory.External = slices.Compact(inventory.External)
 		data, err := json.Marshal(inventory)
 		if err != nil {
 			return err
