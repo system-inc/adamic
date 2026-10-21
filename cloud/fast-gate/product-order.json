@@ -31,6 +31,12 @@
     "internal/oracle TestProduct_MovesDeterminism": [
       "internal/native TestProduct_WASICompiler"
     ],
+    "internal/native TestProduct_WASIServiceModules": [
+      "internal/native TestProduct_WASICompiler"
+    ],
+    "internal/native TestProduct_WASIServiceNative": [
+      "internal/native TestProduct_WASICompiler"
+    ],
     "cmd/adamic TestProduct_CommandRuntimeSanitized": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],
