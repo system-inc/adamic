@@ -16,6 +16,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/leakcheck"
@@ -543,19 +544,16 @@ func execute(t *testing.T, name string, arguments ...string) run {
 // name wins, so a sanitizer setting here can't be overridden by one inherited from the shell.
 func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	ctx, command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 	rememberRun(t, result)
 	return result
 }
@@ -564,8 +562,11 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 // its own, and when the deadline passes or the test ends, the whole group is killed. A fixture that
 // loops, or a child left with nowhere to write, is stopped instead of orphaned. A bare name runs the
 // program toolchain.Path finds, so the node a run answers with is the one the result cache's identity
-// asked for its version; one Path can't find fails as it starts, with Path's error.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// asked for its version; one Path can't find fails as it starts, with Path's error. It returns the
+// deadline's context with the command, so a caller that keeps the output runs it with
+// childguard.Capture under the same deadline, and the output is read to its end rather than cut off
+// a fixed time after the exit.
+func bounded(t *testing.T, name string, arguments ...string) (context.Context, *exec.Cmd) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	t.Cleanup(cancel)
@@ -581,8 +582,7 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	command.WaitDelay = 5 * time.Second
-	return command
+	return ctx, command
 }
 
 // onNode runs a program's source on Node: the oracle.

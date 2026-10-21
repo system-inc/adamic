@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Stage 0's emission is deterministic (@system_adamic, Oct 9: a 43,250-line main.c on the Threadripper against 5,470
@@ -54,16 +55,14 @@ type emitted struct {
 
 func emit(t *testing.T, binary, path string) emitted {
 	t.Helper()
-	command := bounded(t, binary, "c", path)
+	ctx, command := bounded(t, binary, "c", path)
 	command.Dir = repository
-	var output bytes.Buffer
-	command.Stdout = &output
-	err := command.Run()
+	output, _, err := childguard.Capture(ctx, command)
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
 		t.Fatalf("running %s c %s: %v", binary, path, err)
 	}
-	return emitted{code: command.ProcessState.ExitCode(), output: output.Bytes()}
+	return emitted{code: command.ProcessState.ExitCode(), output: output}
 }
 
 // firstDifferingLine is the 1-based line where two emissions first differ, 0 when only the exit codes do.
