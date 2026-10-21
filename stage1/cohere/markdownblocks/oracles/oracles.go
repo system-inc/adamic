@@ -3,7 +3,6 @@
 package oracles
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/json"
@@ -80,9 +79,7 @@ func LeafCompositionGoProduct(t *testing.T, root, name, driverName string) strin
 		defer os.Remove(overlayPath)
 		ctx, cancel := context.WithCancel(context.Background())
 		t.Cleanup(cancel)
-		command := toolchain.CommandContextIn(ctx, cohere, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)...)
-		command.WaitDelay = time.Second
-		if output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true}); err != nil {
+		if output, err := toolchainGo(ctx, cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)...); err != nil {
 			return fmt.Errorf("Go bridge: %v\n%s", err, output)
 		}
 		return nil
@@ -133,9 +130,7 @@ func QuoteLayoutGoProducts(t *testing.T, root, target string) LayoutGoProducts {
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			command := toolchain.CommandContextIn(t.Context(), cohere, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)...)
-			command.WaitDelay = time.Second
-			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+			if output, err := toolchainGo(t.Context(), cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)...); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
 			}
 			return nil
@@ -200,9 +195,7 @@ func StructureLayoutGoProducts(t *testing.T, root, target string) LayoutGoProduc
 			defer os.Remove(overlayPath)
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			command := toolchain.CommandContextIn(ctx, cohere, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)...)
-			command.WaitDelay = 5 * time.Second
-			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+			if output, err := toolchainGo(ctx, cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), main)...); err != nil {
 				return fmt.Errorf("Go bridge: %w\n%s", err, output)
 			}
 			return nil
@@ -263,9 +256,7 @@ func TableLayoutGoProducts(t *testing.T, root, target string) LayoutGoProducts {
 			defer os.Remove(overlayPath)
 			ctx, cancel := context.WithCancel(t.Context())
 			defer cancel()
-			build := toolchain.CommandContextIn(ctx, cohere, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)...)
-			build.WaitDelay = time.Second
-			if output, err := childguard.CombinedOutput(build, childguard.Options{Unbounded: true}); err != nil {
+			if output, err := toolchainGo(ctx, cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)...); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode, err, output)
 			}
 			return nil
@@ -320,9 +311,7 @@ func WhitespaceLayoutGoProducts(t *testing.T, ctx context.Context, root, target 
 				return err
 			}
 			defer os.Remove(overlayPath)
-			command := toolchain.CommandContextIn(ctx, cohere, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), mainPath)...)
-			command.WaitDelay = time.Second
-			if output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true}); err != nil {
+			if output, err := toolchainGo(ctx, cohere, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), mainPath)...); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
 			}
 			return nil
@@ -348,9 +337,7 @@ func whitespaceGoInputs(t *testing.T, root string) buildcache.Inputs {
 func TextFormatterProduct(t *testing.T, root string) string {
 	t.Helper()
 	directory := oracleProduct(t, textToolInputs("formatter"), func(dir string) error {
-		command := toolchain.CommandContextIn(t.Context(), filepath.Join(root, "cohere"), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "cohere"), "./command/cohere")...)
-		command.WaitDelay = time.Second
-		output, err := childguard.CombinedOutput(command, childguard.Options{})
+		output, err := toolchainGo(t.Context(), filepath.Join(root, "cohere"), append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "cohere"), "./command/cohere")...)
 		if err != nil {
 			return fmt.Errorf("formatter: %w\n%s", err, output)
 		}
@@ -363,9 +350,7 @@ func TextFormatterProduct(t *testing.T, root string) string {
 func TextGeneratorProduct(t *testing.T, root string) string {
 	t.Helper()
 	directory := oracleProduct(t, textToolInputs("generator"), func(dir string) error {
-		command := toolchain.CommandContextIn(t.Context(), root, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")...)
-		command.WaitDelay = time.Second
-		output, err := childguard.CombinedOutput(command, childguard.Options{})
+		output, err := toolchainGo(t.Context(), root, append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(dir, "generate"), "./stage1/cohere/markdownblocks/tools/generate_classes")...)
 		if err != nil {
 			return fmt.Errorf("generator: %w\n%s", err, output)
 		}
@@ -782,18 +767,25 @@ func writeOverlay(directory, name string, replace map[string]string) (string, er
 	return overlayPath, os.WriteFile(overlayPath, overlay, 0644)
 }
 
+// toolchainGo runs the toolchain's go in directory and returns its stdout, then its stderr, for an error message.
+// Output is read through childguard.Capture, to its end with no timer deciding when: CombinedOutput's copying under a
+// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after go exited, so a
+// build that had finished could fail its product under load (#n3gk22h's shape). Capture has no stall guard, and the
+// builds that had one lose nothing: a go build writes nothing until it fails, so only childguard's first-output window
+// (30 minutes) could fire, and ctx and the unit's own ceiling end it sooner (Loom kills a test unit at 90 s and a
+// product unit at 600 s).
 func toolchainGo(ctx context.Context, directory string, arguments ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(ctx, directory, "go", arguments...)
-	command.WaitDelay = time.Second
-	return childguard.CombinedOutput(command, childguard.Options{})
+	stdout, stderr, err := childguard.Capture(ctx, toolchain.CommandContextIn(ctx, directory, "go", arguments...))
+	return append(stdout, stderr...), err
 }
 
+// callerGo is toolchainGo with the caller's environment.
 func callerGo(ctx context.Context, directory string, arguments ...string) ([]byte, error) {
 	command := toolchain.CommandContextIn(ctx, directory, "go", arguments...)
 	// The caller's environment, with PWD set to the directory, as a command with no environment of its own gets.
 	command.Env = nil
-	command.WaitDelay = time.Second
-	return childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), err
 }
 
 type run struct {
@@ -801,23 +793,23 @@ type run struct {
 	exitCode       int
 }
 
+// execute reads a run's output through childguard.Capture, as toolchainGo does and for its reason. Here the old
+// WaitDelay was worse than red: an exec.ErrWaitDelay came with a ProcessState, so it passed as exit 0 with the output
+// cut where the reads were closed, and an answers product could store that.
 func execute(ctx context.Context, environment []string, name string, arguments ...string) (run, error) {
 	command := toolchain.CommandContextIn(ctx, "", name, arguments...)
 	command.Env = nil
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	command.WaitDelay = time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := childguard.Run(command, childguard.Options{Unbounded: true})
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return run{}, ctx.Err()
 	}
 	if err != nil && command.ProcessState == nil {
 		return run{}, fmt.Errorf("running %s: %w", name, err)
 	}
-	return run{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}, nil
+	return run{stdout, stderr, command.ProcessState.ExitCode()}, nil
 }
 
 type compilerIdentity struct{ C, CPlusPlus, Report string }
@@ -1297,6 +1289,8 @@ func preflightGo(budget *preflightProductBudget, directory string, arguments ...
 	}()
 	command := toolchain.CommandContextIn(budget.ctx, directory, "go", arguments...)
 	command.Env = nil
+	// Still CombinedOutput, not toolchainGo's Capture: cooked kills the groups Started registers before it exits the
+	// process, and Capture has no Started to register this one by, so its group would outlive the exit.
 	command.WaitDelay = time.Second
 	var processID int
 	defer func() { budget.groups.Delete(processID) }()
