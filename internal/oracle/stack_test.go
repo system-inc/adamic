@@ -1,13 +1,13 @@
 package oracle
 
 import (
-	"bytes"
 	"fmt"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -78,18 +78,17 @@ func stackProbe(t *testing.T, limit int, arguments, environment []string, alone 
 			args = append([]string{"-c", fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, limit), resolved}, args...)
 			resolved = "/bin/sh"
 		}
-		command := bounded(t, resolved, args...)
+		ctx, command := bounded(t, resolved, args...)
 		command.Env = append(command.Env, environment...)
 		command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=0")
 		if alone {
 			command.Env = []string{}
 		}
-		var stdout, stderr bytes.Buffer
-		command.Stdout, command.Stderr = &stdout, &stderr
-		if err := command.Run(); err != nil && command.ProcessState == nil {
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		if err != nil && command.ProcessState == nil {
 			t.Fatal(err)
 		}
-		result := run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+		result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 		rememberRun(t, result)
 		return result
 	}
