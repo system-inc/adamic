@@ -31,7 +31,8 @@ type point struct {
 // A program that finishes must end every call where the graph returns.
 func checkGraphPathsProgram(t *testing.T, path string) {
 	t.Helper()
-	run := traced(t, path)
+	// The walk follows points and calls and passes over what was mutated, so the trace isn't watched.
+	run := traced(t, path, false)
 	for _, problem := range walk(run.graphs, run.marked, run.events) {
 		t.Error(problem)
 	}
@@ -64,7 +65,9 @@ type run struct {
 // one runs the program's getter from inside the tracer, and a getter whose point prints the object
 // that holds it would call itself until the stack ran out (getters_census_throwing_object.a). What
 // a getter returns is computed, not held, and the storage it reads is the object's own fields.
-// Calls are frames, and each compares only its own.
+// Calls are frames, and each compares only its own. A trace that isn't watched (adamicWatched,
+// set by traced) records its points alone: only the ranges read what was mutated, and printing
+// every object at every point is nearly all of a long trace's time on Node.
 const traceRuntime = `
 const adamicTrace = [];
 const adamicIdentities = new WeakMap();
@@ -116,7 +119,7 @@ const adamicMissing = () => {
 const adamicPoint = (point, variables) => {
 	if (adamicPanicked()) return;
 	const frame = adamicFrames[adamicFrames.length - 1];
-	for (const [local, read] of variables) {
+	for (const [local, read] of adamicWatched ? variables : []) {
 		let value;
 		try { value = read(); } catch { frame.held.delete(local); continue; }
 		if (value === null || typeof value !== 'object') { frame.held.delete(local); continue; }
@@ -209,14 +212,18 @@ func tracePrepared(t *testing.T, path string) *traceSetup {
 	return entry.setup
 }
 
-func traced(t *testing.T, path string) run {
+// traced runs the program on Node. watched says whether each point reads its call's variables to
+// report what the instruction before it mutated; the trace's points are the same either way. Only
+// the mutation ranges read those reports, and the reads were about 96% of Node's time on timsort.a,
+// so a check that doesn't read them asks for a trace that isn't watched. Both run the same body.
+func traced(t *testing.T, path string, watched bool) run {
 	t.Helper()
 	setup := tracePrepared(t, path)
 	result := setup.run
 	directory := t.TempDir()
 	trace := filepath.Join(directory, "trace.txt")
-	source := fmt.Sprintf("import { writeFileSync as adamicWrite } from 'node:fs';\n%s\nprocess.on('exit', (code) => adamicWrite(%s, [...adamicTrace, `exit ${code}`].join('\\n')));\n%s",
-		traceRuntime, strconv.Quote(trace), setup.body)
+	source := fmt.Sprintf("import { writeFileSync as adamicWrite } from 'node:fs';\nconst adamicWatched = %t;\n%s\nprocess.on('exit', (code) => adamicWrite(%s, [...adamicTrace, `exit ${code}`].join('\\n')));\n%s",
+		watched, traceRuntime, strconv.Quote(trace), setup.body)
 	module := filepath.Join(directory, "program.mjs")
 	if err := os.WriteFile(module, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
@@ -241,6 +248,23 @@ func traced(t *testing.T, path string) run {
 	}
 	result.events = strings.Split(string(contents), "\n")
 	return result
+}
+
+// A trace that isn't watched runs the same points as one that is, and drops only the mutations.
+// throws.a's catches take throws, and one writes into an object a call holds, so a handler's path
+// and a mutation are both in what's compared.
+func TestUnwatchedTraceRunsTheSamePoints(t *testing.T) {
+	t.Parallel()
+	path := "testdata/throws.a"
+	watched, unwatched := traced(t, path, true), traced(t, path, false)
+	points := slices.DeleteFunc(slices.Clone(watched.events), func(event string) bool { return strings.HasPrefix(event, "mutated ") })
+	if len(points) == len(watched.events) {
+		t.Fatal("the watched trace reported no mutation, so the comparison drops nothing")
+	}
+	if !slices.Equal(points, unwatched.events) {
+		t.Fatalf("the unwatched trace ran other points: %d events, against the watched trace's %d without its mutations", len(unwatched.events), len(points))
+	}
+	t.Logf("%d events, %d mutations dropped", len(points), len(watched.events)-len(points))
 }
 
 // walk follows a trace through the graphs and says everything about it that isn't a path.
@@ -412,7 +436,8 @@ func locate(graph *Function, instruction InstructionId) (*BasicBlock, int) {
 // again is an object rewritten under a reader.
 func checkLivenessProgram(t *testing.T, path string) {
 	t.Helper()
-	run := traced(t, path)
+	// Neither liveness nor the definitions read what was mutated, so the trace isn't watched.
+	run := traced(t, path, false)
 	live := map[int]map[InstructionId]map[DeclarationId]bool{}
 	for function, graph := range run.graphs {
 		live[function] = LiveOut(graph)
