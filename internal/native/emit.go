@@ -195,9 +195,9 @@ func mainParts(statements []string, lines int) []string {
 	if total <= lines {
 		return []string{strings.Join(statements, "")}
 	}
-	// declared is the statement each name is declared in, last the last statement that uses each
-	// identifier.
-	declared, last := map[string]int{}, map[string]int{}
+	// declared is the statement each name is declared in, first and last the first and last
+	// statements that use each identifier.
+	declared, first, last := map[string]int{}, map[string]int{}, map[string]int{}
 	for index, statement := range statements {
 		for _, line := range strings.Split(statement, "\n") {
 			tokens, err := cTokens(line)
@@ -208,6 +208,9 @@ func mainParts(statements []string, lines int) []string {
 			for _, token := range tokens {
 				if !identifierByte(token.text[0]) {
 					continue
+				}
+				if _, seen := first[token.text]; !seen {
+					first[token.text] = index
 				}
 				last[token.text] = index
 				if _, seen := declared[token.text]; !seen && emittedLocal(token.text) {
@@ -220,6 +223,12 @@ func mainParts(statements []string, lines int) []string {
 				}
 			}
 		}
+	}
+	// A name's span opens where it's first used, which only reaches back further than its
+	// declaration for a label a goto names before it (adamic_done_N and its kin), whose own
+	// statement would otherwise start the span and let a cut fall between the goto and the label.
+	for name := range declared {
+		declared[name] = first[name]
 	}
 	if _, read := last["argc"]; read {
 		return []string{strings.Join(statements, "")}
