@@ -3525,6 +3525,706 @@ func TestFamiliesCatchAPlantedCase_WASIInputAgreesWithNode(t *testing.T) {
 	catchPlantedCase(t, "TestWASIInputAgreesWithNode")
 }
 
+func TestWasmtimeAgreesWithNode_000(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 0)
+}
+
+func TestWasmtimeAgreesWithNode_001(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 1)
+}
+
+func TestWasmtimeAgreesWithNode_002(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 2)
+}
+
+func TestWasmtimeAgreesWithNode_003(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 3)
+}
+
+func TestWasmtimeAgreesWithNode_004(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 4)
+}
+
+func TestWasmtimeAgreesWithNode_005(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 5)
+}
+
+func TestWasmtimeAgreesWithNode_006(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 6)
+}
+
+func TestWasmtimeAgreesWithNode_007(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 7)
+}
+
+func TestWasmtimeAgreesWithNode_008(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 8)
+}
+
+func TestWasmtimeAgreesWithNode_009(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 9)
+}
+
+func TestWasmtimeAgreesWithNode_010(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 10)
+}
+
+func TestWasmtimeAgreesWithNode_011(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 11)
+}
+
+func TestWasmtimeAgreesWithNode_012(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 12)
+}
+
+func TestWasmtimeAgreesWithNode_013(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 13)
+}
+
+func TestWasmtimeAgreesWithNode_014(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 14)
+}
+
+func TestWasmtimeAgreesWithNode_015(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 15)
+}
+
+func TestWasmtimeAgreesWithNode_016(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 16)
+}
+
+func TestWasmtimeAgreesWithNode_017(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 17)
+}
+
+func TestWasmtimeAgreesWithNode_018(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 18)
+}
+
+func TestWasmtimeAgreesWithNode_019(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 19)
+}
+
+func TestWasmtimeAgreesWithNode_020(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 20)
+}
+
+func TestWasmtimeAgreesWithNode_021(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 21)
+}
+
+func TestWasmtimeAgreesWithNode_022(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 22)
+}
+
+func TestWasmtimeAgreesWithNode_023(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 23)
+}
+
+func TestWasmtimeAgreesWithNode_024(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 24)
+}
+
+func TestWasmtimeAgreesWithNode_025(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 25)
+}
+
+func TestWasmtimeAgreesWithNode_026(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 26)
+}
+
+func TestWasmtimeAgreesWithNode_027(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 27)
+}
+
+func TestWasmtimeAgreesWithNode_028(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 28)
+}
+
+func TestWasmtimeAgreesWithNode_029(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 29)
+}
+
+func TestWasmtimeAgreesWithNode_030(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 30)
+}
+
+func TestWasmtimeAgreesWithNode_031(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 31)
+}
+
+func TestWasmtimeAgreesWithNode_032(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 32)
+}
+
+func TestWasmtimeAgreesWithNode_033(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 33)
+}
+
+func TestWasmtimeAgreesWithNode_034(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 34)
+}
+
+func TestWasmtimeAgreesWithNode_035(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 35)
+}
+
+func TestWasmtimeAgreesWithNode_036(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 36)
+}
+
+func TestWasmtimeAgreesWithNode_037(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 37)
+}
+
+func TestWasmtimeAgreesWithNode_038(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 38)
+}
+
+func TestWasmtimeAgreesWithNode_039(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 39)
+}
+
+func TestWasmtimeAgreesWithNode_040(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 40)
+}
+
+func TestWasmtimeAgreesWithNode_041(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 41)
+}
+
+func TestWasmtimeAgreesWithNode_042(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 42)
+}
+
+func TestWasmtimeAgreesWithNode_043(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 43)
+}
+
+func TestWasmtimeAgreesWithNode_044(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 44)
+}
+
+func TestWasmtimeAgreesWithNode_045(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 45)
+}
+
+func TestWasmtimeAgreesWithNode_046(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 46)
+}
+
+func TestWasmtimeAgreesWithNode_047(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 47)
+}
+
+func TestWasmtimeAgreesWithNode_048(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 48)
+}
+
+func TestWasmtimeAgreesWithNode_049(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 49)
+}
+
+func TestWasmtimeAgreesWithNode_050(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 50)
+}
+
+func TestWasmtimeAgreesWithNode_051(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 51)
+}
+
+func TestWasmtimeAgreesWithNode_052(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 52)
+}
+
+func TestWasmtimeAgreesWithNode_053(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 53)
+}
+
+func TestWasmtimeAgreesWithNode_054(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 54)
+}
+
+func TestWasmtimeAgreesWithNode_055(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 55)
+}
+
+func TestWasmtimeAgreesWithNode_056(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 56)
+}
+
+func TestWasmtimeAgreesWithNode_057(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 57)
+}
+
+func TestWasmtimeAgreesWithNode_058(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 58)
+}
+
+func TestWasmtimeAgreesWithNode_059(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 59)
+}
+
+func TestWasmtimeAgreesWithNode_060(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 60)
+}
+
+func TestWasmtimeAgreesWithNode_061(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 61)
+}
+
+func TestWasmtimeAgreesWithNode_062(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 62)
+}
+
+func TestWasmtimeAgreesWithNode_063(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 63)
+}
+
+func TestWasmtimeAgreesWithNode_064(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 64)
+}
+
+func TestWasmtimeAgreesWithNode_065(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 65)
+}
+
+func TestWasmtimeAgreesWithNode_066(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 66)
+}
+
+func TestWasmtimeAgreesWithNode_067(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 67)
+}
+
+func TestWasmtimeAgreesWithNode_068(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 68)
+}
+
+func TestWasmtimeAgreesWithNode_069(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 69)
+}
+
+func TestWasmtimeAgreesWithNode_070(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 70)
+}
+
+func TestWasmtimeAgreesWithNode_071(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 71)
+}
+
+func TestWasmtimeAgreesWithNode_072(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 72)
+}
+
+func TestWasmtimeAgreesWithNode_073(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 73)
+}
+
+func TestWasmtimeAgreesWithNode_074(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 74)
+}
+
+func TestWasmtimeAgreesWithNode_075(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 75)
+}
+
+func TestWasmtimeAgreesWithNode_076(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 76)
+}
+
+func TestWasmtimeAgreesWithNode_077(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 77)
+}
+
+func TestWasmtimeAgreesWithNode_078(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 78)
+}
+
+func TestWasmtimeAgreesWithNode_079(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 79)
+}
+
+func TestWasmtimeAgreesWithNode_080(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 80)
+}
+
+func TestWasmtimeAgreesWithNode_081(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 81)
+}
+
+func TestWasmtimeAgreesWithNode_082(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 82)
+}
+
+func TestWasmtimeAgreesWithNode_083(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 83)
+}
+
+func TestWasmtimeAgreesWithNode_084(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 84)
+}
+
+func TestWasmtimeAgreesWithNode_085(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 85)
+}
+
+func TestWasmtimeAgreesWithNode_086(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 86)
+}
+
+func TestWasmtimeAgreesWithNode_087(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 87)
+}
+
+func TestWasmtimeAgreesWithNode_088(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 88)
+}
+
+func TestWasmtimeAgreesWithNode_089(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 89)
+}
+
+func TestWasmtimeAgreesWithNode_090(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 90)
+}
+
+func TestWasmtimeAgreesWithNode_091(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 91)
+}
+
+func TestWasmtimeAgreesWithNode_092(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 92)
+}
+
+func TestWasmtimeAgreesWithNode_093(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 93)
+}
+
+func TestWasmtimeAgreesWithNode_094(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 94)
+}
+
+func TestWasmtimeAgreesWithNode_095(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 95)
+}
+
+func TestWasmtimeAgreesWithNode_096(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 96)
+}
+
+func TestWasmtimeAgreesWithNode_097(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 97)
+}
+
+func TestWasmtimeAgreesWithNode_098(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 98)
+}
+
+func TestWasmtimeAgreesWithNode_099(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 99)
+}
+
+func TestWasmtimeAgreesWithNode_100(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 100)
+}
+
+func TestWasmtimeAgreesWithNode_101(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 101)
+}
+
+func TestWasmtimeAgreesWithNode_102(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 102)
+}
+
+func TestWasmtimeAgreesWithNode_103(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 103)
+}
+
+func TestWasmtimeAgreesWithNode_104(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 104)
+}
+
+func TestWasmtimeAgreesWithNode_105(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 105)
+}
+
+func TestWasmtimeAgreesWithNode_106(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 106)
+}
+
+func TestWasmtimeAgreesWithNode_107(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 107)
+}
+
+func TestWasmtimeAgreesWithNode_108(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 108)
+}
+
+func TestWasmtimeAgreesWithNode_109(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 109)
+}
+
+func TestWasmtimeAgreesWithNode_110(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 110)
+}
+
+func TestWasmtimeAgreesWithNode_111(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 111)
+}
+
+func TestWasmtimeAgreesWithNode_112(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 112)
+}
+
+func TestWasmtimeAgreesWithNode_113(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 113)
+}
+
+func TestWasmtimeAgreesWithNode_114(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 114)
+}
+
+func TestWasmtimeAgreesWithNode_115(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 115)
+}
+
+func TestWasmtimeAgreesWithNode_116(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 116)
+}
+
+func TestWasmtimeAgreesWithNode_117(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 117)
+}
+
+func TestWasmtimeAgreesWithNode_118(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 118)
+}
+
+func TestWasmtimeAgreesWithNode_119(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 119)
+}
+
+func TestWasmtimeAgreesWithNode_120(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 120)
+}
+
+func TestWasmtimeAgreesWithNode_121(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 121)
+}
+
+func TestWasmtimeAgreesWithNode_122(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 122)
+}
+
+func TestWasmtimeAgreesWithNode_123(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 123)
+}
+
+func TestWasmtimeAgreesWithNode_124(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 124)
+}
+
+func TestWasmtimeAgreesWithNode_125(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 125)
+}
+
+func TestWasmtimeAgreesWithNode_126(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 126)
+}
+
+func TestWasmtimeAgreesWithNode_127(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, 127)
+}
+
+func TestWasmtimeAgreesWithNode_bitwise_sweep(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, -1)
+}
+
+func TestWasmtimeAgreesWithNode_normalize_coverage_limit(t *testing.T) {
+	t.Parallel()
+	runWasmtimeAgreesShard(t, -2)
+}
+
+func TestFamiliesCatchAPlantedCase_WasmtimeAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestWasmtimeAgreesWithNode")
+}
+
+func TestWasmtimeInputAgreesWithNode_000(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 0)
+}
+
+func TestWasmtimeInputAgreesWithNode_001(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 1)
+}
+
+func TestWasmtimeInputAgreesWithNode_002(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 2)
+}
+
+func TestWasmtimeInputAgreesWithNode_003(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 3)
+}
+
+func TestWasmtimeInputAgreesWithNode_004(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 4)
+}
+
+func TestWasmtimeInputAgreesWithNode_005(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 5)
+}
+
+func TestWasmtimeInputAgreesWithNode_006(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 6)
+}
+
+func TestWasmtimeInputAgreesWithNode_007(t *testing.T) {
+	t.Parallel()
+	runWasmtimeInputShard(t, 7)
+}
+
+func TestFamiliesCatchAPlantedCase_WasmtimeInputAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	catchPlantedCase(t, "TestWasmtimeInputAgreesWithNode")
+}
+
 func TestReviewProgramsAgreeWithNode_000(t *testing.T) {
 	t.Parallel()
 	runReviewAgreeShard(t, 0)
