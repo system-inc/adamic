@@ -47,21 +47,25 @@ source /workspace/adamic-tools/env.sh
 ADAMIC_TEST_WASI=1 go test ./internal/native -run '^TestWASIService' -count=1 -v -timeout 45m > /tmp/wasm-service-test.log 2>&1
 ```
 
-The oracle runs as separate tests, each building what it needs, so the gate can hold each to
-its 60 s per-test budget: `TestWASIService` (release) and `TestWASIServiceCounted` serve the requests
-through the compiler's existing reactor ABI, and `TestWASIServiceNativeAgrees_0` to `_3` each have the
-host generate the requests and Node's responses only (module `-`) and build a temporary
-native `.a` command importing the same service with `adamic build --sanitize`. Each native
-command reads one quarter of the identical JSONL request file, 25,000 lines, and its stdout must match
-those lines of Node's response file, with ASan, UBSan and LeakSanitizer enabled. All 100,000 in one
-sanitized run took 57.5 s on an idle Linux box (wasm legs 23 to 24 s, mutants 23 s), past the budget on
-a loaded gate box, so every request is checked under ASan in four instances rather than one; the
+The oracle runs as separate tests, so the gate can hold each to its 60 s per-test budget, and
+no test builds anything: the tree builds two products ahead, outside any test's budget.
+`TestProduct_WASIServiceModules` builds the release and counted modules, one counted module per
+source mutant, and whether the emitted C uses statement regions; `TestProduct_WASIServiceNative`
+builds `command.a`, a native command importing the same service, once with `adamic build --sanitize`.
+`TestWASIService` (release) and `TestWASIServiceCounted` serve the requests through the compiler's
+existing reactor ABI, and `TestWASIServiceNativeAgrees_0` to `_7` each have the host generate the
+requests and Node's responses only (module `-`). Each native part reads one eighth of the identical
+JSONL request file, 12,500 lines, and its stdout must match those lines of Node's response file,
+with ASan, UBSan and LeakSanitizer enabled. All 100,000 in one sanitized run took 57.5 s on an idle
+Linux box (wasm legs 23 to 24 s, mutants 23 s), and a quarter about 14 s, past the 30 s aim on a
+loaded gate box, so every request is checked under ASan in eight instances rather than one; the
 counted wasm leg still holds live 0 over all 100,000 in a single instance.
-`TestWASIServiceQuartersTile` refuses quarters with a gap, an overlap, a short end or an empty range. Each mutant is built
-from an isolated temporary `.a` source while the Node oracle keeps the original source.
-A mutant must compile successfully and fail its named runtime assertion
-(`TestWASIServiceMutants`). Every leg refuses a host report of fewer than 100,000 requests,
-and the `shrunk-count` mutant, a host generating 1,000, proves that refusal fires.
+`TestWASIServicePartsTile` requires one test per part and refuses parts with a gap, an overlap, a
+short end or an empty range. Each mutant is built from an isolated temporary `.a` source while the
+Node oracle keeps the original source. A mutant must compile successfully and fail its named runtime
+assertion (`TestWASIServiceMutantResponseByte`, `TestWASIServiceMutantRetainedObject` and
+`TestWASIServiceMutantUnicodeEscape`). Every leg refuses a host report of fewer than 100,000 requests,
+and `TestWASIServiceMutantShrunkCount`, a host generating 1,000, proves that refusal fires.
 
 Machine: shared Linux 6.18.44 container, AMD EPYC 9V74, Node 24.19.0, Go 1.27.1, clang 20.1.8,
 WASI SDK 27. `nproc` = 5; cgroup CPU quota = 400000/100000 (four CPUs); memory limit

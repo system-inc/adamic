@@ -1,0 +1,6 @@
+// The sanitized native command the agreement parts run: each line of the request file its first argument names,
+// answered by the very same handler the wasm modules serve.
+import { handleRequest } from './service.a';
+import { programArguments, readTextFile } from 'adamic';
+const input = readTextFile(programArguments()[0] ?? '');
+if (input.kind === 'Ok') { for (const request of input.text.split('\n').slice(0, -1)) { console.log(handleRequest(request)); } } else { console.error(input.message); }
