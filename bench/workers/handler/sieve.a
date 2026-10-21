@@ -1,0 +1,20 @@
+function countPrimes(limit: number): number {
+	const composite: boolean[] = [];
+	for (let index = 0; index <= limit; index++) { composite.push(false); }
+	for (let prime = 2; prime * prime <= limit; prime++) {
+		if (composite[prime] !== true) {
+			for (let multiple = prime * prime; multiple <= limit; multiple += prime) {
+				composite[multiple] = true;
+			}
+		}
+	}
+	let count = 0;
+	for (let index = 2; index <= limit; index++) {
+		if (composite[index] !== true) { count++; }
+	}
+	return count;
+}
+
+export function handleRequest(request: string): string {
+	return String(countPrimes(Number(request)));
+}

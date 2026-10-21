@@ -59,6 +59,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.declareModule(declarations); err != nil {
 		return nil, err
 	}
+	lowering.recordExports(entry)
 	for _, module := range modules {
 		body, err := lowering.statements(module.Statements.Nodes)
 		if err != nil {

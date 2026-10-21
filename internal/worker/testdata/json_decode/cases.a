@@ -1,0 +1,44 @@
+import { decodeJson } from 'adamic';
+
+interface Leaf { readonly name: string; readonly score: number; readonly flag: boolean; }
+interface Nested { readonly inner: Leaf; readonly rows: readonly Leaf[]; readonly note?: string; }
+type Tagged = { readonly kind: 'Text'; readonly text: string; readonly note?: string } | { readonly kind: 'Count'; readonly count: number };
+interface Optional { readonly first?: string; readonly required: number; readonly words?: readonly string[]; readonly enabled: boolean; }
+
+function units(text: string): string {
+	let out = `${text.length}`;
+	for (let index = 0; index < text.length; index++) out += `,${text.charCodeAt(index)}`;
+	return out;
+}
+function numeric(value: number): string { return `${value}:${1 / value}`; }
+function leaf(value: Leaf): string { return `${units(value.name)}|${numeric(value.score)}|${value.flag}`; }
+export function observe(which: number, text: string): string {
+	if (which === 0) {
+		const r = decodeJson<Nested>(text);
+		if (r.kind === 'Error') return `Error:${units(r.message)}`;
+		let out = `Ok:${Object.keys(r.value).join(',')}|${leaf(r.value.inner)}|${units(r.value.note ?? '')}|${r.value.rows.length}`;
+		for (const row of r.value.rows) out += `|${leaf(row)}`;
+		return out;
+	}
+	if (which === 1) {
+		const r = decodeJson<readonly (readonly number[])[]>(text);
+		if (r.kind === 'Error') return `Error:${units(r.message)}`;
+		let out = `Ok:${r.value.length}`;
+		for (const row of r.value) {
+			out += `|${row.length}`;
+			for (const number of row) out += `|${numeric(number)}`;
+		}
+		return out;
+	}
+	if (which === 2) {
+		const r = decodeJson<Tagged>(text);
+		if (r.kind === 'Error') return `Error:${units(r.message)}`;
+		if (r.value.kind === 'Text') return `Ok:${Object.keys(r.value).join(',')}|${units(r.value.text)}|${units(r.value.note ?? '')}`;
+		return `Ok:${Object.keys(r.value).join(',')}|${numeric(r.value.count)}`;
+	}
+	const r = decodeJson<Optional>(text);
+	if (r.kind === 'Error') return `Error:${units(r.message)}`;
+	let out = `Ok:${Object.keys(r.value).join(',')}|${numeric(r.value.required)}|${units(r.value.first ?? '')}|${r.value.enabled}|${r.value.words?.length ?? -1}`;
+	if (r.value.words !== undefined) { for (const word of r.value.words) out += `|${units(word)}`; }
+	return out;
+}

@@ -44,10 +44,10 @@ func TestJSONDescriptorsBuiltOnce(t *testing.T) {
 }
 
 func TestWithoutJSONIsByteIdentical(t *testing.T) {
-	// Recorded from main 157a4355's emitter plus the JSON imports, using the dedication fixture.
+	// Recorded from scratch base 58c5652e's emitter, using the dedication fixture.
 	program := &ir.Program{Source: "01_hello.ts", Strings: []string{"In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra"}, Main: []ir.Statement{ir.WriteLine{Value: ir.StringConstant{Index: 0}}}}
 	got := fmt.Sprintf("%x", sha256.Sum256([]byte(JavaScript(program))))
-	const want = "e956c2365999f3143a97213151fc499d002c9dac04331dc74cd5ffce11d720b5"
+	const want = "7eb80594e75d1b53981bc00d45416719f580f2e8810da815a189683cd1d2aff3"
 	if got != want {
 		t.Fatalf("non-JSON output changed: %s, want %s", got, want)
 	}
