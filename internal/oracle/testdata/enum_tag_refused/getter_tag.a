@@ -1,0 +1,14 @@
+// a-check: refused an object refinement using an open numeric enum as a literal tag
+// A getter is a call, not a field read, so comparing it isn't a recognized step, whatever it returns.
+enum Kind { Text, Count }
+enum Extra { Only }
+interface X { readonly kind: Kind.Text; readonly extra: Extra; readonly text: string }
+class Y {
+	get kind(): Kind.Count { return Kind.Count; }
+	readonly count: number = 41;
+}
+function show(v: X | Y): string {
+	if (v.kind === Kind.Count) { return `${v.count + 1}`; }
+	return 'text';
+}
+console.log(show(new Y()));
