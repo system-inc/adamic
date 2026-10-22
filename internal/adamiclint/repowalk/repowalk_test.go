@@ -12,6 +12,16 @@ import (
 // finding no want expects as much as on a want nothing found, so the allowed shapes prove the rule stays quiet.
 func TestRepoWalk(t *testing.T) {
 	t.Parallel()
-	analysistest.Run(t, analysistest.TestData(), repowalk.Analyzer, "flagged", "allowed",
+	analysistest.Run(errorsOnly{t}, analysistest.TestData(), repowalk.Analyzer, "flagged", "allowed",
 		"github.com/system-inc/adamic/productwalk")
+}
+
+// errorsOnly hands analysistest.Run a reporter that isn't a testing.TB. Given a testing.TB, Run first proves the go
+// command works by building a throwaway program, and Loom refuses a test that builds anything no key covers. Loading
+// the fixtures needs only go list, a read-only query.
+type errorsOnly struct{ t *testing.T }
+
+func (reporter errorsOnly) Errorf(format string, arguments ...any) {
+	reporter.t.Helper()
+	reporter.t.Errorf(format, arguments...)
 }
