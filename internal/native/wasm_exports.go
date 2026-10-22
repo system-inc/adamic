@@ -88,7 +88,7 @@ func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
 		witness(export.Returns)
 	}
 	program = &copyProgram
-	source := cProgram(program, len(program.Functions))
+	source := cProgram(program, len(program.Functions), mainLines)
 	_, lending := planElementBorrows(program)
 	e := &emitter{program: program, reuse: planReuse(program, lending)}
 	var declarations, bodies strings.Builder
