@@ -110,7 +110,7 @@ func main() {
 		fail(fmt.Errorf("building adamic: %v\n%s", err, output))
 	}
 	floorSource := filepath.Join(work, "floor.ts")
-	if err := os.WriteFile(floorSource, []byte("console.log(0);\n"), 0644); err != nil {
+	if err := os.WriteFile(floorSource, []byte("console.log(\"0\");\n"), 0644); err != nil {
 		fail(err)
 	}
 	floor := program{name: "floor", source: floorSource, native: filepath.Join(work, "floor")}
