@@ -1,6 +1,6 @@
 # Benchmarks
 
-Seven programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program constructs deterministic input and prints a checksum, so there is no input-file I/O in the timing and every runtime has to give the same answer.
+Eight programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program constructs deterministic input and prints a checksum, so there is no input-file I/O in the timing and every runtime has to give the same answer.
 
 ```
 go run ./bench                      # every program, 5 interleaved rounds, best of 5
@@ -21,6 +21,7 @@ The runs are interleaved round by round to spread changes in machine load across
 | `sort.ts` | a million numbers sorted with a comparator, random and then nearly sorted |
 | `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
+| `devirtualize.a` | repeated rule visits over syntax-shaped records, with method calls in the hot loop |
 
 ## Parallel files, October 6, 2026
 
@@ -34,37 +35,34 @@ The source batch's reported time was 82 seconds. Its full 4,096-file program now
 
 On the piece 6 Linux worker (four quota-limited CPUs, `nproc` 5), the one-thread units took 11.02, 19.02 and 15.18 seconds; the default-pool units took 10.39, 10.22 and 13.81 seconds. These are whole test-unit timings, including build and oracle work, from `go test -count=1 -v -timeout 90s ./internal/oracle -run 'Async|Parallel|Concurrency'`. The 82-second figure is supplied historical evidence, not a before measurement on this worker; the split establishes bounded units, not a speedup.
 
-## Noisy cloud numbers, October 5, 2026
+## Cloud, October 22, 2026
 
-Both tables below preserve the October 5, 2026 measurements. They are historical, pending a quiet-machine rerun on a house box, and do not describe the current compiler. The tokenizer row also predates the input-generator repair: its old text was almost entirely numbers, so that row does not measure the current mixed-token workload.
-
-Not the record: a shared cloud container, 4 vCPUs (Intel Xeon @ 2.80GHz), Linux 6.18, load 0.74 before and 1.04 after. Across the five rounds one runtime's times on one program spread 7% to 40%, so differences under about 1.4x here mean little. Adamic `0955c44`, clang 18.1.3, Node 24.21.0, Bun 1.3.14.
+The record, until the next rerun. Cloud, a house box: AMD Ryzen Threadripper 3970X, 64 logical CPUs, Linux 6.18.40.1 under WSL2, its Loom serve stood down and inactive before and after the run. Adamic `f9d746475`, clang 20.1.8, Node 24.19.0, Bun 1.2.20. Load **0.36/0.23/0.13** before and **0.96/0.50/0.24** after (1, 5, 15 minutes). `go run ./bench -rounds 5 -timeout 120s`, best of five interleaved rounds, all answers matching. Time is wall clock and user is CPU time in user mode summed over every thread, both from the operating system for the waited process; memory is peak resident set. Instructions are not counted: WSL2 can't read the hardware counters, so that column waits for a run on Adam or Eve.
 
 | Benchmark | native | Node | Bun | native vs Node |
 |---|---|---|---|---|
-| nbody | 1.452 s, 6.7 MB | 1.256 s, 72.1 MB | 0.201 s, 41.0 MB | 1.16x, slower |
-| sort | 0.575 s, 32.2 MB | 1.183 s, 207.2 MB | 0.876 s, 95.0 MB | 0.49x, faster |
-| spectral_norm | 0.565 s, 5.0 MB | 0.376 s, 70.0 MB | 0.419 s, 40.4 MB | 1.50x, slower |
-| tokenizer | did not finish in 120 s | 0.383 s, 146.1 MB | 0.425 s, 88.6 MB | over 300x, slower |
-| trees | 5.385 s, 98.4 MB | 2.405 s, 308.4 MB | 2.004 s, 207.4 MB | 2.24x, slower |
-| word_count | 0.324 s, 78.3 MB | 0.434 s, 157.8 MB | 0.525 s, 84.0 MB | 0.75x, faster |
+| devirtualize | 0.044 s, user 0.044 s, 4.1 MB | 0.128 s, user 0.117 s, 73.8 MB | 0.054 s, user 0.064 s, 48.7 MB | 0.34x |
+| nbody | 0.200 s, user 0.200 s, 5.1 MB | 0.777 s, user 0.751 s, 71.7 MB | 0.142 s, user 0.144 s, 43.6 MB | 0.26x |
+| parallel_files | 0.156 s, user 0.911 s, 57.6 MB | 0.698 s, user 0.634 s, 245.2 MB | 0.913 s, user 0.810 s, 220.3 MB | 0.22x |
+| sort | 0.225 s, user 0.209 s, 24.4 MB | 0.815 s, user 0.743 s, 194.8 MB | 0.873 s, user 0.856 s, 89.8 MB | 0.28x |
+| spectral_norm | 0.137 s, user 0.136 s, 5.1 MB | 0.232 s, user 0.224 s, 69.3 MB | 0.210 s, user 0.217 s, 45.0 MB | 0.59x |
+| tokenizer | 0.150 s, user 0.130 s, 32.4 MB | 0.232 s, user 0.197 s, 137.4 MB | 0.434 s, user 0.454 s, 93.5 MB | 0.65x |
+| trees | 2.459 s, user 1.515 s, 161.5 MB | 1.298 s, user 1.595 s, 326.7 MB | 0.895 s, user 0.934 s, 192.5 MB | 1.89x, slower |
+| word_count | 0.175 s, user 0.122 s, 109.6 MB | 0.293 s, user 0.246 s, 159.1 MB | 0.604 s, user 0.588 s, 81.7 MB | 0.60x |
 
-| Benchmark | allocations | frees | retains | releases | peak live |
-|---|---:|---:|---:|---:|---:|
-| nbody | 8 | 8 | 52,000,119 | 52,000,123 | 7 |
-| sort | 6 | 6 | 6,002,000 | 6,002,008 | 4 |
-| spectral_norm | 4 | 4 | 3,063 | 3,070 | 4 |
-| tokenizer | did not finish | | | | |
-| trees | 68,332,244 | 68,332,244 | 375,302,854 | 306,970,688 | 2,097,149 |
-| word_count | 1,020,129 | 1,020,129 | 10,160,699 | 9,160,756 | 1,020,006 |
+| Benchmark | allocations | frees | retains | releases | peak live | in regions |
+|---|---:|---:|---:|---:|---:|---:|
+| devirtualize | 772 | 771 | 12,800,513 | 12,800,517 | 772 | 1 |
+| nbody | 8 | 8 | 10 | 14 | 7 | 0 |
+| parallel_files | 3,952,651 | 3,952,651 | 8,151,045 | 8,654,930 | 8,839 | 0 |
+| sort | 6 | 6 | 2,000,002 | 2,000,010 | 4 | 0 |
+| spectral_norm | 4 | 4 | 0 | 7 | 4 | 0 |
+| tokenizer | 526,266 | 526,266 | 3,298,050 | 2,624,293 | 151,005 | 0 |
+| trees | 68,332,244 | 1,572,900 | 0 | 42 | 2,097,149 | 66,759,344 |
+| word_count | 1,020,129 | 1,020,129 | 6,100,370 | 5,100,427 | 1,020,006 | 0 |
 
-Among the five programs native finished, it had the lowest peak resident memory; Node's peak was about 2.0 to 14 times native's (2.0 for word_count). Native's elapsed time was lower in two rows and higher in three; tokenizer did not finish within 120 seconds. The investigation at that revision found these costs in the generated C and runtime:
+Native was faster than Node in seven of eight rows, from 0.22x (parallel_files) to 0.65x (tokenizer), and slower in one: trees, 1.89x. Against Bun it was faster in six and slower in two: nbody (0.200 s against 0.142 s, 1.41x) and trees (2.459 s against 0.895 s, 2.75x). Native's peak resident memory was the lowest in seven rows; in word_count Bun's was lower (81.7 MB against 109.6 MB). Node's peak was 1.5 times native's (word_count) to 18 times (devirtualize).
 
-- **tokenizer: the string walk.** `charCodeAt(i)` and `length` decoded UTF-8 from the start on every call, making the walk quadratic. The degenerate input also left the identifier path almost unused. See docs/memory.md for the subsequent string-index work.
-- **trees: allocation and retain and release traffic.** The counted row recorded about 68 million allocations and frees, and about 375 million retains. Regions and ownership optimizations were subsequent work; this table does not measure them.
-- **spectral_norm: array reads through a call.** `vector[j]` called `adamic_array_at` in a separate runtime translation unit and checked a double-valued index. Inlining and proven integer counters were possible improvements, not results measured by this table.
-- **nbody: field access through a call, and reference-count traffic.** Field access used `adamic_object_field` with a slot cache, and the counted row recorded about 52 million retains and releases. Bun's 0.201-second result alone does not establish which optimization produced it.
-
-The two lower native elapsed times were sort and word_count. Those programs exercise numeric sorting and maps; the table does not isolate the contribution of either implementation or JIT warm-up.
+Across the five rounds, native's times on a program spread 1.5% to 6.8%, except trees at 38.8% (2.459 s to 3.413 s). Node's spread up to 24.4% (sort) and Bun's up to 74.1% (devirtualize, a 0.05-second program). parallel_files used the pool's default threads: 0.156 s of wall bought 0.911 s of user time across them. trees is the row where wall exceeds user by most, about 0.9 seconds of a single-threaded run spent outside user mode, and 66.8 million of its 68.3 million allocations end in regions; that gap is the next thing profiled, not a cause found by this table.
 
 The tokenizer generator uses a fixed Park-Miller seed with exact integer arithmetic below 2^53. Its intended mix is about 3/8 identifiers, 1/4 numbers, 1/4 punctuation and 1/8 quoted strings, separated by spaces, tabs and newlines. `go test ./bench -run '^TestTokenizer' -timeout 60s` checks the scanned identifier share stays at least 25% and proves the check catches the former overflowing generator. This is a workload check, not a new performance measurement.
