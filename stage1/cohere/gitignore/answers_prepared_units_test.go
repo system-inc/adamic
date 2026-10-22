@@ -2,7 +2,6 @@ package gitignore
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -764,7 +763,7 @@ func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(t *testing.T) {
 // own work; Go's process timeout covers preparation and execution together.
 func portCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
-	command := exec.CommandContext(context.Background(), name, args...)
+	command := exec.CommandContext(t.Context(), name, args...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node, leaks) is a tool: the one internal/toolchain resolves, with a tool's environment, not
 		// PATH's, as toolchain.Command runs one under a context it has no form for. A program a test built (the Go
@@ -772,11 +771,10 @@ func portCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 		if path, err := toolchain.Path(name); err != nil {
 			command.Err = err
 		} else {
-			command = exec.CommandContext(context.Background(), path, args...)
+			command = exec.CommandContext(t.Context(), path, args...)
 			command.Env = toolchain.Env()
 		}
 	}
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(err, syscall.ESRCH) {
@@ -784,10 +782,15 @@ func portCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
+// portExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own
+// copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after
+// the child exited, so an oracle, port, Node or leaks run that had finished could fail its shard under load
+// (#n3gk22h's shape). Capture has no stall guard, and the runs lose nothing by it: childguard.Run's windows (two
+// minutes of silence, thirty before the first byte) are longer than the 90 s Loom gives a test unit, which ends a
+// hung run sooner.
 func portExecute(t *testing.T, environment []string, name string, args ...string) run {
 	t.Helper()
 	command := portCommand(t, name, args...)
@@ -795,14 +798,12 @@ func portExecute(t *testing.T, environment []string, name string, args ...string
 		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
 		command.Env = append(command.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := childguard.Run(command, childguard.Options{})
+	stdout, stderr, err := childguard.Capture(t.Context(), command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func portNode(t *testing.T, path string, args ...string) run {
@@ -846,17 +847,13 @@ func portGitCheckIgnore(t *testing.T, tree tree) []string {
 	}
 	command := toolchain.GitCommandIn(tree.Disk, append(arguments, "check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")...)
 	command.Env = append(command.Env, environment...)
-	command.WaitDelay = time.Second
 	command.Stdin = &input
-	var standardOutput, standardError bytes.Buffer
-	command.Stdout = &standardOutput
-	command.Stderr = &standardError
-	err := childguard.Run(command, childguard.Options{})
-	output := standardOutput.Bytes()
+	// Read through childguard.Capture for portExecute's reason: a WaitDelay could cut git's answers short under load.
+	output, standardError, err := childguard.Capture(t.Context(), command)
 	// check-ignore exits 1 when nothing is ignored, which is an answer, not a failure.
 	var exitError *exec.ExitError
 	if err != nil && !(errors.As(err, &exitError) && exitError.ExitCode() == 1) {
-		t.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, err, standardError.String())
+		t.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, err, standardError)
 	}
 	fields := bytes.Split(bytes.TrimSuffix(output, []byte{0}), []byte{0})
 	if len(output) > 0 && len(fields)%4 != 0 {
