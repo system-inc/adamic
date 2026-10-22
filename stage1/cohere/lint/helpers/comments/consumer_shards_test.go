@@ -14,6 +14,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // The 4,513 consumer sources split into buckets by a hash of each row's name and source, so a row's owner is fixed by
@@ -201,14 +203,18 @@ func TestConsumerCommentHelpersPlantedFailure(t *testing.T) {
 			}
 			return err
 		}
-		command.WaitDelay = time.Second
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_COMMENT_CONSUMER_PROBE=") {
 				command.Env = append(command.Env, value)
 			}
 		}
 		command.Env = append(command.Env, "ADAMIC_COMMENT_CONSUMER_PROBE=0")
-		output, err := command.CombinedOutput()
+		// Read through childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second
+		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited, so a
+		// shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s deadline ends a hung
+		// shard. Stdout comes before stderr; the checks below look for their lines anywhere in either.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		cancel()
 		if shard == owner {
 			if err == nil || !bytes.Contains(output, []byte(`output line 1: got "planted"`)) || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
