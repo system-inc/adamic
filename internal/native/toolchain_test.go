@@ -40,6 +40,14 @@ func TestWASIClangIsPinned(t *testing.T) {
 			t.Errorf("refusal must name the clang found and the pinned release: %v", err)
 		}
 	}
+	// A clang that can't be run names its failure, rather than reading as one that printed an empty version.
+	broken := filepath.Join(t.TempDir(), "clang")
+	if err := os.WriteFile(broken, []byte("#!/bin/sh\necho 'clang version 20.1.8-wasi-sdk'\nexit 3\n"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := checkWASIClang(broken); err == nil || !strings.Contains(err.Error(), "--version failed: exit status 3") {
+		t.Errorf("a clang that fails to run must be refused with its failure: %v", err)
+	}
 	if err := checkWASIClang(filepath.Join(t.TempDir(), "clang")); err == nil || !strings.Contains(err.Error(), "cloud/setup.sh --wasi-sdk") {
 		t.Errorf("a missing clang must say how to install the pinned one: %v", err)
 	}
