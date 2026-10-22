@@ -5,7 +5,6 @@ import (
 	"context"
 	"os/exec"
 	"path/filepath"
-	"syscall"
 	"testing"
 	"time"
 
@@ -108,14 +107,13 @@ func runVolumeProfileOverlayShard(t *testing.T, shard int) {
 			}
 			found = true
 			binary, directory := volumeProfileOverlayBinary(t, change)
-			// The deadline kills the whole process group, the test binary's children included.
+			// h.run starts its own copy of this command, in a process group of its own under typeAwareRunCommand's 90 s
+			// context, whose Cancel kills the whole group, the test binary's children included, and reads the output
+			// from files. ctx only times the run.
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			t.Cleanup(cancel)
-			command := exec.CommandContext(ctx, binary, "-test.run", "^TestExactIndexMatchesCompilerNodes$", "-test.count=1", "-test.timeout=90s")
+			command := exec.Command(binary, "-test.run", "^TestExactIndexMatchesCompilerNodes$", "-test.count=1", "-test.timeout=90s")
 			command.Dir = directory
-			command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-			command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-			command.WaitDelay = 5 * time.Second
 			result := h.run(change.name+"-compiler-node-test", command)
 			deadline := ctx.Err() == context.DeadlineExceeded
 			cancel()

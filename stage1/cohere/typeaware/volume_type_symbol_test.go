@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"os/exec"
@@ -25,7 +26,9 @@ func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd
 	return typeSymbolExecContext(ctx, name, args...), cancel
 }
 
-// Both setup and check commands retain cancellation of compiler descendants.
+// Both setup and check commands retain cancellation of compiler descendants. No WaitDelay: the runs that read their
+// output go through childguard.Capture, and one would only let TestVolumeTypeSymbolCommandDeadline pass on a Cancel that
+// never killed its child.
 func typeSymbolExecContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -36,7 +39,6 @@ func typeSymbolExecContext(ctx context.Context, name string, args ...string) *ex
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
@@ -46,9 +48,12 @@ func typeSymbolCommand(directory string, name string, args ...string) error {
 	command := typeSymbolExecContext(ctx, name, args...)
 	defer cancel()
 	command.Dir = directory
-	output, err := command.CombinedOutput()
+	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's own copying under a one-second
+	// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the build exited, so a
+	// finished build could fail its product under load (#n3gk22h's shape).
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil {
-		return fmt.Errorf("%s: %w\n%s", command, err, output)
+		return fmt.Errorf("%s: %w\n%s%s", command, err, stdout, stderr)
 	}
 	return nil
 }
@@ -254,14 +259,14 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 		defer cancel()
 		command := typeSymbolExecContext(ctx, oracle, config, manifest)
 		command.Dir = repository
-		var stdout, stderr bytes.Buffer
-		command.Stdout = &stdout
-		command.Stderr = &stderr
-		if err := command.Run(); err != nil {
-			return fmt.Errorf("oracle: %w %s", err, stderr.Bytes())
+		// Read through childguard.Capture for typeSymbolCommand's reason: a WaitDelay could fail a run that had
+		// finished but was slow to drain.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		if err != nil {
+			return fmt.Errorf("oracle: %w %s", err, stderr)
 		}
 		// Each finding names its fixture in the fixtures product, by that product's key (#tqrqx60).
-		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(stdout.String())), 0444)
+		return os.WriteFile(filepath.Join(dir, "findings"), []byte(buildcache.Relative(string(stdout))), 0444)
 	})
 	truthBytes, err := os.ReadFile(filepath.Join(outputDir, "findings"))
 	if err != nil {

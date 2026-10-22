@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Optional entry point: every selected shard prepares the same plan itself.
@@ -48,7 +50,10 @@ func TestTypeAwareUnitDeadline(t *testing.T) {
 			defer cancel()
 			command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$", "-test.v")
 			command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_DEADLINE_CHILD="+mode, "ADAMIC_TYPEAWARE_DEADLINE_MARKER="+marker)
-			output, err := command.CombinedOutput()
+			// Read through childguard.Capture, to its end with no WaitDelay deciding when. Its group kill can't reach
+			// the marker child, which typeAwareRunCommand starts in a group of its own, so only cooked's kill stops it.
+			stdout, stderr, err := childguard.Capture(ctx, command)
+			output := append(stdout, stderr...)
 			if mode == "quick" {
 				if err != nil || !bytes.Contains(output, []byte("cooked=false")) {
 					t.Fatalf("quick unit: %v %s", err, output)
