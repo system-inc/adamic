@@ -21,7 +21,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", false, false})
+		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", name == "nodearray", false})
 	}
 }
 
@@ -41,6 +41,21 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 				t.Fatalf("Node: %#v", truth)
 			}
 			program, err := lowered(t, path)
+			if name == "nodearray" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				sanitized, binary := nativelyUncached(t, program)
+				for mode, result := range map[string]run{"JavaScript": onJavaScriptBackend(t, program), "native sanitized": sanitized, "native release": releasedUncached(t, program)} {
+					if difference := disagreement(truth, result); difference != "" {
+						t.Fatalf("%s: %s", mode, difference)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
 			if name == "string_dictionary" {
 				if err != nil {
 					t.Fatal(err)
@@ -58,7 +73,6 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 			}
 			var stop *lower.NotYet
 			want := map[string]string{
-				"nodearray":      "a value of type NodeArray<Entry>",
 				"jsdoc":          "a value of type JSDocArray",
 				"numeric_record": "a value of type Record<number, FlowGraphNode>",
 				"template":       "a value of type TemplateStringsArray",

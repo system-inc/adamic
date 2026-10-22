@@ -119,8 +119,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	if literal.Record {
 		return e.recordLiteral(literal)
 	}
-	if reused, ok := e.reused(literal); ok {
-		return reused
+	if !constructionFields(literal.Fields) {
+		if reused, ok := e.reused(literal); ok {
+			return reused
+		}
 	}
 	if literal.Spread != nil {
 		// A copy of the source's object, whatever its shape, with the named fields replaced. The copy
@@ -148,7 +150,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
 			}
 			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
 			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
@@ -171,11 +173,17 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if region {
 			values = append(values, e.handRegion(field.Value, "region"))
 		} else {
+			if field.Absent {
+				values = append(values, "")
+				continue
+			}
 			values = append(values, e.value(field.Value))
 		}
 	}
 	object := ""
-	if region {
+	if constructionFields(literal.Fields) {
+		object = e.own(ir.Object, fmt.Sprintf("adamic_object_construct(&%s)", e.literalShape(literal)))
+	} else if region {
 		allocator := "adamic_object_new_filled_in"
 		if literal.Class != 0 {
 			// Constructor writes can call or throw after allocation, so its untouched slots need zero.
@@ -213,7 +221,13 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
 		}
-		if field.Uninitialized {
+		if field.Absent {
+			continue
+		}
+		if constructionFields(literal.Fields) {
+			e.line("adamic_object_publish(%s, %d); adamic_object_initialized(%s)[%d] = 1;", object, index, object, index)
+		}
+		if field.Uninitialized && !field.Unset {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
 		value := values[index]
@@ -447,7 +461,7 @@ func (e *emitter) prepareObjectMetadata() {
 	if e.objectMetadata != nil {
 		return
 	}
-	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0}
+	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0 || e.constructionNeeded()}
 	walkExpressions(e.program, func(expression ir.Expression) {
 		switch expression := expression.(type) {
 		case ir.ObjectCall:
