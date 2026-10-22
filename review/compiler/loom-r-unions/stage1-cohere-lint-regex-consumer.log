@@ -1,0 +1,6 @@
+=== RUN   TestDynamicPatternGap
+=== PAUSE TestDynamicPatternGap
+=== CONT  TestDynamicPatternGap
+    regex_test.go:204: /workspace/adamic/stage1/cohere/lint/regex/testdata/dynamic_gap.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestDynamicPatternGap (0.34s)
+PASS

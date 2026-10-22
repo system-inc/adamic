@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -207,7 +207,7 @@
+ 	}
+ 	value, err := l.value(node)
+ 	if err == nil {
+-		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
++		if false && value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
+ 			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
+ 		}
+ 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {

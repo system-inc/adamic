@@ -1,0 +1,38 @@
+[
+  {
+    "label": "comments-owner",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments/oracles",
+      "-run",
+      "^TestProduct_CommentsOracle$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-parallel",
+      "2",
+      "-json"
+    ],
+    "seconds": 21.606,
+    "exit": 0
+  },
+  {
+    "label": "comments-consumer-retry",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint/helpers/comments",
+      "-run",
+      "^TestJsxParserGapIsExplicit$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-parallel",
+      "2",
+      "-json"
+    ],
+    "seconds": 6.822,
+    "exit": 0
+  }
+]

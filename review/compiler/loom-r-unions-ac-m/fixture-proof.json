@@ -1,0 +1,55 @@
+[
+  {
+    "label": "meter-positive-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/cmd/adamic-meter/testdata/compiled/main.a"
+    ],
+    "exit": 0,
+    "seconds": 0.084
+  },
+  {
+    "label": "meter-positive-build",
+    "command": [
+      "/tmp/unions-m-adamic",
+      "build",
+      "cmd/adamic-meter/testdata/compiled/main.a",
+      "-o",
+      "/tmp/unions-meter-positive",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 1.016
+  },
+  {
+    "label": "meter-positive-native",
+    "command": [
+      "/tmp/unions-meter-positive"
+    ],
+    "exit": 0,
+    "seconds": 0.008
+  },
+  {
+    "label": "meter-notyet-node",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/cmd/adamic-meter/testdata/corpus/not_yet.a"
+    ],
+    "exit": 0,
+    "seconds": 0.081
+  },
+  {
+    "label": "meter-notyet-status",
+    "command": [
+      "/tmp/unions-m-adamic",
+      "c",
+      "cmd/adamic-meter/testdata/corpus/not_yet.a"
+    ],
+    "exit": 1,
+    "seconds": 0.031
+  }
+]

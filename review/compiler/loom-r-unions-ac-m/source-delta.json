@@ -1,0 +1,15 @@
+{
+  "different_source_files": [
+    "internal/lower/scout_nullable_object_views_test.go",
+    "internal/oracle/scout_string_number_test.go",
+    "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a"
+  ],
+  "production_added_removed_lines_identical": true,
+  "reason": "Exact main narrow-literal refusal tests and a matching first-line header; program body unchanged.",
+  "additional_meter_files": [
+    "cmd/adamic-meter/main_test.go",
+    "cmd/adamic-meter/testdata/compiled/main.a",
+    "cmd/adamic-meter/testdata/corpus/not_yet.a"
+  ],
+  "removed_meter_file": "cmd/adamic-meter/testdata/corpus/not_yet.ts"
+}

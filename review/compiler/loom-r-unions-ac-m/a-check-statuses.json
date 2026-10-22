@@ -1,0 +1,146 @@
+[
+  {
+    "file": "internal/oracle/testdata/scout_boxed_scalar_fields.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.051
+  },
+  {
+    "file": "internal/oracle/testdata/scout_boxed_scalar_stale_field.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.038
+  },
+  {
+    "file": "internal/oracle/testdata/scout_class_boolean_fields.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.038
+  },
+  {
+    "file": "internal/oracle/testdata/scout_hir_optional_boolean.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.033
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_object_null_field.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.034
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_object_stale_field.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.034
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_object_stale_local.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.029
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_objects.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.038
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_storage_refused/array.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet",
+    "seconds": 0.03
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a",
+    "status": "refused",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal",
+    "seconds": 0.032
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_storage_refused/callable.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet",
+    "seconds": 0.039
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_storage_refused/field.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet",
+    "seconds": 0.03
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_storage_refused/lookup.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet",
+    "seconds": 0.032
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet",
+    "seconds": 0.033
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_string_stale_field.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.032
+  },
+  {
+    "file": "internal/oracle/testdata/scout_nullable_strings.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.033
+  },
+  {
+    "file": "internal/oracle/testdata/scout_selector_optional_boolean.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.034
+  },
+  {
+    "file": "internal/oracle/testdata/scout_string_number_fields_locals.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.036
+  },
+  {
+    "file": "internal/oracle/testdata/scout_string_number_stale_field.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.032
+  },
+  {
+    "file": "internal/oracle/testdata/scout_tsc_nullish_content.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.03
+  },
+  {
+    "file": "internal/oracle/testdata/scout_tsc_source_content.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.031
+  },
+  {
+    "file": "internal/oracle/testdata/scout_values_optional_boolean.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.03
+  },
+  {
+    "file": "cmd/adamic-meter/testdata/corpus/not_yet.a",
+    "status": "NotYet",
+    "diagnostic": "adamic: /workspace/adamic/cmd/adamic-meter/testdata/corpus/not_yet.a:4:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet",
+    "seconds": 0.034
+  },
+  {
+    "file": "cmd/adamic-meter/testdata/compiled/main.a",
+    "status": "checked",
+    "diagnostic": "",
+    "seconds": 0.03
+  }
+]

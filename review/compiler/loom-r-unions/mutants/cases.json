@@ -1,0 +1,200 @@
+[
+  {
+    "topic": "null-box",
+    "file": "internal/native/union.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/null-box.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_strings.a"
+  },
+  {
+    "topic": "runtime-typeof",
+    "file": "internal/native/union.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/runtime-typeof.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_tsc_nullish_content.a"
+  },
+  {
+    "topic": "lower-typeof",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/lower-typeof.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_tsc_nullish_content.a"
+  },
+  {
+    "topic": "nullable-admission",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/nullable-admission.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "TestNullableStringAdmission"
+  },
+  {
+    "topic": "equality-observation",
+    "file": "internal/lower/nullable_strings.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/equality-observation.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_strings.a"
+  },
+  {
+    "topic": "class-zero",
+    "file": "internal/lower/class.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/class-zero.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_class_boolean_fields.a"
+  },
+  {
+    "topic": "class-optional",
+    "file": "internal/lower/class_inheritance.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/class-optional.json",
+    "packages": [
+      "./internal/lower"
+    ],
+    "pattern": "TestScoutClassBooleanKeepsUnsafeViewsRefused"
+  },
+  {
+    "topic": "boxed-check",
+    "file": "internal/lower/boxed_scalar_fields.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/boxed-check.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_boxed_scalar_stale_field.a"
+  },
+  {
+    "topic": "boxed-observation",
+    "file": "internal/lower/boxed_scalar_fields.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/boxed-observation.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_boxed_scalar_fields.a"
+  },
+  {
+    "topic": "object-boundary",
+    "file": "internal/lower/nullable_objects.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/object-boundary.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_objects.a"
+  },
+  {
+    "topic": "object-tag",
+    "file": "internal/lower/nullable_objects.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/object-tag.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_object_stale_field.a"
+  },
+  {
+    "topic": "object-optional",
+    "file": "internal/lower/nullable_objects.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/object-optional.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_objects.a"
+  },
+  {
+    "topic": "object-null-field",
+    "file": "internal/lower/nullable_objects.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/object-null-field.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_object_null_field.a"
+  },
+  {
+    "topic": "string-check",
+    "file": "internal/lower/boxed_scalar_fields.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/string-check.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_stale_field.a"
+  },
+  {
+    "topic": "string-tag",
+    "file": "internal/lower/boxed_scalar_fields.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/string-tag.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_fields_locals.a"
+  },
+  {
+    "topic": "local-nullish",
+    "file": "internal/lower/locals.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/local-nullish.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_fields_locals.a"
+  },
+  {
+    "topic": "regex-adapter",
+    "file": "internal/lower/nullable_objects.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/regex-adapter.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/regexp_replace/callback.a"
+  },
+  {
+    "topic": "shared-view",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/shared-view.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNullableObjectStorageArray$"
+  },
+  {
+    "topic": "lookup",
+    "file": "internal/lower/expression.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/lookup.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNullableObjectStorageLookup$"
+  },
+  {
+    "topic": "local-equality",
+    "file": "internal/lower/locals.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/local-equality.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_string_number_fields_locals.a"
+  },
+  {
+    "topic": "object-local-runtime",
+    "file": "internal/lower/locals.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/object-local-runtime.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_object_stale_local.a"
+  },
+  {
+    "topic": "object-local",
+    "file": "internal/lower/locals.go",
+    "overlay": "/workspace/adamic/review/compiler/loom-r-unions/mutants/object-local.json",
+    "packages": [
+      "./internal/oracle"
+    ],
+    "pattern": "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_objects.a"
+  }
+]

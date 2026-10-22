@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-unions/run-mutants.py", line 13, in <module>
+    if changed.count(before)!=1:raise RuntimeError((c['topic'],'ambiguous changed seam',changed.count(before)))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ('object-null-field', 'ambiguous changed seam', 2)

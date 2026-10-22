@@ -1,0 +1,107 @@
+=== RUN   TestInspectRequestRefusals
+    shared_test.go:90: phase command stage0 2.857544s
+    typeaware_test.go:163: phase command checker 13.505295s
+    typeaware_test.go:176: phase load request 0.025971s
+    typeaware_test.go:183: phase lowering request 0.001049s
+    typeaware_test.go:189: phase emission request 0.000374s
+    typeaware_test.go:220: phase clang request 3.743725s
+    typeaware_test.go:176: phase load released-name 0.020991s
+    typeaware_test.go:183: phase lowering released-name 0.000523s
+    typeaware_test.go:189: phase emission released-name 0.000204s
+    typeaware_test.go:220: phase clang released-name 3.752953s
+    inspect_shards_test.go:69: build go_build_./bridge/tsgo/archive_wrong-kind-checker.a a94117447d1c miss 11.93
+    typeaware_test.go:220: phase clang wrong-kind 3.713993s
+    inspect_shards_test.go:69: build go_build_./bridge/tsgo/archive_unknown-question-checker.a 418a410dca4f miss 11.38
+panic: test timed out after 1m0s
+	running tests:
+		TestInspectRequestRefusals (1m0s)
+
+goroutine 44 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive]:
+testing.(*T).Run(0x299890730d88, {0xe0f78b?, 0x2998907c3a30?}, 0x2246190)
+	testing/testing.go:2266 +0x4f2
+testing.runTests.func1(0x299890730d88)
+	testing/testing.go:2742 +0x37
+testing.tRunner(0x299890730d88, 0x2998907c3b58)
+	testing/testing.go:2193 +0xea
+testing.runTests({0xe14203, 0x1c}, {0xe40298, 0x34}, 0x2998906c67f8, {0x2312ec0, 0x185, 0x185}, {0xc2ad21e445e9d175, 0xdf862466e, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x299890804320)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestMain(0x299890804320)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/shared_test.go:37 +0xbd
+main.main()
+	_testmain.go:824 +0xa5
+
+goroutine 21 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xa, 0x2998905c95f0, 0x4, 0x299891c5b680, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x40627c?, 0x2998905c9748?, 0x5746ab?, 0x2998905c9640?, 0x48a47d?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x2998933d7880)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x0?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x299890736b60)
+	os/exec/exec.go:944 +0x45
+github.com/system-inc/adamic/stage1/cohere/typeaware.typeAwareRunCommandContext({0x223ae78?, 0x235eae0?}, 0x2998907369c0)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/typeaware_commands_test.go:71 +0x448
+github.com/system-inc/adamic/stage1/cohere/typeaware.typeAwareRunBuildCommand(...)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/typeaware_commands_test.go:51
+github.com/system-inc/adamic/stage1/cohere/typeaware.typeAwareNativeBuild({0x299892779500, 0x280f}, {0x299890b579f0, 0x4a}, {0x299891c5b5f0, 0x81}, 0x0)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/typeaware_commands_test.go:101 +0x405
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).build.func1(...)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/typeaware_test.go:219
+github.com/system-inc/adamic/stage1/cohere/typeaware.(*harness).build(0x2998906fafc0, {0x10?, 0xdf454d?}, {0xdffa7f, 0x10}, {0x29989089c240, 0x3f}, {0x299891c5b5f0, 0x81}, 0x0)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/typeaware_test.go:226 +0x286
+github.com/system-inc/adamic/stage1/cohere/typeaware.TestInspectRequestRefusals(0x299890730fc8)
+	github.com/system-inc/adamic/stage1/cohere/typeaware/inspect_shards_test.go:70 +0xe06
+testing.tRunner(0x299890730fc8, 0x2246190)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 43 [IO wait]:
+internal/poll.runtime_pollWait(0x7f07b86f8000, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x299892a2b380?, 0x2998905c2800?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x299892a2b380, {0x2998905c2800, 0x200, 0x200})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x2998929a8140, {0x2998905c2800?, 0x0?, 0x0?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x29989331a540, {0x22352b8, 0x2998929a8140})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x22353d8, 0x29989331a540}, {0x22352b8, 0x2998929a8140}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x2998929a8140?, {0x22353d8?, 0x29989331a540?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x2998929a8140, {0x22353d8, 0x29989331a540})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x22353d8, 0x29989331a540}, {0x2235338, 0x2998929a8140}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 21
+	os/exec/exec.go:767 +0x92b

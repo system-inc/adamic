@@ -1,0 +1,11 @@
+--- a/internal/lower/nullable_strings.go
++++ b/internal/lower/nullable_strings.go
+@@ -34,7 +34,7 @@
+ 	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+ 		node, parent = parent, parent.Parent
+ 	}
+-	if comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) {
++	if false || (parent != nil && parent.Kind == ast.KindTypeOfExpression) {
+ 		return read
+ 	}
+ 	if parent != nil && parent.Kind == ast.KindBinaryExpression {

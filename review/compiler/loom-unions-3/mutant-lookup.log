@@ -1,0 +1,16 @@
+{"Time":"2026-10-16T08:35:31.892758645Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-16T08:35:31.897754791Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup"}
+{"Time":"2026-10-16T08:35:31.897836203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup","Output":"=== RUN   TestNullableObjectStorageLookup\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:35:31.897858857Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup","Output":"=== PAUSE TestNullableObjectStorageLookup\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:35:31.897861281Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup"}
+{"Time":"2026-10-16T08:35:31.897863364Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup"}
+{"Time":"2026-10-16T08:35:31.897865046Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup","Output":"=== CONT  TestNullableObjectStorageLookup\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:35:34.385647561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup","Output":"    scout_string_number_test.go:56: want explicit storage view stop, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-16T08:35:34.385732769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup","Output":"--- FAIL: TestNullableObjectStorageLookup (2.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:35:34.385737085Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNullableObjectStorageLookup","Elapsed":2.49}
+{"Time":"2026-10-16T08:35:34.385756234Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:35:34.385764727Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-16T08:35:34.38576684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-16T08:35:34.385768582Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-16T08:35:34.387565617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t2.494s\n","OutputType":"frame"}
+{"Time":"2026-10-16T08:35:34.387588101Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":2.495}

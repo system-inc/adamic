@@ -1,0 +1,40 @@
+[
+  {
+    "label": "base",
+    "revision": "dbdf977f5b8b0979d414ebe6f20e7aadd312e309",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/...",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 15.503
+  },
+  {
+    "label": "tip",
+    "revision": "63604fed2dc1fd5f6b6f4c2198eb374ecec2d05a",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/...",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.902
+  }
+]

@@ -1,0 +1,175 @@
+[
+  {
+    "topic": "null-box",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m/mutants/null-box.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_strings.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.252,
+    "killed": true,
+    "catchers": [
+      {
+        "Time": "2026-10-18T21:06:07.133403218Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_035/internal/oracle/testdata/scout_nullable_strings.a",
+        "Elapsed": 3
+      },
+      {
+        "Time": "2026-10-18T21:06:07.133512139Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_035",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "topic": "runtime-typeof",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m/mutants/runtime-typeof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_tsc_nullish_content.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.852,
+    "killed": true,
+    "catchers": [
+      {
+        "Time": "2026-10-18T21:06:22.987188375Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_091/internal/oracle/testdata/scout_tsc_nullish_content.a",
+        "Elapsed": 3
+      },
+      {
+        "Time": "2026-10-18T21:06:22.987288593Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_091",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "topic": "lower-typeof",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m/mutants/lower-typeof.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_tsc_nullish_content.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 15.69,
+    "killed": true,
+    "catchers": [
+      {
+        "Time": "2026-10-18T21:06:38.675751151Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_091/internal/oracle/testdata/scout_tsc_nullish_content.a",
+        "Elapsed": 0.03
+      },
+      {
+        "Time": "2026-10-18T21:06:38.675770139Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_091",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "topic": "nullable-admission",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m/mutants/nullable-admission.json",
+      "./internal/lower",
+      "-run",
+      "TestNullableStringAdmission",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 14.427,
+    "killed": true,
+    "catchers": [
+      {
+        "Time": "2026-10-18T21:06:53.10465344Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/lower",
+        "Test": "TestNullableStringAdmission",
+        "Elapsed": 0.04
+      }
+    ]
+  },
+  {
+    "topic": "equality-observation",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m/mutants/equality-observation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_nullable_strings.a",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.446,
+    "killed": false,
+    "catchers": []
+  }
+]

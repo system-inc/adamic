@@ -1,0 +1,354 @@
+[
+  {
+    "path": "internal/oracle/testdata/scout_boxed_scalar_fields.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.067,
+    "diagnostics": "",
+    "body_sha256": "b4877fe9eb83abe43483d0ebb0e1af79daa9333bee08581f1f6e82fbb51f5d8a",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_boxed_scalar_fields.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_boxed_scalar_stale_field.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.07,
+    "diagnostics": "",
+    "body_sha256": "3bb9b857aa90c2fdd4e8af0d59e1f0892ff2733243c06cd54574d052f07d00eb",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_boxed_scalar_stale_field.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_class_boolean_fields.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.067,
+    "diagnostics": "",
+    "body_sha256": "cdd5f512f74ab9b794198542e8b21847f143fc9f70aed49d41de7e894de3a92e",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_class_boolean_fields.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_hir_optional_boolean.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.069,
+    "diagnostics": "",
+    "body_sha256": "2bc55431793ac31b11a15c63c471de05d5797390d16b79c10756b724e216f444",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_hir_optional_boolean.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_object_null_field.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.065,
+    "diagnostics": "",
+    "body_sha256": "27752061d4461d304d4ec2b1e2b94a44d009837e88631947f4d9d79e1421012a",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_object_null_field.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_object_stale_field.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.065,
+    "diagnostics": "",
+    "body_sha256": "ad1b624597a22ae429447bedab1da825f8f4125949ce44d3bb2647e00c5e9271",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_object_stale_field.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_object_stale_local.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.068,
+    "diagnostics": "",
+    "body_sha256": "191403972ec14c688882b68bb4927e94466434acaf646ce47c4806af08b46323",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_object_stale_local.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_objects.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.064,
+    "diagnostics": "",
+    "body_sha256": "ea6f9045e1e6179594292aba7d58360f669702870fdc5df8107a1111ce87ba1a",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_objects.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/array.a",
+    "status": "NotYet",
+    "reason": null,
+    "code": null,
+    "exit": 1,
+    "seconds": 0.065,
+    "diagnostics": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+    "body_sha256": "2fa3efd4a06be2009214f0c8a46996d15fbfcf715abed0bd25f54114118e1b0e",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_storage_refused/array.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a",
+    "status": "NotYet",
+    "reason": null,
+    "code": null,
+    "exit": 1,
+    "seconds": 0.065,
+    "diagnostics": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+    "body_sha256": "03dcf73c087ee09eb80c7c4b5206b569328e65c88fb9e9cd02b9a0021ed83b5b",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/callable.a",
+    "status": "NotYet",
+    "reason": null,
+    "code": null,
+    "exit": 1,
+    "seconds": 0.064,
+    "diagnostics": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+    "body_sha256": "207d2e073b15fceb571764c9710c7033a2ef76035b78bd83062f747034c2e720",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_storage_refused/callable.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/field.a",
+    "status": "NotYet",
+    "reason": null,
+    "code": null,
+    "exit": 1,
+    "seconds": 0.068,
+    "diagnostics": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+    "body_sha256": "2d5223425672bad913821ad273ed7b2d001fac8a794aefd86fbb58afac848d6e",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_storage_refused/field.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/lookup.a",
+    "status": "NotYet",
+    "reason": null,
+    "code": null,
+    "exit": 1,
+    "seconds": 0.069,
+    "diagnostics": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet\n",
+    "body_sha256": "8ef495013bc6cf72a4f5c4aabad57775d1b5724ea9b7cc9570a7d38aef97bfb6",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_storage_refused/lookup.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a",
+    "status": "NotYet",
+    "reason": null,
+    "code": null,
+    "exit": 1,
+    "seconds": 0.114,
+    "diagnostics": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet\n",
+    "body_sha256": "a2ea2af1d6cca02032e5d89e45c7882647e7b27bad32c687ee7a16ac45fcee0d",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_storage_refused/object_spread.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_string_stale_field.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.065,
+    "diagnostics": "",
+    "body_sha256": "5c7acb72760abd300100f27f7b5406df72c85961f4551de726895f669a3bd854",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_string_stale_field.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_strings.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.115,
+    "diagnostics": "",
+    "body_sha256": "210ad16ba5498404597e0cc502bcf97d609245c7c3f08072db45c83288c732ab",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_nullable_strings.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_selector_optional_boolean.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.066,
+    "diagnostics": "",
+    "body_sha256": "4fbadba73a7219ef1a4d360b98e3b65c61745401e00a6b0c959baf6fa57f610d",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_selector_optional_boolean.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_string_number_fields_locals.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.064,
+    "diagnostics": "",
+    "body_sha256": "c23b493a0f42e1b0dc151f8fa92a136ebdafb9fafb9e17caa06a22229bd4673b",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_string_number_fields_locals.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_string_number_stale_field.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.066,
+    "diagnostics": "",
+    "body_sha256": "7d3f57023a0c442fc484f7acddb635aec0abdcd9252d2f5c65cdbc9a822c70f1",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_string_number_stale_field.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_tsc_nullish_content.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.064,
+    "diagnostics": "",
+    "body_sha256": "a79ae055e7019cf19d27c28403634ac1290db9a9acfa3b3a07aabbdf0e70b767",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_tsc_nullish_content.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_tsc_source_content.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.065,
+    "diagnostics": "",
+    "body_sha256": "6943a9cc738e13feb8ef680c6ee50ebd6f271296aaf4ec3672490ab3d266be4d",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_tsc_source_content.a"
+    ]
+  },
+  {
+    "path": "internal/oracle/testdata/scout_values_optional_boolean.a",
+    "status": "checked",
+    "reason": null,
+    "code": null,
+    "exit": 0,
+    "seconds": 0.065,
+    "diagnostics": "",
+    "body_sha256": "3cd92dee6d1e9a6d35dece9278347dd2d90de0009d073f5755f16a3657daaa91",
+    "header_added": null,
+    "command": [
+      "/tmp/adamic-gate/unions-ac-adamic",
+      "c",
+      "internal/oracle/testdata/scout_values_optional_boolean.a"
+    ]
+  }
+]

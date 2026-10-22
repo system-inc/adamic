@@ -1,0 +1,12 @@
+{
+  "newly_added": [],
+  "changed": [],
+  "retained": [
+    {
+      "path": "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a",
+      "header": "// a-check: refused union-typed array built from a narrower literal"
+    }
+  ],
+  "body_bytes_unchanged": true,
+  "source": "225850deea88029ed269a8b0e14b6832ebb49134"
+}

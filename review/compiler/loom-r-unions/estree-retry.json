@@ -1,0 +1,38 @@
+[
+  {
+    "label": "estree-owner",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree/oracles",
+      "-run",
+      "^TestProduct_EstreeGoOracle$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-parallel",
+      "2",
+      "-json"
+    ],
+    "seconds": 24.858,
+    "exit": 0
+  },
+  {
+    "label": "estree-consumer-retry",
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/estree",
+      "-run",
+      "^TestAcceptanceGrammar$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-parallel",
+      "2",
+      "-json"
+    ],
+    "seconds": 53.345,
+    "exit": 0
+  }
+]

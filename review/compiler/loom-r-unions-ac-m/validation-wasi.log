@@ -1,0 +1,10 @@
+native-all-wasi 0 181.37
+oracle-all-wasi 0 376.056
+stage1-touched 1 56.93
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/loom-r-unions-ac-m/validate.py", line 21, in <module>
+    run('stage1-touched',['go','test','./stage1/cohere/selector/...','./stage1/cohere/values/...',*standard])
+  File "/workspace/adamic/review/compiler/loom-r-unions-ac-m/validate.py", line 16, in run
+    assert r.returncode==expected,(label,r.returncode)
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('stage1-touched', 1)

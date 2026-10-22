@@ -1,0 +1,7 @@
+Verify a-check headers for the union lowering change
+
+Apply the complete union change on the pinned main base. All 22 changed Adamic programs are checked or NotYet, so no expected-error header is needed. Use an existing headed refusal as the predicate control and preserve every program body and count row.
+
+Re-cut onto main 8cfcf172d08e685850cfd38b1002cfd69e25d3e6 (was 63604fed on dbdf977f), with a current NotYet meter witness, the admitted boolean-field positive check, and main's narrow-array refusal preserved
+
+Co-Authored-By: Ahra <ahra@ahra.ai>

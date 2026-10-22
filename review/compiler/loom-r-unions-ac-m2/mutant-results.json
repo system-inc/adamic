@@ -1,0 +1,99 @@
+[
+  {
+    "name": "drop-map-adapter-exemption",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m2/mutants/drop-map-adapter-exemption.json",
+      "-run",
+      "^TestCallbackWideningNullableObjectMapRelease$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 18.575,
+    "catchers": [
+      "TestCallbackWideningNullableObjectMapRelease"
+    ]
+  },
+  {
+    "name": "drop-nested-storage-match",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-unions-ac-m2/mutants/drop-nested-storage-match.json",
+      "-run",
+      "^TestNullableObjectMapKeepsArrayStorageViewNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 19.14,
+    "catchers": [
+      "TestNullableObjectMapKeepsArrayStorageViewNotYet"
+    ]
+  },
+  {
+    "name": "removed-count-row",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecordedTable$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "seconds": 3.839,
+    "catchers": [
+      "TestCountsAreRecordedTable"
+    ]
+  },
+  {
+    "name": "wrong-count-row",
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/scout_class_boolean_fields.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "seconds": 19.779,
+    "catchers": [
+      "TestCountsAreRecorded_010/internal/oracle/testdata/scout_class_boolean_fields.a",
+      "TestCountsAreRecorded_010"
+    ]
+  }
+]

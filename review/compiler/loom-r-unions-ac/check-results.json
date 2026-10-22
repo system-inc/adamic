@@ -1,0 +1,1170 @@
+[
+  {
+    "label": "oracle-path-readers",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^Test(NullableObjectStorage.*|NullableStringFieldCheckMutant|NonNullAdamicRefusal|CountsAreRecordedTable)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "seconds": 7.555,
+    "exit": 0,
+    "tests": [
+      {
+        "Time": "2026-10-18T08:48:29.438167435Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestCountsAreRecordedTable",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:32.516022475Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableObjectStorageArraySpread",
+        "Elapsed": 3.08
+      },
+      {
+        "Time": "2026-10-18T08:48:32.528428678Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableObjectStorageArray",
+        "Elapsed": 3.09
+      },
+      {
+        "Time": "2026-10-18T08:48:32.599976506Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableObjectStorageField",
+        "Elapsed": 3.16
+      },
+      {
+        "Time": "2026-10-18T08:48:32.635699167Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableObjectStorageCallable",
+        "Elapsed": 3.2
+      },
+      {
+        "Time": "2026-10-18T08:48:32.670983372Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a",
+        "Elapsed": 0.04
+      },
+      {
+        "Time": "2026-10-18T08:48:32.694084478Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a",
+        "Elapsed": 0.02
+      },
+      {
+        "Time": "2026-10-18T08:48:32.813905806Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNonNullAdamicRefusal",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:32.832154867Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableObjectStorageLookup",
+        "Elapsed": 0.3
+      },
+      {
+        "Time": "2026-10-18T08:48:33.125888305Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableObjectStorageObjectSpread",
+        "Elapsed": 0.23
+      },
+      {
+        "Time": "2026-10-18T08:48:33.12615894Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNullableStringFieldCheckMutant",
+        "Elapsed": 0.6
+      }
+    ]
+  },
+  {
+    "label": "union-fixtures",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scout_",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "seconds": 9.402,
+    "exit": 0,
+    "tests": [
+      {
+        "Time": "2026-10-18T08:48:29.440177565Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_000",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.441733675Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_032",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.443856523Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_064",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.443876092Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_062",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.444775399Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_061",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.44651267Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_060",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.446546581Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_096",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.446560081Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_059",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.446577597Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_058",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.446959008Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_056",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.448000738Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_057",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.449192332Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_055",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.449236077Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_054",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.454956601Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_052",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T08:48:29.454991674Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_063",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T08:48:29.454996261Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_051",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T08:48:29.455259875Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_050",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.45573084Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_047",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.456175116Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_046",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.456192642Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_048",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.456219081Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_045",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.45646563Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_043",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.457064357Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_049",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.457626518Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_041",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.459251261Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_039",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.459749647Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_038",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.460261864Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_040",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.461255211Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_036",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.463950106Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_044",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T08:48:29.465104364Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_034",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.465148941Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_033",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.465174679Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_095",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.46541533Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_094",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.465811343Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_092",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.465961668Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_093",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.466666142Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_080",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.466965671Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_089",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.46808074Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_085",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.468095633Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_083",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.468110795Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_086",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.468254761Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_082",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.468714589Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_081",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.468882671Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_084",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.469597341Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_072",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.472732645Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_078",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.472755379Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_076",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.47276893Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_075",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.472779325Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_074",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.472796451Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_077",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.473549598Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_079",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.474114344Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_126",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.474338019Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_124",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.474667622Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_123",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.475089814Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_121",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.475446969Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_120",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.475976782Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_125",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.476196932Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_117",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.476457893Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_116",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.476684602Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_115",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.476964181Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_114",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.477260424Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_113",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.477934854Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_068",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.479946015Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_118",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.479967217Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_071",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.479978814Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_069",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.479995609Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_016",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.480008719Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_031",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.480020096Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_030",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.48004928Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_122",
+        "Elapsed": 0.01
+      },
+      {
+        "Time": "2026-10-18T08:48:29.480064933Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_027",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.480643389Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_026",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.4841971Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_028",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.484211451Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_024",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.484248587Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_025",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.484269038Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_021",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.484288096Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_070",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.484326944Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_019",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.484347094Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_018",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.486272657Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_022",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.486289853Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_104",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.486302142Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_111",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.486314019Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_017",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.487953313Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_109",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.487983809Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_020",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.488591128Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_110",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.489114912Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_107",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.489900799Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_106",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.491214105Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_105",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.492157918Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_066",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.493343373Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_067",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.49429708Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_065",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.494446694Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_015",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.494616248Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_014",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.494772352Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_013",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.49491783Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_012",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.495102767Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_011",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.495382005Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_010",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.495576997Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_009",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.495922143Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_100",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.496146329Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_008",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.49624731Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_102",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.496345738Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_101",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.496504295Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_097",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.496712076Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_108",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.496852957Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_007",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.496946567Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_002",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.497118264Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_006",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.497281609Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_003",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.497466796Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_005",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.497614507Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_001",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.497801687Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_099",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:29.498887002Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_098",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:32.920806731Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_037/internal/oracle/testdata/scout_nullable_string_stale_field.a",
+        "Elapsed": 3.42
+      },
+      {
+        "Time": "2026-10-18T08:48:32.920821413Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_037",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:32.940555838Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_127/internal/oracle/testdata/scout_boxed_scalar_stale_field.a",
+        "Elapsed": 3.5
+      },
+      {
+        "Time": "2026-10-18T08:48:32.940572363Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_127",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:33.035871518Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_042/internal/oracle/testdata/scout_class_boolean_fields.a",
+        "Elapsed": 3.54
+      },
+      {
+        "Time": "2026-10-18T08:48:33.114999263Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_042",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:33.115053174Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_053/internal/oracle/testdata/scout_nullable_objects.a",
+        "Elapsed": 3.62
+      },
+      {
+        "Time": "2026-10-18T08:48:33.115062438Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_053",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:33.498883213Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_091/internal/oracle/testdata/scout_tsc_nullish_content.a",
+        "Elapsed": 0.56
+      },
+      {
+        "Time": "2026-10-18T08:48:33.498892507Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_091",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:33.575864715Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_090/internal/oracle/testdata/scout_selector_optional_boolean.a",
+        "Elapsed": 0.54
+      },
+      {
+        "Time": "2026-10-18T08:48:33.575874099Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_090",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:33.616502065Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_035/internal/oracle/testdata/scout_nullable_strings.a",
+        "Elapsed": 0.7
+      },
+      {
+        "Time": "2026-10-18T08:48:33.616514383Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_035",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:33.890493216Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_088/internal/oracle/testdata/scout_boxed_scalar_fields.a",
+        "Elapsed": 0.77
+      },
+      {
+        "Time": "2026-10-18T08:48:33.890502901Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_088",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.267979108Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_112/internal/oracle/testdata/scout_nullable_object_stale_local.a",
+        "Elapsed": 0.69
+      },
+      {
+        "Time": "2026-10-18T08:48:34.267989033Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_112",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.268306798Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_087/internal/oracle/testdata/scout_values_optional_boolean.a",
+        "Elapsed": 0.77
+      },
+      {
+        "Time": "2026-10-18T08:48:34.268353949Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_087",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.364184049Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_073/internal/oracle/testdata/scout_string_number_stale_field.a",
+        "Elapsed": 0.75
+      },
+      {
+        "Time": "2026-10-18T08:48:34.364193223Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_073",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.508514632Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_119/internal/oracle/testdata/scout_nullable_object_stale_field.a",
+        "Elapsed": 0.62
+      },
+      {
+        "Time": "2026-10-18T08:48:34.755920931Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_119",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.756000841Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_023/internal/oracle/testdata/scout_tsc_source_content.a",
+        "Elapsed": 0.49
+      },
+      {
+        "Time": "2026-10-18T08:48:34.859129208Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_023",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.859175858Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_103/internal/oracle/testdata/scout_nullable_object_null_field.a",
+        "Elapsed": 0.5
+      },
+      {
+        "Time": "2026-10-18T08:48:34.958056445Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_103",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.958104086Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_004/internal/oracle/testdata/scout_hir_optional_boolean.a",
+        "Elapsed": 0.45
+      },
+      {
+        "Time": "2026-10-18T08:48:34.980247869Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_004",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-18T08:48:34.980276542Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_029/internal/oracle/testdata/scout_string_number_fields_locals.a",
+        "Elapsed": 0.71
+      },
+      {
+        "Time": "2026-10-18T08:48:34.980283131Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/oracle",
+        "Test": "TestNativeAgreesWithNode_029",
+        "Elapsed": 0
+      }
+    ]
+  },
+  {
+    "label": "reader-guard",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "seconds": 5.665,
+    "exit": 0,
+    "tests": [
+      {
+        "Time": "2026-10-18T08:48:38.79779851Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/internal/ir",
+        "Test": "TestCallTargetReaders",
+        "Elapsed": 2.13
+      }
+    ]
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/oracle",
+      "./stage1/cohere/selector",
+      "./stage1/cohere/values",
+      "./internal/ir"
+    ],
+    "seconds": 1.073,
+    "exit": 0,
+    "tests": []
+  }
+]

@@ -1,0 +1,8 @@
+{"Time":"2026-10-18T00:19:47.807451298Z","Action":"start","Package":"github.com/system-inc/adamic/internal/boundedrun"}
+{"Time":"2026-10-18T00:19:47.80894416Z","Action":"run","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestCommandDefaultDeadlineIncludesStartup"}
+{"Time":"2026-10-18T00:19:47.80900403Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestCommandDefaultDeadlineIncludesStartup","Output":"=== RUN   TestCommandDefaultDeadlineIncludesStartup\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:47.809025672Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestCommandDefaultDeadlineIncludesStartup","Output":"--- PASS: TestCommandDefaultDeadlineIncludesStartup (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:47.809029048Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/boundedrun","Test":"TestCommandDefaultDeadlineIncludesStartup","Elapsed":0}
+{"Time":"2026-10-18T00:19:47.809039804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:19:47.809267978Z","Action":"output","Package":"github.com/system-inc/adamic/internal/boundedrun","Output":"ok  \tgithub.com/system-inc/adamic/internal/boundedrun\t0.002s\n"}
+{"Time":"2026-10-18T00:19:47.809307377Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/boundedrun","Elapsed":0.002}

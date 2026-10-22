@@ -1,0 +1,34 @@
+[
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a",
+    "mutation": "removed-header",
+    "exit": 1,
+    "caught_by": "unchanged pinned Gate.aCheck replaying the actual branch compiler diagnostic",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/scout_nullable_storage_refused/array_spread.a: refused, expected checked (adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element)",
+    "result": {
+      "a_check": {
+        "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a": {
+          "outcome": "refused",
+          "expected": "checked",
+          "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal"
+        }
+      }
+    }
+  },
+  {
+    "path": "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a",
+    "mutation": "wrong-reason",
+    "exit": 1,
+    "caught_by": "unchanged pinned Gate.aCheck replaying the actual branch compiler diagnostic",
+    "failure": "a-check failed for 1 file:\ninternal/oracle/testdata/scout_nullable_storage_refused/array_spread.a: refused, expected refused deliberately-unmatched-unions-reason (adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element)",
+    "result": {
+      "a_check": {
+        "internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a": {
+          "outcome": "refused",
+          "expected": "refused deliberately-unmatched-unions-reason",
+          "first": "adamic: /workspace/adamic/internal/oracle/testdata/scout_nullable_storage_refused/array_spread.a:4:52: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal"
+        }
+      }
+    }
+  }
+]

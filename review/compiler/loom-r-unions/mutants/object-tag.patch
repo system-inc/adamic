@@ -1,0 +1,11 @@
+--- a/internal/lower/nullable_objects.go
++++ b/internal/lower/nullable_objects.go
+@@ -53,7 +53,7 @@
+ 	null := ir.Expression(ir.IsNull{Value: held})
+ 	matches := ir.Expression(ir.Binary{Operator: ir.And,
+ 		Left:  ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant("object")}},
+-		Right: ir.Unary{Operator: ir.Not, Operand: null}})
++		Right: ir.BooleanConstant{Value: true}})
+ 	if l.includesNull(observed) {
+ 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: null}
+ 	}
