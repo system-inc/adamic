@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct graph_region {
 	struct graph_region *parent;
@@ -47,11 +48,56 @@ static graph_region *find(graph_region *region) {
 	return root;
 }
 
+// Adoption moves the allocation (adamic_heap_graph_storage) and frees the original, so it takes only
+// the kinds whose every pointer at or into the allocation it re-aims below, and returns why it can't
+// take this one. The switch names every kind with no default, so a kind added to adamic.h fails the
+// build here until someone decides whether it can move.
+static const char *unadoptable(adamic_heap *heap) {
+	switch (heap->kind) {
+	case adamic_kind_object:
+	case adamic_kind_array:
+	case adamic_kind_map:
+	case adamic_kind_cell:
+	case adamic_kind_map_iterator:
+		return NULL;
+	case adamic_kind_closure:
+#ifdef ADAMIC_CANONICAL_CLOSURES
+		// Its frame's cache names its address and holds no count on it.
+		if (((adamic_closure *)heap)->canonical_owner != NULL) { return "compiler bug: a canonical closure can't be adopted into a graph region after it's cached"; }
+#endif
+		return NULL;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	case adamic_kind_environment: {
+		adamic_environment *environment = (adamic_environment *)heap;
+		if (environment->functions != NULL) { return "compiler bug: an environment can't be adopted into a graph region after it caches a closure"; }
+		for (size_t i = 0; i < environment->count; i++) {
+			if (adamic_weak_held(&environment->cells[i])) { return "compiler bug: an environment can't be adopted into a graph region while a Weak names one of its cells"; }
+		}
+		return NULL;
+	}
+#endif
+	case adamic_kind_string: return "compiler bug: a string can't be adopted into a graph region";
+	case adamic_kind_number: return "compiler bug: a number box can't be adopted into a graph region";
+	case adamic_kind_boolean: return "compiler bug: a boolean box can't be adopted into a graph region";
+	case adamic_kind_weak: return "compiler bug: a Weak can't be adopted into a graph region";
+	case adamic_kind_typed_array: return "compiler bug: a typed array can't be adopted into a graph region";
+	case adamic_kind_typed_array_iterator: return "compiler bug: a typed array iterator can't be adopted into a graph region";
+	case adamic_kind_async_frame: return "compiler bug: an async frame can't be adopted into a graph region";
+	case adamic_kind_async_promise: return "compiler bug: a promise can't be adopted into a graph region";
+	case adamic_kind_async_reaction: return "compiler bug: an async reaction can't be adopted into a graph region";
+	}
+	return "compiler bug: an unknown kind can't be adopted into a graph region";
+}
+
 void *adamic_graph_adopt(void *value, size_t bytes) {
 	adamic_heap *heap = owner(value);
 	if (heap == NULL || heap != value || (heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1 || adamic_graph_is(heap)) {
 		FAIL("compiler bug: graph adoption needs a new allocation");
 	}
+	const char *refused = unadoptable(heap);
+	if (refused != NULL) { fail(refused, strlen(refused)); }
+	// A Weak names the address the move frees.
+	if (adamic_weak_held(heap)) { FAIL("compiler bug: a value can't be adopted into a graph region while a Weak names it"); }
 	if (heap->kind == adamic_kind_object && bytes != adamic_object_size(((adamic_object *)heap)->shape->count)) {
 		FAIL("compiler bug: graph adoption truncates object storage");
 	}
