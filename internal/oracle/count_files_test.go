@@ -1,0 +1,202 @@
+package oracle
+
+import (
+	"bytes"
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"slices"
+	"strconv"
+	"strings"
+	"testing"
+)
+
+// Keep the full source extension: foo.a and foo.ts are distinct fixtures.
+func countFile(kind, key string) string {
+	return filepath.Join(countsDirectory, kind, filepath.FromSlash(key)+".counts")
+}
+
+func countRecord(kind, key, row string) ([]byte, error) {
+	if !filepath.IsLocal(filepath.FromSlash(key)) || filepath.ToSlash(filepath.Clean(filepath.FromSlash(key))) != key || strings.Contains(key, "\\") {
+		return nil, fmt.Errorf("invalid count fixture key %q", key)
+	}
+	columns := 7
+	if kind == "predicates" {
+		columns = 5
+	} else if kind != "runtime" {
+		return nil, fmt.Errorf("unknown count kind %q", kind)
+	}
+	fields := strings.Split(row, " | ")
+	if len(fields) != columns || fields[0] != "| "+key || !strings.HasSuffix(fields[len(fields)-1], " |") {
+		return nil, fmt.Errorf("invalid %s count row for %s: %q", kind, key, row)
+	}
+	fields[len(fields)-1] = strings.TrimSuffix(fields[len(fields)-1], " |")
+	for _, field := range fields[1:] {
+		value, err := strconv.ParseUint(field, 10, 64)
+		if err != nil || strconv.FormatUint(value, 10) != field {
+			return nil, fmt.Errorf("invalid count %q for %s", field, key)
+		}
+	}
+	return []byte(row + "\n"), nil
+}
+
+func readCountRow(root, kind, key string) (string, error) {
+	file := filepath.Join(root, kind, filepath.FromSlash(key)+".counts")
+	data, err := os.ReadFile(file)
+	if err != nil {
+		return "", err
+	}
+	row := strings.TrimSuffix(string(data), "\n")
+	canonical, err := countRecord(kind, key, row)
+	if err != nil {
+		return "", fmt.Errorf("%s: %w", file, err)
+	}
+	if !bytes.Equal(data, canonical) {
+		return "", fmt.Errorf("%s must contain exactly one row with an LF newline", file)
+	}
+	return row, nil
+}
+
+func readCountRows(root, kind string, keys []string) (map[string]string, error) {
+	rows := map[string]string{}
+	for _, key := range keys {
+		if _, exists := rows[key]; exists {
+			return nil, fmt.Errorf("duplicate %s count fixture %s", kind, key)
+		}
+		row, err := readCountRow(root, kind, key)
+		if err != nil {
+			return nil, err
+		}
+		rows[key] = row
+	}
+	return rows, nil
+}
+
+// The updater and temporary regeneration use the same host-independent encoding.
+// The caller supplies actual measurements, not newly inferred expected counts.
+func writeCountFiles(root string, runtime, predicates map[string]string) error {
+	files := map[string][]byte{}
+	for kind, rows := range map[string]map[string]string{"runtime": runtime, "predicates": predicates} {
+		for key, row := range rows {
+			data, err := countRecord(kind, key, row)
+			if err != nil {
+				return err
+			}
+			files[filepath.Join(root, kind, filepath.FromSlash(key)+".counts")] = data
+		}
+	}
+	paths := make([]string, 0, len(files))
+	for path := range files {
+		paths = append(paths, path)
+	}
+	slices.Sort(paths)
+	for _, path := range paths {
+		data := files[path]
+		if old, err := os.ReadFile(path); err == nil && bytes.Equal(old, data) {
+			continue
+		}
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			return err
+		}
+		if err := os.WriteFile(path, data, 0o644); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func countsFileCensus(root string) error {
+	predicateKeys, err := predicateCountKeys()
+	if err != nil {
+		return err
+	}
+	expected := map[string]bool{}
+	for kind, keys := range map[string][]string{"runtime": countKeys(), "predicates": predicateKeys} {
+		for _, key := range keys {
+			path := filepath.Join(root, kind, filepath.FromSlash(key)+".counts")
+			if expected[path] {
+				return fmt.Errorf("duplicate counts file %s", path)
+			}
+			expected[path] = true
+			if info, err := os.Stat(filepath.Join(repository, filepath.FromSlash(key))); err != nil || !info.Mode().IsRegular() {
+				return fmt.Errorf("%s has no fixture %s: %v", path, key, err)
+			}
+			if _, err := readCountRow(root, kind, key); err != nil {
+				return fmt.Errorf("fixture %s needs counts file %s: %w", key, path, err)
+			}
+		}
+	}
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.IsDir() || path == filepath.Join(root, "README.md") {
+			return nil
+		}
+		if !expected[path] {
+			return fmt.Errorf("orphan counts file %s has no counted fixture", path)
+		}
+		return nil
+	})
+}
+
+func TestCountsFilesCensus(t *testing.T) {
+	t.Parallel()
+	// New files are published by TestMain after a successful measurement run.
+	if *updateCounts {
+		return
+	}
+	if err := countsFileCensus(countsDirectory); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// Each existing count shard regenerates independently measured values through the
+// updater's writer, in temporary storage, and compares committed bytes. No fixture
+// is measured by a monolithic extra test that could exceed its four-CPU budget.
+func regenerateCountRecord(t *testing.T, kind, key, measured string) {
+	t.Helper()
+	root := t.TempDir()
+	rows := map[string]string{key: measured}
+	var err error
+	if kind == "runtime" {
+		err = writeCountFiles(root, rows, nil)
+	} else {
+		err = writeCountFiles(root, nil, rows)
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
+	actual, err := os.ReadFile(filepath.Join(root, kind, filepath.FromSlash(key)+".counts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected, err := os.ReadFile(countFile(kind, key))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(actual, expected) {
+		t.Errorf("regenerated counts differ in %s:\nrecorded: %sregenerated: %s", countFile(kind, key), expected, actual)
+	}
+}
+
+func TestPredicateCountsRegenerateDeterministically(t *testing.T) {
+	t.Parallel()
+	if *updateCounts {
+		return
+	}
+	for key, row := range predicateCountsTable(t) {
+		regenerateCountRecord(t, "predicates", key, row)
+	}
+}
+
+func TestCountsRegenerateDeterministically(t *testing.T) {
+	t.Parallel()
+	if *updateCounts {
+		return
+	}
+	// Every runtime row is also regenerated in its existing count-family shard.
+	const key = "dedication/dedication.a"
+	regenerateCountRecord(t, "runtime", key, countMeasured(t, key))
+}
