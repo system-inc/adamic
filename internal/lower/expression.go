@@ -1155,6 +1155,12 @@ func slotless(valueType ir.Type) bool {
 	return valueType == ir.MaybeBoolean || valueType == ir.Union
 }
 
+// A fitted Union occupies one counted reference. Keep the general slot refusal
+// for callers that have not arranged boxing, and optional booleans for Map slots.
+func boxedSlot(valueType ir.Type) bool {
+	return !slotless(valueType) || valueType == ir.Union
+}
+
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()

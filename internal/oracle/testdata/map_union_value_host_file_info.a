@@ -1,0 +1,19 @@
+// Reduced tsc shapes; the member representations are the same as the recorded Map value type.
+interface FilePresentOnHost { readonly version: string; readonly sourceFile: {readonly fileName: string}; }
+interface FilePresenceUnknownOnHost { readonly version: false; }
+type HostFileInfo = FilePresentOnHost | false | FilePresenceUnknownOnHost;
+function show(value: HostFileInfo | undefined): string {
+ if (value === undefined) { return 'missing'; }
+ if (value === false) { return 'false'; }
+ // Both object members retain their shape; no scalar field union is needed here.
+ return 'object';
+}
+const present: FilePresentOnHost = {version: 'v'.repeat(2), sourceFile: {fileName: 'file'.repeat(2)}};
+const unknown: FilePresenceUnknownOnHost = {version: false};
+const map = new Map<string, HostFileInfo>([['a', present], ['b', false], ['c', unknown]]);
+const held = map.get('a'); map.set('a', false);
+console.log(`${show(held)} ${show(map.get('a'))} ${show(map.get('missing'))} ${held === present}`);
+map.set('b', unknown); const copy = new Map(map); map.clear();
+console.log(`${copy.delete('a')} ${copy.delete('a')}`); copy.set('a', present);
+for (const [key, value] of copy) { console.log(`${key}=${show(value)} ${value === present} ${value === unknown}`); }
+copy.clear(); console.log(`${copy.size}`);
