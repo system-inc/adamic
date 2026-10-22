@@ -1,0 +1,20 @@
+{"Time":"2026-10-18T00:13:24.704701471Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-18T00:13:24.709818132Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers"}
+{"Time":"2026-10-18T00:13:24.709937441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"=== RUN   TestPassThroughsAreNotConsumers\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.709960459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"=== PAUSE TestPassThroughsAreNotConsumers\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.709962999Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers"}
+{"Time":"2026-10-18T00:13:24.709965628Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans"}
+{"Time":"2026-10-18T00:13:24.709967431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"=== RUN   TestInheritanceMemoryPlans\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.709971365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"=== PAUSE TestInheritanceMemoryPlans\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.709973167Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans"}
+{"Time":"2026-10-18T00:13:24.710093856Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers"}
+{"Time":"2026-10-18T00:13:24.710098061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"=== CONT  TestPassThroughsAreNotConsumers\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.710248247Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans"}
+{"Time":"2026-10-18T00:13:24.710250728Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"=== CONT  TestInheritanceMemoryPlans\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.710785636Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Output":"--- PASS: TestPassThroughsAreNotConsumers (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.746537957Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPassThroughsAreNotConsumers","Elapsed":0}
+{"Time":"2026-10-18T00:13:24.7465811Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Output":"--- PASS: TestInheritanceMemoryPlans (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.746589326Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestInheritanceMemoryPlans","Elapsed":0.04}
+{"Time":"2026-10-18T00:13:24.74659568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:13:24.748036094Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.043s\n"}
+{"Time":"2026-10-18T00:13:24.748070964Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.043}

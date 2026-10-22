@@ -1,0 +1,72 @@
+[
+  {
+    "path": "stage3/fixtures/assertions/16_unknown_chain.a",
+    "record": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/16_unknown_chain.a:6:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "actual": "Refused",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/16_unknown_chain.a:6:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/assertions/17_brand_upcast.a",
+    "record": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/17_brand_upcast.a:14:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "actual": "Refused",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/assertions/17_brand_upcast.a:11:73: Adamic 0.1 refuses a string brand member __escapedIdentifier with a runtime layout; keep the brand phantom and unread, or use an explicit object with a string field\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/cycles/04_directory_callback/main.a",
+    "record": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet"
+    },
+    "actual": "NotYet",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/cycles/05_safe_load_read/main.a",
+    "record": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
+    },
+    "actual": "NotYet",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/cycles/06_import_order_mutant/main.a",
+    "record": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
+    },
+    "actual": "NotYet",
+    "stderr": "adamic: /workspace/adamic/stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet\n",
+    "exit": 1
+  },
+  {
+    "path": "stage3/fixtures/namespaces/02_jsx_names.a",
+    "record": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/02_jsx_names.a:7:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "actual": "Compiles",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/namespaces/03_react_names.a",
+    "record": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/03_react_names.a:7:29: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "actual": "Compiles",
+    "stderr": "",
+    "exit": 0
+  }
+]

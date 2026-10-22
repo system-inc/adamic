@@ -1,0 +1,356 @@
+[
+  {
+    "topic": "non-null-check",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestCheckedNonNullTypeScript/undefined",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestCheckedNonNullTypeScript",
+        "seconds": 0
+      }
+    ],
+    "errors": [
+      "non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:0, Sites:[]ir.NonNullCheck(nil)}"
+    ]
+  },
+  {
+    "topic": "non-null-narrowing",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestCheckedNonNullTypeScript/narrowed",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestCheckedNonNullTypeScript",
+        "seconds": 0
+      }
+    ],
+    "errors": [
+      "non_null_checked_test.go:40: want proven 1 checked 0, got ir.NonNullCheckCounts{Proven:0, Checked:1, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:\"/workspace/adamic/internal/oracle/testdata/non_null_checked_narrowed.ts:2:43\", Expression:\"value!\", Proven:false}}}"
+    ]
+  },
+  {
+    "topic": "nested-empty",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestNestedEmptyArrayElementKinds/strings",
+        "seconds": 0.27
+      },
+      {
+        "test": "TestNestedEmptyArrayElementKinds/objects",
+        "seconds": 0.18
+      },
+      {
+        "test": "TestNestedEmptyArrayElementKinds",
+        "seconds": 0
+      }
+    ],
+    "errors": [
+      "empty_literal_test.go:35: empty element kind 1, want 3",
+      "empty_literal_test.go:35: empty element kind 1, want 4"
+    ]
+  },
+  {
+    "topic": "string-concatenation",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestNativeAgreesWithNode_081/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestNativeAgreesWithNode_081",
+        "seconds": 0
+      }
+    ],
+    "errors": [
+      "oracle_test.go:710: Lower: /workspace/adamic/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a:3:13: stage 0 can't lower a BinaryExpression with a string and a value yet"
+    ]
+  },
+  {
+    "topic": "phantom-primitive",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestPhantomCastsAreErased",
+        "seconds": 0.04
+      }
+    ],
+    "errors": [
+      "phantom_brands_test.go:65: /tmp/adamic-gate/TestPhantomCastsAreErased4199710959/001/main.a:2:48: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    ]
+  },
+  {
+    "topic": "proven-predicates",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestCensusComputedRelation",
+        "seconds": 0.09
+      }
+    ],
+    "errors": []
+  },
+  {
+    "topic": "generic-empty",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestNativeAgreesWithNode_059/internal/oracle/testdata/generic_empty_array.a",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestNativeAgreesWithNode_059",
+        "seconds": 0.01
+      }
+    ],
+    "errors": [
+      "oracle_test.go:710: Lower: /workspace/adamic/internal/oracle/testdata/generic_empty_array.a:33:22: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint { text: string; } can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+    ]
+  },
+  {
+    "topic": "debugger",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestDebuggerNativeEmitsNothing/.a",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestDebuggerNativeEmitsNothing/.ts",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestDebuggerNativeEmitsNothing",
+        "seconds": 0
+      }
+    ],
+    "errors": [
+      "debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.a1691335082/001/main.a:4:5: Adamic 0.1 refuses debugger; remove it",
+      "debugger_test.go:45: /tmp/adamic-gate/TestDebuggerNativeEmitsNothing.ts305225570/001/main.ts:4:5: Adamic 0.1 refuses debugger; remove it"
+    ]
+  },
+  {
+    "topic": "generic-values",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestGenericFunctionValuesHaveSeparateInstances",
+        "seconds": 0.03
+      }
+    ],
+    "errors": [
+      "generic_function_value_test.go:19: /tmp/adamic-gate/TestGenericFunctionValuesHaveSeparateInstances3131834857/001/main.a:4:47: stage 0 can't lower a generic function as a value yet"
+    ]
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestGenericFunctionValueNamespaceDirectCallsKeepIdentity",
+        "seconds": 0.03
+      }
+    ],
+    "errors": [
+      "generic_function_value_test.go:152: /tmp/adamic-gate/TestGenericFunctionValueNamespaceDirectCallsKeepIdentity3130259519/001/main.a:6:56: stage 0 can't lower function identity comparison in a program with specialized generic function values yet"
+    ]
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestPhantomOverloadOnlyBrandsKeepMainProof",
+        "seconds": 0.03
+      }
+    ],
+    "errors": [
+      "phantom_brands_test.go:157: /tmp/adamic-gate/TestPhantomOverloadOnlyBrandsKeepMainProof2046181790/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member pathBrand whose type is not void; make pathBrand void (or optional and typed undefined) so the brand is phantom"
+    ]
+  },
+  {
+    "topic": "proven-cleanup",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestCensusGenericRefusalInsideClosure",
+        "seconds": 0.03
+      }
+    ],
+    "errors": []
+  },
+  {
+    "topic": "arrow-constructor-frame",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestArrowFieldCaptureFrames",
+        "seconds": 0.13
+      }
+    ],
+    "errors": [
+      "arrow_capture_frames_test.go:10: receiver frames: got 0 empty and 2 receiver arrows, want 1 and 1"
+    ]
+  },
+  {
+    "topic": "arrow-receiver-capture",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestArrowSuperCaptureFrames",
+        "seconds": 0.05
+      },
+      {
+        "test": "TestArrowStoredCaptureFrames",
+        "seconds": 0.05
+      }
+    ],
+    "errors": [
+      "arrow_capture_frames_test.go:15: receiver frames: got 1 empty and 0 receiver arrows, want 0 and 1",
+      "arrow_capture_frames_test.go:20: receiver frames: got 1 empty and 0 receiver arrows, want 0 and 1"
+    ]
+  },
+  {
+    "topic": "phantom-fresh",
+    "kind": "source overlay",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/host_phantom_overload_primitive.a",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/phantom_brands.a",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/phantom_catch.a",
+        "seconds": 0.04
+      },
+      {
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/phantom_undefined.a",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestFreshCorpusRemainder",
+        "seconds": 1.4
+      }
+    ],
+    "errors": [
+      "corpus_coverage_test.go:82: ../oracle/testdata/host_phantom_overload_primitive.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_brands.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_catch.a: ir.PhantomMember is a node the cycle finder doesn't know",
+      "corpus_coverage_test.go:82: ../oracle/testdata/phantom_undefined.a: ir.PhantomMember is a node the cycle finder doesn't know"
+    ]
+  },
+  {
+    "topic": "empty-array-falsiness",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestEmptyArrayRuntimeMutants/empty_array_is_falsy",
+        "seconds": 0.6
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  },
+  {
+    "topic": "fresh-array-sharing",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestEmptyArrayRuntimeMutants/fresh_number_array_is_shared",
+        "seconds": 0.64
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  },
+  {
+    "topic": "generic-wrong-result",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestGenericFunctionValueWrongResultMutant",
+        "seconds": 18.91
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  },
+  {
+    "topic": "numeric-concatenation-spelling",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestScannerConcatenationMutant",
+        "seconds": 18.97
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  },
+  {
+    "topic": "boolean-concatenation-spelling",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestScannerPrimitiveConcatenationMutants/boolean",
+        "seconds": 0.55
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  },
+  {
+    "topic": "undefined-concatenation-spelling",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestScannerPrimitiveConcatenationMutants/undefined",
+        "seconds": 0.51
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  },
+  {
+    "topic": "null-concatenation-spelling",
+    "kind": "IR output mutant",
+    "caught": true,
+    "catchers": [
+      {
+        "test": "TestScannerPrimitiveConcatenationMutants/null",
+        "seconds": 0.58
+      }
+    ],
+    "evidence": "Passing test requires stdout-only disagreement against source Node in native and JS backends, with build, sanitizer, exit and leak failures rejected."
+  }
+]

@@ -1,0 +1,21 @@
+{"Time":"2026-10-18T00:14:33.625201049Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-18T00:14:33.635484026Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript"}
+{"Time":"2026-10-18T00:14:33.635723261Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript","Output":"=== RUN   TestCheckedNonNullTypeScript\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.635785539Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript","Output":"=== PAUSE TestCheckedNonNullTypeScript\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.635790516Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript"}
+{"Time":"2026-10-18T00:14:33.635793218Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript"}
+{"Time":"2026-10-18T00:14:33.635794959Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript","Output":"=== CONT  TestCheckedNonNullTypeScript\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.63580273Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined"}
+{"Time":"2026-10-18T00:14:33.635808458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined","Output":"=== RUN   TestCheckedNonNullTypeScript/undefined\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.635814131Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined","Output":"=== PAUSE TestCheckedNonNullTypeScript/undefined\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.635816295Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined"}
+{"Time":"2026-10-18T00:14:33.635822848Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined"}
+{"Time":"2026-10-18T00:14:33.635824981Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined","Output":"=== CONT  TestCheckedNonNullTypeScript/undefined\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.671710022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined","Output":"    non_null_checked_test.go:43: want proven 0 checked 1, got ir.NonNullCheckCounts{Proven:0, Checked:0, Sites:[]ir.NonNullCheck(nil)}\n","OutputType":"error"}
+{"Time":"2026-10-18T00:14:33.67185668Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined","Output":"--- FAIL: TestCheckedNonNullTypeScript/undefined (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.671863216Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript/undefined","Elapsed":0.04}
+{"Time":"2026-10-18T00:14:33.671903695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript","Output":"--- FAIL: TestCheckedNonNullTypeScript (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.671906886Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedNonNullTypeScript","Elapsed":0}
+{"Time":"2026-10-18T00:14:33.671914225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.673238819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.047s\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:14:33.673273672Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.048}

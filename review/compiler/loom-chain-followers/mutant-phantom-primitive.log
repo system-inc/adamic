@@ -1,0 +1,13 @@
+{"Time":"2026-10-13T09:20:39.982477625Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-13T09:20:39.990425422Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased"}
+{"Time":"2026-10-13T09:20:39.990486074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased","Output":"=== RUN   TestPhantomCastsAreErased\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:20:39.990524021Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased","Output":"=== PAUSE TestPhantomCastsAreErased\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:20:39.990526445Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased"}
+{"Time":"2026-10-13T09:20:39.990528628Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased"}
+{"Time":"2026-10-13T09:20:39.990530461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased","Output":"=== CONT  TestPhantomCastsAreErased\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:20:40.027059446Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased","Output":"    phantom_brands_test.go:64: /tmp/adamic-gate/TestPhantomCastsAreErased622513172/001/main.a:2:48: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n","OutputType":"error"}
+{"Time":"2026-10-13T09:20:40.027149653Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased","Output":"--- FAIL: TestPhantomCastsAreErased (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:20:40.027155702Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPhantomCastsAreErased","Elapsed":0.04}
+{"Time":"2026-10-13T09:20:40.02717452Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:20:40.028541075Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.046s\n","OutputType":"frame"}
+{"Time":"2026-10-13T09:20:40.028555807Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.046}

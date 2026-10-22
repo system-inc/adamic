@@ -1,0 +1,8 @@
+#!/bin/sh
+case "$*" in
+  --version)
+    /usr/bin/gcc --version
+    printf '%s\n' 'Adamic worker GCC sanitizer interfaces: LLVM 20.1.8 allocator_interface.h'
+    ;;
+  *) exec /usr/bin/gcc -idirafter /workspace/scratch/m2-gcc-include "$@" ;;
+esac

@@ -1,0 +1,100 @@
+[
+  {
+    "path": "stage3/fixtures/assertions/16_unknown_chain.a",
+    "before": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/16_unknown_chain.a:6:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "after": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/16_unknown_chain.a:5:22: Adamic 0.1 refuses a primitive brand member __watchFileKind whose type is not void; make __watchFileKind void (or optional and typed undefined) so the brand is phantom"
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/watchUtilities.ts:835",
+    "program_bytes_unchanged": true,
+    "sha256": "bcb0036e0debfc4a1a879164bead45fa93ee53b5a74c20b9e5ddce020153372e"
+  },
+  {
+    "path": "stage3/fixtures/assertions/17_brand_upcast.a",
+    "before": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/17_brand_upcast.a:14:70: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "after": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/assertions/17_brand_upcast.a:5:17: Adamic 0.1 refuses a primitive brand member __escapedIdentifier whose type is not void; make __escapedIdentifier void (or optional and typed undefined) so the brand is phantom"
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/utilities.ts:664",
+    "program_bytes_unchanged": true,
+    "sha256": "bd4c2fb81336f095018e8dd09c597e96706f8e4470d8ce1d7c5641e0ab0e4bf5"
+  },
+  {
+    "path": "stage3/fixtures/cycles/04_directory_callback/main.a",
+    "before": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet"
+    },
+    "after": {
+      "outcome": "Compiles",
+      "what": ""
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/core.ts:2247",
+    "program_bytes_unchanged": true,
+    "sha256": "4ac5213ff86ad2f490221b2b60fcef7f20395b5f1977f78c759e4b81be2d8f17"
+  },
+  {
+    "path": "stage3/fixtures/cycles/05_safe_load_read/main.a",
+    "before": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet"
+    },
+    "after": {
+      "outcome": "Compiles",
+      "what": ""
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/core.ts:17",
+    "program_bytes_unchanged": true,
+    "sha256": "5a11de835be4c6e3e9520c02d9c00386cd656b9f98aaf4d05f42acb8f5a4f772"
+  },
+  {
+    "path": "stage3/fixtures/cycles/06_import_order_mutant/main.a",
+    "before": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet"
+    },
+    "after": {
+      "outcome": "Compiles",
+      "what": ""
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/core.ts:17",
+    "program_bytes_unchanged": true,
+    "sha256": "b6ba97a6d97e9bb9b6edbafc67979d088067bfcd7efb0c0e9d1b900ed8104e25"
+  },
+  {
+    "path": "stage3/fixtures/namespaces/02_jsx_names.a",
+    "before": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/02_jsx_names.a:7:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "after": {
+      "outcome": "Compiles",
+      "what": ""
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/checker.ts:54223",
+    "program_bytes_unchanged": true,
+    "sha256": "f373559ce85af57a38c637d5a39fa1574830821d7ced6897e8bb8724513fdfd0"
+  },
+  {
+    "path": "stage3/fixtures/namespaces/03_react_names.a",
+    "before": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/namespaces/03_react_names.a:7:29: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    "after": {
+      "outcome": "Compiles",
+      "what": ""
+    },
+    "first_line": "// From TypeScript 6.0.3, src/compiler/checker.ts:54236",
+    "program_bytes_unchanged": true,
+    "sha256": "88d4d50cab993f81630522d923a5cbc3062428345ce222e03bcab4cb6ad2fa60"
+  }
+]

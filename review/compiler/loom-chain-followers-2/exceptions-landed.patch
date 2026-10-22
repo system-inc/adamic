@@ -1,0 +1,13 @@
+diff --git a/internal/lower/exceptions.go b/internal/lower/exceptions.go
+index 6b81dc89..ae5fc770 100644
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -186,6 +186,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
+ 			}
+ 		case ir.NodeFSFile:
+ 			found = found || node.MayThrow()
++		case ir.ObjectLiteral:
++			found = found || l.result.ObjectSpreadMayThrow(node)
+ 		case ir.Throw:
+ 			found = true
+ 		case ir.Call:

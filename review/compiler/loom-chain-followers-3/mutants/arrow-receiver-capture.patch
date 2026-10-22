@@ -1,0 +1,11 @@
+--- internal/lower/locals.go
++++ internal/lower/locals.go
+@@ -197,7 +197,7 @@
+ 	if declared.Ready != 0 {
+ 		l.touch(declared.Ready - 1)
+ 	}
+-	if declared.Global || declared.Function == l.functionIndex {
++	if declared.Global || declared.Function == l.functionIndex || declared.Name == "this" {
+ 		return
+ 	}
+ 	l.result.Locals[local].Captured = true

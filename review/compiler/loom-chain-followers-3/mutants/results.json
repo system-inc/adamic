@@ -1,0 +1,245 @@
+[
+  {
+    "topic": "arrow-constructor-frame",
+    "catchers": [
+      {
+        "log": "mutant-arrow-constructor-frame.log",
+        "test": "TestArrowFieldCaptureFrames",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "arrow-receiver-capture",
+    "catchers": [
+      {
+        "log": "mutant-arrow-receiver-capture.log",
+        "test": "TestArrowSuperCaptureFrames",
+        "seconds": 0.04,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-arrow-receiver-capture.log",
+        "test": "TestArrowStoredCaptureFrames",
+        "seconds": 0.04,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "debugger",
+    "catchers": [
+      {
+        "log": "mutant-debugger.log",
+        "test": "TestDebuggerNativeEmitsNothing/.ts",
+        "seconds": 0.04,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-debugger.log",
+        "test": "TestDebuggerNativeEmitsNothing/.a",
+        "seconds": 0.04,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-debugger.log",
+        "test": "TestDebuggerNativeEmitsNothing",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "generic-empty",
+    "catchers": [
+      {
+        "log": "mutant-generic-empty.log",
+        "test": "TestNativeAgreesWithNode_059/internal/oracle/testdata/generic_empty_array.a",
+        "seconds": 0.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-generic-empty.log",
+        "test": "TestNativeAgreesWithNode_059",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "generic-namespace-interaction",
+    "catchers": [
+      {
+        "log": "mutant-generic-namespace-interaction.log",
+        "test": "TestGenericFunctionValueNamespaceDirectCallsKeepIdentity",
+        "seconds": 0.04,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "generic-values",
+    "catchers": [
+      {
+        "log": "mutant-generic-values.log",
+        "test": "TestGenericFunctionValuesHaveSeparateInstances",
+        "seconds": 0.04,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "nested-empty",
+    "catchers": [
+      {
+        "log": "mutant-nested-empty.log",
+        "test": "TestNestedEmptyArrayElementKinds/strings",
+        "seconds": 0.05,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-nested-empty.log",
+        "test": "TestNestedEmptyArrayElementKinds/objects",
+        "seconds": 0.06,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-nested-empty.log",
+        "test": "TestNestedEmptyArrayElementKinds",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "non-null-check",
+    "catchers": [
+      {
+        "log": "mutant-non-null-check.log",
+        "test": "TestCheckedNonNullTypeScript/undefined",
+        "seconds": 0.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-non-null-check.log",
+        "test": "TestCheckedNonNullTypeScript",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "non-null-narrowing",
+    "catchers": [
+      {
+        "log": "mutant-non-null-narrowing.log",
+        "test": "TestCheckedNonNullTypeScript/narrowed",
+        "seconds": 0.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-non-null-narrowing.log",
+        "test": "TestCheckedNonNullTypeScript",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "phantom-fresh",
+    "catchers": [
+      {
+        "log": "mutant-phantom-fresh.log",
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/host_phantom_overload_primitive.a",
+        "seconds": 0.02,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-phantom-fresh.log",
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/phantom_brands.a",
+        "seconds": 0.05,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-phantom-fresh.log",
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/phantom_catch.a",
+        "seconds": 0.08,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-phantom-fresh.log",
+        "test": "TestFreshCorpusRemainder/../oracle/testdata/phantom_undefined.a",
+        "seconds": 0.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-phantom-fresh.log",
+        "test": "TestFreshCorpusRemainder",
+        "seconds": 0.67,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "phantom-overload-interaction",
+    "catchers": [
+      {
+        "log": "mutant-phantom-overload-interaction.log",
+        "test": "TestPhantomOverloadOnlyBrandsKeepMainProof",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "phantom-primitive",
+    "catchers": [
+      {
+        "log": "mutant-phantom-primitive.log",
+        "test": "TestPhantomCastsAreErased",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "proven-cleanup",
+    "catchers": [
+      {
+        "log": "mutant-proven-cleanup.log",
+        "test": "TestCensusGenericRefusalInsideClosure",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "proven-predicates",
+    "catchers": [
+      {
+        "log": "mutant-proven-predicates.log",
+        "test": "TestCensusComputedRelation",
+        "seconds": 0.03,
+        "result": "fail"
+      }
+    ]
+  },
+  {
+    "topic": "string-concatenation",
+    "catchers": [
+      {
+        "log": "mutant-string-concatenation.log",
+        "test": "TestNativeAgreesWithNode_081/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a",
+        "seconds": 0.03,
+        "result": "fail"
+      },
+      {
+        "log": "mutant-string-concatenation.log",
+        "test": "TestNativeAgreesWithNode_081",
+        "seconds": 0,
+        "result": "fail"
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+path	status	code	reason	header
+internal/lower/testdata/census_panics/computed_relation.a	refused		an unproven relation from { arrow: { message: string; }; } to { readonly arrow: { readonly message: string; readonly suggestion?: string; }; }: optional field arrow.suggestion has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)	// a-check: refused adamic/no-optional-widening
+internal/lower/testdata/census_panics/generic_closure.a	refused		instantiating a generic function makes a value of type string | undefined written where string is read; make the collection readonly, or use a type parameter for the value being written (adamic/invariant-mutable)	// a-check: refused adamic/invariant-mutable
+internal/lower/testdata/census_panics/qualified.a	checked			
+internal/lower/testdata/census_panics/types.a	checked			
+internal/oracle/testdata/arrow_this_field.a	checked			
+internal/oracle/testdata/arrow_this_stored.a	checked			
+internal/oracle/testdata/arrow_this_super.a	checked			
+internal/oracle/testdata/generic_empty_array.a	checked			
+internal/oracle/testdata/generic_function_value.a	checked			
+internal/oracle/testdata/generic_function_value_arms.a	checked			
+internal/oracle/testdata/host_phantom_optional_array.a	checked			
+internal/oracle/testdata/host_phantom_overload_primitive.a	checked			
+internal/oracle/testdata/native-generic-empty-array.a	checked			
+internal/oracle/testdata/phantom_brands.a	checked			
+internal/oracle/testdata/phantom_catch.a	checked			
+internal/oracle/testdata/phantom_undefined.a	checked			
+internal/oracle/testdata/scanner_expressions/number_spellings.a	checked			
+internal/oracle/testdata/scanner_expressions/primitive_concatenation.a	checked			
+internal/oracle/testdata/scanner_expressions/string-number-concatenation.a	checked			
+review/compiler/chain-followers/host-fixtures/nonvoid-path.a	refused		a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom	// a-check: refused a primitive brand member __pathBrand whose type is not void
+review/compiler/chain-followers/host-fixtures/prototype-read.a	refused		a primitive brand member __proto__ that exists on the primitive; use a member name the primitive does not have on its own properties or prototype chain	// a-check: refused a primitive brand member __proto__ that exists on the primitive

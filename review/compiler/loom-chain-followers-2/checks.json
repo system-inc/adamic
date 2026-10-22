@@ -1,0 +1,443 @@
+[
+  {
+    "label": "counts-regeneration",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/(accessor_spread_throw_first\\.a|accessor_spread_throw_last\\.a|accessor_spread_throw_middle\\.a|arrow_this_field\\.a|arrow_this_stored\\.a|arrow_this_super\\.a|generic_empty_array\\.a|generic_function_value\\.a|generic_function_value_arms\\.a|host_phantom_optional_array\\.a|host_phantom_overload_primitive\\.a|native\\-generic\\-empty\\-array\\.a|phantom_brands\\.a|phantom_catch\\.a|phantom_undefined\\.a|plain_data_spread\\.a|scanner_expressions|static_constructor_spread_gap\\.a|static_constructor_spread_owned\\.a|template_nullish\\.a)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 27.365
+  },
+  {
+    "label": "counts-table",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCountsAreRecordedTable$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 3.043
+  },
+  {
+    "label": "lower-focus",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^(TestCensusComputedRelation|TestCensusGenericRefusalInsideClosure|TestCensusQualifiedCast|TestClockGenericReturnsT01SupportsPhantomPrimitives|TestEmptyArrayInstantiations|TestEmptyArrayScalarFallbacksUseTruthiness|TestEmptyArrayViewsStillRefuse|TestGenericFunctionValueDifferentReferenceRepresentations|TestGenericFunctionValueEarlierIdentityComparisonIsNotYet|TestGenericFunctionValueIdentityCallsAreNotYet|TestGenericFunctionValueIdentityComparisonIsNotYet|TestGenericFunctionValueNamespaceDirectCallsKeepIdentity|TestGenericFunctionValueOperandContexts|TestGenericFunctionValueReferenceInstances|TestGenericFunctionValueUnionIdentityIsNotYet|TestGenericFunctionValuesHaveSeparateInstances|TestPhantomCastsAreErased|TestPhantomLiteralCastsStayRefused|TestPhantomOverloadOnlyBrandsKeepMainProof|TestPhantomPrimitiveNames|TestPhantomRealPathRefusal|TestPhantomRefusals|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestArrowFieldCaptureFrames|TestArrowSuperCaptureFrames|TestArrowStoredCaptureFrames|TestClassFeaturesThrowingAccessorSpread|TestNestedEmptyArrayElementKinds)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 10.667
+  },
+  {
+    "label": "oracle-focus",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^(TestArrowThisField|TestArrowThisStored|TestArrowThisSuper|TestEmptyArrayRuntimeMutants|TestGenericFunctionValueWrongResultMutant|TestScannerConcatenationMutant|TestScannerPrimitiveConcatenationMutants|TestCheckedNonNullTypeScript|TestDebuggerNativeEmitsNothing)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 7.715
+  },
+  {
+    "label": "ir-focus",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^(TestObjectSpreadAccessorEffects)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 12.283
+  },
+  {
+    "label": "fixtures",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/(accessor_spread_throw_first\\.a|accessor_spread_throw_last\\.a|accessor_spread_throw_middle\\.a|arrow_this_field\\.a|arrow_this_stored\\.a|arrow_this_super\\.a|generic_empty_array\\.a|generic_function_value\\.a|generic_function_value_arms\\.a|host_phantom_optional_array\\.a|host_phantom_overload_primitive\\.a|native\\-generic\\-empty\\-array\\.a|phantom_brands\\.a|phantom_catch\\.a|phantom_undefined\\.a|plain_data_spread\\.a|scanner_expressions|static_constructor_spread_gap\\.a|static_constructor_spread_owned\\.a|template_nullish\\.a)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 17.927
+  },
+  {
+    "label": "stage3",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixtures(Assertions|Cycles|Namespaces)$/(assertions|cycles|namespaces)/(16_unknown_chain.a|17_brand_upcast.a|04_directory_callback|05_safe_load_read|06_import_order_mutant|02_jsx_names.a|03_react_names.a)",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 28.586
+  },
+  {
+    "label": "readers",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 28.262
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/flow",
+      "./internal/ir",
+      "./internal/javascript",
+      "./internal/lower",
+      "./internal/native",
+      "./internal/oracle"
+    ],
+    "exit": 0,
+    "seconds": 3.385
+  },
+  {
+    "label": "mutant-non-null-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/non-null-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/undefined$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.091
+  },
+  {
+    "label": "mutant-non-null-narrowing",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/non-null-narrowing.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/narrowed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 14.144
+  },
+  {
+    "label": "mutant-nested-empty",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/nested-empty.json",
+      "./internal/lower",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.363
+  },
+  {
+    "label": "mutant-string-concatenation",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/string-concatenation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 12.942
+  },
+  {
+    "label": "mutant-phantom-primitive",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/phantom-primitive.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomCastsAreErased$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.158
+  },
+  {
+    "label": "mutant-proven-predicates",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/proven-predicates.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusComputedRelation$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.426
+  },
+  {
+    "label": "mutant-generic-empty",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/generic-empty.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+/internal/oracle/testdata/generic_empty_array.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.551
+  },
+  {
+    "label": "mutant-debugger",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/debugger.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDebuggerNativeEmitsNothing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 12.743
+  },
+  {
+    "label": "mutant-generic-values",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/generic-values.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValuesHaveSeparateInstances$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.322
+  },
+  {
+    "label": "mutant-generic-namespace-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/generic-namespace-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.814
+  },
+  {
+    "label": "mutant-phantom-overload-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/phantom-overload-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomOverloadOnlyBrandsKeepMainProof$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.464
+  },
+  {
+    "label": "mutant-proven-cleanup",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/proven-cleanup.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusGenericRefusalInsideClosure$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.161
+  },
+  {
+    "label": "mutant-arrow-constructor-frame",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/arrow-constructor-frame.json",
+      "./internal/lower",
+      "-run",
+      "^TestArrowFieldCaptureFrames$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.654
+  },
+  {
+    "label": "mutant-arrow-receiver-capture",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-chain-followers-2/mutants/arrow-receiver-capture.json",
+      "./internal/lower",
+      "-run",
+      "^TestArrow(Super|Stored)CaptureFrames$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.236
+  }
+]

@@ -1,0 +1,24 @@
+counts-regeneration 0 27.365
+counts-table 0 3.043
+lower-focus 0 10.667
+oracle-focus 0 7.715
+ir-focus 0 12.283
+fixtures 0 17.927
+stage3 0 28.586
+readers 0 28.262
+vet 0 3.385
+mutant-non-null-check 1 13.091
+mutant-non-null-narrowing 1 14.144
+mutant-nested-empty 1 9.363
+mutant-string-concatenation 1 12.942
+mutant-phantom-primitive 1 9.158
+mutant-proven-predicates 1 9.426
+mutant-generic-empty 1 13.551
+mutant-debugger 1 12.743
+mutant-generic-values 1 9.322
+mutant-generic-namespace-interaction 1 9.814
+mutant-phantom-overload-interaction 1 9.464
+mutant-proven-cleanup 1 9.161
+mutant-arrow-constructor-frame 1 9.654
+mutant-arrow-receiver-capture 1 9.236
+All focused checks and 14 source mutants completed; 7 IR output mutants are held by oracle-focus.

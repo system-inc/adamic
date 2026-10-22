@@ -1,0 +1,535 @@
+[
+  {
+    "label": "counts-regenerate",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestCountsAreRecorded",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json",
+      "-args",
+      "-update-counts"
+    ],
+    "exit": 0,
+    "seconds": 62.257
+  },
+  {
+    "label": "paths-boundary",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestElementAccessCompilerAreaBoundaries$/paths$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 5.392
+  },
+  {
+    "label": "lower-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 54.882
+  },
+  {
+    "label": "native-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/native/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 210.193
+  },
+  {
+    "label": "other-touched-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./internal/ir/...",
+      "./internal/javascript/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 122.038
+  },
+  {
+    "label": "ir-all-fixed",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 10.853
+  },
+  {
+    "label": "oracle-all",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 360.436
+  },
+  {
+    "label": "readers-maps",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^Test(CallTargetReaders|EveryMapAProgramHoldsIsSorted)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 5.746
+  },
+  {
+    "label": "parallel-guard",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTestIsParallelOrSaysWhy$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 1.22
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./internal/flow/...",
+      "./internal/fresh/...",
+      "./internal/ir/...",
+      "./internal/javascript/..."
+    ],
+    "exit": 0,
+    "seconds": 5.208
+  },
+  {
+    "label": "mutant-non-null-check",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/non-null-check.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/undefined$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.589
+  },
+  {
+    "label": "mutant-non-null-narrowing",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/non-null-narrowing.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedNonNullTypeScript/narrowed$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.729
+  },
+  {
+    "label": "mutant-nested-empty",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/nested-empty.json",
+      "./internal/lower",
+      "-run",
+      "^TestNestedEmptyArrayElementKinds$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.827
+  },
+  {
+    "label": "mutant-string-concatenation",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/string-concatenation.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/scanner_expressions/primitive_concatenation.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 16.236
+  },
+  {
+    "label": "mutant-phantom-primitive",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/phantom-primitive.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomCastsAreErased$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.767
+  },
+  {
+    "label": "mutant-proven-predicates",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/proven-predicates.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusComputedRelation$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.599
+  },
+  {
+    "label": "mutant-generic-empty",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-empty.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode_[0-9]+$/internal/oracle/testdata/generic_empty_array.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.182
+  },
+  {
+    "label": "mutant-debugger",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/debugger.json",
+      "./internal/oracle",
+      "-run",
+      "^TestDebuggerNativeEmitsNothing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 13.575
+  },
+  {
+    "label": "mutant-generic-values",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-values.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValuesHaveSeparateInstances$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.507
+  },
+  {
+    "label": "mutant-generic-namespace-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-namespace-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValueNamespaceDirectCallsKeepIdentity$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.553
+  },
+  {
+    "label": "mutant-phantom-overload-interaction",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/phantom-overload-interaction.json",
+      "./internal/lower",
+      "-run",
+      "^TestPhantomOverloadOnlyBrandsKeepMainProof$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.357
+  },
+  {
+    "label": "mutant-proven-cleanup",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/proven-cleanup.json",
+      "./internal/lower",
+      "-run",
+      "^TestCensusGenericRefusalInsideClosure$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.711
+  },
+  {
+    "label": "mutant-constructor-context",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/constructor-context.json",
+      "./internal/lower",
+      "-run",
+      "^TestArrowFieldCaptureFrames$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.871
+  },
+  {
+    "label": "mutant-dropped-capture",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/dropped-capture.json",
+      "./internal/lower",
+      "-run",
+      "^TestArrowSuperCaptureFrames$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.466
+  },
+  {
+    "label": "mutant-main-implied-target-cache",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/main-implied-target-cache.json",
+      "./internal/lower",
+      "-run",
+      "^TestImpliedTargetOrQueriesOnce$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.42
+  },
+  {
+    "label": "mutant-generic-operand-context",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-chain-followers-ac-m/mutants/generic-operand-context.json",
+      "./internal/lower",
+      "-run",
+      "^TestGenericFunctionValueOperandContexts$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 9.648
+  },
+  {
+    "label": "stage3-fixtures-all",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures/...",
+      "-count=1",
+      "-timeout",
+      "12m",
+      "-parallel",
+      "4",
+      "-p",
+      "1",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 179.156
+  },
+  {
+    "label": "stage3-vet",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": 2.027
+  }
+]
