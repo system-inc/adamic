@@ -1,0 +1,716 @@
+[
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofScannerKeyword",
+    "seconds": 15.52,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofCompoundMutant",
+    "seconds": 15.58,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofWiderTargetMutant",
+    "seconds": 15.62,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofChained",
+    "seconds": 15.94,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofWiderTarget",
+    "seconds": 5.25,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofCompound",
+    "seconds": 5.35,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofIfNarrowingMutant",
+    "seconds": 5.38,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofReturnDefinedMutant",
+    "seconds": 5.18,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofIfNarrowing",
+    "seconds": 4.98,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofReturnDefined",
+    "seconds": 5.2,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofChainedMutant",
+    "seconds": 5.36,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/assignment-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestAssignmentProofScannerKeywordMutant",
+    "seconds": 5.27,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/flow-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/flow",
+    "test": "TestOptionalAfterCallFlowEdges",
+    "seconds": 0.05,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionTypeScriptCallRefused",
+    "seconds": 8.85,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionAdamicUnusedAnnotationRefused",
+    "seconds": 8.86,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionAdamicCallAnnotationRefused",
+    "seconds": 8.92,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionAdamicLengthAnnotationRefused",
+    "seconds": 0.54,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionTypeScriptUnusedAccepted",
+    "seconds": 9.81,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionCallSignatureAgreesWithNode",
+    "seconds": 1.37,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/function-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestFunctionTypeScriptLengthAgreesWithNode",
+    "seconds": 9.16,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-cssstrings-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestMultiPushGap",
+    "seconds": 23.89,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "seconds": 0.02,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/node",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/node",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/node",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/node",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/native",
+    "seconds": 1.97,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/stage0",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a",
+    "seconds": 2.36,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/native",
+    "seconds": 2.07,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/stage0",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a",
+    "seconds": 2.38,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/native",
+    "seconds": 2.07,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/stage0",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 2.41,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/node",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/node",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/native",
+    "seconds": 2.08,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/stage0",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a",
+    "seconds": 2.56,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/native",
+    "seconds": 1.26,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/stage0",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a",
+    "seconds": 1.46,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/native",
+    "seconds": 1.27,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/stage0",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a",
+    "seconds": 1.49,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-fixtures-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage3/fixtures",
+    "test": "TestFixturesAssignmentProofs",
+    "seconds": 17.64,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-json-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/json",
+    "test": "TestClosedMultiplePushGap",
+    "seconds": 3.21,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/1_recursive_state.ts",
+    "seconds": 34.98,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts",
+    "seconds": 0.49,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/3_recursive_callable.ts",
+    "seconds": 2.8,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/14_missing_path_key.ts",
+    "seconds": 1.94,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/4_structural_ranges.ts",
+    "seconds": 0.2,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/5_conditional_panic.ts",
+    "seconds": 0.47,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/7_postfix_property.ts",
+    "seconds": 0.21,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/8_generic_callback_result.ts",
+    "seconds": 0.21,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/9_mixed_path_names.ts",
+    "seconds": 0.21,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/10_multiple_push.ts",
+    "seconds": 0.54,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/11_function_expression.ts",
+    "seconds": 0.59,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts",
+    "seconds": 1.42,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/15_string_or.ts",
+    "seconds": 1.26,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/16_array_shift.ts",
+    "seconds": 0.2,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes/gaps/17_long_optional_chain.ts",
+    "seconds": 0.21,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-markdownblocks-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "test": "TestParserRepresentationProbes",
+    "seconds": 45.73,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts",
+    "seconds": 0.41,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts",
+    "seconds": 0.44,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts",
+    "seconds": 0.46,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts",
+    "seconds": 0.34,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts",
+    "seconds": 3.21,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts",
+    "seconds": 2.78,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-selector-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/selector",
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-typescript-parser-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "test": "TestPushSpreadGap",
+    "seconds": 1.39,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-typescript-scanner-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestGapStandsWhereGapsMdSays",
+    "seconds": 1.36,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-yaml-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsLowered",
+    "seconds": 0.99,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-yaml-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestProduct_YAMLClosedGapsNative",
+    "seconds": 8.15,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/gaps-yaml-green.jsonl",
+    "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "test": "TestLexerGaps",
+    "seconds": 8.36,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/lower-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "test": "TestOptionalAfterCallPreservesEarlierThrow",
+    "seconds": 0,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicUnusedRefused",
+    "seconds": 9.38,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptUnusedAccepted",
+    "seconds": 10.93,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptMissingChecked",
+    "seconds": 11.61,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicComputedRefused",
+    "seconds": 0.72,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptComputedChecked",
+    "seconds": 11.7,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldTypeScriptInitializedAgreesWithNode",
+    "seconds": 2.45,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicReadRefused",
+    "seconds": 0.41,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/merged-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestMergedFieldAdamicInitializedAgreesWithNode",
+    "seconds": 1.57,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/native-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoBuildSeesTheProgramsFeatures",
+    "seconds": 0.45,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/native-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestCheckerBuildsNameNoPlaceOfTheArchive",
+    "seconds": 9.39,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/native-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheRelease",
+    "seconds": 10.82,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/native-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestNativeCachesWriteNothingUnderHome",
+    "seconds": 10.88,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/native-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/native",
+    "test": "TestTSGoCacheSanitized",
+    "seconds": 13.42,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/optional-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCall79",
+    "seconds": 29.16,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/optional-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallRequired",
+    "seconds": 29.41,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/optional-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCall193",
+    "seconds": 29.46,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/optional-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallVariants",
+    "seconds": 29.92,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/optional-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallPropagation",
+    "seconds": 1.33,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/optional-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestOptionalAfterCallComputed",
+    "seconds": 1.17,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/readers-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestCallTargetReaders",
+    "seconds": 24.57,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/spread-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestJSONStringifyShorthandWrongBindingMutant",
+    "seconds": 4.99,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/spread-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestJSONStringifyShorthand",
+    "seconds": 5.1,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/spread-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallSpreadEvaluatedTwiceMutant",
+    "seconds": 26.85,
+    "result": "pass"
+  },
+  {
+    "log": "review/compiler/loom-slice-3-2/spread-green.jsonl",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "test": "TestCallSpreadArray",
+    "seconds": 41.95,
+    "result": "pass"
+  }
+]

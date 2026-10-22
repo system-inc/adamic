@@ -1,0 +1,199 @@
+[
+  {
+    "name": "production-mutants",
+    "command": [
+      "timeout",
+      "720",
+      "python3",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m/run-mutants.py"
+    ],
+    "exit": 1,
+    "seconds": 116.508
+  },
+  {
+    "name": "reader-guard",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallTargetReaders$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 2.939
+  },
+  {
+    "name": "vet",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "vet",
+      "-p",
+      "1",
+      "./internal/ir/...",
+      "./internal/javascript/...",
+      "./internal/lower/...",
+      "./internal/flow/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./stage1/cohere/cssstrings/...",
+      "./stage1/cohere/json/...",
+      "./stage1/cohere/markdownblocks/...",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/yaml/...",
+      "./stage1/typescript/parser/...",
+      "./stage1/typescript/scanner/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 1,
+    "seconds": 15.356
+  },
+  {
+    "name": "metadata-guards",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./cmd/adamic-gate",
+      "-run",
+      "^TestEveryTest(HasOneDescriptiveName|IsParallelOrSaysWhy)$",
+      "-count=1",
+      "-timeout=90s"
+    ],
+    "exit": 0,
+    "seconds": 0.768
+  },
+  {
+    "name": "linker-mutant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/loom-r-slice-3-ac-m/linker-mutant/overlay.json.txt",
+      "./internal/native",
+      "-run",
+      "^TestTSGoCacheShippedRelease$",
+      "-count=1",
+      "-timeout=90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 8.621
+  },
+  {
+    "name": "markdown-own-focus",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "./stage1/cohere/markdownblocks",
+      "-run",
+      "^TestParserRepresentationProbes$",
+      "-count=1",
+      "-timeout=90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 6.997
+  },
+  {
+    "name": "production-mutants-retry",
+    "command": [
+      "timeout",
+      "600",
+      "python3",
+      "review/compiler/loom-r-slice-3-ac-m/run-mutants.py",
+      "function-annotation",
+      "function-call",
+      "function-length",
+      "erase-earlier-throw",
+      "tsgo-absolute-main",
+      "tsgo-rewrite-runtime"
+    ],
+    "exit": 0,
+    "seconds": null
+  },
+  {
+    "name": "vet-retry",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "vet",
+      "-p",
+      "1",
+      "./internal/ir/...",
+      "./internal/javascript/...",
+      "./internal/lower/...",
+      "./internal/flow/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./stage1/cohere/cssstrings/...",
+      "./stage1/cohere/json/...",
+      "./stage1/cohere/markdownblocks/...",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/yaml/...",
+      "./stage1/typescript/parser/...",
+      "./stage1/typescript/scanner/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 1,
+    "seconds": 37.998
+  },
+  {
+    "name": "linker-mutant-retry",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "review/compiler/loom-r-slice-3-ac-m/linker-mutant/overlay.json.txt",
+      "./internal/native",
+      "-run",
+      "^TestTSGoCacheShippedRelease$",
+      "-count=1",
+      "-timeout=90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 10.873
+  },
+  {
+    "name": "vet-final",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "vet",
+      "-p",
+      "1",
+      "./internal/ir/...",
+      "./internal/javascript/...",
+      "./internal/lower/...",
+      "./internal/flow/...",
+      "./internal/native/...",
+      "./internal/oracle/...",
+      "./stage1/cohere/cssstrings/...",
+      "./stage1/cohere/json/...",
+      "./stage1/cohere/markdownblocks/...",
+      "./stage1/cohere/selector/...",
+      "./stage1/cohere/yaml/...",
+      "./stage1/typescript/parser/...",
+      "./stage1/typescript/scanner/...",
+      "./stage3/fixtures/..."
+    ],
+    "exit": 0,
+    "seconds": null
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsFindsGoOracle",
+    "action": "pass",
+    "seconds": 1.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsMutant0Lowered",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsFastNative",
+    "action": "pass",
+    "seconds": 1.28
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsMutant2Native",
+    "action": "pass",
+    "seconds": 1.41
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsMutant2Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsMutant1Native",
+    "action": "pass",
+    "seconds": 0.43
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsMutant1Lowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsMutant0Native",
+    "action": "pass",
+    "seconds": 0.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsFindsGoRawAnswers",
+    "action": "pass",
+    "seconds": 0.08
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsPortNative",
+    "action": "pass",
+    "seconds": 0.36
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsPortLowered",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsFindsGoBatchAnswers",
+    "action": "pass",
+    "seconds": 0.01
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsPrettierBatchAnswers",
+    "action": "pass",
+    "seconds": 0
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "test": "TestProduct_CSSStringsFindsGoAnswers",
+    "action": "pass",
+    "seconds": 0.08
+  }
+]

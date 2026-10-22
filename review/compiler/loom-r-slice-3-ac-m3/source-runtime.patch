@@ -1,0 +1,38 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index f14aaec8..b26175e5 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -182,6 +182,7 @@ struct adamic_closure {
+  bool receiver;
+ #endif
+ 	size_t count;
++	size_t source_length;
+ #ifdef ADAMIC_CANONICAL_CLOSURES
+ 	adamic_environment *canonical_owner;
+ 	adamic_closure *canonical_previous;
+diff --git a/internal/native/runtime/closure.c b/internal/native/runtime/closure.c
+index bf2f47b6..943ee460 100644
+--- a/internal/native/runtime/closure.c
++++ b/internal/native/runtime/closure.c
+@@ -23,6 +23,7 @@ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
+  closure->receiver = false;
+ #endif
+ 	closure->count = count;
++	closure->source_length = 0;
+ #ifdef ADAMIC_CANONICAL_CLOSURES
+ 	closure->canonical_owner = NULL;
+ 	closure->canonical_previous = NULL;
+diff --git a/internal/native/runtime/union.c b/internal/native/runtime/union.c
+index b2fc483e..ece91ac9 100644
+--- a/internal/native/runtime/union.c
++++ b/internal/native/runtime/union.c
+@@ -182,6 +182,9 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
+ }
+ 
+ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
++	if (value != NULL && value->kind == adamic_kind_closure && strcmp(name, "length") == 0) {
++		return adamic_box_number((double)((adamic_closure *)value)->source_length);
++	}
+ 	if (value == NULL || value == &adamic_null) {
+ 		adamic_panic("dynamic property read on null or undefined", sizeof "dynamic property read on null or undefined" - 1);
+ 	}

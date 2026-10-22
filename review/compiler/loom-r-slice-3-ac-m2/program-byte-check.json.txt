@@ -1,0 +1,112 @@
+[
+  {
+    "path": "internal/oracle/testdata/call_spread_array.a",
+    "unchanged": true,
+    "sha256": "263e6f68e756a79ad312918eb5871dd44d6f37eb8e0cc77db12f942b038e0f9b"
+  },
+  {
+    "path": "internal/oracle/testdata/json_shorthand.a",
+    "unchanged": true,
+    "sha256": "9ef047ec7c9a8330034b1a73596067adb168018b1fe360adfa88a9ec4077ebc0"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_193.a",
+    "unchanged": true,
+    "sha256": "2bb394dc0e257673464953b66de38091dbc7f5e1be207410d83cd0a392fb3345"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_79.a",
+    "unchanged": true,
+    "sha256": "a92e4d572da06a74bb2050bf1508a6152c4125fd390339b4a8a02b53c1552fbc"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_gaps/computed.a",
+    "unchanged": true,
+    "sha256": "92684b0018ad3b0438ff2a1970a14ecee9fd15d1fd4c974523d052827b974b73"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_propagation.a",
+    "unchanged": true,
+    "sha256": "22d2d580d0296c21b280268a2cc0704a0a33377929491e44508f0d83dbccf5ba"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_required.a",
+    "unchanged": true,
+    "sha256": "4695accf658be43767af33909612ce1efcf60b490346c0e43f0fafb4d3df17c3"
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_variants.a",
+    "unchanged": true,
+    "sha256": "5cedcc3cb4978f3dbc21beb9c344a7042c49ccd45ffcf7363bc5986adc166af7"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_call.a",
+    "unchanged": true,
+    "sha256": "631dfbd0cd384528741d1a40f514c83d45f1b2181f7b16da6fcb326177a75c6e"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_length.a",
+    "unchanged": true,
+    "sha256": "067ceb85ecfb6faea7ad00583657b000304982e84a8fc8cf6e1f4056fb926b78"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_signature.a",
+    "unchanged": true,
+    "sha256": "56fab3cbe1e8bfd55d2a35adc7bb0e182046d0d25c1b3ac6973d36fdc34a329d"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_unused.a",
+    "unchanged": true,
+    "sha256": "0c4dee15fc7a50aff7048f5c1d916eb02d0fab8708570aabf267072c3957bf9d"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing.a",
+    "unchanged": true,
+    "sha256": "8ea02229cd2d2367aa2ea23f49a49b5263f5b48466ead084f2b495c8965b8c70"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a",
+    "unchanged": true,
+    "sha256": "7944a7312b7ec1506d867cb1b3626b9d96c85f2e37612db798dd2b9923a9601f"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_present.a",
+    "unchanged": true,
+    "sha256": "018fc060dea3569997a0b6d8709d00fdb7322d7ab6e9a66e9e0d08cf52f6b68e"
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_unused.a",
+    "unchanged": true,
+    "sha256": "cd8754dbf50fab766dd8209901717d81ae5a172a4ef9441fd27a6baa90e53053"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+    "unchanged": true,
+    "sha256": "06823e05f425a646396121d177ec3e1cb6380821cab16718772e6b779e81d0f0"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+    "unchanged": true,
+    "sha256": "1f145884fe7f573d60a89c6a52c3193acf7b1b4c5fe0ff9965c6f232d9a5c38f"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/03_return_defined.a",
+    "unchanged": true,
+    "sha256": "f6dc3b36f46bbd95ded8f1dba6be6fa3650d607269b204c771da53e68d0584ae"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/04_chained.a",
+    "unchanged": true,
+    "sha256": "5beef4fe59c5a42093985b14915ffe1b8fcdbdf2f784dff2e58bd05e9c80f8b9"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/05_compound.a",
+    "unchanged": true,
+    "sha256": "96cc7e3e1dc324b53ffb38f617bcad01df8ca4403e5d5270fd9fe4cf37486388"
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/06_wider_target.a",
+    "unchanged": true,
+    "sha256": "3e3e281b7d4db6178cf494ad5294c230652030527b0063fe89ad49ed9dbe158d"
+  }
+]

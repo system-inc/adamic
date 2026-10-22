@@ -1,0 +1,134 @@
+[
+  {
+    "path": "internal/oracle/testdata/call_spread_array.a",
+    "body_sha256": "263e6f68e756a79ad312918eb5871dd44d6f37eb8e0cc77db12f942b038e0f9b",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/json_shorthand.a",
+    "body_sha256": "9ef047ec7c9a8330034b1a73596067adb168018b1fe360adfa88a9ec4077ebc0",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_193.a",
+    "body_sha256": "2bb394dc0e257673464953b66de38091dbc7f5e1be207410d83cd0a392fb3345",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_79.a",
+    "body_sha256": "a92e4d572da06a74bb2050bf1508a6152c4125fd390339b4a8a02b53c1552fbc",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_gaps/computed.a",
+    "body_sha256": "92684b0018ad3b0438ff2a1970a14ecee9fd15d1fd4c974523d052827b974b73",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_propagation.a",
+    "body_sha256": "22d2d580d0296c21b280268a2cc0704a0a33377929491e44508f0d83dbccf5ba",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_required.a",
+    "body_sha256": "4695accf658be43767af33909612ce1efcf60b490346c0e43f0fafb4d3df17c3",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/optional_after_call_variants.a",
+    "body_sha256": "5cedcc3cb4978f3dbc21beb9c344a7042c49ccd45ffcf7363bc5986adc166af7",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_call.a",
+    "body_sha256": "3c1a02a9891e12a76675de63e57e5ec361f76968e7e9271b78808c59c1903d06",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_length.a",
+    "body_sha256": "1ae025e4ec402978de36b83ecaadba36c73e1d292186a794b1b75b809748d457",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_signature.a",
+    "body_sha256": "56fab3cbe1e8bfd55d2a35adc7bb0e182046d0d25c1b3ac6973d36fdc34a329d",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/function_unused.a",
+    "body_sha256": "acb32ab25989c37696da26e12b3e6ac95a25d4a7b814668514207a35e5c5e776",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing.a",
+    "body_sha256": "515b8dac6603e2d6b5c67206ac0ce9255bc92981588638368287e4db113053e1",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a",
+    "body_sha256": "df5bb6367d0ba12730335253cb821400c94f1774da4f0370fa2f86ed265a4e4a",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_present.a",
+    "body_sha256": "018fc060dea3569997a0b6d8709d00fdb7322d7ab6e9a66e9e0d08cf52f6b68e",
+    "body_unchanged": true,
+    "bytes_unchanged": true
+  },
+  {
+    "path": "internal/oracle/testdata/refusal_rulings/merge_unused.a",
+    "body_sha256": "d69ce50dc0923ec5817e8793c55dd375280739227cbcff137072b542c15f12de",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+    "body_sha256": "06823e05f425a646396121d177ec3e1cb6380821cab16718772e6b779e81d0f0",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+    "body_sha256": "1f145884fe7f573d60a89c6a52c3193acf7b1b4c5fe0ff9965c6f232d9a5c38f",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/03_return_defined.a",
+    "body_sha256": "f6dc3b36f46bbd95ded8f1dba6be6fa3650d607269b204c771da53e68d0584ae",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/04_chained.a",
+    "body_sha256": "5beef4fe59c5a42093985b14915ffe1b8fcdbdf2f784dff2e58bd05e9c80f8b9",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/05_compound.a",
+    "body_sha256": "96cc7e3e1dc324b53ffb38f617bcad01df8ca4403e5d5270fd9fe4cf37486388",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  },
+  {
+    "path": "stage3/fixtures/assignment-proofs/06_wider_target.a",
+    "body_sha256": "3e3e281b7d4db6178cf494ad5294c230652030527b0063fe89ad49ed9dbe158d",
+    "body_unchanged": true,
+    "bytes_unchanged": false
+  }
+]

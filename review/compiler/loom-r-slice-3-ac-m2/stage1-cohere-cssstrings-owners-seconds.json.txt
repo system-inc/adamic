@@ -1,0 +1,26 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles",
+    "test": "TestProduct_CSSStringsGoOracle",
+    "action": "pass",
+    "seconds": 20.19
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles",
+    "test": "TestProduct_CSSStringsGoBatchAnswers",
+    "action": "pass",
+    "seconds": 0.15
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles",
+    "test": "TestProduct_CSSStringsGoRawAnswers",
+    "action": "pass",
+    "seconds": 0.96
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles",
+    "test": "TestProduct_CSSStringsGoAnswers",
+    "action": "pass",
+    "seconds": 0.14
+  }
+]

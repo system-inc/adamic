@@ -1,0 +1,6 @@
+The first full internal/ir run failed while exporting Go archives to the pre-existing home cache:
+no space left on device
+/home/agent/.cache/adamic-build/local/.building-7f99fd83f84d-.../exports/279.a
+TestProduct_CallTargetExports failed after 22.01s; TestCallTargetReaders failed after 24.05s.
+The full suite passed after selecting main's supported ADAMIC_BUILD_OUTPUT_DIR on the separate /tmp filesystem.
+The first raw IR log was overwritten by that retry; suites.jsonl retains both results.

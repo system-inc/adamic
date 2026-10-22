@@ -1,0 +1,26 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesNative",
+    "action": "pass",
+    "seconds": 27.89
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesFresh",
+    "action": "pass",
+    "seconds": 13.44
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesFlow",
+    "action": "pass",
+    "seconds": 27.95
+  },
+  {
+    "package": "github.com/system-inc/adamic/internal/ir",
+    "test": "TestProduct_CallTargetReaderArchivesLower",
+    "action": "pass",
+    "seconds": 18.5
+  }
+]

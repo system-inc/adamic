@@ -1,0 +1,27 @@
+[
+  {
+    "test": "TestTSGoBuildSeesTheProgramsFeatures",
+    "seconds": 0.13,
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckerBuildsNameNoPlaceOfTheArchive",
+    "seconds": 4.74,
+    "action": "pass"
+  },
+  {
+    "test": "TestTSGoCacheRelease",
+    "seconds": 5.03,
+    "action": "pass"
+  },
+  {
+    "test": "TestNativeCachesWriteNothingUnderHome",
+    "seconds": 5.7,
+    "action": "pass"
+  },
+  {
+    "test": "TestTSGoCacheSanitized",
+    "seconds": 8.19,
+    "action": "pass"
+  }
+]

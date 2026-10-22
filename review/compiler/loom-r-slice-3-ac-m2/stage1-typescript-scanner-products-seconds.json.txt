@@ -1,0 +1,44 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerFindsOracle",
+    "action": "pass",
+    "seconds": 1.17
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerPunctuator",
+    "action": "pass",
+    "seconds": 4.91
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerRegexRescan",
+    "action": "pass",
+    "seconds": 3.69
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerDecimalSeparator",
+    "action": "pass",
+    "seconds": 4.03
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerRelease",
+    "action": "pass",
+    "seconds": 3.86
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerSourceIdentifier",
+    "action": "pass",
+    "seconds": 4.89
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerNative",
+    "action": "pass",
+    "seconds": 4.25
+  }
+]

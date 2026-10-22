@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestMergedFieldAdamicUnusedRefused",
+    "seconds": 2.94,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldTypeScriptUnusedAccepted",
+    "seconds": 3.26,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldTypeScriptComputedChecked",
+    "seconds": 3.4,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldAdamicReadRefused",
+    "seconds": 0.18,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldTypeScriptInitializedAgreesWithNode",
+    "seconds": 3.44,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldTypeScriptMissingChecked",
+    "seconds": 0.53,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldAdamicComputedRefused",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "test": "TestMergedFieldAdamicInitializedAgreesWithNode",
+    "seconds": 0.43,
+    "action": "pass"
+  }
+]

@@ -1,0 +1,6 @@
+Carry compiler slice 3 with measured a-check headers
+
+Apply 0a8d7ed8 as one change on the fixed dbdf977f base. Replace six refusal headers with their actual reasons and remove six redundant pass headers under the conservative clean-program rule. Preserve every program body byte and all pinned refusal positions.
+
+All 22 changed Adamic files pass the unchanged pinned predicate. Both header mutants are caught. Header-affected tests, readers and vet pass, and all 14 registered affected counts rows remain unchanged.
+

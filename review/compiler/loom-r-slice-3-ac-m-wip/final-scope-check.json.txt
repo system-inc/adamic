@@ -1,0 +1,13 @@
+{
+  "base": "5a94465370ea0172e25aae8c13478e59e40c2bb4",
+  "source": "f75b244b339ac7a0efca162dfc96805547763fe4",
+  "source_paths": 816,
+  "unexpected": [],
+  "runtime_identical": [
+    "internal/native/runtime/adamic.h",
+    "internal/native/runtime/closure.c",
+    "internal/native/runtime/union.c"
+  ],
+  "gofmt": "pass",
+  "product_whitespace": "pass"
+}

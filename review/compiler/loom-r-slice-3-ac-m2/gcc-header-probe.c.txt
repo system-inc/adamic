@@ -1,0 +1,2 @@
+#include <sanitizer/allocator_interface.h>
+int main(void) { return __sanitizer_get_heap_size() == 0; }

@@ -1,0 +1,422 @@
+[
+  {
+    "check": "fixtures",
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/native",
+    "seconds": 1.1,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/03_return_defined.a",
+    "seconds": 1.2,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/native",
+    "seconds": 1.16,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/04_chained.a",
+    "seconds": 1.24,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/native",
+    "seconds": 1.19,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 1.3,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/node",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/native",
+    "seconds": 1.18,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/06_wider_target.a",
+    "seconds": 1.31,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/native",
+    "seconds": 0.94,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/02_if_narrowing.a",
+    "seconds": 1.02,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/native",
+    "seconds": 0.96,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a/stage0",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs/05_compound.a",
+    "seconds": 1.06,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs/assignment-proofs",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "check": "fixtures",
+    "test": "TestFixturesAssignmentProofs",
+    "seconds": 1.84,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldAdamicUnusedRefused",
+    "seconds": 2.01,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldTypeScriptUnusedAccepted",
+    "seconds": 2.25,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldAdamicReadRefused",
+    "seconds": 0.11,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldAdamicInitializedAgreesWithNode",
+    "seconds": 0.36,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldTypeScriptInitializedAgreesWithNode",
+    "seconds": 2.41,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldTypeScriptComputedChecked",
+    "seconds": 2.44,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldAdamicComputedRefused",
+    "seconds": 0.1,
+    "action": "pass"
+  },
+  {
+    "check": "merged",
+    "test": "TestMergedFieldTypeScriptMissingChecked",
+    "seconds": 0.28,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofReturnDefinedMutant",
+    "seconds": 3.23,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofScannerKeyword",
+    "seconds": 3.3,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofChained",
+    "seconds": 3.34,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofIfNarrowingMutant",
+    "seconds": 3.39,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofWiderTargetMutant",
+    "seconds": 1.03,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofReturnDefined",
+    "seconds": 1.18,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofCompoundMutant",
+    "seconds": 1.14,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofWiderTarget",
+    "seconds": 1.15,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofCompound",
+    "seconds": 0.97,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofChainedMutant",
+    "seconds": 0.96,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofIfNarrowing",
+    "seconds": 1.01,
+    "action": "pass"
+  },
+  {
+    "check": "assignment",
+    "test": "TestAssignmentProofScannerKeywordMutant",
+    "seconds": 1.05,
+    "action": "pass"
+  },
+  {
+    "check": "readers",
+    "test": "TestCallTargetReaders",
+    "seconds": 0.77,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionTypeScriptCallRefused",
+    "seconds": 2.49,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionAdamicLengthAnnotationRefused",
+    "seconds": 2.49,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionAdamicUnusedAnnotationRefused",
+    "seconds": 2.5,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionAdamicCallAnnotationRefused",
+    "seconds": 0.2,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionTypeScriptUnusedAccepted",
+    "seconds": 2.73,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionCallSignatureAgreesWithNode",
+    "seconds": 0.49,
+    "action": "pass"
+  },
+  {
+    "check": "function",
+    "test": "TestFunctionTypeScriptLengthAgreesWithNode",
+    "seconds": 1.68,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/merge_missing.a_(TypeScript_mode)",
+    "seconds": 1.54,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/function_length.a_(TypeScript_mode)",
+    "seconds": 1.59,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/function_unused.a_(TypeScript_mode)",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/merge_unused.a_(TypeScript_mode)",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/stage3/fixtures/assignment-proofs/06_wider_target.a",
+    "seconds": 2.16,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/stage3/fixtures/assignment-proofs/03_return_defined.a",
+    "seconds": 0.54,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/stage3/fixtures/assignment-proofs/05_compound.a",
+    "seconds": 0.49,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/function_signature.a",
+    "seconds": 2.16,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/merge_present.a_(TypeScript_mode)",
+    "seconds": 0.39,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+    "seconds": 0.44,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+    "seconds": 0.45,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/stage3/fixtures/assignment-proofs/04_chained.a",
+    "seconds": 0.45,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/merge_missing_computed.a_(TypeScript_mode)",
+    "seconds": 0.09,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded/internal/oracle/testdata/refusal_rulings/merge_present.a",
+    "seconds": 0.08,
+    "action": "pass"
+  },
+  {
+    "check": "counts-stable",
+    "test": "TestHeaderCountsStayRecorded",
+    "seconds": 0,
+    "action": "pass"
+  }
+]

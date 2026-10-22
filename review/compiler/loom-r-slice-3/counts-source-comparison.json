@@ -1,0 +1,134 @@
+[
+  {
+    "key": "internal/load/testdata/0.1/compile/09_tree.ts",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/047cb0d_n_element.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/047cb0d_n_element_method.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/047cb0d_n_element_plain.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/call_spread_array.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/element_access_presence.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/json_shorthand.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/narrowed_fields.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/narrowed_methods.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/narrowed_reads.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/optional_after_call_193.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/optional_after_call_79.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/optional_after_call_gaps/computed.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/optional_after_call_propagation.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/optional_after_call_required.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/optional_after_call_variants.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/function_length.a (TypeScript mode)",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/function_signature.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/function_unused.a (TypeScript mode)",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/merge_missing.a (TypeScript mode)",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a (TypeScript mode)",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/merge_present.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/merge_present.a (TypeScript mode)",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/refusal_rulings/merge_unused.a (TypeScript mode)",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/regexp_null_narrowed.a",
+    "matches_source": true
+  },
+  {
+    "key": "internal/oracle/testdata/reuse_narrowed.a",
+    "matches_source": true
+  },
+  {
+    "key": "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+    "matches_source": true
+  },
+  {
+    "key": "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+    "matches_source": true
+  },
+  {
+    "key": "stage3/fixtures/assignment-proofs/03_return_defined.a",
+    "matches_source": true
+  },
+  {
+    "key": "stage3/fixtures/assignment-proofs/04_chained.a",
+    "matches_source": true
+  },
+  {
+    "key": "stage3/fixtures/assignment-proofs/05_compound.a",
+    "matches_source": true
+  },
+  {
+    "key": "stage3/fixtures/assignment-proofs/06_wider_target.a",
+    "matches_source": true
+  }
+]

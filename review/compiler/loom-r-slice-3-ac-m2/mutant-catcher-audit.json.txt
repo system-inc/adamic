@@ -1,0 +1,170 @@
+[
+  {
+    "name": "check-optional-receiver",
+    "failures": [
+      {
+        "test": "TestOptionalAfterCall79",
+        "seconds": 3.78
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "javascript-required-panic",
+    "failures": [
+      {
+        "test": "TestOptionalAfterCallRequired",
+        "seconds": 3.56
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "native-required-panic",
+    "failures": [
+      {
+        "test": "TestOptionalAfterCallRequired",
+        "seconds": 3.65
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "drop-flow-throw-edge",
+    "failures": [
+      {
+        "test": "TestOptionalAfterCallFlowEdges",
+        "seconds": 0.04
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "drop-required-propagation",
+    "failures": [
+      {
+        "test": "TestOptionalAfterCallPropagation",
+        "seconds": 3.7
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "merged-computed-read",
+    "failures": [
+      {
+        "test": "TestMergedFieldTypeScriptComputedChecked",
+        "seconds": 3.66
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "merged-declaration",
+    "failures": [
+      {
+        "test": "TestMergedFieldAdamicUnusedRefused",
+        "seconds": 0.04
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "merged-read",
+    "failures": [
+      {
+        "test": "TestMergedFieldTypeScriptMissingChecked",
+        "seconds": 4.28
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "function-annotation",
+    "failures": [
+      {
+        "test": "TestFunctionAdamicUnusedAnnotationRefused",
+        "seconds": 0.05
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "function-call",
+    "failures": [
+      {
+        "test": "TestFunctionTypeScriptCallRefused",
+        "seconds": 0.05
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "function-length",
+    "failures": [
+      {
+        "test": "TestFunctionTypeScriptLengthAgreesWithNode",
+        "seconds": 6.62
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "erase-earlier-throw",
+    "failures": [
+      {
+        "test": "TestOptionalAfterCallPreservesEarlierThrow",
+        "seconds": 0.0
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "tsgo-absolute-main",
+    "failures": [
+      {
+        "test": "TestTSGoCacheSanitized",
+        "seconds": 2.09
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  },
+  {
+    "name": "tsgo-rewrite-runtime",
+    "failures": [
+      {
+        "test": "TestTSGoCacheRelease",
+        "seconds": 1.52
+      }
+    ],
+    "compiler_errors": [],
+    "timeouts": [],
+    "caught": true
+  }
+]

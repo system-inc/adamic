@@ -1,0 +1,182 @@
+[
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProfileArtifacts",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestPerformance",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestGapStandsWhereGapsMdSays",
+    "seconds": 1.7,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_003",
+    "seconds": 3.72,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_015",
+    "seconds": 3.84,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_010",
+    "seconds": 3.95,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_013",
+    "seconds": 2.36,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_012",
+    "seconds": 2.43,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_007",
+    "seconds": 2.66,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_009",
+    "seconds": 3.29,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_014",
+    "seconds": 8.53,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_011",
+    "seconds": 6.46,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_008",
+    "seconds": 2.07,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerPunctuator",
+    "seconds": 1.06,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_004",
+    "seconds": 2.02,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_006",
+    "seconds": 3.36,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_001",
+    "seconds": 2.51,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerShardCoverage",
+    "seconds": 0.62,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerRegexRescan",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerDecimalSeparator",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerNative",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerSourceIdentifier",
+    "seconds": 0,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_005",
+    "seconds": 6.4,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProfileSnapshotsAgree",
+    "seconds": 0,
+    "action": "skip"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_000",
+    "seconds": 2.46,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "seconds": 0.15,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerRelease",
+    "seconds": 1.04,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestProduct_ScannerFindsOracle",
+    "seconds": 0.88,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "test": "TestScannerAgreesWithTypescriptGo_002",
+    "seconds": 5.35,
+    "action": "pass"
+  },
+  {
+    "package": "github.com/system-inc/adamic/stage1/typescript/scanner/oracles",
+    "test": "TestProduct_ScannerOracle",
+    "seconds": 1.01,
+    "action": "pass"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "package": "./stage1/cohere/cssstrings",
+    "command": [
+      "timeout",
+      "180",
+      "go",
+      "test",
+      "./stage1/cohere/cssstrings",
+      "-run",
+      "^(TestMultiPushGap)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-parallel",
+      "4",
+      "-json"
+    ],
+    "exit": -15,
+    "seconds": 172.480851394
+  }
+]

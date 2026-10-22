@@ -1,0 +1,19 @@
+{
+  "source": "origin/compiler/loom-slice-3-2",
+  "source_merge_base": "87ad5a4fe0b2ddf75adcde9d326e9d67edc1f2e4",
+  "identical_plus_minus": true,
+  "source_lines": [
+    "+\tsize_t source_length;",
+    "+\tclosure->source_length = 0;",
+    "+\tif (value != NULL && value->kind == adamic_kind_closure && strcmp(name, \"length\") == 0) {",
+    "+\t\treturn adamic_box_number((double)((adamic_closure *)value)->source_length);",
+    "+\t}"
+  ],
+  "recut_lines": [
+    "+\tsize_t source_length;",
+    "+\tclosure->source_length = 0;",
+    "+\tif (value != NULL && value->kind == adamic_kind_closure && strcmp(name, \"length\") == 0) {",
+    "+\t\treturn adamic_box_number((double)((adamic_closure *)value)->source_length);",
+    "+\t}"
+  ]
+}
