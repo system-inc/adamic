@@ -254,7 +254,9 @@ func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 // numbersClangToolchain is clang by its report, without where this machine installed it (#t37sw0f).
 func numbersClangToolchain(t *testing.T) string {
 	t.Helper()
-	if _, err := numbersSetupCommand(t, "clang", "--version").Output(); err != nil {
+	// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had finished.
+	command, ctx := numbersSetupCommand(t, "clang", "--version")
+	if _, _, err := childguard.Capture(ctx, command); err != nil {
 		t.Fatal(err)
 	}
 	return buildcache.Tool("clang", "--version")
@@ -468,7 +470,7 @@ func numbersSetupOracleAnswers(t *testing.T, name, command string, arguments []s
 	return numbersOracleAnswersWithCommand(t, name, command, arguments, data, identity, numbersSetupCommand)
 }
 
-func numbersOracleAnswersWithCommand(t *testing.T, name, command string, arguments []string, data []byte, identity string, makeCommand func(*testing.T, string, ...string) *exec.Cmd) run {
+func numbersOracleAnswersWithCommand(t *testing.T, name, command string, arguments []string, data []byte, identity string, makeCommand func(*testing.T, string, ...string) (*exec.Cmd, context.Context)) run {
 	t.Helper()
 	if name == "Go" {
 		return run{stdout: oracles.FullAnswers(t, command, arguments, data, identity)}
@@ -478,13 +480,15 @@ func numbersOracleAnswersWithCommand(t *testing.T, name, command string, argumen
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			return err
 		}
-		cmd := makeCommand(t, command, append(append([]string{}, arguments...), path)...)
-		var stdout, stderr bytes.Buffer
-		cmd.Stdout, cmd.Stderr = &stdout, &stderr
-		if err := childguard.Run(cmd, childguard.Options{}); err != nil || stderr.Len() != 0 {
-			return fmt.Errorf("%s oracle: %v; %s", name, err, &stderr)
+		// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had
+		// finished. A run made by numbersCommand ends at its 90 s deadline; one made by numbersSetupCommand has
+		// none, and the unit's own ceiling bounds it.
+		cmd, ctx := makeCommand(t, command, append(append([]string{}, arguments...), path)...)
+		stdout, stderr, err := childguard.Capture(ctx, cmd)
+		if err != nil || len(stderr) != 0 {
+			return fmt.Errorf("%s oracle: %v; %s", name, err, stderr)
 		}
-		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout.Bytes(), 0644)
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
 	})
 	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if err != nil {

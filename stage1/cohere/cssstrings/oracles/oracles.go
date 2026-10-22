@@ -86,13 +86,28 @@ func runOracle(t *testing.T, binary string, args []string, input []byte, path st
 	defer cancel()
 	command := toolchain.CommandContextIn(ctx, "", binary, append(append([]string{}, args...), path)...)
 	command.Env = nil
-	command.WaitDelay = time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := childguard.Run(command, childguard.Options{}); err != nil || stderr.Len() != 0 {
-		return nil, fmt.Errorf("oracle on %s: %v; %s", filepath.Base(path), err, &stderr)
+	var stdout, stderr []byte
+	var err error
+	if bounded {
+		// One case reads through childguard.Capture, to its end with no timer deciding when: exec's copying under
+		// a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the
+		// oracle exited, so a case that had finished could fail its product under load (#n3gk22h's shape). Its 90 s
+		// deadline ends a hung case before childguard.Run's windows (two minutes of silence, thirty before the first
+		// byte) could.
+		stdout, stderr, err = childguard.Capture(ctx, command)
+	} else {
+		// The whole corpus keeps childguard.Run's two-minute stall guard, shorter than the 600 s Loom gives a
+		// product unit, since the oracle prints a line per case. With no WaitDelay exec reads both streams to their
+		// end, and the oracle starts no process that could hold them open after it exits.
+		var output, diagnostics bytes.Buffer
+		command.Stdout, command.Stderr = &output, &diagnostics
+		err = childguard.Run(command, childguard.Options{})
+		stdout, stderr = output.Bytes(), diagnostics.Bytes()
 	}
-	return stdout.Bytes(), nil
+	if err != nil || len(stderr) != 0 {
+		return nil, fmt.Errorf("oracle on %s: %v; %s", filepath.Base(path), err, stderr)
+	}
+	return stdout, nil
 }
 func FullAnswers(t *testing.T, binary string, args []string, data []byte, identity string) []byte {
 	t.Helper()
