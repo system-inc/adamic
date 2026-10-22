@@ -1,7 +1,6 @@
 package css
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
@@ -268,14 +267,17 @@ func compositionCases(t *testing.T) string {
 		t.Fatal(err)
 	}
 	oracle := oracles.CompositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
-	command := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
+	command, ctx := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
 	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := command.CombinedOutput(); err != nil {
+	// Read through childguard.Capture for compositionExecute's reason: a WaitDelay could fail a run that had finished.
+	// The run has no deadline of its own, and the unit's own ceiling bounds it.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
+	if err != nil {
 		t.Fatalf("composition corpus: %v\n%s", err, output)
-	} else {
-		t.Logf("%s", output)
 	}
+	t.Logf("%s", output)
 	return cases
 }
 
@@ -380,28 +382,31 @@ var compositionShardFunctions = [...]func(*testing.T){
 
 // Bound the whole process group, including Go's compiler children, using only
 // the declared command's executable rather than an external timeout utility.
-func compositionCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// It returns the command's context with it, for childguard.Capture to end the reads by.
+func compositionCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	t.Cleanup(cancel)
-	return compositionCommandContext(ctx, name, arguments...)
+	return compositionCommandContext(ctx, name, arguments...), ctx
 }
 
+// compositionExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's
+// own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second
+// after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape). It drops
+// childguard.Run's stall guard and loses nothing by it: the guard's windows (four minutes of silence, thirty before the
+// first byte) are longer than the command's 90 s deadline, which ends a hung run sooner.
 func compositionExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	cmd := compositionCommand(t, name, arguments...)
+	cmd, ctx := compositionCommand(t, name, arguments...)
 	if environment != nil {
 		cmd.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	err := childguard.Run(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
+	stdout, stderr, err := childguard.Capture(ctx, cmd)
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: cmd.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}
 }
 
 func compositionNode(t *testing.T, path string, arguments ...string) run {

@@ -4,7 +4,7 @@
 package oracles
 
 import (
-	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
@@ -71,10 +71,13 @@ func CompositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		command := toolchain.CommandContextIn(t.Context(), filepath.Join(repo, "cohere"), "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)...)
-		command.WaitDelay = time.Second
-		output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
+		// The build reads its output through childguard.Capture, to its end with no timer deciding when:
+		// CombinedOutput's copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't
+		// reached EOF a second after go exited, so a product whose build had finished could fail under load (#n3gk22h's
+		// shape).
+		stdout, stderr, err := childguard.Capture(t.Context(), command)
 		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+			return fmt.Errorf("Go oracle: %w\n%s%s", err, stdout, stderr)
 		}
 		return nil
 	})
@@ -311,9 +314,11 @@ func cssParserOracle(t *testing.T) string {
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
 		command := toolchain.CommandContextIn(t.Context(), cohere, "go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")...)
-		command.WaitDelay = time.Second
-		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: ChildStallLimit}); err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		// Read through childguard.Capture for CompositionOracle's reason. It drops childguard.Run's stall guard and loses
+		// nothing by it: a go build writes nothing until it fails, so only the guard's 30-minute first-output window
+		// could fire, and the unit's own ceiling (600 s for a product unit) ends a hung build sooner.
+		if stdout, stderr, err := childguard.Capture(t.Context(), command); err != nil {
+			return fmt.Errorf("Go oracle: %w\n%s%s", err, stdout, stderr)
 		}
 		return nil
 	})
@@ -410,14 +415,16 @@ func CachedParserOutputs(t *testing.T) (string, string) {
 			return err
 		}
 		cmd := toolchain.CommandContextIn(t.Context(), "", oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
-		cmd.WaitDelay = time.Second
 		cmd.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
 		cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: ChildStallLimit})
+		// Read through childguard.Capture for CompositionOracle's reason. The oracle writes no progress, only its
+		// test's start and end, so childguard.Run's four-minute silence window was a ceiling for it, and the unit's
+		// own ceiling bounds it instead.
+		stdout, stderr, err := childguard.Capture(t.Context(), cmd)
 		if err != nil {
-			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+			return fmt.Errorf("Go oracle: %w\n%s%s", err, stdout, stderr)
 		}
-		t.Logf("Go oracle: %s", output)
+		t.Logf("Go oracle: %s%s", stdout, stderr)
 		return nil
 	})
 	cases := filepath.Join(dir, "cases.txt")
@@ -454,15 +461,18 @@ func CachedPostCSSAnswers(t *testing.T, script, library, path, identity string) 
 		if err := os.WriteFile(input, data, 0644); err != nil {
 			return err
 		}
-		cmd := toolchain.Command("node", script, library, input)
+		// Read through childguard.Capture for CompositionOracle's reason: a WaitDelay could fail a run that had finished.
+		// The 90 s ceiling it ran under is now its context's deadline; childguard.Run's four-minute stall window could
+		// never fire before that ceiling.
+		ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
+		defer cancel()
+		cmd := toolchain.CommandContextIn(ctx, "", "node", script, library, input)
 		cmd.Env = os.Environ()
-		cmd.WaitDelay = time.Second
-		var stdout, stderr bytes.Buffer
-		cmd.Stdout, cmd.Stderr = &stdout, &stderr
-		if err := childguard.Run(cmd, childguard.Options{Stall: ChildStallLimit, Ceiling: 90 * time.Second}); err != nil || stderr.Len() != 0 {
-			return fmt.Errorf("PostCSS oracle: %v; %s", err, &stderr)
+		stdout, stderr, err := childguard.Capture(ctx, cmd)
+		if err != nil || len(stderr) != 0 {
+			return fmt.Errorf("PostCSS oracle: %v; %s", err, stderr)
 		}
-		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout.Bytes(), 0644)
+		return os.WriteFile(filepath.Join(dir, "answers.txt"), stdout, 0644)
 	})
 	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if err != nil {
