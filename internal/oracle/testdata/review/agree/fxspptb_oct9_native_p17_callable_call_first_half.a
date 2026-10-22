@@ -1,4 +1,3 @@
-// a-check: refused checked view read of field value with unsupported representation conversion contract
 type Target = ((value: number) => number) | ((value: string | number) => number);
 interface Receiver { readonly kind: 'Receiver'; readonly value: Target; }
 function make(seed: string): Target {

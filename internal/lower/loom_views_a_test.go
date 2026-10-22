@@ -39,9 +39,10 @@ func TestLoomViewUnsupportedRead(t *testing.T) {
 	requireLoomViewRefusal(t, "unsupported", "xx / 0\n", "checked view read of field", "contract before reading this field")
 }
 
+// Views D checks this read against its contract, so it compiles and prints what Node prints.
 func TestLoomViewUnsupportedCallableRead(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "callable", "xx\n3\n12\n", "checked view read of field", "contract before reading this field")
+	lowersAndAgreesWithNode(t, loomViewFixture(t, "callable"))
 }
 
 func TestLoomViewKeyFix(t *testing.T) {
@@ -83,9 +84,10 @@ func TestLoomViewOriginalViewsP72(t *testing.T) {
 	requireLoomViewRefusal(t, "views_p72", "number 2\n", "view member read by element access is not yet checked", "use view.")
 }
 
+// Views D checks this read against its contract, so it compiles and prints what Node prints.
 func TestLoomViewOriginalNativeP21(t *testing.T) {
 	t.Parallel()
-	requireLoomViewRefusal(t, "native_p21", "xx\n3\n12\n", "checked view read of field", "contract before reading this field")
+	lowersAndAgreesWithNode(t, loomViewFixture(t, "native_p21"))
 }
 
 func TestLoomViewOriginalNativeP37(t *testing.T) {
