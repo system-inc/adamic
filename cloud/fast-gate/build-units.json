@@ -2,6 +2,7 @@
   "version": 1,
   "packages": {
     "cmd/adamic-gocacheprog": "its point is go itself: go build -x with this program as GOCACHEPROG, cold then warm, read from go's own trace (main_test.go:291, :294)",
-    "internal/buildcache": "it tests its own builds: byte-identical across checkout paths, fresh = cold = warm, the key follows every input; the cache is forced fresh, so even its products build (identity_test.go:33, gobuild_test.go:152)"
+    "internal/buildcache": "it tests its own builds: byte-identical across checkout paths, fresh = cold = warm, the key follows every input; the cache is forced fresh, so even its products build (identity_test.go:33, gobuild_test.go:152)",
+    "internal/adamiclint/waitdelay": "analysistest.Run loads its testdata through go/packages with compiled files (LoadAllSyntax: go list -compiled=true -test=true -deps=true), which runs build actions and writes the build cache even with no cgo and CGO_ENABLED=0, 132 files on an empty GOCACHE (Computers' measure on #qz2na4a), so the stand-in go refuses it on a test unit (waitdelay_test.go:15)"
   }
 }
