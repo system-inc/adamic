@@ -52,6 +52,10 @@ var checkerMutants = []checkerMutant{
 	{name: "ignored-kind", Mutation: buildcache.Mutation{File: checkerProgram, Before: `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, After: `kind != ""`}},
 }
 
+// checkerSanitized is the environment a sanitized checker archive's cgo builds under, for a native that links it under
+// ASan and UBSan.
+var checkerSanitized = []string{"CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}
+
 // checkerMutantArchive is the path of the named checker mutant's archive.
 func checkerMutantArchive(t *testing.T, name string) string {
 	t.Helper()
@@ -61,12 +65,21 @@ func checkerMutantArchive(t *testing.T, name string) string {
 		}
 		var environment []string
 		if mutant.sanitize {
-			environment = []string{"CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}
+			environment = checkerSanitized
 		}
 		return buildcache.GoBuildInMutated(t, "", name+"-checker.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, []buildcache.Mutation{mutant.Mutation}, environment...)
 	}
 	t.Fatalf("no checker mutant %s", name)
 	return ""
+}
+
+// plantedCheckerArchive is the checker archive with mutation planted, under output, for a mutant another check owns: the
+// type-symbol mutant, the volume guard's strict-this and the volume agreement's. It is checkerMutantArchive's
+// GoBuildInMutated, keyed by the archive's own graph and the change, where each was an ordinary product keyed by this
+// package's test binary, which links the compiler, so every compiler edit rebuilt it (#gr5y0yf).
+func plantedCheckerArchive(t *testing.T, output string, mutation buildcache.Mutation) string {
+	t.Helper()
+	return buildcache.GoBuildInMutated(t, "", output, "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, []buildcache.Mutation{mutation})
 }
 
 func TestProduct_checker_mutant_wrong_kind(t *testing.T) {

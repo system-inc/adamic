@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -52,28 +51,6 @@ func volumeGuardUnion(t *testing.T, buckets [][]volumeGuardCase, controls []stri
 
 }
 
-func volumeGuardArchive(h *volumeGuardHarness, name, overlay string, sanitize bool) string {
-	inputs := volumeGuardInputs(h.ctx, "archive-"+name, sanitize)
-	if overlay != "" {
-		// Overlay paths are temporary; hash the replacement content instead.
-		inputs.Flags = append(inputs.Flags, "NoImplicitThis=StrictNullChecks")
-	}
-	directory := buildcache.Product(h.t, inputs, func(directory string) error {
-		builder := &volumeGuardHarness{harness: &harness{t: h.t, repository: h.repository, directory: directory}, ctx: h.ctx}
-		args := append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", filepath.Join(directory, "checker.a"))
-		if overlay != "" {
-			args = append(args, "-overlay", overlay)
-		}
-		args = append(args, "./bridge/tsgo/archive")
-		cmd := toolchain.Command("go", args...)
-		if sanitize {
-			cmd.Env = append(cmd.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
-		}
-		volumeGuardMust(builder, "checker", cmd)
-		return nil
-	})
-	return filepath.Join(directory, "checker.a")
-}
 func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
 	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
 }
@@ -258,28 +235,15 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 		})
 		return filepath.Join(directory, "adamic")
 	case "oracle":
-		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
-			builder := &volumeGuardHarness{harness: &harness{t: h.t, repository: h.repository, directory: directory}, ctx: h.ctx}
-			virtual := filepath.Join(h.repository, "cohere/adamic_volume-oracle.go")
-			data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-			if err != nil {
-				return err
-			}
-			overlay := builder.write("volume-oracle-overlay.json", string(data))
-			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-			defer os.Remove(overlay)
-			cmd := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", overlay, "-o", filepath.Join(directory, "volume-oracle"), virtual)...)
-			volumeGuardMust(builder, "volume-oracle-build", cmd)
-			return nil
-		})
-		return filepath.Join(directory, "volume-oracle")
+		// The volume oracle and the checker archives are this package's own requests (volumeOracle, h.archive), so the
+		// guard's and the package's checks read one product each.
+		return volumeOracle(h.harness, "volume-oracle", "oracle_volume.go")
 	case "archive-checker":
-		return volumeGuardArchive(h, "checker", "", false)
+		return h.archive(false)
 	case "archive-checker-asan":
-		return volumeGuardArchive(h, "checker-asan", "", true)
+		return h.archive(true)
 	case "archive-strict-this-checker":
-		overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
-		return volumeGuardArchive(h, "strict-this-checker", overlay, false)
+		return plantedCheckerArchive(h.t, "strict-this-checker.a", buildcache.Mutation{File: checkerFacts, Before: "option = p.Compiler.Options().NoImplicitThis", After: "option = p.Compiler.Options().StrictNullChecks"})
 	case "volume", "volume-asan", "strict-this-native":
 		stage0 := volumeGuardProduct(h, "stage0")
 		archiveName := "archive-checker"

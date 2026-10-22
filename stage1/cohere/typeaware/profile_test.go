@@ -60,7 +60,7 @@ func TestShadowIndexMissingBinding_000(t *testing.T) {
 	started := time.Now()
 	h := volumeProfileHarness(t)
 	stage0 := volumeProfileStage0(h)
-	archive := h.archive("checker", false)
+	archive := h.archive(false)
 	t.Logf("setup: %.3fs", time.Since(started).Seconds())
 	mutant := volumeProfileMissingBinding(h, stage0, archive)
 	source := h.write("input.ts", "const x=1;\nexport {};\n")

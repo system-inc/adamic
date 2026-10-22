@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -65,7 +64,7 @@ func typeSymbolMust(h *harness, label, name string, args ...string) result {
 }
 
 func typeSymbolOracle(h *harness) string {
-	return typeAwareOverlayOracle(h, "type-symbol-oracle-build", "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go", "oracle-overlay.json")
+	return typeAwareOverlayOracle(h, "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go")
 }
 
 func typeSymbolFileHash(path string) (string, error) {
@@ -179,9 +178,7 @@ func TestVolumeTypeSymbolPlantedSurvivor(t *testing.T) {
 }
 
 func typeSymbolArchive(h *harness) string {
-	overlay := h.overlay("type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\"")
-	command := toolchain.Command("go", "build", "-buildmode=c-archive", "-o", filepath.Join(h.directory, "type-symbol-checker.a"), "-overlay", overlay, "./bridge/tsgo/archive")
-	return h.sixBuildProduct("type-symbol-checker", command)
+	return plantedCheckerArchive(h.t, "type-symbol-checker.a", buildcache.Mutation{File: checkerFacts, Before: "name = symbol.Name", After: "name = symbol.Name + \"wrong\""})
 }
 
 func typeSymbolNativeProduct(h *harness) string {

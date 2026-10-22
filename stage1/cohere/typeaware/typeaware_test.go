@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	goast "go/ast"
 	"go/parser"
@@ -26,7 +25,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/executable"
 )
 
@@ -68,9 +66,6 @@ type harness struct {
 	sixBuilds             bool
 	sharedSetup           bool
 	setupStarted          time.Time
-	sixFiles              []string
-	sixVersions           []string
-	sixProducts           map[string]sixBuildInputs
 }
 
 func (h *harness) run(name string, command *exec.Cmd) result {
@@ -134,39 +129,25 @@ func (h *harness) write(name, text string) string {
 	}
 	return path
 }
-func (h *harness) overlay(name, path, from, to string) string {
+
+// archive is the unchanged checker archive, plain (checker.a) or sanitized (checker-asan.a), a buildcache.GoBuildIn
+// product as checkerMutantArchive's mutants are. Its key is the archive's own graph, which reaches no compiler code, so
+// a compiler edit that leaves that graph alone finds it built; as an ordinary product of this package it was keyed by the
+// test binary's whole recipe, which links the compiler, and rebuilt on every compiler edit (#gr5y0yf). Every reader asks
+// it by this one request: this package's checks, the volume guard's and the volume agreement's. A check that plants a
+// change in it reads checkerMutantArchive.
+func (h *harness) archive(sanitize bool) string {
 	h.t.Helper()
-	original := filepath.Join(h.repository, path)
-	data, err := os.ReadFile(original)
-	if err != nil {
-		h.t.Fatal(err)
+	if sanitize {
+		return buildcache.GoBuildIn(h.t, "", "checker-asan.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, checkerSanitized...)
 	}
-	if strings.Count(string(data), from) != 1 {
-		h.t.Fatalf("nonunique mutant %s", name)
-	}
-	side := h.write(name+filepath.Ext(path), strings.Replace(string(data), from, to, 1))
-	data, err = json.Marshal(map[string]any{"Replace": map[string]string{original: side}})
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	return h.write(name+".json", string(data))
+	return buildcache.GoBuildIn(h.t, "", "checker.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
 }
 
-// archive is the unchanged checker archive. A check that plants a change in it reads checkerMutantArchive.
-func (h *harness) archive(name string, sanitize bool) string {
-	h.t.Helper()
-	path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
-		archive := filepath.Join(directory, "checker.a")
-		command := toolchain.CommandIn(h.repository, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")...)
-		if sanitize {
-			command.Env = append(command.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
-		}
-		return archive, buildProduct(h.t, name, command, directory)
-	})
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	return path
+// unchangedArchive says whether archive is the unchanged checker archive, plain or sanitized (h.archive), rather than a
+// mutant's, whose name is its own.
+func unchangedArchive(archive string) bool {
+	return filepath.Base(archive) == "checker.a" || filepath.Base(archive) == "checker-asan.a"
 }
 
 // lowerToC is entry's emitted C, by the same load, lowering and TSGo emission pipeline as stage zero.
@@ -239,7 +220,7 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	}
 	// Only unchanged repository programs can be reused by another test. A mutant
 	// runs once and stays in its child directory, avoiding a retained binary copy.
-	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || filepath.Base(archive) != "checker.a" {
+	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || !unchangedArchive(archive) {
 		if err := compile(path); err != nil {
 			h.t.Fatal(err)
 		}

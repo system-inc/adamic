@@ -33,7 +33,7 @@ func TestInspectRequestRefusals(t *testing.T) {
 	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := h.stage0()
-	normal := h.archive("checker", false)
+	normal := h.archive(false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts")
 	binary := h.build(stage0, "request", entry, normal, false)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")

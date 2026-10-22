@@ -5,7 +5,7 @@ import "testing"
 var volumeRules = []string{"no_unsafe_type_assertion", "no_unsafe_member_access", "prefer_nullish_coalescing", "no_shadow", "no_unsafe_enum_comparison", "no_unsafe_assignment", "no_confusing_void_expression", "consistent_return", "switch_exhaustiveness_check", "unbound_method"}
 
 func volumeOracle(h *harness, name, source string) string {
-	return typeAwareOverlayOracle(h, name+"-build", name, "adamic_"+name+".go", source, name+"-overlay.json")
+	return typeAwareOverlayOracle(h, name, "adamic_"+name+".go", source)
 }
 
 // These controls exercise decisions, report spans and repairs, not implementation structure.

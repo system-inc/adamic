@@ -91,9 +91,9 @@ func TestTypeAwareKeysNameTheBuildsCompiler(t *testing.T) {
 	}
 }
 
-// Common archives, native binaries and emitted C are immutable build products.
+// Stage 0, native binaries and emitted C are immutable build products.
 // Keep the process-local publication guard, backed by content-addressed products
-// across gate processes. Oracle commands use their more precise sixBuildRecipe.
+// across gate processes. The checker archives and Go oracles are buildcache.GoBuild* products.
 func cachedTypeAwareProduct(key string, build func(string) (string, error)) (string, error) {
 	return sharedProduct("cached "+key, func(_ string) (string, error) {
 		inputs := typeAwareSharedInputs(key)

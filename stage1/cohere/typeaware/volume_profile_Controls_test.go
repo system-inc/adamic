@@ -246,13 +246,7 @@ func runVolumeProfileControls(t *testing.T, index int) {
 		build   func(*harness) string
 	}{
 		{&stage0, volumeProfileStage0},
-		{&archive, func(h *harness) string {
-			name := "checker"
-			if c.sanitize {
-				name += "-asan"
-			}
-			return h.archive(name, c.sanitize)
-		}},
+		{&archive, func(h *harness) string { return h.archive(c.sanitize) }},
 		{&oracle, func(h *harness) string { return volumeOracle(h, "volume-oracle", "oracle_volume.go") }},
 	} {
 		local := volumeProfileHarness(t)
