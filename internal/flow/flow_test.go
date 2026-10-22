@@ -349,7 +349,7 @@ func (s definitions) walk(value IdentifierId, seen map[IdentifierId]bool) []site
 // These constructor fixtures deliberately assert NotYet and never enter the oracle's runnable set.
 func refusedConstructorFixture(path string) bool {
 	switch filepath.Base(path) {
-	case "new_expression_uint16.a", "new_expression_uint16_notyet.a", "new_expression_class_cache_capture_notyet.a":
+	case "new_expression_class_cache_capture_notyet.a":
 		return true
 	}
 	return false

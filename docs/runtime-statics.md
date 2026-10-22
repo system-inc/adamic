@@ -71,3 +71,12 @@ TestRuntimeStaticsHostWorkers exercises startup observations, clocks, the atomic
 ledger, exit status and raw output on the real pool. Independent lock-removal
 mutants must compile and produce an explicit ThreadSanitizer data-race report;
 crashes, timeouts and mutex-misuse reports do not count as race evidence.
+
+## Uint16Array extension, October 7, 2026
+
+This unit adds no mutable static runtime storage. Uint16Array uses the existing
+counted typed-array header and owner pattern, with a two-byte `uint16_t` buffer
+allocated per owning array. A subarray retains its ultimate owner and points
+into that buffer. The generic iterator retains the array. Existing heap freeing
+releases owners, buffers and iterators; no new global cache or static counter is
+introduced. This entry records this extension, not an inventory of earlier units.
