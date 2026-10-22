@@ -6,14 +6,16 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
 )
 
-// buildLogLine is a line buildLog writes: kind, name, key12 or -, outcome, seconds.
-var buildLogLine = regexp.MustCompile(`^(cCompile|cArchive|cLink|cBuild) (\S+) ([0-9a-f]{12}|-) (hit|miss|off) ([0-9]+\.[0-9]{3})$`)
+// buildLogLine is a line buildLog writes: kind, name, key12 or -, outcome, seconds. repass is compileUnits' second
+// pass after a cold check's mismatch, every unit compiled again uncached.
+var buildLogLine = regexp.MustCompile(`^(cCompile|cArchive|cLink|cBuild) (\S+) ([0-9a-f]{12}|-) (hit|miss|off|repass) ([0-9]+\.[0-9]{3})$`)
 
 // A split build writes one cCompile line per unit and one cLink line to ADAMIC_BUILD_LOG, each saying whether its
 // object came from the cache and how long clang ran, and the log never reaches the binary: the same program built with
@@ -148,5 +150,73 @@ func TestBuildLogKeepsANameOnOneLine(t *testing.T) {
 	}
 	if want := "cLink a_b_c_cCompile_forged_0123456789ab_hit_9.000 - off 1.000\n"; string(written) != want {
 		t.Fatalf("wrote %q, want %q", written, want)
+	}
+}
+
+// A cold check's mismatch compiles every unit again uncached (compileUnits), and that second pass's lines say repass,
+// never off, so a reader counting units or a hit rate leaves them out from the line alone (Performance on #m62spx0). The
+// first pass's lines keep their own outcomes: alpha's unchecked hit, and beta's checked hit that mismatched, a miss. One
+// repass line a unit, each naming no key, beside the mismatch's own line. Mutant: the second pass logged off, red.
+//
+// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG for the process.
+func TestARepassAfterAMismatchSaysRepass(t *testing.T) {
+	compiler := unitKeyCompiler(t)
+	environment := unitKeyEnvironment()
+	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	units := []compilationUnit{
+		{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"},
+		{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"},
+	}
+	root := t.TempDir()
+	cache := filepath.Join(root, "cache")
+	directory := filepath.Join(root, "units")
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	never := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
+	never.check = func(compilationUnit) bool { return false }
+	cached, err := compileUnits(units, common, unitKeyFlags, compiler, never, cache, directory, 2, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, object := range cached {
+		if err := os.WriteFile(object, []byte("planted\n"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	log := filepath.Join(root, "build.log")
+	t.Setenv("ADAMIC_BUILD_LOG", log)
+	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
+	keying.check = func(unit compilationUnit) bool { return unit.name == "beta.c" }
+	if _, err := compileUnits(units, common, unitKeyFlags, compiler, keying, cache, directory, 2, nil); err != nil {
+		t.Fatalf("a mismatched build failed: %v", err)
+	}
+	written, err := os.ReadFile(log)
+	if err != nil {
+		t.Fatal(err)
+	}
+	outcomes, noted := map[string][]string{}, 0
+	for line := range strings.SplitSeq(strings.TrimSuffix(string(written), "\n"), "\n") {
+		// The mismatch's own line, noted where Loom's builder reads it (noteUnitMismatch), is no clang step's.
+		if strings.HasPrefix(line, UnitMismatchPrefix) {
+			noted++
+			continue
+		}
+		match := buildLogLine.FindStringSubmatch(line)
+		if match == nil || match[1] != "cCompile" {
+			t.Fatalf("%q isn't a unit's build log line", line)
+		}
+		if (match[3] == "-") != (match[4] == "repass") {
+			t.Fatalf("%q: a repass line names no key, and every other line of this build does", line)
+		}
+		outcomes[match[2]] = append(outcomes[match[2]], match[4])
+	}
+	if noted != 1 {
+		t.Fatalf("the mismatch was noted %d times, want once:\n%s", noted, written)
+	}
+	for name, want := range map[string][]string{"alpha.c": {"hit", "repass"}, "beta.c": {"miss", "repass"}} {
+		if got := outcomes[name]; !slices.Equal(got, want) {
+			t.Fatalf("%s's lines say %v, want %v:\n%s", name, got, want, written)
+		}
 	}
 }
