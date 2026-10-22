@@ -18,11 +18,6 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/lower/testdata/fx6/p51_wrong.a", true, true})
-	fixtures = append(fixtures, struct {
-		path    string
-		lowers  bool
-		checked bool
 	}{"internal/lower/testdata/fx6/p35.a", true, false})
 	fixtures = append(fixtures, struct {
 		path    string
@@ -172,32 +167,6 @@ func TestOracleViewsDestructuredCallableUnion(t *testing.T) {
 	}
 }
 
-// A wrong view is required to stop before reading its payload, even though
-// the unchecked source on Node continues. The diagnostic pins the view boundary.
-func fx6CheckedStop(t *testing.T, name, message string) {
-	t.Helper()
-	path, err := filepath.Abs("../../internal/lower/testdata/fx6/" + name + ".a")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", source.exitCode, source.stdout, source.stderr)
-	if source.exitCode != 0 {
-		t.Fatal("Node control failed")
-	}
-	expected := run{exitCode: 70, stderr: []byte(message + "\n")}
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
-		if difference := disagreement(expected, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
-		}
-	}
-}
-
 func TestOracleViewsDestructuredInvalidObjectUnionRefuses(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("../lower/testdata/fx6_refused/p49.a")
@@ -215,7 +184,21 @@ func TestOracleViewsDestructuredInvalidObjectUnionRefuses(t *testing.T) {
 	}
 }
 
-func TestOracleViewsDestructuredInvalidCallableStops(t *testing.T) {
+// The stored function takes a string and no member of Target does, so the destructured read is refused where it
+// stands, as p49's incompatible literal producer is, rather than compiled to stop at run time where Node prints 5
+// (Compiler's ruling (b) on #aecx10a).
+func TestOracleViewsDestructuredInvalidCallableRefuses(t *testing.T) {
 	t.Parallel()
-	fx6CheckedStop(t, "p51_wrong", "adamic: panic: field read failed: value (field value) expected Target, found function with incompatible parameter representations")
+	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51_wrong.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if source := onNode(t, path); source.exitCode != 0 {
+		t.Fatalf("Node control failed: %#v", source)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || refused.What != "checked view read of field value with unsupported representation conversion contract" || refused.Fix != "prove or implement the representation conversion contract before reading this field" || !strings.Contains(refused.Where, "p51_wrong.a:7:9") {
+		t.Fatalf("want the located representation conversion refusal at 7:9, got %v", err)
+	}
 }
