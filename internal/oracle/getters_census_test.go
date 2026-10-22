@@ -9,8 +9,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-const gettersCensusCallbackRefusal = "Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)"
-
 func init() {
 	for _, fixture := range []struct {
 		path            string
@@ -61,6 +59,11 @@ func observeGettersCensus(t *testing.T, shape, refusal, want string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// These formerly cycle-refused callback shapes now require graph ownership.
+	// The overloaded shape returns above with its independent cast refusal.
+	if strings.HasSuffix(shape, "_function") && len(program.GraphTypes) == 0 {
+		t.Fatal("callback admitted without graph ownership")
+	}
 	backend := onJavaScriptBackend(t, program)
 	sanitized, binary := natively(t, program)
 	release := released(t, program)
@@ -87,47 +90,47 @@ func TestGettersCensusLazyObject(t *testing.T) {
 
 func TestGettersCensusPrimaryFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "primary_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n")
+	observeGettersCensus(t, "primary_function", "", "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n")
 }
 
 func TestGettersCensusOptionalBooleanFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "optional_boolean_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
+	observeGettersCensus(t, "optional_boolean_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
 }
 
 func TestGettersCensusUpdateNodeFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "update_node_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+	observeGettersCensus(t, "update_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
 }
 
 func TestGettersCensusUnaryNodeFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "unary_node_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+	observeGettersCensus(t, "unary_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
 }
 
 func TestGettersCensusOptionalTypeFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "optional_type_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+	observeGettersCensus(t, "optional_type_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
 }
 
 func TestGettersCensusUpdateTypeFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "update_type_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n")
+	observeGettersCensus(t, "update_type_function", "", "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n")
 }
 
 func TestGettersCensusOptionalCommentFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "optional_comment_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
+	observeGettersCensus(t, "optional_comment_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
 }
 
 func TestGettersCensusUpdateCommentFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "update_comment_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+	observeGettersCensus(t, "update_comment_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
 }
 
 func TestGettersCensusBinaryFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "binary_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+	observeGettersCensus(t, "binary_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
 }
 
 func TestGettersCensusOverloadedFunction(t *testing.T) {
@@ -137,7 +140,7 @@ func TestGettersCensusOverloadedFunction(t *testing.T) {
 
 func TestGettersCensusUnaryFunction(t *testing.T) {
 	t.Parallel()
-	observeGettersCensus(t, "unary_function", gettersCensusCallbackRefusal, "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+	observeGettersCensus(t, "unary_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
 }
 
 func TestGettersCensusThrowingObject(t *testing.T) {
