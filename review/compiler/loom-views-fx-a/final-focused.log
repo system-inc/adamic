@@ -1,0 +1,54 @@
+=== RUN   TestLoomViewKeyRead
+=== PAUSE TestLoomViewKeyRead
+=== RUN   TestLoomViewUnsupportedRead
+=== PAUSE TestLoomViewUnsupportedRead
+=== RUN   TestLoomViewUnsupportedCallableRead
+=== PAUSE TestLoomViewUnsupportedCallableRead
+=== RUN   TestLoomViewKeyFix
+=== PAUSE TestLoomViewKeyFix
+=== RUN   TestLoomViewUnsupportedUnreadControl
+=== PAUSE TestLoomViewUnsupportedUnreadControl
+=== RUN   TestLoomViewOriginalViewsP01
+=== PAUSE TestLoomViewOriginalViewsP01
+=== RUN   TestLoomViewOriginalViewsP05
+=== PAUSE TestLoomViewOriginalViewsP05
+=== RUN   TestLoomViewOriginalViewsP06
+=== PAUSE TestLoomViewOriginalViewsP06
+=== RUN   TestLoomViewOriginalViewsP19
+=== PAUSE TestLoomViewOriginalViewsP19
+=== RUN   TestLoomViewOriginalViewsP72
+=== PAUSE TestLoomViewOriginalViewsP72
+=== RUN   TestLoomViewOriginalNativeP21
+=== PAUSE TestLoomViewOriginalNativeP21
+=== RUN   TestLoomViewOriginalNativeP37
+=== PAUSE TestLoomViewOriginalNativeP37
+=== RUN   TestLoomViewUnionKeyRead
+=== PAUSE TestLoomViewUnionKeyRead
+=== CONT  TestLoomViewKeyRead
+=== CONT  TestLoomViewOriginalViewsP06
+=== CONT  TestLoomViewUnsupportedCallableRead
+=== CONT  TestLoomViewKeyFix
+=== CONT  TestLoomViewUnsupportedRead
+--- PASS: TestLoomViewKeyRead (0.34s)
+=== CONT  TestLoomViewOriginalViewsP05
+--- PASS: TestLoomViewOriginalViewsP06 (0.37s)
+=== CONT  TestLoomViewOriginalViewsP01
+--- PASS: TestLoomViewUnsupportedRead (0.41s)
+=== CONT  TestLoomViewUnsupportedUnreadControl
+--- PASS: TestLoomViewUnsupportedCallableRead (0.43s)
+=== CONT  TestLoomViewOriginalNativeP37
+--- PASS: TestLoomViewKeyFix (0.51s)
+=== CONT  TestLoomViewUnionKeyRead
+--- PASS: TestLoomViewOriginalViewsP01 (0.23s)
+=== CONT  TestLoomViewOriginalViewsP19
+--- PASS: TestLoomViewOriginalViewsP05 (0.39s)
+=== CONT  TestLoomViewOriginalNativeP21
+--- PASS: TestLoomViewOriginalNativeP37 (0.40s)
+=== CONT  TestLoomViewOriginalViewsP72
+--- PASS: TestLoomViewUnionKeyRead (0.40s)
+--- PASS: TestLoomViewOriginalViewsP19 (0.42s)
+--- PASS: TestLoomViewUnsupportedUnreadControl (0.61s)
+--- PASS: TestLoomViewOriginalNativeP21 (0.51s)
+--- PASS: TestLoomViewOriginalViewsP72 (0.45s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.309s
