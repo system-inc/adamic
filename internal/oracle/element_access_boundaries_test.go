@@ -57,13 +57,15 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 				return
 			}
 			var stop *lower.NotYet
+			// Phantom primitive brands represent paths' return type; the branded array
+			// still stops at its representation, like the other read boundaries.
 			want := map[string]string{
 				"nodearray":      "a value of type NodeArray<Entry>",
 				"jsdoc":          "a value of type JSDocArray",
 				"numeric_record": "a value of type Record<number, FlowGraphNode>",
 				"template":       "a value of type TemplateStringsArray",
 				"sorted":         "a value of type SortedReadonlyArray<MappedPosition>",
-				"paths":          "a function returning Path | undefined",
+				"paths":          "a value of type Readonly<PathPathComponents>",
 			}[name]
 			if !errors.As(err, &stop) || stop.What != want {
 				t.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, err)
