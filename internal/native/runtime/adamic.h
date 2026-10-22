@@ -62,6 +62,7 @@ enum adamic_kind {
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
 #endif
+	adamic_kind_foreign,
 };
 
 typedef struct adamic_heap {
@@ -403,6 +404,18 @@ static inline unsigned char *adamic_object_field_types(const adamic_object *obje
 static inline size_t adamic_slot_index(const adamic_object *object, const adamic_value *slot) {
 	return (size_t)(slot - object->slots);
 }
+
+// adamic_foreign is a value another runtime made, held by Adamic: an Objective-C object, so far
+// (foreign.c, docs/apple.md). It's an object of no fields to everything that looks at objects, so
+// nothing can read it as one by accident, and its last release lets go of what it holds, through its
+// kind's release.
+typedef struct adamic_foreign_kind {
+	const char *name;
+	void (*release)(void *pointer);
+} adamic_foreign_kind;
+adamic_object *adamic_foreign_new(void *pointer, const adamic_foreign_kind *kind);
+void *adamic_foreign_pointer(const adamic_object *object);
+void adamic_foreign_dropped(adamic_object *object);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
