@@ -67,8 +67,12 @@ func checkWASIClang(path string) error {
 		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s, whose clang belongs at %s beside WASI_SYSROOT, and none is there; run bash cloud/setup.sh --wasi-sdk", WASISDKVersion, path)
 	}
 	output, err := exec.Command(path, "--version").Output()
+	// A clang that couldn't be run says why, rather than reading as one that printed nothing (#b548dw1).
+	if err != nil {
+		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s --version failed: %w", WASISDKVersion, wasiClangVersion, path, err)
+	}
 	first, _, _ := strings.Cut(string(output), "\n")
-	if err != nil || !strings.HasPrefix(first, wasiClangVersion) {
+	if !strings.HasPrefix(first, wasiClangVersion) {
 		return fmt.Errorf("native: wasm32-wasi is pinned to wasi-sdk %s (%s); %s is %q", WASISDKVersion, wasiClangVersion, path, strings.TrimSpace(first))
 	}
 	return nil
