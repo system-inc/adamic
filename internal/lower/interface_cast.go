@@ -320,7 +320,7 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			fields[property.Name] = true
 			// Preserve the boundary under receiver-specific registration too.
-			l.result.CheckedFields[fmt.Sprintf("%d:%s", target.Id(), property.Name)] = true
+			l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), property.Name)] = true
 		}
 	}
 	seen := map[ir.ViewContractID]bool{}
@@ -338,7 +338,7 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 					if l.result.CheckedFields == nil {
 						l.result.CheckedFields = map[string]bool{}
 					}
-					l.result.CheckedFields[checkedViewFieldKey(typeID, field.Name)] = true
+					l.result.CheckedFields[ir.CheckedFieldKey(typeID, field.Name)] = true
 				}
 			}
 			visit(field.Contract)
@@ -432,7 +432,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 		l.result.CheckedFields = map[string]bool{}
 	}
 	for field := range fields {
-		l.result.CheckedFields[checkedViewFieldKey(int(target.Id()), field)] = true
+		l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), field)] = true
 	}
 	return value, nil
 }
@@ -454,14 +454,14 @@ func (l *lowering) viewReceiverTypeID(receiver *checker.Type) int {
 // boundary for its common field without marking unrelated receiver types.
 func (l *lowering) checkedViewReceiverField(receiver *checker.Type, name string) bool {
 	id := l.viewReceiverTypeID(receiver)
-	if l.result.CheckedFields[checkedViewFieldKey(id, name)] {
+	if l.result.CheckedField(id, name) {
 		return true
 	}
 	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
 			if l.checkedViewReceiverField(member, name) {
-				l.result.CheckedFields[checkedViewFieldKey(id, name)] = true
+				l.result.CheckedFields[ir.CheckedFieldKey(id, name)] = true
 				return true
 			}
 		}

@@ -216,7 +216,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
 		return []ir.Statement{ir.Block{Body: []ir.Statement{
 			ir.Declare{Local: held, Value: object},
-			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)},
+			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression), ViewReceiverTypeID: l.viewReceiverTypeID(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression))},
 		}}}, nil
 	}
 	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {

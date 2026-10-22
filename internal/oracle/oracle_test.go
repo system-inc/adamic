@@ -530,6 +530,13 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/regexp_search.a", true, false},
 	{"internal/oracle/testdata/regexp_unicode.a", true, false},
 	{"internal/oracle/testdata/regexp_split_pair_pattern.a", true, false},
+	// A write through a checked view is checked and boxed under its receiver's key, as its read is
+	// (#a3y38ng): into a union slot it reads back, and into a slot whose type can't take it it stops.
+	{"internal/oracle/testdata/view_write_union_value.a", true, false},
+	{"internal/oracle/testdata/view_write_union_declared.a", true, false},
+	{"internal/oracle/testdata/view_write_union_boolean.a", true, false},
+	{"internal/oracle/testdata/view_write_union_slot.a", true, true},
+	{"internal/oracle/testdata/view_write_misfit.a", true, true},
 }
 
 // run is one execution's observable behavior: what the oracle compares.

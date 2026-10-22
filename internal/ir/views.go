@@ -1,5 +1,20 @@
 package ir
 
+import "strconv"
+
+// CheckedFieldKey is where CheckedFields records a checked view member: under its static receiver's checker type, so an
+// unrelated receiver with the same member name is not checked. Gob-encoded programs and the products that hash them
+// keep this spelling.
+func CheckedFieldKey(receiverTypeID int, name string) string {
+	return strconv.Itoa(receiverTypeID) + ":" + name
+}
+
+// CheckedField says whether a read or write of name through a receiver of type receiverTypeID is checked: a view member
+// under its receiver's key, or a record's field under its bare name.
+func (p *Program) CheckedField(receiverTypeID int, name string) bool {
+	return p.CheckedFields[CheckedFieldKey(receiverTypeID, name)] || p.CheckedFields[name]
+}
+
 // ViewContractID is one-based; zero means no available semantic certificate.
 type ViewContractID int
 
