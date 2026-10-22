@@ -54,11 +54,36 @@ var schedulingState = map[string]string{
 // function: a lean build's key declares no variable, so a reached one is a finding unless its build lets it be read.
 var environmentReads = []string{"os.Getenv", "os.LookupEnv", "os.Environ", "os.ExpandEnv", "syscall.Getenv", "syscall.Environ"}
 
-// leanEnvironment are the environment variables native.BuildLean's reach may name, each with its reason: read only on
-// a path the entry refuses before it reaches it. Any other read, or one by a name the census can't tell, is a finding.
-var leanEnvironment = map[string]string{
-	"WASI_SYSROOT": "read by Flags and compilerName for a wasm32-wasi target alone, which BuildLean refuses",
+// buildLogReading is why a build may read ADAMIC_BUILD_LOG (Performance's ruling, from Runtime's on #gydfg86).
+const buildLogReading = "it names only where buildLog appends a timing line, never reaches clang's inputs or the output's bytes, and an unset or unopenable log writes nothing and fails nothing (library.go's buildLog)"
+
+// runtimeEnvironment are the environment variables native.RuntimeRequest.Build's reach may name, each with its reason.
+// Any other read, or one by a name the census can't tell, is a finding.
+var runtimeEnvironment = map[string]string{
+	"ADAMIC_BUILD_LOG": buildLogReading,
 }
+
+// leanEnvironment are the environment variables native.BuildLean's reach may name, each with its reason: one that never
+// reaches the bytes, or one read only on a path the entry refuses before it reaches it. Any other read, or one by a name
+// the census can't tell, is a finding.
+var leanEnvironment = map[string]string{
+	"ADAMIC_BUILD_LOG": buildLogReading,
+	"WASI_SYSROOT":     "read by Flags for a wasm32-wasi target alone, which BuildLean refuses before it calls Flags (native's TestBuildLeanRefusesATargetFirst)",
+}
+
+// programStarts are the calls that start or find a program by a name, each as go/types names a function, with the index
+// of the argument naming it. A bare name, with no path separator, is found on `PATH` or under the tools directories
+// (toolchain.Path), so which program runs is the process's: on a path that must run only what it's handed, that's a
+// finding.
+var programStarts = map[string]int{
+	"os/exec.Command": 0, "os/exec.CommandContext": 1, "os/exec.LookPath": 0,
+	modulePath + "/internal/toolchain.Command": 0, modulePath + "/internal/toolchain.CommandIn": 1,
+	modulePath + "/internal/toolchain.CommandContextIn": 2, modulePath + "/internal/toolchain.Path": 0,
+}
+
+// bareNamers are internal/native's functions naming a program by a bare name, to be resolved where it's started: a call
+// of one reached on a path that must run only what it's handed is a finding, wherever its name goes.
+var bareNamers = []string{"compilerName", "archiverName"}
 
 // censusExports is the export data of internal/native and every package it and its tests import, a product built ahead
 // (TestProduct_LeanCensusExports), so the census type-checks with real types and runs no go (Tests' and Node's must 1
@@ -117,6 +142,9 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 //     implements;
 //   - each read of the environment in reached code (environmentReads), but of a variable environment names by a
 //     constant;
+//   - when programsByPath, each program reached code starts or finds by a bare name (programStarts given a constant
+//     with no path separator), and each call of a function naming one (bareNamers), so the build runs only programs
+//     it's handed by their paths;
 //   - and each thing the census can't follow, which fails closed: a type error, a call it couldn't type, a call through a
 //     function value held in a package variable or a field or its use as a value, a call through a type parameter,
 //     reflection, a go:linkname, a cgo or assembly file.
@@ -129,7 +157,7 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 // declared file, and by a reached function code outside the reach calls.
 //
 // Empty when the build is complete by its declared files and leanSlice.
-func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string) ([]string, error) {
+func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string, programsByPath bool) ([]string, error) {
 	context := build.Default
 	context.GOOS, context.GOARCH, context.CgoEnabled = "linux", "amd64", true
 	listed, err := context.ImportDir(directory, 0)
@@ -362,6 +390,16 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 					}
 					if _, let := environment[name]; name == "" || !let {
 						findings[fmt.Sprintf("%s: reads the environment (%s %q), which the build's key doesn't declare", at(node), function.FullName(), name)] = true
+					}
+				}
+				if function := calledFunction(node, info); programsByPath && function != nil {
+					if argument, starts := programStarts[function.FullName()]; starts && argument < len(node.Args) {
+						if value := info.Types[node.Args[argument]].Value; value != nil && value.Kind() == constant.String && !strings.ContainsRune(constant.StringVal(value), '/') {
+							findings[fmt.Sprintf("%s: starts %q by a bare name (%s), which `PATH` or the tools directories resolve, not the build's key", at(node), constant.StringVal(value), function.FullName())] = true
+						}
+					}
+					if function.Pkg() == checked && slices.Contains(bareNamers, function.Name()) {
+						findings[fmt.Sprintf("%s: calls %s, naming a program by a bare name, which `PATH` or the tools directories resolve, not the build's key", at(node), function.Name())] = true
 					}
 				}
 			}
@@ -755,12 +793,13 @@ func repositoryRoot(t *testing.T) string {
 // An archive's build reaches nothing of internal/native but the files its key declares (runtimeFiles), and no package
 // of the tree but buildcache's slice, so its lean recipe keys all the code that makes it and no compiler file (Node's
 // rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
-// calls anything, and nothing the census can't follow. Mutant: jobserver.go left out of runtimeFiles.
+// calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. Mutant: jobserver.go
+// left out of runtimeFiles.
 func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
 	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState, nil)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState, runtimeEnvironment, false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -771,15 +810,17 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 
 // An agreement native's build, native.BuildLean, reaches nothing of internal/native but the files its key declares
 // (agreementproducts.NativeFiles), no package of the tree but buildcache's slice, and nothing of the process: no runtime
-// supplier or cache, no process jobserver, no environment but leanEnvironment's (#egjbcre). So agreementproducts' lean
-// recipe keys all the code that makes the binary. Mutants, each a finding: BuildLean taking the process's jobserver
-// (defaultJobserver, which UseJobserver writes); reading ADAMIC_NATIVE_SPLIT; taking its archive from runtimeSupplier
-// (which SupplyRuntimes writes); and target.go left out of NativeFiles.
+// supplier or cache, no process jobserver, no environment but leanEnvironment's, and no program but by the path it's
+// handed (programsByPath, #egjbcre). So agreementproducts' lean recipe keys all the code that makes the binary.
+// Mutants, each a finding: BuildLean taking the process's jobserver (defaultJobserver, which UseJobserver writes);
+// reading ADAMIC_NATIVE_SPLIT; taking its archive from runtimeSupplier (which SupplyRuntimes writes); target.go left out
+// of NativeFiles; and linkOne's compile, or BuildLean's compiler, compilerName(options) again. The runtime's census
+// keeps programsByPath off: RuntimeRequest.Build starts its archiver as archiverName names it.
 func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
 	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "BuildLean", agreementproducts.NativeFiles, exports, tree, testsBuildLean, schedulingState, leanEnvironment)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "BuildLean", agreementproducts.NativeFiles, exports, tree, testsBuildLean, schedulingState, leanEnvironment, true)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -809,7 +850,10 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 // exported rule off; test files read whether or not the tests build lean, and never; an interface's implementers not
 // reached; the tree's implementers unread; a reached type's declaration unread; a reached variable's declared type
 // unread; type errors dropped. An environment read names one too, and by a name the census can't tell, but not one of a
-// variable the build lets it read; mutant: environment reads unread.
+// variable the build lets it read; mutant: environment reads unread. With programsByPath on, so does a program started by
+// a bare name, through exec or toolchain, and a call of a bare namer, but not a program started by a path; mutant:
+// program starts unread. With it off, the runtime's census (TestTheRuntimeBuildReachesOnlyItsDeclaredFiles) reaches
+// archiverName and names nothing.
 func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 	t.Parallel()
 	base := map[string]string{
@@ -860,6 +904,10 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 		"an environment read":                                   {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"CC\") }\n"}, true, "reads the environment (os.Getenv \"CC\")"},
 		"an environment read by a name it can't tell":           {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { name := \"FIXTURE_LET\"; return os.Getenv(name) }\n"}, true, "reads the environment (os.Getenv \"\")"},
 		"an environment read the build lets":                    {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"FIXTURE_LET\") }\n"}, true, ""},
+		"a program started by a bare name":                      {map[string]string{"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc helper() string { _ = exec.Command(\"clang\"); return \"h\" }\n"}, true, "starts \"clang\" by a bare name (os/exec.Command)"},
+		"a tool started by a bare name":                         {map[string]string{"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/toolchain\"\n\nfunc helper() string { _ = toolchain.CommandIn(\".\", \"ar\"); return \"h\" }\n"}, true, "starts \"ar\" by a bare name (github.com/system-inc/adamic/internal/toolchain.CommandIn)"},
+		"a program a bare namer names":                          {map[string]string{"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc compilerName() string { return \"clang\" }\n\nfunc helper() string { compiler := compilerName(); _ = exec.Command(compiler); return \"h\" }\n"}, true, "calls compilerName, naming a program by a bare name"},
+		"a program started by its path":                         {map[string]string{"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc helper() string { _ = exec.Command(\"/usr/bin/clang\"); return run(\"/usr/bin/ar\") }\n\nfunc run(program string) string { _ = exec.Command(program); return \"h\" }\n"}, true, ""},
 	} {
 		root := t.TempDir()
 		directory := filepath.Join(root, "fixture")
@@ -876,7 +924,7 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 				os.WriteFile(filepath.Join(directory, file), []byte(content), 0o644)
 			}
 		}
-		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"}, map[string]string{"FIXTURE_LET": "the fixture's one variable"})
+		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"}, map[string]string{"FIXTURE_LET": "the fixture's one variable"}, true)
 		if err != nil {
 			t.Fatalf("%s: %v", name, err)
 		}

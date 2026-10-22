@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // NativeFiles are internal/native's files defining everything native.BuildLean reaches, which an agreement native's
@@ -31,10 +32,19 @@ var NativeFiles = []string{"internal/native/jobserver.go", "internal/native/lean
 // Product is the directory holding the native agreement binary, native, that the C at source builds, linked with the
 // runtime archive in archive (a runtimeproducts product's directory). split is ADAMIC_NATIVE_SPLIT as the caller read
 // it: native.BuildLean builds one translation unit, and a split build reads the unit cache, so split on is refused.
+//
+// clang is found here, outside the build's window, as Build finds it (toolchain.Path), keyed by its report
+// (buildcache.Tool, which names what it is and never where), and handed to the build by its absolute path, the third of
+// handed.Paths: a handed path never keys, so the key is the same on every machine running the same clang, and the
+// window values what it reads there by content. A Flags entry would key the path's spelling, per box.
 func Product(t testing.TB, source string, archive string, split string) string {
 	t.Helper()
 	if split == "1" {
 		t.Fatal("ADAMIC_NATIVE_SPLIT=1: an agreement native is built lean, in one translation unit (native.BuildLean)")
+	}
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
 	}
 	code, err := os.ReadFile(source)
 	if err != nil {
@@ -49,23 +59,25 @@ func Product(t testing.TB, source string, archive string, split string) string {
 		Name:      "lower agreement native v3",
 		Files:     append(slices.Clone(NativeFiles), "internal/native/agreementproducts"),
 		Flags:     append(native.Flags(options()), fmt.Sprintf("C=%x", sha256.Sum256(code)), "archive="+digest, "ADAMIC_NATIVE_SPLIT="+split),
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool(compiler, "--version")},
 	}
-	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{source, archive}}, BuildAgreementNative)
+	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{source, archive, compiler}}, BuildAgreementNative)
 }
 
-// BuildAgreementNative builds what it's handed, the C and the archive's directory, into directory as native, under the
-// process's compile jobserver, which decides when clang runs and never what it writes. It's a top-level function of
-// what it's handed alone (buildcache.LeanProductOf).
+// BuildAgreementNative builds what it's handed, the C, the archive's directory and clang, into directory as native.
+// It's a top-level function of what it's handed alone (buildcache.LeanProductOf), but for one ambient handle: the
+// process's compile jobserver (ccjobserver.Process), the only thing it takes that it isn't handed, since a named build
+// can't close over its caller's. The jobserver decides when clang runs, never what it writes: BuildLean's binary is the
+// same bytes under none, one token and eight (internal/lower's TestNativeAgreementLeanBuildIsBuildsBytes).
 func BuildAgreementNative(handed buildcache.Handed, directory string) error {
-	if len(handed.Paths) != 2 {
-		return fmt.Errorf("agreementproducts: handed %q, want the C and the archive's directory", handed.Paths)
+	if len(handed.Paths) != 3 {
+		return fmt.Errorf("agreementproducts: handed %q, want the C, the archive's directory and clang", handed.Paths)
 	}
 	jobserver, err := ccjobserver.Process()
 	if err != nil {
 		return err
 	}
-	return native.BuildLean(handed.Paths[0], handed.Paths[1], filepath.Join(directory, "native"), options(), jobserver)
+	return native.BuildLean(handed.Paths[2], handed.Paths[0], handed.Paths[1], filepath.Join(directory, "native"), options(), jobserver)
 }
 
 // options are what every agreement native is compiled with: native, unsanitized, as a user's build.
