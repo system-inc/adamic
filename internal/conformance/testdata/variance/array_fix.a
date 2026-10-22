@@ -1,0 +1,15 @@
+// Spec: fix: read through 'readonly Animal[]'
+// Expect: lowers
+interface Animal {
+	readonly name: string;
+}
+
+interface Dog extends Animal {
+	readonly bark: () => string;
+}
+
+const dogs: Dog[] = [{ name: 'Rex', bark: () => 'woof' }];
+const animals: readonly Animal[] = dogs;
+for (const animal of animals) {
+	console.log(animal.name);
+}
