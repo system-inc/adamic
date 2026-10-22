@@ -1,7 +1,7 @@
 package cssstrings
 
 import (
-	"bytes"
+	"context"
 	"fmt"
 	"github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles"
 	"os"
@@ -105,7 +105,7 @@ func stringsAnswerProductInputs(name, identity, toolchain string, files []string
 	return oracles.AnswerProductInputs(name, identity, toolchain, files, shared)
 }
 
-func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare func() (stringsInputs, []stringsAnswerCase), command func(t *testing.T, input string) *exec.Cmd) string {
+func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare func() (stringsInputs, []stringsAnswerCase), command func(t *testing.T, input string) (*exec.Cmd, context.Context)) string {
 	t.Helper()
 	product.once.Do(func() {
 		// Until the lookup returns, a failure is the first caller stopping in prepare or keying, with its own log.
@@ -145,20 +145,21 @@ func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare
 	return product.directory
 }
 
-// stringsAnswerRun runs the oracle on one case and keeps its stdout; the input file leaves with the run.
-func stringsAnswerRun(t *testing.T, dir string, each stringsAnswerCase, oracleCommand func(t *testing.T, input string) *exec.Cmd) error {
+// stringsAnswerRun runs the oracle on one case and keeps its stdout; the input file leaves with the run. It reads the
+// output through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a case that had finished, and
+// the case's 90 s deadline ends a hung run before childguard.Run's windows could.
+func stringsAnswerRun(t *testing.T, dir string, each stringsAnswerCase, oracleCommand func(t *testing.T, input string) (*exec.Cmd, context.Context)) error {
 	input := filepath.Join(dir, each.file+".input")
 	if err := os.WriteFile(input, each.input, 0644); err != nil {
 		return err
 	}
 	defer os.Remove(input)
-	command := oracleCommand(t, input)
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := childguard.Run(command, childguard.Options{}); err != nil || stderr.Len() != 0 {
-		return fmt.Errorf("oracle on %s: %v; %s", each.file, err, &stderr)
+	command, ctx := oracleCommand(t, input)
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	if err != nil || len(stderr) != 0 {
+		return fmt.Errorf("oracle on %s: %v; %s", each.file, err, stderr)
 	}
-	return os.WriteFile(filepath.Join(dir, each.file), stdout.Bytes(), 0644)
+	return os.WriteFile(filepath.Join(dir, each.file), stdout, 0644)
 }
 
 func stringsGoBatchAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus stringsCorpus) string {
@@ -174,7 +175,9 @@ func stringsPrettierBatchAnswersDirectory(t *testing.T, library, libraryIdentity
 	return stringsAnswerDirectory(t, &stringsPrettierBatchAnswers, func() (stringsInputs, []stringsAnswerCase) {
 		cases := stringsBatchCases(corpus)
 		return stringsAnswerProductInputs("Prettier batch oracle answers", libraryIdentity, buildcache.Tool("node", "--version"), []string{"testdata/library.mjs"}, cases), cases
-	}, func(t *testing.T, input string) *exec.Cmd { return stringsCommand(t, "node", script, library, input) })
+	}, func(t *testing.T, input string) (*exec.Cmd, context.Context) {
+		return stringsCommand(t, "node", script, library, input)
+	})
 }
 
 func stringsGoRawAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus stringsCorpus) string {
