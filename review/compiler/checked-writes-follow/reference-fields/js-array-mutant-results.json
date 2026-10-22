@@ -1,0 +1,20 @@
+[
+  {
+    "name": "drop-js-runtime-array-contract",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/drop-js-runtime-array-contract.json",
+    "package": "./internal/oracle",
+    "selector": "^TestCheckedRuntimeReferenceArrayLaterWriter$",
+    "exit": 1,
+    "caught": true,
+    "seconds": 19.452
+  },
+  {
+    "name": "drop-js-string-heap-kind",
+    "overlay": "review/compiler/checked-writes-follow/reference-fields/drop-js-string-heap-kind.json",
+    "package": "./internal/oracle",
+    "selector": "^TestCheckedRuntimeReferenceArrayLaterWriter$",
+    "exit": 1,
+    "caught": true,
+    "seconds": 14.056
+  }
+]

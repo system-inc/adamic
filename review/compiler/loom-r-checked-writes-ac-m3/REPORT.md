@@ -1,0 +1,32 @@
+Refreshed checked writes onto fetched main without changing the cleared source delta.
+Commit: the single commit on compiler/loom-r-checked-writes-ac-m3; base 832ec1dbe5e990ccd77ed4854e684e1c876918e8.
+Commands and outputs: counts update, counts verification, full lower, reader guard, vet and formatting passed, detailed below.
+Mutants: none rerun for this counts-only refresh; no compiler check or program body changed.
+Not covered: full repository gate, other package suites, a-check and prior semantic mutant catalog; two existing lower skips listed below.
+
+Source: e81d38414e475e9f1b658e943f70e6afd4c72786. Applied its own change using the requested explicit merge base with git merge-tree. The only conflict was internal/oracle/counts.md. Restored that file from main and regenerated it exactly once on Linux using house clang 20.1.8. Main's newer rows remain. No manual table edits, code resolution or expectation changes.
+
+Exact added/deleted-line comparison passed for all 1,776 carried non-count paths, including review evidence. All 16 runtime C/H files have precisely the source commit's own added/deleted lines, exceptions.c included. Runtime lines beyond the cleared delta: none. The refreshed counts delta also has exactly the same 310 added/deleted lines as the source delta. This is stronger than the required non-count identity; whole-file comparisons would incorrectly count main's newer unrelated lines. Audit: exact-delta.json, source-delta.json, counts-own-delta.json; runtime patches retain their respective hunk coordinates for review.
+
+Assumption: preserve all source-own lines and the original commit message verbatim, including historical validation notes; append the requested counts refresh line. New evidence under this review directory is additional report material, excluded from the source delta identity claim. No old evidence was altered.
+
+Counts: 215 changed rows, 120 added and 95 updated; every result exactly equals the source commit's row. No changed row lies outside its own counts change. COUNT-ROWS.md lists every path and its before/after values; counts.json and counts.patch preserve the full table evidence.
+
+Toolchain: Linux, clang 20.1.8, Go 1.27.1, Node v24.19.0. nproc=5, cpu.max=400000 100000; all checks used GOMAXPROCS=4, Go tests -parallel 4 -p 1. Setup's successful timing lines: node 0.022s; go 0.022s; submodules 0.054s; markdown 0.067s; clang 0.167s; shared cache 0.816s; go build 44.825s; cache warm 44.906s; done 44.932s. Sourced the printed env.sh in every validation shell.
+
+Initial setup failed because I switched trees while its cache warm was still running: open internal/lower/boxed_scalar_fields.go: no such file or directory. Rerunning setup on the stable branch passed. Two reader runs failed solely for disk capacity while writing Go export snapshots (no space left on device). Evicted reproducible snapshots and older Go cache blobs, without changing source; the final reader run passed. Both failed logs are retained, and no leaf ran for 60 seconds.
+
+Validation commands and results (wall seconds include command startup):
+
+| Check | Exit | Seconds | Command |
+|---|---:|---:|---|
+| counts-update | 0 | 90.845 | `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 12m -parallel 4 -p 1 -json -args -update-counts` |
+| lower | 0 | 61.882 | `go test ./internal/lower/... -count=1 -timeout 12m -parallel 4 -p 1 -json` |
+| reader | 1 | 47.575 | `go test ./internal/ir -run ^Test(CallTargetReaders.*|EveryMapAProgramHoldsIsSorted)$ -count=1 -timeout 90s -parallel 4 -p 1 -json` |
+| reader-recovered | 1 | 13.816 | `go test ./internal/ir -run ^Test(CallTargetReaders.*|EveryMapAProgramHoldsIsSorted)$ -count=1 -timeout 90s -parallel 4 -p 1 -json` |
+| reader-final | 0 | 9.542 | `go test ./internal/ir -run ^Test(CallTargetReaders.*|EveryMapAProgramHoldsIsSorted)$ -count=1 -timeout 90s -parallel 4 -p 1 -json` |
+| vet | 0 | 21.849 | `go vet -p 1 ./cmd/adamic ./internal/flow ./internal/fresh ./internal/ir ./internal/javascript ./internal/lower ./internal/native ./internal/oracle ./internal/regexp ./stage1/cohere/values` |
+| gofmt | 0 | 0.065 | `gofmt -l cmd/adamic/checks.go cmd/adamic/checks_test.go internal/flow/infer.go internal/fresh/fresh.go internal/ir/checked_result.go internal/ir/gob_map_test.go internal/ir/ir.go internal/javascript/javascript.go internal/javascript/readiness.go internal/javascript/write_contracts.go internal/lower/census_small.go internal/lower/checked_results.go internal/lower/checked_signatures.go internal/lower/checked_signatures_test.go internal/lower/checked_writes.go internal/lower/class.go internal/lower/class_inheritance.go internal/lower/class_static.go internal/lower/container_contracts.go internal/lower/expression.go internal/lower/invariance.go internal/lower/library_object.go internal/lower/logical_assignment.go internal/lower/object.go internal/lower/readiness.go internal/lower/reference_contracts.go internal/lower/write_contracts_finish.go internal/native/checked_library_push_test.go internal/native/checked_reference_fields_test.go internal/native/checked_writes.go internal/native/element_borrow.go internal/native/emit_arrays.go internal/native/emit_expressions.go internal/native/emit_objects.go internal/native/emit_statements.go internal/native/fields_test.go internal/native/object_metadata_test.go internal/native/prototype_contract_probe_test.go internal/native/regexp_test.go internal/native/reuse.go internal/native/runtime_statics_parallel_test.go internal/oracle/checked_cases_test.go internal/oracle/checked_runtime_fields_test.go internal/oracle/checked_views_next_test.go internal/oracle/checked_views_v2_migration_test.go internal/oracle/checked_write_messages_test.go internal/oracle/checked_writes_test.go internal/regexp/native.go stage1/cohere/values/gaps_test.go` |
+| counts-verify | 0 | 71.618 | `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 12m -parallel 4 -p 1 -json` |
+
+Gofmt and vet produced no output. git diff --check passed. Maximum passing test leaf: 18.02 seconds. Complete per-leaf durations: leaves.json. The full lower command includes internal/lower/cycleledger. Existing skips: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; awaits compiler/views-v3 array element kind and holes (b065fa576); TestOriginalCycleLedger requires ADAMIC_CYCLE_LEDGER_ROOT pointing to pristine TypeScript 6.0.3 with generated diagnostics. These tests were not edited.

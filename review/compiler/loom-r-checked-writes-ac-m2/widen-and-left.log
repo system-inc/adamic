@@ -1,0 +1,8 @@
+=== RUN   TestCheckedLogicalAndDoesNotWidenTruthTestedLeft
+=== PAUSE TestCheckedLogicalAndDoesNotWidenTruthTestedLeft
+=== CONT  TestCheckedLogicalAndDoesNotWidenTruthTestedLeft
+    checked_signatures_test.go:96: /tmp/adamic-gate/TestCheckedLogicalAndDoesNotWidenTruthTestedLeft1398564225/001/main.a:3:16: Adamic 0.1 refuses a value of type { readonly value: 1; } seen as { value: number; }, whose readonly field value becomes writable: a readonly field may hold something narrower than 1, which a write of number would replace; keep value readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+--- FAIL: TestCheckedLogicalAndDoesNotWidenTruthTestedLeft (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.091s
+FAIL

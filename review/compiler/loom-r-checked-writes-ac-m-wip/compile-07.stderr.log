@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)

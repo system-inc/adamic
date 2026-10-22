@@ -1,0 +1,263 @@
+{
+  "internal/oracle/testdata/checked-runtime-fields_refused/directory.a": [
+    {
+      "file": "internal/flow/corpus_units_test.go",
+      "line": 578,
+      "text": "\t\"../oracle/testdata/overload_ancestor_directory.a\","
+    },
+    {
+      "file": "internal/fresh/corpus_units_test.go",
+      "line": 616,
+      "text": "\t\"../oracle/testdata/overload_ancestor_directory.a\","
+    },
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 806,
+      "text": "| internal/oracle/testdata/overload_ancestor_directory.a | 3 | 3 | 3 | 6 | 2 | 0 |"
+    },
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1029,
+      "text": "| internal/oracle/testdata/checked-runtime-fields_refused/directory.a (TypeScript adapter) | 5 | 5 | 7 | 10 | 5 | 0 |"
+    },
+    {
+      "file": "internal/oracle/overload_callbacks_test.go",
+      "line": 5,
+      "text": "\t\t\"internal/oracle/testdata/overload_ancestor_directory.a\","
+    },
+    {
+      "file": "internal/lower/testdata/overload_binders/mutants.log",
+      "line": 33,
+      "text": "    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.05s)"
+    },
+    {
+      "file": "internal/lower/testdata/overload_binders/mutants.log",
+      "line": 34,
+      "text": "        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_ancestor_directory.a:2:1: stage 0 can't lower overload 1 of forEachAncestorDirectory with additional implementation type parameters yet"
+    },
+    {
+      "file": "internal/lower/testdata/overload_binders/mutants.log",
+      "line": 81,
+      "text": "    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.03s)"
+    },
+    {
+      "file": "internal/lower/testdata/overload_binders/mutants.log",
+      "line": 82,
+      "text": "        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/overload_ancestor_directory.a:2:55: Adamic 0.1 refuses overload 1 of forEachAncestorDirectory parameter callback cannot be served by implementation parameter callback; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 780,
+      "text": "| internal/oracle/testdata/overload_ancestor_directory.a | 3 | 3 | 3 | 6 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 985,
+      "text": "| internal/oracle/testdata/checked-runtime-fields/directory.a (TypeScript adapter) | 5 | 5 | 7 | 10 | 5 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 377,
+      "text": "| internal/oracle/testdata/checked-runtime-fields/directory.a (TypeScript adapter) | new | 5/5/7/10/5/0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-main.md",
+      "line": 780,
+      "text": "| internal/oracle/testdata/overload_ancestor_directory.a | 3 | 3 | 3 | 6 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/checked-writes-follow/reference-fields/report.md",
+      "line": 15,
+      "text": "- directory: readDirectory result with names string array; all three backends agree with Node and print alpha.txt; .a refusal directory.a:7:47, readonly names becomes writable; fix keep names readonly or copy."
+    },
+    {
+      "file": "stage3/area-stack/MUTANTS.md",
+      "line": 210,
+      "text": "--- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.04s)"
+    },
+    {
+      "file": "stage3/area-stack/MUTANTS.md",
+      "line": 211,
+      "text": "oracle_test.go:751: Lower: /workspace/area-stack-review/internal/oracle/testdata/overload_ancestor_directory.a:2:1: stage 0 can't lower overload 1 of forEachAncestorDirectory with additional implementation type parameters yet"
+    },
+    {
+      "file": "stage3/area-stack/MUTANTS.md",
+      "line": 249,
+      "text": "--- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/overload_ancestor_directory.a (0.03s)"
+    },
+    {
+      "file": "stage3/area-stack/MUTANTS.md",
+      "line": 250,
+      "text": "oracle_test.go:751: Lower: /workspace/area-stack-review/internal/oracle/testdata/overload_ancestor_directory.a:2:55: Adamic 0.1 refuses overload 1 of forEachAncestorDirectory parameter callback cannot be served by implementation parameter callback; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    }
+  ],
+  "internal/oracle/testdata/checked-runtime-fields_refused/fs.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1028,
+      "text": "| internal/oracle/testdata/checked-runtime-fields_refused/fs.a (TypeScript adapter) | 4 | 4 | 7 | 9 | 4 | 0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-runtime-fields_refused/map.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1026,
+      "text": "| internal/oracle/testdata/checked-runtime-fields_refused/map.a (TypeScript adapter) | 9 | 9 | 19 | 21 | 9 | 0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-runtime-fields_refused/regex.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1025,
+      "text": "| internal/oracle/testdata/checked-runtime-fields_refused/regex.a (TypeScript adapter) | 15 | 15 | 23 | 24 | 13 | 0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-runtime-fields_refused/set.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1027,
+      "text": "| internal/oracle/testdata/checked-runtime-fields_refused/set.a (TypeScript adapter) | 10 | 10 | 19 | 22 | 9 | 0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-runtime-fields_refused/status.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1030,
+      "text": "| internal/oracle/testdata/checked-runtime-fields_refused/status.a (TypeScript adapter) | 4 | 4 | 6 | 10 | 4 | 0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1081,
+      "text": "| internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a (TypeScript adapter) | 2 | 0 | 1 | 1 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 1037,
+      "text": "| internal/oracle/testdata/checked-write-messages/02_shared-empty_out.a (TypeScript adapter) | 2 | 0 | 1 | 1 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 379,
+      "text": "| internal/oracle/testdata/checked-write-messages/02_shared-empty_out.a (TypeScript adapter) | new | 2/0/1/1/2/0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1082,
+      "text": "| internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a (TypeScript adapter) | 3 | 0 | 4 | 3 | 3 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 1038,
+      "text": "| internal/oracle/testdata/checked-write-messages/03_flow-node_out.a (TypeScript adapter) | 3 | 0 | 4 | 3 | 3 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 380,
+      "text": "| internal/oracle/testdata/checked-write-messages/03_flow-node_out.a (TypeScript adapter) | new | 3/0/4/3/3/0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1083,
+      "text": "| internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a (TypeScript adapter) | 3 | 0 | 3 | 3 | 3 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 1039,
+      "text": "| internal/oracle/testdata/checked-write-messages/13_declaration-array_out.a (TypeScript adapter) | 3 | 0 | 3 | 3 | 3 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 381,
+      "text": "| internal/oracle/testdata/checked-write-messages/13_declaration-array_out.a (TypeScript adapter) | new | 3/0/3/3/3/0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1084,
+      "text": "| internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a (TypeScript adapter) | 2 | 0 | 2 | 2 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 1040,
+      "text": "| internal/oracle/testdata/checked-write-messages/15_detached-diagnostic_out.a (TypeScript adapter) | 2 | 0 | 2 | 2 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 382,
+      "text": "| internal/oracle/testdata/checked-write-messages/15_detached-diagnostic_out.a (TypeScript adapter) | new | 2/0/2/2/2/0 |"
+    }
+  ],
+  "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1085,
+      "text": "| internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a (TypeScript adapter) | 3 | 0 | 4 | 3 | 3 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 1041,
+      "text": "| internal/oracle/testdata/checked-write-messages/16_flow-assignment-union_out.a (TypeScript adapter) | 3 | 0 | 4 | 3 | 3 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 383,
+      "text": "| internal/oracle/testdata/checked-write-messages/16_flow-assignment-union_out.a (TypeScript adapter) | new | 3/0/4/3/3/0 |"
+    }
+  ],
+  "stage3/checked-writes/array-refused.a": [],
+  "stage3/checked-writes/emit-refused.a": [
+    {
+      "file": "stage3/checked-writes/emit-report.md",
+      "line": 22,
+      "text": "store. emit-refused.a pins its path and readonly/copy fix. proven-emit.a stores a"
+    }
+  ],
+  "stage3/checked-writes/flags-refused.a": [],
+  "stage3/checked-writes/flow-refused.a": [],
+  "stage3/checked-writes/map-refused.a": [],
+  "stage3/checked-writes/proven-generic.a": [
+    {
+      "file": "internal/oracle/counts.md",
+      "line": 1191,
+      "text": "| stage3/checked-writes/proven-generic.a | 2 | 2 | 1 | 4 | 2 | 0 |"
+    },
+    {
+      "file": "internal/oracle/checked_views_next_test.go",
+      "line": 97,
+      "text": "\tpath, err := filepath.Abs(filepath.Join(repository, \"stage3/checked-writes/proven-generic.a\"))"
+    },
+    {
+      "file": "internal/oracle/checked_writes_test.go",
+      "line": 252,
+      "text": "\tfor _, path := range []string{\"stage3/checked-writes/proven-generic.a\", \"stage3/checked-writes/proven-emit.a\", \"stage3/checked-writes/proven-number.a\", \"stage3/checked-writes/proven-containers.a\"} {"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/counts-squash.md",
+      "line": 1150,
+      "text": "| stage3/checked-writes/proven-generic.a | 2 | 2 | 1 | 4 | 2 | 0 |"
+    },
+    {
+      "file": "review/compiler/loom-checked-writes/REPORT.md",
+      "line": 489,
+      "text": "| stage3/checked-writes/proven-generic.a | new | 2/2/1/4/2/0 |"
+    },
+    {
+      "file": "stage3/checked-writes/next-views-report.md",
+      "line": 86,
+      "text": "path, reason and fix. proven-generic.a has no inserted write checks. counts.md adds"
+    }
+  ],
+  "stage3/checked-writes/refused-branch-bottom.a": [],
+  "stage3/checked-writes/refused-branch-diagnostic.a": [],
+  "stage3/checked-writes/refused-optional-boolean.a": [],
+  "stage3/checked-writes/refused-overload-result.a": [],
+  "stage3/checked-writes/shared-never.a": [],
+  "stage3/checked-writes/string-refused.a": []
+}

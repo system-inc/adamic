@@ -1,0 +1,4 @@
+const left: { readonly value: 1 } = { value: 1 };
+const right: { value: number } = { value: 2 };
+const result = left && right;
+console.log(String(result.value));

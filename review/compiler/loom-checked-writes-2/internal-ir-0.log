@@ -1,0 +1,28 @@
+{"Time":"2026-10-14T02:33:32.504388791Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-14T02:33:32.514828079Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt"}
+{"Time":"2026-10-14T02:33:32.514908632Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt","Output":"=== RUN   TestAProgramIsTheSameBytesEveryTimeGobWritesIt\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.515818819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt","Output":"=== PAUSE TestAProgramIsTheSameBytesEveryTimeGobWritesIt\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.515821513Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt"}
+{"Time":"2026-10-14T02:33:32.515825129Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs"}
+{"Time":"2026-10-14T02:33:32.515828003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs","Output":"=== RUN   TestASortedMapIsNilWhereAPlainMapIs\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.515830647Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs","Output":"=== PAUSE TestASortedMapIsNilWhereAPlainMapIs\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.515831939Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs"}
+{"Time":"2026-10-14T02:33:32.515834333Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-14T02:33:32.515835514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== RUN   TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.515837728Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== PAUSE TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.515838779Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-14T02:33:32.515840132Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt"}
+{"Time":"2026-10-14T02:33:32.515841323Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt","Output":"=== CONT  TestAProgramIsTheSameBytesEveryTimeGobWritesIt\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.517146152Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs"}
+{"Time":"2026-10-14T02:33:32.517150979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs","Output":"=== CONT  TestASortedMapIsNilWhereAPlainMapIs\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.518103641Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted"}
+{"Time":"2026-10-14T02:33:32.518105854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"=== CONT  TestEveryMapAProgramHoldsIsSorted\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.518158634Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Output":"--- PASS: TestEveryMapAProgramHoldsIsSorted (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.524865634Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestEveryMapAProgramHoldsIsSorted","Elapsed":0}
+{"Time":"2026-10-14T02:33:32.524899135Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs","Output":"--- PASS: TestASortedMapIsNilWhereAPlainMapIs (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.53484394Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestASortedMapIsNilWhereAPlainMapIs","Elapsed":0.01}
+{"Time":"2026-10-14T02:33:32.534871081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt","Output":"--- PASS: TestAProgramIsTheSameBytesEveryTimeGobWritesIt (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.534877761Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestAProgramIsTheSameBytesEveryTimeGobWritesIt","Elapsed":0.02}
+{"Time":"2026-10-14T02:33:32.534881477Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-14T02:33:32.534983402Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"ok  \tgithub.com/system-inc/adamic/internal/ir\t0.030s\n"}
+{"Time":"2026-10-14T02:33:32.535004594Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.031}

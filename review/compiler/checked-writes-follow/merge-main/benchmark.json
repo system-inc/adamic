@@ -1,0 +1,40 @@
+{
+  "instrument": "Python time.perf_counter_ns around subprocess.run; release -O2, no sanitizers; one warmup, alternating order, best of five",
+  "main_sha": "0bf6186d9753b2ee809965d2510531275e43d867",
+  "previous_follow_sha": "29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d",
+  "machine": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "processor": "AMD EPYC 9V74 80-Core Processor",
+  "nproc": 5,
+  "cpu_quota": "400000 100000",
+  "load_before": [
+    2.806640625,
+    2.60302734375,
+    1.16796875
+  ],
+  "load_after": [
+    2.806640625,
+    2.60302734375,
+    1.16796875
+  ],
+  "runs": {
+    "main": [
+      0.069731949,
+      0.072997346,
+      0.068239231,
+      0.068947187,
+      0.073040361
+    ],
+    "head": [
+      0.070508599,
+      0.073060461,
+      0.07116003,
+      0.071265398,
+      0.073309046
+    ]
+  },
+  "best": {
+    "main": 0.068239231,
+    "head": 0.070508599
+  },
+  "slowdown_percent": 3.325606057899466
+}

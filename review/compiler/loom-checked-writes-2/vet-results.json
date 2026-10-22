@@ -1,0 +1,20 @@
+{
+  "command": [
+    "timeout",
+    "180",
+    "go",
+    "vet",
+    "./cmd/adamic",
+    "./internal/flow",
+    "./internal/fresh",
+    "./internal/ir",
+    "./internal/javascript",
+    "./internal/lower",
+    "./internal/native",
+    "./internal/oracle",
+    "./internal/regexp",
+    "./stage1/cohere/values"
+  ],
+  "exit": 0,
+  "seconds": 32.011
+}

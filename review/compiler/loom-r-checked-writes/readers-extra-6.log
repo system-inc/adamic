@@ -1,0 +1,37 @@
+{"Time":"2026-10-18T00:16:34.874000882Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-18T00:16:34.887433709Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap"}
+{"Time":"2026-10-18T00:16:34.887536163Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap","Output":"=== RUN   TestStrongAstParentGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:34.887567891Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap","Output":"=== PAUSE TestStrongAstParentGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:34.887570355Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap"}
+{"Time":"2026-10-18T00:16:34.887574331Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap"}
+{"Time":"2026-10-18T00:16:34.887576103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Output":"=== RUN   TestPushSpreadGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:34.887578567Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Output":"=== PAUSE TestPushSpreadGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:34.887580109Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap"}
+{"Time":"2026-10-18T00:16:34.887581932Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap"}
+{"Time":"2026-10-18T00:16:34.887584776Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"=== RUN   TestClassMethodInterfaceGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:34.88758738Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"=== PAUSE TestClassMethodInterfaceGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:34.887589083Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap"}
+{"Time":"2026-10-18T00:16:34.887592288Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap"}
+{"Time":"2026-10-18T00:16:34.88759388Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Output":"=== RUN   TestClosedOptionalFunctionValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:37.146631678Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Output":"--- PASS: TestClosedOptionalFunctionValueGap (2.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:37.146674723Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedOptionalFunctionValueGap","Elapsed":2.26}
+{"Time":"2026-10-18T00:16:37.14669963Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap"}
+{"Time":"2026-10-18T00:16:37.146702485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Output":"=== RUN   TestClosedConditionalEmptyArrayGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:37.711117467Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Output":"--- PASS: TestClosedConditionalEmptyArrayGap (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:37.711191498Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClosedConditionalEmptyArrayGap","Elapsed":0.56}
+{"Time":"2026-10-18T00:16:37.711211338Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap"}
+{"Time":"2026-10-18T00:16:37.711215414Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap","Output":"=== CONT  TestStrongAstParentGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:37.711221083Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap"}
+{"Time":"2026-10-18T00:16:37.711226892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"=== CONT  TestClassMethodInterfaceGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:37.711233241Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap"}
+{"Time":"2026-10-18T00:16:37.711235615Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Output":"=== CONT  TestPushSpreadGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:38.001170725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap","Output":"--- PASS: TestStrongAstParentGap (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:38.011516225Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestStrongAstParentGap","Elapsed":0.29}
+{"Time":"2026-10-18T00:16:38.011556085Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Output":"--- PASS: TestPushSpreadGap (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:38.015613479Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Elapsed":0.3}
+{"Time":"2026-10-18T00:16:38.01564079Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"    gaps_test.go:91: Node prints 1; Adamic reports: /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower a class method through a view that erases its prototype origin yet\n"}
+{"Time":"2026-10-18T00:16:38.015657646Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"--- PASS: TestClassMethodInterfaceGap (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:38.015688863Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Elapsed":0.3}
+{"Time":"2026-10-18T00:16:38.015701332Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:16:38.025220436Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t3.149s\n"}
+{"Time":"2026-10-18T00:16:38.025265274Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":3.151}

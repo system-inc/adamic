@@ -1,0 +1,8 @@
+=== RUN   TestCheckedSignatureInstantiation
+=== PAUSE TestCheckedSignatureInstantiation
+=== CONT  TestCheckedSignatureInstantiation
+    checked_signatures_test.go:60: unproven: mapped identity proof true
+--- FAIL: TestCheckedSignatureInstantiation (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.051s
+FAIL

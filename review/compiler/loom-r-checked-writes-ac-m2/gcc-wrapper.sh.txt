@@ -1,0 +1,4 @@
+#!/bin/sh
+# Supply the public LLVM sanitizer allocator header omitted by this GCC SDK.
+gcc_header_root=$(CDPATH= cd -- "$(dirname -- "$0")/../gcc-sanitizer-headers" && pwd)
+exec /usr/bin/gcc -isystem "$gcc_header_root" "$@"

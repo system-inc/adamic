@@ -1,0 +1,39 @@
+{
+  "instrument": "Python time.perf_counter_ns wall clock around subprocess.run; release build, no sanitizers; alternating base/head, best of five",
+  "machine": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cpus": 5,
+  "quota": "400000 100000",
+  "base_sha": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "head_sha": "781766edccfd21ed4f2e9f9106dd488d28751e96",
+  "load_before": [
+    0.3212890625,
+    0.78173828125,
+    2.31640625
+  ],
+  "runs": {
+    "base": [
+      0.067972165,
+      0.071320858,
+      0.063819359,
+      0.06422482,
+      0.065737899
+    ],
+    "before": [
+      0.111424005,
+      0.113905503,
+      0.10748358,
+      0.108691168,
+      0.107557005
+    ]
+  },
+  "load_after": [
+    0.3212890625,
+    0.78173828125,
+    2.31640625
+  ],
+  "best": {
+    "base": 0.063819359,
+    "before": 0.10748358
+  },
+  "slowdown_percent": 68.41845747776938
+}

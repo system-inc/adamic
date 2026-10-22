@@ -1,0 +1,18 @@
+[
+  {
+    "log": "lower.log",
+    "Time": "2026-10-19T01:53:04.973966645Z",
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/internal/lower",
+    "Test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+    "Elapsed": 0
+  },
+  {
+    "log": "lower.log",
+    "Time": "2026-10-19T01:53:15.914677381Z",
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/internal/lower/cycleledger",
+    "Test": "TestOriginalCycleLedger",
+    "Elapsed": 0
+  }
+]

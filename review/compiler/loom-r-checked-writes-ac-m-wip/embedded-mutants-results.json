@@ -1,0 +1,317 @@
+[
+  {
+    "test": "TestCheckedWriteMessageMutant16",
+    "catcher": "TestCheckedWriteMessageMutant16",
+    "seconds": 0.88,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedWriteMessageMutant03",
+    "catcher": "TestCheckedWriteMessageMutant03",
+    "seconds": 1.1,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedWriteMessageMutant13",
+    "catcher": "TestCheckedWriteMessageMutant13",
+    "seconds": 1.07,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedWriteMessageMutant15",
+    "catcher": "TestCheckedWriteMessageMutant15",
+    "seconds": 1.1,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedNeverContractMutant",
+    "catcher": "TestCheckedNeverContractMutant",
+    "seconds": 1.2,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_flow_undefined_misfit",
+    "seconds": 1.16,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+    "catcher": "TestCheckedDiagnosticReferenceMutants_drop_allocation_proof",
+    "seconds": 1.45,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_string_misfit",
+    "seconds": 1.32,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_number_misfit",
+    "seconds": 1.01,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_map_misfit",
+    "seconds": 1.35,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_flow_array_misfit",
+    "seconds": 1.29,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_flow_node_misfit",
+    "seconds": 1.21,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+    "catcher": "TestCheckedDiagnosticReferenceMutants_drop_nested_contract",
+    "seconds": 1.32,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+    "catcher": "TestCheckedDiagnosticReferenceMutants_drop_alias_check",
+    "seconds": 1.33,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedWiderWriteMutants_drop_literal_set",
+    "catcher": "TestCheckedWiderWriteMutants_drop_literal_set",
+    "seconds": 1.37,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedWiderWriteMutants_drop_check",
+    "catcher": "TestCheckedWiderWriteMutants_drop_check",
+    "seconds": 1.14,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_splice_misfit",
+    "seconds": 0.87,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+    "catcher": "TestCheckedEmitContractsMutants_emit_callback_misfit",
+    "seconds": 1.53,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+    "catcher": "TestCheckedViewsNextMutants_branch_bottom_number_misfit",
+    "seconds": 1.39,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+    "catcher": "TestCheckedEmitContractsMutants_emit_auto_misfit",
+    "seconds": 1.02,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_map_object_misfit",
+    "seconds": 1.19,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_alias_misfit",
+    "seconds": 1.37,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants_emit_node_misfit",
+    "catcher": "TestCheckedEmitContractsMutants_emit_node_misfit",
+    "seconds": 1.22,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants_emit_drop_check",
+    "catcher": "TestCheckedEmitContractsMutants_emit_drop_check",
+    "seconds": 1.13,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_fill_misfit",
+    "seconds": 1.12,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_nested_misfit",
+    "seconds": 1,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_boolean_misfit",
+    "seconds": 1.4,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+    "catcher": "TestCheckedFlowContainerContractMutants_container_object_misfit",
+    "seconds": 1.17,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_branch_length_misfit",
+    "catcher": "TestCheckedViewsNextMutants_branch_length_misfit",
+    "seconds": 1.4,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_branch_start_misfit",
+    "catcher": "TestCheckedViewsNextMutants_branch_start_misfit",
+    "seconds": 1.35,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_branch_file_misfit",
+    "catcher": "TestCheckedViewsNextMutants_branch_file_misfit",
+    "seconds": 1.6,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_required_boolean_misfit",
+    "catcher": "TestCheckedViewsNextMutants_required_boolean_misfit",
+    "seconds": 1.54,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_optional_false_misfit",
+    "catcher": "TestCheckedViewsNextMutants_optional_false_misfit",
+    "seconds": 1.7,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+    "catcher": "TestCheckedViewsNextMutants_optional_boolean_misfit",
+    "seconds": 1.5,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+    "catcher": "TestCheckedEmitContractsMutants_emit_comment_misfit",
+    "seconds": 1.07,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+    "catcher": "TestCheckedEmitContractsMutants_emit_resolution_misfit",
+    "seconds": 1.12,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewV2RepresentationMutants/null",
+    "catcher": "TestCheckedViewV2RepresentationMutants/null",
+    "seconds": 0.44,
+    "log": "oracle-remainder-00.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_overload_result_misfit",
+    "catcher": "TestCheckedViewsNextMutants_overload_result_misfit",
+    "seconds": 1.31,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+    "catcher": "TestCheckedViewsNextMutants_branch_bottom_string_misfit",
+    "seconds": 1.25,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_generic_site_misfit",
+    "catcher": "TestCheckedViewsNextMutants_generic_site_misfit",
+    "seconds": 1.38,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewsNextMutants_overload_callback_misfit",
+    "catcher": "TestCheckedViewsNextMutants_overload_callback_misfit",
+    "seconds": 1.45,
+    "log": "oracle-final.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewV2RepresentationMutants/int32",
+    "catcher": "TestCheckedViewV2RepresentationMutants/int32",
+    "seconds": 0.44,
+    "log": "oracle-remainder-00.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewV2RepresentationMutants/uint8",
+    "catcher": "TestCheckedViewV2RepresentationMutants/uint8",
+    "seconds": 0.39,
+    "log": "oracle-remainder-00.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewV2RepresentationMutants/float64",
+    "catcher": "TestCheckedViewV2RepresentationMutants/float64",
+    "seconds": 0.45,
+    "log": "oracle-remainder-00.log",
+    "action": "pass"
+  },
+  {
+    "test": "TestCheckedViewV2RepresentationMutants/undefined",
+    "catcher": "TestCheckedViewV2RepresentationMutants/undefined",
+    "seconds": 0.47,
+    "log": "oracle-remainder-00.log",
+    "action": "pass"
+  }
+]

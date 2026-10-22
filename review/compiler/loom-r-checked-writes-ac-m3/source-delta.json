@@ -1,0 +1,1610 @@
+[
+  {
+    "path": "CohereSettings.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "cmd/adamic/checks.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "cmd/adamic/checks_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/flow/infer.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/fresh/fresh.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/ir/checked_result.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/ir/gob_map_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/ir/ir.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/javascript/javascript.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/javascript/readiness.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/javascript/write_contracts.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/census_small.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/checked_results.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/checked_signatures.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/checked_signatures_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/checked_writes.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/class.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/class_static.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/container_contracts.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/expression.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/invariance.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/library_object.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/logical_assignment.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/object.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/readiness.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/reference_contracts.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/lower/write_contracts_finish.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/checked_library_push_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/checked_reference_fields_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/checked_writes.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/element_borrow.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/emit_arrays.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/emit_expressions.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/emit_objects.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/emit_statements.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/fields_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/object_metadata_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/prototype_contract_probe_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/regexp_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/reuse.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/adamic.h",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/array.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/async_host_impl.h",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/directory.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/exceptions.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/input.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/library_object.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/map.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/map_set.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/node_crypto.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/node_fs_file.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/node_host.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/object.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/record.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/regexp.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime/tsgo.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/runtime_statics_parallel_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/checked_library_push.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/map_hash.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/parallel/cache_pairs.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/parallel/lifecycle.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/parallel/map.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/parallel/memory.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/parallel/scaling.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/field_cache.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/heap_weak.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/json.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/runtime-statics/shape_types.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/native/testdata/to-primitive/runtime.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/checked_cases_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/checked_runtime_fields_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/checked_views_next_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/checked_views_v2_migration_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/checked_write_messages_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/checked_writes_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/dir/alpha.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/directory.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/fs.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/input.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/map.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/regex.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/set.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-runtime-fields_refused/status.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/02_shared-empty_out.a.stderr",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/03_flow-node_out.a.stderr",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/13_declaration-array_out.a.stderr",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/15_detached-diagnostic_out.a.stderr",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/checked-write-messages_refused/16_flow-assignment-union_out.a.stderr",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/oracle/testdata/json_encoder_contract/runtime.c",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "internal/regexp/native.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage1/cohere/json/GAPS.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage1/cohere/markdownblocks/GAPS.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage1/cohere/values/GAPS.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage1/cohere/values/gaps_test.go",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/README.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/a-check.py",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/array-refused.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/array-refused.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/boolean-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/boolean-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-number-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-number-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-string-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-bottom-string-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-file-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-file-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-length-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-length-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-start-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/branch-start-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/census-groups.py",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/census-summary.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/census.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/census.sh",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/census_test.go.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/compound-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/compound-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-alias-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-alias-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-boolean-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-boolean-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-fill-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-fill-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-map-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-map-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-map-object-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-map-object-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-map-values-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-map-values-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-nested-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-nested-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-number-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-number-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-object-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-object-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-slice-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-slice-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-splice-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-splice-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-string-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/container-string-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-alias-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-alias-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-group-commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-group-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-inner-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-inner-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-nested-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-nested-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-proof-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-proof-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-related-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-related-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-rich-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/diagnostic-rich-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-a-check.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-auto-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-auto-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-callback-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-callback-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-comment-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-comment-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-latent-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-ledger.py",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-node-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-node-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-refused.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-refused.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-report.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-resolution-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-resolution-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/emit-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/fixture-extension-commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/fixture-extension-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flags-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flags-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flags-refused.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flags-refused.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-array-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-array-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-baseline-census.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-containers-census.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-flow-only-census.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-latent-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-report.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-container-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-node-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-node-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-refused.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-refused.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-undefined-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/flow-undefined-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/generic-site-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/generic-site-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/latent-controls.py",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/map-refused.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/map-refused.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-group-census.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-group-commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-group-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-index-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-nullable-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-nullable-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-number-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-number-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-object-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-object-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-splice-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-string-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-string-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/never-wide-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/next-views-commands.txt",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/next-views-latent-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/next-views-ledger.py",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/next-views-report.md",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/next-views-results.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/nullable-number-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/nullable-number-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/number-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/number-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/optional-boolean-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/optional-boolean-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/optional-false-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/optional-false-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/overload-callback-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/overload-callback-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/overload-result-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/overload-result-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/parent-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/parent-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/proven-containers.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/proven-emit.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/proven-generic.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/proven-number.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/range-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/range-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/receiver-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/reference-structure.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-branch-bottom.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-branch-bottom.a.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-branch-diagnostic.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-branch-diagnostic.a.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-optional-boolean.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-optional-boolean.a.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-overload-result.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/refused-overload-result.a.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/required-boolean-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/required-boolean-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/shared-never.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/shared-never.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/spread-override.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/string-fit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/string-misfit.ts",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/string-refused.a",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/checked-writes/string-refused.refused",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/fixtures/cycles/status.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  },
+  {
+    "path": "stage3/fixtures/namespaces/status.json",
+    "source_own_identical": true,
+    "source_delta": null,
+    "recut_delta": null
+  }
+]

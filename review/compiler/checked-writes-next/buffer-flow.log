@@ -1,0 +1,8 @@
+=== RUN   TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17
+=== PAUSE TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17
+=== CONT  TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17
+    corpus_units_test.go:7204: ../oracle/testdata/node_buffer_bom.a: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17 (0.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	0.021s
+FAIL
