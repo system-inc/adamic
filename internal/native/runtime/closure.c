@@ -28,6 +28,7 @@ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 	closure->discard = adamic_discard_none;
 #endif
 	closure->count = count;
+	closure->source_length = 0;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	closure->canonical_owner = NULL;
 	closure->canonical_previous = NULL;

@@ -1,0 +1,6 @@
+// Keep the requested computed-index variant visible: stage 0 still refuses ?.[] on an array.
+let values: readonly number[] | undefined = [1];
+function drop(): void { values = undefined; }
+drop();
+const i = 0;
+console.log(`${values?.[i] ?? -1}`);

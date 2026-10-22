@@ -55,6 +55,11 @@ func TestProduct_JSONEmptyFallbackGapSanitized(t *testing.T) {
 	requireNativePort(t, gapPortProduct(t, "emptyFallback.ts", native.Options{Sanitize: true}))
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
+func TestProduct_JSONMultiplePushGapSanitized(t *testing.T) {
+	requireNativePort(t, gapPortProduct(t, "multiplePush.ts", native.Options{Sanitize: true}))
+}
+
 func requireNativePort(t *testing.T, directory string) {
 	t.Helper()
 	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port"})
