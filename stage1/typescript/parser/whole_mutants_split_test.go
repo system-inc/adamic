@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -223,7 +224,12 @@ func TestWholeMutantsUnion(t *testing.T) {
 }
 
 // wholeMutantCommandContext bounds our direct child commands without an
-// external timeout utility, and also cancels their compiler descendants.
+// external timeout utility, and also cancels their compiler descendants. Its
+// output is read through childguard.Capture, to its end with no timer deciding
+// when: exec's own copying under a five-second WaitDelay reported
+// exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds after the
+// child exited, so a leaf or survivor proof that had finished could fail under
+// load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
 func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
@@ -240,7 +246,6 @@ func wholeMutantCommandContext(ctx context.Context, name string, args ...string)
 		}
 		return err
 	}
-	command.WaitDelay = 5 * time.Second
 	return command
 }
 
@@ -257,7 +262,9 @@ func TestWholeMutantsRejectsSurvivor(t *testing.T) {
 		command.Env = append(command.Env, variable)
 	}
 	command.Env = append(command.Env, "ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly", wholeMutantsCaseChildEnv+"=1")
-	output, err := command.CombinedOutput()
+	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatal("cooked: survivor proof exceeded 90-second command deadline")
 	}
