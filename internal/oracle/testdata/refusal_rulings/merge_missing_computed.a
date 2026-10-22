@@ -1,0 +1,4 @@
+// a-check: refused class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view
+class Missing {}
+interface Missing { promised: number; }
+console.log(`${new Missing()['promised']}`);
