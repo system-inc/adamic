@@ -2,7 +2,6 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
@@ -18,9 +17,9 @@ import (
 	"runtime"
 	"sort"
 	"strings"
-	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -105,15 +104,11 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	if len(args) > 0 && args[0] == "admission-lower" {
 		command.Env = append(os.Environ(), "GOMAXPROCS=1")
 	}
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = time.Second
-	var out, errout bytes.Buffer
-	command.Stdout = &out
-	command.Stderr = &errout
+	// Capture runs it in its own process group, kills the group when ctx ends or the command exits, and reads each
+	// stream to its end, so no timer decides when the output is whole (#n3gk22h).
 	started := time.Now()
-	err := command.Run()
-	o := observation{Stdout: out.String(), Stderr: errout.String(), WallSeconds: time.Since(started).Seconds()}
+	out, errout, err := childguard.Capture(ctx, command)
+	o := observation{Stdout: string(out), Stderr: string(errout), WallSeconds: time.Since(started).Seconds()}
 	if err != nil {
 		o.Exit = -1
 		if e, ok := err.(*exec.ExitError); ok {
