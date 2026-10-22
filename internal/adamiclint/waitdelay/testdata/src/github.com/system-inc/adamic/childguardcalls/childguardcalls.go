@@ -13,7 +13,7 @@ import (
 
 // childguard.Run wraps every output in a writer of its own, so exec copies through pipes whatever the outputs are.
 func handedToRun() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	command.Stdout = os.Stdout
 	_ = childguard.Run(command, childguard.Options{})
@@ -21,7 +21,7 @@ func handedToRun() {
 
 // childguard.CombinedOutput gives the command a bytes.Buffer: the stage 1 oracles' shape.
 func handedToCombinedOutput(ctx context.Context) ([]byte, error) {
-	command := exec.CommandContext(ctx, "true")
+	command := exec.CommandContext(ctx, "sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	return childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
 }
@@ -32,14 +32,14 @@ func literalHandedToRun() {
 
 // childguard.Capture gives the command *os.File pipes, so exec copies nothing and WaitDelay only bounds the wait.
 func handedToCapture(ctx context.Context) ([]byte, []byte, error) {
-	command := exec.CommandContext(ctx, "true")
+	command := exec.CommandContext(ctx, "sh")
 	command.WaitDelay = time.Second
 	return childguard.Capture(ctx, command)
 }
 
 // The rule knows childguard by its package path, not by the name a call is spelled with.
 func handedToALookalike() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second
 	command.Stdout = os.Stdout
 	_ = elsewhere.Run(command, elsewhere.Options{})
@@ -48,5 +48,5 @@ func handedToALookalike() {
 
 // A command without WaitDelay handed to childguard is fine.
 func withoutWaitDelay() {
-	_ = childguard.Run(exec.Command("true"), childguard.Options{})
+	_ = childguard.Run(exec.Command("sh"), childguard.Options{})
 }
