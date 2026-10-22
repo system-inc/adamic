@@ -18,30 +18,30 @@ func benchFixture(t *testing.T, name, source string) []string {
 	return []string{"node", path}
 }
 
-// A benchmark whose work vanished, the way a loop the optimizer deleted does, runs as long as its
-// runtime starting with nothing to do. The harness must refuse its number, and still report one for
-// a program that does real work. Each round times the floor, the empty loop and the busy loop in
+// A benchmark whose work vanished, the way a loop the optimizer deleted does, runs no slower than
+// its runtime starting with nothing to do. The harness must refuse its number, and still report one
+// for a program that does real work. Each round times the floor, the empty loop and the busy loop in
 // turn, so load on a shared machine falls on all three alike.
 func TestRefusesARunThatOnlyMeasuredItsRuntimeStarting(t *testing.T) {
-	floor := benchFixture(t, "floor.mjs", "console.log(0);\n")
+	floorProgram := benchFixture(t, "floor.mjs", "console.log(0);\n")
 	empty := benchFixture(t, "empty.mjs", "for (let index = 0; index < 1000; index++) {}\nconsole.log(0);\n")
 	busy := benchFixture(t, "busy.mjs", "let sum = 0;\nfor (let index = 0; index < 300000000; index++) { sum = (sum + index) % 1000003; }\nconsole.log(sum);\n")
 	var floors, empties, busies []measurement
 	for range 5 {
-		floors = append(floors, run(floor, 20*time.Second))
+		floors = append(floors, run(floorProgram, 20*time.Second))
 		empties = append(empties, run(empty, 20*time.Second))
 		busies = append(busies, run(busy, 20*time.Second))
 	}
-	floorBest := bestOf(floors)
-	if floorBest.failure != "" {
-		t.Fatalf("the floor must run: %s", floorBest.failure)
+	floor := slowestOf(floors)
+	if floor.failure != "" {
+		t.Fatalf("the floor must run: %s", floor.failure)
 	}
 	resolution := clockResolution()
-	if judged := judge(bestOf(empties), floorBest, resolution); !strings.HasPrefix(judged.failure, "measured nothing: ") {
-		t.Fatalf("an empty loop was reported as %s against a floor of %s; want it refused", short(judged), seconds(floorBest.elapsed))
+	if judged := judge(bestOf(empties), floor, resolution); !strings.HasPrefix(judged.failure, "measured nothing: ") {
+		t.Fatalf("an empty loop was reported as %s against a floor of up to %s; want it refused", short(judged), seconds(floor.elapsed))
 	}
-	if judged := judge(bestOf(busies), floorBest, resolution); judged.failure != "" {
-		t.Fatalf("real work was refused against a floor of %s: %s", seconds(floorBest.elapsed), judged.failure)
+	if judged := judge(bestOf(busies), floor, resolution); judged.failure != "" {
+		t.Fatalf("real work was refused against a floor of up to %s: %s", seconds(floor.elapsed), judged.failure)
 	}
 }
 

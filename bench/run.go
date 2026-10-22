@@ -15,9 +15,9 @@
 // because numbers without them aren't worth reading.
 //
 // A run that measured nothing is refused, and its cell says why instead of giving a number: one
-// that exited nonzero or printed nothing, one at or below the wall clock's resolution, and one
-// whose own work costs less than starting its runtime with nothing to do (the floor, timed each
-// round on a program that only prints), which is what a loop the optimizer deleted looks like from
+// that exited nonzero or printed nothing, one at or below the wall clock's resolution, and one no
+// slower than starting its runtime with nothing to do (the floor, timed each round on a program
+// that only prints, at its slowest), which is what a loop the optimizer deleted looks like from
 // outside the process. The clock's resolution and every runtime's floor print with the numbers.
 package main
 
@@ -156,16 +156,16 @@ func main() {
 	}
 
 	resolution := clockResolution()
-	floorBest := make([]measurement, len(runtimes))
+	floorSlowest := make([]measurement, len(runtimes))
 	floorCells := []string{}
 	for runtimeIndex, kind := range runtimes {
-		floorBest[runtimeIndex] = bestOf(floors[runtimeIndex])
-		if floorBest[runtimeIndex].failure != "" {
-			fail(fmt.Errorf("%s's floor, a program that only prints, did not run, so no row of its can be judged: %s", kind.name, floorBest[runtimeIndex].failure))
+		floorSlowest[runtimeIndex] = slowestOf(floors[runtimeIndex])
+		if floorSlowest[runtimeIndex].failure != "" {
+			fail(fmt.Errorf("%s's floor, a program that only prints, did not run, so no row of its can be judged: %s", kind.name, floorSlowest[runtimeIndex].failure))
 		}
-		floorCells = append(floorCells, kind.name+" "+seconds(floorBest[runtimeIndex].elapsed))
+		floorCells = append(floorCells, fmt.Sprintf("%s %s to %s", kind.name, seconds(bestOf(floors[runtimeIndex]).elapsed), seconds(floorSlowest[runtimeIndex].elapsed)))
 	}
-	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, best of %d: %s\n", resolution, *rounds, strings.Join(floorCells, ", "))
+	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n", resolution, *rounds, strings.Join(floorCells, ", "))
 	fmt.Printf("best of %d interleaved rounds; time is wall clock, user is that run's CPU time in user mode across every thread, memory is peak resident\n\n", *rounds)
 	header := []string{"benchmark"}
 	for _, kind := range runtimes {
@@ -178,7 +178,7 @@ func main() {
 		row := []string{program.name}
 		best := make([]measurement, len(runtimes))
 		for runtimeIndex := range runtimes {
-			best[runtimeIndex] = judge(bestOf(results[programIndex][runtimeIndex]), floorBest[runtimeIndex], resolution)
+			best[runtimeIndex] = judge(bestOf(results[programIndex][runtimeIndex]), floorSlowest[runtimeIndex], resolution)
 			if best[runtimeIndex].failure != "" {
 				row = append(row, best[runtimeIndex].failure, "", "")
 				continue
@@ -356,8 +356,9 @@ func bestOf(runs []measurement) measurement {
 }
 
 // judge refuses a best run that measured nothing, so it reads as its reason, never as a number:
-// one at or below the wall clock's resolution, and one whose own work, past its runtime's floor,
-// costs less than the floor itself. Perry's report of 0.0 ms in every cell is the shape refused.
+// one at or below the wall clock's resolution, and one no slower than its runtime's slowest floor
+// run, which can't be told from that runtime starting. Perry's report of 0.0 ms in every cell is
+// the shape refused.
 func judge(best measurement, floor measurement, resolution time.Duration) measurement {
 	if best.failure != "" {
 		return best
@@ -365,10 +366,24 @@ func judge(best measurement, floor measurement, resolution time.Duration) measur
 	if best.elapsed <= resolution {
 		return measurement{failure: fmt.Sprintf("measured nothing: %s is at or below the clock's resolution, %s", best.elapsed, resolution)}
 	}
-	if best.elapsed-floor.elapsed < floor.elapsed {
-		return measurement{failure: fmt.Sprintf("measured nothing: %s is within its floor of %s, the runtime starting", seconds(best.elapsed), seconds(floor.elapsed))}
+	if best.elapsed <= floor.elapsed {
+		return measurement{failure: fmt.Sprintf("measured nothing: %s is within its floor, the runtime starting, which ran up to %s", seconds(best.elapsed), seconds(floor.elapsed))}
 	}
 	return best
+}
+
+// slowestOf is the slowest finished run, or the failure when none finished.
+func slowestOf(runs []measurement) measurement {
+	finished := []measurement{}
+	for _, run := range runs {
+		if run.failure == "" {
+			finished = append(finished, run)
+		}
+	}
+	if len(finished) == 0 {
+		return bestOf(runs)
+	}
+	return slices.MaxFunc(finished, func(left, right measurement) int { return int(left.elapsed - right.elapsed) })
 }
 
 // clockResolution is the smallest step the wall clock is seen to take: the least positive
