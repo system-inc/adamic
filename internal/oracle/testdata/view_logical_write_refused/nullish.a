@@ -1,0 +1,11 @@
+// a-check: refused a logical assignment through a checked view
+// ??= through the same view: refused by its form, whether or not this run writes.
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { count: number; }
+function initial(): string | number { return 'abc'; }
+const raw = { kind: 'Holder' as const, count: initial() };
+const base: Root = raw;
+const viewed = base as View;
+viewed.count ??= 7;
+const read: string | number = raw.count;
+console.log(typeof read === 'number' ? `number ${read + 1}` : `string ${read}`);

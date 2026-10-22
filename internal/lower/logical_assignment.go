@@ -107,7 +107,7 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 			}
 			assignment.Key = key
 			assignment.Read = ir.Property{Object: object, Of: of, Absent: true}
-			assignment.Write = ir.SetProperty{Object: object, Value: fit(right, of), Site: l.writeSite(access.Expression)}
+			assignment.Write = ir.SetProperty{Object: object, Value: fit(right, of), Site: l.writeSite(access.Expression), ViewReceiverTypeID: l.viewReceiverTypeID(l.checker.GetTypeAtLocation(access.Expression))}
 		} else {
 			return nil, l.notYet(target, "a logical assignment to this member")
 		}
