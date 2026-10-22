@@ -1736,18 +1736,24 @@ func statementContext(t *testing.T) context.Context {
 
 // StatementExecute runs name with this process's environment and environment added, in its own process group under
 // the case's context, and returns what it printed and how it exited. A child that never started fails the test; one
-// that ran and failed is a result.
+// that ran and failed is a result. Output is read through childguard.Capture, to its end with no timer deciding when:
+// exec's copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five
+// seconds after the child exited, and that error came with a ProcessState, so it passed here as exit 0 with the output
+// cut where the reads were closed (#n3gk22h's shape). Only an exit error is a result now, told by its ProcessState: an
+// error beside a clean exit is never the child's (Capture's reads ended by the context, or the context's own), and an
+// exit error is the one error that comes with a failed exit. Reading it there, not with errors.As, keeps os/exec out of
+// this package, which the gate's compiler dependency census would read as a launcher. The run had no stall guard to
+// lose (Unbounded), and the case's context and the unit's own ceiling bound it.
 func StatementExecute(t *testing.T, environment []string, name string, arguments ...string) Run {
 	t.Helper()
-	command := toolchain.CommandContextIn(statementContext(t), "", name, arguments...)
+	ctx := statementContext(t)
+	command := toolchain.CommandContextIn(ctx, "", name, arguments...)
 	command.Env = append(os.Environ(), environment...)
-	command.WaitDelay = 5 * time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil && command.ProcessState == nil {
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	if err != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
+	return Run{Stdout: stdout, Stderr: stderr, ExitCode: command.ProcessState.ExitCode()}
 }
 
 func statementCorpusBuild(t *testing.T) (string, string, string) {
@@ -1805,11 +1811,15 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
 			return err
 		}
-		command := toolchain.CommandContextIn(statementContext(t), "", oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
-		command.WaitDelay = 5 * time.Second
+		ctx := statementContext(t)
+		command := toolchain.CommandContextIn(ctx, "", oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-		output, err := childguard.CombinedOutput(command, childguard.Options{})
+		// Read through childguard.Capture for StatementExecute's reason, stdout then stderr: a five-second WaitDelay
+		// could fail a corpus run that had finished. The stall guard it loses watched a run that prints its one RUN
+		// line and then nothing until its summary, so it was never progress; the product unit's ceiling bounds it.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		if err != nil {
 			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
 		}
@@ -1908,21 +1918,23 @@ func libraryOracle(t *testing.T, family string, number, side int, specs, library
 
 // libraryOracleBuild runs node over what it's handed, the script, the library and the shard's cases, and keeps the
 // answers it prints. It's a top-level function of what it's handed alone (buildcache.LeanProductOf): no test, no package
-// state (TestALibraryOraclesBuildReadsNoStateButItsInitializers). node runs in its own process group under childguard,
-// which kills the group when it ends, and a child left holding its output is given five seconds.
+// state (TestALibraryOraclesBuildReadsNoStateButItsInitializers). node runs in its own process group, read through
+// childguard.Capture for StatementExecute's reason: under a five-second WaitDelay an exec.ErrWaitDelay passed the exit
+// check as code 0, and the product stored the answers cut where the reads were closed. Capture kills the group once
+// node exits, so nothing node left behind can hold a read open; the product unit's ceiling bounds the run.
 func libraryOracleBuild(handed buildcache.Handed, directory string) error {
-	command := toolchain.CommandContextIn(context.Background(), "", "node", handed.Paths...)
+	ctx := context.Background()
+	command := toolchain.CommandContextIn(ctx, "", "node", handed.Paths...)
 	command.Env = os.Environ()
-	command.WaitDelay = 5 * time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil && command.ProcessState == nil {
+	// As in StatementExecute, an error beside a clean exit is never node's answer.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	if err != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
 		return fmt.Errorf("running node: %w", err)
 	}
-	if code := command.ProcessState.ExitCode(); code != 0 || stderr.Len() != 0 {
-		return fmt.Errorf("%s exit %d: %s", handed.Inputs.Name, code, stderr.Bytes())
+	if code := command.ProcessState.ExitCode(); code != 0 || len(stderr) != 0 {
+		return fmt.Errorf("%s exit %d: %s", handed.Inputs.Name, code, stderr)
 	}
-	return os.WriteFile(filepath.Join(directory, "answers.txt"), stdout.Bytes(), 0o644)
+	return os.WriteFile(filepath.Join(directory, "answers.txt"), stdout, 0o644)
 }
 
 // canonicalRoot and canonicalSource stand for the checkout and the TypeScript source in a shards build: a corpus
