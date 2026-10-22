@@ -113,7 +113,60 @@ static void suite(enum adamic_typed_array_kind kind) {
 	view = adamic_typed_array_subarray(array, 0, 0, false);
 	adamic_release(array); show(view); adamic_release(view);
 }
+// These controls are independent so one index rejection cannot mask another.
+static bool inline_controls(const char *mode) {
+    bool conversion = strcmp(mode, "conversion") == 0;
+    bool fractional = strcmp(mode, "fractional") == 0;
+    bool nan = strcmp(mode, "nan") == 0;
+    bool zero = strcmp(mode, "negative-zero") == 0;
+    bool bounds = strcmp(mode, "bounds") == 0;
+    bool integer = strcmp(mode, "integer-bounds") == 0;
+    bool write = strcmp(mode, "bounds-write") == 0;
+    bool integer_write = strcmp(mode, "integer-bounds-write") == 0;
+    if (!(conversion || fractional || nan || zero || bounds || integer || write || integer_write)) { return false; }
+    for (int kind = adamic_typed_array_uint8; kind <= adamic_typed_array_uint16; kind++) {
+        adamic_typed_array *array = adamic_typed_array_new((enum adamic_typed_array_kind)kind, 3);
+        for (size_t i = 0; i < 3; i++) { adamic_typed_array_set(array, (double)i, (double)i + 1); }
+        if (conversion) {
+            for (size_t i = 0; i < sizeof edges / sizeof *edges; i++) {
+                adamic_typed_array_set(array, 0, edges[i]);
+                number(adamic_typed_array_get(array, 0).number);
+                adamic_typed_array_set_integer(array, 0, edges[i]);
+                number(adamic_typed_array_get_integer(array, 0).number);
+            }
+        }
+        if (zero) {
+            adamic_typed_array_set(array, -0.0, 27);
+            adamic_maybe_number value = adamic_typed_array_get(array, -0.0);
+            if (value.present) { number(value.number); } else { puts("undefined"); }
+            adamic_typed_array_set(array, 0, -0.0);
+            number(adamic_typed_array_get_integer(array, 0).number);
+        }
+        if (fractional || nan || bounds) {
+            const double indices[] = {0.5, -0.5, 1.5, NAN, -1, 3, INFINITY, -INFINITY, 1e100};
+            size_t first = fractional ? 0 : nan ? 3 : 4;
+            size_t last = fractional ? 3 : nan ? 4 : sizeof indices / sizeof *indices;
+            for (size_t i = first; i < last; i++) {
+                adamic_maybe_number value = adamic_typed_array_get(array, indices[i]);
+                if (value.present) { number(value.number); } else { assert(value.number == 0); puts("undefined"); }
+            }
+        }
+        if (integer) {
+            const int64_t indices[] = {-1, 3, INT64_MIN, INT64_MAX};
+            for (size_t i = 0; i < sizeof indices / sizeof *indices; i++) {
+                adamic_maybe_number value = adamic_typed_array_get_integer(array, indices[i]);
+                if (value.present) { number(value.number); } else { assert(value.number == 0); puts("undefined"); }
+            }
+        }
+        if (write) { adamic_typed_array_set(array, 3, 27); }
+        if (integer_write) { adamic_typed_array_set_integer(array, 3, 27); }
+        adamic_release(array);
+    }
+    assert(adamic_counted.allocations == adamic_counted.frees);
+    return true;
+}
 int main(int argc, char **argv) {
+    if (argc > 1 && inline_controls(argv[1])) { return 0; }
 	if (argc > 1) {
 		enum adamic_typed_array_kind kind = strstr(argv[1], "16") != NULL ? adamic_typed_array_uint16 : adamic_typed_array_uint8;
 		adamic_typed_array *array = adamic_typed_array_new(kind, 3);
