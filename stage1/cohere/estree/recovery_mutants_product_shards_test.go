@@ -1,7 +1,6 @@
 package estree
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/binary"
@@ -12,6 +11,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 const testRecoveryMutantsShards = 3
@@ -267,12 +268,10 @@ func TestProduct_RecoveryMutantsNative2(t *testing.T) {
 
 func recoveryMutantExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
-	command := estreeScopedCommand(ctx, name, args...)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	output, err := command.Output()
-	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, err, ctx.Err(), &stderr)
+	// Read through childguard.Capture for estreeScopedCommand's reason; the caller's 90 s deadline ends a hung run.
+	output, stderr, err := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
+	if err != nil || len(stderr) != 0 {
+		t.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, err, ctx.Err(), stderr)
 	}
 	return output
 }

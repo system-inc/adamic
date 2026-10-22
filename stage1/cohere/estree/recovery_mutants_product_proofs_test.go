@@ -9,6 +9,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Each top-level shard prepares its own products before its work deadline.
@@ -55,15 +57,17 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 			}
 			return err
 		}
-		command.WaitDelay = time.Second
 		for _, entry := range os.Environ() {
 			if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_RECOVERY_MUTANT_SURVIVOR=") {
 				command.Env = append(command.Env, entry)
 			}
 		}
 		command.Env = append(command.Env, "ADAMIC_RECOVERY_MUTANT_SURVIVOR="+planted)
-		part, childErr := command.CombinedOutput()
-		output = append(output, part...)
+		// Read through childguard.Capture, to its end with no timer deciding when: exec's copying under a one-second
+		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited,
+		// which counted as a failing shard here and cut the output the verdict reads (#n3gk22h's shape).
+		stdout, stderr, childErr := childguard.Capture(ctx, command)
+		output = append(append(output, stdout...), stderr...)
 		if childErr != nil {
 			err = childErr
 		}
