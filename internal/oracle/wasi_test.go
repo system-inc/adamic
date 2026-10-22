@@ -64,6 +64,9 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 				assertRuntimeBoundaryViewRefusal(t, err)
 				return
 			}
+			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

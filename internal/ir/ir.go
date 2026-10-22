@@ -28,7 +28,8 @@ type Program struct {
 	// record's field under its bare name. CheckedField reads it.
 	CheckedFields SortedMap[string, bool]
 	NonNullChecks NonNullCheckCounts
-	Async         *AsyncProgram
+	Generated     []*GeneratedType
+	AsyncEntry    int // one-based ordinary function for module suspension, zero when synchronous
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -144,7 +145,10 @@ type Function struct {
 	RestElement Type
 
 	// Returns is the result's type, or 0 for void.
-	Returns Type
+	Returns      Type
+	Async        bool
+	AsyncSite    int  // diagnostic source site of the async declaration
+	AsyncReturns Type // body payload; Returns is Promise for an async function
 
 	Body []Statement
 
@@ -221,6 +225,7 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	Promise
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -253,7 +258,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t == Promise || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -1244,6 +1249,7 @@ type (
 	Loop struct {
 		Labels     []string
 		Condition  Expression
+		Test       []Statement // normalization before every loop condition
 		Body       []Statement
 		Update     []Statement
 		CheckAfter bool

@@ -1,7 +1,10 @@
 package oracle
 
 import (
+	"github.com/system-inc/adamic/internal/ir"
 	"path/filepath"
+	"reflect"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -23,7 +26,7 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 	control := native.C(program)
 	oracle := onNode(t, path)
 	t.Run("wrong-resumed-value", func(t *testing.T) {
-		code := strings.Replace(control, "= resumed.number;", "= resumed.number + 1;", 1)
+		code := strings.Replace(control, "= (double)resumed.number;", "= (double)resumed.number + 1;", 1)
 		if code == control {
 			t.Fatal("mutant did not change input")
 		}
@@ -41,7 +44,12 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 		t.Log("wrong resumed value caught only by Node stdout comparison")
 	})
 	t.Run("missing-frame-parameter-retain", func(t *testing.T) {
-		code := strings.Replace(control, "= adamic_retain(argument_0);", "= argument_0;", 1)
+		parameter := regexp.MustCompile(`(frame->cells\[[0-9]+\]\.value\.reference = )adamic_retain\(([^)]+)\);`)
+		location := parameter.FindStringSubmatchIndex(control)
+		if location == nil {
+			t.Fatal("missing frame parameter store")
+		}
+		code := control[:location[0]] + parameter.ReplaceAllString(control[location[0]:location[1]], "${1}${2};") + control[location[1]:]
 		if code == control {
 			t.Fatal("mutant did not change input")
 		}
@@ -70,25 +78,25 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 		t.Fatal(err)
 	}
 	code := native.C(program)
-	begin := strings.Index(code, " if (root->rejected) {")
+	begin := strings.Index(code, "if (root->rejected) {")
 	if begin < 0 {
 		t.Fatal("missing root cleanup hook")
 	}
-	end := strings.Index(code[begin:], " adamic_release(root); return 0;") + begin
+	end := strings.Index(code[begin:], "\n") + begin
 	if end < begin {
 		t.Fatal("missing root cleanup hook")
 	}
-	code = code[:begin] + " if (!root->rejected) return 2;\n" + code[end:]
+	code = code[:begin] + "if (!root->rejected) return 2;" + code[end:]
 	for _, mutant := range []bool{false, true} {
 		t.Run(map[bool]string{false: "control", true: "missing-local-release"}[mutant], func(t *testing.T) {
 			source := code
 			if mutant {
-				start := strings.Index(source, "drop(frame->local_")
-				end := strings.Index(source[start:], ";") + start
-				if start < 0 || end < start {
-					t.Fatal("mutant did not change input")
+				slot := regexp.MustCompile(`adamic_release\((adamic_slot_[0-9]+)\);`)
+				location := slot.FindStringSubmatchIndex(source)
+				if location == nil {
+					t.Fatal("missing private frame slot release")
 				}
-				source = source[:start] + "(void)frame" + source[end:]
+				source = source[:location[0]] + slot.ReplaceAllString(source[location[0]:location[1]], "(void)$1;") + source[location[1]:]
 			}
 			binary := filepath.Join(t.TempDir(), "throw")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
@@ -116,7 +124,7 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 	}
 }
 
-// Mutate the shared lowered constant so both backends can agree with each other and still be
+// Mutate the shared lowered typeof operand so both backends can agree with each other and still be
 // wrong. The source on Node must independently catch the mistaken async function classification.
 func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 	t.Parallel()
@@ -134,14 +142,46 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 		t.Fatalf("Node witness: %+v", oracle)
 	}
 	changed := false
-	for index, value := range program.Strings {
-		if value == "function" {
-			program.Strings[index] = "object"
-			changed = true
+	wrongKind := len(program.Strings)
+	program.Strings = append(program.Strings, "object")
+	var mutate func(reflect.Value) reflect.Value
+	mutate = func(value reflect.Value) reflect.Value {
+		if value.Kind() == reflect.Interface {
+			result := reflect.New(value.Type()).Elem()
+			if !value.IsNil() {
+				result.Set(mutate(value.Elem()))
+			}
+			return result
 		}
+		if observation, ok := value.Interface().(ir.TypeOf); ok && observation.Value.Type() == ir.Closure {
+			changed = true
+			return reflect.ValueOf(ir.StringConstant{Index: wrongKind})
+		}
+		switch value.Kind() {
+		case reflect.Struct:
+			result := reflect.New(value.Type()).Elem()
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(mutate(value.Field(index)))
+			}
+			return result
+		case reflect.Slice:
+			if value.IsNil() {
+				return value
+			}
+			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(mutate(value.Index(index)))
+			}
+			return result
+		}
+		return value
+	}
+	program.Main = mutate(reflect.ValueOf(program.Main)).Interface().([]ir.Statement)
+	for index := range program.Functions {
+		program.Functions[index].Body = mutate(reflect.ValueOf(program.Functions[index].Body)).Interface().([]ir.Statement)
 	}
 	if !changed {
-		t.Fatal("mutant did not change the async typeof constant")
+		t.Fatal("mutant did not change an async typeof operand")
 	}
 	binary := filepath.Join(t.TempDir(), "wrong-kind")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
@@ -161,54 +201,28 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 	}
 }
 
+// Keep the inherited fixtures in their registration order; new witnesses are
+// explicit entries in oracle_test.go and run in the same bounded families.
 func init() {
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/async_*.a"))
-	if err != nil {
-		panic(err)
-	}
-	for _, path := range paths {
-		relative, err := filepath.Rel(repository, path)
-		if err != nil {
-			panic(err)
-		}
+	for _, path := range []string{
+		"internal/oracle/testdata/async_coverage_discard.a",
+		"internal/oracle/testdata/async_coverage_parameters.a",
+		"internal/oracle/testdata/async_coverage_reject_eager.a",
+		"internal/oracle/testdata/async_coverage_reject_empty.a",
+		"internal/oracle/testdata/async_coverage_reject_nested.a",
+		"internal/oracle/testdata/async_coverage_typeof.a",
+		"internal/oracle/testdata/async_coverage_unions.a",
+		"internal/oracle/testdata/async_coverage_values.a",
+		"internal/oracle/testdata/async_nested.a",
+		"internal/oracle/testdata/async_plain.a",
+		"internal/oracle/testdata/async_three.a",
+		"internal/oracle/testdata/async_throw.a",
+		"internal/oracle/testdata/async_typeof.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{filepath.ToSlash(relative), true, false})
-	}
-}
-
-func TestAsyncFixturesAgreeWithNode(t *testing.T) {
-	t.Parallel()
-	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/async_*.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, path := range paths {
-		t.Run(filepath.Base(path), func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lowered(t, path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			oracle := onNode(t, path)
-			observed, leaked, comparable := nativelyCheckingLeaks(t, program, oracle.exitCode == 0)
-			if leaked != "" {
-				t.Fatal(leaked)
-			}
-			if comparable {
-				if diff := disagreement(oracle, observed); diff != "" {
-					t.Fatal(diff)
-				}
-			}
-			if diff := disagreement(oracle, onJavaScriptBackend(t, program)); diff != "" {
-				t.Fatal(diff)
-			}
-		})
+		}{path, true, false})
 	}
 }

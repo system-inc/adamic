@@ -1,0 +1,11 @@
+class Box { readonly text: string; constructor(text: string) { this.text = text; } }
+async function live(seed: string): Promise<string> {
+    const text = `${seed}:${1}`;
+    const object = { text: `${text}:object` };
+    const box = new Box(`${text}:class`);
+    const array = [`${text}:array`, `${text}:tail`];
+    await Promise.resolve();
+    const other = await Promise.resolve({ text: `${text}:payload` });
+    return `${object.text}|${box.text}|${array.join(",")}|${other.text}`;
+}
+console.log(await live(`seed${2}`));
