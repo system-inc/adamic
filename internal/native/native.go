@@ -146,7 +146,10 @@ func Flags(options Options) []string {
 		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
 	}
 	if options.Sanitize {
-		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+		// UBSan keeps each check's source location as a string in the object, a header's by the path clang found it at,
+		// and no prefix map reaches those strings: a sysroot under the tools directory put its root in every object that
+		// checks code from its headers (Hot's arm64, #8wgk65j). A report names its file alone; the line and column stay.
+		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-fsanitize-undefined-strip-path-components=-1")
 	}
 	if options.Target == "wasm32-wasi" {
 		return append(flags, "-Oz")
