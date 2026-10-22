@@ -1,0 +1,177 @@
+function sieveShapes(limit: number): void {
+ const composite = new Uint8Array(limit + 1);
+ for (let squareCounter = 2; squareCounter * squareCounter <= limit; squareCounter++) {
+  if (composite[squareCounter] !== 1) {
+   for (let productCounter = squareCounter * squareCounter; productCounter <= limit; productCounter += squareCounter) {
+    composite[productCounter] = 1;
+   }
+  }
+ }
+ let count = 0;
+ for (let parameterCounter = 2; parameterCounter <= limit; parameterCounter++) {
+  if (composite[parameterCounter] !== 1) { count++; }
+ }
+ console.log(`sieve ${limit}: ${count}`);
+}
+function startsAndSteps(): void {
+ for (let leftCounter = 2; leftCounter < 4; leftCounter++) {
+  for (let rightCounter = 1; rightCounter < 3; rightCounter++) {
+   for (let sumCounter = leftCounter + rightCounter; sumCounter <= 12; sumCounter += leftCounter) {
+    console.log(`sum ${sumCounter}`);
+   }
+   for (let multipliedCounter = leftCounter * rightCounter; multipliedCounter <= 12; multipliedCounter += rightCounter) {
+    console.log(`product ${multipliedCounter}`);
+   }
+  }
+ }
+}
+function parameterSteps(bound: number, step: number): void {
+ let seen = 0;
+ for (let guardedCounter = 0; guardedCounter <= bound; guardedCounter += step) {
+  console.log(`guard ${guardedCounter}`);
+  seen++;
+  if (seen >= 4) { break; }
+ }
+ console.log("guard done");
+}
+function edgeSteps(bound: number, step: number): void {
+ let seen = 0;
+ for (let edgeCounter = 9007199254740990; edgeCounter <= bound; edgeCounter += step) {
+  console.log(`edge ${edgeCounter}`);
+  seen++;
+  if (seen >= 4) { break; }
+ }
+}
+function changingBound(bound: number): void {
+ for (let changingBoundCounter = 0; changingBoundCounter <= bound; changingBoundCounter++) {
+  console.log(`bound ${changingBoundCounter}`);
+  bound -= 0.5;
+ }
+}
+function changingStep(step: number): void {
+ let seen = 0;
+ for (let changingStepCounter = 0; changingStepCounter <= 4; changingStepCounter += step) {
+  console.log(`changing ${changingStepCounter}`);
+  step = 0.5;
+  seen++;
+  if (seen >= 5) { break; }
+ }
+}
+function descend(bound: number, step: number): void {
+ let seen = 0;
+ for (let descendingCounter = 3; descendingCounter >= bound; descendingCounter -= step) {
+  console.log(`down ${descendingCounter}`);
+  seen++;
+  if (seen >= 4) { break; }
+ }
+}
+sieveShapes(30);
+sieveShapes(30.5);
+startsAndSteps();
+parameterSteps(2, 1);
+parameterSteps(2.5, 1);
+parameterSteps(2, 0.5);
+parameterSteps(9007199254740992, 1);
+parameterSteps(4, 9007199254740992);
+parameterSteps(4, 9223372036854775808);
+parameterSteps(NaN, 1);
+parameterSteps(Infinity, 1);
+parameterSteps(2, 0);
+parameterSteps(2, -1);
+parameterSteps(2, Infinity);
+edgeSteps(9007199254740991, 1);
+edgeSteps(9007199254740992, 1);
+edgeSteps(9007199254740992, 3);
+changingBound(4);
+changingStep(1);
+descend(0, 1);
+descend(-0.5, 1);
+descend(-9007199254740992, 1);
+
+function dependentLoops(bound: number): void {
+ for (let dependencyOuterCounter = 0; dependencyOuterCounter <= bound; dependencyOuterCounter++) {
+  for (let dependentCounter = dependencyOuterCounter + 1; dependentCounter < 3; dependentCounter++) {
+   console.log(`dependent ${dependentCounter}`);
+  }
+  if (dependencyOuterCounter >= 2) { break; }
+ }
+}
+function outerOverflow(): void {
+ for (let largeCounter = 9007199254740991; largeCounter < 9007199254740992; largeCounter++) {
+  for (let largeStepCounter = 2; largeStepCounter <= 5; largeStepCounter += largeCounter) {
+   console.log(`large step ${largeStepCounter}`);
+  }
+  for (let smallCounter = 2; smallCounter < 3; smallCounter++) {
+   for (let overflowingProductCounter = largeCounter * smallCounter; overflowingProductCounter <= 18014398509481984; overflowingProductCounter++) {
+    console.log(`large product ${overflowingProductCounter}`);
+    break;
+   }
+  }
+ }
+}
+function squareEdge(bound: number): void {
+ for (let squareEdgeCounter = 94906265; squareEdgeCounter * squareEdgeCounter <= bound; squareEdgeCounter++) {
+  console.log(`square edge ${squareEdgeCounter}`);
+ }
+}
+dependentLoops(2);
+dependentLoops(2.5);
+outerOverflow();
+squareEdge(9007199254740992);
+squareEdge(9007199136250225);
+squareEdge(9007199136250224);
+
+function independentGuards(outerBound: number, innerBound: number): void {
+ for (let independentOuterCounter = 0; independentOuterCounter <= outerBound; independentOuterCounter++) {
+  for (let independentInnerCounter = 0; independentInnerCounter <= innerBound; independentInnerCounter++) {
+   console.log(`independent ${independentInnerCounter}`);
+  }
+ }
+}
+independentGuards(1, 1);
+independentGuards(1.5, 1);
+
+function typedLengthShapes(): void {
+ const values = new Uint8Array(17);
+ for (let typedSquareCounter = 2; typedSquareCounter * typedSquareCounter <= values.length; typedSquareCounter++) {
+  for (let typedProductCounter = typedSquareCounter * typedSquareCounter; typedProductCounter <= values.length; typedProductCounter += typedSquareCounter) {
+   console.log(`typed ${values[typedProductCounter]}`);
+  }
+ }
+}
+typedLengthShapes();
+
+function localBoundsAndSteps(bound: number, step: number): void {
+ let localBound = bound;
+ let localStep = step;
+ localBound += 1;
+ localStep += 1;
+ for (let localCounter = 0; localCounter <= localBound; localCounter += localStep) {
+  console.log(`local ${localCounter}`);
+ }
+}
+function knownFractions(): void {
+ const fractionBound = 2.5;
+ for (let fractionBoundCounter = 0; fractionBoundCounter <= fractionBound; fractionBoundCounter++) {
+  console.log(`fraction bound ${fractionBoundCounter}`);
+ }
+ const fractionStep = 0.5;
+ for (let fractionStepCounter = 0; fractionStepCounter <= 2; fractionStepCounter += fractionStep) {
+  console.log(`fraction step ${fractionStepCounter}`);
+ }
+}
+function capturedStep(step: number): void {
+ const change = (): void => { step = 0.5; };
+ let seen = 0;
+ for (let capturedStepCounter = 0; capturedStepCounter <= 4; capturedStepCounter += step) {
+  change();
+  console.log(`captured ${capturedStepCounter}`);
+  seen++;
+  if (seen >= 5) { break; }
+ }
+}
+localBoundsAndSteps(1, 0);
+localBoundsAndSteps(1.5, 0);
+localBoundsAndSteps(1, -0.5);
+knownFractions();
+capturedStep(1);
