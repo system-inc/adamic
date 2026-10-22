@@ -294,3 +294,14 @@
 
 # typed_array_sort.c has no mutable static storage. Merge buffers and cursors are
 # per-call allocations and automatic locals; the temporary buffer is freed.
+
+# Graph scratch belongs to one task thread; sharing graph members is refused.
+`graph_regions.c:joining:1`
+`graph_regions.c:mark_work:1`
+`graph_regions.c:mark_count:1`
+`graph_regions.c:mark_root:1`
+`graph_regions.c:outside_release:1`
+`graph_regions.c:freeing_root:1`
+`graph_regions.c:freeing_lone:1`
+`runtime-file:graph_regions.c`
+`runtime-file:graph_regions.h`
