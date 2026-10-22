@@ -17,7 +17,7 @@
       "package": "internal/lower",
       "memoryMegabytes": 7168,
       "cpus": 8,
-      "record": "a floor for the fit, a bridge until the fit learns from a kill at plan time (#kjb6mjb; Planner, Oct 22, Loom's and Operations' ask on Sense UnitStarved #725424): internal/lower#1/2 was killed by the kernel at its fitted 2585 MB twice running, future-589c5d52 on Eve at 10:21Z and future-54cfd38d on Adam, and its rerun at the 16384 MB default (rerun-6934fb51877a364bfeeec0be, unit internal-lower-589c5d52fe40) peaked at 4625 MB, against 1619 MB at most over its 69 passed runs at the fitted share since Oct 20; 7168 is 4625 times the fit's 1.5 headroom rounded up to 7 GiB; cpus 8 is the default share's, declared only because a need names both, so it also holds the unit at the 8 cpus it runs at today"
+      "record": "a floor for the fit, a bridge that comes off when #kjb6mjb's plan-time learning reads a kill in the window ( Planner, Oct 22, Loom's and Operations' ask on Sense UnitStarved #725424): internal/lower#1/2 was killed by the kernel at its fitted 2585 MB twice running, future-589c5d52 on Eve at 10:21Z and future-54cfd38d on Adam, and its rerun at the 16384 MB default (rerun-6934fb51877a364bfeeec0be, unit internal-lower-589c5d52fe40) peaked at 4625 MB, against 1619 MB at most over its 69 passed runs at the fitted share since Oct 20; 7168 is 4625 times the fit's 1.5 headroom rounded up to 7 GiB; cpus 8 is the default share's, declared only because a need names both, so it also holds the unit at the 8 cpus it runs at today"
     }
   ]
 }
