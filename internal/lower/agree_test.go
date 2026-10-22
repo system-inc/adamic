@@ -15,10 +15,11 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/ccjobserver"
+	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -143,21 +144,26 @@ func TestProduct_LowerAgreementNative(t *testing.T) {
 }
 
 // Handed the archive native.Build links, native.BuildLean writes Build's bytes for every
-// program in nativeAgreementPrograms, and handed the release archive runtimeproducts holds,
-// the same bytes again: the lean product is the binary the rows checked when Build made it
-// (#egjbcre). Each program's C is built three ways and compared byte for byte, each binary
-// named native, as the product names it: on macOS the linker's ad-hoc signature names the
-// binary by its file's name, so binaries named apart differ there and nowhere else.
+// program in nativeAgreementPrograms, wherever its output is and whatever jobserver it's
+// handed, and handed the release archive runtimeproducts holds, the same bytes again: the
+// lean product is the binary the rows checked when Build made it (#egjbcre). Each program's C
+// is built six ways and compared byte for byte: by Build; by BuildLean into lean under no
+// jobserver; into another directory, named apart and longer, so its build directory beside
+// the binary is too; into lean again under a jobserver of one token and one of eight; and
+// with the product's archive. Each binary is named native, as the product names it: on macOS
+// the linker's ad-hoc signature names the binary by its file's name, so binaries named apart
+// differ there and nowhere else.
 func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
 		t.Skip("ADAMIC_NATIVE_SPLIT=1 splits native.Build, and a lean build is one translation unit")
 	}
 	options := native.Options{}
-	jobserver, err := ccjobserver.Process()
+	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
+	jobservers := map[int]*native.Jobserver{0: nil, 1: agreementJobserver(t, 1), 8: agreementJobserver(t, 8)}
 	for _, name := range slices.Sorted(maps.Keys(nativeAgreementPrograms)) {
 		entry := nativeAgreementPrograms[name]
 		code := agreementNativeCode(lowerAgreementEntry(t, writeAgreementSource(t, entry.source)), entry.planted(t))
@@ -166,44 +172,77 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 		if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
 			t.Fatal(err)
 		}
-		for _, way := range []string{"built", "lean", "product"} {
-			if err := os.Mkdir(filepath.Join(directory, way), 0o755); err != nil {
+		for _, output := range []string{"built", "lean", "another-output-directory", "product"} {
+			if err := os.Mkdir(filepath.Join(directory, output), 0o755); err != nil {
 				t.Fatal(err)
 			}
 		}
 		if err := native.Build(code, filepath.Join(directory, "built", "native"), options); err != nil {
 			t.Fatalf("%s: native.Build: %v", name, err)
 		}
-		library, err := native.RuntimeLibraryForSource("", code, options)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := native.BuildLean(source, filepath.Dir(library), filepath.Join(directory, "lean", "native"), options, jobserver); err != nil {
-			t.Fatalf("%s: native.BuildLean: %v", name, err)
-		}
-		archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners)
-		if err := native.BuildLean(source, archive, filepath.Join(directory, "product", "native"), options, jobserver); err != nil {
-			t.Fatalf("%s: native.BuildLean with the product's archive: %v", name, err)
-		}
 		built, err := os.ReadFile(filepath.Join(directory, "built", "native"))
 		if err != nil {
 			t.Fatal(err)
 		}
+		library, err := native.RuntimeLibraryForSource("", code, options)
+		if err != nil {
+			t.Fatal(err)
+		}
+		archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners, agreementArchiveGroup)
 		same := true
-		for _, way := range []string{"lean", "product"} {
-			binary, err := os.ReadFile(filepath.Join(directory, way, "native"))
+		for _, way := range []struct {
+			name, output, archive string
+			tokens                int
+		}{
+			{"lean", "lean", filepath.Dir(library), 0},
+			{"at another output directory", "another-output-directory", filepath.Dir(library), 0},
+			{"under one token", "lean", filepath.Dir(library), 1},
+			{"under eight tokens", "lean", filepath.Dir(library), 8},
+			{"with the product's archive", "product", archive, 0},
+		} {
+			output := filepath.Join(directory, way.output, "native")
+			if err := native.BuildLean(compiler, source, way.archive, output, options, jobservers[way.tokens]); err != nil {
+				t.Fatalf("%s: native.BuildLean %s: %v", name, way.name, err)
+			}
+			binary, err := os.ReadFile(output)
 			if err != nil {
 				t.Fatal(err)
 			}
 			if !bytes.Equal(binary, built) {
 				same = false
-				t.Errorf("%s: native.BuildLean's binary (%s, %d bytes) differs from native.Build's (%d bytes)", name, way, len(binary), len(built))
+				t.Errorf("%s: native.BuildLean's binary %s (%d bytes) differs from native.Build's (%d bytes)", name, way.name, len(binary), len(built))
+			}
+			if _, err := os.Stat(filepath.Join(directory, way.output, "build")); !errors.Is(err, os.ErrNotExist) {
+				t.Errorf("%s: native.BuildLean %s left its build directory behind: %v", name, way.name, err)
 			}
 		}
 		if same {
-			t.Logf("%s, features %v: %d bytes, the same three ways", name, native.Features(code), len(built))
+			t.Logf("%s, features %v: %d bytes, the same six ways", name, native.Features(code), len(built))
 		}
 	}
+}
+
+// agreementJobserver is a compile jobserver holding tokens, a FIFO filled as Loom fills one.
+func agreementJobserver(t *testing.T, tokens int) *native.Jobserver {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "jobserver")
+	if err := syscall.Mkfifo(path, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	// Opened for reading and writing, as native opens it, so filling it doesn't wait for a reader.
+	filler, err := os.OpenFile(path, os.O_RDWR, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { filler.Close() })
+	if _, err := filler.Write([]byte(strings.Repeat("+", tokens))); err != nil {
+		t.Fatal(err)
+	}
+	jobserver, err := native.OpenJobserver(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return jobserver
 }
 
 // The mutation seam changes only C, after JavaScript agreement, so planted native
@@ -229,9 +268,14 @@ func agreementNativeCode(program *ir.Program, mutate func(string) string) string
 }
 
 // agreementArchiveOwners are the product tests that build the release archives an agreement
-// native links, one a group of runtimeproducts' Sets: TestProduct_LowerAgreementNative waits
-// for them in cloud/fast-gate/product-order.json, and finds the archive its C needs by name.
-const agreementArchiveOwners = "internal/oracle TestProduct_NativeRuntimesRelease"
+// native links, one a group of runtimeproducts' Sets, and agreementArchiveGroup the one group
+// whose test TestProduct_LowerAgreementNative waits for in cloud/fast-gate/product-order.json:
+// every program in nativeAgreementPrograms turns on no feature, the first set. It finds the
+// archive its C needs by name, and a program needing another group's fails, naming the file.
+const (
+	agreementArchiveOwners = "internal/oracle TestProduct_NativeRuntimesRelease"
+	agreementArchiveGroup  = 0
+)
 
 // buildAgreementNative is the one recipe for a native agreement binary: the product
 // test builds it ahead and runAgreementNative fetches it, so the key can't drift
@@ -245,7 +289,7 @@ func buildAgreementNative(t testing.TB, code string) string {
 	if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners)
+	archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners, agreementArchiveGroup)
 	return agreementproducts.Product(t, source, archive, os.Getenv("ADAMIC_NATIVE_SPLIT"))
 }
 

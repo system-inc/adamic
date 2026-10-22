@@ -181,13 +181,20 @@ func Find(t *testing.T, name string, group int, owner string) {
 // one of Sets, for a package whose tests hand it to a build of their own (internal/lower's agreement natives): found as
 // Find finds it, by name under the trace, failing when it isn't there and naming its owner, the test owners names with
 // the set's group after it (internal/oracle TestProduct_NativeRuntimesRelease0), and outside the trace built as Build
-// builds it.
-func Archive(t testing.TB, name string, features []string, owners string) string {
+// builds it. group is the one group whose owner the caller's product test waits for in cloud/fast-gate/product-order.json:
+// a set of another group fails, naming that file, since under the trace its archive is found only if its owner happened
+// to run first.
+func Archive(t testing.TB, name string, features []string, owners string, group int) string {
 	t.Helper()
 	variant := variantNamed(t, name)
 	index := slices.IndexFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) })
 	if index < 0 {
 		t.Fatalf("runtimeproducts: no runtime product for features %v: add the set to Sets", features)
+	}
+	if index%Groups != group {
+		t.Fatalf("runtimeproducts: the %s runtime archive for %v is built by %s%d, and the caller waits for %s%d alone in "+
+			"cloud/fast-gate/product-order.json: add %s%d to the caller's entry there, and ask for that group", variant.Name,
+			features, owners, index%Groups, owners, group, owners, index%Groups)
 	}
 	request, err := native.RuntimeRequestFor(variant.Options, Sets[index].Features...)
 	if err != nil {
