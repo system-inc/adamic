@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"go/ast"
 	"go/build"
+	"go/constant"
 	"go/importer"
 	"go/parser"
 	"go/token"
@@ -25,6 +26,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native/agreementproducts"
 )
 
 // modulePath is the repository's module, the prefix of every package of it.
@@ -46,6 +48,16 @@ var pureConstructors = []string{"regexp.MustCompile", "regexp.MustCompilePOSIX",
 // owner's review.
 var schedulingState = map[string]string{
 	"jobserver": "the process's compile token pool (#cyew6p3): it bounds how many clang run at once, or fails a compile loudly, never what one writes",
+}
+
+// environmentReads are the standard library calls that read the process's environment, each as go/types names a
+// function: a lean build's key declares no variable, so a reached one is a finding unless its build lets it be read.
+var environmentReads = []string{"os.Getenv", "os.LookupEnv", "os.Environ", "os.ExpandEnv", "syscall.Getenv", "syscall.Environ"}
+
+// leanEnvironment are the environment variables native.BuildLean's reach may name, each with its reason: read only on
+// a path the entry refuses before it reaches it. Any other read, or one by a name the census can't tell, is a finding.
+var leanEnvironment = map[string]string{
+	"WASI_SYSROOT": "read by Flags and compilerName for a wasm32-wasi target alone, which BuildLean refuses",
 }
 
 // censusExports is the export data of internal/native and every package it and its tests import, a product built ahead
@@ -103,6 +115,8 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 //     M2);
 //   - each package of the tree it reaches outside leanSlice, and each interface call some type of such a package
 //     implements;
+//   - each read of the environment in reached code (environmentReads), but of a variable environment names by a
+//     constant;
 //   - and each thing the census can't follow, which fails closed: a type error, a call it couldn't type, a call through a
 //     function value held in a package variable or a field or its use as a value, a call through a type parameter,
 //     reflection, a go:linkname, a cgo or assembly file.
@@ -115,7 +129,7 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 // declared file, and by a reached function code outside the reach calls.
 //
 // Empty when the build is complete by its declared files and leanSlice.
-func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string) ([]string, error) {
+func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string) ([]string, error) {
 	context := build.Default
 	context.GOOS, context.GOARCH, context.CgoEnabled = "linux", "amd64", true
 	listed, err := context.ImportDir(directory, 0)
@@ -338,6 +352,17 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 			case *ast.CallExpr:
 				if _, typed := info.Types[node.Fun]; !typed {
 					findings[fmt.Sprintf("%s: a call the census couldn't type, which it can't follow", at(node))] = true
+				}
+				if function := calledFunction(node, info); function != nil && slices.Contains(environmentReads, function.FullName()) {
+					name := ""
+					if len(node.Args) > 0 {
+						if value := info.Types[node.Args[0]].Value; value != nil && value.Kind() == constant.String {
+							name = constant.StringVal(value)
+						}
+					}
+					if _, let := environment[name]; name == "" || !let {
+						findings[fmt.Sprintf("%s: reads the environment (%s %q), which the build's key doesn't declare", at(node), function.FullName(), name)] = true
+					}
 				}
 			}
 			return true
@@ -704,7 +729,7 @@ func receiverName(declaration *ast.FuncDecl) string {
 }
 
 // censusTypes is the export data the census type-checks against (censusExports, censusImports), and whether
-// internal/native's test binary links this package, the one lean caller of native's code.
+// internal/native's test binary links this package or agreementproducts, the lean callers of native's code.
 func censusTypes(t *testing.T) (exports map[string]string, tree []string, testsBuildLean bool) {
 	t.Helper()
 	exports, tree, listed, err := censusImports(censusExports(t))
@@ -714,7 +739,7 @@ func censusTypes(t *testing.T) (exports map[string]string, tree []string, testsB
 	if !listed[modulePath+"/internal/native"] {
 		t.Fatal("the census's export data doesn't list internal/native")
 	}
-	return exports, tree, listed[modulePath+"/internal/native/runtimeproducts"]
+	return exports, tree, listed[modulePath+"/internal/native/runtimeproducts"] || listed[modulePath+"/internal/native/agreementproducts"]
 }
 
 // repositoryRoot is the tree this package sits in, three directories up.
@@ -735,12 +760,31 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
 	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if len(census) > 0 {
 		t.Fatalf("the runtime archive's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
+	}
+}
+
+// An agreement native's build, native.BuildLean, reaches nothing of internal/native but the files its key declares
+// (agreementproducts.NativeFiles), no package of the tree but buildcache's slice, and nothing of the process: no runtime
+// supplier or cache, no process jobserver, no environment but leanEnvironment's (#egjbcre). So agreementproducts' lean
+// recipe keys all the code that makes the binary. Mutants, each a finding: BuildLean taking the process's jobserver
+// (defaultJobserver, which UseJobserver writes); reading ADAMIC_NATIVE_SPLIT; taking its archive from runtimeSupplier
+// (which SupplyRuntimes writes); and target.go left out of NativeFiles.
+func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
+	t.Parallel()
+	root := repositoryRoot(t)
+	exports, tree, testsBuildLean := censusTypes(t)
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "BuildLean", agreementproducts.NativeFiles, exports, tree, testsBuildLean, schedulingState, leanEnvironment)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(census) > 0 {
+		t.Fatalf("an agreement native's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
 	}
 }
 
@@ -764,7 +808,8 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 // scheduling list ignored; uses of a variable sharing its storage unread, and a slice taken as not sharing it; the
 // exported rule off; test files read whether or not the tests build lean, and never; an interface's implementers not
 // reached; the tree's implementers unread; a reached type's declaration unread; a reached variable's declared type
-// unread; type errors dropped.
+// unread; type errors dropped. An environment read names one too, and by a name the census can't tell, but not one of a
+// variable the build lets it read; mutant: environment reads unread.
 func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 	t.Parallel()
 	base := map[string]string{
@@ -812,6 +857,9 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 		"a type reached as a field's":                           {map[string]string{"methods.go": "package fixture\n\nfunc (l level) String() string { return \"l\" }\n"}, true, "String, defined in methods.go"},
 		"a type reached as a variable's":                        {map[string]string{"helper.go": "package fixture\n\ntype counter int\n\nvar current counter\n\nfunc helper() string { _ = current; return \"h\" }\n", "methods.go": "package fixture\n\nfunc (c counter) String() string { return \"c\" }\n"}, true, "String, defined in methods.go"},
 		"a type error":                                          {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return missing() }\n"}, true, "a type error, which fails the census closed"},
+		"an environment read":                                   {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"CC\") }\n"}, true, "reads the environment (os.Getenv \"CC\")"},
+		"an environment read by a name it can't tell":           {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { name := \"FIXTURE_LET\"; return os.Getenv(name) }\n"}, true, "reads the environment (os.Getenv \"\")"},
+		"an environment read the build lets":                    {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"FIXTURE_LET\") }\n"}, true, ""},
 	} {
 		root := t.TempDir()
 		directory := filepath.Join(root, "fixture")
@@ -828,7 +876,7 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 				os.WriteFile(filepath.Join(directory, file), []byte(content), 0o644)
 			}
 		}
-		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"})
+		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"}, map[string]string{"FIXTURE_LET": "the fixture's one variable"})
 		if err != nil {
 			t.Fatalf("%s: %v", name, err)
 		}
