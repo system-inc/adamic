@@ -46,7 +46,7 @@ fi
 		}
 	}
 	adamic := filepath.Join(tools, "adamic")
-	write(adamic, "case \"$1\" in\nc)\n"+fail("c", "exit 2")+";;\njs)\n"+fail("js", "exit 2")+";;\nesac\nprintf 'fixture source\\n'\n")
+	write(adamic, "case \"$1\" in\nc)\n"+fail("c", "kill -TERM $$")+";;\njs)\n"+fail("js", "exit 2")+";;\nesac\nprintf 'fixture source\\n'\n")
 	native := settings + "if [ \"$ASAN_OPTIONS\" = detect_leaks=1 ]; then\n" + fail("leak", "kill -TERM $$") + "else\n" + fail("native", "kill -TERM $$") + "fi\nprintf 'ok\\n'\n"
 	write(filepath.Join(tools, "clang"), fail("clang", "exit 1")+`while [ "$#" -gt 0 ]; do
 if [ "$1" = -o ]; then shift; binary=$1; break; fi
@@ -152,5 +152,54 @@ func TestObserveConfirmsCompilerCrash(t *testing.T) {
 	}
 	if outcome.Has(Signature{Kind: "crash", Text: "fixture failure"}) {
 		t.Fatal("transient crash kept a reducible signature")
+	}
+}
+
+// Not parallel: inspects the process-wide confirmation lock.
+func TestCompileFindingConfirmation(t *testing.T) {
+	for _, test := range []struct {
+		name, body, key string
+		want            Verdict
+		attempts        int
+	}{
+		{"refusal mismatch", "printf 'Adamic 0.1 refuses another path\\n' >&2; exit 1", "refusal did not name the path", Finding, 1},
+		{"timeout", "kill -XCPU $$", "compiler never finished", Flaked, 2},
+		{"death", "kill -TERM $$", "refusal did not name the path", Flaked, 2},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			directory := t.TempDir()
+			compiler := filepath.Join(directory, "compiler")
+			if err := os.WriteFile(compiler, []byte("#!/bin/sh\n"+test.body+"\n"), 0755); err != nil {
+				t.Fatal(err)
+			}
+			path := filepath.Join(directory, "program.a")
+			if err := os.WriteFile(path, []byte("// parallel-refuse: expected path\n"), 0644); err != nil {
+				t.Fatal(err)
+			}
+			checkout := &Checkout{adamic: compiler}
+			attempts := 0
+			outcome := confirm(func() Outcome {
+				attempts++
+				// TryRLock succeeds during the shared attempt and fails during the exclusive one.
+				shared := programRuns.TryRLock()
+				if shared {
+					programRuns.RUnlock()
+				}
+				if shared != (attempts == 1) {
+					t.Fatalf("attempt %d: shared lock available = %v", attempts, shared)
+				}
+				if attempts > 1 {
+					return Outcome{Verdict: Agreed}
+				}
+				result := checkout.tryFile(path, directory)
+				if result.Verdict != Finding || result.Key != test.key {
+					t.Fatalf("got %+v, want finding", result)
+				}
+				return result
+			})
+			if outcome.Verdict != test.want || attempts != test.attempts {
+				t.Fatalf("got %s after %d attempts, want %s after %d", outcome.Verdict, attempts, test.want, test.attempts)
+			}
+		})
 	}
 }
