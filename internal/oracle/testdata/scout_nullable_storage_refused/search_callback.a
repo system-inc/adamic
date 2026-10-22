@@ -1,0 +1,4 @@
+interface Item { readonly id: number; }
+const items: readonly (Item | null)[] = [null];
+console.log(`${items.findIndex((value: Item | null, index: number,
+ array: readonly (Item | null | undefined)[]): boolean => array[0] === null)}`);
