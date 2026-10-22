@@ -11,11 +11,13 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #endif
 #include "async.h"
 #include "count.h"
+#include "graph_regions.h"
 #include "slab_quarantine.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdatomic.h>
+#include <string.h>
 
 // Small heap values come from size classes, 16 bytes apart up to 256, carved from 64 KB chunks: each
 // chunk holds one class's slots, its freed ones on a list threaded through them, and each class keeps
@@ -239,7 +241,7 @@ static void drain_remote(chunk *each) {
 	}
 }
 
-void *adamic_allocate(size_t size, enum adamic_kind kind) {
+static void *allocate_storage(size_t size, enum adamic_kind kind) {
 	adamic_heap *heap;
 	uint32_t slab = 0;
 	if (SLABS && size <= CLASSES * GRANULE) {
@@ -256,8 +258,12 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	heap->references = 1;
 	heap->kind = kind;
 	heap->slab = slab;
-	ADAMIC_COUNT_ALLOCATION();
 	return heap;
+}
+
+void *adamic_allocate(size_t size, enum adamic_kind kind) {
+	ADAMIC_COUNT_ALLOCATION();
+	return allocate_storage(size, kind);
 }
 
 // deallocate gives a value's memory back: to its chunk, or to free.
@@ -282,6 +288,25 @@ static void deallocate(adamic_heap *heap) {
 #endif
 }
 
+// Move a still-new allocation into storage with its graph-only prefix. This is
+// one logical allocation, and must happen before aliases or owned slots exist.
+void *adamic_heap_graph_storage(void *value, size_t size) {
+	adamic_heap *old = value;
+	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
+	uint32_t slab = storage->slab;
+	adamic_graph_header *prefix = (adamic_graph_header *)storage;
+	adamic_heap *heap = (adamic_heap *)(prefix + 1);
+	memcpy(heap, old, size);
+	// A value that points into itself (a small Map's inline entries, on area/library) must point into
+	// its new home before the old one is freed.
+	if (old->kind == adamic_kind_map) { adamic_map_relocated((adamic_map *)old, (adamic_map *)heap); }
+	heap->slab = slab | ADAMIC_GRAPH_FLAG;
+	*prefix = (adamic_graph_header){NULL, NULL};
+	deallocate(old);
+	return heap;
+}
+
+
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
 #ifdef ADAMIC_CANONICAL_CLOSURES
@@ -290,7 +315,9 @@ void *adamic_retain_slow(void *value) {
 		heap = ((adamic_cell *)heap)->owner;
 	}
 #endif
-	if (heap != NULL) {
+	if (adamic_graph_is(heap)) {
+		adamic_graph_retain(heap);
+	} else if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
 		// sharing and zero, so the ordinary positive-count path keeps one branch and plain stores.
@@ -332,6 +359,7 @@ static adamic_heap *drop_reference(void *value) {
 	}
 #endif
 	if (heap == NULL) { return NULL; }
+	if (adamic_graph_is(heap)) { return adamic_graph_release_last(heap) ? heap : NULL; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
 		heap->references = count - 1;
@@ -351,7 +379,7 @@ static void let_go(void *value) {
 	if (last != NULL) { list(last); }
 }
 
-static void free_one(void *value) {
+void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_async_frame:
@@ -437,10 +465,27 @@ static void free_one(void *value) {
 		break;
 	}
 	}
+}
+
+void adamic_heap_free_storage(void *value, uint32_t slab) {
+	adamic_heap *heap = value;
+	if (adamic_graph_is(heap)) {
+		heap = (adamic_heap *)adamic_graph_header_of(heap);
+	}
+	heap->slab = slab & ~ADAMIC_GRAPH_FLAG;
+	deallocate(heap);
+	ADAMIC_COUNT_FREE();
+}
+
+static void free_one(void *value) {
+	if (adamic_graph_is(value)) {
+		adamic_graph_free(value, let_go);
+		return;
+	}
+	adamic_heap_free_children(value, let_go);
 	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
 	adamic_weak_forget(value);
-	deallocate(value);
-	ADAMIC_COUNT_FREE();
+	adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
 }
 
 // Keep destruction out of the common release path: null, immortal and still-shared values need
