@@ -1,0 +1,14 @@
+// More than one stdout buffer, then stderr, then a short tail, then work that does
+// not end. A signal has to flush only the tail still in the buffer; the earlier lines
+// already left when the buffer filled and again before stderr.
+for (let line = 0; line < 2000; line += 1) {
+	console.log(`${line} ${'o'.repeat(40)}`);
+}
+console.error('boundary');
+console.log('tail one');
+console.log('tail two');
+let spins = 0;
+while (spins >= 0) {
+	spins += 1;
+}
+console.log(`never ${spins}`);

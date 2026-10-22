@@ -1,0 +1,9 @@
+// Stderr, then stdout, then a read of stdin. The read has to happen after both lines
+// are out: a file operation flushes the stdout buffer first.
+import { readTextFile } from 'adamic';
+
+console.error('err');
+console.log('out');
+const answer = readTextFile('/dev/stdin');
+console.log(answer.kind === 'Ok' ? `bytes ${answer.text.length}` : answer.message);
+console.error('done');
