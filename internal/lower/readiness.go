@@ -284,7 +284,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedField(expression.ViewReceiverTypeID, expression.Name) || expression.Method {
+				if !program.CheckedField(expression.ViewReceiverTypeID, expression.Name) || expression.Method && !certifiedUntaggedCallableRead(program, program.ViewContractTypes[expression.ViewTypeID]) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
