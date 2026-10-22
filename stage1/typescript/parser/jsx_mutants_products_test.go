@@ -14,6 +14,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 func jsxMutantsRows(t *testing.T, manifest string, count int) []string {
@@ -205,7 +207,9 @@ func jsxMutantsPlantedProof(t *testing.T, shard int, prepared jsxMutantsPrepared
 		}
 	}
 	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma", "ADAMIC_JSX_MUTANTS_PROOF_CHILD=1", jsxMutantsPreparedEnv+"="+descriptor)
-	out, err := cmd.CombinedOutput()
+	// Read through childguard.Capture for jsxMutantsCommand's reason, stdout then stderr.
+	stdout, stderr, err := childguard.Capture(ctx, cmd)
+	out := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatal("planted proof exceeded 60 seconds")
 	}
@@ -221,6 +225,12 @@ func jsxMutantsPlantedProof(t *testing.T, shard int, prepared jsxMutantsPrepared
 
 // Give spawned compilers the child's process group so cancellation cleans up
 // the whole build on Linux and macOS without an external timeout executable.
+// Its output is read through childguard.Capture, to its end with no timer
+// deciding when: exec's own copying under a three-second WaitDelay reported
+// exec.ErrWaitDelay whenever the reads hadn't reached EOF three seconds after
+// the child exited, so a planted proof that had finished could fail under load,
+// and the owner's exit error was never seen (#n3gk22h's shape). The proof's
+// 60 s deadline ends a hung run.
 func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	cmd := exec.CommandContext(ctx, name, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -231,7 +241,6 @@ func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.C
 		}
 		return err
 	}
-	cmd.WaitDelay = 3 * time.Second
 	return cmd
 }
 

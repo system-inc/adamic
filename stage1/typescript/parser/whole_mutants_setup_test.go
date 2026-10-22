@@ -14,6 +14,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 const (
@@ -190,7 +192,9 @@ func wholeMutantsRunShard(t *testing.T, index int) {
 	defer cancel()
 	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^"+t.Name()+"$", "-test.v", "-test.timeout=90s")
 	command.Env = append(environment, wholeMutantsCaseChildEnv+"=1")
-	output, err := command.CombinedOutput()
+	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatalf("cooked: %s exceeded 90 seconds", t.Name())
 	}
