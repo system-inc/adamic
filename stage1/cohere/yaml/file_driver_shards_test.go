@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -200,7 +201,11 @@ func TestFileDriver_007(t *testing.T) {
 	fileDriverRunShard(t, 7)
 }
 
-// fileDriverRun retains the strict stderr and stdout oracle while bounding every child.
+// fileDriverRun retains the strict stderr and stdout oracle while bounding every child. Output is read through
+// childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second WaitDelay reported
+// exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the child exited, so a Go oracle, native or
+// Node run that had finished could fail its shard under load (#n3gk22h's shape). The run's 90 s deadline ends a hung
+// one.
 func fileDriverRun(t *testing.T, directory string, environment []string, name string, args ...string) []byte {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -223,18 +228,15 @@ func fileDriverRun(t *testing.T, directory string, environment []string, name st
 			command.Env = append(toolchain.Env(environment...), "PWD="+absolute)
 		}
 	}
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = time.Second
-	var output, errors bytes.Buffer
-	command.Stdout, command.Stderr = &output, &errors
-	if err := command.Run(); err != nil {
-		t.Fatalf("%s: %v\n%s", name, err, errors.Bytes())
+	output, errors, err := childguard.Capture(ctx, command)
+	if err != nil {
+		t.Fatalf("%s: %v\n%s", name, err, errors)
 	}
-	if errors.Len() != 0 {
-		t.Fatalf("%s stderr: %s", name, errors.Bytes())
+	if len(errors) != 0 {
+		t.Fatalf("%s stderr: %s", name, errors)
 	}
-	return output.Bytes()
+	return output
 }
 
 func fileDriverGoFormat(t *testing.T, cases string) []byte {

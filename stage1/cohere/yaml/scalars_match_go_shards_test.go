@@ -11,6 +11,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -45,6 +46,8 @@ func scalarsMatchGoWriteCases(t *testing.T, cases []string) string {
 	return path
 }
 
+// scalarsMatchGoRun reads a run's output through childguard.Capture for fileDriverRun's reason: a one-second WaitDelay
+// could fail a Go oracle, native or Node run that had finished. The caller's 55 s deadline ends a hung one.
 func scalarsMatchGoRun(t *testing.T, ctx context.Context, environment []string, name string, args ...string) []byte {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, args...)
@@ -61,18 +64,15 @@ func scalarsMatchGoRun(t *testing.T, ctx context.Context, environment []string, 
 			command.Env = toolchain.Env(environment...)
 		}
 	}
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = time.Second
-	var output, errors bytes.Buffer
-	command.Stdout, command.Stderr = &output, &errors
-	if err := command.Run(); err != nil {
-		t.Fatalf("%s: %v\n%s", name, err, errors.Bytes())
+	output, errors, err := childguard.Capture(ctx, command)
+	if err != nil {
+		t.Fatalf("%s: %v\n%s", name, err, errors)
 	}
-	if errors.Len() != 0 {
-		t.Fatalf("%s stderr: %s", name, errors.Bytes())
+	if len(errors) != 0 {
+		t.Fatalf("%s stderr: %s", name, errors)
 	}
-	return output.Bytes()
+	return output
 }
 
 func scalarsMatchGoDisagrees(actual, expected []byte) bool { return !bytes.Equal(actual, expected) }
