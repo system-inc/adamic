@@ -31,6 +31,11 @@ import (
 var families = []family{
 	// 730 s over 946 fixtures, the four solo ones 6.7 to 11.9 s each.
 	{name: "TestNativeAgreesWithNode", shards: 128, runner: "runNativeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", solo: []string{
+		"internal/oracle/testdata/stdout_edges/little_streams.a",
+		"internal/oracle/testdata/stdout_edges/lots_streams.a",
+		"internal/oracle/testdata/stdout_edges/stderr_only.a",
+		"internal/oracle/testdata/stdout_edges/panic_edges.a",
+		"internal/oracle/testdata/stdout_edges/read_after_print.a",
 		"internal/oracle/testdata/bitwise_sweep.a",
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 		"internal/oracle/testdata/normalize_coverage_long.a",
@@ -38,6 +43,11 @@ var families = []family{
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
+		"internal/oracle/testdata/stdout_edges/little_streams.a",
+		"internal/oracle/testdata/stdout_edges/lots_streams.a",
+		"internal/oracle/testdata/stdout_edges/stderr_only.a",
+		"internal/oracle/testdata/stdout_edges/panic_edges.a",
+		"internal/oracle/testdata/stdout_edges/read_after_print.a",
 		"internal/oracle/testdata/bitwise_sweep.a",
 		"internal/oracle/testdata/normalize_coverage_limit.a",
 	}},
@@ -53,7 +63,13 @@ var families = []family{
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
 	{name: "TestReviewProgramsAgreeWithNode", shards: 12, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
 	// 236 s over about 1,030 committed fixture records, each a counted build and run.
-	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed"},
+	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed", solo: []string{
+		"internal/oracle/testdata/stdout_edges/little_streams.a",
+		"internal/oracle/testdata/stdout_edges/lots_streams.a",
+		"internal/oracle/testdata/stdout_edges/stderr_only.a",
+		"internal/oracle/testdata/stdout_edges/panic_edges.a",
+		"internal/oracle/testdata/stdout_edges/read_after_print.a",
+	}},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
 	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
 	// 22.7 s: 20 mutants of library_method_values.a, each built and run.
