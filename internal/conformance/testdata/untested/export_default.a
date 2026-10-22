@@ -1,0 +1,4 @@
+// Spec: No default exports, no namespace imports.
+// Expect: refused export default
+const answer = 42;
+export default answer;

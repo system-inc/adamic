@@ -1,0 +1,5 @@
+// Spec: `sort` requires a comparator in 0.1
+// Expect: lowers
+const values: number[] = [10, 9, 1];
+values.sort((left, right) => left - right);
+console.log(values.join(','));

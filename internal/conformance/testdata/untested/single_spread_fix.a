@@ -1,0 +1,5 @@
+// Spec: exactly one kind of object spread: one leading spread followed by fields
+// Expect: lowers
+const base: { readonly x: number; readonly y: number } = { x: 1, y: 2 };
+const moved = { ...base, y: 3 };
+console.log(`${moved.x} ${moved.y}`);

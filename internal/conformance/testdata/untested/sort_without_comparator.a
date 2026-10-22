@@ -1,0 +1,5 @@
+// Spec: `sort` requires a comparator in 0.1
+// Expect: refused sort without a comparator
+const values: number[] = [10, 9, 1];
+values.sort();
+console.log(values.join(','));

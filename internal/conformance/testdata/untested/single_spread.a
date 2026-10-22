@@ -1,0 +1,6 @@
+// Spec: | `adamic/single-spread` |
+// Expect: refused a spread after the first field
+const base: { readonly x: number } = { x: 1 };
+const extra: { readonly y: number } = { y: 2 };
+const merged = { ...base, ...extra };
+console.log(`${merged.x} ${merged.y}`);
