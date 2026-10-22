@@ -1,3 +1,4 @@
+// a-check: refused checked view read of field value with unsupported representation conversion contract
 interface Root { readonly kind: 'Holder'; }
 interface View extends Root { readonly value: string | Map<string, number>; }
 const map = new Map<string, number>();

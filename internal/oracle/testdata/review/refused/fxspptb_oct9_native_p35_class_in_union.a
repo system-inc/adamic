@@ -1,3 +1,4 @@
+// a-check: refused checked view read of field value with unsupported representation conversion contract
 interface Root { readonly kind: 'Holder'; }
 class Point { constructor(readonly x: number) {} }
 interface View extends Root { readonly value: string | Point; }
