@@ -1,7 +1,6 @@
 package formatfiles
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -16,6 +15,7 @@ import (
 	"time"
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
@@ -168,19 +168,20 @@ func formatfilesContextCommand(ctx context.Context, name string, args ...string)
 		}
 		return err
 	}
-	command.WaitDelay = 2 * time.Second
 	return command
 }
 
+// formatfilesExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's
+// own copying under a two-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds
+// after the child exited, so a Node, native or leaks run that had finished could fail its shard under load (#n3gk22h's
+// shape). ctx, the leaf's 90 s deadline, ends a hung run.
 func formatfilesExecute(t *testing.T, ctx context.Context, environment []string, name string, args ...string) run {
 	t.Helper()
 	command := formatfilesContextCommand(ctx, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		t.Fatalf("cooked: 90 s shard deadline: %v", ctx.Err())
 	}
@@ -188,7 +189,7 @@ func formatfilesExecute(t *testing.T, ctx context.Context, environment []string,
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func formatfilesNode(t *testing.T, ctx context.Context, path string, args ...string) run {
@@ -242,11 +243,13 @@ func formatfilesBuildNative(t *testing.T, source, output string, sanitize bool) 
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 		return err
 	}
-	command := formatfilesContextCommand(context.Background(), os.Args[0])
+	command := formatfilesContextCommand(t.Context(), os.Args[0])
 	command.Env = append(os.Environ(), "ADAMIC_FORMATFILES_NATIVE_SOURCE="+path, "ADAMIC_FORMATFILES_NATIVE_OUTPUT="+output, fmt.Sprintf("ADAMIC_FORMATFILES_NATIVE_SANITIZE=%t", sanitize))
-	result, err := command.CombinedOutput()
+	// Read through childguard.Capture for formatfilesExecute's reason: a WaitDelay could fail a build that had
+	// finished. The test's context has no deadline, so the build stays outside the leaf's; the unit's ceiling bounds it.
+	stdout, stderr, err := childguard.Capture(t.Context(), command)
 	if err != nil {
-		return fmt.Errorf("native builder: %w\n%s", err, result)
+		return fmt.Errorf("native builder: %w\n%s%s", err, stdout, stderr)
 	}
 	return nil
 }
