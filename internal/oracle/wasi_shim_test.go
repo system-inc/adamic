@@ -18,14 +18,15 @@ import (
 // left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
 // TestWASIAgreesWithNode runs these fixtures under node:wasi.
 var shimFileFixtures = map[string]bool{
-	"internal/oracle/testdata/closure_convention_host24.a":  true,
-	"internal/oracle/testdata/unknown_narrowing_host.a":     true,
-	"internal/oracle/testdata/write_stdout_order.a":         true,
-	"internal/oracle/testdata/write_stderr_order.a":         true,
-	"internal/oracle/testdata/prompt_then_read.a":           true,
-	"internal/oracle/testdata/node_fs_rm_options.a":         true,
-	"internal/oracle/testdata/node_options_const_capture.a": true,
-	"internal/oracle/testdata/node_options_widening.a":      true,
+	"internal/oracle/testdata/closure_convention_host24.a":     true,
+	"internal/oracle/testdata/unknown_narrowing_host.a":        true,
+	"internal/oracle/testdata/write_stdout_order.a":            true,
+	"internal/oracle/testdata/write_stderr_order.a":            true,
+	"internal/oracle/testdata/prompt_then_read.a":              true,
+	"internal/oracle/testdata/stdout_edges/read_after_print.a": true,
+	"internal/oracle/testdata/node_fs_rm_options.a":            true,
+	"internal/oracle/testdata/node_options_const_capture.a":    true,
+	"internal/oracle/testdata/node_options_widening.a":         true,
 }
 
 // TestWASIShimAgreesWithNode runs every fixture's wasm32 build through the shim, as a family (families_test.go):

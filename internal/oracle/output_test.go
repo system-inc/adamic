@@ -12,7 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 	"testing"
 	"time"
 
@@ -229,8 +228,10 @@ func TestFileWritesLandInNodesOrder(t *testing.T) {
 }
 
 // A prompt, then a read of stdin: a driver waits to see the prompt before it answers, so the prompt
-// has to be out before the read waits. Each run is answered only once its first line has come, or
-// after ten seconds without it, which is the failure.
+// has to be out before the read waits. Each run is answered once its first line has come, or once it
+// has printed nothing and sat blocked for a second, asleep with its CPU time unchanged, which is the
+// failure: it's waiting for the read. A process starved by load is runnable, not asleep, so load
+// can't fake it, and a real hang still ends at bounded's deadline with no prompt.
 func TestAPromptComesBeforeTheRead(t *testing.T) {
 	t.Parallel()
 	cacheProbe(t, "internal/oracle/testdata/prompt_then_read.a", nil, "", func() {
@@ -259,16 +260,26 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 				line, _ := reader.ReadString('\n')
 				first <- line
 			}()
-			prompted := false
+			prompted, received := false, false
 			var prompt string
-			select {
-			case prompt = <-first:
-				prompted = true
-			case <-time.After(10 * time.Second):
+			for idle, spent := 0, -1.0; !received && idle < 20; {
+				select {
+				case prompt = <-first:
+					// A whole line; at an exit without one there's no prompt.
+					prompted, received = strings.HasSuffix(prompt, "\n"), true
+				case <-time.After(50 * time.Millisecond):
+					now := cpuSeconds(t, command.Process.Pid)
+					if now == spent && asleep(t, command.Process.Pid) {
+						idle++
+					} else {
+						idle = 0
+					}
+					spent = now
+				}
 			}
 			stdin.Write([]byte("yes\n"))
 			stdin.Close()
-			if !prompted {
+			if !received {
 				prompt = <-first
 			}
 			rest, _ := io.ReadAll(reader)
@@ -290,82 +301,8 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 	})
 }
 
-// A program stopped from outside by SIGTERM, SIGINT or SIGHUP: Node has written every line, and is
-// killed by the signal. Native must write out what its buffer holds and be killed by the same signal,
-// under the sanitizers too. No run is signaled after a fixed delay, which a loaded machine can
-// outrun: Node and the JavaScript backend are signaled once their line is on the pipe, and native,
-// whose line stays in its buffer until the signal, once it has spent half a second of its own CPU
-// time, which only the fixture's spin after the line can spend. Load can't fake CPU time.
-// Started with the three signals ignored by its parent (as under nohup, or a background job), Node
-// resets them at startup and is stopped all the same, so native must be too.
-func TestASignalLeavesWhatWasPrinted(t *testing.T) {
-	t.Parallel()
-	for _, ignored := range []bool{false, true} {
-		for _, stop := range []syscall.Signal{syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
-			name := stop.String()
-			if ignored {
-				name += " inherited ignored"
-			}
-			t.Run(name, func(t *testing.T) {
-				t.Parallel()
-				cacheProbe(t, "internal/oracle/testdata/killed_after_output.a", nil, "", func() {
-
-					path, binary, script := sanitized(t, "internal/oracle/testdata/killed_after_output.a")
-					runner := filepath.Join(repository, "oracle", "node.mjs")
-					stopped := func(name string, arguments ...string) (string, []byte) {
-						onNode, label := name == "node", filepath.Base(append([]string{name}, arguments...)[len(arguments)])
-						if ignored {
-							// sh ignores the three, then execs the program in its place, with the same pid.
-							arguments = append([]string{"-c", `trap "" TERM INT HUP; exec "$0" "$@"`, name}, arguments...)
-							name = "sh"
-						}
-						command := bounded(t, name, arguments...)
-						if runtime.GOOS == "linux" {
-							command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
-						}
-						var stdout, stderr lockedBuffer
-						command.Stdout, command.Stderr = &stdout, &stderr
-						if err := command.Start(); err != nil {
-							t.Fatal(err)
-						}
-						ready := func() bool {
-							if onNode {
-								return bytes.Contains(stdout.Bytes(), []byte("\n"))
-							}
-							return cpuSeconds(t, command.Process.Pid) >= 0.5
-						}
-						for deadline := time.Now().Add(30 * time.Second); !ready(); time.Sleep(10 * time.Millisecond) {
-							if time.Now().After(deadline) {
-								t.Fatalf("%s never reached its spin in 30 s; stdout %q, stderr %q", label, stdout.Bytes(), stderr.String())
-							}
-						}
-						command.Process.Signal(stop)
-						command.Wait()
-						status := command.ProcessState.Sys().(syscall.WaitStatus)
-						ended := fmt.Sprintf("exit %d", status.ExitStatus())
-						if status.Signaled() {
-							ended = "killed by " + status.Signal().String()
-						}
-						rememberRun(t, run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()})
-						return ended + ", stderr " + strconv.Quote(stderr.String()), stdout.Bytes()
-					}
-					nodeEnded, node := stopped("node", "--disable-warning=ExperimentalWarning", runner, path)
-					if nodeEnded != "killed by "+stop.String()+`, stderr ""` || len(node) == 0 {
-						t.Fatalf("want Node killed by %s after its line, got %s, stdout %q", stop, nodeEnded, node)
-					}
-					for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-						ended, printed := stopped(other[0], other[1:]...)
-						if ended != nodeEnded || !bytes.Equal(printed, node) {
-							t.Errorf("%s: %s, stdout %q; Node: %s, stdout %q", filepath.Base(other[len(other)-1]), ended, printed, nodeEnded, node)
-						}
-					}
-
-				})
-			})
-		}
-	}
-}
-
+// Each signal, inherited disposition and process leg is a bounded top-level test.
+// Native readiness uses CPU time, since its line stays buffered until termination.
 // lockedBuffer is a child's output, read while the child still writes it.
 type lockedBuffer struct {
 	lock   sync.Mutex
@@ -385,6 +322,26 @@ func (b *lockedBuffer) Bytes() []byte {
 }
 
 func (b *lockedBuffer) String() string { return string(b.Bytes()) }
+
+// asleep reports whether a running process is blocked, every thread waiting (state S on Linux; S or
+// I, idle, from ps on macOS), rather than running or waiting to run.
+func asleep(t *testing.T, pid int) bool {
+	t.Helper()
+	if runtime.GOOS == "linux" {
+		data, err := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
+		if err != nil {
+			return false
+		}
+		fields := strings.Fields(string(data[bytes.LastIndexByte(data, ')')+1:]))
+		return len(fields) != 0 && fields[0] == "S"
+	}
+	output, err := exec.Command("ps", "-o", "state=", "-p", strconv.Itoa(pid)).Output()
+	if err != nil {
+		return false
+	}
+	state := strings.TrimSpace(string(output))
+	return strings.HasPrefix(state, "S") || strings.HasPrefix(state, "I")
+}
 
 // cpuSeconds is the user and system CPU time a running process has spent, from /proc on Linux
 // (in clock ticks of 1/100 s) and ps elsewhere. A process that has ended reads as 0.
