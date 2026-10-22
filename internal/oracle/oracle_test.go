@@ -60,6 +60,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a", false, false},
 	{"internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a", false, false},
 	{"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a", false, false},
+	{"internal/oracle/testdata/views_deep_chain.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/cleanup.a", true, false},
 	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
