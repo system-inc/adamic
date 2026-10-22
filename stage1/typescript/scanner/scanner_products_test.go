@@ -1,7 +1,6 @@
 package scanner
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/json"
@@ -16,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -172,17 +172,17 @@ func scannerSelect(lines []string, shard int) []string {
 	return selected
 }
 
+// scannerRun reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own copying
+// under a three-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF three seconds after
+// the child exited, so a Go oracle, native or Node run that had finished could fail its shard under load (#n3gk22h's
+// shape). The shard's 45 s deadline ends a hung run.
 func scannerRun(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 3 * time.Second
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	output, err := command.Output()
-	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s: %v\n%s", name, err, &stderr)
+	output, stderr, err := childguard.Capture(ctx, command)
+	if err != nil || len(stderr) != 0 {
+		t.Fatalf("%s: %v\n%s", name, err, stderr)
 	}
 	return output
 }
