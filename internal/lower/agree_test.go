@@ -3,28 +3,28 @@ package lower
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"errors"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
+	"slices"
 	"strconv"
 	"strings"
-	"sync"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/buildcache"
-	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native/agreementproducts"
+	"github.com/system-inc/adamic/internal/native/runtimeproducts"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -138,15 +138,77 @@ func TestProduct_LowerAgreementNative(t *testing.T) {
 	t.Parallel()
 	for _, entry := range nativeAgreementPrograms {
 		program := lowerAgreementEntry(t, writeAgreementSource(t, entry.source))
-		if _, err := buildAgreementNative(agreementNativeCode(program, entry.planted(t))); err != nil {
-			t.Fatalf("Native build: %v", err)
+		buildAgreementNative(t, agreementNativeCode(program, entry.planted(t)))
+	}
+}
+
+// Handed the archive native.Build links, native.BuildLean writes Build's bytes for every
+// program in nativeAgreementPrograms, and handed the release archive runtimeproducts holds,
+// the same bytes again: the lean product is the binary the rows checked when Build made it
+// (#egjbcre). Each program's C is built three ways and compared byte for byte, each binary
+// named native, as the product names it: on macOS the linker's ad-hoc signature names the
+// binary by its file's name, so binaries named apart differ there and nowhere else.
+func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
+		t.Skip("ADAMIC_NATIVE_SPLIT=1 splits native.Build, and a lean build is one translation unit")
+	}
+	options := native.Options{}
+	jobserver, err := ccjobserver.Process()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range slices.Sorted(maps.Keys(nativeAgreementPrograms)) {
+		entry := nativeAgreementPrograms[name]
+		code := agreementNativeCode(lowerAgreementEntry(t, writeAgreementSource(t, entry.source)), entry.planted(t))
+		directory := t.TempDir()
+		source := filepath.Join(directory, "main.c")
+		if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		for _, way := range []string{"built", "lean", "product"} {
+			if err := os.Mkdir(filepath.Join(directory, way), 0o755); err != nil {
+				t.Fatal(err)
+			}
+		}
+		if err := native.Build(code, filepath.Join(directory, "built", "native"), options); err != nil {
+			t.Fatalf("%s: native.Build: %v", name, err)
+		}
+		library, err := native.RuntimeLibraryForSource("", code, options)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := native.BuildLean(source, filepath.Dir(library), filepath.Join(directory, "lean", "native"), options, jobserver); err != nil {
+			t.Fatalf("%s: native.BuildLean: %v", name, err)
+		}
+		archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners)
+		if err := native.BuildLean(source, archive, filepath.Join(directory, "product", "native"), options, jobserver); err != nil {
+			t.Fatalf("%s: native.BuildLean with the product's archive: %v", name, err)
+		}
+		built, err := os.ReadFile(filepath.Join(directory, "built", "native"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		same := true
+		for _, way := range []string{"lean", "product"} {
+			binary, err := os.ReadFile(filepath.Join(directory, way, "native"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !bytes.Equal(binary, built) {
+				same = false
+				t.Errorf("%s: native.BuildLean's binary (%s, %d bytes) differs from native.Build's (%d bytes)", name, way, len(binary), len(built))
+			}
+		}
+		if same {
+			t.Logf("%s, features %v: %d bytes, the same three ways", name, native.Features(code), len(built))
 		}
 	}
 }
 
 // The mutation seam changes only C, after JavaScript agreement, so planted native
 // answers prove this leg independently of the JavaScript comparison.
-func agreeSourceNative(t agreementTesting, source string, mutate func(string) string) *ir.Program {
+func agreeSourceNative(t testing.TB, source string, mutate func(string) string) *ir.Program {
 	t.Helper()
 	path := writeAgreementSource(t, source)
 	program := agreeEntry(t, path, lowerAgreementEntry(t, path), 0, nil, nil)
@@ -166,48 +228,36 @@ func agreementNativeCode(program *ir.Program, mutate func(string) string) string
 	return code
 }
 
-// agreementNativeBuilds lets one native agreement product build at a time. Each build's
-// traced window holds the whole process's reads, so parallel rows building at once each
-// recorded the others' reads as their own: a ring of 14 products whose sets read each
-// other, which Loom refuses to record and rebuilds in every tree (#kfjqsnh). The rows
-// still check in parallel; only the builds they wait on are serial.
-var agreementNativeBuilds sync.Mutex
+// agreementArchiveOwners are the product tests that build the release archives an agreement
+// native links, one a group of runtimeproducts' Sets: TestProduct_LowerAgreementNative waits
+// for them in cloud/fast-gate/product-order.json, and finds the archive its C needs by name.
+const agreementArchiveOwners = "internal/oracle TestProduct_NativeRuntimesRelease"
 
 // buildAgreementNative is the one recipe for a native agreement binary: the product
 // test builds it ahead and runAgreementNative fetches it, so the key can't drift
 // between them. It returns the product's directory, which holds the binary as native.
-func buildAgreementNative(code string) (string, error) {
-	agreementNativeBuilds.Lock()
-	defer agreementNativeBuilds.Unlock()
-	options := native.Options{}
-	flags := append(native.Flags(options), fmt.Sprintf("C=%x", sha256.Sum256([]byte(code))),
-		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	// The shared build-product cache hashes C contents, runtime and build code,
-	// native flags and toolchain. A hit runs the binary without invoking clang.
-	return buildcache.Get(buildcache.Inputs{
-		// v2: the sets recorded beside another build's window name that build's reads (#kfjqsnh).
-		Name:      "lower agreement native v2",
-		Files:     []string{"internal/native"},
-		Flags:     flags,
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
-	}, func(directory string) error {
-		return native.Build(code, filepath.Join(directory, "native"), options)
-	})
+// The binary is a lean product (agreementproducts) of what it's handed: the C, written
+// here, and the release archive of the runtime for the C's features, found first as a
+// product of its own. A hit runs the binary without invoking clang.
+func buildAgreementNative(t testing.TB, code string) string {
+	t.Helper()
+	source := filepath.Join(t.TempDir(), "main.c")
+	if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners)
+	return agreementproducts.Product(t, source, archive, os.Getenv("ADAMIC_NATIVE_SPLIT"))
 }
 
-func runAgreementNative(t agreementTesting, code string) nodeObservation {
+func runAgreementNative(t testing.TB, code string) nodeObservation {
 	t.Helper()
-	directory, err := buildAgreementNative(code)
-	if err != nil {
-		t.Fatalf("Native build: %v", err)
-	}
-	binary := filepath.Join(directory, "native")
+	binary := filepath.Join(buildAgreementNative(t, code), "native")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
-	err = command.Run()
+	err := command.Run()
 	exit := 0
 	if ctx.Err() != nil {
 		t.Fatalf("Native %s: %v", binary, ctx.Err())
