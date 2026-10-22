@@ -1,6 +1,7 @@
 package native
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/json"
 	"flag"
@@ -200,6 +201,7 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 			return err
 		}
 		inventory.MutatedWeak = scanArchive(archive)["weak.c"]
+		var librarySymbols []map[string]regexpMemberSymbols
 		for _, path := range libraries {
 			args := []string{"-g", "-P", "--defined-only", path}
 			if strings.HasSuffix(path, ".so.6") || strings.HasSuffix(path, ".so.0") {
@@ -214,23 +216,69 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 			if err != nil {
 				return err
 			}
-			for _, member := range symbols {
-				inventory.External = append(inventory.External, member.Defined...)
-			}
+			librarySymbols = append(librarySymbols, symbols)
 		}
-		// GNU ld synthesizes the ASan section boundaries; weak undefined references
-		// to these are emitted by clang's instrumentation, not by runtime C calls.
-		inventory.External = append(inventory.External, "__start_asan_globals", "__stop_asan_globals")
-		// The libraries' symbols were gathered from maps, in Go's random order: sort them so one key always makes one
-		// symbols.json (#6r7v4ye: unsorted, every rebuild of this product made different bytes and voided its block).
-		slices.Sort(inventory.External)
-		inventory.External = slices.Compact(inventory.External)
-		data, err := json.Marshal(inventory)
+		data, err := regexpWitnessClosureBytes(inventory, librarySymbols)
 		if err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(directory, "symbols.json"), data, 0600)
 	})
+}
+
+// Keep serialization independent of map iteration order, so one inventory key
+// always makes the same symbols.json bytes (#6r7v4ye).
+func regexpWitnessClosureBytes(inventory regexpClosureInventory, libraries []map[string]regexpMemberSymbols) ([]byte, error) {
+	for _, library := range libraries {
+		for _, member := range library {
+			inventory.External = append(inventory.External, member.Defined...)
+		}
+	}
+	// GNU ld synthesizes these ASan boundaries, rather than runtime C sources.
+	inventory.External = append(inventory.External, "__start_asan_globals", "__stop_asan_globals")
+	slices.Sort(inventory.External)
+	inventory.External = slices.Compact(inventory.External)
+	return json.Marshal(inventory)
+}
+
+func TestRegExpWitnessClosureBytesDeterministic(t *testing.T) {
+	t.Parallel()
+	libraries := []map[string]regexpMemberSymbols{{}, {}}
+	for member := range 8 {
+		symbols := regexpMemberSymbols{Undefined: []string{"not_a_definition"}}
+		for symbol := range 8 {
+			symbols.Defined = append(symbols.Defined, fmt.Sprintf("symbol_%02d", member*8+symbol))
+		}
+		// Real libraries can define the same symbol in several members.
+		symbols.Defined = append(symbols.Defined, "symbol_00")
+		libraries[member/4][fmt.Sprintf("member_%d.o", member)] = symbols
+	}
+	inventory := regexpClosureInventory{
+		Members: map[string]regexpMemberSymbols{"weak.c": {Undefined: []string{"symbol_00"}}},
+		Sources: []string{"weak.c"},
+	}
+	var first []byte
+	for run := range 20 {
+		data, err := regexpWitnessClosureBytes(inventory, libraries)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if run == 0 {
+			first = data
+		} else if !bytes.Equal(first, data) {
+			t.Fatalf("symbols.json bytes differ between serialization 1 and %d", run+1)
+		}
+	}
+	var decoded regexpClosureInventory
+	if err := json.Unmarshal(first, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if len(decoded.External) != 66 || !slices.IsSorted(decoded.External) || slices.Contains(decoded.External, "not_a_definition") {
+		t.Fatalf("expected 64 unique definitions and two ASan boundaries, sorted: %v", decoded.External)
+	}
+	if !slices.Equal(decoded.Sources, inventory.Sources) || !slices.Equal(decoded.Members["weak.c"].Undefined, inventory.Members["weak.c"].Undefined) {
+		t.Fatal("serialization lost runtime inventory fields")
+	}
 }
 
 func TestProduct_RegExpWitnessClosureInventory(t *testing.T) {

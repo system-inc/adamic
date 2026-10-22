@@ -1,0 +1,11 @@
+{
+  "Name": "remove-external-sort",
+  "Test": "TestRegExpWitnessClosureBytesDeterministic",
+  "Mutation": "Remove slices.Sort(inventory.External) from regexpWitnessClosureBytes in a throwaway copy; leave Compact in place.",
+  "Diagnostic": "symbols.json bytes differ between serialization 1 and",
+  "Build": "Run go test from the throwaway copy outside the test; the test itself only serializes fixture maps and builds no product.",
+  "ObservedOutput": [
+    "regexp_witness_closure_test.go:268: symbols.json bytes differ between serialization 1 and 2",
+    "--- FAIL: TestRegExpWitnessClosureBytesDeterministic (0.00s)"
+  ]
+}
