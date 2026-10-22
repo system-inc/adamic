@@ -1,0 +1,10 @@
+// a-check: refused a value of type Result[] seen as { text: string; }[], whose readonly field text becomes writable: a readonly field may hold something narrower than string, which a write of string would replace; keep text readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+import { readTextFile } from 'adamic';
+interface Result { readonly text: string }
+const result = readTextFile('testdata/checked-runtime-fields_refused/input.txt');
+if (result.kind === 'Ok') {
+    const results: Result[] = [];
+const wider: { text: string }[] = results;
+    results.push(result);
+    for (const item of results) console.log(item.text.trim());
+}

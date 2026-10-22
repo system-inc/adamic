@@ -65,7 +65,7 @@ static bool regex_compile_names(regex_context *r, adamic_regex_program *p) {
         groups[groups_count]=(adamic_regex_group){names[i]->name,ids,end-i};
         shape_names[groups_count]=names[i]->name;references[groups_count]=true;groups_count++;i=end;
     }
-    *shape=(adamic_shape){groups_count,shape_names,references,NULL};p->groups=groups;p->group_count=groups_count;p->group_shape=shape;return true;
+    *shape=(adamic_shape){groups_count,shape_names,references,NULL,NULL};p->groups=groups;p->group_count=groups_count;p->group_shape=shape;return true;
 }
 static bool regex_compile_bound(regex_context *r, const char *digits, uint64_t *bound) {
     *bound=0;if(digits==NULL)return true;

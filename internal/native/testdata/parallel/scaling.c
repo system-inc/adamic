@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 	if (names == NULL || references == NULL) { abort(); }
 	for (size_t i = 0; i < count; i++) { names[i] = "padding"; }
 	names[count - 1] = "value";
-	adamic_shape shape = {count, names, references, NULL};
+	adamic_shape shape = {count, names, references, NULL, NULL};
 	adamic_object *object = adamic_object_new(&shape);
 	object->slots[count - 1].number = 987;
 	for (size_t i = 0; i < 2; i++) {

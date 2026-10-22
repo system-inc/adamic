@@ -8,7 +8,7 @@ static char trace[512];
 static size_t used;
 static int mode;
 static bool changed;
-static const adamic_shape shape = {0, NULL, NULL, NULL};
+static const adamic_shape shape = {0, NULL, NULL, NULL, NULL};
 static adamic_string *text(const char *bytes) {
     size_t length = strlen(bytes);
     adamic_string *string = adamic_string_allocate(length);
@@ -84,7 +84,7 @@ static adamic_primitive_method get(adamic_heap *self, const char *name) {
 static void run(void) {
     static const char *const names[] = {"major", "minor", "patch"};
     static const bool references[] = {false, false, false};
-    static const adamic_shape version_shape = {3, names, references, NULL};
+    static const adamic_shape version_shape = {3, names, references, NULL, NULL};
     adamic_heap *receiver;
     if (mode == 2) {
         adamic_array *array = adamic_array_new(2, true);

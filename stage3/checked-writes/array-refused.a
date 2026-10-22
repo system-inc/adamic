@@ -1,0 +1,5 @@
+// a-check: refused a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+const narrow: (1 | 2)[] = [1];
+function store(values: number[], value: number): void { values[0] = value; }
+store(narrow, 3);
+console.log((narrow[0] ?? 0).toString());

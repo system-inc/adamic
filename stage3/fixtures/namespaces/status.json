@@ -87,7 +87,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:13:27: Adamic 0.1 refuses a function taking TState[] seen as one taking TState[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"}
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:8:34: stage 0 can't lower a value of type T yet"}
   },
   {
     "file": "07_parser_singleton.a",
