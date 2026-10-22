@@ -112,7 +112,7 @@ func runVolumeProfileMutantShard(t *testing.T, shardIndex int) {
 
 func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) string {
 	t, repository := h.t, h.repository
-	stage0, archive := h.stage0(), h.archive("checker", false)
+	stage0, archive := h.stage0(), h.archive(false)
 	// Hash the actual build executables as well as the imported source tree.
 	var products []string
 	for _, path := range []string{stage0, archive} {

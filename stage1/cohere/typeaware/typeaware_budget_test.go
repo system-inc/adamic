@@ -3,7 +3,6 @@ package typeaware
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -51,7 +50,7 @@ func typeAwareStage0(h *harness) string {
 	return typeAwareSetup(h, "stage0", h.stage0)
 }
 func typeAwareArchive(h *harness, name string, sanitize bool) string {
-	return typeAwareSetup(h, name, func() string { return h.archive(name, sanitize) })
+	return typeAwareSetup(h, name, func() string { return h.archive(sanitize) })
 }
 func typeAwareMutantArchive(h *harness, name string) string {
 	return typeAwareSetup(h, name+"-checker", func() string { return checkerMutantArchive(h.t, name) })
@@ -64,9 +63,6 @@ func typeAwareBuild(h *harness, stage0, name, entry, archive string, sanitize bo
 // builds it ahead and its check only fetches it.
 func typeAwareMutantNative(h *harness, name, entry, archive string, sanitize bool) string {
 	return typeAwareSetup(h, name, func() string { return h.mutantNative(name, entry, archive, sanitize) })
-}
-func typeAwareProduct(h *harness, name string, command *exec.Cmd) string {
-	return typeAwareSetup(h, name, func() string { return h.sixBuildProduct(name, command) })
 }
 func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string, imports ...string) string {
 	return typeAwareSetup(h, name, func() string {

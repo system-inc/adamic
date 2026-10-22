@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
@@ -111,11 +110,9 @@ func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
 
 // The oracle retains every original program root while its walk visits only
 // the shard manifest. Its unchanged production rules still decide the findings.
+// The adapter is a Mutation of oracle_volume.go, so the oracle is a GoBuildIn
+// product as the package's other oracles are (typeAwareOverlayOracle).
 func volumeAgreementOracle(h *volumeGuardHarness) string {
-	data, err := os.ReadFile(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go"))
-	if err != nil {
-		h.t.Fatal(err)
-	}
 	from := "program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})"
 	to := `programRoots := roots
  if len(args)>3 {
@@ -125,39 +122,7 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
   for _,path:=range config.FileNames() { if strings.HasSuffix(path.AsString(),".d.ts") && !slices.Contains(programRoots,path) { programRoots=append(programRoots,path) } }
  }
  program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(programRoots), Host: host, SingleThreaded: core.TSTrue})`
-	text := string(data)
-	if strings.Count(text, from) != 1 {
-		h.t.Fatal("nonunique oracle program-root adapter")
-	}
-	text = strings.Replace(text, from, to, 1)
-	inputs := volumeAgreementInputs("oracle", false)
-	dir := buildcache.Product(h.t, inputs, func(dir string) error {
-		virtual := filepath.Join(h.repository, "cohere/adamic_volume_shard_oracle.go")
-		source := filepath.Join(dir, "oracle.go")
-		if err := os.WriteFile(source, []byte(text), 0444); err != nil {
-			return err
-		}
-		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-		if err != nil {
-			return err
-		}
-		overlay := filepath.Join(dir, "overlay.json")
-		if err := os.WriteFile(overlay, data, 0444); err != nil {
-			return err
-		}
-		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		defer os.Remove(overlay)
-		cmd, cancel := volumeGuardCommand(context.Background(), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", overlay, "-o", filepath.Join(dir, "oracle"), virtual)...)
-		defer cancel()
-		cmd.Dir = filepath.Join(h.repository, "cohere")
-		cmd.Env = append(cmd.Env, "PWD="+cmd.Dir)
-		output, err := volumeGuardOutput(cmd)
-		if err != nil {
-			return fmt.Errorf("oracle: %w %s", err, output)
-		}
-		return nil
-	})
-	return filepath.Join(dir, "oracle")
+	return typeAwareOverlayOracle(h.harness, "oracle", "adamic_volume_shard_oracle.go", "oracle_volume.go", buildcache.Mutation{File: "stage1/cohere/typeaware/testdata/oracle_volume.go", Before: from, After: to})
 }
 func volumeAgreementSource(h *volumeGuardHarness, name string) string {
 	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
@@ -245,39 +210,26 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 		return volumeAgreementNative(h, name, volumeAgreementFetch(h.t, archiveName), volumeAgreementFetch(h.t, "volume-source"), name == "volume-asan")
 	}
 	archiveName := strings.TrimSuffix(name, "-native")
-	var overlay string
+	var mutation *buildcache.Mutation
 	if archiveName == "released-registry" {
-		overlay = h.overlay(archiveName, "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
+		mutation = &buildcache.Mutation{File: checkerArchive, Before: "delete(programs.live, uint64(handle))", After: "// Mutant keeps released program live."}
 	} else if archiveName != "released-handle" {
 		for _, c := range volumeAgreementChanges() {
 			if c.name == archiveName {
-				overlay = h.overlay(c.name, c.path, c.from, c.to)
+				mutation = &buildcache.Mutation{File: c.path, Before: c.from, After: c.to}
 			}
 		}
-		if overlay == "" {
+		if mutation == nil {
 			h.t.Fatalf("unknown product %s", name)
 		}
 	}
 	archive := ""
-	if overlay == "" {
+	if mutation == nil {
 		archive = volumeAgreementFetch(h.t, "archive-checker")
 	} else if strings.HasSuffix(name, "-native") {
 		archive = volumeAgreementFetch(h.t, archiveName)
 	} else {
-		inputs := volumeAgreementInputs("archive-"+archiveName, false)
-		inputs.Flags = append(inputs.Flags, archiveName)
-		dir := buildcache.Product(h.t, inputs, func(dir string) error {
-			command, cancel := volumeGuardCommand(context.Background(), "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-overlay", overlay, "-o", filepath.Join(dir, "checker.a"), "./bridge/tsgo/archive")...)
-			defer cancel()
-			command.Dir = h.repository
-			command.Env = append(command.Env, "PWD="+h.repository)
-			output, err := volumeGuardOutput(command)
-			if err != nil {
-				return fmt.Errorf("archive %s: %w %s", archiveName, err, output)
-			}
-			return nil
-		})
-		archive = filepath.Join(dir, "checker.a")
+		archive = plantedCheckerArchive(h.t, "agreement-"+archiveName+"-checker.a", *mutation)
 	}
 	if !strings.HasSuffix(name, "-native") {
 		return archive

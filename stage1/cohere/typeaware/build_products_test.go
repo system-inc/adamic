@@ -2,10 +2,11 @@ package typeaware
 
 import (
 	"encoding/json"
+	"os"
 	"path/filepath"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
 // Product declarations and check units use these same builders. Dependencies
@@ -18,15 +19,25 @@ func typeAwareProductHarness(t *testing.T) *harness {
 	return h
 }
 
-func typeAwareOverlayOracle(h *harness, productName, binaryName, virtualName, source, overlayName string) string {
+// typeAwareOverlayOracle is a Go oracle built in cohere from a main its overlay synthesizes: virtualName, read from
+// testdata/<source> with mutations planted. It is a buildcache.GoBuildIn product named binaryName, keyed by the oracle's
+// own graph (cohere's lint rules and the TypeScript port, no compiler code) and the overlay's replacement, where as an
+// ordinary product of this package it was keyed by the test binary, which links the compiler, and rebuilt on every
+// compiler edit (#gr5y0yf). The virtual file's name is in the binary's line table, so two oracles over one source are
+// two products.
+func typeAwareOverlayOracle(h *harness, binaryName, virtualName, source string, mutations ...buildcache.Mutation) string {
 	h.t.Helper()
 	virtual := filepath.Join(h.repository, "cohere", virtualName)
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	command := toolchain.CommandIn(filepath.Join(h.repository, "cohere"), "go", "build", "-overlay", h.write(overlayName, string(data)), "-o", filepath.Join(h.directory, binaryName), virtual)
-	return h.sixBuildProduct(productName, command)
+	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
+	overlay := filepath.Join(h.t.TempDir(), "overlay.json")
+	if err := os.WriteFile(overlay, data, 0644); err != nil {
+		h.t.Fatal(err)
+	}
+	return buildcache.GoBuildInMutated(h.t, "cohere", binaryName, virtual, []string{"-overlay=" + overlay}, mutations)
 }
 
 func typeAwareOracle(h *harness, kind string) string {
@@ -34,24 +45,21 @@ func typeAwareOracle(h *harness, kind string) string {
 	if kind == "six" {
 		source, virtual = "oracle_six.go", "adamic_six_oracle.go"
 	}
-	return typeAwareOverlayOracle(h, "oracle-build", "oracle", virtual, source, "oracle-overlay.json")
+	return typeAwareOverlayOracle(h, "oracle", virtual, source)
 }
 
+// sixFactsCostGo is ./bridge/tsgo/cost, the facts' cost measured straight on the checker, a buildcache.GoBuild product.
 func sixFactsCostGo(h *harness) string {
-	return h.sixBuildProduct("facts-cost-go-build", toolchain.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
+	return buildcache.GoBuild(h.t, "direct-cost", "./bridge/tsgo/cost", nil)
 }
 
 func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) string {
-	archiveName := "checker"
-	if sanitize {
-		archiveName += "-asan"
-	}
-	return h.build("", name, filepath.Join(h.repository, "stage1/cohere/typeaware", entry), h.archive(archiveName, sanitize), sanitize)
+	return h.build("", name, filepath.Join(h.repository, "stage1/cohere/typeaware", entry), h.archive(sanitize), sanitize)
 }
 
 func volumeProfileControlProduct(t *testing.T, sanitize bool) string {
 	h := typeAwareProductHarness(t)
-	return volumeProfileControlsBinary(h, "", h.archive("checker", sanitize), sanitize)
+	return volumeProfileControlsBinary(h, "", h.archive(sanitize), sanitize)
 }
 
 func volumeProfileDeclaredMutant(t *testing.T, index int) string {
@@ -61,11 +69,11 @@ func volumeProfileDeclaredMutant(t *testing.T, index int) string {
 func TestProduct_stage0(t *testing.T) { t.Parallel(); typeAwareProductHarness(t).stage0() }
 func TestProduct_checker(t *testing.T) {
 	t.Parallel()
-	typeAwareProductHarness(t).archive("checker", false)
+	typeAwareProductHarness(t).archive(false)
 }
 func TestProduct_checker_asan(t *testing.T) {
 	t.Parallel()
-	typeAwareProductHarness(t).archive("checker-asan", true)
+	typeAwareProductHarness(t).archive(true)
 }
 func TestProduct_six_lowered(t *testing.T) {
 	t.Parallel()
@@ -99,7 +107,7 @@ func TestProduct_six_declaration_source_native(t *testing.T) {
 func TestProduct_typeaware_wrong_node_native(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
-	h.mutantNative("wrong-node", typeAwareWrongNodeEntry(h), h.archive("checker", false), true)
+	h.mutantNative("wrong-node", typeAwareWrongNodeEntry(h), h.archive(false), true)
 }
 func TestProduct_six_oracle(t *testing.T) {
 	t.Parallel()
@@ -180,7 +188,7 @@ func TestProduct_profile_controls_native(t *testing.T) {
 func TestProduct_profile_missing_binding(t *testing.T) {
 	t.Parallel()
 	h := typeAwareProductHarness(t)
-	volumeProfileMissingBinding(h, "", h.archive("checker", false))
+	volumeProfileMissingBinding(h, "", h.archive(false))
 }
 func TestProduct_profile_mutant_binding_slot(t *testing.T) {
 	t.Parallel()
