@@ -60,6 +60,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 	if err := l.parallelPreflight(module); err != nil {
 		return err
 	}
+	if err := l.mergedFieldRulings(module); err != nil {
+		return err
+	}
+	if err := l.functionAnnotations(module); err != nil {
+		return err
+	}
 	// Validate arguments before visiting their annotations, so a failed contract
 	// names the actual argument and parameter even for an inline arrow.
 	var contractError error
@@ -95,6 +101,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if err := l.knownLoweringGap(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.functionCallRefusal(node); err != nil {
 			found = err
 			return true
 		}

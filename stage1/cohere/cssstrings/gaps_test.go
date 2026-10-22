@@ -2,12 +2,13 @@ package cssstrings
 
 import (
 	"context"
-	"errors"
 	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestMultiPushGap(t *testing.T) {
@@ -23,9 +24,20 @@ func TestMultiPushGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "push with other than one value" {
-		t.Fatalf("gap changed: %v; update GAPS.md and remove the workaround if closed", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
 	}
+	binary := filepath.Join(t.TempDir(), "gap")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	clean(t, "native ASan/UBSan/LSan", actual)
+	equal(t, "native", actual.stdout, answer.stdout)
+	emitted := filepath.Join(t.TempDir(), "gap.mjs")
+	write(t, emitted, []byte(javascript.JavaScript(lowered)))
+	backend := onNode(t, emitted)
+	clean(t, "JavaScript backend", backend)
+	equal(t, "JavaScript backend", backend.stdout, answer.stdout)
 }

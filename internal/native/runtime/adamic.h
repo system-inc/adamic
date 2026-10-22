@@ -218,6 +218,7 @@ struct adamic_closure {
  uint8_t discard; // an adamic_discard
 #endif
 	size_t count;
+	size_t source_length;
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_environment *canonical_owner;
 	adamic_closure *canonical_previous;
