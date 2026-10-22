@@ -1,0 +1,133 @@
+{
+  "packages": [
+    {
+      "log": "review-before",
+      "Time": "2026-10-19T00:46:40.407335948Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Elapsed": 40.036
+    },
+    {
+      "log": "review-after",
+      "Time": "2026-10-19T00:50:27.991018126Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Elapsed": 18.119
+    },
+    {
+      "log": "packages-backends",
+      "Time": "2026-10-19T00:58:35.824630786Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 69.951
+    },
+    {
+      "log": "packages-backends",
+      "Time": "2026-10-19T00:58:36.429542489Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/javascript",
+      "Elapsed": 0.151
+    },
+    {
+      "log": "packages-backends",
+      "Time": "2026-10-19T01:06:16.636127437Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Elapsed": 454.711
+    },
+    {
+      "log": "oracle-full",
+      "Time": "2026-10-19T01:14:47.424999864Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Elapsed": 509.014
+    },
+    {
+      "log": "native-storage-retry",
+      "Time": "2026-10-19T01:15:42.828707064Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Elapsed": 24.234
+    },
+    {
+      "log": "refused-final",
+      "Time": "2026-10-19T01:21:25.668417196Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Elapsed": 1.795
+    },
+    {
+      "log": "gate-flow",
+      "Time": "2026-10-19T00:58:08.081204997Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "Elapsed": 0.894
+    },
+    {
+      "log": "gate-flow",
+      "Time": "2026-10-19T00:58:18.12724603Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/flow",
+      "Elapsed": 0.32
+    }
+  ],
+  "native_full_top_level": {
+    "pass": 387,
+    "fail": 16,
+    "skip": 94
+  },
+  "own_lower_leaves": [
+    {
+      "test": "TestLoomViewUnionKeyRead",
+      "seconds": 0.15
+    },
+    {
+      "test": "TestLoomViewOriginalNativeP37",
+      "seconds": 0.14
+    },
+    {
+      "test": "TestLoomViewOriginalNativeP21",
+      "seconds": 0.16
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP72",
+      "seconds": 0.13
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP19",
+      "seconds": 0.11
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP06",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP05",
+      "seconds": 0.13
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP01",
+      "seconds": 0.14
+    },
+    {
+      "test": "TestLoomViewUnsupportedUnreadControl",
+      "seconds": 0.18
+    },
+    {
+      "test": "TestLoomViewKeyFix",
+      "seconds": 0.17
+    },
+    {
+      "test": "TestLoomViewUnsupportedCallableRead",
+      "seconds": 0.14
+    },
+    {
+      "test": "TestLoomViewUnsupportedRead",
+      "seconds": 0.14
+    },
+    {
+      "test": "TestLoomViewKeyRead",
+      "seconds": 0.14
+    }
+  ]
+}

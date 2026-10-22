@@ -1,0 +1,89 @@
+{
+  "base": "fde41ee7d014e38b6d309f217630614507af2011",
+  "full_packages": [
+    {
+      "log": "newest-backends",
+      "Time": "2026-10-19T01:28:17.175993016Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 47.12
+    },
+    {
+      "log": "newest-backends",
+      "Time": "2026-10-19T01:28:17.816248642Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/javascript",
+      "Elapsed": 0.16
+    },
+    {
+      "log": "newest-backends",
+      "Time": "2026-10-19T01:35:55.171916813Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/native",
+      "Elapsed": 445.641
+    },
+    {
+      "log": "newest-oracle",
+      "Time": "2026-10-19T01:45:16.270412643Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/oracle",
+      "Elapsed": 553.179
+    }
+  ],
+  "owned_leaves": [
+    {
+      "test": "TestLoomViewUnionKeyRead",
+      "seconds": 0.13
+    },
+    {
+      "test": "TestLoomViewOriginalNativeP37",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewOriginalNativeP21",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP72",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP19",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP06",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP05",
+      "seconds": 0.11
+    },
+    {
+      "test": "TestLoomViewOriginalViewsP01",
+      "seconds": 0.09
+    },
+    {
+      "test": "TestLoomViewUnsupportedUnreadControl",
+      "seconds": 0.17
+    },
+    {
+      "test": "TestLoomViewKeyFix",
+      "seconds": 0.15
+    },
+    {
+      "test": "TestLoomViewUnsupportedCallableRead",
+      "seconds": 0.12
+    },
+    {
+      "test": "TestLoomViewUnsupportedRead",
+      "seconds": 0.1
+    },
+    {
+      "test": "TestLoomViewKeyRead",
+      "seconds": 0.14
+    }
+  ],
+  "counts_shards": 32,
+  "review_shards": 12
+}

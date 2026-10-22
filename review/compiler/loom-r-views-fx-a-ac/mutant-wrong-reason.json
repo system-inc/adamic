@@ -1,0 +1,27 @@
+{
+  "label": "mutant-wrong-reason",
+  "result": {
+    "a_check": {
+      "internal/lower/testdata/loom_views_a/key.a": {
+        "outcome": "refused",
+        "expected": "refused intentionally wrong reason for header predicate mutant",
+        "first": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count"
+      }
+    }
+  },
+  "steps": {
+    "a-check-build": 0.8227,
+    "a-check": 0.9
+  },
+  "exits": {
+    "a-check": 1
+  },
+  "failure": "a-check failed for 1 file:\ninternal/lower/testdata/loom_views_a/key.a: refused, expected refused intentionally wrong reason for header predicate mutant (adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count)",
+  "diagnostics": {
+    "internal/lower/testdata/loom_views_a/key.a": {
+      "exit": 1,
+      "stderr": "adamic: /workspace/adamic/internal/lower/testdata/loom_views_a/key.a:7:17: Adamic 0.1 refuses view member read by element access is not yet checked; use view.count\n",
+      "stdout_bytes": 0
+    }
+  }
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_d7054e9_this_arrow.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_d7054e9_this_arrow.a:8:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_d7054e9_this_arrow_number.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_d7054e9_this_arrow_number.a:8:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q17_union_literal_all_numbers_some.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q17_union_literal_all_numbers_some.a:1:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q18_every_mixed_literal.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q18_every_mixed_literal.a:6:5: Adamic 0.1 refuses array element narrowing across a union layout is not yet sound; read the elements through the union type, or copy them into a new S[]\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q19_union_literal_index.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q19_union_literal_index.a:1:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q20_every_pass_to_function.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q20_every_pass_to_function.a:10:38: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q21_every_readonly_built.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q21_every_readonly_built.a:5:38: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q22_every_inferred_built.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q22_every_inferred_built.a:1:36: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q31_every_class_union.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q31_every_class_union.a:7:33: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q32_every_negated_return.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q32_every_negated_return.a:5:8: Adamic 0.1 refuses array element narrowing across a union layout is not yet sound; read the elements through the union type, or copy them into a new S[]\n",
+    "pending": true
+  },
+  {
+    "path": "internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q38_property_every.a",
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_predicates_q38_property_every.a:6:38: Adamic 0.1 refuses union-typed array built from a narrower literal; declare the literal's element type explicitly, or build the array with a mixed literal\n",
+    "pending": true
+  }
+]
