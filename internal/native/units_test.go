@@ -267,3 +267,40 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 		})
 	}
 }
+
+func TestSplitRuntimePrototypes(t *testing.T) {
+	t.Parallel()
+	source := `#include "adamic.h"
+adamic_array *adamic_object_values_checked(adamic_object *, int, const char *, bool, const adamic_value *, size_t);
+static int adamic_probe(void) { return 0; }
+int main(void) { return adamic_probe(); }
+`
+	header, units, err := splitC(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(header, "adamic_array *adamic_object_values_checked(") || strings.Contains(header, "adamic_unit_adamic_object_values_checked") {
+		t.Fatalf("runtime prototype linkage changed: %s", header)
+	}
+	for _, unit := range units {
+		if strings.Contains(unit.source, "adamic_object_values_checked") {
+			t.Fatalf("runtime prototype became a definition: %s", unit.source)
+		}
+	}
+	for _, rejected := range []string{
+		"adamic_array *adamic_external;\n",
+		"adamic_array *adamic_external = NULL;\n",
+		"adamic_array *adamic_external(void) { return NULL; }\n",
+	} {
+		if _, _, err := splitC(rejected); err == nil {
+			t.Fatalf("accepted non-static definition: %s", rejected)
+		}
+	}
+	binary := filepath.Join(t.TempDir(), "split")
+	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	if output, err := exec.Command(binary).CombinedOutput(); err != nil || len(output) != 0 {
+		t.Fatalf("split runtime prototype: %v %s", err, output)
+	}
+}

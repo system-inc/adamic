@@ -1,4 +1,5 @@
 #include "harness.h"
+#include "graph_regions.h"
 static adamic_string decomposed = ADAMIC_STRING("é");
 static adamic_string composed = ADAMIC_STRING("é");
 // (e, acute) and (yen, acute) collide in the 64-slot pair cache. Alternating
@@ -13,6 +14,11 @@ static void prepare(void) {}
 static void cleanup(void) {}
 static double exercise(size_t index) {
  (void)index;
+ adamic_cell *child = adamic_graph_adopt(adamic_cell_new((adamic_value){.number = 1}, false), sizeof(adamic_cell));
+ adamic_cell *parent = adamic_cell_new((adamic_value){.reference = child}, true);
+ parent = adamic_graph_adopt_owned(parent, sizeof *parent);
+ adamic_release(parent);
+
  adamic_string *first = adamic_string_normalize(&decomposed, &nfc);
  adamic_string *second = adamic_string_normalize(&composed, &nfd);
  adamic_string *third = adamic_string_normalize(&uncomposed, &nfc);
