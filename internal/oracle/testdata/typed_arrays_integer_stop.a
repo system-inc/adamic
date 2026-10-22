@@ -1,0 +1,9 @@
+function stop(): void {
+ const values = new Uint8Array([7, 8]);
+ for (let index = 0; index <= values.length; index++) {
+  console.log(`${index}: ${values[index]}`);
+  values[index] = 300;
+ }
+ console.log("after");
+}
+stop();
