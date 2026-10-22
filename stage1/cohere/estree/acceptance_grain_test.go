@@ -1,7 +1,6 @@
 package estree
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -18,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -135,6 +135,10 @@ func TestProduct_AcceptanceClassNative(t *testing.T) {
 	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[1], true)
 }
 
+// acceptanceMutantsCommand's output is read through childguard.Capture, to its end with no timer deciding when: exec's
+// own copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five
+// seconds after the child exited, so an oracle, Node, native or proof run that had finished could fail its shard under
+// load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
 func acceptanceMutantsCommand(ctx context.Context, executable string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, executable, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -145,19 +149,16 @@ func acceptanceMutantsCommand(ctx context.Context, executable string, args ...st
 		}
 		return err
 	}
-	command.WaitDelay = 5 * time.Second
 	return command
 }
 
 func acceptanceMutantsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
-	command := acceptanceMutantsCommand(ctx, name, args...)
-	var output, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &output, &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	output, stderr, err := childguard.Capture(ctx, acceptanceMutantsCommand(ctx, name, args...))
+	if err != nil || len(stderr) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
 	}
-	return output.Bytes()
+	return output
 }
 
 func runAcceptanceMutantShard(t *testing.T, shard int) {
@@ -242,7 +243,8 @@ func proveAcceptanceMutantShard(t *testing.T, index int) {
 	defer cancel()
 	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	t.Logf("isolated planted proof:\n%s", output)
 	if ctx.Err() != nil {
 		t.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())

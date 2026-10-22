@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -285,6 +286,10 @@ func threePortReady(t *testing.T) *threePortPrepared {
 	return threePortShared.prepared
 }
 
+// threePortCommand's output is read through childguard.Capture, to its end with no timer deciding when: exec's own
+// copying under a two-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds
+// after the child exited, so an oracle, Node, native or proof run that had finished could fail its shard under load
+// (#n3gk22h's shape). Each caller's deadline ends a hung run.
 func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	// A tool named bare (go, node) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
@@ -303,21 +308,17 @@ func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cm
 		}
 		return err
 	}
-	command.WaitDelay = 2 * time.Second
 	return command
 }
 
 func threePortExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
 	t.Helper()
-	command := threePortCommand(ctx, name, args...)
-	var stderr bytes.Buffer
-	command.Stderr = &stderr
-	output, err := command.Output()
+	output, stderr, err := childguard.Capture(ctx, threePortCommand(ctx, name, args...))
 	if ctx.Err() != nil {
 		t.Fatalf("cooked: %s exceeded leaf's 90s deadline", t.Name())
 	}
-	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if err != nil || len(stderr) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
 	}
 	return output
 }
@@ -462,7 +463,8 @@ func TestThreePortMutants_ShardProof(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			command := threePortCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 			command.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_THREE_PORT_PROOF=%d", m))
-			output, err := command.CombinedOutput()
+			stdout, stderr, err := childguard.Capture(ctx, command)
+			output := append(stdout, stderr...)
 			deadlineErr := ctx.Err()
 			cancel()
 			if deadlineErr != nil {

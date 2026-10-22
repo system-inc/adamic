@@ -53,16 +53,17 @@ func oracleInputs(t *testing.T, name string) buildcache.Inputs {
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
 }
 
+// oracleExecute reads the oracle's output through childguard.Capture, to its end with no timer deciding when: exec's
+// copying under a two-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds
+// after the oracle exited, so a fixture product whose run had finished could fail under load (#n3gk22h's shape). The
+// run had no stall guard to lose (Unbounded), and t.Context() and the unit's own ceiling bound it.
 func oracleExecute(t *testing.T, oracle string, arguments ...string) []byte {
 	t.Helper()
-	command := toolchain.CommandContextIn(t.Context(), "", oracle, arguments...)
-	command.WaitDelay = 2 * time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil || stderr.Len() != 0 {
-		t.Fatalf("oracle %v: %v\n%s", arguments, err, &stderr)
+	stdout, stderr, err := childguard.Capture(t.Context(), toolchain.CommandContextIn(t.Context(), "", oracle, arguments...))
+	if err != nil || len(stderr) != 0 {
+		t.Fatalf("oracle %v: %v\n%s", arguments, err, stderr)
 	}
-	return stdout.Bytes()
+	return stdout
 }
 
 var estreeGoOracleReady struct {
@@ -297,10 +298,12 @@ func ThreePortMutantsOracle(t *testing.T) string {
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 		command := toolchain.CommandContextIn(ctx, "", "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)...)
-		command.WaitDelay = 2 * time.Second
 		command.Dir = filepath.Join(repo, "cohere")
 		command.Env = append(command.Env, "PWD="+command.Dir)
-		output, err := childguard.CombinedOutput(command, childguard.Options{Unbounded: true})
+		// Read through childguard.Capture for oracleExecute's reason: a WaitDelay could fail a build that had
+		// finished. The build had no stall guard to lose, and the product unit's ceiling bounds it.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		if err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}

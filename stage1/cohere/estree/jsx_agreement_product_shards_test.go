@@ -9,6 +9,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 const testJSXAgreementShards = 32
@@ -101,7 +103,9 @@ func TestJSXAgreementPlantedDisagreement(t *testing.T) {
 			}
 		}
 		command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF=TestJSXAgreement")
-		output, err := command.CombinedOutput()
+		// Read through childguard.Capture for threePortCommand's reason, stdout then stderr.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		deadlineErr := ctx.Err()
 		cancel()
 		if deadlineErr != nil {

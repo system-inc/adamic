@@ -9,6 +9,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // These fixed top-level units are visible to go test -list without gate changes.
@@ -125,7 +127,9 @@ func estreeTopUnion(t *testing.T, root string, count int, ids []string) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	output, err := estreeScopedCommand(ctx, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$").CombinedOutput()
+	// Read through childguard.Capture for estreeScopedCommand's reason, stdout then stderr as one listing.
+	stdout, stderr, err := childguard.Capture(ctx, estreeScopedCommand(ctx, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$"))
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatal("cooked: listing top-level units exceeded 90 seconds")
 	}
@@ -191,7 +195,9 @@ func estreeTopPlantedProof(t *testing.T, root string, count int, ids []string) {
 		}
 	}
 	command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF="+root)
-	output, err := command.CombinedOutput()
+	// Read through childguard.Capture for estreeScopedCommand's reason, stdout then stderr.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatal("cooked: planted proof exceeded 90 seconds")
 	}
