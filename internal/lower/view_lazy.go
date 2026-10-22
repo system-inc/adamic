@@ -168,6 +168,10 @@ func (l *lowering) checkLazyViewReads() error {
 			if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
 				return true
 			}
+			if err := l.callableProducerViewRefusal(graph, read); err != nil {
+				refused = err
+				return false
+			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID
 
