@@ -17,7 +17,7 @@ func (l *lowering) checkViewLogicalWrites() error {
 			return true
 		}
 		write, ok := assignment.Write.(ir.SetProperty)
-		if !ok || write.Site == 0 {
+		if !ok {
 			return true
 		}
 		names := []string{write.Name}
@@ -26,7 +26,15 @@ func (l *lowering) checkViewLogicalWrites() error {
 		}
 		for _, name := range names {
 			if l.result.CheckedField(write.ViewReceiverTypeID, name) {
-				refused = &Refused{Where: l.program.Where(l.writeSites[write.Site-1].node), What: "a logical assignment through a checked view", Fix: "write the field through the object's own type, or read it, decide, then assign with ="}
+				// A write without a recorded site is refused all the same, at its read's place or the program's.
+				where := l.result.Source
+				if read, ok := assignment.Read.(ir.Property); ok && read.ViewWhere != "" {
+					where = read.ViewWhere
+				}
+				if write.Site != 0 {
+					where = l.program.Where(l.writeSites[write.Site-1].node)
+				}
+				refused = &Refused{Where: where, What: "a logical assignment through a checked view", Fix: "write the field through the object's own type, or read it, decide, then assign with ="}
 				return false
 			}
 		}
