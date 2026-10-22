@@ -422,6 +422,14 @@ func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 // (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off, prints
 // UnitMismatchPrefix's line naming the unit, the key and both digests, and is the cold object, never an error.
 func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver) (string, error) {
+	return compileUnitAs(unit, common, flags, compiler, keying, cache, directory, jobserver, "off")
+}
+
+// compileUnitAs is compileUnit with uncached, the outcome its build log line says when the unit compiles uncached: off
+// for a build that read no cache, repass for compileUnits' second pass after a mismatch (Performance on #m62spx0), so
+// a reader counting units or a hit rate leaves the pass out from the line alone, in a log several processes append to,
+// whose order no reader can trust.
+func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, uncached string) (string, error) {
 	environment := toolchain.Env()
 	if keying != nil {
 		environment = keying.environment
@@ -436,7 +444,7 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 			return "", err
 		}
 		// An uncached unit is never keyed, since keying is what reads clang's facts before it runs, so its line names no key.
-		buildLog("cCompile", unit.name, "", "off", clang)
+		buildLog("cCompile", unit.name, "", uncached, clang)
 		path := filepath.Join(directory, "uncached-"+unit.name+".o")
 		return path, os.WriteFile(path, object, 0o644)
 	}
@@ -552,13 +560,13 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 func compileUnits(units []compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *Jobserver) ([]string, error) {
 	objects := make([]string, len(units))
 	failures := make([]error, len(units))
-	pass := func(keying *unitKeying) error {
+	pass := func(keying *unitKeying, uncached string) error {
 		work := make(chan int)
 		var workers sync.WaitGroup
 		for range jobs {
 			workers.Go(func() {
 				for index := range work {
-					objects[index], failures[index] = compileUnit(units[index], common, flags, compiler, keying, cache, directory, jobserver)
+					objects[index], failures[index] = compileUnitAs(units[index], common, flags, compiler, keying, cache, directory, jobserver, uncached)
 				}
 			})
 		}
@@ -569,12 +577,12 @@ func compileUnits(units []compilationUnit, common []runtimeFile, flags []string,
 		workers.Wait()
 		return errors.Join(failures...)
 	}
-	if err := pass(keying); err != nil {
+	if err := pass(keying, "off"); err != nil {
 		return nil, err
 	}
 	if keying != nil && keying.mismatched.Load() {
 		fmt.Fprintln(os.Stderr, "native: units compile uncached: a unit's cold check mismatched in this build, so every unit compiles again")
-		if err := pass(nil); err != nil {
+		if err := pass(nil, "repass"); err != nil {
 			return nil, err
 		}
 	}
