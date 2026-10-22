@@ -13,6 +13,12 @@
 // program shows what its speed cost. Peak memory is the process's maximum resident set, from the
 // operating system. The machine and its load, before and after, are printed with the numbers,
 // because numbers without them aren't worth reading.
+//
+// A run that measured nothing is refused, and its cell says why instead of giving a number: one
+// that exited nonzero or printed nothing, one at or below the wall clock's resolution, and one no
+// slower than starting its runtime with nothing to do (the floor, timed each round on a program
+// that only prints, at its slowest), which is what a loop the optimizer deleted looks like from
+// outside the process. The clock's resolution and every runtime's floor print with the numbers.
 package main
 
 import (
@@ -103,6 +109,14 @@ func main() {
 	if output, err := exec.Command("go", "build", "-o", adamic, "./cmd/adamic").CombinedOutput(); err != nil {
 		fail(fmt.Errorf("building adamic: %v\n%s", err, output))
 	}
+	floorSource := filepath.Join(work, "floor.ts")
+	if err := os.WriteFile(floorSource, []byte("console.log(\"0\");\n"), 0644); err != nil {
+		fail(err)
+	}
+	floor := program{name: "floor", source: floorSource, native: filepath.Join(work, "floor")}
+	if output, err := exec.Command(adamic, "build", floor.source, "-o", floor.native).CombinedOutput(); err != nil {
+		fail(fmt.Errorf("adamic build %s: %v\n%s", floor.source, err, output))
+	}
 	for index := range programs {
 		program := &programs[index]
 		program.native = filepath.Join(work, program.name)
@@ -119,7 +133,14 @@ func main() {
 	for index := range results {
 		results[index] = make([][]measurement, len(runtimes))
 	}
+	// floors[runtime] holds every round's run of the floor program, timed first in each round.
+	floors := make([][]measurement, len(runtimes))
 	for round := 0; round < *rounds; round++ {
+		for runtimeIndex, kind := range runtimes {
+			result := run(kind.command(floor), *timeout, kind.environment...)
+			floors[runtimeIndex] = append(floors[runtimeIndex], result)
+			fmt.Fprintf(os.Stderr, "round %d floor %s: %s\n", round+1, kind.name, short(result))
+		}
 		for programIndex, program := range programs {
 			for runtimeIndex, kind := range runtimes {
 				previous := results[programIndex][runtimeIndex]
@@ -134,6 +155,17 @@ func main() {
 		}
 	}
 
+	resolution := clockResolution()
+	floorSlowest := make([]measurement, len(runtimes))
+	floorCells := []string{}
+	for runtimeIndex, kind := range runtimes {
+		floorSlowest[runtimeIndex] = slowestOf(floors[runtimeIndex])
+		if floorSlowest[runtimeIndex].failure != "" {
+			fail(fmt.Errorf("%s's floor, a program that only prints, did not run, so no row of its can be judged: %s", kind.name, floorSlowest[runtimeIndex].failure))
+		}
+		floorCells = append(floorCells, fmt.Sprintf("%s %s to %s", kind.name, seconds(bestOf(floors[runtimeIndex]).elapsed), seconds(floorSlowest[runtimeIndex].elapsed)))
+	}
+	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n", resolution, *rounds, strings.Join(floorCells, ", "))
 	fmt.Printf("best of %d interleaved rounds; time is wall clock, user is that run's CPU time in user mode across every thread, memory is peak resident\n\n", *rounds)
 	header := []string{"benchmark"}
 	for _, kind := range runtimes {
@@ -146,7 +178,7 @@ func main() {
 		row := []string{program.name}
 		best := make([]measurement, len(runtimes))
 		for runtimeIndex := range runtimes {
-			best[runtimeIndex] = bestOf(results[programIndex][runtimeIndex])
+			best[runtimeIndex] = judge(bestOf(results[programIndex][runtimeIndex]), floorSlowest[runtimeIndex], resolution)
 			if best[runtimeIndex].failure != "" {
 				row = append(row, best[runtimeIndex].failure, "", "")
 				continue
@@ -274,6 +306,9 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	if err != nil {
 		return measurement{failure: fmt.Sprintf("failed: %v %s", err, firstLine(stderr.String()))}
 	}
+	if strings.TrimSpace(stdout.String()) == "" {
+		return measurement{failure: "printed nothing"}
+	}
 	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: stdout.String()}
 }
 
@@ -318,6 +353,53 @@ func bestOf(runs []measurement) measurement {
 		return runs[0]
 	}
 	return slices.MinFunc(finished, func(left, right measurement) int { return int(left.elapsed - right.elapsed) })
+}
+
+// judge refuses a best run that measured nothing, so it reads as its reason, never as a number:
+// one at or below the wall clock's resolution, and one no slower than its runtime's slowest floor
+// run, which can't be told from that runtime starting. Perry's report of 0.0 ms in every cell is
+// the shape refused.
+func judge(best measurement, floor measurement, resolution time.Duration) measurement {
+	if best.failure != "" {
+		return best
+	}
+	if best.elapsed <= resolution {
+		return measurement{failure: fmt.Sprintf("measured nothing: %s is at or below the clock's resolution, %s", best.elapsed, resolution)}
+	}
+	if best.elapsed <= floor.elapsed {
+		return measurement{failure: fmt.Sprintf("measured nothing: %s is within its floor, the runtime starting, which ran up to %s", seconds(best.elapsed), seconds(floor.elapsed))}
+	}
+	return best
+}
+
+// slowestOf is the slowest finished run, or the failure when none finished.
+func slowestOf(runs []measurement) measurement {
+	finished := []measurement{}
+	for _, run := range runs {
+		if run.failure == "" {
+			finished = append(finished, run)
+		}
+	}
+	if len(finished) == 0 {
+		return bestOf(runs)
+	}
+	return slices.MaxFunc(finished, func(left, right measurement) int { return int(left.elapsed - right.elapsed) })
+}
+
+// clockResolution is the smallest step the wall clock is seen to take: the least positive
+// difference between successive readings.
+func clockResolution() time.Duration {
+	smallest := time.Duration(1<<63 - 1)
+	for range 1000 {
+		start := time.Now()
+		for {
+			if step := time.Since(start); step > 0 {
+				smallest = min(smallest, step)
+				break
+			}
+		}
+	}
+	return smallest
 }
 
 // counts runs the counted build once and reads the line it writes last.
