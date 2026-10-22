@@ -23,7 +23,7 @@ func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, err err
 
 func buffered() []byte {
 	var output bytes.Buffer
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second
 	command.Stdout = &output
 	_ = command.Run()

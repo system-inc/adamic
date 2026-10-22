@@ -11,7 +11,7 @@ import (
 )
 
 func fileOutputs() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second
 	command.Stdout = os.Stdout
 	command.Stderr = os.Stderr
@@ -24,14 +24,14 @@ func createdFile(path string) error {
 		return err
 	}
 	defer file.Close()
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second
 	command.Stdout, command.Stderr = file, nil
 	return command.Run()
 }
 
 func nilOutputs() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second
 	command.Stdout = nil
 	_ = command.Run()
@@ -43,7 +43,7 @@ func fileLiteral() {
 
 func escapeAbove() {
 	var output bytes.Buffer
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	// WaitDelay: the child never starts a descendant, and a late drain here is a hang we want reported.
 	command.WaitDelay = time.Second
 	command.Stdout = &output
@@ -51,7 +51,7 @@ func escapeAbove() {
 }
 
 func escapeWrapped() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	// WaitDelay: a reason long enough to wrap
 	// onto a second line above the code it explains.
 	command.WaitDelay = time.Second
@@ -59,7 +59,7 @@ func escapeWrapped() {
 }
 
 func escapeOnTheLine() *exec.Cmd {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // WaitDelay: every caller hands it *os.File outputs.
 	return command
 }
@@ -74,27 +74,27 @@ func escapeOnALiteral() *exec.Cmd {
 
 func noWaitDelay(ctx context.Context) ([]byte, error) {
 	var output bytes.Buffer
-	command := exec.CommandContext(ctx, "true")
+	command := exec.CommandContext(ctx, "sh")
 	command.Stdout = &output
 	if err := command.Run(); err != nil {
 		return nil, err
 	}
-	return exec.Command("true").CombinedOutput()
+	return exec.Command("sh").CombinedOutput()
 }
 
 func helperWithoutWaitDelay() *exec.Cmd {
-	return exec.Command("true")
+	return exec.Command("sh")
 }
 
 // Two commands: the one with WaitDelay writes to files, the buffered one has none.
 func anotherCommandBuffered() {
 	var output bytes.Buffer
-	quiet := exec.Command("true")
+	quiet := exec.Command("sh")
 	quiet.WaitDelay = time.Second
 	quiet.Stdout = os.Stdout
-	loud := exec.Command("true")
+	loud := exec.Command("sh")
 	loud.Stdout = &output
-	_, _ = exec.Command("true").Output()
+	_, _ = exec.Command("sh").Output()
 	_ = quiet.Run()
 	_ = loud.Run()
 }
