@@ -189,7 +189,7 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 		default:
 			outcome = judgeParallelRefusal(expected, compilerRefusal(lowered), lowered)
 		}
-		outcome.retry = outcome.Verdict == Finding
+		outcome.retry = outcome.Verdict == Finding && runnerDied(lowered)
 		return outcome
 	}
 	if expected != "" || moveWhat != "" {
