@@ -194,7 +194,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		if statement.Element.IsReference() {
-			value = retained(value)
+			value = e.heldReferenceIn(array, value)
 		}
 		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
@@ -216,7 +216,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		records := e.hasRecordStorage()
 		keptValue := value
 		if statement.Value.Type().IsReference() {
-			keptValue = e.kept(value)
+			keptValue = e.keptIn(object, value)
 		}
 		if records {
 			e.line("if (adamic_record_is(%s)) {", object)
@@ -273,7 +273,11 @@ func (e *emitter) statement(statement ir.Statement) {
 			old := e.temporary()
 			e.line("void *%s = %s->reference;", old, slot)
 			e.line("%s->reference = %s;", slot, keptValue)
-			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			if len(e.program.GraphTypes) != 0 {
+				e.dropIn(object, old)
+			} else {
+				e.line("if (%s != NULL) adamic_release(%s);", old, old)
+			}
 		} else {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
@@ -416,6 +420,7 @@ func (e *emitter) loop(statement ir.Loop) {
 		e.line("if (%s->references) {", fresh)
 		e.line("\tadamic_retain(%s->value.reference);", fresh)
 		e.line("}")
+		e.adoptGraph(fresh, "sizeof *"+fresh, e.program.Locals[local].GraphCell)
 		e.line("adamic_release(%s);", cell)
 		e.line("%s = %s;", cell, fresh)
 	}

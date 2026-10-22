@@ -191,6 +191,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	default:
 		return nil, true, l.notYet(node, "Object."+name)
 	}
+	if call.Checked {
+		l.graphDynamicSite = node
+	}
 	return call, true, nil
 }
 
