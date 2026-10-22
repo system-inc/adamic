@@ -165,7 +165,7 @@ func (l *lowering) checkLazyViewReads() error {
 
 		switch read := node.(type) {
 		case ir.Property:
-			if !(program.CheckedFields[checkedViewFieldKey(read.ViewReceiverTypeID, read.Name)] || program.CheckedFields[read.Name]) {
+			if !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
 				return true
 			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere

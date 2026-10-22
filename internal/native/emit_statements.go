@@ -237,7 +237,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if e.fieldTypesNeeded() {
 			cache = e.cache()
 		}
-		if e.program.CheckedFields[statement.Name] {
+		if e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) {
 			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
@@ -245,7 +245,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		} else {
 			e.line("adamic_value *%s = %s;", slot, e.writeFieldSlot(object, statement.Name, statement.Class))
 		}
-		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
+		converted := e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) && statement.Value.Type() <= ir.Boolean
 		if converted {
 			e.line("if (adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] == 10) {", object, object, slot)
 			boxed := fmt.Sprintf("adamic_box_number(%s)", value)

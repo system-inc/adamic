@@ -24,7 +24,8 @@ type Program struct {
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks PredicateCheckCounts
 
-	// CheckedFields conservatively checks these field names at every object read.
+	// CheckedFields are the fields checked at every object read and write: a view member under its CheckedFieldKey, a
+	// record's field under its bare name. CheckedField reads it.
 	CheckedFields SortedMap[string, bool]
 	NonNullChecks NonNullCheckCounts
 	Async         *AsyncProgram
@@ -1223,6 +1224,9 @@ type (
 		// what it writes into), or 0 when nothing recorded one.
 		Site   int
 		Define bool // class field initialization defines an own data property
+		// ViewReceiverTypeID is the checker type of the write's static receiver, as Property's is of a read's, so a
+		// write through a checked view is checked and boxed under the same CheckedFieldKey its read is.
+		ViewReceiverTypeID int
 	}
 
 	// Return leaves the function, with Value unless it returns void.

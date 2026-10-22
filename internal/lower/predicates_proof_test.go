@@ -85,7 +85,7 @@ func TestPredicateBodyProof(t *testing.T) {
 					members = target.Types()
 				}
 				for _, member := range members {
-					if !l.result.CheckedFields[checkedViewFieldKey(int(member.Id()), "kind")] {
+					if !l.result.CheckedFields[ir.CheckedFieldKey(int(member.Id()), "kind")] {
 						t.Fatal("kind admission lost receiver-specific checked fields")
 					}
 				}

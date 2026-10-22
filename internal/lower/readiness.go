@@ -8,7 +8,6 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"reflect"
 	"slices"
-	"strconv"
 )
 
 func sourceExpression(node *ast.Node) string {
@@ -285,7 +284,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !(program.CheckedFields[checkedViewFieldKey(expression.ViewReceiverTypeID, expression.Name)] || program.CheckedFields[expression.Name]) || expression.Method {
+				if !program.CheckedField(expression.ViewReceiverTypeID, expression.Name) || expression.Method {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
@@ -441,10 +440,4 @@ stored:
 		assigned = ir.Narrow{Value: read, To: to}
 	}
 	return []ir.Statement{ir.Declare{Local: local, Value: value}}, present, assigned, nil
-}
-
-// A checked view member belongs to its static receiver type. Bare names remain
-// reserved for record storage, which has its own representation boundary.
-func checkedViewFieldKey(receiverTypeID int, name string) string {
-	return strconv.Itoa(receiverTypeID) + ":" + name
 }
