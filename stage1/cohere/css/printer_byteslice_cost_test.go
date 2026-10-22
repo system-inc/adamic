@@ -5,11 +5,10 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"slices"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
@@ -18,11 +17,15 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
-// Widening from 6 to 24 KiB compounds the linear/quadratic scaling gap.
-// Alone on four CPUs, clean measured 4.26x and prefix rebuilding 8.30x;
-// their geometric middle is 5.95x. A 6x bound gives both sides multiplicative
-// headroom while interleaving the same sanitized binary under the same load.
-const cssPrinterPreflightScalingBound = 6.0
+// Widening from 6 to 24 KiB compounds the linear/quadratic scaling gap. The guard counts the printer's allocations
+// instead of timing it: a counted build (native.Options.Count) reports them, and one input gives one count on any box
+// under any load. Timed, the same clean change read 4.04x quiet and 6.18x on a loaded Eve against a 6x bound (Loom,
+// Oct 21). Counted, the printer allocated 512,884 then 2,025,835 values (3.95x) and the prefix-rebuild mutant 1,214,890
+// then 14,536,375 (11.97x), every count the same on Pupa and Lunatic, and beside 24 CPU burners on Lunatic's 8 CPUs at
+// a load of 31. Allocations part them widest, since rebuilding a prefix allocates for each character it walks; its
+// releases scaled 7.55x and its retains not at all. Their geometric middle is 6.88x, and a 7x bound leaves each side
+// about 1.7x.
+const cssPrinterPreflightScalingBound = 7.0
 const cssPrinterPreflightSmallBytes = 6 * 1024
 const cssPrinterPreflightLargeBytes = 24 * 1024
 
@@ -39,21 +42,33 @@ const cssPrinterPrefixRebuild = `if(this.ascii) return byte;
         }
         return result.length;`
 
-var cssPrinterCostMutantOnce sync.Once
-var cssPrinterCostMutantBinary string
+// cssPrinterCostMutants are the counted printers the guard measures: the printer as it is, and the printer with the
+// byte-offset slow path restored.
+var cssPrinterCostMutants = []*mutant{nil, {"byte offsets rebuild prefixes", "byte_view.ts", cssPrinterPrefixLookup, cssPrinterPrefixRebuild}}
 
-func cssPrinterCostMutant(t *testing.T) string {
+var cssPrinterCountedOnce [2]sync.Once
+var cssPrinterCountedNatives [2]string
+
+// cssPrinterCounted is one of cssPrinterCostMutants' counted native, built ahead as a product. Its key is what lowering
+// reads, as cssPrinterProduct's is, with the build's flags and, for the mutant, its edit.
+func cssPrinterCounted(t *testing.T, index int) string {
 	t.Helper()
-	cssPrinterCostMutantOnce.Do(func() {
-		options := native.Options{Sanitize: true}
+	cssPrinterCountedOnce[index].Do(func() {
+		options := native.Options{Count: true}
+		name := "css-printer-counted"
+		flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		if applied := cssPrinterCostMutants[index]; applied != nil {
+			name = "css-printer-prefix-cost-mutant-counted"
+			flags = append(flags, applied.from, applied.to)
+		}
 		inputs := buildcache.Inputs{
-			Name:      "css-printer-prefix-cost-mutant",
+			Name:      name,
 			Files:     cssLoweringFiles,
-			Flags:     append(native.Flags(options), cssPrinterPrefixLookup, cssPrinterPrefixRebuild, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+			Flags:     flags,
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
-			copied := portDirectory(t, &mutant{"byte offsets rebuild prefixes", "byte_view.ts", cssPrinterPrefixLookup, cssPrinterPrefixRebuild})
+			copied := portDirectory(t, cssPrinterCostMutants[index])
 			if err := moveTree(filepath.Dir(copied), filepath.Join(dir, "sources")); err != nil {
 				return err
 			}
@@ -68,17 +83,22 @@ func cssPrinterCostMutant(t *testing.T) string {
 			}
 			return native.Build(native.C(program), filepath.Join(dir, "native"), options)
 		})
-		cssPrinterCostMutantBinary = filepath.Join(directory, "native")
+		cssPrinterCountedNatives[index] = filepath.Join(directory, "native")
 	})
-	if cssPrinterCostMutantBinary == "" {
-		t.Fatal("CSS cost mutant preparation failed")
+	if cssPrinterCountedNatives[index] == "" {
+		t.Fatalf("counted css printer %d unavailable: its build failed earlier in this process (see that test's log)", index)
 	}
-	return cssPrinterCostMutantBinary
+	return cssPrinterCountedNatives[index]
+}
+
+func TestProduct_CSSPrinterCounted(t *testing.T) {
+	t.Parallel()
+	cssPrinterCounted(t, 0)
 }
 
 func TestProduct_CSSPrinterPrefixCostMutant(t *testing.T) {
 	t.Parallel()
-	cssPrinterCostMutant(t)
+	cssPrinterCounted(t, 1)
 }
 
 func cssPrinterPreflightCases(t *testing.T) [2]string {
@@ -129,46 +149,49 @@ func cssPrinterPreflightCases(t *testing.T) [2]string {
 	return paths
 }
 
+// cssPrinterCountedAllocations runs a counted printer on one input, holds its output to Go's answer, and returns how
+// many values it allocated. A counted build writes its counts to stderr as one line,
+// "adamic: counts: allocations 3 frees 3 retains 7 releases 10 peak 2 regions 0", and anything else there is an error.
+func cssPrinterCountedAllocations(t *testing.T, binary, expected, path string) (uint64, error) {
+	t.Helper()
+	result := execute(t, nil, binary, path, "output", "once", "default")
+	report, found := strings.CutPrefix(string(result.stderr), "adamic: counts: ")
+	fields := strings.Fields(report)
+	if result.exitCode != 0 || !found || strings.Count(report, "\n") != 1 || !strings.HasSuffix(report, "\n") || len(fields) < 2 || fields[0] != "allocations" {
+		return 0, fmt.Errorf("exit %d stderr %s", result.exitCode, result.stderr)
+	}
+	if difference := firstDifference(string(result.stdout), expected); difference != "" {
+		return 0, fmt.Errorf("output differs from Go: %s", difference)
+	}
+	t.Logf("counts: %s", strings.TrimSpace(report))
+	return strconv.ParseUint(fields[1], 10, 64)
+}
+
 func cssPrinterPreflightCost(t *testing.T, binary, oracle string) error {
 	t.Helper()
 	paths := cssPrinterPreflightCases(t)
-	// Go remains the byte-for-byte oracle for each input; its speed is not the
-	// denominator of a sanitized cost comparison.
-	var expected [2]string
+	var allocations [2]uint64
 	for index, path := range paths {
-		expected[index] = cssPrinterAnswers(t, oracle, path, "default")
-	}
-	// Each sample runs a small and a large input back to back and keeps their
-	// ratio, so the pair sees the same load; the verdict is the median of three
-	// pair ratios. Taking each size's minimum separately let load that moved
-	// between samples pair a quiet small run with a loaded large one, and a
-	// mutant scaling 7.6x in both pairs read 5.95x (Hot Loom, message 70368).
-	var ratios []float64
-	for sample := 0; sample < 3; sample++ {
-		var elapsed [2]time.Duration
-		for index, path := range paths {
-			started := time.Now()
-			if err := cssPrinterSanitizedAgreement(t, binary, expected[index], path, "output", "once", "default"); err != nil {
+		// Go remains the byte-for-byte oracle for each input.
+		expected := cssPrinterAnswers(t, oracle, path, "default")
+		// The guard rests on a count being exact, so each input runs twice and a count that moved is an error.
+		for repeat := 0; repeat < 2; repeat++ {
+			counted, err := cssPrinterCountedAllocations(t, binary, expected, path)
+			if err != nil {
 				return err
 			}
-			elapsed[index] = time.Since(started)
+			if repeat == 1 && counted != allocations[index] {
+				return fmt.Errorf("the counted printer's allocations on one input moved between runs: %d then %d", allocations[index], counted)
+			}
+			allocations[index] = counted
 		}
-		ratio := float64(elapsed[1]) / float64(elapsed[0])
-		ratios = append(ratios, ratio)
-		t.Logf("preflight scaling pair %d: small=%s large=%s ratio=%.3fx", sample+1, elapsed[0], elapsed[1], ratio)
 	}
-	ratio := cssPrinterMedian(ratios)
-	t.Logf("preflight scaling: median pair ratio=%.3fx bound=%.2fx", ratio, cssPrinterPreflightScalingBound)
+	ratio := float64(allocations[1]) / float64(allocations[0])
+	t.Logf("preflight scaling: allocations small=%d large=%d ratio=%.3fx bound=%.2fx", allocations[0], allocations[1], ratio, cssPrinterPreflightScalingBound)
 	if ratio > cssPrinterPreflightScalingBound {
-		return fmt.Errorf("CSS preflight scaling %.3fx exceeds scaling bound %.2fx (pair ratios %.3f)", ratio, cssPrinterPreflightScalingBound, ratios)
+		return fmt.Errorf("CSS preflight scaling %.3fx exceeds scaling bound %.2fx (allocations %d then %d)", ratio, cssPrinterPreflightScalingBound, allocations[0], allocations[1])
 	}
 	return nil
-}
-
-func cssPrinterMedian(values []float64) float64 {
-	sorted := slices.Clone(values)
-	slices.Sort(sorted)
-	return sorted[len(sorted)/2]
 }
 
 // Ordinary top-level tests are enumerated by adamic-gate's go test -list census;
@@ -176,12 +199,7 @@ func cssPrinterMedian(values []float64) float64 {
 func TestCSSPrinterPreflightCost(t *testing.T) {
 	t.Parallel()
 	oracle := oracles.ComparisonOracle(t, true)
-	binary := cssPrinterProduct(t, -1).binary
-	// A scratch probe can run the exact guard with the restored slow path.
-	if os.Getenv("ADAMIC_CSS_PREFIX_COST_MUTANT") == "1" {
-		binary = cssPrinterCostMutant(t)
-	}
-	if err := cssPrinterPreflightCost(t, binary, oracle); err != nil {
+	if err := cssPrinterPreflightCost(t, cssPrinterCounted(t, 0), oracle); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -189,8 +207,7 @@ func TestCSSPrinterPreflightCost(t *testing.T) {
 func TestCSSPrinterPreflightCostMutant(t *testing.T) {
 	t.Parallel()
 	oracle := oracles.ComparisonOracle(t, true)
-	binary := cssPrinterCostMutant(t)
-	err := cssPrinterPreflightCost(t, binary, oracle)
+	err := cssPrinterPreflightCost(t, cssPrinterCounted(t, 1), oracle)
 	if err == nil {
 		t.Fatal("prefix-rebuild cost mutant survived the scaling guard")
 	}
