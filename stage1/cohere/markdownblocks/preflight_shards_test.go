@@ -437,7 +437,11 @@ func preflightCommand(t *testing.T, budget *preflightBudget, name string, argume
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
+	// No WaitDelay: exec reads both streams to their end, where one closed them a second after the child exited and
+	// failed a run that had finished but was slow to drain under load (#n3gk22h's shape). Not childguard.Capture, which
+	// has no Started: cooked kills the groups preflightRun registers before it exits the process, and a group it
+	// couldn't register would outlive the exit. The Go oracle and Node start no process that could hold a pipe open
+	// after they exit, and the budget's hard deadline ends a wait on one that did.
 	return command
 }
 func preflightRun(budget *preflightBudget, command *exec.Cmd) error {

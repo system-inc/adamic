@@ -1,7 +1,6 @@
 package markdownblocks
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -9,12 +8,12 @@ import (
 	"os/exec"
 	"path/filepath"
 	"syscall"
-	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 func tableLayoutCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
 			return os.ErrProcessDone
@@ -25,18 +24,18 @@ func tableLayoutCommand(ctx context.Context, name string, args ...string) *exec.
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
+// tableLayoutExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's
+// own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second
+// after the child exited, so a run that had finished could fail its case under load (#n3gk22h's shape).
 func tableLayoutExecute(ctx context.Context, environment []string, name string, args ...string) (run, error) {
 	command := tableLayoutCommand(ctx, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return run{}, fmt.Errorf("cooked: table layout case deadline exceeded: %w", ctx.Err())
 	}
@@ -44,7 +43,7 @@ func tableLayoutExecute(ctx context.Context, environment []string, name string, 
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, fmt.Errorf("running %s: %w", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 
 func tableLayoutNode(ctx context.Context, path string, args ...string) (run, error) {

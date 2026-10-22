@@ -13,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
@@ -176,16 +177,14 @@ func tokenizerEventAnswers(t *testing.T, binary string, batch []byte) []byte {
 	return oracles.TokenizerEventAnswers(t, binary, batch)
 }
 
-// Child cancellation kills the process group; the caller owns the work deadline.
+// Child cancellation kills the process group; the caller owns the work deadline. Output is read through
+// childguard.Capture for tableLayoutExecute's reason: a WaitDelay could fail a run that had finished.
 func pilotExecuteResult(ctx context.Context, environment []string, name string, args ...string) (run, error) {
 	command := tableLayoutCommand(ctx, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		return run{}, ctx.Err()
 	}
@@ -193,7 +192,7 @@ func pilotExecuteResult(ctx context.Context, environment []string, name string, 
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, err
 	}
-	return run{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}, nil
+	return run{stdout, stderr, command.ProcessState.ExitCode()}, nil
 }
 
 func TestProduct_MarkdownIdentifierLowered(t *testing.T) {

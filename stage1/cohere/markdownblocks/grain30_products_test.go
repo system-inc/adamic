@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"errors"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -19,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
@@ -126,28 +128,32 @@ func grainOwn(t *testing.T) func() {
 	grainContexts.Store(t, ctx)
 	return func() { cancel(); grainContexts.Delete(t); t.Logf("grain own %.3fs", time.Since(started).Seconds()) }
 }
-func grainCommand(t *testing.T, name string, args ...string) *exec.Cmd {
+
+// grainCommand returns the command's context with it, for childguard.Capture to end the reads by.
+func grainCommand(t *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
 	ctx := t.Context()
 	if value, ok := grainContexts.Load(t); ok {
 		ctx = value.(context.Context)
 	}
-	return textCommand(t, ctx, name, args...)
+	return textCommand(t, ctx, name, args...), ctx
 }
+
+// grainExecute reads a run's output through childguard.Capture for textExecute's reason. Only an exit error is an
+// answer: an error that came with a ProcessState was taken for one, so an exec.ErrWaitDelay passed as exit 0 with its
+// output cut short.
 func grainExecute(t *testing.T, env []string, name string, args ...string) run {
 	t.Helper()
-	cmd := grainCommand(t, name, args...)
+	cmd, ctx := grainCommand(t, name, args...)
 	if env != nil {
 		cmd.Env = append(os.Environ(), env...)
 	}
-	var out, errout bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &errout
 	defer textActiveCommands.Delete(cmd)
-	err := cmd.Run()
-	if err != nil && cmd.ProcessState == nil {
+	stdout, stderr, err := childguard.Capture(ctx, cmd)
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
 		t.Fatal(err)
 	}
-	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: cmd.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}
 }
 func grainNode(t *testing.T, main string, args ...string) run {
 	t.Helper()
@@ -328,9 +334,9 @@ func grainGenerator(t *testing.T, name string) string {
 	return grainTool(t, name)
 }
 func grainRegenerate(t *testing.T, name, generator, formatter string) {
-	cmd := grainCommand(t, generator, "-check", "-formatter", formatter)
+	cmd, ctx := grainCommand(t, generator, "-check", "-formatter", formatter)
 	cmd.Dir = markdownLayoutProductRoot(t)
-	if output, err := combinedOutput(cmd); err != nil {
+	if output, err := textCombinedOutput(ctx, cmd); err != nil {
 		t.Fatalf("%s regeneration: %v\n%s", name, err, output)
 	}
 }

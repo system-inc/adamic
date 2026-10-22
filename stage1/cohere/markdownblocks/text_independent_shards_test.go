@@ -47,33 +47,34 @@ func textPhaseDeadline(t *testing.T, name string) func() {
 	return func() { timer.Stop() }
 }
 
-// Each child has a context ceiling, and cancellation kills its compiler descendants.
+// Each child has a context ceiling, and cancellation kills its compiler descendants. Each command comes with its
+// context, for childguard.Capture to end the reads by.
 var textActiveCommands sync.Map
 
-func textBounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+func textBounded(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
 	t.Cleanup(cancel)
-	return textCommand(t, ctx, name, arguments...)
+	return textCommand(t, ctx, name, arguments...), ctx
 }
 
-func textSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+func textSetupCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	ctx, cancel := markdownLayoutSetupContext(t.Context())
 	t.Cleanup(cancel)
-	return textCommand(t, ctx, name, arguments...)
+	return textCommand(t, ctx, name, arguments...), ctx
 }
 
 // textGoCommand is textSetupCommand for go as toolchain resolves it, run in directory under toolchain.Env, the
 // environment whose compilers the Go builds' keys name.
-func textGoCommand(t *testing.T, directory string, arguments ...string) *exec.Cmd {
+func textGoCommand(t *testing.T, directory string, arguments ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
 	resolved := toolchain.CommandIn(directory, "go", arguments...)
 	if resolved.Err != nil {
-		return resolved
+		return resolved, t.Context()
 	}
-	command := textSetupCommand(t, resolved.Path, arguments...)
+	command, ctx := textSetupCommand(t, resolved.Path, arguments...)
 	command.Dir, command.Env = resolved.Dir, resolved.Env
-	return command
+	return command, ctx
 }
 
 // markdownCompilers are the C and C++ compilers go builds a Go product with, and the C compiler's report.
@@ -100,7 +101,6 @@ func markdownGoCompilers() markdownCompilers {
 
 func textCommand(t *testing.T, ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
 			return os.ErrProcessDone
@@ -111,32 +111,39 @@ func textCommand(t *testing.T, ctx context.Context, name string, arguments ...st
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	textActiveCommands.Store(command, t)
 	return command
 }
 
-func textCombinedOutput(command *exec.Cmd) ([]byte, error) {
+// textCombinedOutput returns a run's stdout, then its stderr, read through childguard.Capture for textExecute's
+// reason. The regeneration it runs starts the formatter as a child of its own, and Capture kills the group once the
+// generator exits, so neither holds a pipe after it. The generator writes nothing until it fails, so of
+// childguard.Run's windows only the 30-minute first-output one could have fired, and the unit's own ceiling ends a hung
+// run sooner.
+func textCombinedOutput(ctx context.Context, command *exec.Cmd) ([]byte, error) {
 	defer textActiveCommands.Delete(command)
-	return childguard.CombinedOutput(command, childguard.Options{})
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), err
 }
 
+// textExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own
+// copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after
+// the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape). Capture has no stall
+// guard, and the runs lose nothing by it: childguard.Run's windows (two minutes of silence, thirty before the first
+// byte) are longer than the command's 90 s deadline, which ends a hung run sooner.
 func textExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := textBounded(t, name, arguments...)
+	command, ctx := textBounded(t, name, arguments...)
 	defer textActiveCommands.Delete(command)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 func textOnNode(t *testing.T, path string, arguments ...string) run {
@@ -382,9 +389,9 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 		generatorDir = oracles.TextGeneratorProduct(t, root)
 	}
 	if target == "" {
-		command := textSetupCommand(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
+		command, ctx := textSetupCommand(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
 		command.Dir = root
-		if output, err := textCombinedOutput(command); err != nil {
+		if output, err := textCombinedOutput(ctx, command); err != nil {
 			t.Fatalf("regeneration: %v\n%s", err, output)
 		}
 	}

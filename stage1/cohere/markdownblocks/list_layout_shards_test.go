@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
@@ -335,10 +336,13 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		binary := filepath.Join(dir, name)
-		command := listLayoutCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", binary, main)...)
+		command, ctx := listLayoutCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", binary, main)...)
 		command.Dir = cohere
-		if output, err := combinedOutput(command); err != nil {
-			t.Fatalf("Go bridge: %v\n%s", err, output)
+		// Read through childguard.Capture for listLayoutExecuteResult's reason. go build writes nothing until it
+		// fails, so of childguard.Run's windows only the 30-minute first-output one could have fired, and the unit's
+		// own ceiling ends a hung build sooner.
+		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
+			t.Fatalf("Go bridge: %v\n%s%s", err, stdout, stderr)
 		}
 		return binary
 	}
@@ -715,8 +719,9 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 }
 
 // A child started inside a shard inherits the shard's deadline; a setup child has none, since setup is
-// off the clock. Cancellation includes spawned compilers either way.
-func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// off the clock. Cancellation includes spawned compilers either way. It returns the command's context with it, for
+// childguard.Capture to end the reads by.
+func listLayoutCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
 	ctx := t.Context()
 	if deadline, ok := listLayoutContexts.Load(t); ok {
@@ -725,7 +730,6 @@ func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd
 		t.Cleanup(cancel)
 	}
 	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
 			return os.ErrProcessDone
@@ -736,24 +740,24 @@ func listLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
-	return command
+	return command, ctx
 }
 
+// listLayoutExecuteResult reads a run's output through childguard.Capture, to its end with no timer deciding when:
+// exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a
+// second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
 func listLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
 	t.Helper()
-	command := listLayoutCommand(t, name, arguments...)
+	command, ctx := listLayoutCommand(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, fmt.Errorf("running %s: %w", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 func listLayoutExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()

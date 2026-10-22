@@ -23,6 +23,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -1008,7 +1009,6 @@ func whitespaceLayoutReadProducts(t *testing.T, directory string) (whitespaceLay
 
 func whitespaceLayoutCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(err, syscall.ESRCH) {
@@ -1016,23 +1016,23 @@ func whitespaceLayoutCommand(ctx context.Context, name string, args ...string) *
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
+// whitespaceLayoutExecuteResult reads a run's output through childguard.Capture, to its end with no timer deciding
+// when: exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF
+// a second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
 func whitespaceLayoutExecuteResult(ctx context.Context, environment []string, name string, args ...string) (run, error) {
 	command := whitespaceLayoutCommand(ctx, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, fmt.Errorf("running %s: %w", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 func whitespaceLayoutExecute(t *testing.T, ctx context.Context, environment []string, name string, args ...string) run {
 	t.Helper()
@@ -1081,8 +1081,10 @@ func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, opt
 	}
 	command := whitespaceLayoutCommand(ctx, executable, "-test.run=^TestMarkdownWhitespaceLayoutBuildWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_WHITESPACE_BUILD="+string(request))
-	if output, err := command.CombinedOutput(); err != nil {
-		return fmt.Errorf("native build: %w\n%s", err, output)
+	// Read through childguard.Capture for whitespaceLayoutExecuteResult's reason. The worker starts compilers of its
+	// own, and Capture kills the group once it exits, so none of them holds a pipe after it.
+	if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
+		return fmt.Errorf("native build: %w\n%s%s", err, stdout, stderr)
 	}
 	return nil
 }
