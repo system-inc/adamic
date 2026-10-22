@@ -4,8 +4,6 @@ internal/oracle/enums_test.go	TestEnumSemanticMutants
 internal/oracle/library_map_set_test.go	TestLibraryMapSetMutants
 internal/oracle/namespaces_test.go	TestNamespaceSemanticMutants
 internal/oracle/parameter_properties_test.go	TestParameterPropertyMutants
-internal/oracle/wasi_test.go	TestWASIOracleCatchesMutants
-internal/oracle/wasi_test.go	TestWASIRunnerCatchesMutants
 stage1/cohere/estree/misc_shards_test.go	TestMiscShardGrowthKeepsAssignments
 stage1/cohere/estree/misc_shards_test.go	TestMiscShardUnionRejectsInvalidEnumeration
 stage1/cohere/estree/recovery_cache_inputs_test.go	TestRecoveryCacheInputKeys
