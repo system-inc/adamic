@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	goruntime "runtime"
 	"strings"
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
@@ -154,18 +153,6 @@ func checkerArchivePath(archive string) (string, error) {
 		return "", fmt.Errorf("native: checker archive: %w", err)
 	}
 	return archive, nil
-}
-
-// objectPrefixFlags take the link's working directory off the paths its debug map records. On macOS ld records each
-// object it links that carries debug info by path, for a debugger to find its DWARF there (the stabs' N_OSO), an
-// archive's member by the archive's path, made absolute against the working directory when it isn't: the checker
-// archive's go.o carries Go's DWARF, so checker.a(go.o) would read as the build directory's path, random per build.
-// -oso_prefix takes the working directory back off. An ELF linker copies the DWARF in and records no input's path.
-func objectPrefixFlags() []string {
-	if goruntime.GOOS == "darwin" {
-		return []string{"-Wl,-oso_prefix,."}
-	}
-	return nil
 }
 
 // tsgoFlags compiles the checker-archive build. tsgo_runtime.h, included first, brings adamic.h in

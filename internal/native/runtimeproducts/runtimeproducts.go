@@ -1,5 +1,6 @@
 // Package runtimeproducts is the native runtime's archives as buildcache products, for the tests that build programs
-// natively: internal/oracle's, and stage3/fixtures' oracle hook, which is internal/oracle's test binary.
+// natively: internal/oracle's, stage3/fixtures' oracle hook, which is internal/oracle's test binary, and internal/lower's
+// agreement natives, each handed its archive (Archive).
 //
 // Every program the oracle builds natively links an archive of the runtime compiled for its features (the leading
 // #defines its C turns on) and its options, and an archive is about 56 C files. Compiled where a test first needed it,
@@ -171,8 +172,32 @@ func Find(t *testing.T, name string, group int, owner string) {
 	}
 }
 
+// Archive is the directory holding the archive Build builds for the named variant and a program turning on features,
+// one of Sets, for a package whose tests hand it to a build of their own (internal/lower's agreement natives): found as
+// Find finds it, by name under the trace, failing when it isn't there and naming its owner, the test owners names with
+// the set's group after it (internal/oracle TestProduct_NativeRuntimesRelease0), and outside the trace built as Build
+// builds it.
+func Archive(t testing.TB, name string, features []string, owners string) string {
+	t.Helper()
+	variant := variantNamed(t, name)
+	index := slices.IndexFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) })
+	if index < 0 {
+		t.Fatalf("runtimeproducts: no runtime product for features %v: add the set to Sets", features)
+	}
+	request, err := native.RuntimeRequestFor(variant.Options, Sets[index].Features...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	jobserver, err := ccjobserver.Process()
+	if err != nil {
+		t.Fatal(err)
+	}
+	what := fmt.Sprintf("the %s runtime archive for %v", variant.Name, features)
+	return buildcache.BuiltElsewhere(t, what, Inputs(request), fmt.Sprintf("%s%d", owners, index%Groups), func(directory string) error { return request.Build(directory, 4, jobserver) })
+}
+
 // variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have.
-func variantNamed(t *testing.T, name string) Variant {
+func variantNamed(t testing.TB, name string) Variant {
 	t.Helper()
 	index := slices.IndexFunc(Variants, func(variant Variant) bool { return variant.Name == name })
 	if index < 0 {
