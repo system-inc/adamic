@@ -6,7 +6,6 @@ import (
 
 	"errors"
 	"fmt"
-	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
 	"os"
 	"os/exec"
@@ -324,14 +323,13 @@ type compilerAgreementOracleAnswer struct {
 var compilerAgreementOracleMu sync.Mutex
 var compilerAgreementOracleAnswers = map[int]*compilerAgreementOracleAnswer{}
 
-// compilerAgreementCheckerAllOwner is checker.ts's combined-rule owner, whose sides 1 to 3 are _6561 to _6563: the whole
-// file under every rule, the corpus's heaviest Go answer.
+// compilerAgreementCheckerAllOwner is checker.ts's combined-rule owner: the whole file under every rule, which every side
+// runs in consecutive parts of the rules (compilerAgreementCheckerSideGroups), never as one case.
 const compilerAgreementCheckerAllOwner = compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + compilerAgreementCheckerGroups
 
 // compilerAgreementOracle is the Go oracle's answer for an owner's rows, run once per process for an owner and shared by
-// its sides. The checker.ts combined-rule owner's answer is a product instead (compilerAgreementCheckerAllAnswer): its
-// three sides each waited 6.5 to 9 s on the one run their unit made of it, and a product is built once per tree.
-func compilerAgreementOracle(t *testing.T, owner int, path string, owned []compilerAgreementCase) execution {
+// its sides.
+func compilerAgreementOracle(t *testing.T, owner int, path string) execution {
 	compilerAgreementOracleMu.Lock()
 	answer := compilerAgreementOracleAnswers[owner]
 	if answer == nil {
@@ -342,45 +340,23 @@ func compilerAgreementOracle(t *testing.T, owner int, path string, owned []compi
 	answer.mu.Lock()
 	defer answer.mu.Unlock()
 	if answer.output == nil {
-		if owner == compilerAgreementCheckerAllOwner {
-			answer.output = compilerAgreementCheckerAllAnswer(t, owned)
-		} else {
-			run := execute(t, "", lintGoOracleProduct(t), "--manifest", path)
-			answer.output, answer.duration = run.output, run.duration
-		}
+		run := execute(t, "", lintGoOracleProduct(t), "--manifest", path)
+		answer.output, answer.duration = run.output, run.duration
 	}
 	return execution{output: answer.output, duration: answer.duration}
 }
 
-// compilerAgreementCheckerAllAnswer is the Go oracle's answer for checker.ts's combined-rule rows, as its sides would run
-// it live: one manifest of those rows, in their order. The product holds the answer only, its one row's path written as
-// compilerAgreementCheckerPath, refused when the raw answer already holds that text, so the stand-in reads back exactly;
-// the manifest it ran names this machine's paths, so it stays in a scratch directory.
-func compilerAgreementCheckerAllAnswer(t *testing.T, owned []compilerAgreementCase) []byte {
-	rows := make([]oracles.CheckerRow, len(owned))
-	for i, c := range owned {
-		rows[i] = oracles.CheckerRow{Path: c.path, Key: c.key, Rule: c.rule}
-	}
-	return oracles.CheckerAllAnswer(t, rows)
-}
-
-// compilerAgreementCheckerAllOwned is the checker.ts combined-rule owner's rows, in corpus order, as its sides gather them.
+// compilerAgreementCheckerAllOwned is the checker.ts combined-rule owner's rows in the corpus, before any side expands
+// them into its parts.
 func compilerAgreementCheckerAllOwned(t *testing.T) []compilerAgreementCase {
 	t.Helper()
 	var owned []compilerAgreementCase
 	for _, c := range compilerAgreementCases(t) {
-		if compilerAgreementUnit(c, compilerAgreementFirstSide) == compilerAgreementCheckerAllOwner*compilerAgreementSides+compilerAgreementFirstSide {
+		if compilerAgreementOwner(c) == compilerAgreementCheckerAllOwner {
 			owned = append(owned, c)
 		}
 	}
 	return owned
-}
-
-func TestProduct_LintFindsCompilerAgreementCheckerAllAnswer(t *testing.T) {
-	t.Parallel()
-	// The owner and the live-answer equality test use this identical pinned fixture.
-	// Finding the answer needs no walk of the external compiler corpus.
-	compilerAgreementCheckerAllAnswer(t, []compilerAgreementCase{{path: filepath.Join(repository, "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts"), key: compilerAgreementCheckerKey, rule: "all"}})
 }
 
 func compilerAgreementShard(t *testing.T, shard int) {
@@ -432,12 +408,14 @@ func compilerAgreementSubShard(t *testing.T, shard, part int) {
 func compilerAgreementUnitRun(t *testing.T, owner, side, unit int) {
 	t.Helper()
 	cases := compilerAgreementCases(t)
+	// Checker/all's part is a case only once its side expands the corpus's one row (compilerAgreementSideCases).
+	if owner == compilerAgreementCheckerAllOwner {
+		cases = compilerAgreementSideCases(t, cases, side)
+	}
 	var rows []string
-	var owned []compilerAgreementCase
 	for _, c := range cases {
 		if compilerAgreementUnit(c, side) == unit {
 			rows = append(rows, c.path+"\t"+c.rule)
-			owned = append(owned, c)
 		}
 	}
 	if len(rows) == 0 {
@@ -464,7 +442,7 @@ func compilerAgreementUnitRun(t *testing.T, owner, side, unit int) {
 	if unit >= testCompilerAndStage1AgreeShards {
 		key = unit
 	}
-	want := compilerAgreementOracle(t, key, path, owned)
+	want := compilerAgreementOracle(t, key, path)
 	var got execution
 	switch side {
 	case 1:
@@ -483,10 +461,6 @@ func compilerAgreementUnitRun(t *testing.T, owner, side, unit int) {
 		got = execute(t, "", binary, "--manifest", path)
 	}
 	compilerAgreementCompare(t, got.output, want.output)
-	if owner == compilerAgreementCheckerAllOwner {
-		t.Logf("side %d: %s, oracle from its product, %d cases", side, got.duration, len(rows))
-		return
-	}
 	t.Logf("side %d: %s, oracle %s, %d cases", side, got.duration, want.duration, len(rows))
 }
 
@@ -11124,9 +11098,286 @@ func TestCompilerAndStage1Agree_6557(t *testing.T) { t.Parallel(); compilerAgree
 func TestCompilerAndStage1Agree_6558(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6558) }
 
 func TestCompilerAndStage1Agree_6559(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6559) }
-func TestCompilerAndStage1Agree_6561(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6561) }
-func TestCompilerAndStage1Agree_6562(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6562) }
-func TestCompilerAndStage1Agree_6563(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6563) }
+
+func TestCompilerAndStage1Agree_6561_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 0)
+}
+
+func TestCompilerAndStage1Agree_6561_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 1)
+}
+
+func TestCompilerAndStage1Agree_6561_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 2)
+}
+
+func TestCompilerAndStage1Agree_6561_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 3)
+}
+
+func TestCompilerAndStage1Agree_6561_4(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 4)
+}
+
+func TestCompilerAndStage1Agree_6561_5(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 5)
+}
+
+func TestCompilerAndStage1Agree_6561_6(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 6)
+}
+
+func TestCompilerAndStage1Agree_6561_7(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 7)
+}
+
+func TestCompilerAndStage1Agree_6561_8(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 8)
+}
+
+func TestCompilerAndStage1Agree_6561_9(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 9)
+}
+
+func TestCompilerAndStage1Agree_6561_10(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 10)
+}
+
+func TestCompilerAndStage1Agree_6561_11(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 11)
+}
+
+func TestCompilerAndStage1Agree_6561_12(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 12)
+}
+
+func TestCompilerAndStage1Agree_6561_13(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 13)
+}
+
+func TestCompilerAndStage1Agree_6561_14(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 14)
+}
+
+func TestCompilerAndStage1Agree_6561_15(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 15)
+}
+
+func TestCompilerAndStage1Agree_6561_16(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 16)
+}
+
+func TestCompilerAndStage1Agree_6561_17(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 17)
+}
+
+func TestCompilerAndStage1Agree_6561_18(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 18)
+}
+
+func TestCompilerAndStage1Agree_6561_19(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 19)
+}
+
+func TestCompilerAndStage1Agree_6561_20(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 20)
+}
+
+func TestCompilerAndStage1Agree_6561_21(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 21)
+}
+
+func TestCompilerAndStage1Agree_6561_22(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 22)
+}
+
+func TestCompilerAndStage1Agree_6561_23(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 23)
+}
+
+func TestCompilerAndStage1Agree_6561_24(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 24)
+}
+
+func TestCompilerAndStage1Agree_6561_25(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 25)
+}
+
+func TestCompilerAndStage1Agree_6561_26(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 26)
+}
+
+func TestCompilerAndStage1Agree_6561_27(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6561, 27)
+}
+
+func TestCompilerAndStage1Agree_6562_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 0)
+}
+
+func TestCompilerAndStage1Agree_6562_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 1)
+}
+
+func TestCompilerAndStage1Agree_6562_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 2)
+}
+
+func TestCompilerAndStage1Agree_6562_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 3)
+}
+
+func TestCompilerAndStage1Agree_6562_4(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 4)
+}
+
+func TestCompilerAndStage1Agree_6562_5(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 5)
+}
+
+func TestCompilerAndStage1Agree_6562_6(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 6)
+}
+
+func TestCompilerAndStage1Agree_6562_7(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 7)
+}
+
+func TestCompilerAndStage1Agree_6562_8(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 8)
+}
+
+func TestCompilerAndStage1Agree_6562_9(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 9)
+}
+
+func TestCompilerAndStage1Agree_6562_10(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 10)
+}
+
+func TestCompilerAndStage1Agree_6562_11(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 11)
+}
+
+func TestCompilerAndStage1Agree_6562_12(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 12)
+}
+
+func TestCompilerAndStage1Agree_6562_13(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6562, 13)
+}
+
+func TestCompilerAndStage1Agree_6563_0(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 0)
+}
+
+func TestCompilerAndStage1Agree_6563_1(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 1)
+}
+
+func TestCompilerAndStage1Agree_6563_2(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 2)
+}
+
+func TestCompilerAndStage1Agree_6563_3(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 3)
+}
+
+func TestCompilerAndStage1Agree_6563_4(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 4)
+}
+
+func TestCompilerAndStage1Agree_6563_5(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 5)
+}
+
+func TestCompilerAndStage1Agree_6563_6(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 6)
+}
+
+func TestCompilerAndStage1Agree_6563_7(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 7)
+}
+
+func TestCompilerAndStage1Agree_6563_8(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 8)
+}
+
+func TestCompilerAndStage1Agree_6563_9(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 9)
+}
+
+func TestCompilerAndStage1Agree_6563_10(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 10)
+}
+
+func TestCompilerAndStage1Agree_6563_11(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 11)
+}
+
+func TestCompilerAndStage1Agree_6563_12(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 12)
+}
+
+func TestCompilerAndStage1Agree_6563_13(t *testing.T) {
+	t.Parallel()
+	compilerAgreementSubShard(t, 6563, 13)
+}
 
 func compilerAgreementCompare(t *testing.T, got, want []byte) {
 	t.Helper()
