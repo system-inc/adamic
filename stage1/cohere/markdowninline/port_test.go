@@ -49,33 +49,32 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded prepares a child without a flat deadline; childguard owns its process group.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// bounded prepares a child without a flat deadline; childguard owns its process group. It returns the command's
+// context with it, for childguard.Capture to end the reads by.
+func bounded(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
-	command, cancel := inlineCommand(name, arguments...)
+	command, ctx, cancel := inlineCommand(name, arguments...)
 	t.Cleanup(cancel)
-	return command
+	return command, ctx
 }
 
-func combinedOutput(command *exec.Cmd) ([]byte, error) {
-	return childguard.CombinedOutput(command, childguard.Options{})
-}
-
+// execute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own copying
+// under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds after the
+// child exited, so a Go, native, leaks or Node run that had finished could fail its shard under load (#n3gk22h's
+// shape). Capture has no stall guard, and the runs lose nothing by it: childguard.Run's windows (two minutes of
+// silence, thirty before the first byte) are longer than the 90 s Loom gives a test unit, which ends a hung run sooner.
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	command, ctx := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err := childguard.Run(command, childguard.Options{})
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
