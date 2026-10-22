@@ -8,7 +8,6 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"maps"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -55,104 +54,56 @@ func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Prog
 
 // lowersAndAgreesWithNodeNative adds an unsanitized native observation to the
 // source and JavaScript agreement. Each opting-in row names what only native shows,
-// and runs a program from nativeAgreementPrograms by its name.
+// and runs a program from agreementproducts' programs by its name.
 func lowersAndAgreesWithNodeNative(t *testing.T, name string) *ir.Program {
 	t.Helper()
-	entry := nativeAgreement(t, name)
-	return agreeSourceNative(t, entry.source, entry.planted(t))
+	nativeAgreement(t, name)
+	return agreeSourceNative(t, name)
 }
 
-// nativeAgreementProgram is a program a native agreement row builds: its source and,
-// for a row that plants a wrong native answer, the change it makes to the C, which
-// fails rather than plants when the C has no site for it.
-type nativeAgreementProgram struct {
-	source string
-	mutate func(code string) (string, error)
-}
-
-// nativeAgreementPrograms are every program the native agreement rows build, named
-// for the row that runs it. A row reaches its program by name, and
-// TestProduct_LowerAgreementNative builds each one ahead under the key the row
-// fetches, so a runner that reads products and never builds them
-// (ADAMIC_BUILD_CACHE=read) finds every binary. A program not here has no product.
-var nativeAgreementPrograms = map[string]nativeAgreementProgram{
-	"ArrayNarrowingOptionalNumber":  {source: "const items: (number | undefined)[] = [1, 2];\nif (items.every(value => value !== undefined)) console.log('total ' + items.reduce((a, b) => a + b, 0));\n"},
-	"ArrayNarrowingOptionalString":  {source: "const items: (string | undefined)[] = ['a', 'b'];\nif (items.every(value => value !== undefined)) console.log(items.join(''));\n"},
-	"ArrayNarrowingSomeNegated":     {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['a', 'b', 1];\nitems.pop();\nif (!items.some(isNumber)) {\n let text = '';\n for (const value of items) if (typeof value === 'string') text += value;\n console.log(text);\n}\n"},
-	"ArrayNarrowingFindLastIndex":   {source: "function isNumber(value: string | number): value is number { return typeof value === 'number'; }\nconst items: (string | number)[] = ['x', 2, 4];\nconsole.log('index ' + items.findLastIndex(isNumber));\n"},
-	"ArrayNarrowingPreservedUnion":  {source: "function isScalar(value: string | number | boolean): value is string | number { return typeof value !== 'boolean'; }\nconst items: (string | number | boolean)[] = [1, 'b'];\nif (items.every(isScalar)) {\n for (const value of items) console.log(typeof value === 'number' ? 'number ' + value : value);\n}\n"},
-	"ArrayNarrowingBooleanCallback": {source: "const items: (string | number)[] = [1, 2, 'discard'];\nitems.pop();\nconsole.log(String(items.every((value): boolean => typeof value === 'number')));\n"},
-	"FX5MixedLiteral":               {source: "const items: (string | number)[] = [1, 'a'];\nconsole.log(`${typeof items[0]} ${items[0]}`);\nconsole.log(`${typeof items[1]} ${items[1]}`);\n"},
-	"RegExpUnicodeClassSource":      {source: "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
-	"RegExpSlashClassSource":        {source: "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"},
-	"RegExpEscapedSlashSource":      {source: "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"},
-	"TypedArrayFromArray": {source: `const values = new Uint8Array([1, 2]);
-console.log(values.length.toString());
-for (const value of values) { console.log(value.toString()); }
-`},
-	"TypedArrayFromEmptyArray": {source: `const values = new Uint8Array([]);
-console.log(values.length.toString());
-for (const value of values) { console.log(value.toString()); }
-`},
-	"PlantedWrongOutput": {source: "console.log('computed');", mutate: func(code string) (string, error) {
-		return strings.ReplaceAll(code, "computed", "wrong"), nil
-	}},
-	"PlantedWrongExit": {source: "console.log('computed');", mutate: func(code string) (string, error) {
-		// main returns the host's exit status (process.exitCode, else 0); plant a fixed 7 there.
-		const exit = "return adamic_host_exit_status();"
-		index := strings.LastIndex(code, exit)
-		if index < 0 {
-			return "", errors.New("native main has no successful exit to mutate")
-		}
-		return code[:index] + strings.Replace(code[index:], exit, "return 7;", 1), nil
-	}},
-}
-
-func nativeAgreement(t agreementTesting, name string) nativeAgreementProgram {
+// nativeAgreement fails t unless name is a program agreementproducts holds, the
+// programs every native agreement row builds, each named for the row that runs it.
+// TestProduct_LowerAgreementC lowers each one, and TestProduct_LowerAgreementNative
+// builds each one's binary ahead under the key its row's runAgreementNative fetches,
+// so a runner that reads products and never builds them (ADAMIC_BUILD_CACHE=read)
+// finds every binary. A program not there has no product.
+func nativeAgreement(t agreementTesting, name string) {
 	t.Helper()
-	entry, ok := nativeAgreementPrograms[name]
-	if !ok {
-		t.Fatalf("native agreement program %q is not in nativeAgreementPrograms, so no product builds it", name)
-	}
-	return entry
-}
-
-// planted is the entry's change to C as agreeSourceNative's seam takes it, failing t
-// when the C has no site for it; nil for an entry that plants nothing.
-func (entry nativeAgreementProgram) planted(t agreementTesting) func(string) string {
-	if entry.mutate == nil {
-		return nil
-	}
-	return func(code string) string {
-		mutated, err := entry.mutate(code)
-		if err != nil {
-			t.Fatal(err)
-		}
-		return mutated
+	if !slices.Contains(agreementproducts.Programs(), name) {
+		t.Fatalf("native agreement program %q is not in agreementproducts' programs, so no product builds it", name)
 	}
 }
 
-// TestProduct_LowerAgreementNative builds every program in nativeAgreementPrograms,
-// lowered and planted as its row lowers and plants it, under the key its row's
-// runAgreementNative fetches.
+// TestProduct_LowerAgreementC builds the lower agreement C (agreementproducts.C): every
+// program's source and the C stage 0 lowers it to, planted as its row plants it. Each
+// native is handed its C there, a product, never a file its test wrote.
+func TestProduct_LowerAgreementC(t *testing.T) {
+	t.Parallel()
+	agreementproducts.C(t)
+}
+
+// TestProduct_LowerAgreementNative builds every program's native from the lower
+// agreement C, under the key its row's runAgreementNative fetches.
 func TestProduct_LowerAgreementNative(t *testing.T) {
 	t.Parallel()
-	for _, entry := range nativeAgreementPrograms {
-		program := lowerAgreementEntry(t, writeAgreementSource(t, entry.source))
-		buildAgreementNative(t, agreementNativeCode(program, entry.planted(t)))
+	product := agreementC(t)
+	for _, name := range agreementproducts.Programs() {
+		buildAgreementNative(t, product, name)
 	}
 }
 
 // Handed the archive native.Build links, native.BuildLean writes Build's bytes for every
-// program in nativeAgreementPrograms, wherever its output is and whatever jobserver it's
+// program in agreementproducts' programs, wherever its output is and whatever jobserver it's
 // handed, and handed the release archive runtimeproducts holds, the same bytes again: the
 // lean product is the binary the rows checked when Build made it (#egjbcre). Each program's C
-// is built six ways and compared byte for byte: by Build; by BuildLean into lean under no
-// jobserver; into another directory, named apart and longer, so its build directory beside
-// the binary is too; into lean again under a jobserver of one token and one of eight; and
-// with the product's archive. Each binary is named native, as the product names it: on macOS
-// the linker's ad-hoc signature names the binary by its file's name, so binaries named apart
-// differ there and nowhere else.
+// is the lower agreement C's, which is first the C this test lowers in process from the same
+// source, planted as its row plants it, byte for byte: stage 0's `adamic c` is the lowering
+// the rows ran before. It's built six ways and compared byte for byte: by Build; by BuildLean
+// into lean under no jobserver; into another directory, named apart and longer, so its build
+// directory beside the binary is too; into lean again under a jobserver of one token and one
+// of eight; and with the product's archive. Each binary is named native, as the product names
+// it: on macOS the linker's ad-hoc signature names the binary by its file's name, so binaries
+// named apart differ there and nowhere else.
 func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 	t.Parallel()
 	if os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
@@ -164,14 +115,27 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 		t.Fatal(err)
 	}
 	jobservers := map[int]*native.Jobserver{0: nil, 1: agreementJobserver(t, 1), 8: agreementJobserver(t, 8)}
-	for _, name := range slices.Sorted(maps.Keys(nativeAgreementPrograms)) {
-		entry := nativeAgreementPrograms[name]
-		code := agreementNativeCode(lowerAgreementEntry(t, writeAgreementSource(t, entry.source)), entry.planted(t))
-		directory := t.TempDir()
-		source := filepath.Join(directory, "main.c")
-		if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
+	product := agreementC(t)
+	for _, name := range agreementproducts.Programs() {
+		source := filepath.Join(product, name, "main.c")
+		held, err := os.ReadFile(source)
+		if err != nil {
 			t.Fatal(err)
 		}
+		code := string(held)
+		program, err := os.ReadFile(filepath.Join(product, name, "main.a"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		lowered, err := agreementproducts.Plant(name, native.C(lowerAgreementEntry(t, writeAgreementSource(t, string(program)))))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if lowered != code {
+			t.Errorf("%s: the lower agreement C holds %d bytes of C, and this test lowers %d other bytes from its source", name, len(code), len(lowered))
+			continue
+		}
+		directory := t.TempDir()
 		for _, output := range []string{"built", "lean", "another-output-directory", "product"} {
 			if err := os.Mkdir(filepath.Join(directory, output), 0o755); err != nil {
 				t.Fatal(err)
@@ -245,57 +209,67 @@ func agreementJobserver(t *testing.T, tokens int) *native.Jobserver {
 	return jobserver
 }
 
-// The mutation seam changes only C, after JavaScript agreement, so planted native
-// answers prove this leg independently of the JavaScript comparison.
-func agreeSourceNative(t testing.TB, source string, mutate func(string) string) *ir.Program {
+// agreeSourceNative runs the program name from the lower agreement C, its source
+// lowered here to JavaScript and agreed with Node, and its native, from the C the
+// product holds, agreed with Node too. A planted native answer lives only in that C
+// (agreementproducts.Plant), so it proves this leg independently of the JavaScript
+// comparison.
+func agreeSourceNative(t testing.TB, name string) *ir.Program {
 	t.Helper()
-	path := writeAgreementSource(t, source)
+	product := agreementC(t)
+	source, err := os.ReadFile(filepath.Join(product, name, "main.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := writeAgreementSource(t, string(source))
 	program := agreeEntry(t, path, lowerAgreementEntry(t, path), 0, nil, nil)
 	want := runAgreementNode(t, path)
-	got := runAgreementNative(t, agreementNativeCode(program, mutate))
+	got := runAgreementNative(t, product, name)
 	compareNativeAgreement(t, got, want)
 	return program
-}
-
-// agreementNativeCode is the C a native agreement row builds: the program's, with
-// the row's planted change.
-func agreementNativeCode(program *ir.Program, mutate func(string) string) string {
-	code := native.C(program)
-	if mutate != nil {
-		code = mutate(code)
-	}
-	return code
 }
 
 // agreementArchiveOwners are the product tests that build the release archives an agreement
 // native links, one a group of runtimeproducts' Sets, and agreementArchiveGroup the one group
 // whose test TestProduct_LowerAgreementNative waits for in cloud/fast-gate/product-order.json:
-// every program in nativeAgreementPrograms turns on no feature, the first set. It finds the
+// every program in agreementproducts' programs turns on no feature, the first set. It finds the
 // archive its C needs by name, and a program needing another group's fails, naming the file.
+// agreementCOwner is the product test that builds the lower agreement C, which
+// TestProduct_LowerAgreementNative waits for there too.
 const (
 	agreementArchiveOwners = "internal/oracle TestProduct_NativeRuntimesRelease"
 	agreementArchiveGroup  = 0
+	agreementCOwner        = "internal/lower TestProduct_LowerAgreementC"
 )
+
+// agreementC is the lower agreement C's directory, found first, as the release archive
+// is: built ahead by its owner under the trace, and outside it built here when it's missed.
+func agreementC(t testing.TB) string {
+	t.Helper()
+	return agreementproducts.FindC(t, agreementCOwner)
+}
 
 // buildAgreementNative is the one recipe for a native agreement binary: the product
 // test builds it ahead and runAgreementNative fetches it, so the key can't drift
 // between them. It returns the product's directory, which holds the binary as native.
-// The binary is a lean product (agreementproducts) of what it's handed: the C, written
-// here, and the release archive of the runtime for the C's features, found first as a
-// product of its own. A hit runs the binary without invoking clang.
-func buildAgreementNative(t testing.TB, code string) string {
+// The binary is a lean product (agreementproducts) of what it's handed: name's C in the
+// lower agreement C, product, and the release archive of the runtime for the C's
+// features, each found first as a product of its own. A hit runs the binary without
+// invoking clang.
+func buildAgreementNative(t testing.TB, product, name string) string {
 	t.Helper()
-	source := filepath.Join(t.TempDir(), "main.c")
-	if err := os.WriteFile(source, []byte(code), 0o644); err != nil {
+	source := filepath.Join(product, name, "main.c")
+	code, err := os.ReadFile(source)
+	if err != nil {
 		t.Fatal(err)
 	}
-	archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners, agreementArchiveGroup)
+	archive := runtimeproducts.Archive(t, "release", native.Features(string(code)), agreementArchiveOwners, agreementArchiveGroup)
 	return agreementproducts.Product(t, source, archive, os.Getenv("ADAMIC_NATIVE_SPLIT"))
 }
 
-func runAgreementNative(t testing.TB, code string) nodeObservation {
+func runAgreementNative(t testing.TB, product, name string) nodeObservation {
 	t.Helper()
-	binary := filepath.Join(buildAgreementNative(t, code), "native")
+	binary := filepath.Join(buildAgreementNative(t, product, name), "native")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
@@ -519,11 +493,11 @@ func TestAgreementParseIntRadixWitness(t *testing.T) {
 	lowersAndAgreesWithNode(t, "console.log(['10', '10', '10'].map(Number.parseInt).join(','));")
 }
 
-// recordNativeAgreementFailure runs a program from nativeAgreementPrograms by its
-// name. Its planted change fails t itself, not the recorder, when the C has no site.
+// recordNativeAgreementFailure runs a program from agreementproducts' programs by its
+// name. A name that isn't one fails t itself, not the recorder.
 func recordNativeAgreementFailure(t *testing.T, name string) string {
 	t.Helper()
-	entry := nativeAgreement(t, name)
+	nativeAgreement(t, name)
 	recorder := &agreementRecorder{T: t}
 	func() {
 		defer func() {
@@ -533,7 +507,7 @@ func recordNativeAgreementFailure(t *testing.T, name string) string {
 				}
 			}
 		}()
-		agreeSourceNative(recorder, entry.source, entry.planted(t))
+		agreeSourceNative(recorder, name)
 	}()
 	return recorder.message
 }
@@ -557,7 +531,7 @@ func TestNativeAgreementRejectsWrongExit(t *testing.T) {
 }
 
 // TestNativeAgreementRowsNameRegisteredPrograms reads this package's tests, building
-// nothing: every native agreement row names a program in nativeAgreementPrograms by
+// nothing: every native agreement row names a program in agreementproducts' programs by
 // a literal, only the registry's own plumbing reaches the native build, and every
 // program the registry holds is run by some row, so the product test builds exactly
 // what the rows fetch.
@@ -614,8 +588,8 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 						program, _ = strconv.Unquote(literal.Value)
 					}
 				}
-				if _, registered := nativeAgreementPrograms[program]; !registered {
-					t.Errorf("%s: %s must name a program in nativeAgreementPrograms by a literal, so TestProduct_LowerAgreementNative builds it", fileSet.Position(call.Pos()), callee.Name)
+				if !slices.Contains(agreementproducts.Programs(), program) {
+					t.Errorf("%s: %s must name a program in agreementproducts' programs by a literal, so TestProduct_LowerAgreementNative builds it", fileSet.Position(call.Pos()), callee.Name)
 				}
 				used[program] = true
 				return true
@@ -629,15 +603,15 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 					t.Errorf("%s: %s is used other than called with a program's name", fileSet.Position(identifier.Pos()), identifier.Name)
 				}
 				if callers, guarded := reaches[identifier.Name]; guarded && !callers[function.Name.Name] {
-					t.Errorf("%s: %s reaches %s, which builds a program no product builds; name one in nativeAgreementPrograms instead", fileSet.Position(identifier.Pos()), function.Name.Name, identifier.Name)
+					t.Errorf("%s: %s reaches %s, which builds a program no product builds; name one in agreementproducts' programs instead", fileSet.Position(identifier.Pos()), function.Name.Name, identifier.Name)
 				}
 				return true
 			})
 		}
 	}
-	for name := range nativeAgreementPrograms {
+	for _, name := range agreementproducts.Programs() {
 		if !used[name] {
-			t.Errorf("nativeAgreementPrograms holds %s, which no row runs, so its product is built for nothing", name)
+			t.Errorf("agreementproducts' programs hold %s, which no row runs, so its product is built for nothing", name)
 		}
 	}
 }

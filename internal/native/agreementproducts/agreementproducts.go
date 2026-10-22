@@ -3,10 +3,12 @@
 //
 // Built as plain products, each traced window held the whole process's reads, so the 14 builds read each other's, a
 // ring Loom refuses to record (#kfjqsnh, #egjbcre). So each is a LeanProductOf build (BuildAgreementNative), keyed by
-// its own window and what it's handed: the C, in a file the test wrote, and the runtime archive its features need,
-// found first as runtimeproducts' own product. It builds through native.BuildLean, which reads nothing of the process,
-// and the code that build reaches is the files it's keyed by (NativeFiles). The recipe is here, not in lower's tests,
-// since buildcache builds lean only for a package it has reviewed (its leanCallers).
+// its own window and what it's handed: the C, a file of the lower agreement C (C, a product of its own, built ahead by
+// TestProduct_LowerAgreementC), and the runtime archive its features need, found first as runtimeproducts' own product.
+// It builds through native.BuildLean, which reads nothing of the process, and the code that build reaches is the files
+// it's keyed by (NativeFiles). The recipe is here, not in lower's tests, since buildcache builds lean only for a package
+// it has reviewed (its leanCallers), and the C's build is here too, since it runs stage 0 rather than lowering in
+// process: a package that imported internal/lower couldn't be imported by lower's own tests.
 package agreementproducts
 
 import (
@@ -16,6 +18,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -29,9 +32,10 @@ import (
 // the rest of internal/native, the compiler, is no input of the binary. The runtime is keyed as the archive it's handed.
 var NativeFiles = []string{"internal/native/jobserver.go", "internal/native/lean_build.go", "internal/native/library.go", "internal/native/native.go", "internal/native/regexp_compiler_library.go", "internal/native/target.go"}
 
-// Product is the directory holding the native agreement binary, native, that the C at source builds, linked with the
-// runtime archive in archive (a runtimeproducts product's directory). split is ADAMIC_NATIVE_SPLIT as the caller read
-// it: native.BuildLean builds one translation unit, and a split build reads the unit cache, so split on is refused.
+// Product is the directory holding the native agreement binary, native, that the C at source, a file of the lower
+// agreement C (FindC), builds, linked with the runtime archive in archive (a runtimeproducts product's directory).
+// split is ADAMIC_NATIVE_SPLIT as the caller read it: native.BuildLean builds one translation unit, and a split build
+// reads the unit cache, so split on is refused.
 //
 // clang is found here, outside the build's window, as Build finds it (toolchain.Path), keyed by its report
 // (buildcache.Tool, which names what it is and never where), and handed to the build by its absolute path, the third of
@@ -45,6 +49,11 @@ func Product(t testing.TB, source string, archive string, split string) string {
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
+	}
+	// A C its test wrote, outside every product, is a read under the temporary directory, which a traced window can only
+	// refuse as temp not made by this run (#egjbcre): refused here first, on every machine, naming where it came from.
+	if !strings.HasPrefix(buildcache.Relative(source), "<build cache>/") {
+		t.Fatalf("agreementproducts: the C at %s isn't a product's: hand a native the lower agreement C's <name>/main.c (FindC)", source)
 	}
 	code, err := os.ReadFile(source)
 	if err != nil {
