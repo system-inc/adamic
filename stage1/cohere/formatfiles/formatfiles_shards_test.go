@@ -1,7 +1,6 @@
 package formatfiles
 
 import (
-	"context"
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
@@ -19,6 +18,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
@@ -516,8 +516,12 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 	command := formatfilesCommand(t, product, "-test.run=^TestAdamicPortCases$", "-test.timeout=0")
 	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("cohere's side: %v\n%s", err, output)
+	// Read through childguard.Capture for formatfilesExecute's reason: a WaitDelay could fail a run that had finished.
+	// Capture has no stall guard, and this run loses nothing by it: without -test.v cohere's side prints nothing
+	// until it ends, so only childguard's 30-minute first-output window could have fired, and the unit's own ceiling
+	// (Loom kills a test unit at 90 s and a product unit at 600 s) ends a hung run sooner.
+	if stdout, stderr, err := childguard.Capture(t.Context(), command); err != nil {
+		t.Fatalf("cohere's side: %v\n%s%s", err, stdout, stderr)
 	}
 }
 
@@ -532,5 +536,5 @@ func formatfilesOracle(t *testing.T) (string, string) {
 // Setup children carry no deadline; the gate bounds the whole unit.
 func formatfilesCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	return formatfilesContextCommand(context.Background(), name, arguments...)
+	return formatfilesContextCommand(t.Context(), name, arguments...)
 }
