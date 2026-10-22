@@ -558,7 +558,7 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 			return nil, 0, err
 		}
 	}
-	command := toolchain.CommandIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary)...)...)
+	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary)...)...)
 	// The environment the key read, with the directory CommandIn names as the compile's own.
 	working := []string{}
 	for _, setting := range command.Env {
@@ -729,7 +729,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	arguments = append(arguments, compilerLink...)
 	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
-	link := toolchain.CommandIn(directory, compiler, arguments...)
+	link := clangIn(directory, compiler, arguments...)
 	var linked []byte
 	var linking time.Duration
 	if err := jobserver.Hold(func() error {

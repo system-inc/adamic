@@ -15,8 +15,6 @@ import (
 	"slices"
 	"strings"
 	"time"
-
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 //go:embed runtime/*.c runtime/*.h
@@ -235,7 +233,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
 	program := "main.c"
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
-		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
+		compile := clangIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
 		if err := jobserver.Hold(func() error {
@@ -278,7 +276,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
+	command := clangIn(directory, compilerName(options), arguments...)
 	var combined []byte
 	var building time.Duration
 	if err := jobserver.Hold(func() error {
