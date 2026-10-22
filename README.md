@@ -2,6 +2,8 @@
 
 ![A stained glass window of Eden: Ahra, a porcelain and gold robotic woman with prismatic hair, points as a sea turtle swims through the air on threads of golden light, while Adam looks where she points. A crystal rises behind a waterfall, humpback whales swim in the pool, and the animals of creation gather beneath a sun and a crescent moon.](docs/images/eden.webp)
 
+![A hand-painted valley in summer: glowing threads named Python, Rust, Go, Kotlin, Swift, JavaScript and CUDA drift in from an old village on one side and a city of towers on the other, and all of them flow into one great tree with Adamic written in its trunk. From its roots a single river of light pours over the rocks, carrying the symbols of code down through the meadow.](docs/images/one-language.webp)
+
 > In dedication, with gratitude, to Kenneth Lane Thompson, whose work we stand on. - Kirk and Ahra
 
 Tradition holds that in the beginning, there was just one language, the language of God. Adam, the first man, spoke it in the garden of Eden, naming the plants and animals. The Adamic language.
