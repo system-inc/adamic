@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"bytes"
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
@@ -31,7 +30,15 @@ func TestMigratedNonNullFixturesRemainCovered(t *testing.T) {
 	if len(report.Moves) != 50 {
 		t.Fatalf("want 50 preserved programs, got %d", len(report.Moves))
 	}
-	counts, err := os.ReadFile(countsPath)
+	counts, err := recordedCounts()
+	if err != nil {
+		t.Fatal(err)
+	}
+	predicateKeys, err := predicateCountKeys()
+	if err != nil {
+		t.Fatal(err)
+	}
+	predicateCounts, err := readCountRows(countsDirectory, "predicates", predicateKeys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -48,7 +55,7 @@ func TestMigratedNonNullFixturesRemainCovered(t *testing.T) {
 			if got := fmt.Sprintf("%x", sha256.Sum256(source)); got != move.SHA256 {
 				t.Fatalf("program changed while migrating %s: %s", move.From, got)
 			}
-			if move.Counted && !bytes.Contains(counts, []byte("| "+move.To+" |")) {
+			if move.Counted && counts[move.To] == "" && predicateCounts[move.To] == "" {
 				t.Fatal("original measured fixture lost its count row")
 			}
 			if strings.HasPrefix(move.To, "internal/oracle/testdata/") && filepath.Base(move.To) != "non_null_weak_freed.ts" || strings.HasPrefix(move.To, "stage3/fixtures/nested-functions/") {
