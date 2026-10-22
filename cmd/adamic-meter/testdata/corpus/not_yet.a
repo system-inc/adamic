@@ -1,0 +1,4 @@
+// Nullable object lookup still needs separate null and undefined tags.
+interface Item { readonly name: string; }
+const old: readonly (Item | null)[] = [null];
+console.log(`${old[0] === null}`);

@@ -1,0 +1,5 @@
+interface Item { readonly id: number; }
+const items: readonly (Item | null)[] = [null];
+console.log(items.map((value: Item | null, index: number,
+ array: readonly (Item | null | undefined)[]): string =>
+ array[0] === null ? 'null' : 'missing').join(','));
