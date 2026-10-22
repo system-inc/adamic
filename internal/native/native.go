@@ -221,21 +221,21 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	if err != nil {
 		return err
 	}
-	return linkOne(source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
-		return regexpCompilerLinkFlags(source, options, directory)
-	})
-}
-
-// linkOne compiles source in one translation unit and links it with the runtime archive library into output, each clang
-// holding a token of jobserver (nil bounds none). links, when it isn't nil, gives the flags linking what else the program
-// links (the regexp compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none.
-func linkOne(source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error)) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(directory)
+	return linkOne(directory, compilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
+		return regexpCompilerLinkFlags(source, options, directory)
+	})
+}
 
+// linkOne compiles source in one translation unit with compiler and links it with the runtime archive library into
+// output, in directory, an empty build directory its caller made and removes, each clang holding a token of jobserver
+// (nil bounds none). links, when it isn't nil, gives the flags linking what else the program links (the regexp
+// compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none.
+func linkOne(directory string, compiler string, source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error)) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
@@ -256,7 +256,7 @@ func linkOne(source string, output string, options Options, flags []string, libr
 	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
 	program := "main.c"
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
-		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
+		compile := toolchain.CommandIn(directory, compiler, append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
 		if err := jobserver.Hold(func() error {
@@ -274,6 +274,7 @@ func linkOne(source string, output string, options Options, flags []string, libr
 	}
 	var compilerLink []string
 	if links != nil {
+		var err error
 		if compilerLink, err = links(directory); err != nil {
 			return err
 		}
@@ -301,7 +302,7 @@ func linkOne(source string, output string, options Options, flags []string, libr
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
+	command := toolchain.CommandIn(directory, compiler, arguments...)
 	var combined []byte
 	var building time.Duration
 	if err := jobserver.Hold(func() error {
