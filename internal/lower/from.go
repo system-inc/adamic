@@ -14,6 +14,17 @@ import (
 // missing (alwaysUndefined), which is exactly what it holds.
 func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
+	// Collection iterators already yield fitted slots. Preserve those references
+	// when copying, including boxed union values.
+	if len(arguments) == 1 {
+		if element, iterator := l.libraryIteratorElement(arguments[0]); iterator {
+			value, err := l.expression(arguments[0])
+			if err != nil {
+				return nil, true, err
+			}
+			return l.libraryIteratorArray(node, value, element), true, nil
+		}
+	}
 	if len(arguments) > 0 {
 		if plan, err := l.planIteration(arguments[0]); err != nil {
 			return nil, true, err

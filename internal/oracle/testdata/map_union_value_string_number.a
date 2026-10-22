@@ -1,0 +1,15 @@
+// Reduced tsc shapes; the member representations are the same as the recorded Map value type.
+type Value = string | number;
+function show(value: Value | undefined): string { return `${typeof value}:${value}`; }
+const map = new Map<string, Value>([['a', '1'], ['b', 1], ['nan', NaN], ['zero', -0]]);
+console.log(`${show(map.get('a'))} ${show(map.get('b'))} ${show(map.get('missing'))}`);
+const zero = map.get('zero');
+if (typeof zero === 'number') { console.log(`${1 / zero}`); }
+map.set('a', 2); map.set('b', 'built'.repeat(2));
+for (const [key, value] of map) { console.log(`${key}=${show(value)}`); }
+const copy = new Map(map);
+map.clear();
+console.log(`${copy.delete('a')} ${copy.delete('a')}`);
+copy.set('a', 'again'.repeat(2));
+for (const [key, value] of copy) { console.log(`${key}=${show(value)}`); }
+copy.clear(); console.log(`${copy.size}`);
