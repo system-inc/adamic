@@ -1,10 +1,13 @@
 package fuzz
 
 import (
+	"bytes"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -109,5 +112,52 @@ func TestExecuteRunsTheToolchainsNode(t *testing.T) {
 	run := execute(t.TempDir(), nil, 10*time.Second, "node")
 	if got := string(run.Stdout); got != "toolchain \n" || run.ExitCode != 0 {
 		t.Fatalf("execute ran %q (exit %d, stderr %q), want the tools directory's node with none of the caller's variables", got, run.ExitCode, run.Stderr)
+	}
+}
+
+// A descendant holds both pipes after the leader exits. Capture must stop that
+// descendant and read all bytes, rather than race a deadline for closing reads.
+func TestExecuteCapturesWholeOutput(t *testing.T) {
+	t.Parallel()
+	for _, exitCode := range []int{0, 7} {
+		t.Run(strconv.Itoa(exitCode), func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			pidFile := filepath.Join(directory, "descendant")
+			t.Cleanup(func() {
+				// Also clean up when testing the old runner, which leaves this child alive.
+				if data, err := os.ReadFile(pidFile); err == nil {
+					if pid, err := strconv.Atoi(strings.TrimSpace(string(data))); err == nil {
+						_ = syscall.Kill(pid, syscall.SIGKILL)
+					}
+				}
+			})
+			const script = `sleep 30 &
+echo $! > "$1"
+dd if=/dev/zero bs=262144 count=1 2>/dev/null
+dd if=/dev/zero bs=262144 count=1 >&2 2>/dev/null
+sleep 0.05
+exit "$2"`
+			run := execute(directory, nil, 10*time.Second, "/bin/sh", "-c", script, "output", pidFile, strconv.Itoa(exitCode))
+			want := make([]byte, 262144)
+			if run.TimedOut || run.ExitCode != exitCode || !bytes.Equal(run.Stdout, want) || !bytes.Equal(run.Stderr, want) {
+				t.Fatalf("capture: exit=%d timeout=%t stdout=%d stderr=%d; want exit=%d and %d zero bytes per stream; stderr tail=%q", run.ExitCode, run.TimedOut, len(run.Stdout), len(run.Stderr), exitCode, len(want), tail(run.Stderr))
+			}
+			t.Logf("captured all %d stdout and %d stderr bytes, exit %d", len(run.Stdout), len(run.Stderr), run.ExitCode)
+		})
+	}
+}
+
+func TestExecutePreservesPWD(t *testing.T) {
+	t.Parallel()
+	// The CPU-limit shell can repair a wrong PWD to the physical directory.
+	// A symlink distinguishes that repair from preserving the caller's spelling.
+	directory := filepath.Join(t.TempDir(), "logical")
+	if err := os.Symlink(t.TempDir(), directory); err != nil {
+		t.Fatal(err)
+	}
+	run := executeIsolated(directory, []string{"PWD=/wrong"}, time.Second, "/usr/bin/env")
+	if run.ExitCode != 0 || run.TimedOut || string(run.Stdout) != "PWD="+directory+"\n" || len(run.Stderr) != 0 {
+		t.Fatalf("PWD: %+v, stdout=%q stderr=%q; want %q", run, run.Stdout, run.Stderr, directory)
 	}
 }
