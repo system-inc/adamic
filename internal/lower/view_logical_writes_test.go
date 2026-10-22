@@ -11,6 +11,7 @@ import (
 // refusal asks CheckedField first, and the site only places it. Mutant: skipping writes whose Site is
 // 0 lowers this one.
 func TestViewLogicalWriteWithoutASiteIsRefused(t *testing.T) {
+	t.Parallel()
 	object := ir.Read{Local: 0, Of: ir.Object}
 	l := &lowering{result: &ir.Program{
 		Source:        "main.a",
