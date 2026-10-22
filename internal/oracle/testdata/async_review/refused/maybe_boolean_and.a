@@ -1,0 +1,5 @@
+const flags: boolean[] = [];
+async function run(): Promise<void> {
+    console.log(typeof (flags[0] && await Promise.resolve(true)));
+}
+await run();

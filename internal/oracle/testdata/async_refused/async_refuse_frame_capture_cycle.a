@@ -1,0 +1,8 @@
+async function make(seed: string): Promise<(n: number) => string> {
+    const text = `${seed}:held`;
+    const read = () => text;
+    await Promise.resolve();
+    return (n: number) => `${read()}:${n}`;
+}
+const escaped = await make(`seed${3}`);
+console.log(escaped(7));
