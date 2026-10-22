@@ -1,16 +1,15 @@
 package oracle
 
 import (
+	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 func init() {
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{"internal/lower/testdata/fx7_wrong_aborts/bad_callable.a", true, true})
-
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
@@ -116,6 +115,10 @@ func TestLoomViewsDCallableUnion(t *testing.T) {
 	t.Parallel()
 	loomViewsDAgrees(t, "internal/lower/testdata/fx7_wrong_aborts/p20.a")
 }
+
+// A stored function that fits no member of the view's callable target is a cast the checker was told to believe, so
+// the read through the view is refused where it stands, as it was before views D, never admitted to abort at run time
+// where Node prints 99 (Compiler's ruling (b) on #aecx10a).
 func TestLoomViewsDBadCallable(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/lower/testdata/fx7_wrong_aborts/bad_callable.a"))
@@ -126,14 +129,9 @@ func TestLoomViewsDBadCallable(t *testing.T) {
 	if node.exitCode != 0 || string(node.stdout) != "before\nargument\n99\n" {
 		t.Fatalf("Node: %#v", node)
 	}
-	program, err := lowered(t, path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	sanitized, _ := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
-		if got.exitCode != 70 || string(got.stdout) != "before\n" {
-			t.Errorf("%s: %#v", backend, got)
-		}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "bad_callable.a:9:16:") || !strings.Contains(err.Error(), "checked view read of field value with unsupported representation conversion contract") || !strings.Contains(err.Error(), "prove or implement the representation conversion contract before reading this field") {
+		t.Fatalf("want the located representation conversion refusal at 9:16, got %v", err)
 	}
 }
