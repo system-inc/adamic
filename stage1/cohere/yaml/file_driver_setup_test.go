@@ -48,6 +48,8 @@ func TestMain(m *testing.M) {
 	command.Stdout, command.Stderr = os.Stdout, os.Stderr
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
+	// WaitDelay: the child writes straight to this process's own stdout and stderr files, so exec copies nothing and
+	// no read can be cut short; the delay only bounds the wait after the deadline kills the group.
 	command.WaitDelay = time.Second
 	err = command.Run()
 	cancel()
