@@ -365,6 +365,8 @@ func cBytes(value string) string {
 }
 
 type emitter struct {
+	counterModes      map[int]bool
+	doubleCounterPath bool
 	// objectMetadata holds program-wide facts for this emission, never another program.
 	objectMetadata *objectMetadataNeeds
 	program        *ir.Program
