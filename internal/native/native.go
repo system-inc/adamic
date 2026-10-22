@@ -176,6 +176,18 @@ func linkFlags(flags []string, options Options) []string {
 	return flags
 }
 
+// objectPrefixFlags take the link's working directory off the paths its debug map records. On macOS ld records each
+// object it links that carries debug info by path, for a debugger to find its DWARF there (the stabs' N_OSO), an
+// archive's member by the archive's path, made absolute against the working directory when it isn't: the checker
+// archive's go.o carries Go's DWARF, so checker.a(go.o) would read as the build directory's path, random per build.
+// -oso_prefix takes the working directory back off. An ELF linker copies the DWARF in and records no input's path.
+func objectPrefixFlags() []string {
+	if goruntime.GOOS == "darwin" {
+		return []string{"-Wl,-oso_prefix,."}
+	}
+	return nil
+}
+
 // Build compiles C source and the runtime into a native binary at output.
 func Build(source string, output string, options Options) error {
 	if err := ValidateOptions(options); err != nil {
@@ -209,6 +221,15 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 	if err != nil {
 		return err
 	}
+	return linkOne(source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
+		return regexpCompilerLinkFlags(source, options, directory)
+	})
+}
+
+// linkOne compiles source in one translation unit and links it with the runtime archive library into output, each clang
+// holding a token of jobserver (nil bounds none). links, when it isn't nil, gives the flags linking what else the program
+// links (the regexp compiler's archive), from inside the build directory; BuildLean, handed one archive alone, gives none.
+func linkOne(source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error)) error {
 	directory, err := os.MkdirTemp("", "adamic-build-")
 	if err != nil {
 		return fmt.Errorf("native: %w", err)
@@ -251,9 +272,11 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		}
 		program = "main.o"
 	}
-	compilerLink, err := regexpCompilerLinkFlags(source, options, directory)
-	if err != nil {
-		return err
+	var compilerLink []string
+	if links != nil {
+		if compilerLink, err = links(directory); err != nil {
+			return err
+		}
 	}
 	arguments := append(linkFlags(compileFlags, options), "-o", output)
 	if !options.Request {
