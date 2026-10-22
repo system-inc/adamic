@@ -1,0 +1,10 @@
+// Spec: Assign every field first, then use `this`
+// Expect: lowers
+class Greeter {
+	readonly name: string = 'Ahra';
+	readonly size: number = this.measure();
+	measure(): number {
+		return this.name.length;
+	}
+}
+console.log(`${new Greeter().size}`);

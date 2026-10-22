@@ -1,0 +1,10 @@
+// Spec: Write `(dog) => shelter.admit(dog)`
+// Expect: lowers
+const counter = {
+	count: 1,
+	read(): number {
+		return this.count;
+	},
+};
+const read = (): number => counter.read();
+console.log(`${read().toFixed(1)}`);
