@@ -1,0 +1,11 @@
+// a-check: refused a logical assignment through a checked view
+// &&= through a view whose count is a number, over an object that stores count as string | number.
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { count: number; }
+function initial(): string | number { return 'abc'; }
+const raw = { kind: 'Holder' as const, count: initial() };
+const base: Root = raw;
+const viewed = base as View;
+viewed.count &&= 7;
+const read: string | number = raw.count;
+console.log(typeof read === 'number' ? `number ${read + 1}` : `string ${read}`);
