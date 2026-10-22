@@ -1,0 +1,8 @@
+{"Time":"2026-10-18T00:15:16.29939588Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-18T00:15:16.303583481Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap"}
+{"Time":"2026-10-18T00:15:16.303685074Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Output":"=== RUN   TestPushSpreadGap\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:17.128545374Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Output":"--- PASS: TestPushSpreadGap (0.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:17.12865551Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestPushSpreadGap","Elapsed":0.82}
+{"Time":"2026-10-18T00:15:17.128675701Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-18T00:15:17.130012056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.830s\n"}
+{"Time":"2026-10-18T00:15:17.130068331Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.831}

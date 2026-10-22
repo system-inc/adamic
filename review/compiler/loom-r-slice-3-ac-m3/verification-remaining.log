@@ -1,0 +1,5 @@
+{"name": "reader-product-Native", "command": ["go", "test", "./internal/ir", "-run", "^TestProduct_CallTargetReaderArchivesNative$", "-count=1", "-timeout=90s", "-json", "-parallel=1"], "exit": 0, "seconds": 22.316, "failed": [], "over_budget": []}
+{"name": "reader-product-Lower", "command": ["go", "test", "./internal/ir", "-run", "^TestProduct_CallTargetReaderArchivesLower$", "-count=1", "-timeout=90s", "-json", "-parallel=1"], "exit": 0, "seconds": 20.557, "failed": [], "over_budget": []}
+{"name": "reader-product-Fresh", "command": ["go", "test", "./internal/ir", "-run", "^TestProduct_CallTargetReaderArchivesFresh$", "-count=1", "-timeout=90s", "-json", "-parallel=1"], "exit": 0, "seconds": 14.125, "failed": [], "over_budget": []}
+{"name": "reader-product-Flow", "command": ["go", "test", "./internal/ir", "-run", "^TestProduct_CallTargetReaderArchivesFlow$", "-count=1", "-timeout=90s", "-json", "-parallel=1"], "exit": 1, "seconds": 7.382, "failed": [{"package": "github.com/system-inc/adamic/internal/ir", "test": "TestProduct_CallTargetReaderArchivesFlow", "action": "fail", "seconds": 3.75}], "over_budget": []}
+reader-product-Flow failed
