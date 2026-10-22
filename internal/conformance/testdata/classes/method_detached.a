@@ -1,0 +1,10 @@
+// Spec: A method can't be detached from its object
+// Expect: refused a method read as a value
+const counter = {
+	count: 1,
+	read(): number {
+		return this.count;
+	},
+};
+const read = counter.read;
+console.log(`${read().toFixed(1)}`);

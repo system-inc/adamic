@@ -1,0 +1,10 @@
+// Spec: | `this` escaping a constructor before every field is set
+// Expect: refused a field initializer reading an uninitialized field
+class Greeter {
+	readonly size: number = this.measure();
+	readonly name: string = 'Ahra';
+	measure(): number {
+		return this.name.length;
+	}
+}
+console.log(`${new Greeter().size}`);
