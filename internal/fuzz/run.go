@@ -17,6 +17,7 @@ import (
 	"time"
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -622,14 +623,10 @@ func executeIsolated(directory string, environment []string, limit time.Duration
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	command.WaitDelay = 5 * time.Second
 	// With Env set, exec no longer sets PWD from Dir: the child sees its directory spelled as given, as before.
 	command.Env = append(environment, "PWD="+working)
-	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-	err = command.Run()
-	run := Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), TimedOut: ctx.Err() != nil}
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	run := Run{Stdout: stdout, Stderr: stderr, TimedOut: ctx.Err() != nil}
 	var exitError *exec.ExitError
 	switch {
 	case err == nil || errors.As(err, &exitError):
