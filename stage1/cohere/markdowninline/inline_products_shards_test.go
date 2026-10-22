@@ -21,6 +21,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -34,10 +35,11 @@ const testMarkdownInlineShards = 2048
 const inlineModes = "wefnspctrukvhijlboq"
 
 // Setup commands have no test-side deadline. The gate bounds each whole unit.
-// Cancellation still reaches compiler descendants on command completion.
-func inlineCommand(name string, arguments ...string) (*exec.Cmd, context.CancelFunc) {
+// Cancellation still reaches compiler descendants on command completion. The
+// command's context comes with it, for childguard.Capture to end the reads by.
+func inlineCommand(name string, arguments ...string) (*exec.Cmd, context.Context, context.CancelFunc) {
 	ctx, cancel := context.WithCancel(context.Background())
-	return inlineCommandContext(ctx, name, arguments...), cancel
+	return inlineCommandContext(ctx, name, arguments...), ctx, cancel
 }
 func inlineCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
@@ -52,7 +54,6 @@ func inlineCommandContext(ctx context.Context, name string, arguments ...string)
 		}
 		return err
 	}
-	command.WaitDelay = 5 * time.Second
 	return command
 }
 func inlineEnvironment(names ...string) []string {
@@ -126,11 +127,14 @@ func (source inlineSource) buildNode(dir string) error {
 	if err != nil {
 		return err
 	}
-	cmd, cancel := inlineCommand("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
+	cmd, ctx, cancel := inlineCommand("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
 	defer cancel()
-	out, err := combinedOutput(cmd)
+	// Read through childguard.Capture for execute's reason: a WaitDelay could fail a build that had finished. The
+	// build script prints nothing unless it fails, so only childguard's 30-minute first-output window could have
+	// fired, and the 600 s Loom gives a product unit ends a hung build sooner.
+	stdout, stderr, err := childguard.Capture(ctx, cmd)
 	if err != nil {
-		return fmt.Errorf("%w: %s", err, out)
+		return fmt.Errorf("%w: %s%s", err, stdout, stderr)
 	}
 	return nil
 }
