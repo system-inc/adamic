@@ -189,6 +189,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.ObjectLiteral:
 			found = found || l.result.ObjectSpreadMayThrow(node)
+		case ir.PhantomMember:
+			found = found || !node.Optional
 		case ir.Throw:
 			found = true
 		case ir.Call:
