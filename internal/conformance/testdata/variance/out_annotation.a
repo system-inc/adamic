@@ -1,0 +1,16 @@
+// Spec: | `adamic/invariant-mutable` |
+// Expect: refused Box<Dog> seen as Box<Animal>
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly bark: () => string;
+}
+// An out annotation is a claim tsc measures with its own unsound property variance; the mutable field still decides.
+interface Box<out Item> {
+	item: Item;
+}
+const dogBox: Box<Dog> = { item: { name: 'Rex', bark: () => 'woof' } };
+const animalBox: Box<Animal> = dogBox;
+animalBox.item = { name: 'Tom' };
+console.log(dogBox.item.bark());

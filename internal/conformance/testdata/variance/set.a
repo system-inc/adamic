@@ -1,0 +1,14 @@
+// Spec: | `adamic/invariant-mutable` |
+// Expect: refused Set<Dog> seen as Set<Animal>
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly bark: () => string;
+}
+const dogs = new Set<Dog>([{ name: 'Rex', bark: () => 'woof' }]);
+const animals: Set<Animal> = dogs;
+animals.add({ name: 'Tom' });
+for (const dog of dogs) {
+	console.log(dog.bark());
+}
