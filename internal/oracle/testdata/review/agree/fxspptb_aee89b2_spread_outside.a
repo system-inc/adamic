@@ -1,0 +1,11 @@
+interface Node {
+	readonly name: string;
+	readonly kids: Node[];
+}
+const root: Node = { name: `root${1}`, kids: [] };
+function run(): void {
+	const copy: Node = { ...root, name: `copy${2}` };
+	copy.kids.push(copy); // closes the cycle
+	console.log(`${root.kids.length} ${copy.kids.length}`);
+}
+run();

@@ -111,7 +111,15 @@ func TestNestedCycleRefusal(t *testing.T) {
 	if difference := disagreement(oracle, actual); difference != "" {
 		t.Fatalf("accepted cycle differs from Node: %s", difference)
 	}
-	t.Fatalf("accepted a strong captured-function cycle; leak check:\n%s", leaksUncached(t, program, binary))
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if len(program.GraphTypes) == 0 {
+		t.Fatal("cyclic canonical closure stayed counted")
+	}
+	if difference := disagreement(oracle, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatal(difference)
+	}
 }
 
 func TestNestedRebindingCheckerRefusal(t *testing.T) {
