@@ -1,0 +1,6 @@
+async function keep(seed: string): Promise<string> {
+    await Promise.resolve();
+    return seed + ':after';
+}
+function start(): Promise<string> { return keep(['dynamic', 'input'].join('-')); }
+console.log(await start());

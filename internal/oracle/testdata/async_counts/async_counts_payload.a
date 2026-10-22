@@ -1,0 +1,7 @@
+async function keep(seed: Promise<string>): Promise<string> {
+    const value = await seed;
+    await Promise.resolve();
+    return value + ':after';
+}
+function start(): Promise<string> { return keep(Promise.resolve(['payload', 'value'].join('-'))); }
+console.log(await start());
