@@ -418,6 +418,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if e.program.ClosureMayThrow(expression) {
 		e.checkThrown()
 	}
+	if expression.Returns == ir.Union {
+		return e.callableUnionResult(result, closure, method)
+	}
 	if expression.Returns.IsReference() {
 		// A closure's result comes back owned.
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))

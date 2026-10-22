@@ -41,7 +41,8 @@ func readUnionViewAt(e *emitter, property ir.Property, object string) (string, b
 	e.line("if (%s.kind == adamic_view_union_number) %s = adamic_box_number(%s.payload.number);", snapshot, boxed, snapshot)
 	e.line("else if (%s.kind == adamic_view_union_boolean) %s = %s.payload.boolean ? (adamic_heap *)&adamic_box_true : (adamic_heap *)&adamic_box_false;", snapshot, boxed, snapshot)
 	e.line("else if (%s.kind == adamic_view_union_null) %s = &adamic_null;", snapshot, boxed)
-	e.line("else %s = adamic_retain(%s.payload.reference);", boxed, snapshot)
+	e.line("else if (%s.kind >= adamic_view_union_string && %s.kind <= adamic_view_union_function) %s = adamic_retain(%s.payload.reference);", snapshot, snapshot, boxed, snapshot)
+	e.line("else %s = NULL;", boxed)
 	value := e.own(ir.Union, boxed)
 	if contract.Of == ir.Closure {
 		recorded := e.temporary()
