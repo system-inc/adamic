@@ -1,7 +1,6 @@
 package tsprinter
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"os"
@@ -79,17 +78,21 @@ func testMutant(t *testing.T, i int) {
 }
 
 // The case-only context covers both output oracles. A killed or crashed child
-// is a test failure, never evidence that a mutant was caught.
+// is a test failure, never evidence that a mutant was caught. Output is read
+// through childguard.Capture, to its end with no timer deciding when: exec's own
+// copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the
+// reads hadn't reached EOF a second after the child exited, so a Node or native
+// mutant run that had finished could fail its shard under load (#n3gk22h's
+// shape). Capture has no stall guard, and the runs lose nothing by it:
+// childguard.Run's windows (two minutes of silence, thirty before the first
+// byte) are longer than the case's 60 s deadline, which ends a hung run sooner.
 func mutantExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) oracles.Run {
 	t.Helper()
 	command := exec.CommandContext(ctx, name, arguments...)
-	command.WaitDelay = time.Second
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := childguard.Run(command, childguard.Options{})
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		t.Fatalf("mutant own-work deadline: %v", ctx.Err())
 	}
@@ -97,5 +100,5 @@ func mutantExecute(t *testing.T, ctx context.Context, environment []string, name
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
+	return oracles.Run{Stdout: stdout, Stderr: stderr, ExitCode: command.ProcessState.ExitCode()}
 }
