@@ -19,6 +19,15 @@ func (l *lowering) untaggedCallableShape(target *checker.Type) bool {
 	}
 	for _, parameter := range signature.Parameters() {
 		of, known := l.representation(l.checker.GetTypeOfSymbol(parameter))
+		if of == ir.Union && known {
+			primitive := true
+			for _, member := range l.checker.GetTypeOfSymbol(parameter).Types() {
+				primitive = primitive && interfaceScalar(member)
+			}
+			if primitive {
+				continue
+			}
+		}
 		if !known || !(of == ir.Number || of == ir.Boolean || of == ir.String || of == ir.MaybeNumber || of == ir.MaybeBoolean) {
 			return false
 		}
@@ -46,6 +55,11 @@ func (l *lowering) prepareUntaggedCallableMember(node *ast.Node, target *checker
 		child, err := l.viewContract(node, l.checker.GetTypeOfSymbol(parameter))
 		if err != nil {
 			return 0, err
+		}
+		if members, ok := ir.PrimitiveViewMembers(l.result, child); ok {
+			for _, member := range members {
+				l.result.ViewContracts[child-1].RepresentationMask |= 1 << member.Of
+			}
 		}
 		contract.Parameters = append(contract.Parameters, child)
 	}
