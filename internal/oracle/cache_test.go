@@ -74,11 +74,11 @@ func cacheKey(parts ...string) string {
 }
 
 func nativeResultKey(code, runtimeKey, nodeVersion, context string) string {
-	return cacheKey("adamic-native-result-v1", code, runtimeKey, nodeVersion, context)
+	return cacheKey("adamic-native-result-v1", ir.TypeTagFingerprint(), code, runtimeKey, nodeVersion, context)
 }
 
 func nodeResultKey(source, javascript, nodeVersion, context string) string {
-	return cacheKey("adamic-node-result-v1", source, javascript, nodeVersion, context)
+	return cacheKey("adamic-node-result-v1", ir.TypeTagFingerprint(), source, javascript, nodeVersion, context)
 }
 
 func (cache *resultCache) read(key string, value any) bool {
@@ -583,5 +583,15 @@ func TestGateCacheUncached(t *testing.T) {
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	if got := cachedResult(t, cache, nativeResults, key, func() string { t.Fatal("old evidence disappeared"); return "" }); got != "cached" {
 		t.Fatal("uncached run wrote its results into the cache")
+	}
+}
+
+func TestGateCacheIncludesTypeTags(t *testing.T) {
+	t.Parallel()
+	if nativeResultKey("code", "runtime", "node", "context") != cacheKey("adamic-native-result-v1", ir.TypeTagFingerprint(), "code", "runtime", "node", "context") {
+		t.Fatal("native result cache omits representation fingerprint")
+	}
+	if nodeResultKey("source", "javascript", "node", "context") != cacheKey("adamic-node-result-v1", ir.TypeTagFingerprint(), "source", "javascript", "node", "context") {
+		t.Fatal("JavaScript result cache omits representation fingerprint")
 	}
 }
