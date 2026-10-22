@@ -1,0 +1,52 @@
+{
+  "typescript": "6.0.3",
+  "method": "AST inventory plus LanguageService.findReferences",
+  "filesParsed": 39349,
+  "sourceRoots": 711,
+  "occurrences": [
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "name": "addNodeFactoryPatcher",
+      "kind": "Identifier",
+      "parent": "FunctionDeclaration",
+      "start": 12895
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "name": "addObjectAllocatorPatcher",
+      "kind": "Identifier",
+      "parent": "FunctionDeclaration",
+      "start": 338722
+    }
+  ],
+  "registrations": [
+    {
+      "name": "addNodeFactoryPatcher",
+      "references": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 481,
+          "column": 17,
+          "parent": "FunctionDeclaration",
+          "text": "export function addNodeFactoryPatcher(fn: (factory: NodeFactory) => void): void {\r\n    nodeFactoryPatchers.push(fn);\r\n}",
+          "permitted": true
+        }
+      ],
+      "callers": []
+    },
+    {
+      "name": "addObjectAllocatorPatcher",
+      "references": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8574,
+          "column": 17,
+          "parent": "FunctionDeclaration",
+          "text": "export function addObjectAllocatorPatcher(fn: (objectAllocator: ObjectAllocator) => void): void {\r\n    objectAllocatorPatchers.push(fn);\r\n    fn(objectAllocator);\r\n}",
+          "permitted": true
+        }
+      ],
+      "callers": []
+    }
+  ]
+}

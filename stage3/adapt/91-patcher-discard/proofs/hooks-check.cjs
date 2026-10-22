@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const ts=require(process.argv[2]);
+const expected=JSON.parse(process.argv[3]);
+const factory={first:0,second:0},allocator={first:0,second:0};
+ts.addNodeFactoryPatcher(()=>{factory.first++;return 42;});
+ts.addNodeFactoryPatcher(()=>{factory.second++;});
+ts.createNodeFactory(ts.NodeFactoryFlags.None);
+ts.addObjectAllocatorPatcher(()=>{allocator.first++;return 17;});
+ts.addObjectAllocatorPatcher(()=>{allocator.second++;});
+allocator.first=allocator.second=0;
+ts.setObjectAllocator(ts.objectAllocator);
+const result={node:process.version,returns:{factory:42,allocator:17},factory,allocator};
+fs.writeFileSync(process.argv[4],JSON.stringify(result,null,2)+'\n');
+assert.deepEqual([factory.first,factory.second,allocator.first,allocator.second],expected);
+console.log(JSON.stringify(result));
