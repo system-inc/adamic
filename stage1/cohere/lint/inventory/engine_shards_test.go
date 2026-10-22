@@ -169,10 +169,10 @@ func TestInventoryEngineShardAssignment(t *testing.T) {
 }
 
 func inventoryEngineRun(t *testing.T, binary, directory, name string) ([]byte, error) {
-	command, cancel := inventoryEngineTestCommand(t, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+	command, ctx, cancel := inventoryEngineTestCommand(t, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
 	defer cancel()
 	command.Dir = directory
-	return command.CombinedOutput()
+	return inventoryEngineOutput(ctx, command)
 }
 
 func inventoryEngineSelector(value string) (func(int) bool, error) {
