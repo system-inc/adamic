@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -78,7 +79,7 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 // Fault injection at lowered source reads, using the same IR consumed by both backends.
 func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 	t.Parallel()
-	for _, variant := range []string{"good-number", "good-string", "wrong", "nested"} {
+	for _, variant := range []string{"good-number", "good-string"} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
 			program, path := interfaceFixture(t, "untagged/fixtures/callable-union-"+variant)
@@ -88,20 +89,33 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 			}
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
 				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
-				if variant != "wrong" && variant != "nested" {
-					if difference := disagreement(node, got); difference != "" {
-						t.Errorf("%s: %s", backend, difference)
-					}
-				} else {
-					field := "view.value"
-					if variant == "nested" {
-						field = "view.holder.value"
-					}
-					want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + field + " expected Target, found function with incompatible parameter representations\n")}
-					if difference := disagreement(want, got); difference != "" {
-						t.Errorf("%s: %s", backend, difference)
-					}
+				if difference := disagreement(node, got); difference != "" {
+					t.Errorf("%s: %s", backend, difference)
 				}
+			}
+		})
+	}
+}
+
+// A stored function that takes a boolean fits neither member of Target, read directly or through a nested holder, so
+// the read is refused where it stands rather than compiled to stop at run time where Node prints true (Compiler's
+// ruling (b) on #aecx10a).
+func TestCheckedViewUntaggedCallableUnionMisfitRefuses(t *testing.T) {
+	t.Parallel()
+	for variant, at := range map[string]string{"wrong": ":8:16:", "nested": ":9:16:"} {
+		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("untagged/fixtures/callable-union-"+variant)))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+				t.Fatal(difference)
+			}
+			_, err = lowered(t, path)
+			var refused *lower.Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "callable-union-"+variant+".a"+at) || refused.What != "checked view read of field value with unsupported representation conversion contract" {
+				t.Fatalf("want the located representation conversion refusal at %s, got %v", at, err)
 			}
 		})
 	}
