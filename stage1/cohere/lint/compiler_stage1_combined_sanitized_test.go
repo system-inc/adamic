@@ -151,6 +151,11 @@ func compilerAgreementCutCheckerGroups(descriptors []registry.Descriptor) ([]com
 	if len(current.rules) > 0 {
 		groups = append(groups, current)
 	}
+	for part, g := range groups {
+		if g.millis <= 0 || g.millis > compilerAgreementCheckerGroupBudgetMillis {
+			return nil, fmt.Errorf("checker group %d costs %d ms", part, g.millis)
+		}
+	}
 	if err := compilerAgreementCheckerGroupUnion(groups, descriptors); err != nil {
 		return nil, err
 	}
@@ -167,9 +172,6 @@ func compilerAgreementCheckerGroupUnion(groups []compilerAgreementCheckerGroup, 
 	for part, g := range groups {
 		if len(g.rules) == 0 {
 			return fmt.Errorf("checker group %d is empty", part)
-		}
-		if g.millis <= 0 || g.millis > compilerAgreementCheckerGroupBudgetMillis {
-			return fmt.Errorf("checker group %d costs %d ms", part, g.millis)
 		}
 		for _, d := range g.rules {
 			if !known[d.Name] {
@@ -204,13 +206,34 @@ func compilerAgreementCombinedGroups(t *testing.T) []compilerAgreementCheckerGro
 	return groups
 }
 
-// Only side 4 expands the single checker/all case. Its other sides keep their
-// whole-rule interaction case and their existing shared Go answer unchanged.
-func compilerAgreementSideCases(t *testing.T, cases []compilerAgreementCase, side int) []compilerAgreementCase {
-	if side != 4 {
-		return cases
-	}
+// compilerAgreementCheckerSideGroups is checker/all's parts on side: a side split into as many parts as there are
+// groups (1 and 4) runs each measured group as a part of its own, and a side split into fewer (2 and 3) runs consecutive
+// runs of those groups, each merged into one selection. A part keeps production order, as every group does, so a
+// merged selection filters the registry as one group would.
+func compilerAgreementCheckerSideGroups(t *testing.T, side int) []compilerAgreementCheckerGroup {
+	t.Helper()
 	groups := compilerAgreementCombinedGroups(t)
+	count := compilerAgreementSplitParts(compilerAgreementCheckerAllOwner, side)
+	if count <= 0 || count > len(groups) {
+		t.Fatalf("checker/all's side %d is split into %d parts of %d groups", side, count, len(groups))
+	}
+	parts := make([]compilerAgreementCheckerGroup, count)
+	for part := range parts {
+		for _, g := range groups[part*len(groups)/count : (part+1)*len(groups)/count] {
+			parts[part].rules = append(parts[part].rules, g.rules...)
+			parts[part].millis += g.millis
+		}
+	}
+	if err := compilerAgreementCheckerGroupUnion(parts, prepareRegistry(t, ".")); err != nil {
+		t.Fatalf("checker/all side %d: %v", side, err)
+	}
+	return parts
+}
+
+// Every side expands the single checker/all case into its parts (compilerAgreementCheckerSideGroups), each part a case
+// of its own with its own live Go answer.
+func compilerAgreementSideCases(t *testing.T, cases []compilerAgreementCase, side int) []compilerAgreementCase {
+	groups := compilerAgreementCheckerSideGroups(t, side)
 	expanded := make([]compilerAgreementCase, 0, len(cases)+len(groups)-1)
 	for _, c := range cases {
 		if c.key == compilerAgreementCheckerKey && c.rule == "all" {

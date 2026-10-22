@@ -37,9 +37,21 @@ var compilerAgreementCheckerSanitizedWrapper = regexp.MustCompile(`(?m)^func ` +
 // three (#mq768wp, Home's units 35 and 36 of 4a769ad6's run, Oct 19), and on a loaded Golem a part of one rule took 5.7
 // and 13.7 s, so the hash's best cut, three and two parts, left two of them at 23 and 24 s. Each part is
 // TestCompilerAndStage1Agree_<shard>_<part>, and the owner's numbered wrapper for that side is gone. Checker/all (owner
-// 1312) uses consecutive measured-price groups instead: its one original row expands only on side 4. A future heavy
-// owner side joins by number.
-var compilerAgreementSplit = []struct{ Owner, Side, Parts int }{{289, 4, 4}, {293, 4, 4}, {385, 4, 4}, {673, 4, 4}, {1009, 4, 4}, {1215, 4, 2}, {compilerAgreementCheckerAllOwner, 4, compilerAgreementCheckerGroupCount}, {1303, 1, 6}, {1310, 1, 3}}
+// 1312) uses consecutive measured-price groups instead (compilerAgreementCheckerSideGroups), and its one original row
+// expands on every side: sides 1 and 4 into its groups, and sides 2 and 3 into compilerAgreementCheckerSideParts parts
+// of consecutive groups, as the whole file under every rule ran 64.7, 56.2 and 53.1 s on sides 1 to 3, _6561 to _6563,
+// over Loom's 60 s budget at an 8-CPU share (#mq768wp, unit 72 of future-9f780ec59f99-1, Oct 22). So no side runs
+// every rule over checker.ts in one process any more: an interaction between rules in different parts goes unseen
+// there, as it already did on side 4. Every other file still runs all its rules together, in one case, on every side.
+// A future heavy owner side joins by number.
+var compilerAgreementSplit = []struct{ Owner, Side, Parts int }{{289, 4, 4}, {293, 4, 4}, {385, 4, 4}, {673, 4, 4}, {1009, 4, 4}, {1215, 4, 2}, {compilerAgreementCheckerAllOwner, 1, compilerAgreementCheckerGroupCount}, {compilerAgreementCheckerAllOwner, 2, compilerAgreementCheckerSideParts}, {compilerAgreementCheckerAllOwner, 3, compilerAgreementCheckerSideParts}, {compilerAgreementCheckerAllOwner, 4, compilerAgreementCheckerGroupCount}, {1303, 1, 6}, {1310, 1, 3}}
+
+// compilerAgreementCheckerSideParts is how many parts checker/all's sides 2 and 3 run in, two of the 28 groups to a
+// part. Each part pays its own parse of checker.ts and its own live Go answer, so a side takes no more parts than it
+// needs. Run all at once at GOMAXPROCS=8 on a quiet Pupa (3e5fde87, Oct 22), sides 2 and 3 at fourteen parts took 2.7
+// to 12.7 s, and side 1 at fourteen 5.9 to 26.5 s, its part of groups 12 and 13 the 26.5, so side 1 runs every group
+// as a part, as side 4 does: its 28 parts, run alone, took 5.2 to 15.2 s.
+const compilerAgreementCheckerSideParts = 14
 
 // compilerAgreementMaxParts bounds a split owner's parts, so every sub-unit has its own number past the shards'.
 const compilerAgreementMaxParts = 32
@@ -311,7 +323,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 	for side := compilerAgreementFirstSide; side < compilerAgreementSides; side++ {
 		for _, c := range compilerAgreementSideCases(t, cases, side) {
 			unit := compilerAgreementUnit(c, side)
-			if c.group > 0 && (side != 4 || c.key != compilerAgreementCheckerKey || c.group > compilerAgreementCheckerGroupCount || unit != compilerAgreementSubUnit(compilerAgreementCheckerAllOwner*compilerAgreementSides+4, c.group-1)) {
+			if c.group > 0 && (c.key != compilerAgreementCheckerKey || c.group > compilerAgreementSplitParts(compilerAgreementCheckerAllOwner, side) || unit != compilerAgreementSubUnit(compilerAgreementCheckerAllOwner*compilerAgreementSides+side, c.group-1)) {
 				t.Fatalf("invalid combined checker group %d on side %d: unit %d", c.group, side, unit)
 			}
 			pair := fmt.Sprintf("%s\t%s\t%d", c.key, c.rule, side)
@@ -340,8 +352,8 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 			if shard := compilerAgreementOwner(c)*compilerAgreementSides + side; c.key == compilerAgreementCheckerKey && c.rule != "all" && c.group == 0 && unit != shard && (!subUnits[unit] || (unit-testCompilerAndStage1AgreeShards)/compilerAgreementMaxParts != shard) {
 				t.Fatalf("checker rule %s moved on side %d", c.rule, side)
 			}
-			if c.key == compilerAgreementCheckerKey && c.rule == "all" && unit != (compilerAgreementFileBuckets*compilerAgreementRuleGroups+compilerAgreementFixBuckets+compilerAgreementCheckerGroups)*compilerAgreementSides+side {
-				t.Fatalf("checker/all moved on side %d", side)
+			if c.key == compilerAgreementCheckerKey && c.rule == "all" {
+				t.Fatalf("checker/all runs whole on side %d, not in its parts", side)
 			}
 		}
 	}
@@ -356,7 +368,7 @@ func compilerAgreementCheckUnits(t *testing.T, cases []compilerAgreementCase) {
 			t.Fatalf("%s owns %d sanitized checker.ts cases, want 1", test, owned[test])
 		}
 	}
-	t.Logf("union: %d checker rules covered exactly once under ASan, each by its own %s<slug>; checker/all stays on sides 1–3 and its side 4 runs in consecutive groups", len(owned), compilerAgreementCheckerSanitizedPrefix)
+	t.Logf("union: %d checker rules covered exactly once under ASan, each by its own %s<slug>; checker/all runs in consecutive groups on every side", len(owned), compilerAgreementCheckerSanitizedPrefix)
 	t.Logf("union: %d split owner sides' cases each in exactly one of their %d sub-shards", len(compilerAgreementSplit), len(subUnits))
 }
 
