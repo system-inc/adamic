@@ -1,0 +1,15 @@
+async function run(): Promise<void> {
+    const readers: (() => string)[] = [];
+    let i = 0;
+    while (i < 3) {
+        const held = `item${i}`;
+        readers.push(() => held);
+        await Promise.resolve();
+        i++;
+    }
+    const a = readers[0] ?? (() => "missing");
+    const b = readers[1] ?? (() => "missing");
+    const c = readers[2] ?? (() => "missing");
+    console.log(`${a()} ${b()} ${c()}`);
+}
+await run();

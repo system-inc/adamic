@@ -133,6 +133,10 @@ func (n *inference) run() {
 			n.list = nil
 			n.instruction = id
 			n.run1(n.function.Instructions[id])
+			if _, suspends := block.Terminal.(*Suspend); suspends && position == len(block.Instructions)-1 {
+				// Other queued tasks may mutate anything reachable outside this activation.
+				n.mutateEscaped()
+			}
 			if len(n.list) > 0 {
 				n.effects.byInstruction[id] = n.list
 			}
@@ -169,6 +173,11 @@ func (n *inference) run1(instruction *Instruction) {
 		}
 	default:
 		var defined shape
+		if declaration, ok := (*instruction.At).(ir.Declare); ok && instruction.Part == 1 {
+			if _, awaited := declaration.Value.(ir.Await); awaited {
+				defined.unknown = true
+			}
+		}
 		if instruction.Expression != nil {
 			defined = n.value(instruction.Expression)
 		}

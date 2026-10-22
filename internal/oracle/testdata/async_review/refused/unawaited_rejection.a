@@ -1,0 +1,6 @@
+async function fail(): Promise<number> {
+    await Promise.resolve();
+    throw new Error("lost rejection");
+}
+const ignored = fail();
+console.log("done");

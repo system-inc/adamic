@@ -37,13 +37,25 @@ func (e *emitter) store(local int, value string, owned bool) {
 			e.line("%s.%s = %s;", slot, member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value))
 			return
 		}
+		if e.asyncBorrows[local] {
+			// The source slot owns this alias until the whole frame finishes.
+			e.line("%s.reference = %s;", slot, value)
+			if owned {
+				e.line("adamic_release(%s);", value)
+			}
+			return
+		}
 		if !owned {
 			value = retained(value)
 		}
 		old := e.temporary()
 		e.line("void *%s = %s.reference;", old, slot)
 		e.line("%s.reference = %s;", slot, value)
-		e.line("adamic_release(%s);", old)
+		if _, framed := e.asyncSlots[local]; framed {
+			e.line("if (%s != NULL) adamic_release(%s);", old, old)
+		} else {
+			e.line("adamic_release(%s);", old)
+		}
 		return
 	}
 	if !e.program.Locals[local].Type.IsReference() {
@@ -91,11 +103,8 @@ func (e *emitter) read(read ir.Read) string {
 	if read.Checked {
 		e.checkReady(read.Local)
 	}
-	// The readiness pass (lower/readiness.go) clears Readiness on reads it proves ready, but async
-	// programs lower on their own path and never reach it. That path refuses uninitialized locals and
-	// nested functions, and tsc refuses a read before its declaration in the same body (TS2448), so
-	// every read there is of an initialized local: there's no ready flag to check.
-	if read.Readiness != "" && e.program.Async == nil {
+	// The shared readiness pass clears checks it proves unnecessary.
+	if read.Readiness != "" {
 		e.checkReadyRead(read.Local, read.Readiness)
 	}
 	if e.program.Locals[read.Local].Counter {
@@ -116,6 +125,12 @@ func (e *emitter) read(read ir.Read) string {
 			return e.snapshot(read.Of, fmt.Sprintf("(%s)%s", cType(read.Of), value))
 		}
 		if read.Of.IsReference() {
+			// An uncaptured suspension slot has the same statement lifetime as
+			// an ordinary local: this resume holds the frame, and no callee can
+			// replace the binding. Expression writes still require a snapshot.
+			if _, framed := e.asyncSlots[read.Local]; framed && !e.program.Locals[read.Local].Captured && !e.program.Locals[read.Local].ExpressionAssigned {
+				return fmt.Sprintf("((%s)%s)", cType(read.Of), value)
+			}
 			return e.own(read.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(read.Of), value))
 		}
 		snapshot := e.temporary()
@@ -141,6 +156,11 @@ func (e *emitter) read(read ir.Read) string {
 // value is already the local's. A captured local is declared straight into a cell.
 func (e *emitter) declareLocal(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
+	if _, ok := e.asyncSlots[local]; ok {
+		e.store(local, value, owned)
+		e.line("%s->ready = true;", e.cellReference(local))
+		return
+	}
 	if declared.Counter {
 		// A whole-number constant within 2^53, which an integer holds exactly (lower/counters.go).
 		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
@@ -198,6 +218,9 @@ func (e *emitter) cellSlot(local int) string {
 
 // cellReference is the cell a captured local lives in, from the current function, or "".
 func (e *emitter) cellReference(local int) string {
+	if position, ok := e.asyncSlots[local]; ok {
+		return fmt.Sprintf("(&frame->cells[%d])", position)
+	}
 	declared := e.program.Locals[local]
 	if declared.Global || !declared.Captured {
 		return ""

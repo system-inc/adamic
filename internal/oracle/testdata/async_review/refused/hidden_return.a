@@ -1,0 +1,5 @@
+interface Visible { value: number; }
+const actual = { value: 1, then(resolve: (value: number) => void): void { resolve(7); } };
+const hidden: Visible = actual;
+async function run(): Promise<Visible> { return hidden; }
+console.log(typeof await run());

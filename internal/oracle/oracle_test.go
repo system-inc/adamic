@@ -40,6 +40,26 @@ var fixtures = []struct {
 	checked bool
 }{
 	{"internal/oracle/testdata/release_fma.a", true, false},
+	{"internal/oracle/testdata/async_catch_return.a", true, false},
+	{"internal/oracle/testdata/async_catches.a", true, false},
+	{"internal/oracle/testdata/async_closures.a", true, false},
+	{"internal/oracle/testdata/async_conditions.a", true, false},
+	{"internal/oracle/testdata/async_control.a", true, false},
+	{"internal/oracle/testdata/async_escaped_capture.a", true, false},
+	{"internal/oracle/testdata/async_frame_capture_safe.a", true, false},
+	{"internal/oracle/testdata/async_fresh_holder.a", true, false},
+	{"internal/oracle/testdata/async_live_values.a", true, false},
+	{"internal/oracle/testdata/async_methods.a", true, false},
+	{"internal/oracle/testdata/async_mutation.a", true, false},
+	{"internal/oracle/testdata/async_operand_order.a", true, false},
+	{"internal/oracle/testdata/async_promise_expression.a", true, false},
+	{"internal/oracle/testdata/async_receiver.a", true, false},
+	{"internal/oracle/testdata/async_snapshots.a", true, false},
+	{"internal/oracle/testdata/async_void_value.a", true, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a", false, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a", false, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a", false, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a", false, false},
 	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/cleanup.a", true, false},
 	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
@@ -740,6 +760,9 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 			}
 			if runtimeBoundaryViewFixture(fixture.path) {
 				assertRuntimeBoundaryViewRefusal(t, err)
+				return
+			}
+			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
 				return
 			}
 			if !fixture.lowers {
