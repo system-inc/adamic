@@ -1,0 +1,6 @@
+interface Room {
+	readonly doors: Map<string, Room>;
+}
+const hall: Room = { doors: new Map<string, Room>() };
+hall.doors.set('self', hall);
+
