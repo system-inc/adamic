@@ -12,7 +12,7 @@ import (
 
 func fieldWithBuffer() {
 	var output bytes.Buffer
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `^exec\.Cmd\.WaitDelay with buffered output reports ErrWaitDelay by chance when a slow run drains late; run it with childguard\.Capture, or say why in // WaitDelay: <reason> \(#n3gk22h\)$`
 	command.Stdout = &output
 	_ = command.Run()
@@ -20,7 +20,7 @@ func fieldWithBuffer() {
 
 func stderrToBuilderBeforeDelay() {
 	var errors strings.Builder
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.Stderr = &errors
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	_ = command.Run()
@@ -28,7 +28,7 @@ func stderrToBuilderBeforeDelay() {
 
 func bothStreamsAtOnce() {
 	var output bytes.Buffer
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	command.Stdout, command.Stderr = &output, &output
 	_ = command.Run()
@@ -36,7 +36,7 @@ func bothStreamsAtOnce() {
 
 // An io.Writer may hold an *os.File, but the rule reads the type the code wrote, and exec copies anything else.
 func writerOfUnknownKind(writer io.Writer) {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	command.Stdout = writer
 	_ = command.Run()
@@ -60,13 +60,13 @@ func compositeLiteralDeclared() {
 }
 
 func combinedOutput() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	_, _ = command.CombinedOutput()
 }
 
 func output() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	_, _ = command.Output()
 }
@@ -79,7 +79,7 @@ func returnedHelper(ctx context.Context, name string) *exec.Cmd {
 }
 
 func callerBuffersHelper(ctx context.Context) {
-	command := returnedHelper(ctx, "true")
+	command := returnedHelper(ctx, "sh")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
@@ -87,7 +87,7 @@ func callerBuffersHelper(ctx context.Context) {
 }
 
 func returnedWithError() (*exec.Cmd, error) {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	return command, nil
 }
@@ -108,7 +108,7 @@ type runner struct {
 
 func embedded() {
 	var output bytes.Buffer
-	run := runner{exec.Command("true")}
+	run := runner{exec.Command("sh")}
 	run.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	run.Stdout = &output
 	_ = run.Run()
@@ -126,21 +126,21 @@ func throughAField(work *job) {
 }
 
 func bufferedInAClosure() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	run := func() ([]byte, error) { return command.CombinedOutput() }
 	_, _ = run()
 }
 
 func escapeWithoutAReason() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	// WaitDelay:
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
 	_, _ = command.Output()
 }
 
 func escapeTooFarAbove() {
-	command := exec.Command("true")
+	command := exec.Command("sh")
 	// WaitDelay: this reason is for the line just below, not for the assignment after it.
 	command.Env = nil
 	command.WaitDelay = time.Second // want `exec\.Cmd\.WaitDelay with buffered output`
