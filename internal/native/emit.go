@@ -3,6 +3,7 @@ package native
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"sort"
 	"strings"
 )
 
@@ -210,7 +211,7 @@ func cProgram(program *ir.Program, handler, lines int) string {
 		builder.WriteString("\n")
 	}
 	emitter.classDeclarations(&builder)
-	builder.WriteString(bodies.String())
+	builder.WriteString(strings.Replace(bodies.String(), "\tadamic_start(argc, argv);\n", "\tadamic_start(argc, argv);\n"+emitter.shapeChecks(), 1))
 	return builder.String()
 }
 
@@ -487,4 +488,20 @@ func utf16Units(value string) int {
 		offset += size
 	}
 	return units
+}
+
+// Iterate actual declared names: later identity work may give shapes nonnumeric names.
+func (e *emitter) shapeChecks() string {
+	names := e.regexpShapeNames()
+	for _, name := range e.shapes {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	var checks strings.Builder
+	checks.WriteString("#ifdef ADAMIC_COUNT\n")
+	for _, name := range names {
+		fmt.Fprintf(&checks, "\tadamic_shape_check(&%s);\n", name)
+	}
+	checks.WriteString("#endif\n")
+	return checks.String()
 }
