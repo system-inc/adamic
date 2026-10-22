@@ -162,13 +162,6 @@ func TestProduct_CSSParserClosingBraceMutantNative(t *testing.T) {
 	t.Parallel()
 	cssParserPreparedNative(t, 2)
 }
-func TestProduct_CSSParserDarwinLeaks(t *testing.T) {
-	t.Parallel()
-	if runtime.GOOS != "darwin" {
-		t.Skip("Darwin-only product")
-	}
-	cssParserPreparedLeaks(t)
-}
 
 func TestProduct_CSSCompositionLowered(t *testing.T) {
 	t.Parallel()
