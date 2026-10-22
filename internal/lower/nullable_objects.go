@@ -170,7 +170,7 @@ func freshNullableObjectStorage(node *ast.Node) bool {
 func (l *lowering) nullableObjectViewHazard(node *ast.Node, contextual *checker.Type) bool {
 	// RegExp replacement adapts the closure's actual signature instead of sharing
 	// lib.d.ts's callable ABI, including its declared return conversion.
-	if l.regexReplacementArgument(node) || l.nullableObjectAdaptedMapCallback(node, contextual) {
+	if l.regexReplacementArgument(node) || l.nullableObjectAdaptedMapCallback(node, contextual) || l.nullableObjectAdaptedSearchCallback(node, contextual) {
 		return false
 	}
 	return !freshNullableObjectStorage(node) && l.nullableObjectSharedView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{})
@@ -221,6 +221,52 @@ func (l *lowering) nullableObjectAdaptedMapCallback(node *ast.Node, contextual *
 			return false
 		}
 		if !l.nullableObjectCallbackStorageMatches(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(expected[0].Parameters()[index])) {
+			return false
+		}
+	}
+	return true
+}
+
+// A search converts each element to its callback's own value representation and
+// tags null separately when that value is a union (arraySearchContract, in
+// array_search_contract.go). That adapts the value parameter only, so the index
+// and array parameters must keep the receiver's storage, as map's do. Unlike map,
+// the result needs no identical type: a search reads it only as a boolean.
+func (l *lowering) nullableObjectAdaptedSearchCallback(node *ast.Node, contextual *checker.Type) bool {
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer.Parent == nil || outer.Parent.Kind != ast.KindCallExpression {
+		return false
+	}
+	call := outer.Parent.AsCallExpression()
+	if len(call.Arguments.Nodes) != 1 || call.Arguments.Nodes[0] != outer {
+		return false
+	}
+	callee := ast.SkipParentheses(call.Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(callee) {
+		return false
+	}
+	switch callee.Name().Text() {
+	case "find", "findIndex", "findLast", "findLastIndex":
+	default:
+		return false
+	}
+	receiver := l.concrete(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
+	if !l.checker.IsArrayType(receiver) && !checker.IsTupleType(receiver) {
+		return false
+	}
+	actual := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node), checker.SignatureKindCall)
+	expected := l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall)
+	if len(actual) != 1 || len(expected) != 1 || len(actual[0].Parameters()) > len(expected[0].Parameters()) {
+		return false
+	}
+	for index, parameter := range actual[0].Parameters() {
+		if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+			return false
+		}
+		if index > 0 && !l.nullableObjectCallbackStorageMatches(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(expected[0].Parameters()[index])) {
 			return false
 		}
 	}
