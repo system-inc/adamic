@@ -1,0 +1,101 @@
+{
+  "mode": "void-widening-only-source-scan",
+  "before": 5,
+  "after": 1,
+  "mutant": 3,
+  "removed": [
+    {
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined",
+      "text": "src/compiler/factory/nodeFactory.ts:1164:40: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1164,
+      "column": 40,
+      "refusals": [
+        {
+          "kind": "Refused",
+          "reason": "a void value at a return site whose function returns void | undefined",
+          "text": "src/compiler/factory/nodeFactory.ts:1164:40: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)"
+        }
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined",
+      "text": "src/compiler/utilities.ts:8582:38: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+      "file": "src/compiler/utilities.ts",
+      "line": 8582,
+      "column": 38,
+      "refusals": [
+        {
+          "kind": "Refused",
+          "reason": "a void-returning function at the argument site seen as (element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined",
+          "text": "src/compiler/utilities.ts:8582:38: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (objectAllocator: ObjectAllocator) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)"
+        }
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined",
+      "text": "src/compiler/utilities.ts:8582:44: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)",
+      "file": "src/compiler/utilities.ts",
+      "line": 8582,
+      "column": 44,
+      "refusals": [
+        {
+          "kind": "Refused",
+          "reason": "a void value at a return site whose function returns void | undefined",
+          "text": "src/compiler/utilities.ts:8582:44: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)"
+        }
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined",
+      "text": "src/compiler/factory/nodeFactory.ts:1164:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1164,
+      "column": 34,
+      "refusals": [
+        {
+          "kind": "Refused",
+          "reason": "a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined",
+          "text": "src/compiler/factory/nodeFactory.ts:1164:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)"
+        }
+      ]
+    }
+  ],
+  "added": [],
+  "mutantReturned": [
+    {
+      "kind": "Refused",
+      "reason": "a void value at a return site whose function returns void | undefined",
+      "text": "src/compiler/factory/nodeFactory.ts:1164:40: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1164,
+      "column": 40,
+      "refusals": [
+        {
+          "kind": "Refused",
+          "reason": "a void value at a return site whose function returns void | undefined",
+          "text": "src/compiler/factory/nodeFactory.ts:1164:40: Adamic 0.1 refuses a void value at a return site whose function returns void | undefined; declare the function's real return type (adamic/no-void-widening)"
+        }
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined",
+      "text": "src/compiler/factory/nodeFactory.ts:1164:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)",
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1164,
+      "column": 34,
+      "refusals": [
+        {
+          "kind": "Refused",
+          "reason": "a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined",
+          "text": "src/compiler/factory/nodeFactory.ts:1164:34: Adamic 0.1 refuses a void-returning function at the argument site seen as (element: (factory: NodeFactory) => void, index: number) => void | undefined; declare the function's real return type (adamic/no-void-widening)"
+        }
+      ]
+    }
+  ]
+}

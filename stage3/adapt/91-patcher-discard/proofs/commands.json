@@ -1,0 +1,292 @@
+[
+  {
+    "name": "idempotence",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/adapt.cjs",
+      "/workspace/scratch/adapt91-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 120,
+    "exit": 0,
+    "seconds": 1.938
+  },
+  {
+    "name": "references",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/references.cjs",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/references.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 24.673
+  },
+  {
+    "name": "scope",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-scope.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 2.028
+  },
+  {
+    "name": "mutant-scope",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-mutant",
+      "/workspace/scratch/adapt91-mutant-scope.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 1.574
+  },
+  {
+    "name": "scope-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-invalid-scope.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 1,
+    "seconds": 0.265
+  },
+  {
+    "name": "moved-target-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/adapt.cjs",
+      "/workspace/scratch/adapt91-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 120,
+    "exit": 1,
+    "seconds": 1.882
+  },
+  {
+    "name": "registrant-mutant",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/references.cjs",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-invalid-references.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 1,
+    "seconds": 23.612
+  },
+  {
+    "name": "overlay",
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/census/latent/make_overlay.py",
+      "/workspace/adamic",
+      "/workspace/scratch/adapt91-latent-overlay"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 0.517
+  },
+  {
+    "name": "scan-overlay",
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/make-scan.py",
+      "/workspace/adamic",
+      "/workspace/scratch/adapt91-latent-overlay/overlay.json",
+      "/workspace/scratch/adapt91-scan-overlay"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 0.064
+  },
+  {
+    "name": "scan-build",
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/adapt91-scan-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/adapt91-void-scan",
+      "./stage3/census/latent/tool"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 14.242
+  },
+  {
+    "name": "scan-before",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/adapt91-control/src/compiler",
+      "/workspace/scratch/adapt91-scan-before.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 30.801
+  },
+  {
+    "name": "scan-after",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/adapt91-after/src/compiler",
+      "/workspace/scratch/adapt91-scan-after.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 29.087
+  },
+  {
+    "name": "scan-mutant",
+    "command": [
+      "/workspace/scratch/adapt91-void-scan",
+      "/workspace/scratch/adapt91-mutant/src/compiler",
+      "/workspace/scratch/adapt91-scan-mutant.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 29.044
+  },
+  {
+    "name": "scan-compare",
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/compare-scans.py",
+      "/workspace/scratch/adapt91-scan-before.jsonl",
+      "/workspace/scratch/adapt91-scan-after.jsonl",
+      "/workspace/scratch/adapt91-scan-mutant.jsonl",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/scan-delta.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 0.064
+  },
+  {
+    "name": "control-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/adapt91-control",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 15.262
+  },
+  {
+    "name": "control-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/adapt91-control",
+    "limit": 600,
+    "exit": 0,
+    "seconds": 22.908
+  },
+  {
+    "name": "after-install",
+    "command": [
+      "npm",
+      "ci",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/workspace/scratch/adapt91-after",
+    "limit": 300,
+    "exit": 0,
+    "seconds": 2.477
+  },
+  {
+    "name": "after-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/adapt91-after",
+    "limit": 600,
+    "exit": 0,
+    "seconds": 23.076
+  },
+  {
+    "name": "original-hooks",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks.cjs",
+      "/workspace/scratch/adapt91-control/built/local/typescript.js",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-before.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.164
+  },
+  {
+    "name": "hooks-before",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/adapt91-control/built/local/typescript.js",
+      "[1,0,1,0]",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-control.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.165
+  },
+  {
+    "name": "hooks-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-check.cjs",
+      "/workspace/scratch/adapt91-after/built/local/typescript.js",
+      "[1,1,1,1]",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks-after.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 60,
+    "exit": 0,
+    "seconds": 0.165
+  },
+  {
+    "name": "original-hooks-after",
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/adapt/91-patcher-discard/proofs/hooks.cjs",
+      "/workspace/scratch/adapt91-after/built/local/typescript.js",
+      "/workspace/scratch/adapt91-invalid-hooks.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "limit": 60,
+    "exit": 1,
+    "seconds": 0.215
+  }
+]

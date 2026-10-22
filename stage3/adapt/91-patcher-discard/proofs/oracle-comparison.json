@@ -1,0 +1,74 @@
+{
+  "status": "pass",
+  "runs": [
+    {
+      "label": "control",
+      "command": [
+        "bash",
+        "stage3/oracle/run.sh",
+        "/workspace/scratch/adapt91-control",
+        "/workspace/scratch/adapt91-oracle-control",
+        "--workers",
+        "4",
+        "--limit-seconds",
+        "1800"
+      ],
+      "exit": 1,
+      "seconds": 360.135,
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "memoryBefore": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+      "memoryAfter": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+      "sanctionedApi": {
+        "reference_declarations": 28,
+        "composed_declarations": 223,
+        "sanctioned_declarations": 223,
+        "added_lines": 195,
+        "removed_lines": 194
+      }
+    },
+    {
+      "label": "after",
+      "command": [
+        "bash",
+        "stage3/oracle/run.sh",
+        "/workspace/scratch/adapt91-after",
+        "/workspace/scratch/adapt91-oracle-after",
+        "--workers",
+        "4",
+        "--limit-seconds",
+        "1800"
+      ],
+      "exit": 1,
+      "seconds": 359.893,
+      "counts": {
+        "passing": 106366,
+        "failing": 1,
+        "pending": 0
+      },
+      "memoryBefore": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+      "memoryAfter": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+      "sanctionedApi": {
+        "reference_declarations": 28,
+        "composed_declarations": 223,
+        "sanctioned_declarations": 223,
+        "added_lines": 195,
+        "removed_lines": 194
+      }
+    }
+  ],
+  "baselineDiff": {
+    "byteIdentical": true,
+    "bytes": 51093,
+    "sha256": "5333568a661aea24fc8af3149e9f4d2dfca70731842461c677f385b092adc4f0",
+    "extraLineMutantCaught": true
+  },
+  "api": {
+    "byteIdentical": true,
+    "bytes": 590861,
+    "sha256": "477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051"
+  }
+}

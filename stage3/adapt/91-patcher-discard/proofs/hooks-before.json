@@ -1,0 +1,28 @@
+{
+  "node": "v24.19.0",
+  "factory": {
+    "first": 1,
+    "second": 0
+  },
+  "allocator": {
+    "first": 1,
+    "second": 0
+  },
+  "observed": [
+    {
+      "hook": "nodeFactory",
+      "value": {
+        "type": "number",
+        "value": "42"
+      }
+    },
+    {
+      "hook": "objectAllocator",
+      "value": {
+        "type": "number",
+        "value": "17"
+      }
+    }
+  ],
+  "meaning": "Both forEach calls retain a truthy callback return and stop before the second callback."
+}

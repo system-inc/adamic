@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "conditions": {
+    "1_bodyOnlyAndApiIdentical": "pass",
+    "2_noRegistrant": "pass",
+    "3_sameOracleAndBaseline": "pass",
+    "4_javascriptChangeWitnessed": "pass",
+    "5_bothSitesClear": "pass"
+  },
+  "scan": {
+    "before": 5,
+    "after": 1,
+    "removed": 4,
+    "newFindingsOfAnyKind": 0
+  },
+  "mutant": {
+    "scan": 3,
+    "restoredRows": 2,
+    "transpileChangedSites": 1
+  },
+  "counts": {
+    "control": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "after": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    }
+  },
+  "finalBuiltTreeScope": "pass",
+  "finalIdempotence": "zero edits",
+  "baselineDiff": {
+    "byteIdentical": true,
+    "bytes": 51093,
+    "sha256": "5333568a661aea24fc8af3149e9f4d2dfca70731842461c677f385b092adc4f0",
+    "extraLineMutantCaught": true
+  },
+  "api": {
+    "byteIdentical": true,
+    "bytes": 590861,
+    "sha256": "477a56fb7b35a5f268be6131441c67d237b4646a9f8d2e1f50dc163879450051"
+  }
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "label": "control",
+    "command": [
+      "bash",
+      "stage3/oracle/run.sh",
+      "/workspace/scratch/adapt91-control",
+      "/workspace/scratch/adapt91-oracle-control",
+      "--workers",
+      "4",
+      "--limit-seconds",
+      "1800"
+    ],
+    "exit": 1,
+    "seconds": 360.135,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "memoryBefore": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "memoryAfter": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "sanctionedApi": {
+      "reference_declarations": 28,
+      "composed_declarations": 223,
+      "sanctioned_declarations": 223,
+      "added_lines": 195,
+      "removed_lines": 194
+    }
+  },
+  {
+    "label": "after",
+    "command": [
+      "bash",
+      "stage3/oracle/run.sh",
+      "/workspace/scratch/adapt91-after",
+      "/workspace/scratch/adapt91-oracle-after",
+      "--workers",
+      "4",
+      "--limit-seconds",
+      "1800"
+    ],
+    "exit": 1,
+    "seconds": 359.893,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "memoryBefore": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "memoryAfter": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n"
+  }
+]

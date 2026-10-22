@@ -1,0 +1,11 @@
+--- before/utilities.ts.js
++++ mutant/utilities.ts.js
+@@ -6876,7 +6876,7 @@
+ /** @internal */
+ export function setObjectAllocator(alloc) {
+     Object.assign(objectAllocator, alloc);
+-    forEach(objectAllocatorPatchers, fn => fn(objectAllocator));
++    forEach(objectAllocatorPatchers, fn => { fn(objectAllocator); });
+ }
+ /** @internal */
+ export function formatStringFromArgs(text, args) {

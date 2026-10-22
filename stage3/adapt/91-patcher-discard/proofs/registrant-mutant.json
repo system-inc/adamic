@@ -1,0 +1,91 @@
+{
+  "typescript": "6.0.3",
+  "method": "AST inventory plus LanguageService.findReferences",
+  "filesParsed": 39351,
+  "sourceRoots": 712,
+  "occurrences": [
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "name": "addNodeFactoryPatcher",
+      "kind": "Identifier",
+      "parent": "FunctionDeclaration",
+      "start": 12895
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "name": "addObjectAllocatorPatcher",
+      "kind": "Identifier",
+      "parent": "FunctionDeclaration",
+      "start": 338722
+    },
+    {
+      "file": "src/testRunner/adapt91Registrant.ts",
+      "name": "addNodeFactoryPatcher",
+      "kind": "Identifier",
+      "parent": "CallExpression",
+      "start": 76
+    },
+    {
+      "file": "src/testRunner/adapt91Registrant.ts",
+      "name": "addNodeFactoryPatcher",
+      "kind": "Identifier",
+      "parent": "ImportSpecifier",
+      "start": 9
+    }
+  ],
+  "registrations": [
+    {
+      "name": "addNodeFactoryPatcher",
+      "references": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 481,
+          "column": 17,
+          "parent": "FunctionDeclaration",
+          "text": "export function addNodeFactoryPatcher(fn: (factory: NodeFactory) => void): void {\r\n    nodeFactoryPatchers.push(fn);\r\n}",
+          "permitted": true
+        },
+        {
+          "file": "src/testRunner/adapt91Registrant.ts",
+          "line": 1,
+          "column": 10,
+          "parent": "ImportSpecifier",
+          "text": "addNodeFactoryPatcher",
+          "permitted": true
+        },
+        {
+          "file": "src/testRunner/adapt91Registrant.ts",
+          "line": 2,
+          "column": 1,
+          "parent": "CallExpression",
+          "text": "addNodeFactoryPatcher(() => {})",
+          "permitted": false
+        }
+      ],
+      "callers": [
+        {
+          "file": "src/testRunner/adapt91Registrant.ts",
+          "line": 2,
+          "column": 1,
+          "parent": "CallExpression",
+          "text": "addNodeFactoryPatcher(() => {})",
+          "permitted": false
+        }
+      ]
+    },
+    {
+      "name": "addObjectAllocatorPatcher",
+      "references": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8574,
+          "column": 17,
+          "parent": "FunctionDeclaration",
+          "text": "export function addObjectAllocatorPatcher(fn: (objectAllocator: ObjectAllocator) => void): void {\r\n    objectAllocatorPatchers.push(fn);\r\n    fn(objectAllocator);\r\n}",
+          "permitted": true
+        }
+      ],
+      "callers": []
+    }
+  ]
+}
