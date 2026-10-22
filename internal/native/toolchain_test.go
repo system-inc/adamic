@@ -9,8 +9,11 @@ import (
 
 // The wasm32 toolchain is pinned: a system LLVM clang beside the sysroot must be refused by name, and
 // wasi-sdk's own clang accepted. Fake compilers stand in for both, so this runs on every gate.
+//
+// Not parallel: it writes executables and runs them, and a parallel sibling that forks between a write and its exec
+// holds the script open for writing, so the exec fails with `ETXTBSY`, which checkWASIClang reads as an empty version
+// (#nf1x9fp, at load 80 on Loom). Serial tests run before the package's parallel ones resume.
 func TestWASIClangIsPinned(t *testing.T) {
-	t.Parallel()
 	fake := func(t *testing.T, version string) string {
 		t.Helper()
 		path := filepath.Join(t.TempDir(), "clang")
