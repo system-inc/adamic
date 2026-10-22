@@ -164,9 +164,11 @@ func functionPackage(symbol string) string {
 // leanCallers are the packages outside buildcache that may build lean (LeanProduct, LeanGet, LeanProductOf), each
 // reviewed to take nothing from its caller but its Inputs: native's runtime archives, whose sources are the runtime's
 // files; internal/lower's native agreement binaries, each a LeanProductOf build of its C and its archive through
-// native.BuildLean, whose reach runtimeproducts' census holds (TestTheLeanBuildReachesOnlyItsDeclaredFiles, #egjbcre);
-// and tsprinter's library oracles and their shards, each a LeanProductOf build of what it's handed (#zb9268t), whose
-// package holds its census (TestALibraryOraclesBuildReadsNoStateButItsInitializers).
+// native.BuildLean, whose reach runtimeproducts' census holds (TestTheLeanBuildReachesOnlyItsDeclaredFiles, #egjbcre),
+// and their C, a LeanProductOf build running the stage 0 compiler it's handed over the package's programs
+// (TestTheAgreementCBuildReachesOnlyItsDeclaredFiles); and tsprinter's library oracles and their shards, each a
+// LeanProductOf build of what it's handed (#zb9268t), whose package holds its census
+// (TestALibraryOraclesBuildReadsNoStateButItsInitializers).
 var leanCallers = []string{"internal/native/agreementproducts", "internal/native/runtimeproducts", "stage1/cohere/tsprinter/oracles"}
 
 func product(t testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {

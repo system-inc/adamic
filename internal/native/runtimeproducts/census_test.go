@@ -98,6 +98,19 @@ func TestProduct_LeanCensusExports(t *testing.T) {
 	censusExports(t)
 }
 
+// agreementCensusExports is censusExports for agreementproducts, whose build of the lower agreement C the census follows
+// from that package (TestTheAgreementCBuildReachesOnlyItsDeclaredFiles): internal/native's listing holds no package
+// only agreementproducts imports.
+func agreementCensusExports(t testing.TB) string {
+	t.Helper()
+	return buildcache.GoExports(t, "./internal/native/agreementproducts")
+}
+
+func TestProduct_AgreementCensusExports(t *testing.T) {
+	t.Parallel()
+	agreementCensusExports(t)
+}
+
 // censusImports is what product, a GoExports product's directory, holds: each package's export data by its import path
 // (never a variant compiled for a test), the packages of the tree among them, and every package it lists, variants by
 // their own path.
@@ -826,6 +839,28 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 	}
 	if len(census) > 0 {
 		t.Fatalf("an agreement native's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
+	}
+}
+
+// The lower agreement C's build, agreementproducts.BuildAgreementC, reaches nothing but its own package, the files its
+// key declares, and buildcache's slice, and nothing of the process: no environment at all, no package variable but the
+// programs' table, written only by its initializer, and no program but the stage 0 compiler it's handed by its path
+// (programsByPath, #egjbcre). So what it lowers is the programs and their plants, keyed as this package's code, and the
+// compiler, keyed as the product it's handed. Mutants, each a finding: the build reading ADAMIC_NATIVE_SPLIT; the
+// programs' table written outside its initializer; the build running adamic by a bare name.
+func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
+	t.Parallel()
+	root := repositoryRoot(t)
+	exports, tree, _, err := censusImports(agreementCensusExports(t))
+	if err != nil {
+		t.Fatal(err)
+	}
+	census, err := leanCensus(root, filepath.Join(root, "internal", "native", "agreementproducts"), modulePath+"/internal/native/agreementproducts", "BuildAgreementC", []string{"internal/native/agreementproducts"}, exports, tree, true, nil, nil, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(census) > 0 {
+		t.Fatalf("the lower agreement C's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
 	}
 }
 
