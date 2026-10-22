@@ -67,6 +67,15 @@ func runWASIShimShard(t *testing.T, shard int) {
 				refused.Add(1)
 				return
 			}
+			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
+				var refusal *lower.Refused
+				if errors.As(err, &refusal) {
+					refused.Add(1)
+				} else {
+					notYet.Add(1)
+				}
+				return
+			}
 			if !fixture.lowers {
 				var refusal *lower.NotYet
 				if !errors.As(err, &refusal) {

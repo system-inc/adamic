@@ -365,7 +365,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 
 	if expression.Returns == 0 && !e.discarding(closureArm) && !e.discarding(methodArm) {
 		e.line("%s;", call)
-		e.closureThrown()
+		if e.program.ClosureMayThrow(expression) {
+			e.checkThrown()
+		}
 		return "0"
 	}
 	if expression.Returns == 0 {
@@ -399,7 +401,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	result := e.temporary()
 	e.line("adamic_value %s = %s;", result, call)
 	// A throw gives back a zero value, nothing to let go.
-	e.closureThrown()
+	if e.program.ClosureMayThrow(expression) {
+		e.checkThrown()
+	}
 	if expression.Returns.IsReference() {
 		// A closure's result comes back owned.
 		return e.own(expression.Returns, fmt.Sprintf("(%s)%s.reference", cType(expression.Returns), result))

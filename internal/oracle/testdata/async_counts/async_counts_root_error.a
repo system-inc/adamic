@@ -1,0 +1,5 @@
+async function fail(): Promise<void> {
+    await Promise.resolve();
+    throw new Error(['root', 'failure'].join('-'));
+}
+await fail();

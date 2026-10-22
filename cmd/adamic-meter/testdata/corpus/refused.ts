@@ -1,2 +1,1 @@
-async function later(): Promise<void> {}
-void later;
+console.log(`${1 == 1}`);
