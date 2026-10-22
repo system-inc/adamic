@@ -830,6 +830,36 @@ func TestNativeAgreesWithNode_user_iterators(t *testing.T) {
 	runNativeAgreesShard(t, -37)
 }
 
+func TestNativeAgreesWithNode_typed_arrays_integer(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -38)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -39)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -40)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -41)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -42)
+}
+
+func TestNativeAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
+	t.Parallel()
+	runNativeAgreesShard(t, -43)
+}
+
 func TestFamiliesCatchAPlantedCase_NativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
 	catchPlantedCase(t, "TestNativeAgreesWithNode")
@@ -1648,6 +1678,36 @@ func TestWASIAgreesWithNode_bitwise_sweep(t *testing.T) {
 func TestWASIAgreesWithNode_normalize_coverage_limit(t *testing.T) {
 	t.Parallel()
 	runWASIAgreesShard(t, -35)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_integer(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -36)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_integer_stop(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -37)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_uint8array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -38)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_uint16array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -39)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_int32array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -40)
+}
+
+func TestWASIAgreesWithNode_typed_arrays_sort_float64array(t *testing.T) {
+	t.Parallel()
+	runWASIAgreesShard(t, -41)
 }
 
 func TestFamiliesCatchAPlantedCase_WASIAgreesWithNode(t *testing.T) {
@@ -2723,6 +2783,36 @@ func TestCountsAreRecorded_async_snapshots(t *testing.T) {
 func TestCountsAreRecorded_async_void_value(t *testing.T) {
 	t.Parallel()
 	runCountsShard(t, -29)
+}
+
+func TestCountsAreRecorded_typed_arrays_integer(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -30)
+}
+
+func TestCountsAreRecorded_typed_arrays_integer_stop(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -31)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_uint8array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -32)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_uint16array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -33)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_int32array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -34)
+}
+
+func TestCountsAreRecorded_typed_arrays_sort_float64array(t *testing.T) {
+	t.Parallel()
+	runCountsShard(t, -35)
 }
 
 func TestFamiliesCatchAPlantedCase_CountsAreRecorded(t *testing.T) {

@@ -228,6 +228,7 @@
 `runtime-file:tsgo.c`
 `runtime-file:tsgo_runtime.h`
 `runtime-file:typed_array.c`
+`runtime-file:typed_array_sort.c`
 `runtime-file:union.c`
 `runtime-file:utf8.c`
 `runtime-file:view_callables_contract.h`
@@ -290,3 +291,6 @@
 # Constructor runtime and ownership helpers keep state in counted per-object storage.
 `runtime-file:regexp_compile_ownership.c`
 `runtime-file:regexp_compile_runtime.c`
+
+# typed_array_sort.c has no mutable static storage. Merge buffers and cursors are
+# per-call allocations and automatic locals; the temporary buffer is freed.

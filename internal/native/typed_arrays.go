@@ -38,6 +38,10 @@ func (e *emitter) typedArrayValue(expression ir.Expression) string {
 			function = "adamic_typed_array_from_numbers"
 		}
 		return e.own(v.Of, fmt.Sprintf("%s(%s, %s)", function, typedArrayKind(v.Of), source))
+	case ir.TypedArraySort:
+		array := e.value(v.Array)
+		e.line("adamic_typed_array_sort(%s);", array)
+		return array
 	case ir.TypedArrayFill:
 		array := e.value(v.Array)
 		value := e.snapshot(ir.Number, e.value(v.Arguments[0]))
