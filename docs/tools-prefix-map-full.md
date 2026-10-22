@@ -98,3 +98,22 @@ the sha (the `full.log` here is that rerun, and its wrapper printed the worktree
 - `docs/tools-prefix-map-full/92b7d6db/full.log`
 - `docs/tools-prefix-map-full/92b7d6db/targeted.log`
 - `docs/tools-prefix-map-full/34dfaca1/failing-test.log`
+
+## 4d61be85: green
+
+The branch moved to `4d61be85ea77a50f875c4888b5c30a427a616c4f`, one commit on 92b7d6db that changes only
+`internal/native/release_build_test.go` (3 lines), pinning the strip flag in the test's three sanitized rows. Same box,
+same tools, same worktree checked out detached at the new sha, submodules updated (cohere still `06af2e39`).
+
+- `go test ./internal/native -count=1 -v -run '^TestNonShippingFlagsStayIdentical$'`: exit 0,
+  `--- PASS: TestNonShippingFlagsStayIdentical (0.00s)`. Log: `4d61be85/single.log`.
+- `go test ./internal/native -count=1 -timeout 40m`: exit 0, 330 s wall, `ok  	github.com/system-inc/adamic/internal/native	327.331s`.
+  The log is that one line. Log: `4d61be85/full.log`.
+
+Conditions. `/proc/loadavg` before the full run `3.49 3.46 3.07`, after `3.82 3.87 3.35`. To get the free disk back to
+12 GB I removed the `34dfaca1` comparison worktree and ran `go clean -cache` again. The lowest of the 30 s samples
+during the run was 9.6 GB free.
+
+Why this run took half the 674 s of the first one, inferred and not measured: neither run set
+`ADAMIC_GATE_UNCACHED`, so this one could reuse the native unit cache the first run filled (`~/.cache/adamic-build`,
+2.3 GB after it). This is an ordinary cached run, not an uncached one.
