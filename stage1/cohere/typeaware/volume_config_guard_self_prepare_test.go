@@ -424,7 +424,11 @@ func volumeGuardCommand(parent context.Context, name string, args ...string) (*e
 		}
 		return err
 	}
-	cmd.WaitDelay = time.Second
+	// No WaitDelay: exec reads volumeGuardOutput's buffer to its end, where one closed it a second after go exited and
+	// failed a build that had finished but was slow to drain under load (#n3gk22h's shape). Not childguard.Capture,
+	// which has no Started: volumeGuardUnitContext's cook kills the groups volumeGuardExecute registers before it exits
+	// the process, and a group it couldn't register would outlive the exit. go waits for the compilers it starts before
+	// it exits, so nothing holds a pipe after it, and the cook or the unit's ceiling ends a wait on one that did.
 	return cmd, cancel
 }
 func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) result {

@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"syscall"
-	"time"
 )
 
 // A compiler can spawn clang or other compiler children. Cancel the whole
@@ -24,6 +23,5 @@ func volumeProfileCommand(ctx context.Context, name string, args ...string) *exe
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }

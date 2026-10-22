@@ -24,6 +24,13 @@ var typeAwareCommandGroups sync.Map
 
 // A fresh Unix process group includes the command's compiler descendants. This
 // works on macOS and Linux without an external timeout program or /proc.
+//
+// No WaitDelay: exec reads a buffered stream to its end, where one closed the reads a second after the child exited and
+// failed a build or probe that had finished but was slow to drain under load (#n3gk22h's shape). The commands
+// typeAwareRunCommandContext runs aren't childguard.Capture's, which has no Started: typeAwareDeadline's cooked kills the
+// groups it registers before it exits the process, and a group it couldn't register would outlive the exit. go and
+// stage 0 wait for the compilers they start before they exit, so nothing holds a pipe after them, and the unit's
+// ceiling ends a wait on one that did.
 func typeAwareContextCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -37,7 +44,6 @@ func typeAwareContextCommand(ctx context.Context, name string, args ...string) *
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
@@ -155,6 +161,9 @@ func TestTypeAwareContextKillsCompilerGroup(t *testing.T) {
 	defer cancel()
 	command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^TestTypeAwareContextKillsCompilerGroup$")
 	command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_GROUP_PROBE=leader", "ADAMIC_TYPEAWARE_GROUP_MARKER="+marker)
+	// Not childguard.Capture: its own group kill when ctx ends would do Cancel's work and hide a Cancel that kills only
+	// the leader. The output is only the failure's message, and only the leader holds the pipe (the marker child's
+	// streams are the null device), so with no WaitDelay the read ends when the leader dies.
 	output, err := command.CombinedOutput()
 	if err == nil || !errors.Is(ctx.Err(), context.DeadlineExceeded) {
 		t.Fatalf("context did not kill leader: %v %s", err, output)

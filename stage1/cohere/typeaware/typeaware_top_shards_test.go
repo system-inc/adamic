@@ -9,6 +9,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type typeAwarePlan struct {
@@ -113,7 +115,10 @@ func TestTypeAwareTopShardPlantedFailure(t *testing.T) {
 		name := fmt.Sprintf("TestTypeAwareTopPlanted_%03d", i)
 		command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_TOP_PLANTED=1")
-		output, err := command.CombinedOutput()
+		// Read through childguard.Capture, to its end with no WaitDelay deciding when, so a nonholding leaf that passed
+		// but was slow to drain under load never reads as failed, and the holding leaf's message is never cut short.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		cancel()
 		if i == 0 && err != nil {
 			t.Fatalf("nonholding leaf failed: %v %s", err, output)
