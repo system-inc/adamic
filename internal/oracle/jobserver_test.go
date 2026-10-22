@@ -16,6 +16,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -110,7 +111,7 @@ func jobserverRun(t *testing.T, clang string, tokens int) (report, commands stri
 	// last value of a variable is the one a child sees). Under it, chg_j1h9dkkk's unit refused the archive as not
 	// built (#yzwm4rj).
 	command.Env = append(os.Environ(), "ADAMIC_ORACLE_JOBSERVER_CHILD="+out, ccjobserver.Variable+"="+fifo, "ADAMIC_TOOLS="+tools,
-		"ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_STORE=off", "ADAMIC_BUILD_CACHE=")
+		"ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_STORE=off", "ADAMIC_BUILD_CACHE=", location.OutputDirectoryVariable+"=")
 	output, err := command.CombinedOutput()
 	if err != nil || !strings.Contains(string(output), "--- PASS: TestTheJobserverNeverReachesTheEmittedCOrClangChild") {
 		t.Fatalf("the run under a jobserver of %d tokens: %v\n%s", tokens, err, output)
