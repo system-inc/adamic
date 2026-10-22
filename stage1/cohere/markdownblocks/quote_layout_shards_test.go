@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
@@ -496,12 +497,13 @@ func quoteLayoutFixture(t *testing.T, inputs []auditInput, products quoteLayoutP
 }
 
 // quoteLayoutCommand gives children their own deadline and process group so
-// cancellation reaches the compilers spawned by Go as well as the Go process.
-func quoteLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+// cancellation reaches the compilers spawned by Go as well as the Go process. It returns the command's context with
+// it, for childguard.Capture to end the reads by.
+func quoteLayoutCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
 	t.Cleanup(cancel)
-	return quoteLayoutContextCommand(ctx, name, arguments...)
+	return quoteLayoutContextCommand(ctx, name, arguments...), ctx
 }
 
 // Setup keeps process-group cancellation without a deadline of its own.
@@ -525,24 +527,24 @@ func quoteLayoutContextCommand(ctx context.Context, name string, arguments ...st
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
+// quoteLayoutExecuteResult reads a run's output through childguard.Capture, to its end with no timer deciding when:
+// exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a
+// second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
 func quoteLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
 	t.Helper()
-	command := quoteLayoutCommand(t, name, arguments...)
+	command, ctx := quoteLayoutCommand(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		return run{}, fmt.Errorf("running %s: %w", name, err)
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
+	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
 
 func quoteLayoutExecute(t *testing.T, environment []string, name string, arguments ...string) run {

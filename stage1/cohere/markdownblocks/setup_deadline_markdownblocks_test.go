@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Shared preparation has no deadline; the unit runner still bounds the process.
@@ -39,8 +41,8 @@ func TestMarkdownLayoutSetupHasNoDeadline(t *testing.T) {
 	}
 	command := tableLayoutCommand(work, binary, "-test.run=^TestMarkdownLayoutDeadlineWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_MARKDOWN_LAYOUT_DEADLINE_WORKER=1")
-	if output, err := command.CombinedOutput(); err == nil {
-		t.Fatalf("work deadline did not stop child: %s", output)
+	if stdout, stderr, err := childguard.Capture(work, command); err == nil {
+		t.Fatalf("work deadline did not stop child: %s%s", stdout, stderr)
 	}
 	if !errors.Is(work.Err(), context.DeadlineExceeded) {
 		t.Fatalf("work ended with %v", work.Err())

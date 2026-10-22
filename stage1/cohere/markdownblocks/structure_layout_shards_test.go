@@ -537,6 +537,5 @@ func structureLayoutCommand(name string, arguments ...string) (*exec.Cmd, contex
 		}
 		return err
 	}
-	command.WaitDelay = 5 * time.Second
 	return command, cancel
 }

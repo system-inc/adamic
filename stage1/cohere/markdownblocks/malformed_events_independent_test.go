@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
@@ -289,7 +290,6 @@ func malformedEventsDeadline(t *testing.T, name string) (context.Context, func()
 
 func malformedEventsCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(err, syscall.ESRCH) {
@@ -297,19 +297,19 @@ func malformedEventsCommand(ctx context.Context, name string, arguments ...strin
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 
+// malformedEventsExecute reads a run's output through childguard.Capture, to its end with no timer deciding when:
+// exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a
+// second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
 func malformedEventsExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) run {
 	t.Helper()
 	command := malformedEventsCommand(ctx, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
 		t.Fatalf("cooked: %s exceeded 90s: %v", t.Name(), ctx.Err())
 	}
@@ -317,7 +317,7 @@ func malformedEventsExecute(t *testing.T, ctx context.Context, environment []str
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
 	}
-	return run{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}
+	return run{stdout, stderr, command.ProcessState.ExitCode()}
 }
 
 func malformedEventsNode(t *testing.T, ctx context.Context, path string, arguments ...string) run {
