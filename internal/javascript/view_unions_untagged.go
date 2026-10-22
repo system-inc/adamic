@@ -57,12 +57,19 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
  };
  const active=new Map();
  const matches=(value,id,depth=0)=>{
+  // A defined value can only use the non-undefined arm of this optional union.
+  // Resolve it in this frame, leaving branching unions to ordinary backtracking.
+  const optional=contracts[id-1];
+  if(value!==undefined && optional?.Kind===4 && (!optional.Unsupported || optional.Unsupported==='untagged object union') && !optional.Nominal && optional.Members?.length===2){
+   const [left,right]=optional.Members;
+   if(contracts[left-1]?.Kind===7){id=right;depth++;}
+   else if(contracts[right-1]?.Kind===7){id=left;depth++;}
+  }
   const reference=value!==null && typeof value==='object';
   let seen=reference ? active.get(value) : undefined;
   if(seen?.has(id)) return true;
   if(reference){if(seen===undefined){seen=new Set();active.set(value,seen);}seen.add(id);}
   try {
-  if(depth>128) return false;
   const contract=contracts[id-1];
   if(contract===undefined || (contract.Unsupported && contract.Unsupported!=='untagged object union') || contract.Nominal) return false;
   if(value===undefined && (contract.Undefined || contract.Kind===7)) return true;
@@ -82,15 +89,16 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   if(contract.Kind===3) return false; // awaits views-v3: array element kind
   if(contract.Kind===6) return value===null;
   if(contract.Kind===7) return value===undefined;
-  if(contract.Kind===4) return (contract.Members || []).some(member=>matches(value,member,depth+1));
-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (!contract.FixedTuple && Array.isArray(value)) || value instanceof Map) return false;
-  if(contract.FixedTuple && (!Array.isArray(value) || value.length !== contract.Tuple.length)) return false;
+  if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1)) return true;}return false;}
+  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
+  if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
   const fields=contract.Fields || [];
   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
   if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
   const tags=fields.filter(field=>!field.Optional && contracts[field.Contract-1]?.Kind===1 && contracts[field.Contract-1]?.Allowed?.length);
   if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name);return actual!==undefined && matches(actual.value,field.Contract,depth+1);});
-  return fields.every(field=>{const actual=slot(value,field.Name);return actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1);});
+  for(const field of fields){const actual=slot(value,field.Name);if(!(actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1))) return false;}
+  return true;
   } finally {if(reference){seen.delete(id);if(seen.size===0) active.delete(value);}}
  };
  if(contracts[id-1].FixedTuple && matches(value,id)) return id;
@@ -120,18 +128,20 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 			continue
 		}
 		parameters := make([]ir.Type, len(contract.Parameters))
+		masks := make([]uint16, len(parameters)+1)
 		known := true
 		for i, parameter := range contract.Parameters {
 			parameters[i] = e.program.ViewContracts[parameter-1].Of
+			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
 			known = known && parameters[i] != 0
 		}
 		result := e.program.ViewContracts[contract.Result-1].Of
 		if !known || result == 0 {
 			continue
 		}
-		choices = append(choices, unionCallableSignature(parameters, result, root.Name))
+		choices = append(choices, unionCallableSignature(parameters, result, root.Name, masks))
 	}
-	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
+	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>adamicViewCallableSignaturesMatch(recorded,expected)) || choices[0];})(" + recorded + ")"
 }
 
 func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
