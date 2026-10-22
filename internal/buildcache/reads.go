@@ -48,6 +48,13 @@ import (
 // whose values differ from the ones its newest set recorded.
 const keptSets = 4
 
+// keptPinned is how many sets pinned to a tree a file keeps past keptSets, the newest first (keptSetsOf). A tree's own
+// cache is gone or carried as a seed, under another path, by the next tree, so its pins end with it. A cache that lives
+// past one tree under one path, adamic's own default one on a developer's machine, would hold every pin a reader ever
+// made, so pins are capped there too. A set dropped past the cap fails closed: its reader misses and builds again.
+// A tree builds one name key at most once for each test that settles it, and block 165 had 46 such lint shards.
+const keptPinned = 64
+
 // readsVersion versions the read set file and every key derived from it. v4: a product read is valued by its bytes
 // (productDigest), where v3 valued it by its key.
 const readsVersion = "buildcache reads v4"
@@ -230,14 +237,20 @@ func withReads(cache, nameKey string, change func(file *readsFile) error) error 
 	return os.Rename(temporary.Name(), readsPath(cache, nameKey))
 }
 
-// keptSetsOf is sets trimmed to the newest keptSets, and every older one pinned to tree, which leaves only once the file
-// is carried to another tree (#xjqwsad: block 165's lint void, the oracle's upstream build pushed out of
-// lint-decoded-options-native-setup-v2's file by the builds settled after it in the same tree).
+// keptSetsOf is sets trimmed to the newest keptSets, and the newest keptPinned older ones pinned to tree, which leave
+// only once the file is carried to another tree or the cap passes them (#xjqwsad: block 165's lint void, the oracle's
+// upstream build pushed out of lint-decoded-options-native-setup-v2's file by the builds settled after it in the same
+// tree).
 func keptSetsOf(sets []readSet, tree string) []readSet {
 	var kept []readSet
+	pinned := 0
 	for index, set := range sets {
-		if index < keptSets || set.Pinned == tree {
+		switch {
+		case index < keptSets:
 			kept = append(kept, set)
+		case set.Pinned == tree && pinned < keptPinned:
+			kept = append(kept, set)
+			pinned++
 		}
 	}
 	return kept

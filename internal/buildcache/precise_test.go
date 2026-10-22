@@ -3138,9 +3138,10 @@ func TestAReaderStillFindsTheUpstreamBuildItRead(t *testing.T) {
 // trim pushes out the oldest, and a re-record of the same entries replaces it outright: either way the very set a
 // reader in the tree names leaves its file, and no seed check can catch that. The pin keeps it through both. D reads
 // U's first build; U is re-recorded keptSets+1 times with other entries and once with the first's own entries under
-// another key; U's file still holds the first set, and D is still found with U's first build as its upstream. Mutants
-// that each fail it: the trim ignoring pins (keptSetsOf evicting at the cap); recordReads replacing a pinned set of the
-// same entries.
+// another key, then settled once more with other bytes, its product here; U's file still holds the first set, and D is
+// still found with U's first build as its upstream, by the bytes it recorded, not the newest's. Mutants that each fail
+// it: the trim ignoring pins (keptSetsOf evicting at the cap); recordReads replacing a pinned set of the same entries;
+// entryProduct taking the newest always (Node's).
 // Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
 func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
 	r := newRig(t)
@@ -3171,6 +3172,11 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+	// And U settles once more in the tree with other bytes, its product here, so the newest set with a product present
+	// is that later build's: only the match finds the first.
+	if later := settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: "include/x.h"}}, "later"); later == first {
+		t.Fatalf("U's later build kept the first's key %s", first)
+	}
 	file, err := loadReads(r.cache, built)
 	if err != nil {
 		t.Fatal(err)
@@ -3186,6 +3192,25 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
 	}
 	if !slices.ContainsFunc(found.upstreams, func(one upstream) bool { return one.directory == filepath.Join(r.cache, first) }) {
 		t.Fatalf("the reader's upstreams are %+v, want U's first build %s", found.upstreams, first)
+	}
+}
+
+// Pins are capped (keptPinned): a cache that lives past one tree under one path, adamic's own default one on a
+// developer's machine, keeps the newest keptPinned pinned sets past keptSets, never every pin a reader ever made. The
+// oldest ones go first, and their readers miss and build again, failing closed. Mutant that fails it: the cap dropped.
+func TestPinnedSetsAreCapped(t *testing.T) {
+	t.Parallel()
+	var sets []readSet
+	for index := range keptSets + keptPinned + 3 {
+		set := readSet{Key: fmt.Sprint(index)}
+		if index >= keptSets {
+			set.Pinned = "/trees/this/cache"
+		}
+		sets = append(sets, set)
+	}
+	kept := keptSetsOf(sets, "/trees/this/cache")
+	if len(kept) != keptSets+keptPinned || kept[len(kept)-1].Key != fmt.Sprint(keptSets+keptPinned-1) {
+		t.Fatalf("kept %d sets, the oldest %q; want %d, the oldest %d", len(kept), kept[len(kept)-1].Key, keptSets+keptPinned, keptSets+keptPinned-1)
 	}
 }
 
