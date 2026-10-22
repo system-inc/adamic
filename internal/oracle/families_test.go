@@ -75,6 +75,8 @@ var families = []family{
 		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
 		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
 		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
+		"internal/oracle/testdata/counters_shapes.a",
+		"internal/oracle/testdata/counters_square_jump.a",
 	}},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
 	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
@@ -120,6 +122,8 @@ var families = []family{
 		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
 		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
 		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
+		"internal/oracle/testdata/counters_shapes.a",
+		"internal/oracle/testdata/counters_square_jump.a",
 	}},
 	// 579.6 s in Loom as one test: each fixture's wasm32 build, its import inventory, and runs on node:wasi, the shim
 	// and Node, so about TestWASIAgreesWithNode's cost and a half, over as many shards and the same solo fixtures.
@@ -169,6 +173,8 @@ var families = []family{
 		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
 		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
 		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
+		"internal/oracle/testdata/counters_shapes.a",
+		"internal/oracle/testdata/counters_square_jump.a",
 	}},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
 	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
