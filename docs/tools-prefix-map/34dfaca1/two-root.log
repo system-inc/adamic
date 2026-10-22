@@ -1,0 +1,15 @@
+== llvm-a: /opt/llvm-a/bin/clang, cache /tmp/two-root/34dfaca1/cache-llvm-a (0 entries before)
+build exit=0
+== llvm-c-longer-name: /opt/llvm-c-longer-name/bin/clang, cache /tmp/two-root/34dfaca1/cache-llvm-c-longer-name (0 entries before)
+build exit=0
+/tmp/two-root/34dfaca1/arguments-llvm-a /tmp/two-root/34dfaca1/arguments-llvm-c-longer-name differ: char 41, line 1
+cmp exit=1
+strings -a arguments-llvm-a | grep -c /opt/llvm: 2
+      1 /opt/llvm-a/lib/clang/20/include/sanitizer
+      1 /opt/llvm-a/lib/clang/20/include
+strings -a arguments-llvm-c-longer-name | grep -c /opt/llvm: 2
+      1 /opt/llvm-c-longer-name/lib/clang/20/include/sanitizer
+      1 /opt/llvm-c-longer-name/lib/clang/20/include
+427c8c0391e819882decf75db872be4ea1d0379e9bc6a337532ca7466b30c592  /tmp/two-root/34dfaca1/arguments-llvm-a
+af5db8f015e55c9e3b1d99e20321f7afb015957a1a7f8e5f9ab603a165ba9285  /tmp/two-root/34dfaca1/arguments-llvm-c-longer-name
+run exit=0

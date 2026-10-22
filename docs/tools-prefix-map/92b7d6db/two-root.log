@@ -1,0 +1,10 @@
+== llvm-a: /opt/llvm-a/bin/clang, cache /tmp/two-root/92b7d6db/cache-llvm-a (0 entries before)
+build exit=0
+== llvm-c-longer-name: /opt/llvm-c-longer-name/bin/clang, cache /tmp/two-root/92b7d6db/cache-llvm-c-longer-name (0 entries before)
+build exit=0
+cmp exit=0
+strings -a arguments-llvm-a | grep -c /opt/llvm: 0
+strings -a arguments-llvm-c-longer-name | grep -c /opt/llvm: 0
+9593d4dea3346ccb9e3ffe7c48d85e5ccec24fe5be8cefb8de17b69edf232546  /tmp/two-root/92b7d6db/arguments-llvm-a
+9593d4dea3346ccb9e3ffe7c48d85e5ccec24fe5be8cefb8de17b69edf232546  /tmp/two-root/92b7d6db/arguments-llvm-c-longer-name
+run exit=0

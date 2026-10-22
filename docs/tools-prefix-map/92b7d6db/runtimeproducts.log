@@ -1,0 +1,9 @@
+--- FAIL: TestProduct_LeanCensusExports (13.75s)
+    census_test.go:61: build go list -export  ./internal/native listing.json: write /root/.cache/adamic-build/local/.building-1112cf07f5ef-993035847/exports/265.a: no space left on device
+--- FAIL: TestTheRuntimeBuildReachesOnlyItsDeclaredFiles (15.08s)
+    census_test.go:737: build go list -export  ./internal/native listing.json: write /root/.cache/adamic-build/local/.building-1112cf07f5ef-2894150058/exports/265.a: no space left on device
+--- FAIL: TestTheLeanCensusFollowsTheBuildAndFailsClosed (18.13s)
+    census_test.go:778: build go list -export  ./internal/native listing.json: write /root/.cache/adamic-build/local/.building-1112cf07f5ef-3780693665/exports/265.a: no space left on device
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native/runtimeproducts	18.182s
+FAIL

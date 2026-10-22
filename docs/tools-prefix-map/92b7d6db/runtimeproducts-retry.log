@@ -1,0 +1,11 @@
+--- FAIL: TestProduct_LeanCensusExports (130.72s)
+    census_test.go:61: build go list -export  ./internal/native listing.json: go list -export: exit status 1
+        # github.com/microsoft/TypeScript/tsc/internal/checker
+        compile: writing output: write $WORK/b281/_pkg_.a: no space left on device
+--- FAIL: TestTheRuntimeBuildReachesOnlyItsDeclaredFiles (215.13s)
+    census_test.go:737: build go list -export  ./internal/native listing.json: write /root/.cache/adamic-build/local/.building-1112cf07f5ef-2906667465/exports/273.a: no space left on device
+--- FAIL: TestTheLeanCensusFollowsTheBuildAndFailsClosed (217.96s)
+    census_test.go:778: build go list -export  ./internal/native listing.json: write /root/.cache/adamic-build/local/.building-1112cf07f5ef-174383438/exports/273.a: no space left on device
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native/runtimeproducts	218.004s
+FAIL

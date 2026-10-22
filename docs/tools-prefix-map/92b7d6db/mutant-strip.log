@@ -1,0 +1,19 @@
+=== RUN   TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== PAUSE TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== RUN   TestToolMapsTakeTheSysrootOut
+=== PAUSE TestToolMapsTakeTheSysrootOut
+=== RUN   TestASanitizedObjectNamesNoHeadersDirectory
+=== PAUSE TestASanitizedObjectNamesNoHeadersDirectory
+=== CONT  TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== CONT  TestASanitizedObjectNamesNoHeadersDirectory
+=== CONT  TestToolMapsTakeTheSysrootOut
+--- PASS: TestToolMapsTakeTheSysrootOut (0.00s)
+=== NAME  TestASanitizedObjectNamesNoHeadersDirectory
+    tool_maps_test.go:108: the sanitized object names the headers' directory /tmp/adamic-gate/TestASanitizedObjectNamesNoHeadersDirectory1512955177/002, so its bytes depend on where they sit
+--- FAIL: TestASanitizedObjectNamesNoHeadersDirectory (0.03s)
+=== NAME  TestAnObjectNamesNotWhereTheCompilerIsInstalled
+    tool_maps_test.go:56: the unmapped object names /opt/llvm-a; the mapped one doesn't
+--- PASS: TestAnObjectNamesNotWhereTheCompilerIsInstalled (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.058s
+FAIL

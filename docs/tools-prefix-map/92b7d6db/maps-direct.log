@@ -1,0 +1,15 @@
+=== RUN   TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== PAUSE TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== RUN   TestToolMapsTakeTheSysrootOut
+=== PAUSE TestToolMapsTakeTheSysrootOut
+=== RUN   TestASanitizedObjectNamesNoHeadersDirectory
+=== PAUSE TestASanitizedObjectNamesNoHeadersDirectory
+=== CONT  TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== CONT  TestASanitizedObjectNamesNoHeadersDirectory
+=== CONT  TestToolMapsTakeTheSysrootOut
+--- PASS: TestToolMapsTakeTheSysrootOut (0.00s)
+--- PASS: TestASanitizedObjectNamesNoHeadersDirectory (6.74s)
+=== NAME  TestAnObjectNamesNotWhereTheCompilerIsInstalled
+    tool_maps_test.go:56: the unmapped object names /opt/llvm-a; the mapped one doesn't
+--- PASS: TestAnObjectNamesNotWhereTheCompilerIsInstalled (6.77s)
+PASS

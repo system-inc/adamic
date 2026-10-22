@@ -1,0 +1,12 @@
+diff --git a/internal/native/library.go b/internal/native/library.go
+index 2b6b4062..d2b2f36e 100644
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -558,6 +558,7 @@ func clangIn(directory string, compiler string, arguments ...string) *exec.Cmd {
+ // its headers from <compiler> (portableKeyParts), never where it sits, so neither may reach the bytes. The installation is
+ // read from the compiler's own path, never the environment.
+ func toolMaps(compiler string, arguments []string) []string {
++	return nil
+ 	if !filepath.IsAbs(compiler) {
+ 		if path, err := toolchain.Path(compiler); err == nil {
+ 			compiler = path

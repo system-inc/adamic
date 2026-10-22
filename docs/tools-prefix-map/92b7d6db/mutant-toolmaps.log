@@ -1,0 +1,18 @@
+=== RUN   TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== PAUSE TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== RUN   TestToolMapsTakeTheSysrootOut
+=== PAUSE TestToolMapsTakeTheSysrootOut
+=== RUN   TestASanitizedObjectNamesNoHeadersDirectory
+=== PAUSE TestASanitizedObjectNamesNoHeadersDirectory
+=== CONT  TestAnObjectNamesNotWhereTheCompilerIsInstalled
+=== CONT  TestASanitizedObjectNamesNoHeadersDirectory
+=== CONT  TestToolMapsTakeTheSysrootOut
+    tool_maps_test.go:71: maps [], want "-ffile-prefix-map=/tmp/adamic-gate/TestToolMapsTakeTheSysrootOut3170298484/001=/adamic-sysroot" among them
+--- FAIL: TestToolMapsTakeTheSysrootOut (0.00s)
+--- PASS: TestASanitizedObjectNamesNoHeadersDirectory (0.03s)
+=== NAME  TestAnObjectNamesNotWhereTheCompilerIsInstalled
+    tool_maps_test.go:54: the object names where clang is installed (/opt/llvm-a), so its bytes depend on where the tools sit
+--- FAIL: TestAnObjectNamesNotWhereTheCompilerIsInstalled (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.061s
+FAIL
