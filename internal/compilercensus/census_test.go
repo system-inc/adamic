@@ -39,6 +39,7 @@ var compilerSites = map[string]string{
 	"internal/buildcache/precise_test.go:TestWhatABuildReadsOfTheMachineIsKeyed":                      "a fake system directory's cc link, a path in a trace; nothing runs",
 	"internal/buildcache/precise_test.go:TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed":         "a fake tools directory's clang script, run through a link in a trace; nothing compiles",
 	"internal/toolchain/toolchain_test.go:TestAToolsCompilersAreClangUnlessTheCallerNamesOne":         "checks Env names clang and clang++ as CC and CXX; compiles nothing",
+	"internal/lower/agree_test.go:TestNativeAgreementLeanBuildIsBuildsBytes":                          "finds the clang native.Build runs, to hand native.BuildLean that one by its path and prove the lean binary is Build's bytes; compiles through native alone",
 	"internal/fuzz/run.go:tryFile":                                                                    "the fuzzer compiles each case into its own scratch directory, never a product",
 	"internal/oracle/runtimes_test.go:TestARuntimeProductKeyIsTheSameThroughEitherLink":               "finds clang to reach it through two links and key a runtime; compiles nothing",
 	"internal/oracle/counts_test.go:countMeasurementInputs":                                           "resolves clang to key a count product by its version report; compiles nothing",
