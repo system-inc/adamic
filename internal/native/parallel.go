@@ -13,9 +13,13 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 	if expression.Moved {
 		name = "adamic_parallel_map_move"
 	}
-	declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
-	if !slices.Contains(e.declarations, declaration) {
-		e.declarations = append(e.declarations, declaration)
+	// Keep the ordinary program's explicit ABI declaration. Async programs use
+	// adamic.h's declaration so split units need no external prototype ownership.
+	if expression.Moved || !e.program.HasPromises() {
+		declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
+		if !slices.Contains(e.declarations, declaration) {
+			e.declarations = append(e.declarations, declaration)
+		}
 	}
 	items := e.value(expression.Items)
 	original := e.value(expression.Work)

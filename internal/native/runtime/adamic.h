@@ -143,7 +143,7 @@ typedef struct adamic_cell {
 	bool references;
 	bool ready;
 #ifdef ADAMIC_CANONICAL_CLOSURES
-	struct adamic_environment *owner;
+	adamic_heap *owner;
 #endif
 	adamic_value value;
 } adamic_cell;
@@ -158,6 +158,8 @@ typedef struct adamic_environment {
 	adamic_cell cells[];
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
+void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 #endif
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);

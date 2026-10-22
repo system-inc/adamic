@@ -1,0 +1,16 @@
+import { parallelMap } from "adamic";
+function work(value: number, index: number): number { throw new Error(`parallel${value + index}`); }
+async function run(): Promise<string> {
+    try {
+        await Promise.resolve();
+        const items: readonly number[] = [1];
+        const values = parallelMap(items, work);
+        return `missed:${values.length}`;
+    } catch (error) {
+        const recovered = [1].map((value: number): number => value + 1);
+        if (recovered[0] !== 2) { return "wrong recovery"; }
+        if (error instanceof Error) { return `caught:${error.message}`; }
+        return "wrong error";
+    }
+}
+console.log(await run());

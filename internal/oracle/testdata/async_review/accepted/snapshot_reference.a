@@ -1,0 +1,7 @@
+let text = `before${1}`;
+async function change(): Promise<string> {
+    text = `after${2}`;
+    await Promise.resolve();
+    return "right";
+}
+console.log(text + await change());
