@@ -837,7 +837,7 @@ func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(t *testing.T) {
 			t.Fatalf("the read set %q lacks %q", got, want)
 		}
 	}
-	if value, _ := entryValue(r.root, r.cache, readEntry{Kind: "link", Path: "lib"}, 0, nil); value != "link source" {
+	if value, _ := treeEntryValue(r.root, r.cache, readEntry{Kind: "link", Path: "lib"}); value != "link source" {
 		t.Fatalf("a symbolic link to a directory values %q", value)
 	}
 	write(t, r.root, "source/a.c", "int a2;\n")
@@ -3084,5 +3084,125 @@ func TestAReadThroughALinkThenDotDotIsKeyedWhereTheKernelLands(t *testing.T) {
 		if slices.ContainsFunc(got, func(entry string) bool { return strings.HasSuffix(entry, " "+spelled) }) {
 			t.Fatalf("the read set %q keys the spelling's %s", got, spelled)
 		}
+	}
+}
+
+// An upstream settled again in one tree with other bytes still values as its reader recorded (#xjqwsad, block 165's
+// lint void): the set the reader found it by is pinned for the tree, so the union never folds it away, and a product
+// entry is valued by the set, valid on this tree with its product here, whose product has the bytes the entry
+// recorded, the newest only when none does. D reads U at its first build; U settles five times more, each with other
+// bytes; D is still found, with U's first build as its upstream, in this cache and in a copy of it at another path, a
+// runner's. Mutants that each fail it: the pin off; the match off.
+// Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
+func TestAReaderStillFindsTheUpstreamBuildItRead(t *testing.T) {
+	r := newRig(t)
+	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
+	settle := func(nameKey string, entries []readEntry, content string) string {
+		t.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+			directory := filepath.Join(r.cache, key)
+			os.MkdirAll(directory, 0o755)
+			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
+			return directory
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return evaluated.key
+	}
+	first := settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}}, "first")
+	read := settle(reader, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}, "reader")
+	for index, path := range []string{"source/b.c", "include/x.h", "notes.txt", "go.sum", "go.mod"} {
+		settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: path}}, fmt.Sprintf("build %d", index))
+	}
+	// A lookup outside the trace, as a runner's or the next build's, holding nothing from the settlements.
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	readProducts.Clear()
+	elsewhere := filepath.Join(t.TempDir(), "cache")
+	if err := os.CopyFS(elsewhere, os.DirFS(r.cache)); err != nil {
+		t.Fatal(err)
+	}
+	for _, cache := range []string{r.cache, elsewhere} {
+		found, err := productFor(r.root, cache, reader, 0, nil)
+		if err != nil || found.key != read {
+			t.Fatalf("in %s the reader is found under %q (%v, %s), want %s", cache, found.key, err, found.why, read)
+		}
+		if !slices.ContainsFunc(found.upstreams, func(one upstream) bool { return one.directory == filepath.Join(cache, first) }) {
+			t.Fatalf("in %s the reader's upstreams are %+v, want U's first build %s", cache, found.upstreams, first)
+		}
+	}
+}
+
+// Adam's shape (#xjqwsad, chg_08hty4at's tree on Adam, three times): within one tree's build, re-records of an upstream
+// (rerecord's recordReads, a set that found its product under a key it didn't store) put each set first, so the cap's
+// trim pushes out the oldest, and a re-record of the same entries replaces it outright: either way the very set a
+// reader in the tree names leaves its file, and no seed check can catch that. The pin keeps it through both. D reads
+// U's first build; U is re-recorded keptSets+1 times with other entries and once with the first's own entries under
+// another key; U's file still holds the first set, and D is still found with U's first build as its upstream. Mutants
+// that each fail it: the trim ignoring pins (keptSetsOf evicting at the cap); recordReads replacing a pinned set of the
+// same entries.
+// Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
+func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
+	r := newRig(t)
+	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
+	settle := func(nameKey string, entries []readEntry, content string) string {
+		t.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+			directory := filepath.Join(r.cache, key)
+			os.MkdirAll(directory, 0o755)
+			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
+			return directory
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		return evaluated.key
+	}
+	firstEntries := []readEntry{{Kind: "content", Path: "source/a.c"}}
+	first := settle(built, firstEntries, "first")
+	read := settle(reader, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}, "reader")
+	rerecords := [][]readEntry{}
+	for _, path := range []string{"source/b.c", "include/x.h", "notes.txt", "go.sum", "go.mod"} {
+		rerecords = append(rerecords, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: path}})
+	}
+	rerecords = append(rerecords, []readEntry{{Kind: "content", Path: "source/a.c", Value: "another build's"}})
+	for index, entries := range rerecords {
+		if err := recordReads(r.cache, built, "a", readSet{Recorded: now(), Key: fmt.Sprintf("%064x", index+1), Entries: entries}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	file, err := loadReads(r.cache, built)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(rerecords)-1 <= keptSets || !slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == first }) {
+		t.Fatalf("U's read set file holds %d sets without U's first build %s, after %d re-records", len(file.Sets), first, len(rerecords))
+	}
+	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	readProducts.Clear()
+	found, err := productFor(r.root, r.cache, reader, 0, nil)
+	if err != nil || found.key != read {
+		t.Fatalf("the reader is found under %q (%v, %s), want %s", found.key, err, found.why, read)
+	}
+	if !slices.ContainsFunc(found.upstreams, func(one upstream) bool { return one.directory == filepath.Join(r.cache, first) }) {
+		t.Fatalf("the reader's upstreams are %+v, want U's first build %s", found.upstreams, first)
+	}
+}
+
+// A read set file keeps its newest keptSets sets and every older one pinned to its tree, and drops one pinned to
+// another tree, a seed's carried in (#xjqwsad). Mutant that fails it: the pins ignored.
+func TestAPinnedSetStaysInItsTreeAlone(t *testing.T) {
+	t.Parallel()
+	var sets []readSet
+	for index := range keptSets + 3 {
+		sets = append(sets, readSet{Key: fmt.Sprint(index)})
+	}
+	sets[keptSets].Pinned, sets[keptSets+1].Pinned = "/trees/this/cache", "/trees/other/cache"
+	var kept []string
+	for _, set := range keptSetsOf(sets, "/trees/this/cache") {
+		kept = append(kept, set.Key)
+	}
+	if want := []string{"0", "1", "2", "3", fmt.Sprint(keptSets)}; !slices.Equal(kept, want) {
+		t.Fatalf("kept %q, want %q", kept, want)
 	}
 }

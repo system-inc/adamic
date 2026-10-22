@@ -1682,12 +1682,20 @@ func (state *traceState) measured(entry journalEntry, reads, lastReads map[strin
 // this same tree: its reads are ones this build could have made too (a build's reads can vary from run to run, and
 // two settlements can race), so the set recorded and keyed is their union, and the earlier set gives way to it. The
 // union is lean only when every set in it is: a lean set folded with a whole one keys by the whole recipe's reads too.
+//
+// A set pinned to this tree (Pinned) never gives way: a set settled after it reads its product, by its bytes. Each
+// product the recorded set reads is pinned in turn, at the key it was found under (pinReads, #xjqwsad).
 func recordUnion(root, cache, nameKey, name string, set readSet, placing func(key string) string) (readSet, evaluation, string, error) {
 	var evaluated evaluation
 	var product string
+	tree := pinTree(cache)
 	err := withReads(cache, nameKey, func(file *readsFile) error {
 		var kept []readSet
 		for _, other := range file.Sets {
+			if other.Pinned == tree {
+				kept = append(kept, other)
+				continue
+			}
 			if before, err := evaluate(root, cache, nameKey, other, 0, nil); err == nil && len(differing(other, before)) == 0 {
 				set.Entries, set.Lean = sortedEntries(set.Entries, other.Entries), set.Lean && other.Lean
 				continue
@@ -1706,6 +1714,9 @@ func recordUnion(root, cache, nameKey, name string, set readSet, placing func(ke
 		file.Name, file.Sets = name, append([]readSet{set}, kept...)
 		return nil
 	})
+	if err == nil {
+		pinReads(cache, evaluated.products)
+	}
 	return set, evaluated, product, err
 }
 
