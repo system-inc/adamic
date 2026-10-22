@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -318,7 +319,7 @@ func runtimePlatformParts() []string {
 	// v5: clang and ar run under toolchain.Env, not the caller's environment, so a v4 archive built under whatever the
 	// caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
 	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by them.
-	return []string{"adamic-runtime-v6", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	return []string{"adamic-runtime-v6", "ir-tags " + ir.TypeTagFingerprint(), "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
 }
 
 // runtimeSourceParts are what a runtime key reads of what is compiled: the system headers the compile reads, every

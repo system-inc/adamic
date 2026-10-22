@@ -225,6 +225,7 @@ const (
 	Int32Array
 	Float64Array
 	Promise
+	Uint16Array
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
