@@ -319,7 +319,9 @@ func runtimePlatformParts() []string {
 	// v5: clang and ar run under toolchain.Env, not the caller's environment, so a v4 archive built under whatever the
 	// caller had set (CPATH, SDKROOT, CCC_OVERRIDE_OPTIONS) isn't reused.
 	// v6: the key is a list of named parts, each file by the sha256 of what it holds, so a product can be keyed by them.
-	return []string{"adamic-runtime-v6", "ir-tags " + ir.TypeTagFingerprint(), "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	// v7: objects no longer carry where the compiler is installed or the sysroot sits (clangIn), so a v6 archive whose
+	// debug info named either is never reused (#8wgk65j).
+	return []string{"adamic-runtime-v7", "ir-tags " + ir.TypeTagFingerprint(), "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
 }
 
 // runtimeSourceParts are what a runtime key reads of what is compiled: the system headers the compile reads, every
@@ -499,7 +501,7 @@ func compileRuntime(files []runtimeFile, flags []string, compiler string, direct
 			// object: mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native
 			// product carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
 			arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "/adamic-runtime")...), "-c", source, "-o", objects[index])
-			command := toolchain.CommandIn(directory, compiler, arguments...)
+			command := clangIn(directory, compiler, arguments...)
 			var output []byte
 			var clang time.Duration
 			if err := jobserver.Hold(func() error {
@@ -537,6 +539,38 @@ func prefixMaps(directory, name string) []string {
 	maps := []string{"-ffile-prefix-map=" + directory + "=" + name}
 	if real, err := filepath.EvalSymlinks(directory); err == nil && real != directory {
 		maps = append(maps, "-ffile-prefix-map="+real+"="+name)
+	}
+	return maps
+}
+
+// clangIn is every clang adamic runs to compile or link (compiler, a path or a name toolchain resolves), in directory:
+// arguments, and after them the maps that take the compiler's installation and any sysroot out of everything the compile
+// records of a path (toolMaps). The prefix maps beside a call take its own directories out; these take the tools out, in
+// one place, so no compile can forget them.
+func clangIn(directory string, compiler string, arguments ...string) *exec.Cmd {
+	return toolchain.CommandIn(directory, compiler, append(append([]string{}, arguments...), toolMaps(compiler, arguments)...)...)
+}
+
+// toolMaps map where the compiler is installed to /adamic-compiler, and any --sysroot in arguments to /adamic-sysroot,
+// in everything a compile records of a path. clang records the include directories it searches in debug info
+// (.debug_line_str), and its own headers sit under its installation: built with the tools at two places, one key built two
+// sets of bytes that differed by exactly those paths (Hot x86, #8wgk65j). A key names the compiler by what it reports and
+// its headers from <compiler> (portableKeyParts), never where it sits, so neither may reach the bytes. The installation is
+// read from the compiler's own path, never the environment.
+func toolMaps(compiler string, arguments []string) []string {
+	if !filepath.IsAbs(compiler) {
+		if path, err := toolchain.Path(compiler); err == nil {
+			compiler = path
+		}
+	}
+	var maps []string
+	if installation := compilerInstallation(compiler); installation != "" {
+		maps = append(maps, prefixMaps(installation, "/adamic-compiler")...)
+	}
+	for _, argument := range arguments {
+		if sysroot, found := strings.CutPrefix(argument, "--sysroot="); found && sysroot != "" {
+			maps = append(maps, prefixMaps(sysroot, "/adamic-sysroot")...)
+		}
 	}
 	return maps
 }
@@ -584,7 +618,7 @@ func scanHeaders(files []runtimeFile, flags []string, compiler string) (string, 
 	if err != nil {
 		return "", err
 	}
-	command := toolchain.CommandIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
+	command := clangIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
 	var rules []byte
 	err = jobserver.Hold(func() (err error) { rules, err = command.Output(); return err })
 	if err != nil {

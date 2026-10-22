@@ -25,9 +25,9 @@ func TestNonShippingFlagsStayIdentical(t *testing.T) {
 		}{
 			{"counted", Options{Release: release, Count: true}, " -DADAMIC_COUNT -O2"},
 			{"thread sanitized", Options{Release: release, ThreadSanitize: true}, " -O1 -g -fsanitize=thread -DADAMIC_TSAN_TEST"},
-			{"sanitized", Options{Release: release, Sanitize: true}, " -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"},
-			{"oracle counts", Options{Release: release, Sanitize: true, Count: true}, " -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"},
-			{"slab probe", Options{Release: release, Sanitize: true, Count: true, slabs: true, cpu: "haswell"}, " -DADAMIC_COUNT -DADAMIC_SLABS -march=haswell -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"},
+			{"sanitized", Options{Release: release, Sanitize: true}, " -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
+			{"oracle counts", Options{Release: release, Sanitize: true, Count: true}, " -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
+			{"slab probe", Options{Release: release, Sanitize: true, Count: true, slabs: true, cpu: "haswell"}, " -DADAMIC_COUNT -DADAMIC_SLABS -march=haswell -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
 		} {
 			want := strings.ReplaceAll(historicalCommonFlags+row.suffix, " ", "\x00")
 			for _, got := range [][]string{Flags(row.options), LinkFlags(row.options)} {
