@@ -13,6 +13,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 const testCommentMutantsShards = 5
@@ -200,14 +202,18 @@ func TestCommentMutantsPlantedFailure(t *testing.T) {
 			}
 			return err
 		}
-		command.WaitDelay = time.Second
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=") {
 				command.Env = append(command.Env, value)
 			}
 		}
 		command.Env = append(command.Env, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=1")
-		output, err := command.CombinedOutput()
+		// Read through childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second
+		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited, so a
+		// shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s deadline ends a hung
+		// shard. Stdout comes before stderr; the checks below look for their lines anywhere in either.
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		cancel()
 		if shard == 2 {
 			if err == nil || !bytes.Contains(output, []byte("compiled semantic mutant survived")) || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
