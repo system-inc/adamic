@@ -99,6 +99,9 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.checkPromiseConsumption(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkViewLogicalWrites(); err != nil {
+		return nil, err
+	}
 	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)

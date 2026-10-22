@@ -1,0 +1,14 @@
+// a-check: refused a logical assignment through a checked view
+// The assignment's function is lowered before the cast that makes count checked, so the refusal
+// waits for lowering to finish rather than ask at the assignment.
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { count: number; }
+function bump(view: View): void {
+	view.count &&= 7;
+}
+function initial(): string | number { return 'abc'; }
+const raw = { kind: 'Holder' as const, count: initial() };
+const base: Root = raw;
+bump(base as View);
+const read: string | number = raw.count;
+console.log(typeof read === 'number' ? `number ${read + 1}` : `string ${read}`);
