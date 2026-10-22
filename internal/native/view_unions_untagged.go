@@ -161,6 +161,10 @@ func (e *emitter) certifyUntaggedCallableRecorded(property ir.Property, value, r
 		contract := e.program.ViewContracts[member-1]
 		certified = certified || contract.ProducerCertified
 		for _, function := range contract.Functions {
+			// Match the producer registry before comparing code identities.
+			if !e.program.Functions[function].Closure || e.program.Functions[function].Receiver {
+				continue
+			}
 			tests = append(tests, e.unionClosureCodeIdentity(value, function))
 		}
 	}
