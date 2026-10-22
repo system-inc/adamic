@@ -38,6 +38,14 @@ func TestNbodyIndexedElementsBorrow(t *testing.T) {
 		t.Fatalf("want sun and both body/other pairs borrowed, got %d declarations", declarations)
 	}
 	generated := C(program)
+	// Both indexed pairs use proven integer counters; the constant sun index
+	// remains on the ordinary numeric path. Borrowing must preserve that choice.
+	if got := strings.Count(generated, " = adamic_array_at_integer("); got != 4 {
+		t.Fatalf("want four borrowed counter lookups on the integer path, got %d", got)
+	}
+	if got := strings.Count(generated, " = adamic_array_at("); got != 1 {
+		t.Fatalf("want only the sun's constant index on the numeric path, got %d", got)
+	}
 	for statement := range borrows {
 		declare, ok := (*statement).(ir.Declare)
 		if !ok {
