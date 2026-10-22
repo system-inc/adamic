@@ -1,0 +1,9 @@
+interface Item { readonly text: string; }
+interface Holder { value: Item | null | undefined; }
+function clear(holder: Holder): void { holder.value = null; }
+function observe(item: Item): string { return typeof item; }
+const holder: Holder = {value: {text: 'item'}};
+if (holder.value !== null && holder.value !== undefined) {
+    clear(holder);
+    console.log(observe(holder.value));
+}

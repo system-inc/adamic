@@ -1,0 +1,8 @@
+// RawSourceMap.sourcesContent element read adds undefined through unchecked access.
+function describe(content: string | null | undefined): string {
+    console.log(typeof content);
+    return content === null ? 'null' : content === undefined ? 'undefined' : content;
+}
+console.log(describe('source'));
+console.log(describe(null));
+console.log(describe(undefined));
