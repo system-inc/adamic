@@ -1,0 +1,15 @@
+// Spec: | `adamic/invariant-mutable` |
+// Expect: refused Kennel seen as { pet: Animal; }
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly bark: () => string;
+}
+class Kennel {
+	pet: Dog = { name: 'Rex', bark: () => 'woof' };
+}
+const kennel = new Kennel();
+const view: { pet: Animal } = kennel;
+view.pet = { name: 'Tom' };
+console.log(kennel.pet.bark());

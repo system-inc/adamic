@@ -1,0 +1,6 @@
+// Spec: | `adamic/invariant-mutable` |
+// Expect: refused [string, number] seen as (string | number)[]
+const pair: [string, number] = ['Ahra', 7];
+const list: (string | number)[] = pair;
+list[0] = 5;
+console.log(pair[0].toUpperCase());

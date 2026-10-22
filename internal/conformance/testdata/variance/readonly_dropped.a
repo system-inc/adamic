@@ -1,0 +1,15 @@
+// Spec: | `adamic/invariant-mutable` |
+// Expect: refused whose readonly field pet becomes writable
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly bark: () => string;
+}
+const kennel: { readonly pet: Dog } = { pet: { name: 'Rex', bark: () => 'woof' } };
+const wide: { readonly pet: Animal } = kennel;
+function swap(target: { pet: Animal }): void {
+	target.pet = { name: 'Tom' };
+}
+swap(wide);
+console.log(kennel.pet.bark());
