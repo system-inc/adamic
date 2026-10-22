@@ -18,6 +18,18 @@ language lead's October 20 ruling on #wks9251. No declaration or type changes.
 No public API line changes. The ruling's reason is that a void-typed value is
 not a value an accepted Adamic program can read.
 
+JavaScript-changing: an untyped caller of the internal `ts.addNodeFactoryPatcher`
+or `ts.addObjectAllocatorPatcher` whose patcher returns a truthy value no longer
+stops the loop. Neither function is declared in the published `typescript.d.ts`
+(0 matches in TypeScript 6.0.3's lib/typescript.d.ts), but the published
+lib/typescript.js still exports both on the runtime `ts` object (its export map,
+lines 204 and 205, and again at 184156 and 184157). Such a caller uses an internal
+API with no declaration and no contract, and the native tsc binary has no
+JavaScript `ts` object at all. Adamic admitted 91 with this named (#wks9251,
+October 20). The witnesses for the behavior dropped are
+[hooks.cjs](proofs/hooks.cjs): patchers returning 42 and 17 stop the loop on Node
+before 91 and don't after.
+
 ## Exact scope and public API
 
 [scope.json](proofs/scope.json), [source.diff](proofs/source.diff), and
