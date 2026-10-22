@@ -25,9 +25,9 @@ func inventoryEngineDeadline(t *testing.T, binary, directory string, cases []str
 		t.Logf("shard time %.6fs cooked=%t", time.Since(started).Seconds(), ctx.Err() == context.DeadlineExceeded)
 	}()
 	for _, name := range cases {
-		command, cancelCommand := inventoryEngineCommand(ctx, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+		command, commandContext, cancelCommand := inventoryEngineCommand(ctx, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
 		command.Dir = directory
-		output, err := command.CombinedOutput()
+		output, err := inventoryEngineOutput(commandContext, command)
 		cancelCommand()
 		t.Logf("%s", output)
 		if ctx.Err() == context.DeadlineExceeded {
