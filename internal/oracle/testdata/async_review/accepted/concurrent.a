@@ -1,0 +1,15 @@
+async function task(name: string, fail: boolean): Promise<string> {
+    console.log(`${name}:start`);
+    try {
+        await Promise.resolve();
+        console.log(`${name}:resume`);
+        if (fail) { await Promise.reject<number>(new Error(name)); return "missed"; }
+        return `${name}:ok`;
+    } catch (error) {
+        if (error instanceof Error) { return `caught:${error.message}`; }
+        return "wrong error";
+    }
+}
+const first = task("one", false);
+const second = task("two", true);
+console.log(`${await first}|${await second}`);

@@ -1,0 +1,4 @@
+interface Visible { value: number; }
+const hidden: Visible = { value: 1 };
+Object.assign(hidden, { then(resolve: (value: number) => void): void { resolve(8); } });
+console.log(typeof await hidden);

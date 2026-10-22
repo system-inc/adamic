@@ -1,0 +1,16 @@
+class Worker {
+    readonly name: string;
+    constructor(name: string) { this.name = name; }
+    async run(fail: boolean): Promise<string> {
+        try {
+            const held = `${this.name}:${await Promise.resolve(4)}`;
+            if (fail) { await Promise.reject<number>(new Error("method")); return "missed"; }
+            return held;
+        } catch (error) {
+            if (error instanceof Error) { return `${this.name}:caught:${error.message}`; }
+            return "wrong error";
+        }
+    }
+}
+const worker = new Worker(`worker${2}`);
+console.log(`${await worker.run(false)}|${await worker.run(true)}`);

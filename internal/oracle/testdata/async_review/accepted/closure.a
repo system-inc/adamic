@@ -1,0 +1,14 @@
+function make(seed: string): (fail: boolean) => Promise<string> {
+    return async (fail: boolean): Promise<string> => {
+        try {
+            const held = `${seed}:${await Promise.resolve(3)}`;
+            if (fail) { await Promise.reject<number>(new Error("closure")); return "missed"; }
+            return held;
+        } catch (error) {
+            if (error instanceof Error) { return `${seed}:caught:${error.message}`; }
+            return "wrong error";
+        }
+    };
+}
+const work = make(`seed${1}`);
+console.log(`${await work(false)}|${await work(true)}`);

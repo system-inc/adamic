@@ -1,0 +1,7 @@
+async function keep(): Promise<string> {
+    let held = ['before', '1'].join('');
+    const saved = held + (held = ['after', '2'].join(''));
+    await Promise.resolve();
+    return saved + ':' + held;
+}
+console.log(await keep());

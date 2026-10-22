@@ -45,7 +45,7 @@ static void append(pending_values *pending, void *value) {
 	// A canonical closure's interior cell is counted on its environment, so the environment is what
 	// becomes shared, and with it every cell it holds.
 	adamic_heap *heap = value;
-	if (heap->kind == adamic_kind_cell && ((adamic_cell *)value)->owner != NULL) { value = &((adamic_cell *)value)->owner->heap; }
+	if (heap->kind == adamic_kind_cell && ((adamic_cell *)value)->owner != NULL) { value = ((adamic_cell *)value)->owner; }
 #endif
 	if (pending->count == pending->capacity) {
 		size_t capacity = pending->capacity == 0 ? 64 : pending->capacity * 2;

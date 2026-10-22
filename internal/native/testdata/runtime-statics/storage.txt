@@ -25,6 +25,8 @@
 `adamic.h:adamic_typeof_object:1`
 `adamic.h:adamic_typeof_string:1`
 `adamic.h:adamic_typeof_undefined:1`
+# Loop-thread-only borrowed frame cleanup registry, like subscriptions and jobs.
+`async.c:cleanups:1`
 `async.c:jobs:1`
 `async.c:jobs_last:1`
 `async.c:subscriptions:1`
