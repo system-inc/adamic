@@ -1,0 +1,9 @@
+function squareJump(n: number, s: number): void {
+ let iterations = 0;
+ for (let i = 0; i * i <= n; i += s) {
+  console.log(`iteration ${iterations}: ${i}`);
+  iterations++;
+ }
+ console.log(`iterations ${iterations}`);
+}
+squareJump(1000000000000000, 4503599627370496);
