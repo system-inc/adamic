@@ -199,12 +199,17 @@ if "$wasmtime"; then
    wasmtimeSHA256=10f8dd0f4789075321a439a1fb4a3d1888e3a45c0620dc9c562e198095120120 ;;
  esac
  wasmtimeDirectory="$tools/wasmtime-$wasmtimeVersion"
- if [ ! -x "$wasmtimeDirectory/wasmtime" ]; then
+ # Loom's runner reads archive-sha256 in the directory of the wasmtime a unit's PATH resolves to, and voids a unit
+ # whose key names another digest, so a pass is never recorded under bytes that didn't run. An install counts only
+ # when its record is the pin; anything else (an older install with no record, an interrupted lay) is laid again.
+ if [ ! -x "$wasmtimeDirectory/wasmtime" ] || [ "$(cat "$wasmtimeDirectory/archive-sha256" 2> /dev/null)" != "$wasmtimeSHA256" ]; then
   wasmtimeArchive="$tools/wasmtime-$wasmtimeVersion-$wasmtimeArchitecture.tar.xz"
   curl -fsSL "https://github.com/bytecodealliance/wasmtime/releases/download/v$wasmtimeVersion/wasmtime-v$wasmtimeVersion-$wasmtimeArchitecture-linux.tar.xz" -o "$wasmtimeArchive"
   printf '%s  %s\n' "$wasmtimeSHA256" "$wasmtimeArchive" | sha256sum -c -
   mkdir -p "$wasmtimeDirectory"
+  rm -f "$wasmtimeDirectory/archive-sha256"
   tar --no-same-owner -xJf "$wasmtimeArchive" -C "$wasmtimeDirectory" --strip-components 1
+  printf '%s\n' "$wasmtimeSHA256" > "$wasmtimeDirectory/archive-sha256"
  fi
  "$wasmtimeDirectory/wasmtime" --version
  ln -sf "$wasmtimeDirectory/wasmtime" "$tools/bin/wasmtime"
