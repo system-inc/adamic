@@ -87,6 +87,7 @@ func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name st
 	if of != ir.Union {
 		value = ir.Narrow{Value: value, To: of}
 	}
+	l.graphDynamicSite = node
 	return value, nil
 }
 

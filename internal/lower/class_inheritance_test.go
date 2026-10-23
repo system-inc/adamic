@@ -46,6 +46,10 @@ child.next = child;`, "cycle-capable", "Weak"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if probe.rule == "cycle-capable" {
+				graphAccepted(t, probe.source)
+				return
+			}
 			_, err := lowerSource(t, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.rule) || !strings.Contains(err.Error(), probe.fix) {
@@ -241,6 +245,10 @@ class Child<T> extends Link<T> {}
 const child = new Child<Holder>(); const holder: Holder = { back: child }; child.set(holder);`, "cycle-capable"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			if probe.rule == "cycle-capable" {
+				graphAccepted(t, probe.source)
+				return
+			}
 			_, err := lowerSource(t, probe.source)
 			var refusal *Refused
 			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), probe.rule) {
