@@ -109,6 +109,40 @@ func TestProduct_typeaware_wrong_node_native(t *testing.T) {
 	h := typeAwareProductHarness(t)
 	typeAwareWrongNodeNative(h, h.archive(false), true)
 }
+
+// TypeAwareAgreement's other mutant natives, and the bad-kind refusal's, each built ahead so its shard only runs it.
+func TestProduct_typeaware_stale_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	h.mutantNative("stale-native", filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released.ts"), checkerMutantArchive(t, "retained-handle"), false)
+}
+func TestProduct_typeaware_empty_frame_native(t *testing.T) {
+	t.Parallel()
+	typeAwareFrameMutantProduct(t, "empty-frame")
+}
+func TestProduct_typeaware_missing_header_native(t *testing.T) {
+	t.Parallel()
+	typeAwareFrameMutantProduct(t, "missing-header")
+}
+func TestProduct_typeaware_bad_length_native(t *testing.T) {
+	t.Parallel()
+	typeAwareFrameMutantProduct(t, "bad-length")
+}
+func typeAwareFrameMutantProduct(t *testing.T, name string) {
+	t.Helper()
+	h := typeAwareProductHarness(t)
+	h.mutantNative(name+"-native", filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"), checkerMutantArchive(t, name), false)
+}
+func TestProduct_typeaware_bad_kind_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	typeAwareBadKindNative(h, "bad-kind", h.archive(false))
+}
+func TestProduct_typeaware_ignored_kind_native(t *testing.T) {
+	t.Parallel()
+	h := typeAwareProductHarness(t)
+	typeAwareBadKindNative(h, "ignored-kind-native", checkerMutantArchive(t, "ignored-kind"))
+}
 func TestProduct_six_oracle(t *testing.T) {
 	t.Parallel()
 	typeAwareOracle(typeAwareProductHarness(t), "six")

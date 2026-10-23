@@ -211,6 +211,45 @@ func (h *harness) loweredMutant(entry, name, key string) string {
 	return source
 }
 
+// typeAwareBadKindSource is testdata/query_cost.ts asking for an Identifier where it asks for a PrefixUnaryExpression,
+// so the exact-kind lookup refuses.
+func typeAwareBadKindSource(repository string) (string, error) {
+	text, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/testdata/query_cost.ts"))
+	if err != nil {
+		return "", err
+	}
+	if !strings.Contains(string(text), "'PrefixUnaryExpression'") {
+		return "", fmt.Errorf("bad-kind anchor changed")
+	}
+	return strings.Replace(string(text), "'PrefixUnaryExpression'", "'Identifier'", 1), nil
+}
+
+// typeAwareBadKindNative is the bad-kind program's native over archive as a product. The program is query_cost.ts with
+// typeAwareBadKindSource overlaid in place (load.LoadOverlay), as wrong-node's is, so its C names no checkout, and that
+// C is a product keyed by name that refuses to be one if it does (#nwczaa5). The bad-kind refusal and the ignored-kind
+// mutant fetch what their TestProduct_ built ahead instead of lowering and linking inside their shards.
+func typeAwareBadKindNative(h *harness, name, archive string) string {
+	h.t.Helper()
+	return typeAwareSetup(h, name, func() string {
+		source, err := cachedTypeAwareProduct("C typeaware mutant bad-kind", func(_ string) (string, error) {
+			mutant, err := typeAwareBadKindSource(h.repository)
+			if err != nil {
+				return "", err
+			}
+			entry := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
+			source, err := h.lowerOverlayToC(entry, map[string]string{entry: mutant}, "bad-kind")
+			if err != nil {
+				return "", err
+			}
+			return source, typeAwareCNamesNoCheckout(source, h.repository)
+		})
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		return h.mutantNativeOf(name, source, archive, false)
+	})
+}
+
 // build uses the same load, lowering and TSGo emission pipeline as stage zero.
 // Only the completed C string is shared, because emission mutates its IR.
 func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
@@ -260,7 +299,8 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 // TestSixRuleAgreementAndMutants_028's 26.1 s, alone on one core). Its key is typeAwareNativeKey's, as h.build's
 // cached natives' is: the emitted C's hash (emission names no path, so the same mutant lowered from two directories is
 // the same C) and the archive's. Its TestProduct_ makes it ahead. Every six mutant's native is one (sixMutants, and
-// declaration-source's); any other mutant still compiles inside its own check, as h.build does.
+// declaration-source's), and so is every TypeAwareAgreement mutant's: wrong-node, stale, the three bad frames and
+// ignored-kind (the frames' links took 17 to 37 s of _006 to _008 under load, Eve and Adam, Oct 23).
 func (h *harness) mutantNative(name, entry, archive string, sanitize bool) string {
 	h.t.Helper()
 	return h.mutantNativeOf(name, h.lowered(entry, name), archive, sanitize)
@@ -635,8 +675,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	expected = append(expected, []string{"mutant/stale"}...)
 	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
 		t := h.t
-		staleArchive := typeAwareMutantArchive(h, "retained-handle")
-		staleBinary := typeAwareBuild(h, stage0, "stale-native", releasedEntry, staleArchive, false)
+		staleBinary := typeAwareMutantNative(h, "stale-native", releasedEntry, typeAwareMutantArchive(h, "retained-handle"), false)
 		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
 		if len(stale.stderr) != 0 {
 			t.Fatal("stale mutant did not finish cleanly")
@@ -654,8 +693,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
 			t := h.t
-			archive := typeAwareMutantArchive(h, change.name)
-			malformed := typeAwareBuild(h, stage0, change.name+"-native", entry, archive, false)
+			malformed := typeAwareMutantNative(h, change.name+"-native", entry, typeAwareMutantArchive(h, change.name), false)
 			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
 			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
 				t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
@@ -670,15 +708,10 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	cost := func(h *harness) string { return typeAwareBuild(h, stage0, "query-cost", costEntry, normal(h), false) }
 	readyCost := cost(h)
 	cost = func(*harness) string { return readyCost }
-	costText, err := os.ReadFile(costEntry)
-	if err != nil {
-		t.Fatal(err)
-	}
-	badSource := h.write("bad-kind.ts", strings.Replace(string(costText), "'PrefixUnaryExpression'", "'Identifier'", 1))
 	expected = append(expected, []string{"refusal/bad-kind"}...)
 	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(h *harness) {
 		t := h.t
-		bad := typeAwareBuild(h, stage0, "bad-kind", badSource, normal(h), false)
+		bad := typeAwareBadKindNative(h, "bad-kind", normal(h))
 		got := h.run("bad-kind-run", exec.Command(bad, config, probe, "2"))
 		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
 			t.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
@@ -687,8 +720,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	expected = append(expected, []string{"mutant/ignored-kind"}...)
 	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
 		t := h.t
-		ignoredArchive := typeAwareMutantArchive(h, "ignored-kind")
-		ignoredBinary := typeAwareBuild(h, stage0, "ignored-kind-native", badSource, ignoredArchive, false)
+		ignoredBinary := typeAwareBadKindNative(h, "ignored-kind-native", typeAwareMutantArchive(h, "ignored-kind"))
 		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
 		if len(ignored.stderr) != 0 {
 			t.Fatal("kind-guard mutant did not finish cleanly")
