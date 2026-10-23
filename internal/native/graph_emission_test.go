@@ -48,7 +48,8 @@ func graphCompilerWitness(t *testing.T, source string, mutant func(string) strin
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lower.Lower(context.Background(), checked)
+	// This witness targets batch 8 ownership even when the process opts into Program mode.
+	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -305,3 +305,6 @@
 `graph_regions.c:freeing_lone:1`
 `runtime-file:graph_regions.c`
 `runtime-file:graph_regions.h`
+
+`runtime-file:program_region.c`
+`program_region.c:members:1` Main-thread-only Program member list. Fresh adoption links members; teardown runs after task joins. Members and interior environment cells cannot be shared.
