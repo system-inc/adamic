@@ -1,0 +1,2 @@
+import { decodeJson } from 'adamic';
+decodeJson<number | undefined>('1');
