@@ -1732,3 +1732,16 @@ reads cmd/adamic-test262 internal/lower/*.go
 reads stage1/cohere/estree internal/native/runtime/*.[ch]
 reads stage1/cohere/markdownblocks internal/native/*.go
 reads cloud *
+# cmd/adamic's TestDocumentedCitationsResolve (cli_doc_test.go) reads docs/cli.md and every path it cites: a Go file's
+# declarations (under *.go above), another file's lines, or that a path exists. Main 31408f80's page cites docs, cloud
+# scripts, oracle hosts, bridge/tsgo/README.md and internal/native/runtime's sources, each class keyed by its directory
+# so a new citation of the same kind is covered without a line (CLI's question on #mjh6rd5).
+reads cmd/adamic docs/*.md
+reads cmd/adamic cloud/*.sh
+reads cmd/adamic oracle/*.mjs
+reads cmd/adamic bridge/tsgo/README.md
+reads cmd/adamic internal/native/runtime/*
+# internal/oracle's views_deep_chain_test.go reads every file of internal/native/runtime (os.ReadDir), and internal/flow's
+# writes_test.go parses ../ir/*.go: Adamic Operations' repowalk over main e50e502c and 876cdd2e.
+reads internal/oracle internal/native/runtime/*
+reads internal/flow internal/ir/*.go
