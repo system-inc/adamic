@@ -1,0 +1,4 @@
+// Spec: | `==`, `!=`, `with`, `var`, `arguments` |
+// Expect: refused var; use const or let
+var count = 1;
+console.log(`${count}`);
