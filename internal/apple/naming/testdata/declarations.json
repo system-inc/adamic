@@ -1,0 +1,4244 @@
+[
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSWindow",
+      "Framework": "AppKit"
+    },
+    "swift": "NSWindow",
+    "adamic": "Window",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSView",
+    "adamic": "View",
+    "module": "apple/appkit/view",
+    "source": "https://developer.apple.com/documentation/appkit/nsview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSViewController",
+      "Framework": "AppKit"
+    },
+    "swift": "NSViewController",
+    "adamic": "ViewController",
+    "module": "apple/appkit/view-controller",
+    "source": "https://developer.apple.com/documentation/appkit/nsviewcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSWindowController",
+      "Framework": "AppKit"
+    },
+    "swift": "NSWindowController",
+    "adamic": "WindowController",
+    "module": "apple/appkit/window-controller",
+    "source": "https://developer.apple.com/documentation/appkit/nswindowcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSApplication",
+      "Framework": "AppKit"
+    },
+    "swift": "NSApplication",
+    "adamic": "Application",
+    "module": "apple/appkit/application",
+    "source": "https://developer.apple.com/documentation/appkit/nsapplication"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSButton",
+      "Framework": "AppKit"
+    },
+    "swift": "NSButton",
+    "adamic": "Button",
+    "module": "apple/appkit/button",
+    "source": "https://developer.apple.com/documentation/appkit/nsbutton"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTextField",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTextField",
+    "adamic": "TextField",
+    "module": "apple/appkit/text-field",
+    "source": "https://developer.apple.com/documentation/appkit/nstextfield"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTextView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTextView",
+    "adamic": "TextView",
+    "module": "apple/appkit/text-view",
+    "source": "https://developer.apple.com/documentation/appkit/nstextview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSScrollView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSScrollView",
+    "adamic": "ScrollView",
+    "module": "apple/appkit/scroll-view",
+    "source": "https://developer.apple.com/documentation/appkit/nsscrollview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSClipView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSClipView",
+    "adamic": "ClipView",
+    "module": "apple/appkit/clip-view",
+    "source": "https://developer.apple.com/documentation/appkit/nsclipview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSImageView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSImageView",
+    "adamic": "ImageView",
+    "module": "apple/appkit/image-view",
+    "source": "https://developer.apple.com/documentation/appkit/nsimageview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSImage",
+      "Framework": "AppKit"
+    },
+    "swift": "NSImage",
+    "adamic": "Image",
+    "module": "apple/appkit/image",
+    "source": "https://developer.apple.com/documentation/appkit/nsimage"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSColor",
+      "Framework": "AppKit"
+    },
+    "swift": "NSColor",
+    "adamic": "Color",
+    "module": "apple/appkit/color",
+    "source": "https://developer.apple.com/documentation/appkit/nscolor"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSFont",
+      "Framework": "AppKit"
+    },
+    "swift": "NSFont",
+    "adamic": "Font",
+    "module": "apple/appkit/font",
+    "source": "https://developer.apple.com/documentation/appkit/nsfont"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSMenu",
+      "Framework": "AppKit"
+    },
+    "swift": "NSMenu",
+    "adamic": "Menu",
+    "module": "apple/appkit/menu",
+    "source": "https://developer.apple.com/documentation/appkit/nsmenu"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSMenuItem",
+      "Framework": "AppKit"
+    },
+    "swift": "NSMenuItem",
+    "adamic": "MenuItem",
+    "module": "apple/appkit/menu-item",
+    "source": "https://developer.apple.com/documentation/appkit/nsmenuitem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSPanel",
+      "Framework": "AppKit"
+    },
+    "swift": "NSPanel",
+    "adamic": "Panel",
+    "module": "apple/appkit/panel",
+    "source": "https://developer.apple.com/documentation/appkit/nspanel"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSOpenPanel",
+      "Framework": "AppKit"
+    },
+    "swift": "NSOpenPanel",
+    "adamic": "OpenPanel",
+    "module": "apple/appkit/open-panel",
+    "source": "https://developer.apple.com/documentation/appkit/nsopenpanel"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSSavePanel",
+      "Framework": "AppKit"
+    },
+    "swift": "NSSavePanel",
+    "adamic": "SavePanel",
+    "module": "apple/appkit/save-panel",
+    "source": "https://developer.apple.com/documentation/appkit/nssavepanel"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSAlert",
+      "Framework": "AppKit"
+    },
+    "swift": "NSAlert",
+    "adamic": "Alert",
+    "module": "apple/appkit/alert",
+    "source": "https://developer.apple.com/documentation/appkit/nsalert"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSScreen",
+      "Framework": "AppKit"
+    },
+    "swift": "NSScreen",
+    "adamic": "Screen",
+    "module": "apple/appkit/screen",
+    "source": "https://developer.apple.com/documentation/appkit/nsscreen"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSEvent",
+      "Framework": "AppKit"
+    },
+    "swift": "NSEvent",
+    "adamic": "Event",
+    "module": "apple/appkit/event",
+    "source": "https://developer.apple.com/documentation/appkit/nsevent"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSCursor",
+      "Framework": "AppKit"
+    },
+    "swift": "NSCursor",
+    "adamic": "Cursor",
+    "module": "apple/appkit/cursor",
+    "source": "https://developer.apple.com/documentation/appkit/nscursor"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTableView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTableView",
+    "adamic": "TableView",
+    "module": "apple/appkit/table-view",
+    "source": "https://developer.apple.com/documentation/appkit/nstableview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTableColumn",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTableColumn",
+    "adamic": "TableColumn",
+    "module": "apple/appkit/table-column",
+    "source": "https://developer.apple.com/documentation/appkit/nstablecolumn"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTableCellView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTableCellView",
+    "adamic": "TableCellView",
+    "module": "apple/appkit/table-cell-view",
+    "source": "https://developer.apple.com/documentation/appkit/nstablecellview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSOutlineView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSOutlineView",
+    "adamic": "OutlineView",
+    "module": "apple/appkit/outline-view",
+    "source": "https://developer.apple.com/documentation/appkit/nsoutlineview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSCollectionView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSCollectionView",
+    "adamic": "CollectionView",
+    "module": "apple/appkit/collection-view",
+    "source": "https://developer.apple.com/documentation/appkit/nscollectionview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSCollectionViewItem",
+      "Framework": "AppKit"
+    },
+    "swift": "NSCollectionViewItem",
+    "adamic": "CollectionViewItem",
+    "module": "apple/appkit/collection-view-item",
+    "source": "https://developer.apple.com/documentation/appkit/nscollectionviewitem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSStackView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSStackView",
+    "adamic": "StackView",
+    "module": "apple/appkit/stack-view",
+    "source": "https://developer.apple.com/documentation/appkit/nsstackview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSSplitView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSSplitView",
+    "adamic": "SplitView",
+    "module": "apple/appkit/split-view",
+    "source": "https://developer.apple.com/documentation/appkit/nssplitview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSSplitViewController",
+      "Framework": "AppKit"
+    },
+    "swift": "NSSplitViewController",
+    "adamic": "SplitViewController",
+    "module": "apple/appkit/split-view-controller",
+    "source": "https://developer.apple.com/documentation/appkit/nssplitviewcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTabView",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTabView",
+    "adamic": "TabView",
+    "module": "apple/appkit/tab-view",
+    "source": "https://developer.apple.com/documentation/appkit/nstabview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTabViewItem",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTabViewItem",
+    "adamic": "TabViewItem",
+    "module": "apple/appkit/tab-view-item",
+    "source": "https://developer.apple.com/documentation/appkit/nstabviewitem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTabViewController",
+      "Framework": "AppKit"
+    },
+    "swift": "NSTabViewController",
+    "adamic": "TabViewController",
+    "module": "apple/appkit/tab-view-controller",
+    "source": "https://developer.apple.com/documentation/appkit/nstabviewcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSBox",
+      "Framework": "AppKit"
+    },
+    "swift": "NSBox",
+    "adamic": "Box",
+    "module": "apple/appkit/box",
+    "source": "https://developer.apple.com/documentation/appkit/nsbox"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSProgressIndicator",
+      "Framework": "AppKit"
+    },
+    "swift": "NSProgressIndicator",
+    "adamic": "ProgressIndicator",
+    "module": "apple/appkit/progress-indicator",
+    "source": "https://developer.apple.com/documentation/appkit/nsprogressindicator"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSSlider",
+      "Framework": "AppKit"
+    },
+    "swift": "NSSlider",
+    "adamic": "Slider",
+    "module": "apple/appkit/slider",
+    "source": "https://developer.apple.com/documentation/appkit/nsslider"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSStepper",
+      "Framework": "AppKit"
+    },
+    "swift": "NSStepper",
+    "adamic": "Stepper",
+    "module": "apple/appkit/stepper",
+    "source": "https://developer.apple.com/documentation/appkit/nsstepper"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSPopUpButton",
+      "Framework": "AppKit"
+    },
+    "swift": "NSPopUpButton",
+    "adamic": "PopUpButton",
+    "module": "apple/appkit/pop-up-button",
+    "source": "https://developer.apple.com/documentation/appkit/nspopupbutton"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSComboBox",
+      "Framework": "AppKit"
+    },
+    "swift": "NSComboBox",
+    "adamic": "ComboBox",
+    "module": "apple/appkit/combo-box",
+    "source": "https://developer.apple.com/documentation/appkit/nscombobox"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSSegmentedControl",
+      "Framework": "AppKit"
+    },
+    "swift": "NSSegmentedControl",
+    "adamic": "SegmentedControl",
+    "module": "apple/appkit/segmented-control",
+    "source": "https://developer.apple.com/documentation/appkit/nssegmentedcontrol"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSSearchField",
+      "Framework": "AppKit"
+    },
+    "swift": "NSSearchField",
+    "adamic": "SearchField",
+    "module": "apple/appkit/search-field",
+    "source": "https://developer.apple.com/documentation/appkit/nssearchfield"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSToolbar",
+      "Framework": "AppKit"
+    },
+    "swift": "NSToolbar",
+    "adamic": "Toolbar",
+    "module": "apple/appkit/toolbar",
+    "source": "https://developer.apple.com/documentation/appkit/nstoolbar"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSToolbarItem",
+      "Framework": "AppKit"
+    },
+    "swift": "NSToolbarItem",
+    "adamic": "ToolbarItem",
+    "module": "apple/appkit/toolbar-item",
+    "source": "https://developer.apple.com/documentation/appkit/nstoolbaritem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSStatusBar",
+      "Framework": "AppKit"
+    },
+    "swift": "NSStatusBar",
+    "adamic": "StatusBar",
+    "module": "apple/appkit/status-bar",
+    "source": "https://developer.apple.com/documentation/appkit/nsstatusbar"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSStatusItem",
+      "Framework": "AppKit"
+    },
+    "swift": "NSStatusItem",
+    "adamic": "StatusItem",
+    "module": "apple/appkit/status-item",
+    "source": "https://developer.apple.com/documentation/appkit/nsstatusitem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSPasteboard",
+      "Framework": "AppKit"
+    },
+    "swift": "NSPasteboard",
+    "adamic": "Pasteboard",
+    "module": "apple/appkit/pasteboard",
+    "source": "https://developer.apple.com/documentation/appkit/nspasteboard"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSWorkspace",
+      "Framework": "AppKit"
+    },
+    "swift": "NSWorkspace",
+    "adamic": "Workspace",
+    "module": "apple/appkit/workspace",
+    "source": "https://developer.apple.com/documentation/appkit/nsworkspace"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSDocument",
+      "Framework": "AppKit"
+    },
+    "swift": "NSDocument",
+    "adamic": "Document",
+    "module": "apple/appkit/document",
+    "source": "https://developer.apple.com/documentation/appkit/nsdocument"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSDocumentController",
+      "Framework": "AppKit"
+    },
+    "swift": "NSDocumentController",
+    "adamic": "DocumentController",
+    "module": "apple/appkit/document-controller",
+    "source": "https://developer.apple.com/documentation/appkit/nsdocumentcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSResponder",
+      "Framework": "AppKit"
+    },
+    "swift": "NSResponder",
+    "adamic": "Responder",
+    "module": "apple/appkit/responder",
+    "source": "https://developer.apple.com/documentation/appkit/nsresponder"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIView",
+    "adamic": "View",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIViewController",
+      "Framework": "UIKit"
+    },
+    "swift": "UIViewController",
+    "adamic": "ViewController",
+    "module": "apple/uikit/view-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uiviewcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIWindow",
+      "Framework": "UIKit"
+    },
+    "swift": "UIWindow",
+    "adamic": "Window",
+    "module": "apple/uikit/window",
+    "source": "https://developer.apple.com/documentation/uikit/uiwindow"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIApplication",
+      "Framework": "UIKit"
+    },
+    "swift": "UIApplication",
+    "adamic": "Application",
+    "module": "apple/uikit/application",
+    "source": "https://developer.apple.com/documentation/uikit/uiapplication"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIButton",
+      "Framework": "UIKit"
+    },
+    "swift": "UIButton",
+    "adamic": "Button",
+    "module": "apple/uikit/button",
+    "source": "https://developer.apple.com/documentation/uikit/uibutton"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UILabel",
+      "Framework": "UIKit"
+    },
+    "swift": "UILabel",
+    "adamic": "Label",
+    "module": "apple/uikit/label",
+    "source": "https://developer.apple.com/documentation/uikit/uilabel"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITextField",
+      "Framework": "UIKit"
+    },
+    "swift": "UITextField",
+    "adamic": "TextField",
+    "module": "apple/uikit/text-field",
+    "source": "https://developer.apple.com/documentation/uikit/uitextfield"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITextView",
+      "Framework": "UIKit"
+    },
+    "swift": "UITextView",
+    "adamic": "TextView",
+    "module": "apple/uikit/text-view",
+    "source": "https://developer.apple.com/documentation/uikit/uitextview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIScrollView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIScrollView",
+    "adamic": "ScrollView",
+    "module": "apple/uikit/scroll-view",
+    "source": "https://developer.apple.com/documentation/uikit/uiscrollview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIImageView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIImageView",
+    "adamic": "ImageView",
+    "module": "apple/uikit/image-view",
+    "source": "https://developer.apple.com/documentation/uikit/uiimageview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIImage",
+      "Framework": "UIKit"
+    },
+    "swift": "UIImage",
+    "adamic": "Image",
+    "module": "apple/uikit/image",
+    "source": "https://developer.apple.com/documentation/uikit/uiimage"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIColor",
+      "Framework": "UIKit"
+    },
+    "swift": "UIColor",
+    "adamic": "Color",
+    "module": "apple/uikit/color",
+    "source": "https://developer.apple.com/documentation/uikit/uicolor"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIFont",
+      "Framework": "UIKit"
+    },
+    "swift": "UIFont",
+    "adamic": "Font",
+    "module": "apple/uikit/font",
+    "source": "https://developer.apple.com/documentation/uikit/uifont"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIScreen",
+      "Framework": "UIKit"
+    },
+    "swift": "UIScreen",
+    "adamic": "Screen",
+    "module": "apple/uikit/screen",
+    "source": "https://developer.apple.com/documentation/uikit/uiscreen"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIEvent",
+      "Framework": "UIKit"
+    },
+    "swift": "UIEvent",
+    "adamic": "Event",
+    "module": "apple/uikit/event",
+    "source": "https://developer.apple.com/documentation/uikit/uievent"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITouch",
+      "Framework": "UIKit"
+    },
+    "swift": "UITouch",
+    "adamic": "Touch",
+    "module": "apple/uikit/touch",
+    "source": "https://developer.apple.com/documentation/uikit/uitouch"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UIGestureRecognizer",
+    "adamic": "GestureRecognizer",
+    "module": "apple/uikit/gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uigesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITapGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UITapGestureRecognizer",
+    "adamic": "TapGestureRecognizer",
+    "module": "apple/uikit/tap-gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uitapgesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIPanGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UIPanGestureRecognizer",
+    "adamic": "PanGestureRecognizer",
+    "module": "apple/uikit/pan-gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uipangesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIPinchGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UIPinchGestureRecognizer",
+    "adamic": "PinchGestureRecognizer",
+    "module": "apple/uikit/pinch-gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uipinchgesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIRotationGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UIRotationGestureRecognizer",
+    "adamic": "RotationGestureRecognizer",
+    "module": "apple/uikit/rotation-gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uirotationgesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UISwipeGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UISwipeGestureRecognizer",
+    "adamic": "SwipeGestureRecognizer",
+    "module": "apple/uikit/swipe-gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uiswipegesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UILongPressGestureRecognizer",
+      "Framework": "UIKit"
+    },
+    "swift": "UILongPressGestureRecognizer",
+    "adamic": "LongPressGestureRecognizer",
+    "module": "apple/uikit/long-press-gesture-recognizer",
+    "source": "https://developer.apple.com/documentation/uikit/uilongpressgesturerecognizer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITableView",
+      "Framework": "UIKit"
+    },
+    "swift": "UITableView",
+    "adamic": "TableView",
+    "module": "apple/uikit/table-view",
+    "source": "https://developer.apple.com/documentation/uikit/uitableview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITableViewCell",
+      "Framework": "UIKit"
+    },
+    "swift": "UITableViewCell",
+    "adamic": "TableViewCell",
+    "module": "apple/uikit/table-view-cell",
+    "source": "https://developer.apple.com/documentation/uikit/uitableviewcell"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UICollectionView",
+      "Framework": "UIKit"
+    },
+    "swift": "UICollectionView",
+    "adamic": "CollectionView",
+    "module": "apple/uikit/collection-view",
+    "source": "https://developer.apple.com/documentation/uikit/uicollectionview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UICollectionViewCell",
+      "Framework": "UIKit"
+    },
+    "swift": "UICollectionViewCell",
+    "adamic": "CollectionViewCell",
+    "module": "apple/uikit/collection-view-cell",
+    "source": "https://developer.apple.com/documentation/uikit/uicollectionviewcell"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIStackView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIStackView",
+    "adamic": "StackView",
+    "module": "apple/uikit/stack-view",
+    "source": "https://developer.apple.com/documentation/uikit/uistackview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UINavigationController",
+      "Framework": "UIKit"
+    },
+    "swift": "UINavigationController",
+    "adamic": "NavigationController",
+    "module": "apple/uikit/navigation-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uinavigationcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UINavigationBar",
+      "Framework": "UIKit"
+    },
+    "swift": "UINavigationBar",
+    "adamic": "NavigationBar",
+    "module": "apple/uikit/navigation-bar",
+    "source": "https://developer.apple.com/documentation/uikit/uinavigationbar"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UINavigationItem",
+      "Framework": "UIKit"
+    },
+    "swift": "UINavigationItem",
+    "adamic": "NavigationItem",
+    "module": "apple/uikit/navigation-item",
+    "source": "https://developer.apple.com/documentation/uikit/uinavigationitem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITabBarController",
+      "Framework": "UIKit"
+    },
+    "swift": "UITabBarController",
+    "adamic": "TabBarController",
+    "module": "apple/uikit/tab-bar-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uitabbarcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITabBar",
+      "Framework": "UIKit"
+    },
+    "swift": "UITabBar",
+    "adamic": "TabBar",
+    "module": "apple/uikit/tab-bar",
+    "source": "https://developer.apple.com/documentation/uikit/uitabbar"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UITabBarItem",
+      "Framework": "UIKit"
+    },
+    "swift": "UITabBarItem",
+    "adamic": "TabBarItem",
+    "module": "apple/uikit/tab-bar-item",
+    "source": "https://developer.apple.com/documentation/uikit/uitabbaritem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIToolbar",
+      "Framework": "UIKit"
+    },
+    "swift": "UIToolbar",
+    "adamic": "Toolbar",
+    "module": "apple/uikit/toolbar",
+    "source": "https://developer.apple.com/documentation/uikit/uitoolbar"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIBarButtonItem",
+      "Framework": "UIKit"
+    },
+    "swift": "UIBarButtonItem",
+    "adamic": "BarButtonItem",
+    "module": "apple/uikit/bar-button-item",
+    "source": "https://developer.apple.com/documentation/uikit/uibarbuttonitem"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIAlertController",
+      "Framework": "UIKit"
+    },
+    "swift": "UIAlertController",
+    "adamic": "AlertController",
+    "module": "apple/uikit/alert-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uialertcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIAlertAction",
+      "Framework": "UIKit"
+    },
+    "swift": "UIAlertAction",
+    "adamic": "AlertAction",
+    "module": "apple/uikit/alert-action",
+    "source": "https://developer.apple.com/documentation/uikit/uialertaction"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIProgressView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIProgressView",
+    "adamic": "ProgressView",
+    "module": "apple/uikit/progress-view",
+    "source": "https://developer.apple.com/documentation/uikit/uiprogressview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UISlider",
+      "Framework": "UIKit"
+    },
+    "swift": "UISlider",
+    "adamic": "Slider",
+    "module": "apple/uikit/slider",
+    "source": "https://developer.apple.com/documentation/uikit/uislider"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIStepper",
+      "Framework": "UIKit"
+    },
+    "swift": "UIStepper",
+    "adamic": "Stepper",
+    "module": "apple/uikit/stepper",
+    "source": "https://developer.apple.com/documentation/uikit/uistepper"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UISwitch",
+      "Framework": "UIKit"
+    },
+    "swift": "UISwitch",
+    "adamic": "Switch",
+    "module": "apple/uikit/switch",
+    "source": "https://developer.apple.com/documentation/uikit/uiswitch"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIActivityIndicatorView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIActivityIndicatorView",
+    "adamic": "ActivityIndicatorView",
+    "module": "apple/uikit/activity-indicator-view",
+    "source": "https://developer.apple.com/documentation/uikit/uiactivityindicatorview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UISearchBar",
+      "Framework": "UIKit"
+    },
+    "swift": "UISearchBar",
+    "adamic": "SearchBar",
+    "module": "apple/uikit/search-bar",
+    "source": "https://developer.apple.com/documentation/uikit/uisearchbar"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UISearchController",
+      "Framework": "UIKit"
+    },
+    "swift": "UISearchController",
+    "adamic": "SearchController",
+    "module": "apple/uikit/search-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uisearchcontroller"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIPageControl",
+      "Framework": "UIKit"
+    },
+    "swift": "UIPageControl",
+    "adamic": "PageControl",
+    "module": "apple/uikit/page-control",
+    "source": "https://developer.apple.com/documentation/uikit/uipagecontrol"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIDatePicker",
+      "Framework": "UIKit"
+    },
+    "swift": "UIDatePicker",
+    "adamic": "DatePicker",
+    "module": "apple/uikit/date-picker",
+    "source": "https://developer.apple.com/documentation/uikit/uidatepicker"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIPickerView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIPickerView",
+    "adamic": "PickerView",
+    "module": "apple/uikit/picker-view",
+    "source": "https://developer.apple.com/documentation/uikit/uipickerview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIVisualEffectView",
+      "Framework": "UIKit"
+    },
+    "swift": "UIVisualEffectView",
+    "adamic": "VisualEffectView",
+    "module": "apple/uikit/visual-effect-view",
+    "source": "https://developer.apple.com/documentation/uikit/uivisualeffectview"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIBlurEffect",
+      "Framework": "UIKit"
+    },
+    "swift": "UIBlurEffect",
+    "adamic": "BlurEffect",
+    "module": "apple/uikit/blur-effect",
+    "source": "https://developer.apple.com/documentation/uikit/uiblureffect"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIVibrancyEffect",
+      "Framework": "UIKit"
+    },
+    "swift": "UIVibrancyEffect",
+    "adamic": "VibrancyEffect",
+    "module": "apple/uikit/vibrancy-effect",
+    "source": "https://developer.apple.com/documentation/uikit/uivibrancyeffect"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "UIBezierPath",
+      "Framework": "UIKit"
+    },
+    "swift": "UIBezierPath",
+    "adamic": "BezierPath",
+    "module": "apple/uikit/bezier-path",
+    "source": "https://developer.apple.com/documentation/uikit/uibezierpath"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLSession",
+      "Framework": "Foundation"
+    },
+    "swift": "URLSession",
+    "adamic": "UrlSession",
+    "module": "apple/foundation/url-session",
+    "source": "https://developer.apple.com/documentation/foundation/urlsession"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLSessionTask",
+      "Framework": "Foundation"
+    },
+    "swift": "URLSessionTask",
+    "adamic": "UrlSessionTask",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLSessionDataTask",
+      "Framework": "Foundation"
+    },
+    "swift": "URLSessionDataTask",
+    "adamic": "UrlSessionDataTask",
+    "module": "apple/foundation/url-session-data-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiondatatask"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLSessionDownloadTask",
+      "Framework": "Foundation"
+    },
+    "swift": "URLSessionDownloadTask",
+    "adamic": "UrlSessionDownloadTask",
+    "module": "apple/foundation/url-session-download-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiondownloadtask"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLSessionUploadTask",
+      "Framework": "Foundation"
+    },
+    "swift": "URLSessionUploadTask",
+    "adamic": "UrlSessionUploadTask",
+    "module": "apple/foundation/url-session-upload-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessionuploadtask"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLSessionConfiguration",
+      "Framework": "Foundation"
+    },
+    "swift": "URLSessionConfiguration",
+    "adamic": "UrlSessionConfiguration",
+    "module": "apple/foundation/url-session-configuration",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessionconfiguration"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSURLResponse",
+      "Framework": "Foundation"
+    },
+    "swift": "URLResponse",
+    "adamic": "UrlResponse",
+    "module": "apple/foundation/url-response",
+    "source": "https://developer.apple.com/documentation/foundation/urlresponse"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSHTTPURLResponse",
+      "Framework": "Foundation"
+    },
+    "swift": "HTTPURLResponse",
+    "adamic": "HttpUrlResponse",
+    "module": "apple/foundation/http-url-response",
+    "source": "https://developer.apple.com/documentation/foundation/httpurlresponse"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSOperation",
+      "Framework": "Foundation"
+    },
+    "swift": "Operation",
+    "adamic": "Operation",
+    "module": "apple/foundation/operation",
+    "source": "https://developer.apple.com/documentation/foundation/operation"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSOperationQueue",
+      "Framework": "Foundation"
+    },
+    "swift": "OperationQueue",
+    "adamic": "OperationQueue",
+    "module": "apple/foundation/operation-queue",
+    "source": "https://developer.apple.com/documentation/foundation/operationqueue"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSBlockOperation",
+      "Framework": "Foundation"
+    },
+    "swift": "BlockOperation",
+    "adamic": "BlockOperation",
+    "module": "apple/foundation/block-operation",
+    "source": "https://developer.apple.com/documentation/foundation/blockoperation"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSFileManager",
+      "Framework": "Foundation"
+    },
+    "swift": "FileManager",
+    "adamic": "FileManager",
+    "module": "apple/foundation/file-manager",
+    "source": "https://developer.apple.com/documentation/foundation/filemanager"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSFileHandle",
+      "Framework": "Foundation"
+    },
+    "swift": "FileHandle",
+    "adamic": "FileHandle",
+    "module": "apple/foundation/file-handle",
+    "source": "https://developer.apple.com/documentation/foundation/filehandle"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSProcessInfo",
+      "Framework": "Foundation"
+    },
+    "swift": "ProcessInfo",
+    "adamic": "ProcessInfo",
+    "module": "apple/foundation/process-info",
+    "source": "https://developer.apple.com/documentation/foundation/processinfo"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSThread",
+      "Framework": "Foundation"
+    },
+    "swift": "Thread",
+    "adamic": "Thread",
+    "module": "apple/foundation/thread",
+    "source": "https://developer.apple.com/documentation/foundation/thread"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTimer",
+      "Framework": "Foundation"
+    },
+    "swift": "Timer",
+    "adamic": "Timer",
+    "module": "apple/foundation/timer",
+    "source": "https://developer.apple.com/documentation/foundation/timer"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSRunLoop",
+      "Framework": "Foundation"
+    },
+    "swift": "RunLoop",
+    "adamic": "RunLoop",
+    "module": "apple/foundation/run-loop",
+    "source": "https://developer.apple.com/documentation/foundation/runloop"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSScanner",
+      "Framework": "Foundation"
+    },
+    "swift": "Scanner",
+    "adamic": "Scanner",
+    "module": "apple/foundation/scanner",
+    "source": "https://developer.apple.com/documentation/foundation/scanner"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "Formatter",
+    "adamic": "Formatter",
+    "module": "apple/foundation/formatter",
+    "source": "https://developer.apple.com/documentation/foundation/formatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSNumberFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "NumberFormatter",
+    "adamic": "NumberFormatter",
+    "module": "apple/foundation/number-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/numberformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSDateFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "DateFormatter",
+    "adamic": "DateFormatter",
+    "module": "apple/foundation/date-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/dateformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSByteCountFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "ByteCountFormatter",
+    "adamic": "ByteCountFormatter",
+    "module": "apple/foundation/byte-count-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/bytecountformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSDateComponentsFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "DateComponentsFormatter",
+    "adamic": "DateComponentsFormatter",
+    "module": "apple/foundation/date-components-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/datecomponentsformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSDateIntervalFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "DateIntervalFormatter",
+    "adamic": "DateIntervalFormatter",
+    "module": "apple/foundation/date-interval-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/dateintervalformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSLengthFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "LengthFormatter",
+    "adamic": "LengthFormatter",
+    "module": "apple/foundation/length-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/lengthformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSMassFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "MassFormatter",
+    "adamic": "MassFormatter",
+    "module": "apple/foundation/mass-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/massformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSEnergyFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "EnergyFormatter",
+    "adamic": "EnergyFormatter",
+    "module": "apple/foundation/energy-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/energyformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSMeasurementFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "MeasurementFormatter",
+    "adamic": "MeasurementFormatter",
+    "module": "apple/foundation/measurement-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/measurementformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSPersonNameComponentsFormatter",
+      "Framework": "Foundation"
+    },
+    "swift": "PersonNameComponentsFormatter",
+    "adamic": "PersonNameComponentsFormatter",
+    "module": "apple/foundation/person-name-components-formatter",
+    "source": "https://developer.apple.com/documentation/foundation/personnamecomponentsformatter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSProgress",
+      "Framework": "Foundation"
+    },
+    "swift": "Progress",
+    "adamic": "Progress",
+    "module": "apple/foundation/progress",
+    "source": "https://developer.apple.com/documentation/foundation/progress"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSUndoManager",
+      "Framework": "Foundation"
+    },
+    "swift": "UndoManager",
+    "adamic": "UndoManager",
+    "module": "apple/foundation/undo-manager",
+    "source": "https://developer.apple.com/documentation/foundation/undomanager"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSNotificationCenter",
+      "Framework": "Foundation"
+    },
+    "swift": "NotificationCenter",
+    "adamic": "NotificationCenter",
+    "module": "apple/foundation/notification-center",
+    "source": "https://developer.apple.com/documentation/foundation/notificationcenter"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSUserDefaults",
+      "Framework": "Foundation"
+    },
+    "swift": "UserDefaults",
+    "adamic": "UserDefaults",
+    "module": "apple/foundation/user-defaults",
+    "source": "https://developer.apple.com/documentation/foundation/userdefaults"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSBundle",
+      "Framework": "Foundation"
+    },
+    "swift": "Bundle",
+    "adamic": "Bundle",
+    "module": "apple/foundation/bundle",
+    "source": "https://developer.apple.com/documentation/foundation/bundle"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSObject",
+      "Framework": "Foundation"
+    },
+    "swift": "NSObject",
+    "adamic": "FoundationObject",
+    "module": "apple/foundation/foundation-object",
+    "source": "https://developer.apple.com/documentation/objectivec/nsobject-swift.class"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSProxy",
+      "Framework": "Foundation"
+    },
+    "swift": "NSProxy",
+    "adamic": "FoundationProxy",
+    "module": "apple/foundation/foundation-proxy",
+    "source": "https://developer.apple.com/documentation/foundation/nsproxy"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSCache",
+      "Framework": "Foundation"
+    },
+    "swift": "NSCache",
+    "adamic": "Cache",
+    "module": "apple/foundation/cache",
+    "source": "https://developer.apple.com/documentation/foundation/nscache"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSMapTable",
+      "Framework": "Foundation"
+    },
+    "swift": "NSMapTable",
+    "adamic": "MapTable",
+    "module": "apple/foundation/map-table",
+    "source": "https://developer.apple.com/documentation/foundation/nsmaptable"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSHashTable",
+      "Framework": "Foundation"
+    },
+    "swift": "NSHashTable",
+    "adamic": "HashTable",
+    "module": "apple/foundation/hash-table",
+    "source": "https://developer.apple.com/documentation/foundation/nshashtable"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSLock",
+      "Framework": "Foundation"
+    },
+    "swift": "NSLock",
+    "adamic": "Lock",
+    "module": "apple/foundation/lock",
+    "source": "https://developer.apple.com/documentation/foundation/nslock"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSRecursiveLock",
+      "Framework": "Foundation"
+    },
+    "swift": "NSRecursiveLock",
+    "adamic": "RecursiveLock",
+    "module": "apple/foundation/recursive-lock",
+    "source": "https://developer.apple.com/documentation/foundation/nsrecursivelock"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSCondition",
+      "Framework": "Foundation"
+    },
+    "swift": "NSCondition",
+    "adamic": "Condition",
+    "module": "apple/foundation/condition",
+    "source": "https://developer.apple.com/documentation/foundation/nscondition"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSConditionLock",
+      "Framework": "Foundation"
+    },
+    "swift": "NSConditionLock",
+    "adamic": "ConditionLock",
+    "module": "apple/foundation/condition-lock",
+    "source": "https://developer.apple.com/documentation/foundation/nsconditionlock"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSNull",
+      "Framework": "Foundation"
+    },
+    "swift": "NSNull",
+    "adamic": "Null",
+    "module": "apple/foundation/null",
+    "source": "https://developer.apple.com/documentation/foundation/nsnull"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSPredicate",
+      "Framework": "Foundation"
+    },
+    "swift": "NSPredicate",
+    "adamic": "Predicate",
+    "module": "apple/foundation/predicate",
+    "source": "https://developer.apple.com/documentation/foundation/nspredicate"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSCompoundPredicate",
+      "Framework": "Foundation"
+    },
+    "swift": "NSCompoundPredicate",
+    "adamic": "CompoundPredicate",
+    "module": "apple/foundation/compound-predicate",
+    "source": "https://developer.apple.com/documentation/foundation/nscompoundpredicate"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSComparisonPredicate",
+      "Framework": "Foundation"
+    },
+    "swift": "NSComparisonPredicate",
+    "adamic": "ComparisonPredicate",
+    "module": "apple/foundation/comparison-predicate",
+    "source": "https://developer.apple.com/documentation/foundation/nscomparisonpredicate"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSExpression",
+      "Framework": "Foundation"
+    },
+    "swift": "NSExpression",
+    "adamic": "Expression",
+    "module": "apple/foundation/expression",
+    "source": "https://developer.apple.com/documentation/foundation/nsexpression"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSRegularExpression",
+      "Framework": "Foundation"
+    },
+    "swift": "NSRegularExpression",
+    "adamic": "RegularExpression",
+    "module": "apple/foundation/regular-expression",
+    "source": "https://developer.apple.com/documentation/foundation/nsregularexpression"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSTextCheckingResult",
+      "Framework": "Foundation"
+    },
+    "swift": "NSTextCheckingResult",
+    "adamic": "TextCheckingResult",
+    "module": "apple/foundation/text-checking-result",
+    "source": "https://developer.apple.com/documentation/foundation/nstextcheckingresult"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSValue",
+      "Framework": "Foundation"
+    },
+    "swift": "NSValue",
+    "adamic": "Value",
+    "module": "apple/foundation/value",
+    "source": "https://developer.apple.com/documentation/foundation/nsvalue"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSNumber",
+      "Framework": "Foundation"
+    },
+    "swift": "NSNumber",
+    "adamic": "FoundationNumber",
+    "module": "apple/foundation/foundation-number",
+    "source": "https://developer.apple.com/documentation/foundation/nsnumber"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSError",
+      "Framework": "Foundation"
+    },
+    "swift": "NSError",
+    "adamic": "FoundationError",
+    "module": "apple/foundation/foundation-error",
+    "source": "https://developer.apple.com/documentation/foundation/nserror"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSException",
+      "Framework": "Foundation"
+    },
+    "swift": "NSException",
+    "adamic": "Exception",
+    "module": "apple/foundation/exception",
+    "source": "https://developer.apple.com/documentation/foundation/nsexception"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSNotification",
+      "Framework": "Foundation"
+    },
+    "swift": "NSNotification",
+    "adamic": "Notification",
+    "module": "apple/foundation/notification",
+    "source": "https://developer.apple.com/documentation/foundation/nsnotification"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSAttributedString",
+      "Framework": "Foundation"
+    },
+    "swift": "NSAttributedString",
+    "adamic": "AttributedString",
+    "module": "apple/foundation/attributed-string",
+    "source": "https://developer.apple.com/documentation/foundation/nsattributedstring"
+  },
+  {
+    "declaration": {
+      "Kind": "class",
+      "Name": "NSMutableAttributedString",
+      "Framework": "Foundation"
+    },
+    "swift": "NSMutableAttributedString",
+    "adamic": "MutableAttributedString",
+    "module": "apple/foundation/mutable-attributed-string",
+    "source": "https://developer.apple.com/documentation/foundation/nsmutableattributedstring"
+  },
+  {
+    "declaration": {
+      "Kind": "struct",
+      "Name": "CGPoint",
+      "Framework": "CoreGraphics"
+    },
+    "swift": "CGPoint",
+    "adamic": "Point",
+    "module": "apple/coregraphics/point",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgpoint"
+  },
+  {
+    "declaration": {
+      "Kind": "struct",
+      "Name": "CGSize",
+      "Framework": "CoreGraphics"
+    },
+    "swift": "CGSize",
+    "adamic": "Size",
+    "module": "apple/coregraphics/size",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgsize"
+  },
+  {
+    "declaration": {
+      "Kind": "struct",
+      "Name": "CGVector",
+      "Framework": "CoreGraphics"
+    },
+    "swift": "CGVector",
+    "adamic": "Vector",
+    "module": "apple/coregraphics/vector",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgvector"
+  },
+  {
+    "declaration": {
+      "Kind": "struct",
+      "Name": "CGAffineTransform",
+      "Framework": "CoreGraphics"
+    },
+    "swift": "CGAffineTransform",
+    "adamic": "AffineTransform",
+    "module": "apple/coregraphics/affine-transform",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgaffinetransform"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGColorRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGColor"
+    },
+    "swift": "CGColor",
+    "adamic": "Color",
+    "module": "apple/coregraphics/color",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgcolor"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGColorSpaceRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGColorSpace"
+    },
+    "swift": "CGColorSpace",
+    "adamic": "ColorSpace",
+    "module": "apple/coregraphics/color-space",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgcolorspace"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGContextRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGContext"
+    },
+    "swift": "CGContext",
+    "adamic": "Context",
+    "module": "apple/coregraphics/context",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgcontext"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGImageRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGImage"
+    },
+    "swift": "CGImage",
+    "adamic": "Image",
+    "module": "apple/coregraphics/image",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgimage"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGPathRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGPath"
+    },
+    "swift": "CGPath",
+    "adamic": "Path",
+    "module": "apple/coregraphics/path",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgpath"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGMutablePathRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGMutablePath"
+    },
+    "swift": "CGMutablePath",
+    "adamic": "MutablePath",
+    "module": "apple/coregraphics/mutable-path",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgmutablepath"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGGradientRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGGradient"
+    },
+    "swift": "CGGradient",
+    "adamic": "Gradient",
+    "module": "apple/coregraphics/gradient",
+    "source": "https://developer.apple.com/documentation/coregraphics/cggradient"
+  },
+  {
+    "declaration": {
+      "Kind": "typedef",
+      "Name": "CGPatternRef",
+      "Framework": "CoreGraphics",
+      "APIName": "CGPattern"
+    },
+    "swift": "CGPattern",
+    "adamic": "Pattern",
+    "module": "apple/coregraphics/pattern",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgpattern"
+  },
+  {
+    "declaration": {
+      "Kind": "struct",
+      "Name": "CGRect",
+      "Framework": "CoreGraphics"
+    },
+    "swift": "CGRect",
+    "adamic": "Rectangle",
+    "module": "apple/coregraphics/rectangle",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgrect"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "title",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "NSString *"
+      }
+    },
+    "swift": "NSWindow.title",
+    "adamic": "title",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/title"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "frame",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "NSRect"
+      }
+    },
+    "swift": "NSWindow.frame",
+    "adamic": "frame",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/frame"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "contentView",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "NSView *",
+        "Object": true
+      }
+    },
+    "swift": "NSWindow.contentView",
+    "adamic": "contentView",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/contentview"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "styleMask",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "NSWindowStyleMask"
+      }
+    },
+    "swift": "NSWindow.styleMask",
+    "adamic": "styleMask",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.property"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "backgroundColor",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "NSColor *",
+        "Object": true
+      }
+    },
+    "swift": "NSWindow.backgroundColor",
+    "adamic": "backgroundColor",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/backgroundcolor"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "alphaValue",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "CGFloat"
+      }
+    },
+    "swift": "NSWindow.alphaValue",
+    "adamic": "alphaValue",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/alphavalue"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "level",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Result": {
+        "Spelling": "NSWindowLevel"
+      }
+    },
+    "swift": "NSWindow.level",
+    "adamic": "level",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/level-swift.property"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "frame",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "CGRect"
+      }
+    },
+    "swift": "UIView.frame",
+    "adamic": "frame",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/frame"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "bounds",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "CGRect"
+      }
+    },
+    "swift": "UIView.bounds",
+    "adamic": "bounds",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/bounds"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "alpha",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "CGFloat"
+      }
+    },
+    "swift": "UIView.alpha",
+    "adamic": "alpha",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/alpha"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "backgroundColor",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "UIColor *",
+        "Object": true
+      }
+    },
+    "swift": "UIView.backgroundColor",
+    "adamic": "backgroundColor",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/backgroundcolor"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "tag",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "NSInteger"
+      }
+    },
+    "swift": "UIView.tag",
+    "adamic": "tag",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/tag"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "hidden",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "BOOL"
+      },
+      "Getter": "isHidden"
+    },
+    "swift": "UIView.isHidden",
+    "adamic": "isHidden",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/ishidden"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "opaque",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Result": {
+        "Spelling": "BOOL"
+      },
+      "Getter": "isOpaque"
+    },
+    "swift": "UIView.isOpaque",
+    "adamic": "isOpaque",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/isopaque"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "taskIdentifier",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Result": {
+        "Spelling": "NSUInteger"
+      }
+    },
+    "swift": "URLSessionTask.taskIdentifier",
+    "adamic": "taskIdentifier",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/taskidentifier"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "originalRequest",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Result": {
+        "Spelling": "NSURLRequest *",
+        "Object": true
+      }
+    },
+    "swift": "URLSessionTask.originalRequest",
+    "adamic": "originalRequest",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/originalrequest"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "currentRequest",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Result": {
+        "Spelling": "NSURLRequest *",
+        "Object": true
+      }
+    },
+    "swift": "URLSessionTask.currentRequest",
+    "adamic": "currentRequest",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/currentrequest"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "response",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Result": {
+        "Spelling": "NSURLResponse *",
+        "Object": true
+      }
+    },
+    "swift": "URLSessionTask.response",
+    "adamic": "response",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/response"
+  },
+  {
+    "declaration": {
+      "Kind": "property",
+      "Name": "taskDescription",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Result": {
+        "Spelling": "NSString *"
+      }
+    },
+    "swift": "URLSessionTask.taskDescription",
+    "adamic": "taskDescription",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/taskdescription"
+  },
+  {
+    "declaration": {
+      "Kind": "struct-field",
+      "Name": "origin",
+      "Parent": "CGRect",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGPoint"
+      }
+    },
+    "swift": "CGRect.origin",
+    "adamic": "origin",
+    "module": "apple/coregraphics/rectangle",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgrect/origin"
+  },
+  {
+    "declaration": {
+      "Kind": "struct-field",
+      "Name": "size",
+      "Parent": "CGRect",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGSize"
+      }
+    },
+    "swift": "CGRect.size",
+    "adamic": "size",
+    "module": "apple/coregraphics/rectangle",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgrect"
+  },
+  {
+    "declaration": {
+      "Kind": "struct-field",
+      "Name": "x",
+      "Parent": "CGPoint",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGFloat"
+      }
+    },
+    "swift": "CGPoint.x",
+    "adamic": "x",
+    "module": "apple/coregraphics/point",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgpoint/x"
+  },
+  {
+    "declaration": {
+      "Kind": "struct-field",
+      "Name": "y",
+      "Parent": "CGPoint",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGFloat"
+      }
+    },
+    "swift": "CGPoint.y",
+    "adamic": "y",
+    "module": "apple/coregraphics/point",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgpoint/y"
+  },
+  {
+    "declaration": {
+      "Kind": "struct-field",
+      "Name": "width",
+      "Parent": "CGSize",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGFloat"
+      }
+    },
+    "swift": "CGSize.width",
+    "adamic": "width",
+    "module": "apple/coregraphics/size",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgsize/width"
+  },
+  {
+    "declaration": {
+      "Kind": "struct-field",
+      "Name": "height",
+      "Parent": "CGSize",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGFloat"
+      }
+    },
+    "swift": "CGSize.height",
+    "adamic": "height",
+    "module": "apple/coregraphics/size",
+    "source": "https://developer.apple.com/documentation/corefoundation/cgsize/width"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "makeKeyAndOrderFront:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "sender",
+          "Type": {
+            "Spelling": "id"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.makeKeyAndOrderFront(_:)",
+    "adamic": "makeKeyAndOrderFront",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/makekeyandorderfront%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "setFrame:display:animate:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "frame",
+          "Type": {
+            "Spelling": "NSRect"
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "display",
+          "Type": {
+            "Spelling": "BOOL"
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "animate",
+          "Type": {
+            "Spelling": "BOOL"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.setFrame(_:display:animate:)",
+    "adamic": "setFrame",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/setframe%28_%3Adisplay%3Aanimate%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "setFrameOrigin:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "point",
+          "Type": {
+            "Spelling": "NSPoint"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.setFrameOrigin(_:)",
+    "adamic": "setFrameOrigin",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/setframeorigin%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "setContentSize:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "size",
+          "Type": {
+            "Spelling": "NSSize"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.setContentSize(_:)",
+    "adamic": "setContentSize",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/setcontentsize%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "orderFront:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "sender",
+          "Type": {
+            "Spelling": "id"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.orderFront(_:)",
+    "adamic": "orderFront",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/orderfront%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "orderOut:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "sender",
+          "Type": {
+            "Spelling": "id"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.orderOut(_:)",
+    "adamic": "orderOut",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/orderout%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "close",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.close()",
+    "adamic": "close",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/close%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "center",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSWindow.center()",
+    "adamic": "center",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/center%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "addSubview:",
+      "Parent": "NSView",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "view",
+          "Type": {
+            "Spelling": "NSView *",
+            "Nullability": "nonnull",
+            "Object": true
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSView.addSubview(_:)",
+    "adamic": "addSubview",
+    "module": "apple/appkit/view",
+    "source": "https://developer.apple.com/documentation/appkit/nsview/addsubview%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "removeFromSuperview",
+      "Parent": "NSView",
+      "Framework": "AppKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSView.removeFromSuperview()",
+    "adamic": "removeFromSuperview",
+    "module": "apple/appkit/view",
+    "source": "https://developer.apple.com/documentation/appkit/nsview/removefromsuperview%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "setNeedsDisplayInRect:",
+      "Parent": "NSView",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "rect",
+          "Type": {
+            "Spelling": "NSRect"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      },
+      "APIName": "setNeedsDisplay(_:)"
+    },
+    "swift": "NSView.setNeedsDisplay(_:)",
+    "adamic": "setNeedsDisplay",
+    "module": "apple/appkit/view",
+    "source": "https://developer.apple.com/documentation/appkit/nsview/setneedsdisplay%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "displayIfNeeded",
+      "Parent": "NSView",
+      "Framework": "AppKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSView.displayIfNeeded()",
+    "adamic": "displayIfNeeded",
+    "module": "apple/appkit/view",
+    "source": "https://developer.apple.com/documentation/appkit/nsview/displayifneeded%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "layoutSubtreeIfNeeded",
+      "Parent": "NSView",
+      "Framework": "AppKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "NSView.layoutSubtreeIfNeeded()",
+    "adamic": "layoutSubtreeIfNeeded",
+    "module": "apple/appkit/view",
+    "source": "https://developer.apple.com/documentation/appkit/nsview/layoutsubtreeifneeded%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "addSubview:",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Parameters": [
+        {
+          "Name": "view",
+          "Type": {
+            "Spelling": "UIView *",
+            "Nullability": "nonnull",
+            "Object": true
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "UIView.addSubview(_:)",
+    "adamic": "addSubview",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/addsubview%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "removeFromSuperview",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "UIView.removeFromSuperview()",
+    "adamic": "removeFromSuperview",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/removefromsuperview%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "setNeedsLayout",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "UIView.setNeedsLayout()",
+    "adamic": "setNeedsLayout",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/setneedslayout%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "layoutIfNeeded",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "UIView.layoutIfNeeded()",
+    "adamic": "layoutIfNeeded",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/layoutifneeded%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "setNeedsDisplayInRect:",
+      "Parent": "UIView",
+      "Framework": "UIKit",
+      "Parameters": [
+        {
+          "Name": "rect",
+          "Type": {
+            "Spelling": "CGRect"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      },
+      "APIName": "setNeedsDisplay(_:)"
+    },
+    "swift": "UIView.setNeedsDisplay(_:)",
+    "adamic": "setNeedsDisplay",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/setneedsdisplay%28_%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "dismissViewControllerAnimated:completion:",
+      "Parent": "UIViewController",
+      "Framework": "UIKit",
+      "Parameters": [
+        {
+          "Name": "animated",
+          "Type": {
+            "Spelling": "BOOL"
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "completion",
+          "Type": {
+            "Spelling": "void (^)(void)",
+            "Function": {
+              "Result": {
+                "Spelling": "void"
+              }
+            }
+          },
+          "DefaultArgument": true
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "UIViewController.dismiss(animated:completion:)",
+    "adamic": "dismiss",
+    "module": "apple/uikit/view-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uiviewcontroller/dismiss%28animated%3Acompletion%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "presentViewController:animated:completion:",
+      "Parent": "UIViewController",
+      "Framework": "UIKit",
+      "Parameters": [
+        {
+          "Name": "controller",
+          "Type": {
+            "Spelling": "UIViewController *",
+            "Nullability": "nonnull",
+            "Object": true
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "animated",
+          "Type": {
+            "Spelling": "BOOL"
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "completion",
+          "Type": {
+            "Spelling": "void (^)(void)",
+            "Function": {
+              "Result": {
+                "Spelling": "void"
+              }
+            }
+          },
+          "DefaultArgument": true
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "UIViewController.present(_:animated:completion:)",
+    "adamic": "present",
+    "module": "apple/uikit/view-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uiviewcontroller/present%28_%3Aanimated%3Acompletion%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "pushViewController:animated:",
+      "Parent": "UINavigationController",
+      "Framework": "UIKit",
+      "Parameters": [
+        {
+          "Name": "viewController",
+          "Type": {
+            "Spelling": "UIViewController *",
+            "Nullability": "nonnull",
+            "Object": true
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "animated",
+          "Type": {
+            "Spelling": "BOOL"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      },
+      "PropertyNames": [
+        "viewControllers"
+      ]
+    },
+    "swift": "UINavigationController.pushViewController(_:animated:)",
+    "adamic": "pushViewController",
+    "module": "apple/uikit/navigation-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uinavigationcontroller/pushviewcontroller%28_%3Aanimated%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "popViewControllerAnimated:",
+      "Parent": "UINavigationController",
+      "Framework": "UIKit",
+      "Parameters": [
+        {
+          "Name": "animated",
+          "Type": {
+            "Spelling": "BOOL"
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "UIViewController *",
+        "Object": true
+      }
+    },
+    "swift": "UINavigationController.popViewController(animated:)",
+    "adamic": "popViewController",
+    "module": "apple/uikit/navigation-controller",
+    "source": "https://developer.apple.com/documentation/uikit/uinavigationcontroller/popviewcontroller%28animated%3A%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "dataTaskWithURL:completionHandler:",
+      "Parent": "NSURLSession",
+      "Framework": "Foundation",
+      "Parameters": [
+        {
+          "Name": "url",
+          "Type": {
+            "Spelling": "NSURL *",
+            "Nullability": "nonnull",
+            "Object": true
+          },
+          "DefaultArgument": false
+        },
+        {
+          "Name": "completion",
+          "Type": {
+            "Spelling": "void (^)(NSData *, NSURLResponse *, NSError *)",
+            "Function": {
+              "Result": {
+                "Spelling": "void"
+              },
+              "Parameters": [
+                {
+                  "Spelling": "NSData *",
+                  "Nullability": "nullable",
+                  "Object": true
+                },
+                {
+                  "Spelling": "NSURLResponse *",
+                  "Nullability": "nullable",
+                  "Object": true
+                },
+                {
+                  "Spelling": "NSError *",
+                  "Nullability": "nullable",
+                  "Object": true
+                }
+              ]
+            }
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "NSURLSessionDataTask *",
+        "Object": true
+      }
+    },
+    "swift": "URLSession.dataTask(with:completionHandler:)",
+    "adamic": "dataTask",
+    "module": "apple/foundation/url-session",
+    "source": "https://developer.apple.com/documentation/foundation/urlsession/datatask%28with%3Acompletionhandler%3A%29-52wk8"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "resume",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "URLSessionTask.resume()",
+    "adamic": "resume",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/resume%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "suspend",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "URLSessionTask.suspend()",
+    "adamic": "suspend",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/suspend%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "cancel",
+      "Parent": "NSURLSessionTask",
+      "Framework": "Foundation",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "URLSessionTask.cancel()",
+    "adamic": "cancel",
+    "module": "apple/foundation/url-session-task",
+    "source": "https://developer.apple.com/documentation/foundation/urlsessiontask/cancel%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "addOperation:",
+      "Parent": "NSOperationQueue",
+      "Framework": "Foundation",
+      "Parameters": [
+        {
+          "Name": "operation",
+          "Type": {
+            "Spelling": "NSOperation *",
+            "Nullability": "nonnull",
+            "Object": true
+          },
+          "DefaultArgument": false
+        }
+      ],
+      "Result": {
+        "Spelling": "void"
+      },
+      "PropertyNames": [
+        "operations"
+      ]
+    },
+    "swift": "OperationQueue.addOperation(_:)",
+    "adamic": "addOperation",
+    "module": "apple/foundation/operation-queue",
+    "source": "https://developer.apple.com/documentation/foundation/operationqueue/addoperation%28_%3A%29-64o8a"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "cancelAllOperations",
+      "Parent": "NSOperationQueue",
+      "Framework": "Foundation",
+      "Parameters": [],
+      "Result": {
+        "Spelling": "void"
+      }
+    },
+    "swift": "OperationQueue.cancelAllOperations()",
+    "adamic": "cancelAllOperations",
+    "module": "apple/foundation/operation-queue",
+    "source": "https://developer.apple.com/documentation/foundation/operationqueue/cancelalloperations%28%29"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskBorderless",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.borderless",
+    "adamic": "'Borderless'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/borderless"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskTitled",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.titled",
+    "adamic": "'Titled'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/titled"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskClosable",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.closable",
+    "adamic": "'Closable'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/closable"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskMiniaturizable",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.miniaturizable",
+    "adamic": "'Miniaturizable'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/miniaturizable"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskResizable",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.resizable",
+    "adamic": "'Resizable'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/resizable"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskUtilityWindow",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.utilityWindow",
+    "adamic": "'UtilityWindow'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/utilitywindow"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskDocModalWindow",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.docModalWindow",
+    "adamic": "'DocModalWindow'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/docmodalwindow"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskNonactivatingPanel",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.nonactivatingPanel",
+    "adamic": "'NonactivatingPanel'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/nonactivatingpanel"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskHUDWindow",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.hudWindow",
+    "adamic": "'HudWindow'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/hudwindow"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskFullScreen",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.fullScreen",
+    "adamic": "'FullScreen'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/fullscreen"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "NSWindowStyleMaskFullSizeContentView",
+      "Parent": "NSWindowStyleMask",
+      "ParentSwiftName": "NSWindow.StyleMask",
+      "Framework": "AppKit",
+      "Enumerators": [
+        {
+          "Name": "NSWindowStyleMaskBorderless"
+        },
+        {
+          "Name": "NSWindowStyleMaskTitled"
+        },
+        {
+          "Name": "NSWindowStyleMaskClosable"
+        },
+        {
+          "Name": "NSWindowStyleMaskMiniaturizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskResizable"
+        },
+        {
+          "Name": "NSWindowStyleMaskUtilityWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskDocModalWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskNonactivatingPanel"
+        },
+        {
+          "Name": "NSWindowStyleMaskHUDWindow"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullScreen"
+        },
+        {
+          "Name": "NSWindowStyleMaskFullSizeContentView"
+        }
+      ]
+    },
+    "swift": "NSWindow.StyleMask.fullSizeContentView",
+    "adamic": "'FullSizeContentView'",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct/fullsizecontentview"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIViewAutoresizingFlexibleLeftMargin",
+      "Parent": "UIViewAutoresizing",
+      "ParentSwiftName": "UIView.AutoresizingMask",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIViewAutoresizingNone"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleLeftMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleWidth"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleRightMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleTopMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleHeight"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleBottomMargin"
+        }
+      ]
+    },
+    "swift": "UIView.AutoresizingMask.flexibleLeftMargin",
+    "adamic": "'FlexibleLeftMargin'",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/autoresizingmask-swift.struct/flexibleleftmargin"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIViewAutoresizingFlexibleWidth",
+      "Parent": "UIViewAutoresizing",
+      "ParentSwiftName": "UIView.AutoresizingMask",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIViewAutoresizingNone"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleLeftMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleWidth"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleRightMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleTopMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleHeight"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleBottomMargin"
+        }
+      ]
+    },
+    "swift": "UIView.AutoresizingMask.flexibleWidth",
+    "adamic": "'FlexibleWidth'",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/autoresizingmask-swift.struct/flexiblewidth"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIViewAutoresizingFlexibleRightMargin",
+      "Parent": "UIViewAutoresizing",
+      "ParentSwiftName": "UIView.AutoresizingMask",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIViewAutoresizingNone"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleLeftMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleWidth"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleRightMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleTopMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleHeight"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleBottomMargin"
+        }
+      ]
+    },
+    "swift": "UIView.AutoresizingMask.flexibleRightMargin",
+    "adamic": "'FlexibleRightMargin'",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/autoresizingmask-swift.struct/flexiblerightmargin"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIViewAutoresizingFlexibleTopMargin",
+      "Parent": "UIViewAutoresizing",
+      "ParentSwiftName": "UIView.AutoresizingMask",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIViewAutoresizingNone"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleLeftMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleWidth"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleRightMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleTopMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleHeight"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleBottomMargin"
+        }
+      ]
+    },
+    "swift": "UIView.AutoresizingMask.flexibleTopMargin",
+    "adamic": "'FlexibleTopMargin'",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/autoresizingmask-swift.struct/flexibletopmargin"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIViewAutoresizingFlexibleHeight",
+      "Parent": "UIViewAutoresizing",
+      "ParentSwiftName": "UIView.AutoresizingMask",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIViewAutoresizingNone"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleLeftMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleWidth"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleRightMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleTopMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleHeight"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleBottomMargin"
+        }
+      ]
+    },
+    "swift": "UIView.AutoresizingMask.flexibleHeight",
+    "adamic": "'FlexibleHeight'",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/autoresizingmask-swift.struct/flexibleheight"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIViewAutoresizingFlexibleBottomMargin",
+      "Parent": "UIViewAutoresizing",
+      "ParentSwiftName": "UIView.AutoresizingMask",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIViewAutoresizingNone"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleLeftMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleWidth"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleRightMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleTopMargin"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleHeight"
+        },
+        {
+          "Name": "UIViewAutoresizingFlexibleBottomMargin"
+        }
+      ]
+    },
+    "swift": "UIView.AutoresizingMask.flexibleBottomMargin",
+    "adamic": "'FlexibleBottomMargin'",
+    "module": "apple/uikit/view",
+    "source": "https://developer.apple.com/documentation/uikit/uiview/autoresizingmask-swift.struct/flexiblebottommargin"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateNormal",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.normal",
+    "adamic": "'Normal'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/normal"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateHighlighted",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.highlighted",
+    "adamic": "'Highlighted'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/highlighted"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateDisabled",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.disabled",
+    "adamic": "'Disabled'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/disabled"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateSelected",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.selected",
+    "adamic": "'Selected'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/selected"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateFocused",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.focused",
+    "adamic": "'Focused'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/focused"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateApplication",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.application",
+    "adamic": "'Application'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/application"
+  },
+  {
+    "declaration": {
+      "Kind": "option-constant",
+      "Name": "UIControlStateReserved",
+      "Parent": "UIControlState",
+      "ParentSwiftName": "UIControl.State",
+      "Framework": "UIKit",
+      "Enumerators": [
+        {
+          "Name": "UIControlStateNormal"
+        },
+        {
+          "Name": "UIControlStateHighlighted"
+        },
+        {
+          "Name": "UIControlStateDisabled"
+        },
+        {
+          "Name": "UIControlStateSelected"
+        },
+        {
+          "Name": "UIControlStateFocused"
+        },
+        {
+          "Name": "UIControlStateApplication"
+        },
+        {
+          "Name": "UIControlStateReserved"
+        }
+      ]
+    },
+    "swift": "UIControl.State.reserved",
+    "adamic": "'Reserved'",
+    "module": "apple/uikit/control",
+    "source": "https://developer.apple.com/documentation/uikit/uicontrol/state-swift.struct/reserved"
+  },
+  {
+    "declaration": {
+      "Kind": "enum-constant",
+      "Name": "CGLineCapButt",
+      "Parent": "CGLineCap",
+      "ParentSwiftName": "CGLineCap",
+      "Framework": "CoreGraphics",
+      "Enumerators": [
+        {
+          "Name": "CGLineCapButt"
+        },
+        {
+          "Name": "CGLineCapRound"
+        },
+        {
+          "Name": "CGLineCapSquare"
+        }
+      ]
+    },
+    "swift": "CGLineCap.butt",
+    "adamic": "'Butt'",
+    "module": "apple/coregraphics/line-cap",
+    "source": "https://developer.apple.com/documentation/coregraphics/cglinecap/butt"
+  },
+  {
+    "declaration": {
+      "Kind": "enum-constant",
+      "Name": "CGLineCapRound",
+      "Parent": "CGLineCap",
+      "ParentSwiftName": "CGLineCap",
+      "Framework": "CoreGraphics",
+      "Enumerators": [
+        {
+          "Name": "CGLineCapButt"
+        },
+        {
+          "Name": "CGLineCapRound"
+        },
+        {
+          "Name": "CGLineCapSquare"
+        }
+      ]
+    },
+    "swift": "CGLineCap.round",
+    "adamic": "'Round'",
+    "module": "apple/coregraphics/line-cap",
+    "source": "https://developer.apple.com/documentation/coregraphics/cglinecap/round"
+  },
+  {
+    "declaration": {
+      "Kind": "enum-constant",
+      "Name": "CGLineCapSquare",
+      "Parent": "CGLineCap",
+      "ParentSwiftName": "CGLineCap",
+      "Framework": "CoreGraphics",
+      "Enumerators": [
+        {
+          "Name": "CGLineCapButt"
+        },
+        {
+          "Name": "CGLineCapRound"
+        },
+        {
+          "Name": "CGLineCapSquare"
+        }
+      ]
+    },
+    "swift": "CGLineCap.square",
+    "adamic": "'Square'",
+    "module": "apple/coregraphics/line-cap",
+    "source": "https://developer.apple.com/documentation/coregraphics/cglinecap/square"
+  },
+  {
+    "declaration": {
+      "Kind": "enum-constant",
+      "Name": "CGLineJoinMiter",
+      "Parent": "CGLineJoin",
+      "ParentSwiftName": "CGLineJoin",
+      "Framework": "CoreGraphics",
+      "Enumerators": [
+        {
+          "Name": "CGLineJoinMiter"
+        },
+        {
+          "Name": "CGLineJoinRound"
+        },
+        {
+          "Name": "CGLineJoinBevel"
+        }
+      ]
+    },
+    "swift": "CGLineJoin.miter",
+    "adamic": "'Miter'",
+    "module": "apple/coregraphics/line-join",
+    "source": "https://developer.apple.com/documentation/coregraphics/cglinejoin/miter"
+  },
+  {
+    "declaration": {
+      "Kind": "enum-constant",
+      "Name": "CGLineJoinRound",
+      "Parent": "CGLineJoin",
+      "ParentSwiftName": "CGLineJoin",
+      "Framework": "CoreGraphics",
+      "Enumerators": [
+        {
+          "Name": "CGLineJoinMiter"
+        },
+        {
+          "Name": "CGLineJoinRound"
+        },
+        {
+          "Name": "CGLineJoinBevel"
+        }
+      ]
+    },
+    "swift": "CGLineJoin.round",
+    "adamic": "'Round'",
+    "module": "apple/coregraphics/line-join",
+    "source": "https://developer.apple.com/documentation/coregraphics/cglinejoin/round"
+  },
+  {
+    "declaration": {
+      "Kind": "enum-constant",
+      "Name": "CGLineJoinBevel",
+      "Parent": "CGLineJoin",
+      "ParentSwiftName": "CGLineJoin",
+      "Framework": "CoreGraphics",
+      "Enumerators": [
+        {
+          "Name": "CGLineJoinMiter"
+        },
+        {
+          "Name": "CGLineJoinRound"
+        },
+        {
+          "Name": "CGLineJoinBevel"
+        }
+      ]
+    },
+    "swift": "CGLineJoin.bevel",
+    "adamic": "'Bevel'",
+    "module": "apple/coregraphics/line-join",
+    "source": "https://developer.apple.com/documentation/coregraphics/cglinejoin/bevel"
+  },
+  {
+    "declaration": {
+      "Kind": "protocol",
+      "Name": "NSWindowDelegate",
+      "Framework": "AppKit"
+    },
+    "swift": "NSWindowDelegate",
+    "adamic": "WindowDelegate",
+    "module": "apple/appkit/window-delegate",
+    "source": "https://developer.apple.com/documentation/appkit/nswindowdelegate"
+  },
+  {
+    "declaration": {
+      "Kind": "protocol",
+      "Name": "NSApplicationDelegate",
+      "Framework": "AppKit"
+    },
+    "swift": "NSApplicationDelegate",
+    "adamic": "ApplicationDelegate",
+    "module": "apple/appkit/application-delegate",
+    "source": "https://developer.apple.com/documentation/appkit/nsapplicationdelegate"
+  },
+  {
+    "declaration": {
+      "Kind": "option-set",
+      "Name": "NSWindowStyleMask",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "APIName": "NSWindow.StyleMask"
+    },
+    "swift": "NSWindow.StyleMask",
+    "adamic": "StyleMask",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/stylemask-swift.struct"
+  },
+  {
+    "declaration": {
+      "Kind": "enum",
+      "Name": "NSBackingStoreType",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "APIName": "NSWindow.BackingStoreType"
+    },
+    "swift": "NSWindow.BackingStoreType",
+    "adamic": "BackingStoreType",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/backingstoretype"
+  },
+  {
+    "declaration": {
+      "Kind": "constant",
+      "Name": "NSNotFound",
+      "Framework": "Foundation",
+      "Result": {
+        "Spelling": "NSInteger"
+      }
+    },
+    "swift": "NSNotFound",
+    "adamic": "notFound",
+    "module": "apple/foundation/not-found",
+    "source": "https://developer.apple.com/documentation/foundation/nsnotfound-4qp9h"
+  },
+  {
+    "declaration": {
+      "Kind": "c-function",
+      "Name": "CGMainDisplayID",
+      "Framework": "CoreGraphics",
+      "Result": {
+        "Spelling": "CGDirectDisplayID"
+      }
+    },
+    "swift": "CGMainDisplayID()",
+    "adamic": "mainDisplayIdentifier",
+    "module": "apple/coregraphics/main-display-identifier",
+    "source": "https://developer.apple.com/documentation/coregraphics/cgmaindisplayid()"
+  },
+  {
+    "declaration": {
+      "Kind": "instance-method",
+      "Name": "initWithContentRect:styleMask:backing:defer:",
+      "Parent": "NSWindow",
+      "Framework": "AppKit",
+      "Parameters": [
+        {
+          "Name": "contentRect",
+          "Type": {
+            "Spelling": "NSRect"
+          }
+        },
+        {
+          "Name": "styleMask",
+          "Type": {
+            "Spelling": "NSWindowStyleMask"
+          }
+        },
+        {
+          "Name": "backing",
+          "Type": {
+            "Spelling": "NSBackingStoreType"
+          }
+        },
+        {
+          "Name": "defer",
+          "Type": {
+            "Spelling": "BOOL"
+          }
+        }
+      ],
+      "Result": {
+        "Spelling": "instancetype",
+        "Nullability": "nonnull"
+      }
+    },
+    "swift": "NSWindow.init(contentRect:styleMask:backing:defer:)",
+    "adamic": "constructor",
+    "module": "apple/appkit/window",
+    "source": "https://developer.apple.com/documentation/appkit/nswindow/init(contentrect:stylemask:backing:defer:)"
+  }
+]

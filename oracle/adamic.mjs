@@ -2,6 +2,9 @@
 //
 // A panic writes one line to stderr and exits 70 without running catch or finally. Blocking stdio
 // makes preceding writes reach their descriptors before process.exit, including pipes on macOS.
+export { encodeJson } from './json_encode.mjs';
+export { decodeJson } from './json_decode.mjs';
+
 import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 
 // A second failure while the first is being reported (stderr closed under it, say) ends the program
