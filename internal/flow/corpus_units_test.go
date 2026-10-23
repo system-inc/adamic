@@ -868,6 +868,57 @@ var flowCorpusPaths = []string{
 	"../oracle/testdata/modules/main.a",
 	"testdata/joins.a",
 	"testdata/mutations.a",
+	"../oracle/testdata/canonical_graph.a",
+	"../oracle/testdata/canonical_graph_counted.a",
+	"../oracle/testdata/graph_regions_accessor.a",
+	"../oracle/testdata/graph_regions_anchor.a",
+	"../oracle/testdata/graph_regions_cache.a",
+	"../oracle/testdata/graph_regions_closure.a",
+	"../oracle/testdata/graph_regions_counted_container.a",
+	"../oracle/testdata/graph_regions_coverage_arrays.a",
+	"../oracle/testdata/graph_regions_coverage_boundary.a",
+	"../oracle/testdata/graph_regions_coverage_closure_loop.a",
+	"../oracle/testdata/graph_regions_coverage_iterator.a",
+	"../oracle/testdata/graph_regions_coverage_maps.a",
+	"../oracle/testdata/graph_regions_coverage_merge.a",
+	"../oracle/testdata/graph_regions_coverage_payload_loop.a",
+	"../oracle/testdata/graph_regions_coverage_readonly.a",
+	"../oracle/testdata/graph_regions_coverage_spread.a",
+	"../oracle/testdata/graph_regions_coverage_throw.a",
+	"../oracle/testdata/graph_regions_entries.a",
+	"../oracle/testdata/graph_regions_escape.a",
+	"../oracle/testdata/graph_regions_flow.a",
+	"../oracle/testdata/graph_regions_generic_capture.a",
+	"../oracle/testdata/graph_regions_list.a",
+	"../oracle/testdata/graph_regions_literal_method.a",
+	"../oracle/testdata/graph_regions_literals.a",
+	"../oracle/testdata/graph_regions_nested_disjoint.a",
+	"../oracle/testdata/graph_regions_nested_self.a",
+	"../oracle/testdata/graph_regions_parse.a",
+	"../oracle/testdata/graph_regions_regression_01.a",
+	"../oracle/testdata/graph_regions_regression_02.a",
+	"../oracle/testdata/graph_regions_regression_03.a",
+	"../oracle/testdata/graph_regions_regression_04.a",
+	"../oracle/testdata/graph_regions_regression_05.a",
+	"../oracle/testdata/graph_regions_regression_06.a",
+	"../oracle/testdata/graph_regions_regression_07.a",
+	"../oracle/testdata/graph_regions_regression_08.a",
+	"../oracle/testdata/graph_regions_regression_09.a",
+	"../oracle/testdata/graph_regions_regression_10.a",
+	"../oracle/testdata/graph_regions_regression_11.a",
+	"../oracle/testdata/graph_regions_regression_12.a",
+	"../oracle/testdata/graph_regions_regression_13.a",
+	"../oracle/testdata/graph_regions_regression_14.a",
+	"../oracle/testdata/graph_regions_regression_15.a",
+	"../oracle/testdata/graph_regions_static.a",
+	"../oracle/testdata/graph_regions_static_interface.a",
+	"../oracle/testdata/graph_regions_static_parent.a",
+	"../oracle/testdata/graph_regions_static_private.a",
+	"../oracle/testdata/graph_regions_structural_literal.a",
+	"../oracle/testdata/graph_regions_symbols.a",
+	"../oracle/testdata/graph_regions_throw.a",
+	"../oracle/testdata/graph_regions_weak_mixed.a",
+	"../oracle/testdata/weak_region_review.a",
 }
 
 var flowCorpusTests = [][]func(*testing.T){
@@ -1736,6 +1787,57 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_modules_main_a_ba3df876e9c3,
 		TestFlowProgram_testdata_joins_a_091c4a59e83f,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
+		TestFlowProgram____oracle_testdata_canonical_graph_a_bc6d431f0c8a,
+		TestFlowProgram____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0,
+		TestFlowProgram____oracle_testdata_graph_regions_accessor_a_db8706d48a33,
+		TestFlowProgram____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3,
+		TestFlowProgram____oracle_testdata_graph_regions_cache_a_1b12f0485baa,
+		TestFlowProgram____oracle_testdata_graph_regions_closure_a_4d10bd748832,
+		TestFlowProgram____oracle_testdata_graph_regions_counted_container_a_8882bcc22860,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6,
+		TestFlowProgram____oracle_testdata_graph_regions_entries_a_117a98274595,
+		TestFlowProgram____oracle_testdata_graph_regions_escape_a_98fcd5165ce0,
+		TestFlowProgram____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a,
+		TestFlowProgram____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea,
+		TestFlowProgram____oracle_testdata_graph_regions_list_a_4228a1ee18c3,
+		TestFlowProgram____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954,
+		TestFlowProgram____oracle_testdata_graph_regions_literals_a_0f8d10e31629,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_self_a_09d57fca100e,
+		TestFlowProgram____oracle_testdata_graph_regions_parse_a_0dd26eaadff0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_03_a_700a32fb4059,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_09_a_508993ca39b8,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_14_a_897993068e8d,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_15_a_07df93539566,
+		TestFlowProgram____oracle_testdata_graph_regions_static_a_fb53ce309661,
+		TestFlowProgram____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa,
+		TestFlowProgram____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2,
+		TestFlowProgram____oracle_testdata_graph_regions_static_private_a_b4deba490da0,
+		TestFlowProgram____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3,
+		TestFlowProgram____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e,
+		TestFlowProgram____oracle_testdata_graph_regions_throw_a_fe072c4edae4,
+		TestFlowProgram____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c,
+		TestFlowProgram____oracle_testdata_weak_region_review_a_62e4a9b489e8,
 	},
 	{
 		TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f,
@@ -2602,6 +2704,57 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_modules_main_a_ba3df876e9c3,
 		TestFlowProgram_testdata_joins_a_091c4a59e83f,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
+		TestFlowProgram____oracle_testdata_canonical_graph_a_bc6d431f0c8a,
+		TestFlowProgram____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0,
+		TestFlowProgram____oracle_testdata_graph_regions_accessor_a_db8706d48a33,
+		TestFlowProgram____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3,
+		TestFlowProgram____oracle_testdata_graph_regions_cache_a_1b12f0485baa,
+		TestFlowProgram____oracle_testdata_graph_regions_closure_a_4d10bd748832,
+		TestFlowProgram____oracle_testdata_graph_regions_counted_container_a_8882bcc22860,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6,
+		TestFlowProgram____oracle_testdata_graph_regions_entries_a_117a98274595,
+		TestFlowProgram____oracle_testdata_graph_regions_escape_a_98fcd5165ce0,
+		TestFlowProgram____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a,
+		TestFlowProgram____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea,
+		TestFlowProgram____oracle_testdata_graph_regions_list_a_4228a1ee18c3,
+		TestFlowProgram____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954,
+		TestFlowProgram____oracle_testdata_graph_regions_literals_a_0f8d10e31629,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_self_a_09d57fca100e,
+		TestFlowProgram____oracle_testdata_graph_regions_parse_a_0dd26eaadff0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_03_a_700a32fb4059,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_09_a_508993ca39b8,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_14_a_897993068e8d,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_15_a_07df93539566,
+		TestFlowProgram____oracle_testdata_graph_regions_static_a_fb53ce309661,
+		TestFlowProgram____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa,
+		TestFlowProgram____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2,
+		TestFlowProgram____oracle_testdata_graph_regions_static_private_a_b4deba490da0,
+		TestFlowProgram____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3,
+		TestFlowProgram____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e,
+		TestFlowProgram____oracle_testdata_graph_regions_throw_a_fe072c4edae4,
+		TestFlowProgram____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c,
+		TestFlowProgram____oracle_testdata_weak_region_review_a_62e4a9b489e8,
 	},
 	{
 		TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f,
@@ -3468,6 +3621,57 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_modules_main_a_ba3df876e9c3,
 		TestFlowProgram_testdata_joins_a_091c4a59e83f,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
+		TestFlowProgram____oracle_testdata_canonical_graph_a_bc6d431f0c8a,
+		TestFlowProgram____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0,
+		TestFlowProgram____oracle_testdata_graph_regions_accessor_a_db8706d48a33,
+		TestFlowProgram____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3,
+		TestFlowProgram____oracle_testdata_graph_regions_cache_a_1b12f0485baa,
+		TestFlowProgram____oracle_testdata_graph_regions_closure_a_4d10bd748832,
+		TestFlowProgram____oracle_testdata_graph_regions_counted_container_a_8882bcc22860,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6,
+		TestFlowProgram____oracle_testdata_graph_regions_entries_a_117a98274595,
+		TestFlowProgram____oracle_testdata_graph_regions_escape_a_98fcd5165ce0,
+		TestFlowProgram____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a,
+		TestFlowProgram____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea,
+		TestFlowProgram____oracle_testdata_graph_regions_list_a_4228a1ee18c3,
+		TestFlowProgram____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954,
+		TestFlowProgram____oracle_testdata_graph_regions_literals_a_0f8d10e31629,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_self_a_09d57fca100e,
+		TestFlowProgram____oracle_testdata_graph_regions_parse_a_0dd26eaadff0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_03_a_700a32fb4059,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_09_a_508993ca39b8,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_14_a_897993068e8d,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_15_a_07df93539566,
+		TestFlowProgram____oracle_testdata_graph_regions_static_a_fb53ce309661,
+		TestFlowProgram____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa,
+		TestFlowProgram____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2,
+		TestFlowProgram____oracle_testdata_graph_regions_static_private_a_b4deba490da0,
+		TestFlowProgram____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3,
+		TestFlowProgram____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e,
+		TestFlowProgram____oracle_testdata_graph_regions_throw_a_fe072c4edae4,
+		TestFlowProgram____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c,
+		TestFlowProgram____oracle_testdata_weak_region_review_a_62e4a9b489e8,
 	},
 	{
 		TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f,
@@ -4334,6 +4538,57 @@ var flowCorpusTests = [][]func(*testing.T){
 		TestFlowProgram____oracle_testdata_modules_main_a_ba3df876e9c3,
 		TestFlowProgram_testdata_joins_a_091c4a59e83f,
 		TestFlowProgram_testdata_mutations_a_fe30ed94ac7e,
+		TestFlowProgram____oracle_testdata_canonical_graph_a_bc6d431f0c8a,
+		TestFlowProgram____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0,
+		TestFlowProgram____oracle_testdata_graph_regions_accessor_a_db8706d48a33,
+		TestFlowProgram____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3,
+		TestFlowProgram____oracle_testdata_graph_regions_cache_a_1b12f0485baa,
+		TestFlowProgram____oracle_testdata_graph_regions_closure_a_4d10bd748832,
+		TestFlowProgram____oracle_testdata_graph_regions_counted_container_a_8882bcc22860,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0,
+		TestFlowProgram____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6,
+		TestFlowProgram____oracle_testdata_graph_regions_entries_a_117a98274595,
+		TestFlowProgram____oracle_testdata_graph_regions_escape_a_98fcd5165ce0,
+		TestFlowProgram____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a,
+		TestFlowProgram____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea,
+		TestFlowProgram____oracle_testdata_graph_regions_list_a_4228a1ee18c3,
+		TestFlowProgram____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954,
+		TestFlowProgram____oracle_testdata_graph_regions_literals_a_0f8d10e31629,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e,
+		TestFlowProgram____oracle_testdata_graph_regions_nested_self_a_09d57fca100e,
+		TestFlowProgram____oracle_testdata_graph_regions_parse_a_0dd26eaadff0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_03_a_700a32fb4059,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_09_a_508993ca39b8,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_14_a_897993068e8d,
+		TestFlowProgram____oracle_testdata_graph_regions_regression_15_a_07df93539566,
+		TestFlowProgram____oracle_testdata_graph_regions_static_a_fb53ce309661,
+		TestFlowProgram____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa,
+		TestFlowProgram____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2,
+		TestFlowProgram____oracle_testdata_graph_regions_static_private_a_b4deba490da0,
+		TestFlowProgram____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3,
+		TestFlowProgram____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e,
+		TestFlowProgram____oracle_testdata_graph_regions_throw_a_fe072c4edae4,
+		TestFlowProgram____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c,
+		TestFlowProgram____oracle_testdata_weak_region_review_a_62e4a9b489e8,
 	},
 }
 
@@ -9537,4 +9792,310 @@ func TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95(t *testing.T) {
 	t.Parallel()
 	beginFlowUnit(t)
 	checkLivenessProgram(t, flowCorpusPaths[766])
+}
+
+func TestFlowProgram____oracle_testdata_canonical_graph_a_bc6d431f0c8a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[835])
+}
+
+func TestFlowProgram____oracle_testdata_canonical_graph_counted_a_2c0e181b56e0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[836])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_accessor_a_db8706d48a33(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[837])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_anchor_a_f63b6ab273a3(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[838])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_cache_a_1b12f0485baa(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[839])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_closure_a_4d10bd748832(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[840])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_counted_container_a_8882bcc22860(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[841])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_arrays_a_a3ad881426ed(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[842])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_boundary_a_e76071fcc612(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[843])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_closure_loop_a_0cd23dfce867(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[844])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_iterator_a_8f7f3db3cdec(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[845])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_maps_a_50609c9ad03c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[846])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_merge_a_3a7a395272b7(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[847])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_payload_loop_a_d39851b7af97(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[848])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_readonly_a_1060a2a5a185(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[849])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_spread_a_147e51d496c0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[850])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_coverage_throw_a_d4817c14bfd6(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[851])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_entries_a_117a98274595(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[852])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_escape_a_98fcd5165ce0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[853])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_flow_a_1ad7e6e6403a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[854])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_generic_capture_a_b9ecf0616fea(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[855])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_list_a_4228a1ee18c3(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[856])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_literal_method_a_e05e9d3d7954(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[857])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_literals_a_0f8d10e31629(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[858])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_nested_disjoint_a_c2e03ff4961e(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[859])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_nested_self_a_09d57fca100e(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[860])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_parse_a_0dd26eaadff0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[861])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_01_a_64fc5e63de10(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[862])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_02_a_e3f1af4c7771(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[863])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_03_a_700a32fb4059(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[864])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_04_a_4db456bffa3a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[865])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_05_a_41c64a5c5c5a(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[866])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_06_a_e5f9d453add0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[867])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_07_a_5564e7e47c06(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[868])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_08_a_93ccfe5ea5c1(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[869])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_09_a_508993ca39b8(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[870])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_10_a_ea1c09d73904(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[871])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_11_a_ee6a82d2c787(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[872])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_12_a_02b60267dbb9(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[873])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_13_a_66e1aa5f5326(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[874])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_14_a_897993068e8d(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[875])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_regression_15_a_07df93539566(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[876])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_static_a_fb53ce309661(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[877])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_static_interface_a_4445a01b54aa(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[878])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_static_parent_a_f9ba51b1a4e2(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[879])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_static_private_a_b4deba490da0(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[880])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_structural_literal_a_1f3509d5a7b3(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[881])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_symbols_a_7a2b9265b21e(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[882])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_throw_a_fe072c4edae4(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[883])
+}
+
+func TestFlowProgram____oracle_testdata_graph_regions_weak_mixed_a_faf958d45b0c(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[884])
+}
+
+func TestFlowProgram____oracle_testdata_weak_region_review_a_62e4a9b489e8(t *testing.T) {
+	t.Parallel()
+	beginFlowUnit(t)
+	checkAllFlowProgram(t, flowCorpusPaths[885])
 }

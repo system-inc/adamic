@@ -1,0 +1,15 @@
+interface Node { readonly id: number; next: Node | undefined; }
+function same<T>(value: T): T { return value; }
+function run(): void {
+ const node: Node = { id: 7, next: undefined }; node.next = node;
+ const array: readonly Node[] = [node];
+ const pair: readonly [string, Node] = [`key${7}`, node];
+ const map: ReadonlyMap<string, Node> = new Map<string, Node>([[pair[0], pair[1]]]);
+ const set: ReadonlySet<Node> = new Set([node]);
+ const iterator = set.values();
+ const first = iterator.next();
+ console.log(`${same(array)[0]?.next?.id} ${map.get('key7')?.next?.id} ${set.has(node)}`);
+ if (!first.done) { console.log(`${first.value.next === pair[1]}`); }
+ console.log(`${iterator.next().done}`);
+}
+run();
