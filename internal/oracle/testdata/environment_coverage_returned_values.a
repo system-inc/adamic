@@ -1,0 +1,15 @@
+interface Item { label: string; }
+interface Result { text: string; words: string[]; item: Item; }
+function make(start: number): Result {
+ const text = 'returned' + String(start);
+ const words = [text, text + '!'];
+ const item: Item = { label: text + '?' };
+ function readText(): string { return text; }
+ function readWords(): string[] { return words; }
+ function readItem(): Item { return item; }
+ return { text: readText(), words: readWords(), item: readItem() };
+}
+const first = make(1); const second = make(2);
+first.words.push(first.text); first.item.label += '!';
+console.log(`${first.text}:${first.words.join(',')}:${first.item.label}`);
+console.log(`${second.text}:${second.words.join(',')}:${second.item.label}`);

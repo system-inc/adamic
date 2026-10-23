@@ -1,0 +1,7 @@
+function check(start: number): number {
+ let total = start;
+ function add(value: number): void { total += value; }
+ for (let index = 0; index < 10; index += 1) { add(index); }
+ return total;
+}
+console.log(String(check(2)));

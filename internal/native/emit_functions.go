@@ -93,8 +93,21 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
-	e.allocateEnvironment(function.FrameEnvironment)
+	for index := range function.Body {
+		if _, ok := function.Body[index].(ir.AllocateEnvironment); ok {
+			e.allocateEnvironment(&function.Body[index])
+		}
+	}
 	for _, parameter := range function.Parameters {
+		local := e.program.Locals[parameter]
+		if local.Captured {
+			if local.EnvironmentCell && local.Type.IsReference() && local.Borrowed {
+				panic(fmt.Sprintf("native: a store into the borrowed parameter %s", local.Name))
+			}
+			// The cell owns the incoming value. No independent raw parameter survives entry.
+			e.makeCell(parameter, e.localName(parameter), e.reuse.consumed[parameter])
+			continue
+		}
 		switch {
 		case e.reuse.consumed[parameter]:
 			// Its caller handed over a reference (reuse.go): it's the callee's to let go of.
@@ -103,10 +116,6 @@ func (e *emitter) functionBody(function ir.Function) {
 			// A borrowed parameter is its caller's, kept alive for the whole call.
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
-		}
-		if e.program.Locals[parameter].Captured {
-			// A closure captured this parameter: from here on it lives in a cell.
-			e.makeCell(parameter, e.localName(parameter), false)
 		}
 	}
 	for index := range function.Body {
