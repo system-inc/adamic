@@ -9,10 +9,17 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
-// Isolation children deliberately include cold product preparation.
-func lintBuildPhaseChild(t *testing.T, name string, args ...string) *exec.Cmd {
+// Isolation children deliberately include cold product preparation. The command's context comes with it, for
+// childguard.Capture to end the reads by: every caller reads the child's output through Capture, to its end with no
+// WaitDelay deciding when, where exec's copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the
+// reads hadn't reached EOF a second after the child exited, so an isolation child that had passed could fail under
+// load (#n3gk22h's shape). Capture has no stall guard to lose, and the 600 s deadline or the unit's own ceiling,
+// whichever comes first, ends a hung child.
+func lintBuildPhaseChild(t *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	t.Cleanup(cancel)
@@ -25,8 +32,7 @@ func lintBuildPhaseChild(t *testing.T, name string, args ...string) *exec.Cmd {
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
-	return command
+	return command, ctx
 }
 
 func TestShardsAgree_Setup(t *testing.T) {
@@ -39,9 +45,10 @@ func TestShardsAgree_SetupRequired(t *testing.T) {
 	t.Parallel()
 	// The selected leaf, without Setup, looks up the prepared corpus itself, inheriting this run's products (a
 	// runner's are Workshop's, read and never built; TestProduct_ proves it builds alone).
-	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
+	command, ctx := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_SHARDS_AGREE_LEAF=0")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) || !productLookedUp(output, "shards-agree-prepared-v1") || !productLookedUp(output, "shards-agree-references-v1") {
 		t.Fatalf("standalone shard must look up its corpus: %v\n%s", err, output)
 	}
@@ -82,9 +89,10 @@ func TestProfileCompilationPlantedFailure(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := lintBuildPhaseChild(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=600s")
+	command, ctx := lintBuildPhaseChild(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=600s")
 	command.Env = append(os.Environ(), "ADAMIC_PROFILE_COMPILATION_PLANT=1")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if command.ProcessState == nil {
 		t.Fatalf("planted-failure child did not complete: %v", err)
 	}

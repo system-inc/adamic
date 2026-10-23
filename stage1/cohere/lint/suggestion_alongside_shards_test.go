@@ -21,6 +21,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -268,9 +269,11 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=native")
-	output, err := command.CombinedOutput()
+	// Read through childguard.Capture for lintBuildPhaseChild's reason, stdout then stderr; the 600 s deadline ends a
+	// hung child.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if err == nil || bytes.Count(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_")) != 1 || !bytes.Contains(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte("planted automatic fix mismatch")) {
 		t.Fatalf("wrong planted failure: %v\n%s", err, output)
 	}
@@ -281,9 +284,10 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 // Workshop's, read and never built; TestProduct_ proves each builds alone).
 func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
 	t.Parallel()
-	command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
+	command, ctx := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !productLookedUp(output, `suggestion-alongside-\S+`) {
 		t.Fatalf("standalone shard: %v\n%s", err, output)
 	}

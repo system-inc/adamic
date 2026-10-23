@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -153,8 +154,12 @@ func compilerAgreementOwner(c compilerAgreementCase) int {
 }
 
 // Bound the whole child process group, including any compilers the child starts.
-// The caller defers cancel to release the context after a successful command.
-func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+// The caller defers cancel to release the context after a successful command. The command's context comes with it,
+// for childguard.Capture to end the reads by: its callers read their probe's output through Capture, to its end with
+// no WaitDelay deciding when, where exec's copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever
+// the reads hadn't reached EOF a second after the child exited, so a probe that had finished could fail, or count a
+// part that passed as failed, under load (#n3gk22h's shape). The 90 s deadline ends a hung probe.
+func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.Context, context.CancelFunc) {
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -168,8 +173,7 @@ func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.C
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
-	return command, cancel
+	return command, ctx, cancel
 }
 
 var compilerAgreementInputMu sync.Mutex
@@ -11540,9 +11544,10 @@ func TestCompilerAndStage1AgreePlantedDisagreement(t *testing.T) {
 	failures := 0
 	for _, shard := range []int{target - 1, target, target + 1} {
 		name := fmt.Sprintf("TestCompilerAndStage1Agree_%03d", shard)
-		command, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command, ctx, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
-		output, err := command.CombinedOutput()
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		cancel()
 		if shard == target {
 			if err == nil || bytes.Count(output, []byte("--- FAIL:")) != 1 || !bytes.Contains(output, []byte("--- FAIL: "+name)) {

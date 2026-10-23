@@ -15,6 +15,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -353,9 +354,12 @@ func TestOwnedWitnessesPlantedDisagreement(t *testing.T) {
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	command.Env = append(os.Environ(), "ADAMIC_OWNED_WITNESS_PROBE=1", "ADAMIC_TEST_SHARD=")
-	output, err := command.CombinedOutput()
+	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's copying under a one-second
+	// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the child exited, an
+	// error that reads as the child's failure here whatever it exited with, beside output cut short (#n3gk22h's shape).
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if err == nil {
 		t.Fatal("planted disagreement survived")
 	}
