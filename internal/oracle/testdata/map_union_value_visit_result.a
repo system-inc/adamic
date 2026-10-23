@@ -1,0 +1,18 @@
+// Reduced tsc shapes; the member representations are the same as the recorded Map value type.
+interface Node { readonly kind: number; }
+interface ExportAssignment extends Node { readonly text: string; }
+interface LateVisibilityPaintedStatement extends Node { readonly name: string; }
+type VisitResult<T extends Node | undefined> = T | readonly Node[];
+type Value = VisitResult<ExportAssignment | LateVisibilityPaintedStatement | undefined>;
+function show(value: Value): string { return `${typeof value}:${value === undefined}`; }
+const node: ExportAssignment = {kind: 1, text: 'export'.repeat(2)};
+const painted: LateVisibilityPaintedStatement = {kind: 2, name: 'paint'.repeat(2)};
+const nodes: readonly Node[] = [node, painted];
+const map = new Map<string, Value>([['a', node], ['b', nodes], ['c', undefined], ['d', painted]]);
+console.log(`${map.get('a') === node} ${map.get('b') === nodes} ${map.get('d') === painted} ${map.has('c')} ${map.has('missing')}`);
+const held = map.get('b'); map.set('b', node);
+console.log(`${held === nodes}`);
+const copy = new Map(map); map.clear();
+console.log(`${copy.delete('a')} ${copy.delete('a')}`); copy.set('a', nodes);
+for (const [key, value] of copy) { console.log(`${key}=${show(value)} ${value === nodes}`); }
+copy.clear(); console.log(`${copy.size}`);

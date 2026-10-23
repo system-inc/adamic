@@ -165,6 +165,7 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		// An attribute's parentheses name nothing: regexp's compiled programs are declared
 		// `static const adamic_regex_program name __attribute__((aligned(64))) = {...}`.
 		beforeAttribute := ""
+		prototype := false
 		for j := 1; j < limit; j++ {
 			if declaration.tokens[j].text == "__attribute__" {
 				if beforeAttribute == "" {
@@ -185,6 +186,7 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 				continue
 			}
 			if declaration.tokens[j].text == "(" {
+				prototype = true
 				declaration.name = declaration.tokens[j-1].text
 				break
 			}
@@ -201,6 +203,15 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		}
 		if declaration.name == ";" && limit >= 3 {
 			declaration.name = declaration.tokens[limit-2].text
+		}
+		// Runtime entry points may be declared by an emitted helper's consumer.
+		// Their prototypes belong in every unit's header, with external linkage and
+		// their API names intact. Non-static definitions remain unsupported.
+		if prototype && !declaration.function && declaration.initializer < 0 && declaration.tokens[0].text != "static" && cName.MatchString(declaration.name) {
+			declaration.name = ""
+			declarations = append(declarations, declaration)
+			begin = end
+			continue
 		}
 		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
