@@ -57,6 +57,7 @@ var Sets = []Set{
 	{[]string{"ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_value.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/nested_captures.a"},
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/census_optional_values_system.a"},
+	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/program_region/parse.a"},
 }
 
 // A Variant is one way the oracle builds a program: sanitized for the comparison and the leak check, release as a

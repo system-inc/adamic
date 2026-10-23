@@ -14,6 +14,9 @@ func (e *emitter) adoptGraph(value, bytes string, graph bool) {
 }
 
 func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
+	if literal.ProgramRegion {
+		return
+	}
 	graph := e.graphTypes(literal.GraphTypes)
 	if literal.Class != 0 {
 		graph = graph || e.program.Classes[literal.Class-1].Graph
@@ -56,8 +59,8 @@ func (e *emitter) graphUnique(value string) string {
 	return result
 }
 
-func (e *emitter) graphArray(code string, types []int) string {
+func (e *emitter) graphArray(code string, types []int, program ...bool) string {
 	value := e.own(ir.Array, code)
-	e.adoptGraph(value, "sizeof *"+value, e.graphTypes(types))
+	e.adoptGraph(value, "sizeof *"+value, e.graphTypes(types) && !(len(program) != 0 && program[0]))
 	return value
 }
