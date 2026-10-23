@@ -113,8 +113,14 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
+	// Program membership changes ownership only after every ordinary graph check passes.
 	if err := finder.graphTypes(modules); err != nil {
 		return err
+	}
+	if l.programDiscovery {
+		l.resolveCountTypes(modules)
+		l.programPlan = l.selectProgramMembership(finder, modules)
+		return l.checkLazyViewReads()
 	}
 	l.resolveCountTypes(modules)
 	return l.checkLazyViewReads()
