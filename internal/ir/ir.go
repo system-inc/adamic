@@ -949,6 +949,8 @@ type (
 	// ParallelMap is structured fork-join; the callback takes item then index.
 	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
 	ParallelMap struct {
+		// Site identifies one instantiated parallel boundary for ownership validation.
+		Site int
 		// Moved is set by lowering only after proving exclusive, disjoint item
 		// graphs and consuming the source binding. Native skips item/result sharing.
 		Moved       bool
