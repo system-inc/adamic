@@ -1,0 +1,11 @@
+// Spec: and `in` that narrows a union of object types
+// Expect: refused in that narrows a union of object types
+type Fish = { readonly swim: () => string };
+type Bird = { readonly fly: () => string };
+function move(animal: Fish | Bird): string {
+	if ('swim' in animal) {
+		return animal.swim();
+	}
+	return animal.fly();
+}
+console.log(move({ fly: () => 'flap' }));
