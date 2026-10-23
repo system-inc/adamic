@@ -23,6 +23,7 @@ static inline adamic_graph_header *adamic_graph_header_of(void *value) {
 // slots and transfers their counts; direct self slots are re-aimed after moving.
 void *adamic_graph_adopt(void *value, size_t size);
 void *adamic_heap_graph_storage(void *value, size_t size);
+void *adamic_heap_program_storage(void *value, size_t size);
 void adamic_graph_merge(void *left, void *right);
 void adamic_graph_retain(void *value);
 bool adamic_graph_release_last(void *value);
