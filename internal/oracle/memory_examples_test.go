@@ -78,7 +78,11 @@ func checkMemoryExampleRefusal(t *testing.T, name, output, reason string) {
 	if result.exitCode != 0 || string(result.stdout) != output || len(result.stderr) != 0 {
 		t.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
-	_, err = lowered(t, path)
+	program, err := lowered(t, path)
+	if err == nil {
+		checkGraphAdmission(t, path, program)
+		return
+	}
 	var refused *lower.Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") || !strings.Contains(err.Error(), reason) {
 		t.Fatalf("want cycle refusal naming %q, got %v", reason, err)

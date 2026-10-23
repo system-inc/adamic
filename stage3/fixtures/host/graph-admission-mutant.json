@@ -1,0 +1,27 @@
+{
+  "candidate": "749e668e1d7aa32b0ed716b3f17ab6cba94b6f13",
+  "mutant": "Restore the prior Refused stage0 rows in a scratch fixture root, leaving the compiler unchanged.",
+  "command": "go test ./stage3/fixtures -run '^TestFixtures(Objects|Host)$/^(objects|host)$/^(29_parameter_default.a|14_getCurrentDirectory.a)$' -count=1 -v -timeout 4m -args -fixtures /tmp/wb8-status-mutant",
+  "exit": 1,
+  "red_tests": [
+    "TestFixturesHost/host/14_getCurrentDirectory.a/stage0"
+  ],
+  "observed": "got Outcome:Compiles; recorded Outcome:Refused. Both Node and native checks pass; only the restored recorded outcomes are stale.",
+  "log": "notes/graph-regions-refusal-census/status-mutants.log.gz",
+  "promise_mutant": {
+    "mutant": "Keep the four memoize entries in known.txt and the old cwd refusal header.",
+    "red_test": "TestEveryProgramOutsideAPackageKeepsItsPromise",
+    "observed": "Four keep their promise now errors, and cwd checked while its first line promises refused callback.",
+    "log": "notes/graph-regions-refusal-census/acheck-before.log.gz"
+  },
+  "record": "status.json: 14_getCurrentDirectory.a",
+  "related_red_test": [
+    "TestFixturesObjects/objects/29_parameter_default.a/stage0"
+  ],
+  "header_mutant": {
+    "mutant": "Restore the old refused first-line promise",
+    "red_test": "TestRecordedGraphAdmissionHostCurrentDirectory",
+    "exit": 1,
+    "log": "notes/graph-regions-refusal-census/host-header-mutant.log.gz"
+  }
+}
