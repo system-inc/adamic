@@ -19,7 +19,6 @@ original = (repository / 'internal/lower/lower.go').read_text()
 start = original.index('\tfiles := program.Files()')
 end = original.index('\n}\n\ntype lowering', start)
 original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurement only; no IR output")' + original[end:]
-original = original.replace('\n\t"path/filepath"', '')
 original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool\n latentAncestors map[*ast.Node]bool')
 overlay('internal/lower/lower.go', original)
 # Generate typed snapshots of all lowering-owned state; unknown shapes fail loudly.
@@ -152,6 +151,10 @@ source = source.replace(needle, '\tif latentPieceSkipBody(declaration) { return 
 output.write_text(source)
 overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
+
+# Clean imports after every rewrite, including files subsequently extended above.
+subprocess.run(['go', 'run', str(territory / 'importclean'),
+                *sorted(set(replace.values()))], check=True, cwd=territory)
 
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
 print(scratch / 'overlay.json')
