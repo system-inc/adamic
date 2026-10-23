@@ -1,0 +1,13 @@
+interface Node { readonly id: number; next: Node | undefined; }
+function pair(id: number): Node {
+ const a: Node = { id, next: undefined }; const b: Node = { id: id + 1, next: a }; a.next = b; return a;
+}
+function run(): void {
+ let small: Node | undefined = pair(1); let large: Node | undefined = pair(10);
+ const extra = pair(20); large.next = extra;
+ const held = small.next;
+ small.next = large; large.next = small;
+ small = undefined; large = undefined;
+ console.log(`${held?.next?.next?.id} ${extra.next?.id}`);
+}
+run();

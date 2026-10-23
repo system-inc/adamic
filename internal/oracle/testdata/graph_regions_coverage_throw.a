@@ -1,0 +1,14 @@
+interface Node { readonly label: string; next: Node | undefined; }
+function make(): Node {
+ const a: Node = { label: `node${1}`, next: undefined }; a.next = a; return a;
+}
+function run(): void {
+ let held: Node | undefined = undefined;
+ try {
+  const node = make(); held = node; throw new Error(`failure${1}`);
+ } catch (error) { console.log('caught'); }
+ finally { console.log(held?.next?.label ?? 'missing'); }
+ held = undefined;
+ console.log('dropped');
+}
+run();

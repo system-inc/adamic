@@ -93,6 +93,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		return nil, refused
 	}
 	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
+	l.graphViewSite = node
 	return value, nil
 }
 
@@ -305,6 +306,7 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 }
 
 func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+	l.graphViewSite = node
 	id, err := l.viewContract(node, target)
 	if err != nil {
 		return nil, err
@@ -434,6 +436,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	for field := range fields {
 		l.result.CheckedFields[ir.CheckedFieldKey(int(target.Id()), field)] = true
 	}
+	l.graphViewSite = node
 	return value, nil
 }
 
