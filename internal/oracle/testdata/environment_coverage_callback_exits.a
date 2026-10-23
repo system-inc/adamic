@@ -1,0 +1,19 @@
+function check(mode: number): string {
+ const text = 'callback' + String(mode);
+ const words = [text];
+ const item = { label: text + '!' };
+ function stop(): never { throw new Error(words.join(',') + item.label); }
+ function visit(value: number): void { if (value > 0) { stop(); } }
+ function map(value: number): string { if (value > 0) { stop(); } return text; }
+ function accept(value: number): boolean { if (value > 0) { stop(); } return false; }
+ function compare(left: number, right: number): number { if (left !== right) { stop(); } return 0; }
+ if (mode === 0) { [1].forEach(visit); }
+ if (mode === 1) { return [1].map(map).join(','); }
+ if (mode === 2) { return [1].filter(accept).join(','); }
+ if (mode === 3) { return [2, 1].sort(compare).join(','); }
+ if (mode === 4) { return String([1].find(accept) ?? -1); }
+ return text;
+}
+for (const mode of [0, 1, 2, 3, 4]) {
+ try { console.log(check(mode)); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+}
