@@ -15,8 +15,9 @@ typedef struct adamic_view_untagged_member {
     size_t count;
 } adamic_view_untagged_member;
 
-// The owning slot probe returns false for missing, uninitialized or unsupported
-// storage. It must neither panic nor evaluate getters or user code. No new
+// The plain slot probe returns false for missing or uninitialized slots and
+// unsupported receivers. Present unsupported storage returns true with Unknown
+// kind. It neither panics nor evaluates getters or user code. No new
 // readiness state is owned here. Returned normalized snapshots are borrowed.
 typedef bool (*adamic_view_untagged_probe)(void *context, const adamic_view_union_value *object, const char *field, adamic_view_union_value *slot);
 

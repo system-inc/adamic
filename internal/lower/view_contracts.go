@@ -7,12 +7,16 @@ import (
 	"reflect"
 )
 
-// Lane 2 registers these adapters from its new files. Until then an unsupported
-// family stays NotYet/Refused, rather than silently lowering an incomplete contract.
+// Family adapters build child descriptors through the shared lazy builder.
 type viewContractBuilder func(*checker.Type) (ir.ViewContractID, error)
 type viewContractHook func(*lowering, *ast.Node, *checker.Type, viewContractBuilder) (ir.ViewContractID, error)
 
+// Reserved for the array adapter carried by compiler/views-v4.
+// This base routes array descriptors through unionAggregateContract first.
 var viewArrayContractHook viewContractHook
+
+// Reserved attachment point for V4 standalone callable contracts.
+// Current callable obligations are recorded lazily before strict construction.
 var viewCallableContractHook viewContractHook
 
 func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
@@ -35,6 +39,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		return id, nil
 	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
+	// Retain the strict adapter boundary for the array lane on compiler/views-v4.
 	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
 		if viewArrayContractHook == nil {
 			return 0, l.notYet(node, "an array checked-view contract")

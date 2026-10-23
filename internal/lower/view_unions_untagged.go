@@ -70,7 +70,7 @@ func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) (
 	return members, nil
 }
 
-// Shared lazy dispatch calls this only for a demanded union read. Tagged
+// Contract construction and completion use this to mark supported union reads. Tagged
 // members defer unread descendants. Field-only membership needs a complete,
 // recursive plain-data contract; unavailable adapters remain named obligations.
 func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {

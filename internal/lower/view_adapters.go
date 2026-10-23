@@ -16,14 +16,11 @@ var viewUnionContractHook viewContractHook
 
 func init() { viewUnionContractHook = buildUnionReadContract }
 
+// Reserved attachment point for V5 dictionary contracts; no current caller.
 var viewDictionaryContractHook = unavailableViewFamily("dictionary")
+
+// Reserved for V5 dictionary intersections; no current caller.
 var viewIntersectionContractHook = unavailableViewFamily("intersection")
 
+// Reserved fail-closed attachment point for V6 erasure; no current caller.
 func viewErasureProof(*ir.Program, ir.Property) bool { return false }
-func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, _ map[*checker.Type]bool, _ bool) error {
-	all, err := l.viewSchema(node, target)
-	for field := range all {
-		fields[field] = true
-	}
-	return err
-}
