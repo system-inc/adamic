@@ -246,6 +246,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	value, err := l.value(node)
 	if err == nil {
+		value = l.graphAllocation(value, node)
+	}
+	if err == nil {
 		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
 			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
 		}

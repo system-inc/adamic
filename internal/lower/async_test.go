@@ -18,11 +18,7 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 			t.Fatal("a name claimed the runtime exemption")
 		}
 		source := "class " + generated.Name + " { next: " + generated.Name + " | undefined = undefined; }\nconst self = new " + generated.Name + "();\nself.next = self;\n"
-		_, err := lowerSource(t, source)
-		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-			t.Fatalf("user class with exact generated name %s: %v", generated.Name, err)
-		}
+		graphAccepted(t, source)
 	}
 }
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
