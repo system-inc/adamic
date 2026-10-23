@@ -43,8 +43,12 @@ var compilerAgreementCheckerSanitizedWrapper = regexp.MustCompile(`(?m)^func ` +
 // over Loom's 60 s budget at an 8-CPU share (#mq768wp, unit 72 of future-9f780ec59f99-1, Oct 22). So no side runs
 // every rule over checker.ts in one process any more: an interaction between rules in different parts goes unseen
 // there, as it already did on side 4. Every other file still runs all its rules together, in one case, on every side.
-// A future heavy owner side joins by number.
-var compilerAgreementSplit = []struct{ Owner, Side, Parts int }{{289, 4, 4}, {293, 4, 4}, {385, 4, 4}, {673, 4, 4}, {1009, 4, 4}, {1215, 4, 2}, {compilerAgreementCheckerAllOwner, 1, compilerAgreementCheckerGroupCount}, {compilerAgreementCheckerAllOwner, 2, compilerAgreementCheckerSideParts}, {compilerAgreementCheckerAllOwner, 3, compilerAgreementCheckerSideParts}, {compilerAgreementCheckerAllOwner, 4, compilerAgreementCheckerGroupCount}, {1303, 1, 6}, {1310, 1, 3}}
+// 1281, 1284, 1285, 1294, 1301 and 1306 are checker.ts's per-rule groups 1, 4, 5, 14, 21 and 26 on side 1, split one
+// rule to a part as 1303 and 1310 are: _6506 ran 61.2 and 55.0 s over five rules, _6406 52.2 and 47.2 over six, _6426
+// 42.2 over six, _6421 37.0 over five, _6471 36.2 over five and _6531 35.7 over three, against Loom's 60 s budget at an
+// 8-CPU share (#mq768wp, Eve's units of future-f648d7372a15-1 and future-29df76653c00-1, Oct 22). A future heavy owner
+// side joins by number.
+var compilerAgreementSplit = []struct{ Owner, Side, Parts int }{{289, 4, 4}, {293, 4, 4}, {385, 4, 4}, {673, 4, 4}, {1009, 4, 4}, {1215, 4, 2}, {compilerAgreementCheckerAllOwner, 1, compilerAgreementCheckerGroupCount}, {compilerAgreementCheckerAllOwner, 2, compilerAgreementCheckerSideParts}, {compilerAgreementCheckerAllOwner, 3, compilerAgreementCheckerSideParts}, {compilerAgreementCheckerAllOwner, 4, compilerAgreementCheckerGroupCount}, {1281, 1, 6}, {1284, 1, 5}, {1285, 1, 6}, {1294, 1, 5}, {1301, 1, 5}, {1303, 1, 6}, {1306, 1, 3}, {1310, 1, 3}}
 
 // compilerAgreementCheckerSideParts is how many parts checker/all's sides 2 and 3 run in, two of the 28 groups to a
 // part. Each part pays its own parse of checker.ts and its own live Go answer, so a side takes no more parts than it
