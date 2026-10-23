@@ -488,7 +488,8 @@ func newUnitKeying(first string, common []runtimeFile, flags []string, compiler 
 		return nil, err
 	}
 	// v4: keyed before clang runs, by the unit's bytes and its headers' resolution, never by its preprocessed bytes.
-	parts := []string{"adamic-units-v4", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
+	// v5: objects no longer carry where the compiler is installed or the sysroot sits (clangIn, #8wgk65j).
+	parts := []string{"adamic-units-v5", "os " + goruntime.GOOS, "arch " + goruntime.GOARCH}
 	parts = append(parts, clang.parts...)
 	parts = append(parts, environmentParts...)
 	for _, flag := range flags {
