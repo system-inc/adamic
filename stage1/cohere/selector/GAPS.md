@@ -27,7 +27,7 @@ exact `lower.NotYet.What` refusal. A gap closing therefore fails the gap test.
 | [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | Closed by spread-shorthand; held to Node in both backends | Multiple values per push restored.                            |
 | [2_mixed_field.ts](gaps/2_mixed_field.ts)                 | `true`      | `a field of type string \| boolean \| undefined`       | Namespace string and separate true bit.        |
 | [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | Closed by compiler/scout-unions-main: matches Node     | Quoted value and presence bit.                 |
-| [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback` | Explicit map-key collection loop.              |
+| [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | Closed by graph regions A: lowers, must match Node     | Explicit map-key collection loop.              |
 | [5_conditional_panic.ts](gaps/5_conditional_panic.ts)     | `a`         | Closed by compiler/area-next: lowers, must match Node  | Guard helper calls panic in its own statement. |
 | [6_undefined_case.ts](gaps/6_undefined_case.ts)           | `a`         | `a case whose type differs from the switch's`          | Narrow undefined before the switch.            |
 
@@ -40,6 +40,10 @@ switch over `string | undefined` is still refused, now because the case's type
 differs from the switch's. With gap 5 closed, `gaps_test.go` builds it natively and
 requires Node's `a` with no leaks. The workarounds still stand; retiring gap 5's is
 its own change against the corpus.
+
+Graph regions A (wave B batch 7) closed gap 4: `Array.from` of a Map iterator lowers.
+`gaps_test.go` builds it natively and requires Node's `a` with no leaks. Its workaround
+(nodes.ts, gap 4) stands; retiring it is its own change against the corpus.
 
 ## Upstream nontermination
 
