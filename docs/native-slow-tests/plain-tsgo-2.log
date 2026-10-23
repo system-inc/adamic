@@ -1,0 +1,15 @@
+# label plain-tsgo-2
+# cwd /home/user/wt/internal/native
+# ADAMIC_BUILD_CACHE_DIR=/tmp/adamic-gate/cache-dvajoq (fresh, empty)
+# loadavg before: 2.34 2.63 1.33 1/106 5972
+# command: go test ./internal/native -count=1 -v -run ^TestTSGoCacheSanitized$
+=== RUN   TestTSGoCacheSanitized
+=== PAUSE TestTSGoCacheSanitized
+=== CONT  TestTSGoCacheSanitized
+    tsgo_cache_test.go:23: first and warm builds agree with source Node: "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"; binary bytes and runtime archive unchanged
+--- PASS: TestTSGoCacheSanitized (14.25s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	14.268s
+# exit 0
+# wall 16.948250082s
+# loadavg after: 2.04 2.55 1.33 1/109 6213

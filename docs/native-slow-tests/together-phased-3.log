@@ -1,0 +1,46 @@
+# label together-phased-3
+# cwd /home/user/wt-instr/internal/native
+# ADAMIC_BUILD_CACHE_DIR=/tmp/adamic-gate/cache-Kgd9Su (fresh, empty)
+# loadavg before: 2.37 2.42 1.84 1/108 15693
+# command: go test ./internal/native -count=1 -v -parallel 6 -run ^(TestTheJobserverNeverReachesTheBytes|TestTSGoCacheSanitized)$
+=== RUN   TestTheJobserverNeverReachesTheBytes
+=== PAUSE TestTheJobserverNeverReachesTheBytes
+=== RUN   TestTSGoCacheSanitized
+=== PAUSE TestTSGoCacheSanitized
+=== CONT  TestTheJobserverNeverReachesTheBytes
+=== CONT  TestTSGoCacheSanitized
+    tsgo_cache_test.go:36: phase load.Load plus lower.Lower 0.07s
+    tsgo_cache_test.go:36: phase C(program) 0.00s
+    tsgo_cache_test.go:36: phase node run 0.13s
+    tsgo_cache_test.go:36: phase stubs compile and archive 0.02s
+=== NAME  TestTheJobserverNeverReachesTheBytes
+    jobserver_test.go:311: phase child none 3.21s
+    jobserver_test.go:340: phase collect none 0.02s
+    jobserver_test.go:341: count none: 162 files in the archive directory, 64 of them .o, 66 clang invocations recorded
+    jobserver_test.go:311: phase child 1 token 6.83s
+    jobserver_test.go:340: phase collect 1 token 0.02s
+    jobserver_test.go:341: count 1 token: 162 files in the archive directory, 64 of them .o, 66 clang invocations recorded
+=== NAME  TestTSGoCacheSanitized
+    tsgo_cache_test.go:36: phase tsgoRuntimeLibrary (cold) 12.55s
+    tsgo_cache_test.go:36: phase stat, previous round's binary checks, mkdir, before first 0.00s
+=== NAME  TestTheJobserverNeverReachesTheBytes
+    jobserver_test.go:311: phase child 8 tokens 3.06s
+    jobserver_test.go:340: phase collect 8 tokens 0.01s
+    jobserver_test.go:341: count 8 tokens: 162 files in the archive directory, 64 of them .o, 66 clang invocations recorded
+    jobserver_test.go:344: phase comparison 0.00s
+--- PASS: TestTheJobserverNeverReachesTheBytes (13.17s)
+=== NAME  TestTSGoCacheSanitized
+    tsgo_cache_test.go:36: phase BuildTSGo first 0.40s
+    tsgo_cache_test.go:36: phase binary run first 0.02s
+    tsgo_cache_test.go:36: phase stat, previous round's binary checks, mkdir, before warm 0.01s
+    tsgo_cache_test.go:36: phase BuildTSGo warm 0.37s
+    tsgo_cache_test.go:36: phase binary run warm 0.01s
+    tsgo_cache_test.go:36: phase warm round's binary checks 0.01s
+    tsgo_cache_test.go:36: phase tsgoRuntimeLibrary (second) 0.03s
+    tsgo_cache_test.go:24: first and warm builds agree with source Node: "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"; binary bytes and runtime archive unchanged
+--- PASS: TestTSGoCacheSanitized (13.63s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.641s
+# exit 0
+# wall 16.189031577s
+# loadavg after: 2.51 2.45 1.86 1/108 16354

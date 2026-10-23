@@ -1,0 +1,28 @@
+# label phased-tsgo-3
+# cwd /home/user/wt-instr/internal/native
+# ADAMIC_BUILD_CACHE_DIR=/tmp/adamic-gate/cache-5tUrqB (fresh, empty)
+# loadavg before: 1.69 2.80 1.87 1/105 11784
+# command: go test ./internal/native -count=1 -v -run ^TestTSGoCacheSanitized$
+=== RUN   TestTSGoCacheSanitized
+=== PAUSE TestTSGoCacheSanitized
+=== CONT  TestTSGoCacheSanitized
+    tsgo_cache_test.go:36: phase load.Load plus lower.Lower 0.06s
+    tsgo_cache_test.go:36: phase C(program) 0.00s
+    tsgo_cache_test.go:36: phase node run 0.10s
+    tsgo_cache_test.go:36: phase stubs compile and archive 0.02s
+    tsgo_cache_test.go:36: phase tsgoRuntimeLibrary (cold) 12.06s
+    tsgo_cache_test.go:36: phase stat, previous round's binary checks, mkdir, before first 0.00s
+    tsgo_cache_test.go:36: phase BuildTSGo first 0.38s
+    tsgo_cache_test.go:36: phase binary run first 0.01s
+    tsgo_cache_test.go:36: phase stat, previous round's binary checks, mkdir, before warm 0.01s
+    tsgo_cache_test.go:36: phase BuildTSGo warm 0.33s
+    tsgo_cache_test.go:36: phase binary run warm 0.01s
+    tsgo_cache_test.go:36: phase warm round's binary checks 0.01s
+    tsgo_cache_test.go:36: phase tsgoRuntimeLibrary (second) 0.03s
+    tsgo_cache_test.go:24: first and warm builds agree with source Node: "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"; binary bytes and runtime archive unchanged
+--- PASS: TestTSGoCacheSanitized (13.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.043s
+# exit 0
+# wall 15.625971066s
+# loadavg after: 1.53 2.71 1.85 1/105 12022

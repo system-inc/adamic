@@ -1,0 +1,116 @@
+diff --git a/internal/native/jobserver_test.go b/internal/native/jobserver_test.go
+index 15b4692a..e2dbb743 100644
+--- a/internal/native/jobserver_test.go
++++ b/internal/native/jobserver_test.go
+@@ -305,8 +305,11 @@ func TestTheJobserverNeverReachesTheBytes(t *testing.T) {
+ 		if err := os.WriteFile(filepath.Join(tools, "bin", "clang"), []byte(wrapper), 0o755); err != nil {
+ 			t.Fatal(err)
+ 		}
++		phaseStart := time.Now()
+ 		inChild(t, "TestTheJobserverNeverReachesTheBytesChild", 5*time.Minute, "ADAMIC_TOOLS="+tools,
+ 			"ADAMIC_NATIVE_JOBSERVER_FIFO="+jobserver.path, "ADAMIC_NATIVE_ARCHIVE="+directory)
++		t.Logf("phase %s %.2fs", "child "+jobserver.name, time.Since(phaseStart).Seconds())
++		collectStart := time.Now()
+ 		files, err := os.ReadDir(directory)
+ 		if err != nil || len(files) == 0 {
+ 			t.Fatal(jobserver.name, files, err)
+@@ -328,7 +331,17 @@ func TestTheJobserverNeverReachesTheBytes(t *testing.T) {
+ 			t.Fatal(err)
+ 		}
+ 		runs[jobserver.name] = built{listing.String(), sameDirectories(string(commands), directory), string(parts)}
++		objects := 0
++		for _, file := range files {
++			if strings.HasSuffix(file.Name(), ".o") {
++				objects++
++			}
++		}
++		t.Logf("phase %s %.2fs", "collect "+jobserver.name, time.Since(collectStart).Seconds())
++		t.Logf("count %s: %d files in the archive directory, %d of them .o, %d clang invocations recorded", jobserver.name, len(files), objects, strings.Count(commands, "end\n"))
+ 	}
++	compareStart := time.Now()
++	defer func() { t.Logf("phase %s %.2fs", "comparison", time.Since(compareStart).Seconds()) }()
+ 	if !strings.Contains(runs["none"].files, "runtime.a ") || strings.Count(runs["none"].commands, "end\n") < 2 {
+ 		t.Fatalf("the archive or its commands weren't recorded:\n%s\n%s", runs["none"].files, runs["none"].commands)
+ 	}
+diff --git a/internal/native/tsgo_cache_test.go b/internal/native/tsgo_cache_test.go
+index 453e565f..1e89131d 100644
+--- a/internal/native/tsgo_cache_test.go
++++ b/internal/native/tsgo_cache_test.go
+@@ -8,6 +8,7 @@ import (
+ 	"regexp"
+ 	"strings"
+ 	"testing"
++	"time"
+ 
+ 	bridge "github.com/system-inc/adamic/bridge/tsgo"
+ 	"github.com/system-inc/adamic/internal/load"
+@@ -30,6 +31,11 @@ func tsgoCacheWitness(t *testing.T, options Options) {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
++	phaseStart := time.Now()
++	phase := func(name string) {
++		t.Logf("phase %s %.2fs", name, time.Since(phaseStart).Seconds())
++		phaseStart = time.Now()
++	}
+ 	loaded, err := load.Load([]string{fixture})
+ 	if err != nil {
+ 		t.Fatal(err)
+@@ -38,12 +44,15 @@ func tsgoCacheWitness(t *testing.T, options Options) {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
++	phase("load.Load plus lower.Lower")
+ 	source := "#include \"tsgo_runtime.h\"\n" + C(program)
++	phase("C(program)")
+ 	node := toolchain.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", fixture)
+ 	expected, err := node.CombinedOutput()
+ 	if err != nil {
+ 		t.Fatalf("source Node: %v\n%s", err, expected)
+ 	}
++	phase("node run")
+ 	directory := t.TempDir()
+ 	var stubs strings.Builder
+ 	seen := map[string]bool{}
+@@ -71,10 +80,12 @@ func tsgoCacheWitness(t *testing.T, options Options) {
+ 	if output, err := archive.CombinedOutput(); err != nil {
+ 		t.Fatalf("archive: %v\n%s", err, output)
+ 	}
++	phase("stubs compile and archive")
+ 	library, err := tsgoRuntimeLibrary(source, options)
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
++	phase("tsgoRuntimeLibrary (cold)")
+ 	info, err := os.Stat(library)
+ 	if err != nil {
+ 		t.Fatal(err)
+@@ -85,12 +96,15 @@ func tsgoCacheWitness(t *testing.T, options Options) {
+ 		if err := os.Mkdir(filepath.Dir(binary), 0755); err != nil {
+ 			t.Fatal(err)
+ 		}
++		phase("stat, previous round's binary checks, mkdir, before " + round)
+ 		if err := BuildTSGo(source, binary, filepath.Join(directory, "checker.a"), options); err != nil {
+ 			t.Fatal(err)
+ 		}
++		phase("BuildTSGo " + round)
+ 		run := toolchain.Command(binary)
+ 		run.Env = append(run.Env, "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
+ 		output, err := run.CombinedOutput()
++		phase("binary run " + round)
+ 		if err != nil || !bytes.Equal(output, expected) {
+ 			t.Fatalf("%s: %v output %q, Node %q", round, err, output, expected)
+ 		}
+@@ -109,10 +123,12 @@ func tsgoCacheWitness(t *testing.T, options Options) {
+ 			t.Error("cold and warm binaries differ")
+ 		}
+ 	}
++	phase("warm round's binary checks")
+ 	warm, err := tsgoRuntimeLibrary(source, options)
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
++	phase("tsgoRuntimeLibrary (second)")
+ 	after, err := os.Stat(warm)
+ 	if err != nil {
+ 		t.Fatal(err)

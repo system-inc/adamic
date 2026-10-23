@@ -1,0 +1,14 @@
+# label plain-jobserver-1
+# cwd /home/user/wt/internal/native
+# ADAMIC_BUILD_CACHE_DIR=/tmp/adamic-gate/cache-Zr9Sdo (fresh, empty)
+# loadavg before: 3.71 2.92 1.34 1/107 4726
+# command: go test ./internal/native -count=1 -v -run ^TestTheJobserverNeverReachesTheBytes$
+=== RUN   TestTheJobserverNeverReachesTheBytes
+=== PAUSE TestTheJobserverNeverReachesTheBytes
+=== CONT  TestTheJobserverNeverReachesTheBytes
+--- PASS: TestTheJobserverNeverReachesTheBytes (13.67s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.681s
+# exit 0
+# wall 16.455642212s
+# loadavg after: 3.04 2.81 1.33 1/109 5210

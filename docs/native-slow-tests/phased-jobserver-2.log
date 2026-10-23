@@ -1,0 +1,24 @@
+# label phased-jobserver-2
+# cwd /home/user/wt-instr/internal/native
+# ADAMIC_BUILD_CACHE_DIR=/tmp/adamic-gate/cache-WrORDV (fresh, empty)
+# loadavg before: 2.21 3.06 1.90 1/105 10557
+# command: go test ./internal/native -count=1 -v -run ^TestTheJobserverNeverReachesTheBytes$
+=== RUN   TestTheJobserverNeverReachesTheBytes
+=== PAUSE TestTheJobserverNeverReachesTheBytes
+=== CONT  TestTheJobserverNeverReachesTheBytes
+    jobserver_test.go:311: phase child none 2.72s
+    jobserver_test.go:340: phase collect none 0.02s
+    jobserver_test.go:341: count none: 162 files in the archive directory, 64 of them .o, 66 clang invocations recorded
+    jobserver_test.go:311: phase child 1 token 6.69s
+    jobserver_test.go:340: phase collect 1 token 0.02s
+    jobserver_test.go:341: count 1 token: 162 files in the archive directory, 64 of them .o, 66 clang invocations recorded
+    jobserver_test.go:311: phase child 8 tokens 2.79s
+    jobserver_test.go:340: phase collect 8 tokens 0.02s
+    jobserver_test.go:341: count 8 tokens: 162 files in the archive directory, 64 of them .o, 66 clang invocations recorded
+    jobserver_test.go:344: phase comparison 0.00s
+--- PASS: TestTheJobserverNeverReachesTheBytes (12.26s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	12.271s
+# exit 0
+# wall 14.882686215s
+# loadavg after: 2.01 2.98 1.89 1/104 11040

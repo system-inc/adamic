@@ -1,0 +1,20 @@
+# label together-1
+# cwd /home/user/wt/internal/native
+# ADAMIC_BUILD_CACHE_DIR=/tmp/adamic-gate/cache-66ckRK (fresh, empty)
+# loadavg before: 0.87 2.34 1.77 1/108 12360
+# command: go test ./internal/native -count=1 -v -parallel 6 -run ^(TestTheJobserverNeverReachesTheBytes|TestTSGoCacheSanitized)$
+=== RUN   TestTheJobserverNeverReachesTheBytes
+=== PAUSE TestTheJobserverNeverReachesTheBytes
+=== RUN   TestTSGoCacheSanitized
+=== PAUSE TestTSGoCacheSanitized
+=== CONT  TestTheJobserverNeverReachesTheBytes
+=== CONT  TestTSGoCacheSanitized
+--- PASS: TestTheJobserverNeverReachesTheBytes (12.37s)
+=== NAME  TestTSGoCacheSanitized
+    tsgo_cache_test.go:23: first and warm builds agree with source Node: "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"; binary bytes and runtime archive unchanged
+--- PASS: TestTSGoCacheSanitized (13.54s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.552s
+# exit 0
+# wall 16.068766778s
+# loadavg after: 1.44 2.39 1.79 1/105 13018
