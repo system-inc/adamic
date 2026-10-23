@@ -631,7 +631,7 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 func onNode(t *testing.T, path string) run {
 	t.Helper()
 	return cachedNode(t, path, func() run {
-		return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+		return executeWith(t, jsonTypesEnvironment(t, path), "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
 	})
 }
 

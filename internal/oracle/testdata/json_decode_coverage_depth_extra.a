@@ -1,0 +1,6 @@
+import { decodeJson } from 'adamic';
+for (const depth of [126, 127, 128]) {
+ const text = '{"keep":1,"drop":' + '['.repeat(depth) + '0' + ']'.repeat(depth) + '}';
+ const r = decodeJson<{ readonly keep: number }>(text);
+ console.log(r.kind === 'Ok' ? `${r.value.keep}` : r.message);
+}
