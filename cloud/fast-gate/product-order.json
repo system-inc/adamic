@@ -55,6 +55,9 @@
     "internal/acheck TestProduct_Adamic": [
       "internal/native TestProduct_WASICompiler"
     ],
+    "internal/apple/generate TestProduct_Adamic": [
+      "internal/native TestProduct_WASICompiler"
+    ],
     "cmd/adamic-test262 TestProduct_RegExpRunnerNative": [
       "internal/oracle TestProduct_NativeRuntimesSanitized0"
     ],

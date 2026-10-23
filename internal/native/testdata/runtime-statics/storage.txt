@@ -294,3 +294,26 @@
 
 # typed_array_sort.c has no mutable static storage. Merge buffers and cursors are
 # per-call allocations and automatic locals; the temporary buffer is freed.
+
+# foreign.c's only static is foreign_shape, a const shape of no fields; a foreign value keeps its
+# pointer and kind in its own two slots. Apple objects reach Adamic only on the main thread
+# (docs/apple.md), and parallel work refuses them (#5bajvpb), so nothing here is shared.
+`runtime-file:foreign.c`
+# decodeJson and encodeJson run on the program's own thread only: parallelMap work that calls
+# either is refused at compile time ("work calls a closure whose body isn't known"), checked on
+# both. decode_shapes is the canonical shape list canonical_shape appends to without a lock; the
+# lock lands with decodeJson's listing as pure for parallel work (#7nfhgvh), not before.
+`runtime-file:json_decode.c`
+`runtime-file:json_decode.h`
+`json_decode.c:decode_shapes:1`
+# ok_kind, error_kind and root are immortal ADAMIC_STRING literals (references=0): retain and
+# release leave them unchanged, so they hold no mutable shared state.
+`json_decode.c:ok_kind:1`
+`json_decode.c:error_kind:1`
+`json_decode.c:root:1`
+# json_encode.c has no mutable static storage. Each field's last-shape cache lives in the
+# program's emitted descriptor, written only on the program's own thread, as above. When
+# encodeJson is allowed in parallel work, those cache writes must become atomic (a
+# compare-and-swap, or a pointer published once), as decode_shapes needs its lock.
+`runtime-file:json_encode.c`
+`runtime-file:json_encode.h`

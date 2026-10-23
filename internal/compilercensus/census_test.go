@@ -21,6 +21,12 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
 // "--version" or "-v"), passes without a reason.
 var compilerSites = map[string]string{
+	"bench/apple/run.go:main":                                                                         "compiles the Objective-C benchmark witness into a scratch directory; Adamic products use native.BuildApple",
+	"cmd/adamic-apple-bindings/main.go:run":                                                           "selects clang for SDK header inspection and binding generation; builds no executable product",
+	"internal/apple/generate/generate_test.go:clangPath":                                              "finds clang for fixture header syntax and AST inspection; builds no executable product",
+	"internal/apple/generate/sdk.go:FromSDK":                                                          "resolves the SDK clang for header AST inspection and binding generation; builds no executable product",
+	"internal/apple/generate/sdk.go:CheckSDK":                                                         "syntax-checks generated binding declarations against SDK headers; builds no executable product",
+	"internal/apple/witness_test.go:TestProgramsAgreeWithTheirWitnesses":                              "compiles independent Objective-C witnesses into t.TempDir; Adamic programs use native.BuildApple",
 	"internal/oracle/release_stack_test.go:reservationProbe":                                          "compiles the isolated stack constructor probe in a scratch directory, never a product",
 	"internal/fuzz/confirm_test.go:TestFindingReproducesAlone":                                        "names clang as a fixture failure stage; compiles nothing",
 	"internal/fuzz/confirm_test.go:flakyCheckout":                                                     "writes fixture tools that simulate failed executions; compiles nothing",
