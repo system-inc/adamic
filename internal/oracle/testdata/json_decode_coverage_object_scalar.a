@@ -1,0 +1,7 @@
+import { decodeJson } from 'adamic';
+type Value = { readonly value: number } | string;
+for (const text of ['"scalar"', '{"value":2,"extra":1}', '{}', '{"value":"bad"}', '42', 'null']) {
+ const r = decodeJson<Value>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else console.log(r.kind);
+}

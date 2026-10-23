@@ -1,0 +1,22 @@
+import { decodeJson } from 'adamic';
+interface Supplement {
+ readonly identifier: string;
+ readonly name: string;
+ readonly milligrams: number;
+ readonly timing: 'Morning' | 'Evening' | 'Anytime';
+ readonly note?: string;
+}
+for (const text of [
+ '[{"identifier":"mg","name":"Magnesium","milligrams":120,"timing":"Evening"}]',
+ '[{"identifier":"mg","name":"Magnesium","milligrams":120,"timing":"Evening","note":"food"}]',
+ '[{"identifier":"mg","name":"Magnesium","milligrams":120,"timing":"Noon"}]',
+ '[{"identifier":"mg","milligrams":120,"timing":"Evening"}]',
+ '[{"identifier":"mg","name":"Magnesium","milligrams":"120","timing":"Evening"}]',
+ '[{"identifier":"mg","name":"Magnesium","milligrams":null,"timing":"Evening"}]',
+ '[{"identifier":"mg","name":"Magnesium","milligrams":9007199254740993,"timing":"Evening"}]',
+]) {
+ const decoded = decodeJson<readonly Supplement[]>(text);
+ if (decoded.kind === 'Ok') {
+  for (const supplement of decoded.value) console.log(`${supplement.name} ${supplement.milligrams} ${supplement.note ?? 'absent'}`);
+ } else console.log(decoded.message);
+}

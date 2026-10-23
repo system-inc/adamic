@@ -1,0 +1,87 @@
+// supplements.a: day 6's app, held to its witness. A supplements list written in Adamic through
+// SwiftUI, its rows a class of their own, shows a progress view, fetches its list over URLSession,
+// decodes it into true types with decodeJson, and renders it: what SwiftUI shows is printed. Then a
+// list drifted from its type ("Noon" isn't a timing) comes back as an error, a value, not a crash.
+// supplements.swift is the same app written in Swift: the two must agree (witness_test.go).
+
+import { decodeJson, programArguments } from 'adamic';
+import { Window } from 'apple/appkit/window';
+import { RunLoop } from 'apple/corefoundation/run-loop';
+import { Url } from 'apple/foundation/url';
+import { UrlSession } from 'apple/foundation/url-session';
+import { Host } from 'apple/swiftui/host';
+import { State, renderWhenStateChanges } from 'apple/swiftui/state';
+import { horizontalStack, image, list, navigationStack, progressView, section, spacer, text, type View } from 'apple/swiftui/views';
+
+interface Supplement {
+	readonly name: string;
+	readonly dose: string;
+	readonly symbol: string;
+	readonly timing: 'Morning' | 'Evening';
+}
+
+const supplements = new State<readonly Supplement[]>([]);
+
+class SupplementRow implements View {
+	readonly supplement: Supplement;
+
+	constructor(supplement: Supplement) {
+		this.supplement = supplement;
+	}
+
+	body(): View {
+		return horizontalStack({ spacing: 10 }, [image(this.supplement.symbol).foregroundColor('Accent'), text(this.supplement.name), spacer(), text(this.supplement.dose).foregroundColor('Secondary')]);
+	}
+}
+
+class SupplementsView implements View {
+	rows(timing: 'Morning' | 'Evening'): readonly View[] {
+		return supplements.value.filter((supplement) => supplement.timing === timing).map((supplement) => new SupplementRow(supplement));
+	}
+
+	body(): View {
+		if (supplements.value.length === 0) {
+			return navigationStack(progressView().navigationTitle('Stack'));
+		}
+		return navigationStack(list([section('Morning', this.rows('Morning')), section('Evening', this.rows('Evening'))]).listStyle('Inset').navigationTitle('Stack'));
+	}
+}
+
+const host = new Host(new SupplementsView());
+renderWhenStateChanges(() => {
+	host.render(new SupplementsView());
+});
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 360, height: 480 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
+window.contentView = host.view();
+console.log(`loading: rows ${host.listRows()}`);
+
+const address = programArguments()[0] ?? 'http://127.0.0.1:1';
+UrlSession.shared
+	.dataTask({
+		with: new Url({ string: `${address}/supplements.json` }),
+		completionHandler: (data, response, error) => {
+			const decoded = decodeJson<Supplement[]>(data === undefined ? '' : (data.utf8Text() ?? ''));
+			if (error !== undefined || decoded.kind === 'Error') {
+				console.log('supplements: failed');
+			} else {
+				supplements.set(decoded.value);
+				console.log(`supplements: ${supplements.value.length}, rows ${host.listRows()}`);
+				for (const supplement of supplements.value) {
+					console.log(`  ${supplement.timing}: ${supplement.name}, ${supplement.dose}`);
+				}
+			}
+			UrlSession.shared
+				.dataTask({
+					with: new Url({ string: `${address}/drifted.json` }),
+					completionHandler: (drifted) => {
+						const again = decodeJson<Supplement[]>(drifted === undefined ? '' : (drifted.utf8Text() ?? ''));
+						console.log(`drifted: ${again.kind === 'Error' ? 'refused' : 'accepted'}, rows ${host.listRows()}`);
+						RunLoop.main.stop();
+					},
+				})
+				.resume();
+		},
+	})
+	.resume();
+RunLoop.run();
+window.close();
