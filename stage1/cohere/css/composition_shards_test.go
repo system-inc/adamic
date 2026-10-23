@@ -24,7 +24,9 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
-const testCompositionMatchesGoShards = 16
+// At 16 shards each ran 30 to 46 s in css#10/17 at load 45 to 51 (Eve and Adam, Oct 23): the Go oracle, the
+// sanitized build, Node, the JavaScript backend and the leak run over a sixteenth of the corpus, one after another.
+const testCompositionMatchesGoShards = 48
 
 func compositionShard(key string) int {
 	sum := sha256.Sum256([]byte(key))
@@ -200,7 +202,7 @@ func TestCompositionMatchesGoUnion(t *testing.T) {
 
 // Mutant-must-fail remains a whole-corpus condition, as before sharding: each parser mutant, composed and run on Node
 // over every live case, must differ from the unmutated composition's run. One test per mutant, each with its own
-// baseline: the union ran all four whole-corpus Node runs, 31.0 s alone on one core (Home).
+// baseline run beside the mutant's: the union ran all four whole-corpus Node runs, 31.0 s alone on one core (Home).
 func compositionCatchesMutant(t *testing.T, index int) {
 	t.Helper()
 	state := compositionSetup(t)
@@ -212,7 +214,27 @@ func compositionCatchesMutant(t *testing.T, index int) {
 		t.Fatal(err)
 	}
 	source, _ := filepath.Abs("compose_main.ts")
-	baseline := compositionNode(t, source, cases)
+	mutation := mutants[index]
+	mutated := portDirectory(t, &mutation)
+	// The baseline and the mutant are two independent whole-corpus Node runs, so they run at once: 45 to 48 s one after
+	// the other in css#10/17 at load 45 to 51 (Eve and Adam, Oct 23), each run about half of it.
+	runs := [2]run{}
+	failures := [2]error{}
+	var group sync.WaitGroup
+	for i, path := range []string{source, filepath.Join(mutated, "compose_main.ts")} {
+		group.Add(1)
+		go func() {
+			defer group.Done()
+			runs[i], failures[i] = compositionNodeRun(t, path, cases)
+		}()
+	}
+	group.Wait()
+	for _, err := range failures {
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	baseline, result := runs[0], runs[1]
 	if baseline.exitCode != 0 || len(baseline.stderr) != 0 {
 		t.Fatalf("Node baseline: %d %s", baseline.exitCode, baseline.stderr)
 	}
@@ -221,9 +243,6 @@ func compositionCatchesMutant(t *testing.T, index int) {
 			t.Fatal(err)
 		}
 	}
-	mutation := mutants[index]
-	mutated := portDirectory(t, &mutation)
-	result := compositionNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("composed mutant must terminate: %s", result.stderr)
 	}
@@ -361,6 +380,166 @@ func TestCompositionMatchesGo_015(t *testing.T) {
 	compositionRunShard(t, 15)
 }
 
+func TestCompositionMatchesGo_016(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 16)
+}
+
+func TestCompositionMatchesGo_017(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 17)
+}
+
+func TestCompositionMatchesGo_018(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 18)
+}
+
+func TestCompositionMatchesGo_019(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 19)
+}
+
+func TestCompositionMatchesGo_020(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 20)
+}
+
+func TestCompositionMatchesGo_021(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 21)
+}
+
+func TestCompositionMatchesGo_022(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 22)
+}
+
+func TestCompositionMatchesGo_023(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 23)
+}
+
+func TestCompositionMatchesGo_024(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 24)
+}
+
+func TestCompositionMatchesGo_025(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 25)
+}
+
+func TestCompositionMatchesGo_026(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 26)
+}
+
+func TestCompositionMatchesGo_027(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 27)
+}
+
+func TestCompositionMatchesGo_028(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 28)
+}
+
+func TestCompositionMatchesGo_029(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 29)
+}
+
+func TestCompositionMatchesGo_030(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 30)
+}
+
+func TestCompositionMatchesGo_031(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 31)
+}
+
+func TestCompositionMatchesGo_032(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 32)
+}
+
+func TestCompositionMatchesGo_033(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 33)
+}
+
+func TestCompositionMatchesGo_034(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 34)
+}
+
+func TestCompositionMatchesGo_035(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 35)
+}
+
+func TestCompositionMatchesGo_036(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 36)
+}
+
+func TestCompositionMatchesGo_037(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 37)
+}
+
+func TestCompositionMatchesGo_038(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 38)
+}
+
+func TestCompositionMatchesGo_039(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 39)
+}
+
+func TestCompositionMatchesGo_040(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 40)
+}
+
+func TestCompositionMatchesGo_041(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 41)
+}
+
+func TestCompositionMatchesGo_042(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 42)
+}
+
+func TestCompositionMatchesGo_043(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 43)
+}
+
+func TestCompositionMatchesGo_044(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 44)
+}
+
+func TestCompositionMatchesGo_045(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 45)
+}
+
+func TestCompositionMatchesGo_046(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 46)
+}
+
+func TestCompositionMatchesGo_047(t *testing.T) {
+	t.Parallel()
+	compositionRunShard(t, 47)
+}
+
 var compositionShardFunctions = [...]func(*testing.T){
 	TestCompositionMatchesGo_000,
 	TestCompositionMatchesGo_001,
@@ -378,6 +557,38 @@ var compositionShardFunctions = [...]func(*testing.T){
 	TestCompositionMatchesGo_013,
 	TestCompositionMatchesGo_014,
 	TestCompositionMatchesGo_015,
+	TestCompositionMatchesGo_016,
+	TestCompositionMatchesGo_017,
+	TestCompositionMatchesGo_018,
+	TestCompositionMatchesGo_019,
+	TestCompositionMatchesGo_020,
+	TestCompositionMatchesGo_021,
+	TestCompositionMatchesGo_022,
+	TestCompositionMatchesGo_023,
+	TestCompositionMatchesGo_024,
+	TestCompositionMatchesGo_025,
+	TestCompositionMatchesGo_026,
+	TestCompositionMatchesGo_027,
+	TestCompositionMatchesGo_028,
+	TestCompositionMatchesGo_029,
+	TestCompositionMatchesGo_030,
+	TestCompositionMatchesGo_031,
+	TestCompositionMatchesGo_032,
+	TestCompositionMatchesGo_033,
+	TestCompositionMatchesGo_034,
+	TestCompositionMatchesGo_035,
+	TestCompositionMatchesGo_036,
+	TestCompositionMatchesGo_037,
+	TestCompositionMatchesGo_038,
+	TestCompositionMatchesGo_039,
+	TestCompositionMatchesGo_040,
+	TestCompositionMatchesGo_041,
+	TestCompositionMatchesGo_042,
+	TestCompositionMatchesGo_043,
+	TestCompositionMatchesGo_044,
+	TestCompositionMatchesGo_045,
+	TestCompositionMatchesGo_046,
+	TestCompositionMatchesGo_047,
 }
 
 // Bound the whole process group, including Go's compiler children, using only
@@ -397,6 +608,16 @@ func compositionCommand(t *testing.T, name string, arguments ...string) (*exec.C
 // first byte) are longer than the command's 90 s deadline, which ends a hung run sooner.
 func compositionExecute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
+	result, err := compositionRun(t, environment, name, arguments...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return result
+}
+
+// compositionRun is compositionExecute returning its failure to start or read the command instead of failing the
+// test, so a caller can run commands on goroutines of its own and fail on the test's.
+func compositionRun(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
 	cmd, ctx := compositionCommand(t, name, arguments...)
 	if environment != nil {
 		cmd.Env = append(os.Environ(), environment...)
@@ -404,18 +625,27 @@ func compositionExecute(t *testing.T, environment []string, name string, argumen
 	stdout, stderr, err := childguard.Capture(ctx, cmd)
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
-		t.Fatalf("running %s: %v", name, err)
+		return run{}, fmt.Errorf("running %s: %v", name, err)
 	}
-	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}
+	return run{stdout: stdout, stderr: stderr, exitCode: cmd.ProcessState.ExitCode()}, nil
 }
 
 func compositionNode(t *testing.T, path string, arguments ...string) run {
 	t.Helper()
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	result, err := compositionNodeRun(t, path, arguments...)
 	if err != nil {
 		t.Fatal(err)
 	}
-	return compositionExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return result
+}
+
+// compositionNodeRun is compositionNode for a goroutine: it returns its failure rather than failing the test.
+func compositionNodeRun(t *testing.T, path string, arguments ...string) (run, error) {
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		return run{}, err
+	}
+	return compositionRun(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 }
 
 func compositionLeaks(t *testing.T, state compositionProducts, cases string) string {
