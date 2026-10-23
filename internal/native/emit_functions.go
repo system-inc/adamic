@@ -45,6 +45,16 @@ func (e *emitter) signature(function int) string {
 	return fmt.Sprintf("%s %s(%s)", returns, name, strings.Join(parameters, ", "))
 }
 
+// stackCheck is a function's stack guard, naming the function in its overflow panic. The macro
+// joins a short name to its message as literals; a message past a C literal's limit is written
+// whole, as bytes (cString), since the preprocessor cannot join those.
+func stackCheck(name string) string {
+	if message := "RangeError: Maximum call stack size exceeded in " + name; len(message) > longestLiteral {
+		return "ADAMIC_CHECK_STACK_MESSAGE(" + cString(message) + ")"
+	}
+	return "ADAMIC_CHECK_STACK_NAMED(" + cString(name) + ")"
+}
+
 // functionBody emits a function's body. A string parameter is retained on entry and released on
 // every way out, like any local, so a function may reassign it without touching its caller's.
 func (e *emitter) functionBody(function ir.Function) {
@@ -52,7 +62,11 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
-	e.line("ADAMIC_CHECK_STACK();")
+	name := function.Name
+	if name == "" {
+		name = "<anonymous>"
+	}
+	e.line("%s;", stackCheck(name))
 	if function.ArgumentsCount != 0 && !function.Closure {
 		e.line("(void)%s;", e.localName(function.ArgumentsCount-1))
 	}

@@ -13,6 +13,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->class = NULL;
 	object->frozen = false;
 	object->tuple = false;
+	object->write_order = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
@@ -22,7 +23,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 // field_owned is adamic_object_field that also says which object holds the slot: a constructor's
 // static field can live in a parent constructor until an own write shadows it (class_static.c).
 // Per-slot metadata is indexed from that object's slots, never from the shared packed cache.
-static adamic_value *field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner) {
+adamic_value *adamic_object_field_owned(const adamic_object *object, const char *name, adamic_slot_cache *cache, const adamic_object **owner) {
 	while (object->class != NULL && object->class->is_static) {
 		adamic_value *slot = adamic_object_find(object, name, cache);
 		size_t flag = object->class->static_flags[adamic_slot_index(object, slot)];
@@ -41,9 +42,11 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
 	if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
-	adamic_object *object = adamic_object_new(shape);
+	adamic_object *object = source->write_order == NULL ? adamic_object_new(shape) : adamic_object_construct(shape);
+	if (source->write_order != NULL) memcpy(object->write_order, source->write_order, shape->count * sizeof(size_t));
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
+		if (!adamic_object_present(source, index)) continue;
 		adamic_slot_cache cache = {0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
 
@@ -51,7 +54,7 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 			// The slot found says where the field is, not the cache: another thread may store a
 			// different shape's slot in a shared cache (the packed cache, adamic.h).
 			const adamic_object *owner = source;
-			adamic_value *found = expression == NULL ? field_owned(source, shape->names[index], &cache, &owner) : adamic_object_read_mode(source, shape->names[index], &cache, expression, NULL, &owner);
+			adamic_value *found = expression == NULL ? adamic_object_field_owned(source, shape->names[index], &cache, &owner) : adamic_object_read_mode(source, shape->names[index], &cache, expression, NULL, &owner);
 			object->slots[index] = *found;
 			adamic_object_initialized(object)[index] = adamic_object_initialized(owner)[adamic_slot_index(owner, found)];
 			adamic_object_field_types(object)[index] = adamic_object_field_types(owner)[adamic_slot_index(owner, found)];
@@ -79,7 +82,7 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 		const char *field = object->shape->names[index];
 		size_t length = strlen(field);
 		if (length == name->length && memcmp(field, name->bytes, length) == 0) {
-			return true;
+			return adamic_object_present(object, index);
 		}
 	}
 	return false;
@@ -170,7 +173,7 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
 		}
 		adamic_slot_cache_store(cache, object->shape, slot);
 	}
-	if (slot == object->shape->count) { return NULL; }
+	if (slot == object->shape->count || !adamic_object_present(object, slot)) { return NULL; }
 	return &((adamic_object *)object)->slots[slot];
 }
 
@@ -237,6 +240,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 	// The object's own field: readiness belongs to the object being initialized, never a parent's.
 	adamic_value *slot = adamic_object_find(object, name, &cache);
 	adamic_object_initialized(object)[adamic_slot_index(object, slot)] = initialized;
+	adamic_object_publish(object, adamic_slot_index(object, slot));
 }
 
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
@@ -302,7 +306,13 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 
 // Writes through an asserted view must not reinterpret or release a differently typed slot.
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
-	adamic_value *slot = adamic_object_optional_field(object, name, cache);
+	adamic_value *slot = adamic_object_optional_find(object, name, cache);
+	// An absent reserved field still has writable storage. Find it without rereading a shared cache.
+	if (slot == NULL) {
+		for (size_t index = 0; index < object->shape->count; index++) {
+			if (strcmp(object->shape->names[index], name) == 0) { slot = &object->slots[index]; break; }
+		}
+	}
 	if (slot != NULL) {
 		size_t index = adamic_slot_index(object, slot);
 		unsigned char actual = adamic_object_field_types(object)[index];
@@ -314,7 +324,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	const adamic_object *owner = object;
-	adamic_value *slot = field_owned(object, name, cache, &owner);
+	adamic_value *slot = adamic_object_field_owned(object, name, cache, &owner);
 	if (owner->shape->references[adamic_slot_index(owner, slot)]) {
 		if (slot->reference != NULL) {
 			static const char message[] = "compiler bug: a boolean field holds a reference";

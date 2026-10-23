@@ -98,6 +98,13 @@ void adamic_share(void *value) {
 				for (size_t i = 0; i < array->length; i++) { append(&pending, array->elements[i].reference); }
 			}
 			append(&pending, array->properties);
+			// Metadata is interior storage; publish its children, never its zero-count header.
+			if (array->metadata != NULL) {
+				adamic_object *metadata = array->metadata;
+				for (size_t i = 0; i < metadata->shape->count; i++) {
+					if (metadata->shape->references[i]) { append(&pending, metadata->slots[i].reference); }
+				}
+			}
 			break;
 		}
 		case adamic_kind_map: {

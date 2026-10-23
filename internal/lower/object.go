@@ -70,7 +70,14 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
 				declared := l.declaredField(node, fieldName)
-				if declared == 0 || declared == ir.MaybeBoolean {
+				initializer := ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
+				if declared == 0 && initializer.Kind == ast.KindAsExpression {
+					// An annotated placeholder reserves the annotation's storage even
+					// when the object literal has no contextual type.
+					declared, _ = l.representation(l.checker.GetTypeAtLocation(initializer))
+				}
+				declared = placeholderStorage(declared)
+				if declared == 0 {
 					return nil, l.notYet(property, "an uninitialized object field without a supported declared slot type")
 				}
 				if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
@@ -80,7 +87,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				if declared.IsReference() {
 					value = ir.Undefined{Of: declared}
 				}
-				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true})
+				value = l.placeholderInitialValue(property.AsPropertyAssignment().Initializer, declared)
+				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true, Unset: true})
 				continue
 			}
 			var value ir.Expression
@@ -96,9 +104,22 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
+			if l.placeholderOrigin(property.Name()) != "" {
+				value = fit(value, placeholderStorage(value.Type()))
+			}
 			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
+			}
+			if literal.Spread != nil {
+				source := node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression
+				if sourceField := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source)), fieldName); sourceField != nil {
+					if held, err := l.typeOfSymbol(source, sourceField); err == nil && held == ir.Union {
+						// Spread keeps its source shape. Overrides must retain that slot's
+						// counted representation rather than write an unboxed scalar into it.
+						value = fit(value, held)
+					}
+				}
 			}
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
@@ -127,7 +148,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 		}
 		literal.Empty = empty
 	}
-	return literal, nil
+	return l.reserveFactoryFields(node, literal)
 }
 
 // emptySpread is the object { ...source, fields } makes when source is undefined: JavaScript's is
@@ -162,7 +183,21 @@ func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, erro
 // typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
 func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
 	declared := l.checker.GetTypeOfSymbol(symbol)
+	if l.placeholderSymbolOrigin(symbol) != "" || l.result.PlaceholderViews[l.placeholderKey(symbol)] != "" {
+		if stored, _ := l.representation(declared); stored == ir.Weak {
+			return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")
+		}
+		if held, known := l.representation(l.checker.GetNonNullableType(declared)); known {
+			if held == ir.Weak {
+				return 0, l.notYet(node, "a placeholder slot holding Weak; its target-read semantics need a separate checked boundary")
+			}
+			return placeholderStorage(held), nil
+		}
+	}
 	if valueType, isKnown := l.representation(declared); isKnown {
+		if l.placeholderSymbolOrigin(symbol) != "" || l.result.PlaceholderViews[l.placeholderKey(symbol)] != "" {
+			valueType = placeholderStorage(valueType)
+		}
 		return valueType, nil
 	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(declared))
@@ -188,7 +223,7 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 			if field == nil {
 				continue
 			}
-			declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+			declared, _ := l.typeOfSymbol(literal, field)
 			if shared != 0 && shared != declared {
 				return 0
 			}
@@ -200,7 +235,7 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 	if field == nil {
 		return 0
 	}
-	declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
+	declared, _ := l.typeOfSymbol(literal, field)
 	return declared
 }
 
@@ -339,6 +374,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A Weak<Node[]> narrowed to present is the array.
 		arrayType = target
 	}
+	if _, element, known := l.nodeArrayLayoutOf(arrayType); known {
+		held, _ := l.representation(element)
+		return held, nil
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
@@ -431,6 +470,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Object || object.Type() == ir.Array {
+		if value, handled, err := l.factoryFieldRead(node, object, name); handled {
+			return value, err
+		}
+	}
 	if object.Type() == ir.Union && access.QuestionDotToken != nil && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
 		object = l.optionalNullableObject(object)
 	}
@@ -480,6 +524,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.StringLength{Value: object, Optional: true}, nil
 	}
+	if object.Type() == ir.Array && name != "length" {
+		if value, handled, err := l.nodeArrayProperty(node, object, name); handled {
+			return value, err
+		}
+	}
 	if object.Type() == ir.Array && name != "length" && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 		of, e := l.typeOf(node)
 		if e != nil {
@@ -519,6 +568,26 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		// is its type's, read here when nothing about reading the tuple itself could be seen.
 		return l.tupleLength(node, access.Expression)
 	case object.Type() == ir.Object:
+		if origin := l.placeholderReadOrigin(node); origin != "" {
+			stored, err := l.typeOfSymbol(node, l.symbol(node))
+			if err != nil {
+				return nil, err
+			}
+			property := ir.Property{Object: object, Name: name, Of: stored, Optional: access.QuestionDotToken != nil, Class: l.classOf(node), Unset: true}
+			property.Absent = l.symbol(node).Flags&ast.SymbolFlagsOptional != 0
+			if l.placeholderOrigin(node) == "" {
+				present, _ := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(l.symbol(node))))
+				property.UnsetType = present
+				if present != ir.Number && present != ir.Boolean && present != ir.String && present != ir.Object && present != ir.Array && present != ir.Map {
+					return nil, l.notYet(node, "a placeholder field view without a physical-kind check for this representation")
+				}
+				property.View = sourceExpression(node)
+				property.ViewType = l.checker.TypeToString(l.checker.GetTypeOfSymbol(l.symbol(node)))
+				property.ViewAllowed = l.viewLiterals(l.checker.GetTypeOfSymbol(l.symbol(node)))
+				l.result.PlaceholderChecks = append(l.result.PlaceholderChecks, ir.PlaceholderCheck{Origin: origin, Use: "field representation", Path: sourceExpression(node), Where: l.program.Where(node), Status: "checked"})
+			}
+			return l.placeholderRead(node, property, origin), nil
+		}
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Weak {
 				// The field keeps a handle, whatever the checker narrowed the read to.

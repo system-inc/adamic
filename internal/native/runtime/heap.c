@@ -405,6 +405,7 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 			}
 		}
 		let_go(array->properties);
+		if (array->metadata != NULL) adamic_object_free_children(array->metadata, let_go);
 		free(array->elements);
 		break;
 	}

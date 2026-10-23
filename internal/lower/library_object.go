@@ -64,6 +64,17 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
+		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
+			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+				value, err := l.expression(written[0])
+				if err != nil {
+					return nil, true, err
+				}
+				call.Arguments = []ir.Expression{value}
+				call.Returns = ir.Array
+				return call, true, nil
+			}
+		}
 		// Assignment and freezing retain their existing exact-shape requirement.
 		// A plain const's literal initializer proves the complete shape, including field presence.
 		shape := ast.SkipParentheses(written[0])
@@ -84,6 +95,13 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		value, err := l.expression(written[0])
 		if err != nil {
 			return nil, true, err
+		}
+		if name == "keys" && value.Type() == ir.Array {
+			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+				call.Arguments = []ir.Expression{value}
+				call.Returns = ir.Array
+				return call, true, nil
+			}
 		}
 		if value.Type() != ir.Object || l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) || checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")

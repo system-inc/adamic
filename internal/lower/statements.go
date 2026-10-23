@@ -254,6 +254,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 // returnAssignment preserves the right side's value, assigns once, then returns
 // that same value. Reading the target again could observe another write.
 func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+	if l.uninitializedInitializer(node.AsBinaryExpression().Right) {
+		return nil, l.notYet(node, "returning a placeholder reset")
+	}
 	statements, err := l.assignment(node)
 	if err != nil {
 		return nil, err
@@ -273,5 +276,9 @@ func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
 	}
 	read := ir.Read{Local: held, Of: value.Type()}
 	assignment.Value = read
-	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.BodyReturns())}}, nil
+	var returned ir.Expression = read
+	if origin := l.placeholderOrigin(node.AsBinaryExpression().Left); origin != "" && !l.placeholderAllowsUnset(node) {
+		returned = ir.PlaceholderUse{Value: read, Origin: origin, Use: "return", Path: sourceExpression(node), Where: l.program.Where(node), Of: l.function.BodyReturns()}
+	}
+	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(returned, l.function.BodyReturns())}}, nil
 }
