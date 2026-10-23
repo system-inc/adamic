@@ -410,8 +410,11 @@ func (n *inference) value(expression ir.Expression) shape {
 			return shape{fresh: true, holds: operands[0].roots()}
 		case "keys":
 			return shape{fresh: true}
+		case "has", "hasOwn":
+			return shape{}
 		}
-		return shape{}
+		// A method this doesn't know yet is the most it could be, as a node is below.
+		return n.call(operands)
 	case ir.RecordLiteral:
 		result := shape{fresh: true}
 		if expression.Spread != nil {
@@ -474,8 +477,9 @@ func (n *inference) value(expression ir.Expression) shape {
 	// Everything else: the effects of what it evaluates, field by field, and then, as cohere assumes
 	// of a call it has no signature for, that it mutates and may return any of them. That covers
 	// the methods that call a callback (map, forEach, a Map's or Set's forEach, reduce, sort, Array.from), the ones that write
-	// (splice, fill, set, delete), and a node added to the IR after this was written, which is then
-	// treated as the most it could be rather than as nothing.
+	// (splice, fill, set, delete, clear), and every node whose value can be mutated. Only a node
+	// that does none of these gives nothing, and writes_test.go fails on a node added to the IR
+	// until it's named as one of them, so a new write can't be taken for nothing by its type.
 	operands := n.operands(expression)
 	if !mutable(expression.Type()) && !writes(expression) && !callsBack(expression) {
 		return shape{}
@@ -483,8 +487,30 @@ func (n *inference) value(expression ir.Expression) shape {
 	return n.call(operands)
 }
 
-// operands evaluates every expression an IR node holds, in the order its fields are declared.
-func (n *inference) operands(expression ir.Expression) []shape {
+// statement makes the effects of a statement an expression holds (an Effects' body, a logical
+// assignment's write) as run1 makes a statement's, a write into a field or an element being a
+// store, and is the shapes of the expressions it holds, as operands is.
+func (n *inference) statement(statement ir.Statement) []shape {
+	switch statement := statement.(type) {
+	case ir.SetProperty:
+		object := n.value(statement.Object)
+		value := n.value(statement.Value)
+		n.store(object, value)
+		return []shape{object, value}
+	case ir.SetIndex:
+		array := n.value(statement.Array)
+		index := n.value(statement.Index)
+		value := n.value(statement.Value)
+		n.store(array, value)
+		return []shape{array, index, value}
+	}
+	return n.operands(statement)
+}
+
+// operands evaluates every expression an IR node holds, in the order its fields are declared. A
+// statement it holds is made by statement, so a write among an Effects' statements, or a logical
+// assignment's, is a store.
+func (n *inference) operands(node any) []shape {
 	var operands []shape
 	var walk func(value reflect.Value)
 	walk = func(value reflect.Value) {
@@ -495,6 +521,10 @@ func (n *inference) operands(expression ir.Expression) []shape {
 			}
 			if inner, ok := value.Interface().(ir.Expression); ok {
 				operands = append(operands, n.value(inner))
+				return
+			}
+			if inner, ok := value.Interface().(ir.Statement); ok {
+				operands = append(operands, n.statement(inner)...)
 				return
 			}
 			walk(value.Elem())
@@ -508,16 +538,29 @@ func (n *inference) operands(expression ir.Expression) []shape {
 			}
 		}
 	}
-	walk(reflect.ValueOf(expression))
+	walk(reflect.ValueOf(node))
 	return operands
 }
 
-// writes reports whether an IR node writes into a container it's handed.
+// writes reports whether an IR node writes into a container it's handed. It's asked before the
+// node's type is, since a write can give something that can't be mutated (a clear is void, a
+// readSync is a count). writes_test.go fails on an IR expression it doesn't find classified: here,
+// in callsBack, in a case of value's own, as holding statements, or as writing nothing.
 func writes(expression ir.Expression) bool {
 	switch call := expression.(type) {
 	case ir.NodeBufferCall:
 		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
-	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
+	case ir.NodeFSFile:
+		// readSync reads into the buffer it's handed.
+		return call.Operation == "read_sync"
+	case ir.ObjectCall:
+		return call.Method == "assign" || call.Method == "freeze"
+	case ir.RegExpCall:
+		// A pattern's lastIndex: exec, test, match and replace move or reset it, search sets it and
+		// puts it back, and an iterator's next moves its own. split and matchAll work on a copy of
+		// the pattern, and iteratorDone reads a result's done.
+		return call.Method != "split" && call.Method != "matchAll" && call.Method != "iteratorDone"
+	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete, ir.MapClear, ir.SetAdd:
 		return true
 	}
 	return false
@@ -529,7 +572,7 @@ func callsBack(expression ir.Expression) bool {
 		return call.Replacement != nil
 	}
 	switch expression.(type) {
-	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
+	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach, ir.ParallelMap:
 		return true
 	}
 	return false
