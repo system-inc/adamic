@@ -1,0 +1,23 @@
+import { decodeJson } from 'adamic';
+interface Leaf { readonly text: string; readonly enabled: boolean; }
+interface Root { readonly rows: readonly (readonly Leaf[])[]; readonly pair: readonly [Leaf, readonly number[]]; readonly optional?: Leaf; }
+for (const text of [
+ '{"rows":[[],[{"text":"\\uD800\\n","enabled":false,"extra":1}]],"pair":[{"text":"🌍","enabled":true},[-0,1e400]]}',
+ '{"rows":[[{"text":"good","enabled":true},{"text":"bad"}]],"pair":[]}',
+ '{"rows":[[{"text":42,"enabled":true}]],"pair":[]}',
+ '{"rows":{},"pair":[]}',
+ '{"rows":[],"pair":[{"text":"ok","enabled":true},[1,"bad"]]}',
+ '{"rows":[],"pair":[{"text":"ok","enabled":true},[]],"optional":null}',
+ '{"rows":[],"pair":[{"text":"ok","enabled":true},[]],"extra":{"ignored":[true,null]}}',
+ '{"rows":[],"pair":[]} trailing'
+]) {
+ const r = decodeJson<Root>(text);
+ if (r.kind === 'Error') console.log(r.message);
+ else {
+  console.log(`${r.value.rows.length} ${r.value.pair[0].text.length} ${r.value.pair[1].length} ${r.value.optional?.text ?? 'absent'}`);
+  for (const row of r.value.rows) for (const leaf of row) {
+   console.log(`${leaf.enabled} ${leaf.text.length}`);
+   for (let i = 0; i < leaf.text.length; i++) console.log(`${leaf.text.charCodeAt(i)}`);
+  }
+ }
+}
