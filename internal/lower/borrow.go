@@ -13,6 +13,7 @@ import "github.com/system-inc/adamic/internal/ir"
 //
 // Parameters in a shared frame environment need owned treatment, even when read-only:
 // initializing that owned slot is a store, and an escaping closure keeps it after the call.
+// The slot owns that reference; native entry must not also retain the raw parameter.
 // ir.Assign is the only statement that writes a local that already exists, and locals are numbered
 // across the whole program, so a closure writing a parameter through its cell is found too.
 func borrow(program *ir.Program) {

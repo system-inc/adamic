@@ -1,0 +1,6 @@
+function make(text: string): () => string {
+ function read(): string { return text; }
+ return read;
+}
+const read = make('capture' + String(3));
+console.log(read());

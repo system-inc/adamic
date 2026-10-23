@@ -34,6 +34,7 @@ void *adamic_program_adopt_owned(void *value, size_t size) {
  // Interior cells share this indivisible member and take the header fast path too.
  if (heap->kind == adamic_kind_environment) {
   adamic_environment *environment = (adamic_environment *)heap;
+  environment->cells = (adamic_cell *)(void *)(environment + 1);
   for (size_t i = 0; i < environment->count; i++) {
    environment->cells[i].owner = &environment->heap;
    environment->cells[i].heap.slab |= ADAMIC_PROGRAM_FLAG;
