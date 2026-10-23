@@ -1,0 +1,7 @@
+function run(): void {
+	const scratch = new Map<string, string>();
+	scratch.set('a', 'x');
+	scratch.clear();
+}
+run();
+console.log('cleared');

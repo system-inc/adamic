@@ -1,0 +1,33 @@
+// Writes whose result isn't a value that can be mutated: a logical assignment to a field gives the
+// string it leaves there, and readSync gives how many bytes it read into the buffer it's handed. In
+// each function the write is the last thing done to a value it made, so only the node counting as a
+// write can put the write inside that value's range.
+import { Buffer } from 'node:buffer';
+import { closeSync, mkdtempSync, openSync, readSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+interface Named {
+	name: string;
+}
+
+function throughLogicalAssignment(): string {
+	const box: Named = { name: '' };
+	const result = (box.name ||= 'filled');
+	return result;
+}
+
+function throughReadSync(path: string): number {
+	const buffer = Buffer.from('....');
+	const descriptor = openSync(path, 'r');
+	const read = readSync(descriptor, buffer, 0, 4, 0);
+	closeSync(descriptor);
+	return read;
+}
+
+const directory = mkdtempSync(join(tmpdir(), 'adamic-hidden-writes-'));
+const path = join(directory, 'data.txt');
+writeFileSync(path, 'data');
+console.log(throughLogicalAssignment());
+console.log(String(throughReadSync(path)));
+rmSync(directory, { recursive: true, force: true });
