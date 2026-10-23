@@ -113,6 +113,7 @@ import "probe/ast"
 func (l *lowering) refuse(module *ast.SourceFile) error {
  if err := l.referenceRefusal(module); err != nil { return err }
  if err := l.parallelPreflight(module); err != nil { return err }
+ if err := l.futurePreflight(module); err != nil { return err }
  if len(module.CommentDirectives)>0 {
   directive:=module.CommentDirectives[0]
   return &Refused{What:directive.Name}
@@ -164,6 +165,7 @@ func(*program) LatentDiagnosticsIn(n *ast.Node)[]string{if n.Diagnosed{return []
 type lowering struct{program *program}
 func(*lowering) referenceRefusal(*ast.SourceFile)error{return fmt.Errorf("reference")}
 func(*lowering) parallelPreflight(*ast.SourceFile)error{return fmt.Errorf("parallel")}
+func(*lowering) futurePreflight(*ast.SourceFile)error{return fmt.Errorf("future")}
 func(*lowering) predicateArguments(n *ast.Node)error{if n.Diagnosed{panic("contract visitor entered diagnosed body")};if n.Contract{return fmt.Errorf("contract:%s",n.Label)};return nil}
 func(*lowering) nodeRefusal(n *ast.Node)error{if n.Diagnosed{panic("syntax visitor entered diagnosed body")};if n.Syntax{return fmt.Errorf("syntax:%s",n.Label)};return nil}
 var observations []string
@@ -183,7 +185,7 @@ func TestBehavior(t *testing.T){
  l:=&lowering{program:&program{}}
  if err:=l.refuse(module);err==nil||err.Error()!="reference"{t.Fatalf("production first refusal: %v",err)}
  if err:=l.latentRefuse(module);err!=nil{t.Fatal(err)}
- want:=[]string{"reference","parallel","directive-one","directive-two","pragma","contract:parent","syntax:parent","syntax:child","syntax:sibling"}
+ want:=[]string{"reference","parallel","future","directive-one","directive-two","pragma","contract:parent","syntax:parent","syntax:child","syntax:sibling"}
  if !reflect.DeepEqual(observations,want){t.Fatalf("findings=%v want=%v",observations,want)}
 }
 `
@@ -262,24 +264,44 @@ func TestProduct_RefusalRewriteBehaviorProbe(t *testing.T) {
 	behaviorProbe(t)
 }
 
-func TestNamedPreflightsAndUnknownShapes(t *testing.T) {
+func TestModulePreflightShapes(t *testing.T) {
 	t.Parallel()
 	for _, preflight := range []string{"referenceRefusal", "parallelPreflight", "unknownPreflight"} {
 		input := strings.Replace(behaviorSource, "if len(module.CommentDirectives)", "if err := l."+preflight+"(module); err != nil { return err }; if len(module.CommentDirectives)", 1)
 		output, err := Rewrite([]byte(input))
-		if preflight == "unknownPreflight" {
-			if err == nil || output != nil {
-				t.Fatal("unknown preflight published output")
-			}
-		} else {
-			if err != nil {
-				t.Fatal(err)
-			}
-			text := string(output)
-			clone := text[strings.Index(text, "func (l *lowering) latentRefuse"):]
-			if !strings.Contains(clone, "latentRecord(err)") {
-				t.Fatal("preflight error not recorded")
-			}
+		if err != nil {
+			t.Fatal(err)
 		}
+		clone := string(output)[strings.Index(string(output), "func (l *lowering) latentRefuse"):]
+		if !strings.Contains(clone, "latentRecord(err)") {
+			t.Fatal("preflight error not recorded")
+		}
+	}
+}
+
+func TestUnsupportedPreflightReturns(t *testing.T) {
+	t.Parallel()
+	for _, statement := range []string{
+		`if err := l.unknownPreflight(module); err != nil { return fmt.Errorf("wrapped: %w", err) }`,
+		`if module != nil { if err := l.unknownPreflight(module); err != nil { return err } }`,
+		`if err = l.unknownPreflight(module); err != nil { return err }`,
+		`if err := l.unknownPreflight(other); err != nil { return err }`,
+	} {
+		input := strings.Replace(behaviorSource, "if len(module.CommentDirectives)", statement+"; if len(module.CommentDirectives)", 1)
+		output, err := Rewrite([]byte(input))
+		if err == nil || output != nil {
+			t.Fatalf("unsupported return published: %s", statement)
+		}
+	}
+}
+
+func TestCompilerSlice3Shape(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile("testdata/refusals-slice3.go.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Rewrite(source); err != nil {
+		t.Fatal(err)
 	}
 }
