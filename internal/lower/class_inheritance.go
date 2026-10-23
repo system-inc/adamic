@@ -51,12 +51,19 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 		if member.Name() == nil || ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) != static {
 			continue
 		}
-		inherited := l.checker.GetPropertyOfType(base, member.Name().Text())
+		// Computed names are checker property identities, not textual AST names.
+		// In particular Symbol.iterator must use its unique-symbol key.
+		symbol := l.checker.GetSymbolOfDeclaration(member)
+		if symbol == nil {
+			return l.notYet(member, "a class member without a resolved property identity")
+		}
+		key := symbol.Name
+		inherited := l.checker.GetPropertyOfType(base, key)
 		if inherited == nil {
 			continue
 		}
 		own := l.checker.GetTypeAtLocation(member.Name())
-		if property := l.checker.GetPropertyOfType(classType, member.Name().Text()); property != nil {
+		if property := l.checker.GetPropertyOfType(classType, key); property != nil {
 			own = l.checker.GetTypeOfSymbol(property)
 		}
 		previous := l.checker.GetTypeOfSymbol(inherited)
@@ -70,7 +77,7 @@ func (l *lowering) checkMemberOverrides(declaration *ast.Node, classType, base *
 		if accessorMember(member) {
 			ownGet, ownSet, baseGet, baseSet := false, false, false, false
 			for _, candidate := range declaration.Members() {
-				if candidate.Name() != nil && candidate.Name().Text() == member.Name().Text() && ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) == static {
+				if candidate.Name() != nil && l.checker.GetSymbolOfDeclaration(candidate) != nil && l.checker.GetSymbolOfDeclaration(candidate).Name == key && ast.HasSyntacticModifier(candidate, ast.ModifierFlagsStatic) == static {
 					ownGet = ownGet || candidate.Kind == ast.KindGetAccessor
 					ownSet = ownSet || candidate.Kind == ast.KindSetAccessor
 				}

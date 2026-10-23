@@ -1,0 +1,14 @@
+interface Node { readonly text: string; readonly numbers: number[]; readonly words: string[]; next: Node | undefined; }
+function run(): void {
+ let total = 0;
+ for (let i = 0; i < 20; i++) {
+  const root: Node = { text: `root${i}`, numbers: [i, i + 1], words: [`word${i}`], next: undefined };
+  const old: Node = { text: `old${i}`, numbers: [i], words: [`oldword${i}`], next: root };
+  root.next = old;
+  root.next = { text: `new${i}`, numbers: [i + 2], words: [`newword${i}`], next: root };
+  total += root.next.numbers[0] ?? 0;
+  if (i === 0 || i === 19) { console.log(`${root.text} ${root.next.words[0]} ${root.next.next === root}`); }
+ }
+ console.log(`${total}`);
+}
+run();

@@ -11,7 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Node observes the real cycle; the compiler must refuse its closing write.
+// Node observes the real cycle; refusal or graph ownership must keep it sound.
 var freshClobberOutputs = map[string]string{
 	"alias_fill.a":          "100\n",
 	"alias_mapset.a":        "200\n",
@@ -48,7 +48,11 @@ func freshClobberWitness(t *testing.T, name string) {
 	if marked == 0 {
 		t.Fatal("no closing write marked")
 	}
-	_, err = lowered(t, path)
+	program, err := lowered(t, path)
+	if err == nil {
+		checkGraphAdmission(t, path, program)
+		return
+	}
 	var refused *lower.Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") || !strings.Contains(err.Error(), fmt.Sprintf("the write at %s:%d:", path, marked)) {
 		t.Fatalf("want marked cycle refusal, got %v", err)

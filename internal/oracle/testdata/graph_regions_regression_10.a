@@ -1,0 +1,13 @@
+interface Animal {
+	readonly name: string;
+}
+interface Dog extends Animal {
+	readonly owner: Person;
+}
+class Person {
+	pet: Animal | undefined = undefined;
+}
+const person = new Person();
+const dog: Dog = { name: 'Rex', owner: person };
+person.pet = dog;
+
