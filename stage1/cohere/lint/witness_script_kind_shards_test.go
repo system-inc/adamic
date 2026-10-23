@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -189,7 +190,8 @@ func TestWitnessScriptKindPlantedFailure(t *testing.T) {
 	defer cancel()
 	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_[0-9]+$", "-test.timeout=600s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key)
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatalf("P0 cooked planted-failure shard: %v", ctx.Err())
 	}
@@ -221,7 +223,10 @@ func TestWitnessScriptKind_Setup(t *testing.T) {
 	witnessScriptKindSetup(t)
 }
 
-// POSIX process groups keep compiler descendants within the context cancellation.
+// POSIX process groups keep compiler descendants within the context cancellation. Its callers read the child's output
+// through childguard.Capture, to its end with no timer deciding when: exec's own copying under a two-second WaitDelay
+// reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds after the child exited, so a leaf that
+// had passed could fail its probe under load (#n3gk22h's shape). Each caller's 600 s deadline ends a hung child.
 func witnessScriptKindCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -232,7 +237,6 @@ func witnessScriptKindCommand(ctx context.Context, name string, args ...string) 
 		}
 		return err
 	}
-	command.WaitDelay = 2 * time.Second
 	return command
 }
 
@@ -243,7 +247,8 @@ func TestWitnessScriptKindStandalone(t *testing.T) {
 	defer cancel()
 	// A new process selects only one leaf and fetches its own shared products.
 	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_000$", "-test.timeout=600s", "-test.v")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
 		t.Fatalf("P0 cooked standalone probe: %v", ctx.Err())
 	}

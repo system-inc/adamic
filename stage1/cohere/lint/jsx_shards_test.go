@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -494,9 +495,10 @@ func TestJsxSetupKeyNamesTheBuildsCompiler(t *testing.T) {
 		if compiler != "" {
 			environment = append(environment, "CC="+compiler)
 		}
-		command := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestJsxSetupKeyNamesTheBuildsCompiler$", "-test.timeout=120s")
+		command, ctx := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestJsxSetupKeyNamesTheBuildsCompiler$", "-test.timeout=120s")
 		command.Env = environment
-		output, err := command.CombinedOutput()
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		if err != nil {
 			t.Fatalf("CC=%s: %v\n%s", compiler, err, output)
 		}
@@ -748,9 +750,10 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := lintBuildPhaseChild(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=600s")
+	command, ctx := lintBuildPhaseChild(t, executable, "-test.run=^TestJsxLintTrees_[0-9]{3}$", "-test.v", "-test.timeout=600s")
 	command.Env = append(os.Environ(), "ADAMIC_JSX_SHARD_CHILD=1")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	if err == nil {
 		t.Fatalf("planted disagreement survived:\n%s", output)
 	}
@@ -768,14 +771,13 @@ func TestJsxLintTreesShardDisagreement(t *testing.T) {
 }
 
 // jsxContextCommand is lintCommand under a case's own 90-second deadline: the entire child process group is
-// cancelled with it, including any spawned compilers, with no external timeout executable.
+// cancelled with it, including any spawned compilers, with no external timeout executable. It adds no WaitDelay, for
+// lintCommand's reason.
 func jsxContextCommand(t *testing.T, parent context.Context, directory, name string, args ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
 	t.Cleanup(cancel)
-	command := lintCommand(ctx, directory, name, args...)
-	command.WaitDelay = 2 * time.Second
-	return command
+	return lintCommand(ctx, directory, name, args...)
 }
 
 func jsxCaseExecute(t *testing.T, ctx context.Context, directory, name string, args ...string) execution {
@@ -842,7 +844,9 @@ func jsxCaptureRun(directory string, environment []string, name string, args ...
 		}
 		return err
 	}
-	command.WaitDelay = 2 * time.Second
+	// No WaitDelay, for lintCommand's reason: stdout is a file, and exec reads stderr to its end. go test waits for
+	// the compilers and test binaries it starts before it exits, so nothing holds the pipe after it, and the unit's
+	// ceiling ends a wait on one that did.
 	output, err := os.CreateTemp(sharedDirectory, "jsx-capture-stdout-")
 	if err != nil {
 		return nil, err

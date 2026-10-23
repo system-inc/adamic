@@ -8,9 +8,10 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // The old isolated sweep rebuilt four products and selected leaf 001 in
@@ -35,11 +36,10 @@ func grain30Probe(t *testing.T, name string, plant bool) ([]byte, error) {
 	if plant {
 		command.Env = append(command.Env, "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
 	}
-	output, err := command.CombinedOutput()
-	if command.Process != nil {
-		_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	return output, err
+	// Read through childguard.Capture for lintCommand's reason, stdout then stderr. Capture kills the child's group
+	// once it exits, so no product build it started outlives it.
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	return append(stdout, stderr...), err
 }
 
 func grain30IsolationResult(index int, output []byte, err error) error {

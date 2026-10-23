@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -391,9 +392,10 @@ func TestCompilerAndStage1AgreeSanitizedPlantedDisagreement(t *testing.T) {
 		t.Fatal(err)
 	}
 	owner := owners[compilerAgreementSanitizedPlantedRule]
-	command, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^"+compilerAgreementCheckerSanitizedPrefix, "-test.skip=^TestProduct_", "-test.timeout=90s", "-test.v")
+	command, ctx, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^"+compilerAgreementCheckerSanitizedPrefix, "-test.skip=^TestProduct_", "-test.timeout=90s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	cancel()
 	if err == nil || bytes.Count(output, []byte("--- FAIL:")) != 1 || !bytes.Contains(output, []byte("--- FAIL: "+owner+" ")) {
 		t.Fatalf("planted sanitized disagreement not caught exactly once, by %s: %v\n%s", owner, err, output)
@@ -790,9 +792,10 @@ func TestCompilerAndStage1AgreeSubShardPlantedDisagreement(t *testing.T) {
 		owners = append(owners, fmt.Sprintf("TestCompilerAndStage1Agree_%d_%d", shard, compilerAgreementPart(compilerAgreementSubShardPlanted(t, split.Owner), split.Parts)))
 		parts += split.Parts
 	}
-	command, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^TestCompilerAndStage1Agree_("+strings.Join(shards, "|")+")_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command, ctx, cancel := compilerAgreementCommand(os.Args[0], "-test.run=^TestCompilerAndStage1Agree_("+strings.Join(shards, "|")+")_[0-9]+$", "-test.timeout=90s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_COMPILER_AGREEMENT_PROBE=1")
-	output, err := command.CombinedOutput()
+	stdout, stderr, err := childguard.Capture(ctx, command)
+	output := append(stdout, stderr...)
 	cancel()
 	if err == nil || bytes.Count(output, []byte("--- FAIL:")) != len(owners) {
 		t.Fatalf("planted sub-shard disagreements not caught once for each of %d owner sides: %v\n%s", len(owners), err, output)

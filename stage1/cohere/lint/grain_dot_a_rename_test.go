@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -369,6 +370,10 @@ func dotARenameReady(t *testing.T, renamed bool) dotARenameProducts {
 	return *dotARenamePrepared[slot]
 }
 
+// dotARenameChild's output is read through childguard.Capture, to its end with no timer deciding when: exec's own
+// copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds
+// after the child exited, which a probe counted as a caught shard with its output cut short (#n3gk22h's shape). Each
+// caller's 10 s deadline ends a hung child.
 func dotARenameChild(ctx context.Context, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, os.Args[0], args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -379,7 +384,6 @@ func dotARenameChild(ctx context.Context, args ...string) *exec.Cmd {
 		}
 		return err
 	}
-	command.WaitDelay = 5 * time.Second
 	return command
 }
 
@@ -471,7 +475,8 @@ func dotARenamePlant(t *testing.T, key string, p dotARenameProducts, module stri
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
 		command.Env = append(os.Environ(), "ADAMIC_DOT_A_RENAME_PROBE="+products)
-		output, err := command.CombinedOutput()
+		stdout, stderr, err := childguard.Capture(ctx, command)
+		output := append(stdout, stderr...)
 		expired := ctx.Err()
 		cancel()
 		if expired != nil {

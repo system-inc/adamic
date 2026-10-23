@@ -321,6 +321,8 @@ func compilationEmission(t *testing.T, inputs buildcache.Inputs, kind string) st
 
 // Bound child commands without requiring an external timeout executable. Kill
 // the entire process group so compiler descendants cannot outlive the deadline.
+// No WaitDelay: its caller writes both streams to files, so exec copies nothing
+// and Wait returns when the child does; the group kill is the whole bound.
 func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -334,7 +336,6 @@ func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 

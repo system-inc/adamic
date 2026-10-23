@@ -13,7 +13,6 @@ import (
 	"strings"
 	"sync"
 	"syscall"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
@@ -140,6 +139,12 @@ func lintGoSettings() string {
 // environment with PWD set to directory, never PATH's with this process's; a path is a program a test built, which
 // runs as named with this process's environment. A tool toolchain can't resolve fails as the command starts, with
 // toolchain's error.
+//
+// No WaitDelay: one closed exec's reads of a buffered stream a second after the child exited and reported
+// exec.ErrWaitDelay, so a run that had finished but was slow to drain under load failed by chance (#n3gk22h's shape).
+// A caller that reads a pipe reads it through childguard.Capture. One that writes stdout to a file, the package's rule
+// for Node's writev path, keeps exec's copy of stderr, read to its end: node, the port and the Go oracle start no
+// process that could hold it, and ctx's group kill or the unit's ceiling ends a wait on one that did.
 func lintCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -166,7 +171,6 @@ func lintCommand(ctx context.Context, directory, name string, args ...string) *e
 		}
 		return err
 	}
-	command.WaitDelay = time.Second
 	return command
 }
 

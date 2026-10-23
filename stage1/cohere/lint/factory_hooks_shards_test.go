@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -321,9 +322,10 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 	}
 	command := lintCommand(ctx, "", executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source, "ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output)
-	data, err := command.CombinedOutput()
+	// Read through childguard.Capture for lintCommand's reason: a WaitDelay could fail a build that had finished.
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil {
-		return fmt.Errorf("sanitized native build: %w\n%s", err, data)
+		return fmt.Errorf("sanitized native build: %w\n%s%s", err, stdout, stderr)
 	}
 	return nil
 }
