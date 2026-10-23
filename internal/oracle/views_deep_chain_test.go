@@ -56,6 +56,7 @@ func TestViewsDeepChainRecursiveWalkMutant(t *testing.T) {
 		t.Fatalf("control: %s", diff)
 	}
 	directory := t.TempDir()
+	// Reads: internal/native/runtime/*
 	files, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
 	if err != nil {
 		t.Fatal(err)

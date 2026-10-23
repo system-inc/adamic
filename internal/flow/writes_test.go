@@ -231,6 +231,7 @@ func TestEveryExpressionIsClassified(t *testing.T) {
 // without declaring them).
 func irExpressions(t *testing.T) map[string]bool {
 	t.Helper()
+	// Reads: internal/ir/*.go
 	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
 		t.Fatal(err)
