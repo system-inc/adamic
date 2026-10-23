@@ -2,6 +2,9 @@ package fuzz
 
 import (
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -58,10 +61,6 @@ func TestMovesFeatureCoverage(t *testing.T) {
 
 // The default is a smoke run; ADAMIC_FUZZ_MOVES_SEEDS requests a full campaign
 // or the same bounded seed search against a compiler mutant in a Go overlay.
-func TestMovesCampaign_0(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 0)
-}
 func TestMovesCampaign_1(t *testing.T) {
 	t.Parallel()
 	movesCampaign(t, 1)
@@ -74,9 +73,94 @@ func TestMovesCampaign_3(t *testing.T) {
 	t.Parallel()
 	movesCampaign(t, 3)
 }
+func TestMovesCampaign_4(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 4)
+}
+func TestMovesCampaign_5(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 5)
+}
+func TestMovesCampaign_6(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 6)
+}
+func TestMovesCampaign_7(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 7)
+}
+func TestMovesCampaign_8(t *testing.T) {
+	t.Parallel()
+	movesCampaign(t, 8)
+}
+
+const movesCampaignTests = 8
+
+func movesCampaignSeeds(first, count int) []uint64 {
+	var seeds []uint64
+	for seed := uint64(first); seed <= uint64(count); seed += movesCampaignTests {
+		seeds = append(seeds, seed)
+	}
+	return seeds
+}
+
+func TestMovesCampaignSeedCoverage(t *testing.T) {
+	t.Parallel()
+	// Read the actual test declarations so removing a campaign loses its seeds.
+	file, err := parser.ParseFile(token.NewFileSet(), "moves_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, count := range []int{8, 37} {
+		owners := make([]int, count+1)
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || !strings.HasPrefix(function.Name.Name, "TestMovesCampaign_") {
+				continue
+			}
+			calls := 0
+			ast.Inspect(function.Body, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
+				if !ok {
+					return true
+				}
+				name, ok := call.Fun.(*ast.Ident)
+				if !ok || name.Name != "movesCampaign" {
+					return true
+				}
+				calls++
+				if len(call.Args) != 2 {
+					t.Fatalf("%s: invalid campaign call", function.Name.Name)
+				}
+				literal, ok := call.Args[1].(*ast.BasicLit)
+				if !ok {
+					t.Fatalf("%s: campaign seed must be literal", function.Name.Name)
+				}
+				first, err := strconv.Atoi(literal.Value)
+				if err != nil || first < 1 || first > movesCampaignTests {
+					t.Fatalf("%s: invalid first seed", function.Name.Name)
+				}
+				seeds := movesCampaignSeeds(first, count)
+				t.Logf("count %d %s: %v", count, function.Name.Name, seeds)
+				for _, seed := range seeds {
+					owners[seed]++
+				}
+				return true
+			})
+			if calls != 1 {
+				t.Fatalf("%s: got %d campaign calls", function.Name.Name, calls)
+			}
+		}
+		for seed := 1; seed <= count; seed++ {
+			if owners[seed] != 1 {
+				t.Errorf("count %d seed %d has %d owners, want 1", count, seed, owners[seed])
+			}
+		}
+	}
+}
 
 // A seed has exactly one owner, including an explicitly requested longer campaign.
-func movesCampaign(t *testing.T, shard int) {
+func movesCampaign(t *testing.T, first int) {
 	count := 8
 	if value := os.Getenv("ADAMIC_FUZZ_MOVES_SEEDS"); value != "" {
 		var err error
@@ -96,7 +180,7 @@ func movesCampaign(t *testing.T, shard int) {
 	t.Logf("thread sanitizer: %s", checkout.TSan)
 	started := time.Now()
 	totals := map[Verdict]int{}
-	for seed := uint64(1 + shard); seed <= uint64(count); seed += 4 {
+	for _, seed := range movesCampaignSeeds(first, count) {
 		program := GenerateMoves(seed)
 		outcome := checkout.Try(program.Source(), filepath.Join(directory, "program"))
 		expected := Agreed
