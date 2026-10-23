@@ -23,6 +23,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -100,10 +101,7 @@ func execute(t testing.TB, directory string, environment []string, name string, 
 	command.Env = append(append(os.Environ(), toolchainSettings("PATH", "CC", "CXX")...), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
-	var stdout, stderr bytes.Buffer
-	command.Stdout, command.Stderr = &stdout, &stderr
-	err := command.Run()
+	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exited *exec.ExitError
 	if ctx.Err() != nil {
 		t.Fatalf("%s timed out: %v", name, ctx.Err())
@@ -111,7 +109,7 @@ func execute(t testing.TB, directory string, environment []string, name string, 
 	if err != nil && !errors.As(err, &exited) {
 		t.Fatal(err)
 	}
-	return behavior{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
+	return behavior{string(stdout), string(stderr), command.ProcessState.ExitCode()}
 }
 
 func equal(t *testing.T, check string, got, want behavior) {
@@ -572,5 +570,21 @@ func TestExecuteGivesChildrenTheToolchainsCompiler(t *testing.T) {
 	result := execute(t, t.TempDir(), nil, "/bin/sh", "-c", `echo "$CC $CXX"`)
 	if result.Exit != 0 || result.Stdout != "clang clang++\n" {
 		t.Fatalf("a child saw %q (exit %d, stderr %q), want toolchain's clang and clang++", result.Stdout, result.Exit, result.Stderr)
+	}
+}
+
+// Both streams exceed a pipe buffer; the final bytes and nonzero exit must survive the drain.
+// Mutant: drop the last captured stdout byte before returning from execute.
+func TestExecuteCapturesWholeOutput(t *testing.T) {
+	t.Parallel()
+	const size = 1 << 20
+	result := execute(t, t.TempDir(), nil, "node", "-e", `
+const fs = require('node:fs');
+fs.writeFileSync(1, 'o'.repeat(1 << 20));
+fs.writeFileSync(2, 'e'.repeat(1 << 20));
+setTimeout(() => process.exit(7), 25);
+`)
+	if result.Exit != 7 || result.Stdout != strings.Repeat("o", size) || result.Stderr != strings.Repeat("e", size) {
+		t.Fatalf("captured exit=%d stdout=%d bytes stderr=%d bytes, want exit=7 and %d bytes per stream", result.Exit, len(result.Stdout), len(result.Stderr), size)
 	}
 }
