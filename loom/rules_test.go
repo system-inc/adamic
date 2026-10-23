@@ -57,6 +57,8 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"door bound unknown", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"budget": 2}}`, `unknown field "budget"`},
 		{"door bound zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"waiting": 0}}`, "a whole number from 1 to 9007199254740991"},
 		{"door bound null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"heavy": null}}`, "a whole number from 1 to 9007199254740991"},
+		{"door censusWithin zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"censusWithin": 0}}`, "door's censusWithin is 0"},
+		{"door censusWithin null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"censusWithin": null}}`, "door's censusWithin is null"},
 		{"door bound fraction", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"lines": 2.5}}`, "cannot unmarshal number 2.5"},
 		{"door bound string", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"lines": "100"}}`, "cannot unmarshal string"},
 		{"door bound past the queue's", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "door": {"files": 9007199254740992}}`, "a whole number from 1 to 9007199254740991"},
@@ -121,6 +123,21 @@ func TestRulesTakeADoor(t *testing.T) {
 	}
 	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Door != nil {
+		t.Fatalf("%+v, %v", rules.Door, err)
+	}
+}
+
+// A censusWithin the lander takes reads here too (Loom 0.8.510, the census door, #1kz9c3d), so a rules.json that turns
+// the door on is taken by adamic's own reader: a whole number of minutes from 1 to 2^53-1, beside the other bounds, and
+// absent as absent. Mutant that fails it: the field dropped from DoorRule (an unknown field, refused).
+func TestRulesTakeACensusWithin(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {"heavy": 1000, "censusWithin": 10}}`))
+	if err != nil || rules.Door == nil || rules.Door.CensusWithin == nil || *rules.Door.CensusWithin != 10 || *rules.Door.Heavy != 1000 {
+		t.Fatalf("%+v, %v", rules.Door, err)
+	}
+	rules, err = ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}, "door": {"heavy": 1000}}`))
+	if err != nil || rules.Door.CensusWithin != nil {
 		t.Fatalf("%+v, %v", rules.Door, err)
 	}
 }

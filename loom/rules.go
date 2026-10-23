@@ -33,13 +33,16 @@ type Rules struct {
 // DoorRule is the door's bounds, each a whole number from 1 to MaximumDoorBound while present: pacedAfter (an owner whose
 // changes go red waits), waiting (the most an owner has on its way), files and lines (the largest diff), and heavy (the
 // most units a block prefix's plan moves before its change rides apart from light ones; a declared rekey is heavy at
-// any count, #mdect20). The lander's DoorRule.
+// any count, #mdect20), and censusWithin (the census door, #1kz9c3d: a checked change joins no block until the planner
+// has censused its own diff, and this many minutes on the queue's clock with no census let it in). The lander's
+// DoorRule.
 type DoorRule struct {
-	PacedAfter *int64 `json:"pacedAfter"`
-	Waiting    *int64 `json:"waiting"`
-	Files      *int64 `json:"files"`
-	Lines      *int64 `json:"lines"`
-	Heavy      *int64 `json:"heavy"`
+	PacedAfter   *int64 `json:"pacedAfter"`
+	Waiting      *int64 `json:"waiting"`
+	Files        *int64 `json:"files"`
+	Lines        *int64 `json:"lines"`
+	Heavy        *int64 `json:"heavy"`
+	CensusWithin *int64 `json:"censusWithin"`
 }
 
 // MaximumDoorBound is the queue's largest safe integer, 2^53-1 (Loom's lander/rules.go).
@@ -157,7 +160,7 @@ func ParseRules(data []byte) (Rules, error) {
 		if bytes.Equal(bytes.TrimSpace(raw.Door), []byte("null")) || json.Unmarshal(raw.Door, &bounds) != nil {
 			return Rules{}, fmt.Errorf("rules.json: door is %s, and it's an object of bounds", raw.Door)
 		}
-		for name, bound := range map[string]*int64{"pacedAfter": rules.Door.PacedAfter, "waiting": rules.Door.Waiting, "files": rules.Door.Files, "lines": rules.Door.Lines, "heavy": rules.Door.Heavy} {
+		for name, bound := range map[string]*int64{"pacedAfter": rules.Door.PacedAfter, "waiting": rules.Door.Waiting, "files": rules.Door.Files, "lines": rules.Door.Lines, "heavy": rules.Door.Heavy, "censusWithin": rules.Door.CensusWithin} {
 			if _, present := bounds[name]; present && (bound == nil || *bound < 1 || *bound > MaximumDoorBound) {
 				return Rules{}, fmt.Errorf("rules.json: door's %s is %s, and it's a whole number from 1 to %d", name, bounds[name], int64(MaximumDoorBound))
 			}
