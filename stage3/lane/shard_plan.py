@@ -23,7 +23,9 @@ PAIRED_CASE_FILES = {
     'src/testRunner/unittests/tsbuild/noEmit.ts',
     'src/testRunner/unittests/tsc/noEmit.ts',
 }
-CASE_GROUPS = 3
+# Project-reference groups need headroom under CPU contention; other partitions stay fixed.
+CASE_GROUPS = {file: 24 if label == 'project-reference-cases' else 3
+               for file, label in CASE_PARTITIONS.items()}
 RUNTIME = ['run.py', '../oracle/run.py', '../oracle/profile-tasks.cjs', 'artifact.py', 'view.py', 'shard_plan.py', 'shard.py', 'merge_shards.py',
            'prepare_shards.py', 'check.py', 'normalize-api.cjs', 'expected.json',
            'sanctioned-api.json', '../oracle/run-prepared.mjs', '../oracle/run-tasks.cjs', '../oracle/observe-tests.cjs',
@@ -72,7 +74,7 @@ def file_assignment(tasks, target_seconds=9.0):
         loads[index] += files[file]
     return owners, dict(target_seconds=target_seconds, weight_target_seconds=weight_target,
                         calibration_maximum_seconds=maximum,
-                        case_groups={file: CASE_GROUPS for file in CASE_PARTITIONS},
+                        case_groups=dict(CASE_GROUPS),
                         calibration_sha256=hashlib.sha256(ledger_path.read_bytes()).hexdigest())
 
 
@@ -108,11 +110,12 @@ def build_plan(artifact, api_digest):
             if row['file'] == file:
                 family = row['name'][:-1] if file in PAIRED_CASE_FILES else row['name']
                 titles[title(family)].append(row)
-        if len(titles) < CASE_GROUPS:
+        groups = CASE_GROUPS[file]
+        if len(titles) < groups:
             raise ValueError('case partition has too few selectable titles: ' + file)
         ordered = sorted(titles)
-        for index in range(CASE_GROUPS):
-            selected = ordered[index::CASE_GROUPS]
+        for index in range(groups):
+            selected = ordered[index::groups]
             name = f'stage3-lane-{label}-{index:02d}'
             names = {title(row['name']): row['name'] for text in selected for row in titles[text]}
             units[name] = dict(name=name, tasks=tasks, tests=[],

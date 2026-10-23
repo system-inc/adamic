@@ -83,11 +83,38 @@ class ShardTests(unittest.TestCase):
                            if row['file'] != shard_plan.WATCHER and row['file'] not in shard_plan.CASE_PARTITIONS)
         for row in candidate['tasks']:
             if row['file'] in shard_plan.CASE_PARTITIONS:
-                expected[(row['task']['runner'], row['task']['file'])] += shard_plan.CASE_GROUPS
+                expected[(row['task']['runner'], row['task']['file'])] += shard_plan.CASE_GROUPS[row['file']]
         expected.update((row['task']['runner'], row['task']['file']) for row in original
                         if row['file'] == shard_plan.WATCHER)
         self.assertEqual(Counter((task['runner'], task['file']) for unit in plan['units']
                                  for task in unit['tasks']), expected)
+
+    def test_project_reference_split_preserves_old_owners(self):
+        plan = shard_plan.load_plan()
+        legacy_groups = {file: 3 for file in shard_plan.CASE_PARTITIONS}
+        with patch.object(shard_plan, 'CASE_GROUPS', legacy_groups):
+            legacy, original = shard_plan.build_plan(plan['artifact'], plan['api_digest'])
+        current, assigned = shard_plan.build_plan(plan['artifact'], plan['api_digest'])
+        prefix = 'stage3-lane-project-reference-cases-'
+        unchanged = lambda units: [{key: value for key, value in unit.items() if key != 'inputs_hash'}
+                                    for unit in units if not unit['name'].startswith(prefix)]
+        self.assertEqual(unchanged(legacy['units']), unchanged(current['units']))
+        old_owners = {row['id']: row['unit'] for row in original}
+        children = {}
+        for row in assigned:
+            if row['unit'].startswith(prefix):
+                children.setdefault(row['unit'], set()).add(old_owners[row['id']])
+        self.assertGreater(len(children), 3)
+        self.assertTrue(all(len(owners) == 1 for owners in children.values()))
+        for old in (unit for unit in legacy['units'] if unit['name'].startswith(prefix)):
+            rows = [row for row in assigned if old_owners[row['id']] == old['name']]
+            self.assertEqual(shard_plan.names_digest(rows), old['names_digest'])
+        families = {}
+        for row in assigned:
+            if row['file'] in shard_plan.CASE_PARTITIONS:
+                name = row['name'][:-1] if row['file'] in shard_plan.PAIRED_CASE_FILES else row['name']
+                families.setdefault((row['file'], shard_plan.title(name)), set()).add(row['unit'])
+        self.assertTrue(all(len(owners) == 1 for owners in families.values()))
 
     def test_case_partitions_reject_invalid_inventory(self):
         for duplicate_task, short_titles, message in [
@@ -97,7 +124,7 @@ class ShardTests(unittest.TestCase):
             for index, file in enumerate(shard_plan.CASE_PARTITIONS):
                 task = dict(runner='unittest', file=f'root-{index}')
                 tasks.append(dict(file=file, task=task, seconds=1))
-                for case in range(1 if short_titles and index == 0 else shard_plan.CASE_GROUPS):
+                for case in range(1 if short_titles and index == 0 else shard_plan.CASE_GROUPS[file]):
                     records.append(dict(id=f'{index}/{case}', file=file, task=task,
                                         name=[task['file'], f'family-{case}', f'case-{case}'], status='pass'))
             if duplicate_task:

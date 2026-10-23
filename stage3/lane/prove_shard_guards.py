@@ -25,7 +25,7 @@ def caught(name, method):
 def main():
     source = Path(shard_plan.__file__).read_text()
     for name, predicate in [('multiple-task-guard', 'if len(tasks) != 1:'),
-                            ('too-few-titles-guard', 'if len(titles) < CASE_GROUPS:')]:
+                            ('too-few-titles-guard', 'if len(titles) < groups:')]:
         try:
             assert source.count(predicate) == 1
             exec(compile(source.replace(predicate, 'if False:', 1), shard_plan.__file__, 'exec'),
