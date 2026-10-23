@@ -1,0 +1,14 @@
+let receivers = 0;
+let indices = 0;
+function receiver(present: boolean): readonly number[] | undefined {
+    receivers++;
+    return present ? [8] : undefined;
+}
+function index(): number { indices++; return 0; }
+console.log(`${receiver(false)?.[index()] ?? -1}|${receivers}|${indices}`);
+console.log(`${receiver(true)?.[index()] ?? -1}|${receivers}|${indices}`);
+function read<T>(items: readonly T[] | undefined, position: number): T | undefined { return items?.[position]; }
+const empty: readonly number[] = [];
+console.log(`${read<number>(empty, 0) ?? -1}|${read([8], -1) ?? -1}|${read([8], 0.5) ?? -1}`);
+console.log(`${read(["word"], 0) ?? "none"}|${read<string>(undefined, 0) ?? "none"}`);
+console.log(`${read([false], 0) ?? true}|${read<boolean>(undefined, 0) ?? true}`);

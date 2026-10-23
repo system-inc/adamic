@@ -1,0 +1,7 @@
+// a-check: refused overload 1 of evaluate result Result<"safe"> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit "safe"; prove every return for this overload's admitted arguments, preserving result variance
+interface Result<T> { readonly value: T; flag: boolean; }
+const shared: Result<string> = { value: 'bad', flag: false };
+function widerResult(): Result<string> { return shared; }
+function evaluate(): Result<'safe'>;
+function evaluate(): Result<string | number | undefined> { return widerResult(); }
+console.log(evaluate().value);

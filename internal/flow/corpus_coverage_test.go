@@ -180,3 +180,32 @@ func TestFlowCorpusBoundaryDeclarations(t *testing.T) {
 		t.Fatalf("want eight boundary declarations, got %d", count)
 	}
 }
+
+func TestFlowCorpusHiddenBoundaryRefusalClassification(t *testing.T) {
+	t.Parallel()
+	live := map[string]bool{}
+	for _, path := range programs(t) {
+		live[filepath.Base(path)] = true
+	}
+	for _, name := range []string{
+		"hidden_boundary_alias_cast_refused.a",
+		"hidden_boundary_optional_array_mutation_refused.a",
+	} {
+		if live[name] {
+			t.Errorf("refused control %s entered the runnable flow corpus", name)
+		}
+	}
+	for _, name := range []string{
+		"hidden_boundary_generic_optional_array.a",
+		"hidden_boundary_optional_array_order.a",
+		"hidden_boundary_generic_tnode.a",
+		"hidden_boundary_generic_tnode_constraints.a",
+		"hidden_boundary_never_array.a",
+		"hidden_boundary_never_array_observations.a",
+		"hidden_wave2_method_destructuring.a",
+	} {
+		if !live[name] {
+			t.Errorf("runnable control %s left the flow corpus", name)
+		}
+	}
+}

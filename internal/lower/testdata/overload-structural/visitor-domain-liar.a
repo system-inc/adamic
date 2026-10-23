@@ -1,0 +1,11 @@
+// a-check: refused overload 1 of visitNodes visitor argument path is unproven at /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain-liar.a:6:2: original-array input must fit TIn and exclude undefined; callback contravariance at callback.parameter1 requires Node to fit TIn; pass a present original input element at every visitor invocation, including helpers
+interface Node { readonly kind: number; }
+interface Modifier extends Node { readonly text: string; }
+function visitNodes<TIn extends Node>(nodes: readonly TIn[], visitor: (node: TIn) => Node | undefined): readonly Node[];
+function visitNodes(nodes: readonly Node[], visitor: (node: Node) => Node | undefined): readonly Node[] {
+ visitor({ kind: 0 });
+ return nodes;
+}
+const modifiers: readonly Modifier[] = [{ kind: 1, text: 'modifier' }];
+function visitor(node: Modifier): Node | undefined { console.log(node.text); return node; }
+console.log(`${visitNodes(modifiers, visitor).length}`);

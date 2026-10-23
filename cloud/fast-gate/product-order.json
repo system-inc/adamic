@@ -1860,6 +1860,9 @@
     "internal/lower TestProduct_LowerAgreementNative": [
       "internal/oracle TestProduct_NativeRuntimesRelease0",
       "internal/lower TestProduct_LowerAgreementC"
+    ],
+    "cmd/adamic TestProduct_CommandRuntimeCanonicalClosures": [
+      "internal/oracle TestProduct_NativeRuntimesSanitized2"
     ]
   }
 }

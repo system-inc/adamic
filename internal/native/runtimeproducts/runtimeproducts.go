@@ -38,9 +38,8 @@ type Set struct {
 
 // Sets are every feature set the oracle's programs need, counted at 91671a25be over every lowered fixture and review
 // program (base 1021, canonical closures 46, convention 18, receivers 14, regexp callback 6, node host 5, the rest 1
-// to 4), and the programs stage3/fixtures' oracle hook builds (at ed4fc86eef its 82 that compile need seven, six of
-// them these and receivers with node host, which only stage3/fixtures/host's 13_createDirectory.a needs). A program
-// whose set isn't here fails its build, naming the set to add.
+// to 4). The programs stage3/fixtures' oracle hook builds use these sets too; receiver-independent
+// host methods use the node-host set alone. A program whose set isn't here fails its build, naming the set to add.
 var Sets = []Set{
 	{nil, "dedication/dedication.a"},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION"}, "internal/oracle/testdata/array_from_undefined.a"},
@@ -53,10 +52,9 @@ var Sets = []Set{
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "internal/oracle/testdata/regexp_replace/callback.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/getters_census_binary_inline.a"},
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
-	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
 	{[]string{"ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_value.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/nested_captures.a"},
-	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/census_optional_values_system.a"},
+	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "stage3/fixtures/objects/24_transformation_accessors.a"},
 }
 
 // A Variant is one way the oracle builds a program: sanitized for the comparison and the leak check, release as a

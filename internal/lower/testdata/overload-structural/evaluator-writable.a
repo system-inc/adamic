@@ -1,0 +1,2 @@
+// a-check: refused overload 1 of evaluate parameter input cannot be served by implementation parameter input; make the implementation accept every value admitted by this overload, without mutable widening or bivariance
+interface EvaluatorResult<T>{value:T;}function evaluate(input:EvaluatorResult<string>):EvaluatorResult<string>;function evaluate(input:EvaluatorResult<string|number>):EvaluatorResult<string|number>{input.value=1;return input;}console.log(evaluate({value:'node'}).value);
