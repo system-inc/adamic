@@ -1,0 +1,42 @@
+{
+  "main": {
+    "latent_records": 80,
+    "source_files": 79,
+    "totals": {
+      "NotYet": 929,
+      "Refused": 3403,
+      "SkippedDependency": 2,
+      "error": 0,
+      "panic": 2
+    },
+    "compressed_stream_reproduces_report": true
+  },
+  "area": {
+    "latent_records": 80,
+    "source_files": 79,
+    "totals": {
+      "NotYet": 929,
+      "Refused": 3403,
+      "SkippedDependency": 2,
+      "error": 0,
+      "panic": 2
+    },
+    "compressed_stream_reproduces_report": true
+  },
+  "daily_exit_status": 0,
+  "elapsed_seconds": 1353,
+  "compiler_mode": {
+    "mode": "per-ref",
+    "latent_mode": "first-error",
+    "commits": {
+      "main": "e50e502c21f12f9df64f7e716e980ed84695aa6f",
+      "area": "e50e502c21f12f9df64f7e716e980ed84695aa6f"
+    }
+  },
+  "open_enum": {
+    "NotYet": 0,
+    "Refused": 502
+  },
+  "same_panic_reasons_as_oct20": true,
+  "reason_rows_equal_after_adapted_path_normalization": true
+}
