@@ -30,7 +30,8 @@ type loopCounter struct {
 
 // loopCounters is every loop of the sweep, in the order the sweep makes them.
 func loopCounters() []loopCounter {
-	two32, two53 := 4294967296.0, 9007199254740992.0
+	two53 := 9007199254740992.0
+	lengthMax := two53 - 1 // Every length and size is bounded by the spec, including typed arrays.
 	// Every start and bound with the range it can take, worked out by hand rather than by the pass's
 	// own arithmetic, and whether it's one the pass may keep (whole within 2^53 at both ends and, for a
 	// start, never -0).
@@ -44,26 +45,28 @@ func loopCounters() []loopCounter {
 		{"9007199254740989", two53 - 3, two53 - 3, true}, {"-9007199254740989", 3 - two53, 3 - two53, true},
 		{"9007199254740992", two53, two53, true},
 		{"-9007199254740992", -two53, -two53, true}, {"9007199254740994", 0, 0, false}, {"2 ** 3", 0, 0, false},
-		{"values.length - 1", -1, two32 - 1, true}, {"wholeConstant + 1", 1, two32 + 1, true},
-		{"0 - values.length", -two32, 0, true}, {"-empty.length", 0, 0, false}, {"0 * -1", 0, 0, false},
+		{"values.length - 1", -1, lengthMax - 1, true}, {"wholeConstant + 1", 1, lengthMax + 1, true},
+		{"0 - values.length", -lengthMax, 0, true}, {"-empty.length", 0, 0, false}, {"0 * -1", 0, 0, false},
 		{"values.length * 2", 0, 0, false}, {"text.length / 2", 0, 0, false}, {"changing", 0, 0, false},
 	}
+	// At the maximum length, +2 rounds to 2^53 in double arithmetic.
+	// A strict ascending loop can still stop there without stepping past it.
 	bounds := []value{
-		{"values.length", 0, two32, true}, {"text.length", 0, two32, true}, {"sizes.size", 0, two32, true},
-		{"wholeConstant", 0, two32, true}, {"5", 5, 5, true}, {"0", 0, 0, true}, {"-0", 0, 0, true}, {"-3", -3, -3, true},
+		{"values.length", 0, lengthMax, true}, {"text.length", 0, lengthMax, true}, {"sizes.size", 0, lengthMax, true},
+		{"wholeConstant", 0, lengthMax, true}, {"5", 5, 5, true}, {"0", 0, 0, true}, {"-0", 0, 0, true}, {"-3", -3, -3, true},
 		{"9007199254740991", two53 - 1, two53 - 1, true}, {"9007199254740992", two53, two53, true},
 		{"-9007199254740992", -two53, -two53, true}, {"9007199254740994", 0, 0, false},
 		{"2.5", 0, 0, false}, {"-0.5", 0, 0, false}, {"NaN", 0, 0, false}, {"Infinity", 0, 0, false},
 		{"-Infinity", 0, 0, false}, {"fractionConstant", 0, 0, false}, {"changing", 0, 0, false}, {"2 ** 2", 0, 0, false},
-		{"values.length - 1", -1, two32 - 1, true}, {"values.length + 2", 2, two32 + 2, true},
-		{"values.length * 2", 0, 2 * two32, true}, {"-values.length", -two32, 0, true},
-		{"wholeConstant - 1", -1, two32 - 1, true}, {"derived", -3, 2*two32 - 3, true},
-		{"9007199254740991 - values.length", two53 - 1 - two32, two53 - 1, true},
-		{"values.length - 9007199254740991", 1 - two53, two32 + 1 - two53, true},
+		{"values.length - 1", -1, lengthMax - 1, true}, {"values.length + 2", 2, two53, true},
+		{"values.length * 2", 0, 0, false}, {"-values.length", -lengthMax, 0, true},
+		{"wholeConstant - 1", -1, lengthMax - 1, true}, {"derived", 0, 0, false},
+		{"9007199254740991 - values.length", two53 - 1 - lengthMax, two53 - 1, true},
+		{"values.length - 9007199254740991", 1 - two53, lengthMax + 1 - two53, true},
 		{"values.length + 9007199254740990", 0, 0, false}, {"text.length / 2", 0, 0, false},
 		{"values.length % 3", 0, 0, false},
 		{"9007199254740000 + values.length", 0, 0, false}, {"-9007199254740000 - values.length", 0, 0, false},
-		{"values.length * -2097152", -two53, 0, true}, {"values.length * 2097153", 0, 0, false},
+		{"values.length * -2097152", 0, 0, false}, {"values.length * 2097153", 0, 0, false},
 		{"values.length * values.length", 0, 0, false},
 	}
 	// The updates, each with its step (0 for one the pass never takes) and its comparison.
@@ -168,7 +171,7 @@ func loopCounters() []loopCounter {
 		{"let I = 0; I < values.length; I++", "let J = -I; J < 3; J++", true, false},
 		{"let I = 0; I < values.length; I++", "let J = I * 2; J < 9; J++", true, false},
 		{"let I = 0; I < values.length; I++", "let J = 0; J < I; J++", true, true},
-		{"let I = 0; I < values.length; I++", "let J = 0; J <= I * 3 - 1; J += 2", true, true},
+		{"let I = 0; I < values.length; I++", "let J = 0; J <= I * 3 - 1; J += 2", true, false},
 		{"let I = 9007199254740989; I < 9007199254740992; I++", "let J = I; J <= I + 1; J++", true, false},
 		{"let I = 9007199254740989; I < 9007199254740992; I++", "let J = I; J < I + 1; J++", true, true},
 		{"let I = 9007199254740989; I <= 9007199254740991; I += 1", "let J = I + 1; J < 9007199254740992; J++", true, true},
