@@ -1,0 +1,43 @@
+=== RUN   TestProduct_LeanCensusExports
+=== PAUSE TestProduct_LeanCensusExports
+=== RUN   TestProduct_AgreementCensusExports
+=== PAUSE TestProduct_AgreementCensusExports
+=== RUN   TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== PAUSE TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== RUN   TestTheLeanBuildReachesOnlyItsDeclaredFiles
+=== PAUSE TestTheLeanBuildReachesOnlyItsDeclaredFiles
+=== RUN   TestTheAgreementCBuildReachesOnlyItsDeclaredFiles
+=== PAUSE TestTheAgreementCBuildReachesOnlyItsDeclaredFiles
+=== RUN   TestTheLeanCensusFollowsTheBuildAndFailsClosed
+=== PAUSE TestTheLeanCensusFollowsTheBuildAndFailsClosed
+=== RUN   TestTheJobserverNeverReachesAnArchivesBytes
+=== PAUSE TestTheJobserverNeverReachesAnArchivesBytes
+=== RUN   TestAnArchivesBuildIsJournaledAsRuntimeproducts
+--- PASS: TestAnArchivesBuildIsJournaledAsRuntimeproducts (0.00s)
+=== CONT  TestProduct_LeanCensusExports
+=== CONT  TestTheAgreementCBuildReachesOnlyItsDeclaredFiles
+=== CONT  TestTheLeanBuildReachesOnlyItsDeclaredFiles
+=== CONT  TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+=== NAME  TestTheAgreementCBuildReachesOnlyItsDeclaredFiles
+    census_test.go:854: build go_list_-export__./internal/native/agreementproducts_listing.json b2f2c4d06f4b miss 9.77
+--- PASS: TestTheAgreementCBuildReachesOnlyItsDeclaredFiles (10.15s)
+=== CONT  TestTheJobserverNeverReachesAnArchivesBytes
+=== NAME  TestProduct_LeanCensusExports
+    census_test.go:98: build go_list_-export__./internal/native_listing.json ff78e8590a89 miss 18.78
+--- PASS: TestProduct_LeanCensusExports (19.15s)
+=== NAME  TestTheLeanBuildReachesOnlyItsDeclaredFiles
+    census_test.go:835: build go_list_-export__./internal/native_listing.json ff78e8590a89 hit 18.78
+=== CONT  TestProduct_AgreementCensusExports
+=== NAME  TestTheRuntimeBuildReachesOnlyItsDeclaredFiles
+    census_test.go:814: build go_list_-export__./internal/native_listing.json ff78e8590a89 hit 18.79
+=== NAME  TestProduct_AgreementCensusExports
+    census_test.go:111: build go_list_-export__./internal/native/agreementproducts_listing.json b2f2c4d06f4b hit 0.00
+--- PASS: TestProduct_AgreementCensusExports (0.01s)
+=== CONT  TestTheLeanCensusFollowsTheBuildAndFailsClosed
+    census_test.go:902: build go_list_-export__./internal/native_listing.json ff78e8590a89 hit 0.02
+--- PASS: TestTheLeanCensusFollowsTheBuildAndFailsClosed (0.31s)
+--- PASS: TestTheLeanBuildReachesOnlyItsDeclaredFiles (19.56s)
+--- PASS: TestTheRuntimeBuildReachesOnlyItsDeclaredFiles (19.60s)
+--- PASS: TestTheJobserverNeverReachesAnArchivesBytes (13.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native/runtimeproducts	23.320s
