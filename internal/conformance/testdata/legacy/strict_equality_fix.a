@@ -1,0 +1,5 @@
+// Spec: `<`, `<=`, `>`, `>=` on two numbers or two strings; `===` and `!==`
+// Expect: lowers
+const left: number = 1;
+const right: number = 1;
+console.log(left === right ? 'same' : 'different');

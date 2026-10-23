@@ -1,0 +1,4 @@
+// Spec: | `eval`, `new Function`, the `Function` type |
+// Expect: refused the Function annotation in .a
+const callback: Function = () => 1;
+console.log(typeof callback);
