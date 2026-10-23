@@ -1,0 +1,198 @@
+// Objects several levels deep, held in fields, arrays, maps, and closures. A loop drops one,
+// replaces what a fresh tree holds, and reassigns the variable that held the previous tree.
+// Dropping a holder frees what it alone contained, so a tree's fields, elements, map entries,
+// and closure are released because that holder is being freed.
+import { panic } from 'adamic';
+
+interface Chain {
+	readonly tag: string;
+	readonly n: number;
+	readonly next: Chain | undefined;
+}
+
+interface Tree {
+	readonly label: string;
+	readonly nodes: Tree[];
+	next: Tree | undefined;
+	readonly named: Map<string, Tree>;
+	owned: () => string;
+}
+
+interface Holder {
+	tree: Tree;
+}
+
+function word(n: number): string {
+	let text = '';
+	for (let index = 0; index < 6; index += 1) {
+		text += 'y';
+	}
+	return `${text}${n}`;
+}
+
+function chain(depth: number): Chain {
+	const tag = word(depth);
+	if (depth === 0) {
+		return { tag, n: depth, next: undefined };
+	}
+	return { tag, n: depth, next: chain(depth - 1) };
+}
+
+function walk(link: Chain | undefined): string {
+	if (link === undefined) {
+		return '';
+	}
+	return `${link.tag}:${link.n}/${walk(link.next)}`;
+}
+
+// The closure alone holds the chain. Dropping the closure drops every link, and each link's
+// last holder is the link outside it, which is being freed with it.
+function tower(depth: number): () => string {
+	const made = chain(depth);
+	return () => walk(made);
+}
+
+function leaf(label: string): Tree {
+	return { label, nodes: [], next: undefined, named: new Map<string, Tree>(), owned: tower(0) };
+}
+
+function branch(label: string, depth: number): Tree {
+	const node = leaf(label);
+	node.owned = tower(depth);
+	if (depth > 0) {
+		node.nodes.push(branch(`${label}.a`, depth - 1));
+		node.next = branch(`${label}.n`, depth - 1);
+		node.named.set('k', branch(`${label}.m`, depth - 1));
+	}
+	return node;
+}
+
+function weigh(tree: Tree | undefined): number {
+	if (tree === undefined) {
+		return 0;
+	}
+	let total = tree.label.length + tree.owned().length;
+	total += weigh(tree.next);
+	for (const child of tree.nodes) {
+		total += weigh(child);
+	}
+	for (const [key, value] of tree.named) {
+		total += key.length + weigh(value);
+	}
+	return total;
+}
+
+// Replace fields, an element, and a map entry of a tree this function just made, then return it.
+function assemble(round: number): Tree {
+	const tree = branch(`b${round}`, 2);
+	if (tree.nodes.length > 0) {
+		tree.nodes[0] = branch(`r${round}`, 1);
+	}
+	tree.nodes.splice(0, 0, leaf(`s${round}`));
+	tree.next = branch(`n${round}`, 1);
+	tree.named.set('k', branch(`m${round}`, 1));
+	tree.named.set('gone', leaf(`g${round}`));
+	tree.named.delete('gone');
+	tree.owned = tower(round % 3);
+	return tree;
+}
+
+// Reassigning current drops the previous tree. It alone held its children.
+function churn(): number {
+	let current = assemble(0);
+	let total = weigh(current);
+	for (let round = 1; round < 4; round += 1) {
+		current = assemble(round);
+		total += weigh(current);
+	}
+	return total;
+}
+
+// Reassigning the holder drops that object, which alone held its tree.
+function rehold(): number {
+	let holder: Holder = { tree: assemble(0) };
+	let total = weigh(holder.tree);
+	for (let round = 1; round < 4; round += 1) {
+		holder = { tree: assemble(round) };
+		total += weigh(holder.tree);
+	}
+	return total;
+}
+
+function burst(): number {
+	let total = 0;
+	for (let round = 0; round < 3; round += 1) {
+		const made = assemble(round);
+		total += weigh(made);
+	}
+	return total;
+}
+
+function byBreak(): number {
+	let total = 0;
+	for (let round = 0; round < 6; round += 1) {
+		const made = branch(`brk${round}`, 1);
+		total += made.label.length + made.owned().length;
+		if (round === 2) {
+			break;
+		}
+	}
+	return total;
+}
+
+function byContinue(): number {
+	let total = 0;
+	for (let round = 0; round < 4; round += 1) {
+		const made = branch(`con${round}`, 1);
+		if (round === 1) {
+			continue;
+		}
+		total += made.owned().length;
+	}
+	return total;
+}
+
+function byReturn(stop: boolean): string {
+	const made = branch('ret', 2);
+	const nested = leaf('keep');
+	if (stop) {
+		return nested.label;
+	}
+	return `${made.owned()}:${nested.label}`;
+}
+
+function removed(): string {
+	const row: Tree[] = [branch('p0', 1), branch('p1', 1), leaf('p2')];
+	row.splice(0, 2);
+	const stack: Tree[] = [branch('q0', 1), leaf('q1')];
+	const top = stack.pop() ?? panic('empty pop');
+	stack.pop();
+	const scratch = new Map<string, Tree>();
+	scratch.set('a', branch('ma', 1));
+	scratch.set('a', leaf('mb'));
+	scratch.delete('a');
+	scratch.set('c', leaf('mc'));
+	let walked = '';
+	for (const [key, value] of scratch) {
+		walked += `${key}${value.label}`;
+	}
+	scratch.clear();
+	const left = row[0] ?? panic('spliced row');
+	return `${left.label}:${top.label}:${walked}:${row.length}:${stack.length}`;
+}
+
+const live = assemble(9);
+let alias = live;
+const nodes = live.nodes;
+let nodesAlias = nodes;
+const named = live.named;
+let namedAlias = named;
+const owned = live.owned;
+let ownedAlias = owned;
+alias = leaf('alias');
+nodesAlias = [];
+namedAlias = new Map<string, Tree>();
+ownedAlias = tower(0);
+
+const after = `${weigh(live)} ${owned()} ${live.label} ${nodes.length} ${named.size}`;
+console.log(`${after} ${churn()} ${rehold()} ${burst()} ${byBreak()} ${byContinue()} ${byReturn(true)} ${byReturn(false)} ${removed()}`);
