@@ -80,6 +80,7 @@ func cProgram(program *ir.Program, handler, lines int) string {
 	if program.HasPromises() {
 		builder.WriteString("#include \"async.h\"\n#include <string.h>\n")
 	}
+	builder.WriteString(appleInclude(program))
 	for index, value := range program.Strings {
 		if len(value) <= longestLiteral {
 			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_UNITS(%s, %d);\n", index, cLiteral(value), utf16Units(value))
@@ -124,7 +125,11 @@ func cProgram(program *ir.Program, handler, lines int) string {
 			fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
 			emitter.indent = 1
 			emitter.functionIndex = index
-			emitter.functionBody(function)
+			if function.Foreign != nil {
+				emitter.foreignBody(function)
+			} else {
+				emitter.functionBody(function)
+			}
 			bodies.WriteString(emitter.out.String())
 			emitter.out.Reset()
 			bodies.WriteString("}\n\n")
@@ -453,6 +458,13 @@ type emitter struct {
 	asyncHandler  string
 	function      *ir.Function
 	functionDepth int
+
+	// foreignPrototypes are the C functions Apple calls declared so far, by symbol, and blockTypes
+	// the block types, by their parameters (foreign.go).
+	foreignPrototypes map[string]string
+	blockTypes        map[string]string
+	// delegateClasses are the delegates whose classes are declared so far, by name.
+	delegateClasses map[string]bool
 }
 
 func (e *emitter) line(format string, arguments ...any) {
