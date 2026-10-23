@@ -5,18 +5,21 @@ import (
 	"context"
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
-	"strings"
 	"testing"
+	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestStrongAstParentGap(t *testing.T) {
-	t.Parallel()
+// Not parallel: ASAN_OPTIONS and UBSAN_OPTIONS process environment via t.Setenv.
+func TestClosedStrongAstParentGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/1_strong_ast_parent.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -25,19 +28,59 @@ func TestStrongAstParentGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if string(result.output) != "root\n" {
-		t.Fatalf("Node gap result %q", result.output)
+	expected := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
+	if string(expected) != "root\n" {
+		t.Fatalf("Node gap result %q", expected)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var refusal *lower.Refused
-	if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "a cycle reference counting can't free") {
-		t.Fatalf("GAPS.md says strong parent/child cycle is refused, got %v", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
 	}
+	if len(lowered.GraphTypes) == 0 {
+		t.Fatal("strong parent/child cycle accepted without graph ownership")
+	}
+	code := native.C(lowered)
+	binary := filepath.Join(t.TempDir(), "strong-parent")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
+	t.Setenv("UBSAN_OPTIONS", "halt_on_error=1")
+	actual := execute(t, "", binary).output
+	emitted := filepath.Join(t.TempDir(), "strong-parent.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	backend := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
+	for _, side := range []struct {
+		name   string
+		output []byte
+	}{{"native ASan/UBSan/LSan", actual}, {"JavaScript backend", backend}} {
+		if !bytes.Equal(side.output, expected) {
+			t.Fatalf("%s: %q, Node %q", side.name, side.output, expected)
+		}
+	}
+	if report := leakcheck.Report(t, code, binary); report != "" {
+		t.Fatal(report)
+	}
+	counted := filepath.Join(t.TempDir(), "strong-parent-counted")
+	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	stdout, stderr, err := childguard.Capture(ctx, exec.Command(counted))
+	if err != nil || !bytes.Equal(stdout, expected) {
+		t.Fatalf("counted native: %v, stdout %q, stderr %q; Node %q", err, stdout, stderr, expected)
+	}
+	if report := leakcheck.Unbalanced(leakcheck.Run{Stdout: stdout, Stderr: stderr}); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("Node, JavaScript, and sanitized native agree on %q; leak check clean; %s", expected, stderr)
 }
 
 // Not parallel: ASAN_OPTIONS process environment via t.Setenv.
