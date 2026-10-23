@@ -189,7 +189,7 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 		default:
 			outcome = judgeParallelRefusal(expected, compilerRefusal(lowered), lowered)
 		}
-		outcome.retry = outcome.Verdict == Finding && runnerDied(lowered)
+		outcome.retry = outcome.Verdict == Finding && (runnerDied(lowered) || !recognizedRefusal(lowered))
 		return outcome
 	}
 	if expected != "" || moveWhat != "" {
@@ -346,6 +346,14 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 
 	outcome.Verdict = Agreed
 	return outcome
+}
+
+// recognizedRefusal identifies deterministic compiler rejections. Without one,
+// even a normal exit can be a load failure: Go panics and out-of-memory errors exit 2.
+func recognizedRefusal(lowered Run) bool {
+	stderr := string(lowered.Stderr)
+	return strings.Contains(stderr, "Adamic 0.1 refuses") ||
+		(strings.Contains(stderr, "can't lower") && strings.Contains(stderr, "yet"))
 }
 
 // compilerRefusal sorts the compiler's refusal: the checker's (the generator's fault), stage 0's

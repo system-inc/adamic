@@ -46,7 +46,7 @@ fi
 		}
 	}
 	adamic := filepath.Join(tools, "adamic")
-	write(adamic, "case \"$1\" in\nc)\n"+fail("c", "kill -TERM $$")+";;\njs)\n"+fail("js", "exit 2")+";;\nesac\nprintf 'fixture source\\n'\n")
+	write(adamic, "case \"$1\" in\nc)\n"+fail("c", "exit 2")+";;\njs)\n"+fail("js", "exit 2")+";;\nesac\nprintf 'fixture source\\n'\n")
 	native := settings + "if [ \"$ASAN_OPTIONS\" = detect_leaks=1 ]; then\n" + fail("leak", "kill -TERM $$") + "else\n" + fail("native", "kill -TERM $$") + "fi\nprintf 'ok\\n'\n"
 	write(filepath.Join(tools, "clang"), fail("clang", "exit 1")+`while [ "$#" -gt 0 ]; do
 if [ "$1" = -o ]; then shift; binary=$1; break; fi
@@ -163,6 +163,8 @@ func TestCompileFindingConfirmation(t *testing.T) {
 		attempts        int
 	}{
 		{"refusal mismatch", "printf 'Adamic 0.1 refuses another path\\n' >&2; exit 1", "refusal did not name the path", Finding, 1},
+		{"not yet mismatch", "printf \"can't lower fixture yet\\n\" >&2; exit 2", "expected a refusal, stage 0 said not yet", Finding, 1},
+		{"panic", "printf 'panic: x\\n goroutine 1 [running]:\\n' >&2; exit 2", "compiler crashed", Flaked, 2},
 		{"timeout", "kill -XCPU $$", "compiler never finished", Flaked, 2},
 		{"death", "kill -TERM $$", "refusal did not name the path", Flaked, 2},
 	} {
