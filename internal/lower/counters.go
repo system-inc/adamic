@@ -6,7 +6,12 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// counters marks the loop counters the native backend may keep in an integer (ir.Local.Counter).
+// counters marks static integer counters and loop-entry guarded specializations.
+// The static proof below keeps its original refusals. extendedCounter additionally
+// handles nonnegative squared conditions, starts from nonnegative whole-counter
+// products, and whole invariant steps. Unknown invariant numeric locals are checked at
+// loop entry, including the final update's range, with the double loop retained
+// as fallback. Facts derived from a guarded outer loop carry that dependency.
 //
 // A number in JavaScript is a double, and a loop counter is one too. But a counter that starts at a
 // whole number, steps by a whole number, and stops at a bound that's a whole number in a range known
@@ -23,7 +28,7 @@ import (
 //	    an integer has no -0 and 1 / counter would tell; step is a whole-number constant, 1 or more;
 //	  - nothing but the update writes the counter, and no closure captures it (a cell holds a double);
 //	  - bound is, every time the condition reads it, a whole number in a known range: an array's, a
-//	    string's or a map's size (from 0 to 2^32), a constant, a variable nothing writes but its
+//	    string's or a map's size (from 0 to 2^53 - 1), a constant, a variable nothing writes but its
 //	    declaration, the counter of a loop it's in the body of (in the range it holds there), or any
 //	    of those negated, added, subtracted or multiplied, which keep whole numbers whole while they
 //	    stay within 2^53. Division and remainder don't, and NaN, infinities and
@@ -36,7 +41,7 @@ import (
 // keeps a double, since nothing bounds where it goes. A global counter keeps a double too, since a
 // function may run before its loop has.
 func counters(program *ir.Program) {
-	known := facts{assigned: map[int]bool{}, declared: map[int]ir.Expression{}, counters: map[int]span{}}
+	known := facts{assigned: map[int]bool{}, declared: map[int]ir.Expression{}, counters: map[int]span{}, guarded: map[int]bool{}}
 	for _, function := range program.Functions {
 		findAssigned(function.Body, known.assigned)
 		findDeclared(function.Body, known.declared)
@@ -48,6 +53,7 @@ func counters(program *ir.Program) {
 	mark := func(statements []ir.Statement) {
 		eachBlock(statements, func(block ir.Block) {
 			markCounter(program, block, known)
+			extendedCounter(program, block, known)
 		})
 	}
 	for _, function := range program.Functions {
@@ -62,6 +68,7 @@ type facts struct {
 	assigned map[int]bool
 	declared map[int]ir.Expression
 	counters map[int]span
+	guarded  map[int]bool
 }
 
 // span is the least and the most a counter can be.
@@ -149,7 +156,13 @@ func markCounter(program *ir.Program, block ir.Block, known facts) {
 	if !isWhole {
 		return
 	}
-	program.Locals[counter].Counter = true
+	dependencies := counterDependencies(known, start, condition.Right)
+	if len(dependencies) == 0 {
+		program.Locals[counter].Counter = true
+	} else {
+		program.Locals[counter].CounterGuard = &ir.CounterGuard{Dependencies: dependencies}
+		known.guarded[counter] = true
+	}
 	// A loop in the body that reads the counter, as for (let j = i + 1; ...) does, reads a value in
 	// this range: the body never writes the counter, and runs only while the condition holds. A body
 	// that never runs has a range whose ends cross, which boundRange refuses.
@@ -165,8 +178,10 @@ func boundRange(bound ir.Expression, known facts, depth int) (float64, float64, 
 	var low, high float64
 	switch bound := bound.(type) {
 	case ir.Length, ir.StringLength, ir.MapSize:
-		// An array's length is below 2^32, and a string's and a map's size far below.
-		low, high = 0, math.Ldexp(1, 32)
+		// A typed array's length can pass 2^32: new Uint8Array(4294967297)
+		// runs in Node and natively. The spec bounds every length and size by
+		// 2^53 - 1, so this range holds for all three expressions.
+		low, high = 0, math.Ldexp(1, 53)-1
 	case ir.NumberConstant:
 		low, high = bound.Value, bound.Value
 	case ir.Read:
