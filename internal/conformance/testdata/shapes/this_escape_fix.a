@@ -1,0 +1,11 @@
+// Spec: Assign every field first, then use `this`
+// Expect: lowers
+const seen: Counter[] = [];
+class Counter {
+	readonly count: number;
+	constructor() {
+		this.count = 1;
+		seen.push(this);
+	}
+}
+console.log(`${new Counter().count} ${seen.length}`);

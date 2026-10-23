@@ -1,0 +1,11 @@
+// Spec: | `this` escaping a constructor before every field is set
+// Expect: refused this escaping a constructor before every field is set
+const seen: Counter[] = [];
+class Counter {
+	readonly count: number;
+	constructor() {
+		seen.push(this);
+		this.count = 1;
+	}
+}
+console.log(`${new Counter().count} ${seen.length}`);

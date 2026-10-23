@@ -1,0 +1,5 @@
+// Spec: | Expandos, `delete`, `Object.defineProperty`
+// Expect: refused Object.defineProperty
+const point: { x: number } = { x: 1 };
+Object.defineProperty(point, 'x', { value: 2 });
+console.log(`${point.x}`);

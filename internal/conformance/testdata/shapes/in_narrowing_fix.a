@@ -1,0 +1,11 @@
+// Spec: Use string literal unions (`'Circle' \| 'Rectangle'`)
+// Expect: lowers
+type Fish = { readonly kind: 'Fish'; readonly swim: () => string };
+type Bird = { readonly kind: 'Bird'; readonly fly: () => string };
+function move(animal: Fish | Bird): string {
+	if (animal.kind === 'Fish') {
+		return animal.swim();
+	}
+	return animal.fly();
+}
+console.log(move({ kind: 'Bird', fly: () => 'flap' }));
