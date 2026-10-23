@@ -187,15 +187,27 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
 	if directives != 1 {
 		return nil, fail("expected one directive scan, found %d", directives)
 	}
-	// Only these exact module preflights may return their local err.
+	// Top-level module preflights may return only their own local err.
 	preflightReturns := map[*ast.ReturnStmt]bool{}
 	for _, statement := range clone.Body.List {
 		conditional, ok := statement.(*ast.IfStmt)
-		if !ok || conditional.Init == nil || conditional.Else != nil || printed(conditional.Cond) != "err != nil" || len(conditional.Body.List) != 1 {
+		if !ok || conditional.Init == nil || conditional.Else != nil || len(conditional.Body.List) != 1 {
 			continue
 		}
-		init := printed(conditional.Init)
-		if init != "err := l.referenceRefusal(module)" && init != "err := l.parallelPreflight(module)" {
+		condition, ok := conditional.Cond.(*ast.BinaryExpr)
+		if !ok || condition.Op != token.NEQ || !ident(condition.X, "err") || !ident(condition.Y, "nil") {
+			continue
+		}
+		init, ok := conditional.Init.(*ast.AssignStmt)
+		if !ok || init.Tok != token.DEFINE || len(init.Lhs) != 1 || !ident(init.Lhs[0], "err") || len(init.Rhs) != 1 {
+			continue
+		}
+		call, ok := init.Rhs[0].(*ast.CallExpr)
+		if !ok || len(call.Args) != 1 || !ident(call.Args[0], "module") || call.Ellipsis.IsValid() {
+			continue
+		}
+		method, ok := call.Fun.(*ast.SelectorExpr)
+		if !ok || !ident(method.X, "l") {
 			continue
 		}
 		ret, ok := conditional.Body.List[0].(*ast.ReturnStmt)
