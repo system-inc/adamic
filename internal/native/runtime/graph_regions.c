@@ -85,6 +85,9 @@ static const char *unadoptable(adamic_heap *heap) {
 	case adamic_kind_async_frame: return "compiler bug: an async frame can't be adopted into a graph region";
 	case adamic_kind_async_promise: return "compiler bug: a promise can't be adopted into a graph region";
 	case adamic_kind_async_reaction: return "compiler bug: an async reaction can't be adopted into a graph region";
+	// A foreign value keeps its pointer and kind in two slots past its shape's count (foreign.c), which
+	// a move by its shape's size would drop, and its last release lets go through Apple's.
+	case adamic_kind_foreign: return "compiler bug: a foreign value can't be adopted into a graph region";
 	}
 	return "compiler bug: an unknown kind can't be adopted into a graph region";
 }
