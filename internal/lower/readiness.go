@@ -73,6 +73,7 @@ func readiness(program *ir.Program) {
 	for _, function := range program.Functions {
 		walk(function.Body, markRecord)
 	}
+	finishWriteContracts(program)
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {

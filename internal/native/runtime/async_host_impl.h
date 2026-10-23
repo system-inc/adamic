@@ -223,7 +223,7 @@ static void host_settle(host_entry *entry) {
     } else {
         static const char *const names[] = {"body", "status"};
         static const bool references[] = {true, false};
-        static const adamic_shape shape = {2, names, references, NULL};
+        static const adamic_shape shape = {2, names, references, NULL, NULL};
         value = adamic_object_new(&shape);
         value->slots[0].reference = text; /* Move the owned string into the result. */
         value->slots[1].number = entry->status;

@@ -76,6 +76,10 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				}
 				return
 			}
+			backendRun := onJavaScriptBackend(t, lowered)
+			if backendRun.exitCode != 0 || string(backendRun.stdout) != gap.stdout {
+				t.Errorf("JavaScript backend: exit %d, stdout %q, stderr %q; Node prints %q", backendRun.exitCode, backendRun.stdout, backendRun.stderr, gap.stdout)
+			}
 			sanitized := filepath.Join(gapSanitized(t, gap.path), "port")
 			nativeRun := sanitizedRun(t, sanitized)
 			if nativeRun.exitCode != 0 || string(nativeRun.stdout) != gap.stdout {

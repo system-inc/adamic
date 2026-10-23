@@ -1,0 +1,1 @@
+stage3/checked-writes/flow-refused.a:11:59: Adamic 0.1 refuses a write through a union of Expression into a slot that holds BinaryExpression | CallExpression in FlowMutation; narrow to one member before writing, so the value fits the slot it lands in; a discriminant is written only after narrowing (union-write)

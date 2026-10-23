@@ -1,0 +1,9 @@
+// a-check: refused a value of type number[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+const empty: never[] = [];
+const broad: number[] = [1];
+function select(flag: boolean) { return flag ? empty : broad; }
+function store(values: number[], insert: boolean): void { if (insert) { values.push(1); } }
+store(select(true), true);
+console.log(empty.length.toString());
+store(select(false), true);
+console.log(broad.length.toString());

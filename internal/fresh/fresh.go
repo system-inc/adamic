@@ -1322,6 +1322,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			}
 		}
 		return made
+	case ir.ContractContainer:
+		return a.value(expression.Value)
 	case ir.ArrayLiteral:
 		var elements value
 		for index, element := range expression.Elements {

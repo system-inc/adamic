@@ -7,10 +7,10 @@
 
 static const char *const names[] = {"text", "padding"};
 static const bool references[] = {true, true};
-static const adamic_shape shape = {2, names, references, NULL};
+static const adamic_shape shape = {2, names, references, NULL, NULL};
 static const char *const reversed_names[] = {"padding", "text"};
 static const bool reversed_references[] = {true, true};
-static const adamic_shape reversed_shape = {2, reversed_names, reversed_references, NULL};
+static const adamic_shape reversed_shape = {2, reversed_names, reversed_references, NULL, NULL};
 static adamic_string literal = ADAMIC_STRING("é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀");
 static adamic_object *objects[2];
 static adamic_map *map;
