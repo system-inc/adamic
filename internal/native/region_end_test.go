@@ -24,7 +24,8 @@ func TestRegionEndWeakTargets(t *testing.T) {
 #include <stdio.h>
 static const char *const names[] = {"number"};
 static const bool references[] = {false};
-static const adamic_shape shape = {1, names, references, NULL};
+static const adamic_field_kind shape_kinds[] = {adamic_field_number};
+static const adamic_shape shape = {1, names, references, NULL, shape_kinds};
 int main(void) {
 	adamic_region region = ADAMIC_REGION;
 	adamic_object *first = adamic_object_new_filled_in(&region, &shape);
@@ -160,7 +161,7 @@ func TestRegionEndConcurrentWeak(t *testing.T) {
 #include <stdatomic.h>
 #include <stdlib.h>
 #define N 256
-static const adamic_shape shape = {0, NULL, NULL, NULL};
+static const adamic_shape shape = {0, NULL, NULL, NULL, NULL};
 static adamic_region regions[N];
 static adamic_weak *handles[N];
 static pthread_barrier_t barrier;

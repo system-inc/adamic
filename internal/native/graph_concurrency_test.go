@@ -70,7 +70,8 @@ const graphObjectPrelude = `#include "adamic.h"
 #include <assert.h>
 static const char *const names[] = {"next", "number", "last"};
 static const bool refs[] = {true, false, false};
-static const adamic_shape shape __attribute__((unused)) = {3, names, refs, NULL};
+static const adamic_field_kind shape_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number};
+static const adamic_shape shape __attribute__((unused)) = {3, names, refs, NULL, shape_kinds};
 `
 
 func TestGraphAdoptionObjectBytes(t *testing.T) {
@@ -407,7 +408,8 @@ const graphMapAdoptions = `#include "adamic.h"
 #include <assert.h>
 static const char *const names[] = {"0", "1"};
 static const bool references[] = {false, true};
-static const adamic_shape pair = {2, names, references, NULL};
+static const adamic_field_kind pair_kinds[] = {adamic_field_number, adamic_field_reference};
+static const adamic_shape pair = {2, names, references, NULL, pair_kinds};
 int main(void) {
  adamic_cell *child = adamic_graph_adopt(adamic_cell_new((adamic_value){.number = 19}, false), sizeof *child);
  adamic_map *map = adamic_graph_adopt(adamic_map_new(false, true), sizeof(adamic_map));
