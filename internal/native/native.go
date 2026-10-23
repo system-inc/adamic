@@ -15,8 +15,6 @@ import (
 	"slices"
 	"strings"
 	"time"
-
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 //go:embed runtime/*.c runtime/*.h
@@ -148,7 +146,10 @@ func Flags(options Options) []string {
 		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
 	}
 	if options.Sanitize {
-		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+		// UBSan keeps each check's source location as a string in the object, a header's by the path clang found it at,
+		// and no prefix map reaches those strings: a sysroot under the tools directory put its root in every object that
+		// checks code from its headers (Hot's arm64, #8wgk65j). A report names its file alone; the line and column stay.
+		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-fsanitize-undefined-strip-path-components=-1")
 	}
 	if options.Target == "wasm32-wasi" {
 		return append(flags, "-Oz")
@@ -256,7 +257,7 @@ func linkOne(directory string, compiler string, source string, output string, op
 	// the debug map names it main.o alone, as a split build's names its units. An ELF linker records no input's path.
 	program := "main.c"
 	if goruntime.GOOS == "darwin" && options.Target != "wasm32-wasi" {
-		compile := toolchain.CommandIn(directory, compiler, append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
+		compile := clangIn(directory, compiler, append(slices.Clone(compileFlags), "-c", "main.c", "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
 		if err := jobserver.Hold(func() error {
@@ -302,7 +303,7 @@ func linkOne(directory string, compiler string, source string, output string, op
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
-	command := toolchain.CommandIn(directory, compiler, arguments...)
+	command := clangIn(directory, compiler, arguments...)
 	var combined []byte
 	var building time.Duration
 	if err := jobserver.Hold(func() error {

@@ -11,7 +11,6 @@ import (
 
 	"github.com/system-inc/adamic/bridge/tsgo/spec"
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func UsesTSGo(program *ir.Program) bool {
@@ -114,7 +113,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	flags = append(flags, "-I", "runtime")
 	program := "main.c"
 	if goruntime.GOOS == "darwin" {
-		compile := toolchain.CommandIn(directory, compilerName(options), append(slices.Clone(flags), "-c", program, "-o", "main.o")...)
+		compile := clangIn(directory, compilerName(options), append(slices.Clone(flags), "-c", program, "-o", "main.o")...)
 		var combined []byte
 		if err := jobserver.Hold(func() (err error) { combined, err = compile.CombinedOutput(); return err }); err != nil {
 			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
@@ -127,7 +126,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	arguments := append(linkFlags(slices.Clone(flags), options), "-o", output, program)
 	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
-	command := toolchain.CommandIn(directory, compilerName(options), arguments...)
+	command := clangIn(directory, compilerName(options), arguments...)
 	var combined []byte
 	if err := jobserver.Hold(func() (err error) { combined, err = command.CombinedOutput(); return err }); err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
