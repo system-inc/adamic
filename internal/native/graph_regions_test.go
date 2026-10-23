@@ -448,3 +448,75 @@ func graphMeasuredSize(t *testing.T, output []byte, name string) uint64 {
 	}
 	return size
 }
+
+// Adoption moves an allocation and frees the original, so it takes only the kinds it can re-aim
+// (graph_regions.c's unadoptable) and refuses a value something still names by address. Each refusal
+// is a compiler bug if a program reaches it, so it stops by name. The control moves a Weak's target
+// without the check and shows the read that the check prevents.
+func TestGraphAdoptionRefusals(t *testing.T) {
+	t.Parallel()
+	const main = `static adamic_value code(adamic_closure *self, adamic_value *arguments) {
+ (void)self; (void)arguments;
+ return (adamic_value){.number = 1};
+}
+int main(int count, char **arguments) {
+ (void)count;
+ if (strcmp(arguments[1], "string") == 0) {
+  static adamic_string a = ADAMIC_STRING("made ");
+  static adamic_string b = ADAMIC_STRING("at runtime");
+  adamic_string *made = adamic_string_concat(2, (adamic_string *const[]){&a, &b});
+  adamic_graph_adopt(made, sizeof *made);
+  return 1;
+ }
+ if (strcmp(arguments[1], "number") == 0) {
+  adamic_heap *box = adamic_box_number(7);
+  adamic_graph_adopt(box, sizeof *box);
+  return 1;
+ }
+ if (strcmp(arguments[1], "canonical") == 0) {
+  adamic_environment *environment = adamic_environment_new(1);
+  adamic_closure *closure = adamic_closure_canonical(&environment->cells[0], code, 0, NULL);
+  adamic_graph_adopt(closure, sizeof *closure);
+  // Without the refusal, the cache still names the freed closure, and this lookup reads it.
+  adamic_closure_canonical(&environment->cells[0], code, 0, NULL);
+  return 1;
+ }
+ adamic_object *object = adamic_object_new(&shape);
+ adamic_weak *weak = adamic_weak_of(object);
+ if (strcmp(arguments[1], "weak") == 0) {
+  adamic_graph_adopt(object, adamic_object_size(3));
+  // Without the refusal, the Weak still names the freed original, and this read reaches it.
+  printf("%zu\n", ((adamic_object *)adamic_weak_target(weak))->shape->count);
+  return 1;
+ }
+ // control: the move the check refuses, made directly.
+ object = adamic_heap_graph_storage(object, adamic_object_size(3));
+ adamic_object *named = adamic_weak_target(weak);
+ printf("%zu\n", named->shape->count);
+ return 0;
+}
+`
+	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
+	binary := filepath.Join(t.TempDir(), "refusals")
+	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	for mode, want := range map[string]string{
+		"string":    "compiler bug: a string can't be adopted into a graph region",
+		"number":    "compiler bug: a number box can't be adopted into a graph region",
+		"canonical": "compiler bug: a canonical closure can't be adopted into a graph region after it's cached",
+		"weak":      "compiler bug: a value can't be adopted into a graph region while a Weak names it",
+		"control":   "ERROR: AddressSanitizer: heap-use-after-free",
+	} {
+		command := exec.Command(binary, mode)
+		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
+		output, err := command.CombinedOutput()
+		if err == nil || !strings.Contains(string(output), want) {
+			t.Fatalf("%s: want %q: %v\n%s", mode, want, err, output)
+		}
+		if mode != "control" && strings.Contains(string(output), "Sanitizer") {
+			t.Fatalf("%s stopped by a sanitizer, not by name:\n%s", mode, output)
+		}
+		t.Logf("%s: %s", mode, want)
+	}
+}
