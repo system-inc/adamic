@@ -114,6 +114,7 @@
 `map.c:key_cache:1`
 `map.c:value_cache:1`
 `map_set.c:collection_next:1`
+`map_set.c:string_next:1`
 `maybe.c:adamic_string_undefined:1`
 `node_fs_file.c:cache:1`
 `node_fs_file.c:cache:2`
@@ -308,3 +309,5 @@
 
 `runtime-file:program_region.c`
 `program_region.c:members:1` Main-thread-only Program member list. Fresh adoption links members; teardown runs after task joins. Members and interior environment cells cannot be shared.
+
+# map_set.c:string_next is an adamic_code_function forward declaration, like collection_next; the function type owns no mutable storage.

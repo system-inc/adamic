@@ -185,8 +185,10 @@ adamic_array *adamic_program_arguments(void) {
 static const char *const ok_names[] = {"kind", "text"};
 static const char *const error_names[] = {"kind", "message"};
 static const bool both_references[] = {true, true};
-static const adamic_shape ok_shape = {2, ok_names, both_references, NULL};
-static const adamic_shape error_shape = {2, error_names, both_references, NULL};
+static const adamic_field_kind ok_kinds[] = {adamic_field_reference, adamic_field_reference};
+static const adamic_shape ok_shape = {2, ok_names, both_references, NULL, ok_kinds};
+static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
+static const adamic_shape error_shape = {2, error_names, both_references, NULL, error_kinds};
 static adamic_string ok_kind = ADAMIC_STRING("Ok");
 static adamic_string error_kind = ADAMIC_STRING("Error");
 
@@ -346,7 +348,8 @@ adamic_object *adamic_read_text_file(const adamic_string *path) {
 
 // The shape writeTextFile's success comes in.
 static const char *const written_names[] = {"kind"};
-static const adamic_shape written_shape = {1, written_names, both_references, NULL};
+static const adamic_field_kind written_kinds[] = {adamic_field_reference};
+static const adamic_shape written_shape = {1, written_names, both_references, NULL, written_kinds};
 
 // write_all writes every byte, through partial writes and interrupted calls, and returns 0 or the
 // errno that stopped it.
