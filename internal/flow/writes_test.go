@@ -139,6 +139,28 @@ var writesNothing = []struct {
 	{ir.WriteTextFile{}, "writes a file from a string"},
 }
 
+// regExpMethods is every Method lowering gives a RegExpCall (internal/lower/regexp.go,
+// library_regexp_replace.go, object.go), with whether it moves a pattern's lastIndex. writes counts
+// every method but the three it names, so a method added later is a write until someone says
+// otherwise; this pins each one that's here now.
+var regExpMethods = []struct {
+	method string
+	writes bool
+}{
+	{"exec", true}, {"test", true}, {"next", true}, {"match", true}, {"search", true},
+	{"replace", true}, {"replaceAll", true},
+	{"split", false}, {"matchAll", false}, {"iteratorDone", false},
+}
+
+func TestRegExpCallWritesByMethod(t *testing.T) {
+	t.Parallel()
+	for _, entry := range regExpMethods {
+		if got := writes(ir.RegExpCall{Method: entry.method}); got != entry.writes {
+			t.Errorf("writes(RegExpCall %s) = %t, want %t", entry.method, got, entry.writes)
+		}
+	}
+}
+
 func TestEveryExpressionIsClassified(t *testing.T) {
 	t.Parallel()
 	statements := irExpressions(t)

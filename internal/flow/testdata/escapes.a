@@ -1,0 +1,47 @@
+// A value stored into a variable the graph doesn't track escapes through it: a call can mutate it
+// by that name, and the mutation must fall inside the value's range. Each function stores an object
+// it made into such a variable, a global, one a closure captured, and one assigned inside an
+// expression, then has a call mutate it through that name, then reads it back.
+interface Counter {
+	count: number;
+}
+
+let shared: Counter = { count: 0 };
+
+function bumpShared(): void {
+	shared.count += 1;
+}
+
+function throughGlobal(): number {
+	const counter: Counter = { count: 10 };
+	shared = counter;
+	bumpShared();
+	return counter.count;
+}
+
+function throughCapture(): number {
+	let held: Counter = { count: 20 };
+	const bump = (): void => {
+		held.count += 1;
+	};
+	const counter: Counter = { count: 30 };
+	held = counter;
+	bump();
+	return counter.count;
+}
+
+function bumpCounter(target: Counter): void {
+	target.count += 1;
+}
+
+function throughExpression(flag: boolean): number {
+	const counter: Counter = { count: 40 };
+	let alias: Counter = { count: 0 };
+	const chosen = flag ? (alias = counter) : alias;
+	bumpCounter(alias);
+	return counter.count + chosen.count;
+}
+
+console.log(`global ${throughGlobal()}`);
+console.log(`capture ${throughCapture()}`);
+console.log(`expression ${throughExpression(true)}`);
