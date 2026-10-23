@@ -1,0 +1,7 @@
+interface Root { readonly kind: 'box' | 'other' }
+interface View extends Root { readonly kind: 'box'; readonly values: ReadonlyMap<string, number> }
+const raw = { kind: 'box' as const, values: new Map<string, number>([["one", 1]]) };
+const base: Root = raw;
+const view = base as View;
+const { values } = view;
+console.log(String(values.size));
