@@ -1,0 +1,10 @@
+const text = String(12345);
+const leaf = {text};
+const first = {next: undefined, text, counted: leaf};
+const second = {next: first, text};
+first.next = second;
+const environment = {text, number: 42};
+const map = new Map([[7, text], [8, first]]);
+console.log(`objects ${first.text} ${second.text}`);
+console.log(`environment ${environment.text} ${environment.number}`);
+console.log(`map ${map.get(7)} cycle ${map.get(8).next.next === first}`);
