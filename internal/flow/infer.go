@@ -184,6 +184,15 @@ func (n *inference) run1(instruction *Instruction) {
 		for _, define := range instruction.Defines {
 			n.define(define, defined)
 		}
+		// A declaration or assignment that defines nothing writes a local the graph doesn't track (a
+		// global, a captured variable, one assigned inside an expression), and any call may reach the
+		// value through it, so the value escapes.
+		switch (*instruction.At).(type) {
+		case ir.Declare, ir.Assign:
+			if len(instruction.Defines) == 0 {
+				n.escape(defined)
+			}
+		}
 	}
 	// What an instruction defines, it defines last: a read of a variable in the same instruction is
 	// of its old value, and the new one holds from here on.
@@ -348,7 +357,9 @@ func (n *inference) value(expression ir.Expression) shape {
 		if !mutable(expression.Of) {
 			return shape{}
 		}
-		if declared.Global || declared.Captured {
+		// A local the graph doesn't track holds whatever was last written into it, which may be any
+		// escaped value.
+		if declared.Global || declared.Captured || declared.ExpressionAssigned {
 			return shape{unknown: true}
 		}
 		value, ok := n.current[DeclarationId(expression.Local+1)]
