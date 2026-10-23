@@ -1,8 +1,11 @@
 package native
 
 import (
+	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"sync"
 	"testing"
 )
 
@@ -19,6 +22,7 @@ const indexHarness = `#include "adamic.h"
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void put_hex(const adamic_string *string) {
@@ -95,10 +99,14 @@ static void read_at(adamic_string *string, double index) {
 	}
 }
 
-int main(void) {
+int main(int count, char **arguments) {
+	(void)count;
+	// The shifts this run makes strings with, the first included and the last not.
+	size_t first_shift = (size_t)strtoull(arguments[1], NULL, 10);
+	size_t last_shift = (size_t)strtoull(arguments[2], NULL, 10);
 	static const size_t counts[] = {@COUNTS@};
 	for (size_t which = 0; which < sizeof counts / sizeof counts[0]; which++) {
-		for (size_t shift = 0; shift < @SHIFTS@; shift++) {
+		for (size_t shift = first_shift; shift < last_shift; shift++) {
 			adamic_string *first = make(counts[which], shift);
 			adamic_string *second = make(counts[which] + 7, shift + 3);
 			size_t length = (size_t)adamic_string_length(first);
@@ -194,6 +202,7 @@ function wtf8(string) {
 	return out;
 }
 const pattern = [@PATTERN@];
+const [firstShift, lastShift] = process.argv.slice(1, 3).map(Number);
 const character = (point) => (point >= 0xd800 && point <= 0xdfff ? String.fromCharCode(point) : String.fromCodePoint(point));
 const make = (count, shift) => {
 	let result = '';
@@ -210,7 +219,7 @@ const readAt = (string, index) => {
 };
 const lines = [];
 for (const count of [@COUNTS@]) {
-	for (let shift = 0; shift < @SHIFTS@; shift++) {
+	for (let shift = firstShift; shift < lastShift; shift++) {
 		const first = make(count, shift);
 		const second = make(count + 7, shift + 3);
 		const length = first.length;
@@ -264,9 +273,7 @@ for (const count of [@COUNTS@]) {
 process.stdout.write(lines.join('\n') + '\n');
 `
 
-// The code points each sweep is made from, by name. One pattern's sweep is as much as one test
-// should carry alone, so each is its own top-level test below, and
-// TestStringIndexPatternsEachHaveOneTest holds the two in step.
+// The code points each sweep is made from, by name.
 var stringIndexPatterns = map[string]string{
 	"mixed": "0x61, 0xe9, 0x4e16, 0x1f30d, 0x62, 0xd800, 0x63, 0x1f600, 0x1f600, 0xdc00, 0x3b1, 0x20, 0xffff, 0x10ffff, 0xdbff, 0xdfff",
 	// Lone high halves separated from low halves: no supplementary points can form.
@@ -275,59 +282,144 @@ var stringIndexPatterns = map[string]string{
 	"ASCII":          "0x61, 0x62, 0x20, 0x7f",
 }
 
+// stringIndexShifts is how many shifts each count's strings are made with, 0 and up.
+const stringIndexShifts = 16
+
+// stringIndexSweep is a pattern's strings made with the shifts first to last, the last not included.
+type stringIndexSweep struct {
+	pattern string
+	shifts  testUnitRange
+}
+
+// The sweeps, by name. One pattern's sweep of every shift is as much as one test should carry alone,
+// and the longer ones are cut into ranges of shifts (first to last, both included), so each sweep is
+// its own top-level test below, and TestStringIndexSweepsEachHaveOneTest holds the two in step.
+var stringIndexSweeps = map[string]stringIndexSweep{
+	"mixed":                          {"mixed", testUnitRange{0, stringIndexShifts}},
+	"BMP":                            {"BMP", testUnitRange{0, stringIndexShifts}},
+	"BMP low halves shifts 0 to 5":   {"BMP low halves", testUnitRange{0, 6}},
+	"BMP low halves shifts 6 to 10":  {"BMP low halves", testUnitRange{6, 11}},
+	"BMP low halves shifts 11 to 15": {"BMP low halves", testUnitRange{11, 16}},
+	"ASCII shifts 0 to 7":            {"ASCII", testUnitRange{0, 8}},
+	"ASCII shifts 8 to 15":           {"ASCII", testUnitRange{8, 16}},
+}
+
 func TestStringIndexMatchesNodeMixed(t *testing.T) {
 	t.Parallel()
-	runStringIndexPattern(t, "mixed")
+	runStringIndexSweep(t, "mixed")
 }
 
 func TestStringIndexMatchesNodeBMP(t *testing.T) {
 	t.Parallel()
-	runStringIndexPattern(t, "BMP")
+	runStringIndexSweep(t, "BMP")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalves(t *testing.T) {
+func TestStringIndexMatchesNodeBMPLowHalvesShifts0To5(t *testing.T) {
 	t.Parallel()
-	runStringIndexPattern(t, "BMP low halves")
+	runStringIndexSweep(t, "BMP low halves shifts 0 to 5")
 }
 
-func TestStringIndexMatchesNodeASCII(t *testing.T) {
+func TestStringIndexMatchesNodeBMPLowHalvesShifts6To10(t *testing.T) {
 	t.Parallel()
-	runStringIndexPattern(t, "ASCII")
+	runStringIndexSweep(t, "BMP low halves shifts 6 to 10")
 }
 
-// A pattern added to the table without its test, or a test naming a pattern that isn't there,
-// fails here without building anything.
-func TestStringIndexPatternsEachHaveOneTest(t *testing.T) {
+func TestStringIndexMatchesNodeBMPLowHalvesShifts11To15(t *testing.T) {
 	t.Parallel()
-	checkNamedWrappers(t, "string_index_test.go", "TestStringIndexMatchesNode", "runStringIndexPattern", stringIndexPatterns)
+	runStringIndexSweep(t, "BMP low halves shifts 11 to 15")
 }
 
-func runStringIndexPattern(t *testing.T, name string) {
-	t.Helper()
-	points, ok := stringIndexPatterns[name]
-	if !ok {
-		t.Fatalf("no index pattern %q", name)
+func TestStringIndexMatchesNodeASCIIShifts0To7(t *testing.T) {
+	t.Parallel()
+	runStringIndexSweep(t, "ASCII shifts 0 to 7")
+}
+
+func TestStringIndexMatchesNodeASCIIShifts8To15(t *testing.T) {
+	t.Parallel()
+	runStringIndexSweep(t, "ASCII shifts 8 to 15")
+}
+
+// A sweep added to the table without its test, a test naming a sweep that isn't there, a pattern
+// without a sweep, or a pattern's ranges of shifts leaving one out or making one twice fails here
+// without building anything. A sweep named for its pattern alone makes every shift.
+func TestStringIndexSweepsEachHaveOneTest(t *testing.T) {
+	t.Parallel()
+	checkNamedWrappers(t, "string_index_test.go", "TestStringIndexMatchesNode", "runStringIndexSweep", stringIndexSweeps)
+	for pattern := range stringIndexPatterns {
+		ranges := map[string]testUnitRange{}
+		for name, sweep := range stringIndexSweeps {
+			if sweep.pattern != pattern {
+				continue
+			}
+			if name == pattern {
+				if sweep.shifts != (testUnitRange{0, stringIndexShifts}) {
+					t.Errorf("sweep %q makes shifts %d to %d, not every shift", name, sweep.shifts.first, sweep.shifts.last-1)
+				}
+				continue
+			}
+			ranges[name] = sweep.shifts
+		}
+		if _, whole := stringIndexSweeps[pattern]; whole == (len(ranges) > 0) {
+			t.Errorf("pattern %q needs either one sweep named for it or ranges of shifts, not both or neither", pattern)
+			continue
+		}
+		if len(ranges) > 0 {
+			checkRangesTile(t, pattern+" shifts %d to %d", stringIndexShifts, ranges)
+		}
 	}
-	checkStringIndex(t, points)
+	for name, sweep := range stringIndexSweeps {
+		if _, ok := stringIndexPatterns[sweep.pattern]; !ok {
+			t.Errorf("sweep %q names no pattern %q", name, sweep.pattern)
+		}
+	}
 }
 
-func checkStringIndex(t *testing.T, pattern string) {
-	t.Helper()
+// stringIndexReplacer fills in the harness and the oracle for a pattern's code points.
+func stringIndexReplacer(points string) *strings.Replacer {
 	// One-, two-, three- and four-byte code points, and lone surrogates of each half, which meet in
 	// some shifts and stay apart in others.
-	replacer := strings.NewReplacer(
-		"@PATTERN@", pattern,
+	return strings.NewReplacer(
+		"@PATTERN@", points,
 		"@COUNTS@", "20, 40, 41, 63, 64, 65, 100, 400, 2000",
-		"@SHIFTS@", "16",
 		"@SLICE_LIMIT@", "140",
 	)
-	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(replacer.Replace(indexHarness), binary, Options{Sanitize: true}); err != nil {
+}
+
+// stringIndexBinaries are each pattern's harness, built once for every sweep of it in this process,
+// in a directory of its own, since a test's own would go when that test ends.
+var stringIndexBinaries = func() map[string]func() (string, error) {
+	binaries := make(map[string]func() (string, error), len(stringIndexPatterns))
+	for name, points := range stringIndexPatterns {
+		binaries[name] = sync.OnceValues(func() (string, error) {
+			directory, err := os.MkdirTemp("", "adamic-string-index-")
+			if err != nil {
+				return "", err
+			}
+			binary := filepath.Join(directory, "harness")
+			return binary, Build(stringIndexReplacer(points).Replace(indexHarness), binary, Options{Sanitize: true})
+		})
+	}
+	return binaries
+}()
+
+func runStringIndexSweep(t *testing.T, name string) {
+	t.Helper()
+	sweep, ok := stringIndexSweeps[name]
+	if !ok {
+		t.Fatalf("no index sweep %q", name)
+	}
+	build, ok := stringIndexBinaries[sweep.pattern]
+	if !ok {
+		t.Fatalf("no index pattern %q", sweep.pattern)
+	}
+	binary, err := build()
+	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := replacer.Replace(indexOracle)
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, "", binary), "\n"), "\n")
-	node := strings.Split(strings.TrimSuffix(runWithInput(t, "", "node", "--eval", oracle), "\n"), "\n")
+	oracle := stringIndexReplacer(stringIndexPatterns[sweep.pattern]).Replace(indexOracle)
+	first, last := strconv.Itoa(sweep.shifts.first), strconv.Itoa(sweep.shifts.last)
+	native := strings.Split(strings.TrimSuffix(runWithInput(t, "", binary, first, last), "\n"), "\n")
+	node := strings.Split(strings.TrimSuffix(runWithInput(t, "", "node", "--eval", oracle, first, last), "\n"), "\n")
 	if len(native) != len(node) {
 		t.Fatalf("%d native lines, %d from Node", len(native), len(node))
 	}
@@ -350,7 +442,7 @@ func checkStringIndex(t *testing.T, pattern string) {
 // units and byte checkpoints. The pointer comparison proves this exercises the in-place path.
 func TestStringViewAfterAppendMatchesNode(t *testing.T) {
 	t.Parallel()
-	harness := strings.Split(indexHarness, "int main(void)")[0] + `int main(void) {
+	harness := strings.Split(indexHarness, "int main(")[0] + `int main(void) {
 	static adamic_string literal = ADAMIC_STRING("@BMP_LITERAL@");
 	adamic_string stack = {{0, adamic_kind_string, 0}, literal.length, literal.bytes, 0, NULL, NULL, 0};
 	put_number(adamic_string_length(&literal));

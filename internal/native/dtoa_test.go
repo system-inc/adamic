@@ -7,9 +7,11 @@ import (
 	"fmt"
 	"math"
 	"math/rand/v2"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -87,10 +89,68 @@ func dtoaValues(random *rand.Rand, count int) []float64 {
 	return all
 }
 
-func TestToExponentialAndToPrecisionMatchNode(t *testing.T) {
+// dtoaSweepValues are the values the sweep asks about, the same list on every call.
+func dtoaSweepValues() []float64 {
+	return dtoaValues(rand.New(rand.NewPCG(2011, 1993)), 400)
+}
+
+// The values the sweep is cut into, by their places in dtoaSweepValues (first to last, both
+// included). Each is asked about with every argument, and the whole list is more than one test
+// should carry alone, so each range is its own top-level test below, and
+// TestToExponentialAndToPrecisionValueRangesTile holds the ranges to every value once and to their tests.
+var dtoaValueRanges = map[string]testUnitRange{
+	"0 to 922":     {0, 923},
+	"923 to 1844":  {923, 1845},
+	"1845 to 2767": {1845, 2768},
+	"2768 to 3689": {2768, 3690},
+}
+
+func TestToExponentialAndToPrecisionMatchNodeValues0To922(t *testing.T) {
 	t.Parallel()
-	random := rand.New(rand.NewPCG(2011, 1993))
-	values := dtoaValues(random, 400)
+	runDtoaValues(t, "0 to 922")
+}
+
+func TestToExponentialAndToPrecisionMatchNodeValues923To1844(t *testing.T) {
+	t.Parallel()
+	runDtoaValues(t, "923 to 1844")
+}
+
+func TestToExponentialAndToPrecisionMatchNodeValues1845To2767(t *testing.T) {
+	t.Parallel()
+	runDtoaValues(t, "1845 to 2767")
+}
+
+func TestToExponentialAndToPrecisionMatchNodeValues2768To3689(t *testing.T) {
+	t.Parallel()
+	runDtoaValues(t, "2768 to 3689")
+}
+
+// A range that leaves a value out or asks about one twice, a range without its test, or a test
+// naming a range that isn't there fails here without building anything.
+func TestToExponentialAndToPrecisionValueRangesTile(t *testing.T) {
+	t.Parallel()
+	checkRangesTile(t, "%d to %d", len(dtoaSweepValues()), dtoaValueRanges)
+	checkNamedWrappers(t, "dtoa_test.go", "TestToExponentialAndToPrecisionMatchNodeValues", "runDtoaValues", dtoaValueRanges)
+}
+
+// dtoaHarnessBinary is the harness every range of the sweep runs, built once for all of them in
+// this process, in a directory of its own, since a test's own would go when that test ends.
+var dtoaHarnessBinary = sync.OnceValues(func() (string, error) {
+	directory, err := os.MkdirTemp("", "adamic-dtoa-")
+	if err != nil {
+		return "", err
+	}
+	binary := filepath.Join(directory, "harness")
+	return binary, Build(dtoaHarness, binary, Options{Sanitize: true})
+})
+
+func runDtoaValues(t *testing.T, name string) {
+	t.Helper()
+	piece, ok := dtoaValueRanges[name]
+	if !ok {
+		t.Fatalf("no value range %q", name)
+	}
+	values := dtoaSweepValues()[piece.first:piece.last]
 	var input strings.Builder
 	bits := func(value float64) string { return fmt.Sprintf("%016x", math.Float64bits(value)) }
 	lines := 0
@@ -128,8 +188,8 @@ func TestToExponentialAndToPrecisionMatchNode(t *testing.T) {
 		}
 	}
 
-	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(dtoaHarness, binary, Options{Sanitize: true}); err != nil {
+	binary, err := dtoaHarnessBinary()
+	if err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
