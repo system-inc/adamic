@@ -20,6 +20,8 @@ func (n *NotYet) Error() string {
 // Refused is something Adamic 0.1 doesn't allow at all (docs/0.1.md), as opposed to something stage 0
 // hasn't learned yet. The difference is a promise, so the message keeps them apart.
 type Refused struct {
+	// cycle identifies the slot-cycle proof, independently of diagnostic wording.
+	cycle bool
 	Where string
 	What  string
 	Fix   string

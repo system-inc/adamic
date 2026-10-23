@@ -7,64 +7,6 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// graphAllocationSites copies the IR tree before assigning unique allocation
-// IDs. Pointer and map children must be copied too, so their sites do not depend
-// solely on a checker identity. Nil containers preserve their original shape.
-func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
-	var sites func(reflect.Value) reflect.Value
-	sites = func(value reflect.Value) reflect.Value {
-		switch value.Kind() {
-		case reflect.Interface:
-			if value.IsNil() {
-				return value
-			}
-			mapped := sites(value.Elem())
-			result := reflect.New(value.Type()).Elem()
-			result.Set(mapped)
-			return result
-		case reflect.Ptr:
-			if value.IsNil() {
-				return value
-			}
-			result := reflect.New(value.Type().Elem())
-			result.Elem().Set(sites(value.Elem()))
-			return result
-		case reflect.Map:
-			if value.IsNil() {
-				return value
-			}
-			result := reflect.MakeMapWithSize(value.Type(), value.Len())
-			entries := value.MapRange()
-			for entries.Next() {
-				result.SetMapIndex(sites(entries.Key()), sites(entries.Value()))
-			}
-			return result
-		case reflect.Struct:
-			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(sites(value.Field(i)))
-			}
-			if field := result.FieldByName("GraphTypes"); field.IsValid() && field.Type() == reflect.TypeOf([]int{}) {
-				*next--
-				field.Set(reflect.ValueOf(append(append([]int{}, field.Interface().([]int)...), *next)))
-			}
-			return result
-		case reflect.Slice:
-			if value.IsNil() {
-				return value
-			}
-			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(sites(value.Index(i)))
-			}
-			return result
-		default:
-			return value
-		}
-	}
-	return sites(value)
-}
-
 // allocationFlowGraph is the shared may-flow graph used by graph regions and
 // shape certification. It never changes ownership when queried.
 type allocationFlowGraph struct {
@@ -147,6 +89,14 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 	}
 	value := reflect.ValueOf(expression)
 	if field := value.FieldByName("GraphTypes"); field.IsValid() {
+		// Ownership metadata also labels collection operations. Views only
+		// prove the literal layouts indexed by their projection analysis.
+		switch expression.(type) {
+		case ir.ObjectLiteral, ir.ArrayLiteral:
+		default:
+			unknown(fmt.Sprintf("untracked allocation source %T", expression))
+			return
+		}
 		ids := field.Interface().([]int)
 		if len(ids) == 0 || ids[len(ids)-1] >= 0 {
 			unknown("allocation has no site identity")
