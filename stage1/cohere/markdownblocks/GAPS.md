@@ -439,10 +439,10 @@ Go still parses/preprocesses the AST and supplies unported children.
 
 A two-field structural range array was rejected before code generation because
 other structural subtypes can carry child arrays. The minimal witness is
-`gaps/4_structural_ranges.ts`: Node prints 1; Adamic reports Refused with the
-cycle reference-counting diagnostic. Root ignore ranges now use numeric index
-pairs; the complete root gate compiles, runs and leaks nothing. This is a
-representation workaround, not a compiler change or a reason to stop parsing.
+`gaps/4_structural_ranges.ts`. Closed by wave B graph regions B: Node, the
+JavaScript backend and native under ASan/UBSan agree on `1`, with the leak
+check clean. Root ignore ranges retain the numeric index pair workaround;
+changing that representation remains a separate port decision.
 
 ## Native heading, sentence and paragraph boundary
 
@@ -580,8 +580,10 @@ Adamic port, not evidence that Markdown cannot ever be implemented in Adamic:
   Closed by compiler/area-next: nested functions (closures) lower, and native and the JavaScript
   backend match Node.
 - `gaps/2_state_arrow_cycle.ts` prints `35` twice on Node. Rewriting the nested
-  declaration as a mutable arrow slot is refused by Adamic 0.1 as a closure/cell
-  reference-counting cycle. This is a `Refused`, not a `NotYet`.
+  declaration as a mutable arrow slot previously produced a closure/cell
+  reference-counting cycle refusal. Closed by wave B graph regions B: Node,
+  the JavaScript backend and native under ASan/UBSan agree on `35` twice,
+  with the leak check clean. The port retains its explicit state/frame IDs.
 - `gaps/3_recursive_callable.ts` is closed: a noncapturing, top-level recursive
   callable state is supported. Source Node, native under ASan/UBSan, the
   JavaScript backend and LeakSanitizer agree on `1` then `0`. The recursive

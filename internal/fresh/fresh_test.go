@@ -2,9 +2,7 @@ package fresh_test
 
 import (
 	"context"
-	"errors"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/fresh"
@@ -96,12 +94,22 @@ func TestMethodKeepsArgument(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
-	var refused *lower.Refused
-	if !errors.As(err, &refused) {
-		t.Fatalf("method-kept argument closes a cycle: want refusal, got %v", err)
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatalf("graph program must be admitted: %v", err)
 	}
-	if !strings.Contains(refused.Error(), "(adamic/cycle-capable)") || !strings.Contains(refused.Error(), "the write at "+path+":15:") {
-		t.Fatalf("refusal does not name the cycle-closing push: %v", refused)
+	found := false
+	for _, write := range fresh.ProveWrites(program) {
+		if write.Kind != fresh.WriteElement {
+			continue
+		}
+		found = true
+		if write.Proven || write.Why == "" {
+			t.Fatalf("method-kept argument must escape before the push: %+v", write)
+		}
+		t.Logf("method-kept argument: %+v", write)
+	}
+	if !found {
+		t.Fatal("missing cycle-closing element write")
 	}
 }
