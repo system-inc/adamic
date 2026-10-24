@@ -664,6 +664,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 			adamic_object *pair = NULL;
 			if (spans[2 * k] >= 0) {
 				pair = adamic_object_new(&pair_shape);
+				pair->tuple = true;
 				pair->slots[0].number = (double)spans[2 * k];
 				pair->slots[1].number = (double)spans[2 * k + 1];
 			}

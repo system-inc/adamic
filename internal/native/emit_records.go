@@ -45,6 +45,10 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 				shape := e.shapeOf([]string{"0", "1"}, []ir.Type{ir.String, call.Element})
 				pair := e.temporary()
 				e.line("adamic_object *%s = adamic_object_new(&%s);", pair, shape)
+				// [key, value] is a tuple to a view, and its slots carry their representations as a literal's do.
+				e.line("%s->tuple = true;", pair)
+				e.line("adamic_object_field_types(%s)[0] = %d;", pair, ir.String)
+				e.line("adamic_object_field_types(%s)[1] = %d;", pair, call.Element)
 				e.line("%s->slots[0].reference = adamic_retain(%s);", pair, key)
 				e.line("%s->slots[1] = %s;", pair, value)
 				value = fmt.Sprintf("(adamic_value){.reference = %s}", pair)

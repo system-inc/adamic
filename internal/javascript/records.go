@@ -38,7 +38,9 @@ func (e *emitter) recordCall(c ir.RecordCall) string {
 		return "adamicRecordSet(" + args + ")"
 	case "delete":
 		return "((r, k) => delete r[k])(" + args + ")"
-	case "hasOwn", "keys", "values", "entries":
+	case "entries":
+		return "Object.entries(" + args + ").map(adamicTuple)"
+	case "hasOwn", "keys", "values":
 		return "Object." + c.Method + "(" + args + ")"
 	}
 	panic("javascript: unknown record operation")

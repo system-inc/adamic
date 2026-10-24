@@ -99,6 +99,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 	if (part == 3) {
 		int shape = collection_kind(key_type) * 3 + collection_kind(value_type);
 		adamic_object *pair = adamic_object_new(&pair_shapes[shape]);
+		pair->tuple = true;
 		pair->slots[0] = key;
 		pair->slots[1] = value;
 		adamic_object_field_types(pair)[0] = (unsigned char)key_type;

@@ -279,6 +279,7 @@ adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair
 		}
 		// [key, value], an object whose fields are named "0" and "1".
 		adamic_object *tuple = adamic_object_new(pair);
+		tuple->tuple = true;
 		tuple->slots[0] = entry->key;
 		tuple->slots[1] = entry->value;
 		if (map->reference_keys) {
