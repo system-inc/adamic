@@ -89,7 +89,7 @@ func (l *lowering) checkLazyViewReads() error {
 	l.completeUntaggedRecursiveContracts()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
-		return nil
+		return unemittableCheckedViewRead(program)
 	}
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
@@ -199,6 +199,49 @@ func (l *lowering) checkLazyViewReads() error {
 			refused = &Refused{Where: where, What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 		}
 		return true
+	}
+	walk(program.Main, inspect)
+	for _, function := range program.Functions {
+		walk(function.Body, inspect)
+	}
+	if refused != nil {
+		return refused
+	}
+	return unemittableCheckedViewRead(program)
+}
+
+// A checked field read is emitted either through the union adapter, whose contracts are unions,
+// fixed tuples and certified callables, or in place as one of the representations the runtime
+// checks a slot against. A read that is neither, such as an interface with a length held as a
+// union because a string, an array and an object all satisfy it, has no emission, so it stops at
+// the read. A method read is the call's to emit, through the adapter.
+func unemittableCheckedViewRead(program *ir.Program) error {
+	var refused error
+	inspect := func(node any) bool {
+		if refused != nil {
+			return false
+		}
+		read, isProperty := node.(ir.Property)
+		if !isProperty || read.View == "" || read.Method || !program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+			return true
+		}
+		// Readiness hands emission the contract the read's declared type has by then.
+		contract := read.ViewContract
+		if read.ViewTypeID != 0 {
+			contract = program.ViewContractTypes[read.ViewTypeID]
+		}
+		if contract > 0 && int(contract) <= len(program.ViewContracts) {
+			descriptor := program.ViewContracts[contract-1]
+			if descriptor.Kind == ir.ViewUnion || descriptor.FixedTuple || descriptor.Kind == ir.ViewCallable && descriptor.ProducerCertified {
+				return true
+			}
+		}
+		switch read.Of {
+		case ir.Number, ir.Boolean, ir.String, ir.Object, ir.Array, ir.Map:
+			return true
+		}
+		refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of field " + read.Name + " of type " + read.ViewType + ", which is a " + typeName(read.Of) + " outside a union view contract"}
+		return false
 	}
 	walk(program.Main, inspect)
 	for _, function := range program.Functions {
