@@ -6,10 +6,12 @@
 //
 //	// Spec: <a phrase docs/0.1.md says, verbatim>
 //	// Expect: refused <a phrase the refusal must say>
+//	// Expect: notyet <a phrase the not yet must say>
 //	// Expect: lowers
 //
 // A refused case must be refused (lower.Refused, a promise about the language), never only not yet lowered
-// (lower.NotYet, a promise about stage 0), and the refusal must say the phrase. A case that lowers is the sound
+// (lower.NotYet, a promise about stage 0), and the refusal must say the phrase. A not yet case is the other promise:
+// something the language means to admit, so a refusal there is as wrong as a lowering. A case that lowers is the sound
 // sibling of a refusal: the fix the refusal names, held to compile, so a refusal that grew to swallow its own fix
 // goes red too. A case whose spec phrase docs/0.1.md no longer says goes red, so the spec and the suite move together.
 package conformance
@@ -28,10 +30,19 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
+// outcome is what lowering a case must end in.
+type outcome int
+
+const (
+	lowers outcome = iota
+	refused
+	notYet
+)
+
 // expectation is what a case's header promises.
 type expectation struct {
 	spec    string
-	refused bool
+	outcome outcome
 	says    string
 }
 
@@ -57,7 +68,9 @@ func readExpectation(path string) (expectation, error) {
 		case comment == "Expect: lowers":
 			expected = true
 		case strings.HasPrefix(comment, "Expect: refused "):
-			found.refused, found.says, expected = true, strings.TrimPrefix(comment, "Expect: refused "), true
+			found.outcome, found.says, expected = refused, strings.TrimPrefix(comment, "Expect: refused "), true
+		case strings.HasPrefix(comment, "Expect: notyet "):
+			found.outcome, found.says, expected = notYet, strings.TrimPrefix(comment, "Expect: notyet "), true
 		}
 	}
 	if err := scanner.Err(); err != nil {
@@ -74,18 +87,25 @@ func judge(promise expectation, spec string, lowered error) string {
 	if !strings.Contains(spec, promise.spec) {
 		return fmt.Sprintf("cites %q, which docs/0.1.md doesn't say", promise.spec)
 	}
-	if !promise.refused {
+	switch promise.outcome {
+	case refused:
+		var refusal *lower.Refused
+		if !errors.As(lowered, &refusal) {
+			return fmt.Sprintf("the spec promises a refusal saying %q, and stage 0 gave %v", promise.says, lowered)
+		}
+	case notYet:
+		var later *lower.NotYet
+		if !errors.As(lowered, &later) {
+			return fmt.Sprintf("the spec promises a not yet saying %q, and stage 0 gave %v", promise.says, lowered)
+		}
+	default:
 		if lowered != nil {
 			return fmt.Sprintf("the spec promises this lowers, and stage 0 says: %v", lowered)
 		}
 		return ""
 	}
-	var refused *lower.Refused
-	if !errors.As(lowered, &refused) {
-		return fmt.Sprintf("the spec promises a refusal saying %q, and stage 0 gave %v", promise.says, lowered)
-	}
 	if !strings.Contains(lowered.Error(), promise.says) {
-		return fmt.Sprintf("refused, but without saying %q: %v", promise.says, lowered)
+		return fmt.Sprintf("stage 0 kept the promise's kind, but without saying %q: %v", promise.says, lowered)
 	}
 	return ""
 }
@@ -131,28 +151,32 @@ func TestEveryCaseKeepsTheSpecsPromise(t *testing.T) {
 }
 
 // The judge on promises kept and broken, so a judge that passes everything can't hide behind green cases. Each row
-// is a mutant of judge: a NotYet taken for a refusal, a refusal that doesn't say its phrase, any error taken for
-// lowering, and a spec phrase the spec doesn't hold.
+// is a mutant of judge: a NotYet taken for a refusal or a refusal for a NotYet, a promise that doesn't say its phrase,
+// any error taken for lowering, and a spec phrase the spec doesn't hold.
 func TestTheJudgeTellsAKeptPromiseFromABrokenOne(t *testing.T) {
 	t.Parallel()
 	const spec = "Decorators are refused."
 	refusal := &lower.Refused{Where: "main.a:1:1", What: "a decorator", Fix: "write the behavior where it applies"}
-	notYet := &lower.NotYet{Where: "main.a:1:1", What: "a decorator"}
+	later := &lower.NotYet{Where: "main.a:1:1", What: "a decorator"}
 	for _, row := range []struct {
 		name    string
 		promise expectation
 		lowered error
 		kept    bool
 	}{
-		{"a refusal saying its phrase", expectation{spec: "Decorators", refused: true, says: "a decorator"}, refusal, true},
-		{"a refusal wrapped", expectation{spec: "Decorators", refused: true, says: "a decorator"}, fmt.Errorf("lowering: %w", refusal), true},
-		{"not yet is not refused", expectation{spec: "Decorators", refused: true, says: "a decorator"}, notYet, false},
-		{"a refusal saying something else", expectation{spec: "Decorators", refused: true, says: "a getter"}, refusal, false},
-		{"lowered where a refusal was promised", expectation{spec: "Decorators", refused: true, says: "a decorator"}, nil, false},
+		{"a refusal saying its phrase", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, refusal, true},
+		{"a refusal wrapped", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, fmt.Errorf("lowering: %w", refusal), true},
+		{"not yet is not refused", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, later, false},
+		{"a refusal saying something else", expectation{spec: "Decorators", outcome: refused, says: "a getter"}, refusal, false},
+		{"lowered where a refusal was promised", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, nil, false},
 		{"lowered as promised", expectation{spec: "Decorators"}, nil, true},
 		{"refused where lowering was promised", expectation{spec: "Decorators"}, refusal, false},
-		{"not yet where lowering was promised", expectation{spec: "Decorators"}, notYet, false},
-		{"a phrase the spec doesn't say", expectation{spec: "Getters", refused: true, says: "a decorator"}, refusal, false},
+		{"not yet where lowering was promised", expectation{spec: "Decorators"}, later, false},
+		{"a phrase the spec doesn't say", expectation{spec: "Getters", outcome: refused, says: "a decorator"}, refusal, false},
+		{"a not yet saying its phrase", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, later, true},
+		{"refused where not yet was promised", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, refusal, false},
+		{"lowered where not yet was promised", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, nil, false},
+		{"a not yet saying something else", expectation{spec: "Decorators", outcome: notYet, says: "a getter"}, later, false},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
