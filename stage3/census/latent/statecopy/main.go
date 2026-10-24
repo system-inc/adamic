@@ -15,8 +15,10 @@ import (
 )
 
 type generator struct {
-	types  map[string]ast.Expr
-	needed map[string]bool
+	types     map[string]ast.Expr
+	needed    map[string]bool
+	sortedMap *ast.TypeSpec
+	positions *token.FileSet
 }
 
 func printed(n ast.Node) string {
@@ -74,19 +76,60 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for i,item:=range value {result[i]=" + g.copy(t.Elt, "item") + "}; return result}(" + value + ")"
 	case *ast.MapType:
 		ty := printed(t)
-		return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for key,item:=range value {result[key]=" + g.copy(t.Value, "item") + "}; return result}(" + value + ")"
+		return g.copyMap(ty, t.Key, t.Value, value)
+	case *ast.IndexListExpr:
+		selector, ok := t.X.(*ast.SelectorExpr)
+		if ok && printed(selector.X) == "ir" && selector.Sel.Name == "SortedMap" && len(t.Indices) == 2 && g.sortedMap != nil {
+			definition, ok := g.sortedMap.Type.(*ast.MapType)
+			if !ok || printed(definition.Key) != "K" || printed(definition.Value) != "V" {
+				panic("state copy: ir.SortedMap definition is no longer map[K]V")
+			}
+			return g.copyMap(printed(t), t.Indices[0], t.Indices[1], value)
+		}
+		panic("state copy: unsupported field type " + printed(t))
 	case *ast.InterfaceType:
 		panic("state copy: anonymous interface requires an explicit copier")
 	default:
 		panic("state copy: unsupported field type " + printed(t))
 	}
 }
-func main() {
-	if len(os.Args) != 4 {
-		panic("usage: statecopy repository overlaid-lower.go output.go")
+func (g *generator) copyField(owner string, id *ast.Ident, field *ast.Field) (result string) {
+	defer func() {
+		if failure := recover(); failure != nil {
+			panic(fmt.Sprintf("%s: %s.%s: %v", g.positions.Position(field.Pos()), owner, id.Name, failure))
+		}
+	}()
+	return g.copy(field.Type, "value."+id.Name)
+}
+func (g *generator) copyMap(ty string, key, item ast.Expr, value string) string {
+	return "func(value " + ty + ") " + ty + " {if value==nil{return nil}; result:=make(" + ty + ",len(value)); for key,item:=range value {result[" + g.copy(key, "key") + "]=" + g.copy(item, "item") + "}; return result}(" + value + ")"
+}
+func loadGenerator(repository, lowerInput string) generator {
+	g := generator{types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}, positions: token.NewFileSet()}
+
+	irFiles, err := filepath.Glob(filepath.Join(repository, "internal/ir/*.go"))
+	if err != nil {
+		panic(err)
 	}
-	g := generator{types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}}
-	paths, err := filepath.Glob(filepath.Join(os.Args[1], "internal/lower/*.go"))
+	for _, path := range irFiles {
+		if strings.HasSuffix(path, "_test.go") {
+			continue
+		}
+		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+		if err != nil {
+			panic(err)
+		}
+		for _, decl := range file.Decls {
+			if group, ok := decl.(*ast.GenDecl); ok {
+				for _, spec := range group.Specs {
+					if spec, ok := spec.(*ast.TypeSpec); ok && spec.Name.Name == "SortedMap" {
+						g.sortedMap = spec
+					}
+				}
+			}
+		}
+	}
+	paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/*.go"))
 	if err != nil {
 		panic(err)
 	}
@@ -96,9 +139,9 @@ func main() {
 		}
 		input := path
 		if filepath.Base(path) == "lower.go" {
-			input = os.Args[2]
+			input = lowerInput
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), input, nil, 0)
+		file, err := parser.ParseFile(g.positions, input, nil, 0)
 		if err != nil {
 			panic(err)
 		}
@@ -112,6 +155,10 @@ func main() {
 			}
 		}
 	}
+	return g
+}
+func generate(repository, lowerInput string) []byte {
+	g := loadGenerator(repository, lowerInput)
 	if _, ok := g.types["lowering"].(*ast.StructType); !ok {
 		panic("state copy: lowering: expected a struct")
 	}
@@ -143,7 +190,7 @@ func main() {
 						fmt.Fprint(&body, "if value.impliedTargetQuery != nil {panic(\"latent state copy: populated impliedTargetQuery is unsupported\")};")
 						expr = "value." + id.Name
 					} else {
-						expr = g.copy(field.Type, "value."+id.Name)
+						expr = g.copyField(name, id, field)
 					}
 					if expr != "value."+id.Name {
 						fmt.Fprintf(&body, "result.%s=%s;", id.Name, expr)
@@ -167,6 +214,13 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	return text
+}
+func main() {
+	if len(os.Args) != 4 {
+		panic("usage: statecopy repository overlaid-lower.go output.go")
+	}
+	text := generate(os.Args[1], os.Args[2])
 	if err := os.WriteFile(os.Args[3], text, 0600); err != nil {
 		panic(err)
 	}
