@@ -1,0 +1,17 @@
+interface Item { label: string; }
+function check(start: number): string {
+ let text = 'text' + String(start);
+ let values = [text, 'tail' + String(start)];
+ let item: Item = { label: 'item' + String(start) };
+ function read(): string { return text + ':' + values.join(',') + ':' + item.label; }
+ function change(): void { text += '!'; values = [text]; item = { label: item.label + '?' }; }
+ function fail(): void { throw new Error(read()); }
+ change();
+ if (start === 0) { return read(); }
+ if (start === 1) { fail(); }
+ try { return read(); } finally { console.log('finally ' + read()); }
+ return read();
+}
+for (const value of [0, 1, 2]) {
+ try { console.log(check(value)); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+}
