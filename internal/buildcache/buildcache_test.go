@@ -546,6 +546,39 @@ func TestAFillThatLosesItsRenameFindsTheProduct(t *testing.T) {
 	}
 }
 
+// A flag naming the tools root keys alike under every home a build runs under and every spelling the box gives the root
+// (#zxq3k08, Node's ruling): a unit whose home moved spelled its sysroot flag absolute, /home/ahra/.adamic-tools/..., where
+// ahra's spelled it ~/.adamic-tools/... (#y4kty3d). Here the box's root is a directory with a .adamic-tools link beside
+// it, as on the house's boxes, and ADAMIC_TOOLS names the directory: the flag through either spelling, under the box
+// user's home and under a unit's empty one, is <tools>/... all four ways. With ADAMIC_TOOLS unset it's ~ as before.
+// Mutant that fails it: the candidates not resolved (compared as spelled), red on the .adamic-tools rows.
+// Not parallel: points the home directory and ADAMIC_TOOLS at each layout's through t.Setenv.
+func TestAToolsFlagKeysAlikeUnderEveryHomeAndSpelling(t *testing.T) {
+	box, unit := t.TempDir(), t.TempDir()
+	tools := filepath.Join(box, "adamic-tools")
+	if err := os.MkdirAll(filepath.Join(tools, "wasi-sysroot"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink("adamic-tools", filepath.Join(box, ".adamic-tools")); err != nil {
+		t.Fatal(err)
+	}
+	repository := filepath.Join(t.TempDir(), "adamic")
+	t.Setenv("ADAMIC_TOOLS", tools)
+	for _, home := range []string{box, unit} {
+		t.Setenv("HOME", home)
+		for _, spelling := range []string{tools, filepath.Join(box, ".adamic-tools")} {
+			if got := portable(repository, "--sysroot="+filepath.Join(spelling, "wasi-sysroot")); got != "--sysroot=<tools>/wasi-sysroot" {
+				t.Errorf("under home %s, the flag through %s keys as %q", home, spelling, got)
+			}
+		}
+	}
+	t.Setenv("ADAMIC_TOOLS", "")
+	t.Setenv("HOME", box)
+	if got := portable(repository, "--sysroot="+filepath.Join(tools, "wasi-sysroot")); got != "--sysroot=~/adamic-tools/wasi-sysroot" {
+		t.Errorf("with ADAMIC_TOOLS unset, the flag keys as %q, want it under ~ as before", got)
+	}
+}
+
 // A key names what changes a product, never which machine computed it (#t37sw0f): the checkout's path, the home
 // directory, the build cache and Go's -p share are spelled the same on every machine, and every flag that changes the
 // output still moves the key. Each pair below is one machine against another; drop a rule from portable and its pair
