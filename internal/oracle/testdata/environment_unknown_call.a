@@ -1,0 +1,9 @@
+let saved: (() => string) | undefined = undefined;
+function fill(keep: (read: () => string) => void, start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ keep(read);
+}
+fill((read) => { saved = read; }, 3);
+function show(): void { if (saved !== undefined) { console.log(saved()); } }
+show();
